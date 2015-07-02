@@ -21,6 +21,7 @@
 #include <tuple>
 
 #include "Message.h"
+#include "message/AckNak.h"
 #include "message/AckAck.h"
 
 
@@ -30,6 +31,7 @@ namespace ublox
 template <typename TMessage = Message>
 using AllMessages =
     std::tuple<
+        message::AckNak<TMessage>,
         message::AckAck<TMessage>
     >;
 

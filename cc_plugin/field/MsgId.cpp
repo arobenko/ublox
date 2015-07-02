@@ -38,6 +38,7 @@ QVariantMap createMsgIdProperties()
 {
     QVariantMap props;
     props.insert(cc::Property::name(), "CLASS + ID");
+    props.insert(cc::Property::indexedName(MsgId_ACK_NAK), "ACK-NAK");
     props.insert(cc::Property::indexedName(MsgId_ACK_ACK), "ACK-ACK");
     return props;
 }

@@ -21,6 +21,7 @@
 #include <tuple>
 #include "cc_plugin/Message.h"
 
+#include "cc_plugin/message/AckNak.h"
 #include "cc_plugin/message/AckAck.h"
 
 namespace ublox
@@ -30,6 +31,7 @@ namespace cc_plugin
 {
 
 typedef std::tuple<
+    cc_plugin::message::AckNak,
     cc_plugin::message::AckAck
 > AllMessages;
 

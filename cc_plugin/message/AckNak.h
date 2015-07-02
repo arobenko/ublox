@@ -19,7 +19,7 @@
 #pragma once
 
 #include "comms_champion/comms_champion.h"
-#include "ublox/message/AckAck.h"
+#include "ublox/message/AckNak.h"
 #include "cc_plugin/Message.h"
 #include "cc_plugin/ProtocolMessageBase.h"
 
@@ -32,19 +32,19 @@ namespace cc_plugin
 namespace message
 {
 
-class AckAck : public
+class AckNak : public
     ProtocolMessageBase<
-        ublox::message::AckAck<ublox::cc_plugin::Message>,
-        AckAck>
+        ublox::message::AckNak<ublox::cc_plugin::Message>,
+        AckNak>
 {
 public:
-    AckAck() = default;
-    AckAck(const AckAck&) = default;
-    AckAck(AckAck&&) = default;
-    virtual ~AckAck() = default;
+    AckNak() = default;
+    AckNak(const AckNak&) = default;
+    AckNak(AckNak&&) = default;
+    virtual ~AckNak() = default;
 
-    AckAck& operator=(const AckAck&) = default;
-    AckAck& operator=(AckAck&&) = default;
+    AckNak& operator=(const AckNak&) = default;
+    AckNak& operator=(AckNak&&) = default;
 
 protected:
     virtual const char* nameImpl() const override;

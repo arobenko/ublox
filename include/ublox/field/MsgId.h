@@ -34,7 +34,7 @@ namespace details
 inline
 bool validateAck(ublox::MsgId id)
 {
-    return (ublox::MsgId_ACK_ACK == id);
+    return (ublox::MsgId_ACK_NAK <= id) && (id <= MsgId_ACK_ACK);
 }
 
 struct MsgIdValueValidator

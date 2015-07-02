@@ -25,6 +25,7 @@ namespace ublox
 
 enum MsgId : std::uint16_t
 {
+    MsgId_ACK_NAK = 0x0500,
     MsgId_ACK_ACK = 0x0501
 };
 

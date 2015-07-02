@@ -15,13 +15,14 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+#include <type_traits>
+#include <functional>
+#include <cassert>
 
-#pragma once
+#include "AckNak.h"
+#include "cc_plugin/field/MsgId.h"
 
-#include "comms_champion/comms_champion.h"
-#include "ublox/message/AckAck.h"
-#include "cc_plugin/Message.h"
-#include "cc_plugin/ProtocolMessageBase.h"
+namespace cc = comms_champion;
 
 namespace ublox
 {
@@ -32,29 +33,35 @@ namespace cc_plugin
 namespace message
 {
 
-class AckAck : public
-    ProtocolMessageBase<
-        ublox::message::AckAck<ublox::cc_plugin::Message>,
-        AckAck>
+namespace
 {
-public:
-    AckAck() = default;
-    AckAck(const AckAck&) = default;
-    AckAck(AckAck&&) = default;
-    virtual ~AckAck() = default;
 
-    AckAck& operator=(const AckAck&) = default;
-    AckAck& operator=(AckAck&&) = default;
+QVariantList createFieldsProperties()
+{
+    QVariantList props;
+    props.append(cc_plugin::field::msgIdProperties());
 
-protected:
-    virtual const char* nameImpl() const override;
-    virtual const QVariantList& fieldsPropertiesImpl() const override;
-};
+    assert(props.size() == AckNak::FieldIdx_NumOfValues);
+    return props;
+}
+
+}  // namespace
+
+const char* AckNak::nameImpl() const
+{
+    static const char* Str = "ACK-NAK";
+    return Str;
+}
+
+const QVariantList& AckNak::fieldsPropertiesImpl() const
+{
+    static const auto Props = createFieldsProperties();
+    return Props;
+}
 
 }  // namespace message
 
 }  // namespace cc_plugin
 
 }  // namespace ublox
-
 
