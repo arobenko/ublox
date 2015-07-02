@@ -18,6 +18,7 @@
 
 #pragma once
 
+#include <algorithm>
 #include "comms/comms.h"
 #include "ublox/MsgId.h"
 
@@ -27,10 +28,43 @@ namespace ublox
 namespace field
 {
 
+namespace details
+{
+
+inline
+bool validateAck(ublox::MsgId id)
+{
+    return (ublox::MsgId_ACK_ACK == id);
+}
+
+struct MsgIdValueValidator
+{
+    template <typename TField>
+    bool operator()(const TField& field) const
+    {
+        typedef bool (*ValidateFunc)(ublox::MsgId);
+
+        static const ValidateFunc Funcs[] = {
+            &validateAck
+        };
+
+        ublox::MsgId id = field.value();
+        return std::any_of(
+            std::begin(Funcs), std::end(Funcs),
+            [id](ValidateFunc func) -> bool
+            {
+                return func(id);
+            });
+    }
+};
+
+}  // namespace details
+
 using MsgId =
     comms::field::EnumValue<
         comms::Field<comms::option::BigEndian>,
-        ublox::MsgId
+        ublox::MsgId,
+        comms::option::ContentsValidator<details::MsgIdValueValidator>
     >;
 
 }  // namespace field

@@ -34,17 +34,6 @@ namespace cc_plugin
 namespace
 {
 
-enum FieldIdx
-{
-    FieldIdx_Sync1,
-    FieldIdx_Sync2,
-    FieldIdx_Checksum,
-    FieldIdx_Id,
-    FieldIdx_Len,
-    FieldIdx_Payload,
-    FieldIdx_NumOfValues
-};
-
 QVariantMap createSync1MemberData()
 {
     QVariantMap map;
@@ -85,12 +74,11 @@ QVariantList createFieldsProperties()
     QVariantList props;
     props.append(createSync1MemberData());
     props.append(createSync2MemberData());
-    props.append(createChecksumProperties());
     props.append(field::msgIdProperties());
     props.append(createLengthProperties());
     props.append(createPayloadProperties());
-
-    assert(props.size() == FieldIdx_NumOfValues);
+    props.append(createChecksumProperties());
+    assert(props.size() == TransportMessage::FieldIdx_NumOfValues);
     return props;
 }
 
@@ -100,6 +88,20 @@ const QVariantList& TransportMessage::fieldsPropertiesImpl() const
 {
     static const auto Props = createFieldsProperties();
     return Props;
+}
+
+comms::ErrorStatus TransportMessage::readImpl(ReadIterator& iter, std::size_t size)
+{
+    static const auto ChecksumLen =
+        sizeof(ublox::ChecksumField<cc_plugin::Stack::Message::Field>::ValueType);
+
+    size -= ChecksumLen;
+    auto es = Base::readFieldsUntil<FieldIdx_Checksum>(iter, size);
+    if (es == comms::ErrorStatus::Success) {
+        size += ChecksumLen;
+        es = readFieldsFrom<FieldIdx_Checksum>(iter, size);
+    }
+    return es;
 }
 
 

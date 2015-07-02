@@ -28,11 +28,41 @@ namespace ublox
 namespace cc_plugin
 {
 
+namespace details
+{
+
+using TransportMessageFields =
+    std::tuple<
+        ublox::SyncField1<cc_plugin::Stack::Message::Field>,
+        ublox::SyncField2<cc_plugin::Stack::Message::Field>,
+        ublox::field::MsgId,
+        ublox::LengthField<cc_plugin::Stack::Message::Field>,
+        ublox::DataField<cc_plugin::Stack::Message::Field>,
+        ublox::ChecksumField<cc_plugin::Stack::Message::Field>
+    >;
+
+}  // namespace details
+
 class TransportMessage : public
     comms_champion::TransportMessageBase<
-        cc_plugin::Stack>
+        cc_plugin::Stack::Message,
+        details::TransportMessageFields>
 {
+    typedef comms_champion::TransportMessageBase<
+        cc_plugin::Stack::Message,
+        details::TransportMessageFields> Base;
 public:
+    enum FieldIdx
+    {
+        FieldIdx_Sync1,
+        FieldIdx_Sync2,
+        FieldIdx_Id,
+        FieldIdx_Len,
+        FieldIdx_Payload,
+        FieldIdx_Checksum,
+        FieldIdx_NumOfValues
+    };
+
     TransportMessage() = default;
     TransportMessage(const TransportMessage&) = default;
     TransportMessage(TransportMessage&&) = default;
@@ -43,6 +73,8 @@ public:
 
 protected:
     virtual const QVariantList& fieldsPropertiesImpl() const override;
+    virtual comms::ErrorStatus readImpl(ReadIterator& iter, std::size_t size) override;
+
 };
 
 }  // namespace cc_plugin
