@@ -19,20 +19,29 @@
 #pragma once
 
 #include <tuple>
+#include "cc_plugin/Message.h"
 
-#include "Message.h"
-#include "message/AckNak.h"
-#include "message/AckAck.h"
+#include "cc_plugin/message/NavPosecef.h"
 
+#include "cc_plugin/message/AckNak.h"
+#include "cc_plugin/message/AckAck.h"
 
 namespace ublox
 {
 
-template <typename TMessage = Message>
-using AllMessages =
-    std::tuple<
-        message::AckNak<TMessage>,
-        message::AckAck<TMessage>
-    >;
+namespace cc_plugin
+{
+
+typedef std::tuple<
+    cc_plugin::message::NavPosecef,
+    cc_plugin::message::AckNak,
+    cc_plugin::message::AckAck
+> InputMessages;
+
+}  // namespace cc_plugin
 
 }  // namespace ublox
+
+
+
+

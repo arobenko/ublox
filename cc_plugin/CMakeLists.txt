@@ -17,9 +17,11 @@ function (cc_plugin_ublox)
         Plugin.cpp
         Protocol.cpp
         TransportMessage.cpp
+        message/NavPosecef.cpp
         message/AckNak.cpp
         message/AckAck.cpp
         field/MsgId.cpp
+        field/nav.cpp
     )
     
     set (hdr

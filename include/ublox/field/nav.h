@@ -18,24 +18,30 @@
 
 #pragma once
 
-#include <tuple>
-#include "cc_plugin/Message.h"
-
-#include "cc_plugin/message/AckNak.h"
-#include "cc_plugin/message/AckAck.h"
+#include "common.h"
 
 namespace ublox
 {
 
-namespace cc_plugin
+namespace field
 {
 
-typedef std::tuple<
-    cc_plugin::message::AckNak,
-    cc_plugin::message::AckAck
-> AllMessages;
+namespace nav
+{
 
-}  // namespace cc_plugin
+using ITOW = common::U4;
+
+using ECEF = common::I4;
+
+using ECEF_X = ECEF;
+using ECEF_Y = ECEF;
+using ECEF_Z = ECEF;
+
+using Pacc = common::U4;
+
+}  // namespace nav
+
+}  // namespace field
 
 }  // namespace ublox
 

@@ -31,12 +31,6 @@ namespace field
 namespace details
 {
 
-inline
-bool validateAck(ublox::MsgId id)
-{
-    return (ublox::MsgId_ACK_NAK <= id) && (id <= MsgId_ACK_ACK);
-}
-
 struct MsgIdValueValidator
 {
     template <typename TField>
@@ -45,7 +39,8 @@ struct MsgIdValueValidator
         typedef bool (*ValidateFunc)(ublox::MsgId);
 
         static const ValidateFunc Funcs[] = {
-            &validateAck
+            &MsgIdValueValidator::validateNav,
+            &MsgIdValueValidator::validateAck
         };
 
         ublox::MsgId id = field.value();
@@ -55,6 +50,36 @@ struct MsgIdValueValidator
             {
                 return func(id);
             });
+    }
+
+private:
+    static bool validateNav(ublox::MsgId id)
+    {
+        static const ublox::MsgId IDs[] = {
+            MsgId_NAV_POSECEF,
+            MsgId_NAV_POSLLH,
+            MsgId_NAV_STATUS,
+            MsgId_NAV_DOP,
+            MsgId_NAV_SOL,
+            MsgId_NAV_POSUTM,
+            MsgId_NAV_VELECEF,
+            MsgId_NAV_VELNED,
+            MsgId_NAV_TIMEGPS,
+            MsgId_NAV_TIMEUTC,
+            MsgId_NAV_CLOCK,
+            MsgId_NAV_SVINFO,
+            MsgId_NAV_DGPS,
+            MsgId_NAV_SBAS,
+            MsgId_NAV_EKFSTATUS
+        };
+
+        auto iter = std::lower_bound(std::begin(IDs), std::end(IDs), id);
+        return (iter != std::end(IDs)) && (*iter == id);
+    }
+
+    static bool validateAck(ublox::MsgId id)
+    {
+        return (ublox::MsgId_ACK_NAK <= id) && (id <= MsgId_ACK_ACK);
     }
 };
 

@@ -38,8 +38,26 @@ QVariantMap createMsgIdProperties()
 {
     QVariantMap props;
     props.insert(cc::Property::name(), "CLASS + ID");
+
+    props.insert(cc::Property::indexedName(MsgId_NAV_POSECEF), "NAV-POSECEF");
+    props.insert(cc::Property::indexedName(MsgId_NAV_POSLLH), "NAV-POSLLH");
+    props.insert(cc::Property::indexedName(MsgId_NAV_STATUS), "NAV-STATUS");
+    props.insert(cc::Property::indexedName(MsgId_NAV_DOP), "NAV-DOP");
+    props.insert(cc::Property::indexedName(MsgId_NAV_SOL), "NAV-SOL");
+    props.insert(cc::Property::indexedName(MsgId_NAV_POSUTM), "NAV-POSUTM");
+    props.insert(cc::Property::indexedName(MsgId_NAV_VELECEF), "NAV-VELECEF");
+    props.insert(cc::Property::indexedName(MsgId_NAV_VELNED), "NAV-VELNED");
+    props.insert(cc::Property::indexedName(MsgId_NAV_TIMEGPS), "NAV-TIMEGPS");
+    props.insert(cc::Property::indexedName(MsgId_NAV_TIMEUTC), "NAV-TIMEUTC");
+    props.insert(cc::Property::indexedName(MsgId_NAV_CLOCK), "NAV-CLOCK");
+    props.insert(cc::Property::indexedName(MsgId_NAV_SVINFO), "NAV-SVINFO");
+    props.insert(cc::Property::indexedName(MsgId_NAV_DGPS), "NAV-DGPS");
+    props.insert(cc::Property::indexedName(MsgId_NAV_SBAS), "NAV-SBAS");
+    props.insert(cc::Property::indexedName(MsgId_NAV_EKFSTATUS), "NAV-EKFSTATUS");
+
     props.insert(cc::Property::indexedName(MsgId_ACK_NAK), "ACK-NAK");
     props.insert(cc::Property::indexedName(MsgId_ACK_ACK), "ACK-ACK");
+
     return props;
 }
 

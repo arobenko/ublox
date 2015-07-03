@@ -18,9 +18,7 @@
 
 #pragma once
 
-#include "ublox/Stack.h"
-#include "Message.h"
-#include "InputMessages.h"
+#include <QtCore/QVariantMap>
 
 namespace ublox
 {
@@ -28,10 +26,21 @@ namespace ublox
 namespace cc_plugin
 {
 
-typedef ublox::Stack<
-    cc_plugin::Message,
-    cc_plugin::InputMessages
-> Stack;
+namespace field
+{
+
+namespace nav
+{
+
+const QVariantMap& itowProperties();
+const QVariantMap& ecefPropertiesX();
+const QVariantMap& ecefPropertiesY();
+const QVariantMap& ecefPropertiesZ();
+const QVariantMap& paccProperties();
+
+}  // namespace nav
+
+}  // namespace field
 
 }  // namespace cc_plugin
 

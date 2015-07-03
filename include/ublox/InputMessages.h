@@ -18,24 +18,25 @@
 
 #pragma once
 
-#include "ublox/Stack.h"
+#include <tuple>
+
 #include "Message.h"
-#include "InputMessages.h"
+
+#include "message/NavPosecef.h"
+
+#include "message/AckNak.h"
+#include "message/AckAck.h"
+
 
 namespace ublox
 {
 
-namespace cc_plugin
-{
-
-typedef ublox::Stack<
-    cc_plugin::Message,
-    cc_plugin::InputMessages
-> Stack;
-
-}  // namespace cc_plugin
+template <typename TMessage = Message>
+using InputMessages =
+    std::tuple<
+        message::NavPosecef<TMessage>,
+        message::AckNak<TMessage>,
+        message::AckAck<TMessage>
+    >;
 
 }  // namespace ublox
-
-
-

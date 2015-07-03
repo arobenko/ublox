@@ -18,9 +18,10 @@
 
 #pragma once
 
-#include "ublox/Stack.h"
-#include "Message.h"
-#include "InputMessages.h"
+#include "comms_champion/comms_champion.h"
+#include "ublox/message/NavPosecef.h"
+#include "cc_plugin/Message.h"
+#include "cc_plugin/ProtocolMessageBase.h"
 
 namespace ublox
 {
@@ -28,14 +29,32 @@ namespace ublox
 namespace cc_plugin
 {
 
-typedef ublox::Stack<
-    cc_plugin::Message,
-    cc_plugin::InputMessages
-> Stack;
+namespace message
+{
+
+class NavPosecef : public
+    ProtocolMessageBase<
+        ublox::message::NavPosecef<ublox::cc_plugin::Message>,
+        NavPosecef>
+{
+public:
+    NavPosecef() = default;
+    NavPosecef(const NavPosecef&) = default;
+    NavPosecef(NavPosecef&&) = default;
+    virtual ~NavPosecef() = default;
+
+    NavPosecef& operator=(const NavPosecef&) = default;
+    NavPosecef& operator=(NavPosecef&&) = default;
+
+protected:
+    virtual const char* nameImpl() const override;
+    virtual const QVariantList& fieldsPropertiesImpl() const override;
+};
+
+}  // namespace message
 
 }  // namespace cc_plugin
 
 }  // namespace ublox
-
 
 
