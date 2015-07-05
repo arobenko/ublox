@@ -48,10 +48,12 @@ protected:
     virtual MessagesList createAllMessagesImpl() override;
     virtual comms_champion::MessageInfo::MessagePtr cloneMessageImpl(
         const Message& msg) override;
+    virtual comms_champion::MessageInfoPtr createMessageImpl(const QString& idAsString) override;
 
 private:
     comms_champion::MessageInfo::MessagePtr createPollMsg(Message::MsgIdType id);
 
+    comms_champion::MessageInfo::MessagePtr createMessageInternal(const QString& idAsString);
 };
 
 }  // namespace cc_plugin

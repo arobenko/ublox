@@ -46,36 +46,25 @@ Protocol::MessagesList Protocol::createAllMessagesImpl()
 cc::MessageInfo::MessagePtr Protocol::cloneMessageImpl(
         const Message& msg)
 {
-    static const QString PollSuffix("-Poll");
-    auto fullIdStr = msg.idAsString();
-    auto pollIdx = fullIdStr.indexOf(PollSuffix);
-    if (pollIdx < 0) {
+    cc::MessageInfo::MessagePtr clonedMsg = createMessageInternal(msg.idAsString());
+    if (!clonedMsg) {
         return Base::cloneMessageImpl(msg);
     }
+    clonedMsg->assign(msg);
+    return clonedMsg;
+}
 
-    cc::MessageInfo::MessagePtr clonedMsg;
-    do {
-        auto idStr = fullIdStr.left(pollIdx);
-        bool ok = false;
-        auto idNum = static_cast<Message::MsgIdType>(idStr.toUInt(&ok, 16));
-        if (!ok) {
-            break;
-        }
-
-        auto pollLenStr = fullIdStr.right(fullIdStr.size() - (pollIdx + PollSuffix.size()));
-        if (pollLenStr.isEmpty()) {
-            clonedMsg = createPollMsg(idNum);
-            break;
-        }
-
-        assert(!"NYI");
-    } while (false);
-
-    if (clonedMsg) {
-        clonedMsg->assign(msg);
+cc::MessageInfoPtr Protocol::createMessageImpl(const QString& idAsString)
+{
+    auto clonedMsg = createMessageInternal(idAsString);
+    if (!clonedMsg) {
+        return Base::createMessageImpl(idAsString);
     }
 
-    return clonedMsg;
+    auto msgInfo = cc::makeMessageInfo();
+    msgInfo->setAppMessage(std::move(clonedMsg));
+    updateMessageInfo(*msgInfo);
+    return msgInfo;
 }
 
 cc::MessageInfo::MessagePtr Protocol::createPollMsg(Message::MsgIdType id)
@@ -88,6 +77,35 @@ cc::MessageInfo::MessagePtr Protocol::createPollMsg(Message::MsgIdType id)
     }
 
     return cc::MessageInfo::MessagePtr(msg.release());
+}
+
+cc::MessageInfo::MessagePtr Protocol::createMessageInternal(const QString& idAsString)
+{
+    static const QString PollSuffix("-Poll");
+    auto pollIdx = idAsString.indexOf(PollSuffix);
+    if (pollIdx < 0) {
+        return cc::MessageInfo::MessagePtr();
+    }
+
+    cc::MessageInfo::MessagePtr msg;
+    do {
+        auto idStr = idAsString.left(pollIdx);
+        bool ok = false;
+        auto idNum = static_cast<Message::MsgIdType>(idStr.toUInt(&ok, 16));
+        if (!ok) {
+            break;
+        }
+
+        auto pollLenStr = idAsString.right(idAsString.size() - (pollIdx + PollSuffix.size()));
+        if (pollLenStr.isEmpty()) {
+            msg = createPollMsg(idNum);
+            break;
+        }
+
+        assert(!"NYI");
+    } while (false);
+
+    return msg;
 }
 
 }  // namespace cc_plugin
