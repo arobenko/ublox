@@ -23,6 +23,8 @@
 
 #include "cc_plugin/message/NavPosecef.h"
 #include "cc_plugin/message/NavPosecefPoll.h"
+#include "cc_plugin/message/NavPosllh.h"
+#include "cc_plugin/message/NavPosllhPoll.h"
 
 #include "cc_plugin/message/AckNak.h"
 #include "cc_plugin/message/AckAck.h"
@@ -36,6 +38,8 @@ namespace cc_plugin
 typedef std::tuple<
     cc_plugin::message::NavPosecef,
     cc_plugin::message::NavPosecefPoll,
+    cc_plugin::message::NavPosllh,
+    cc_plugin::message::NavPosllhPoll,
     cc_plugin::message::AckNak,
     cc_plugin::message::AckAck
 > AllMessages;

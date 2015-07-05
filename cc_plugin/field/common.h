@@ -18,40 +18,28 @@
 
 #pragma once
 
-#include "common.h"
+#include <QtCore/QVariantList>
 
 namespace ublox
+{
+
+namespace cc_plugin
 {
 
 namespace field
 {
 
-namespace nav
+namespace common
 {
 
-using ITOW = common::U4;
+const QVariantList& emptyProperties();
 
-using ECEF = common::I4;
-
-using ECEF_X = ECEF;
-using ECEF_Y = ECEF;
-using ECEF_Z = ECEF;
-
-using Pacc = common::U4;
-using Hacc = common::U4;
-using Vacc = common::U4;
-
-using LON = common::I4;
-using LAT = common::I4;
-using HEIGHT = common::I4;
-using HMSL = common::I4;
-
-}  // namespace nav
+}  // namespace common
 
 }  // namespace field
 
+}  // namespace cc_plugin
+
 }  // namespace ublox
-
-
 
 

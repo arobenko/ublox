@@ -57,6 +57,48 @@ QVariantMap createPaccProperties()
     return props;
 }
 
+QVariantMap createLonProperties()
+{
+    QVariantMap props;
+    props.insert(cc::Property::name(), "LON");
+    return props;
+}
+
+QVariantMap createLatProperties()
+{
+    QVariantMap props;
+    props.insert(cc::Property::name(), "LAT");
+    return props;
+}
+
+QVariantMap createHeightProperties()
+{
+    QVariantMap props;
+    props.insert(cc::Property::name(), "HEIGHT");
+    return props;
+}
+
+QVariantMap createHmslProperties()
+{
+    QVariantMap props;
+    props.insert(cc::Property::name(), "HMSL");
+    return props;
+}
+
+QVariantMap createHaccProperties()
+{
+    QVariantMap props;
+    props.insert(cc::Property::name(), "Hacc");
+    return props;
+}
+
+QVariantMap createVaccProperties()
+{
+    QVariantMap props;
+    props.insert(cc::Property::name(), "Vacc");
+    return props;
+}
+
 }  // namespace
 
 const QVariantMap& itowProperties()
@@ -86,6 +128,42 @@ const QVariantMap& ecefPropertiesZ()
 const QVariantMap& paccProperties()
 {
     static const QVariantMap Props = createPaccProperties();
+    return Props;
+}
+
+const QVariantMap& lonProperties()
+{
+    static const QVariantMap Props = createLonProperties();
+    return Props;
+}
+
+const QVariantMap& latProperties()
+{
+    static const QVariantMap Props = createLatProperties();
+    return Props;
+}
+
+const QVariantMap& heightProperties()
+{
+    static const QVariantMap Props = createHeightProperties();
+    return Props;
+}
+
+const QVariantMap& hmslProperties()
+{
+    static const QVariantMap Props = createHmslProperties();
+    return Props;
+}
+
+const QVariantMap& haccProperties()
+{
+    static const QVariantMap Props = createHaccProperties();
+    return Props;
+}
+
+const QVariantMap& vaccProperties()
+{
+    static const QVariantMap Props = createVaccProperties();
     return Props;
 }
 

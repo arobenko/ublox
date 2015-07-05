@@ -18,40 +18,43 @@
 
 #pragma once
 
-#include "common.h"
+#include "comms_champion/comms_champion.h"
+#include "ublox/message/NavPosllh.h"
+#include "cc_plugin/Message.h"
+#include "cc_plugin/ProtocolMessageBase.h"
 
 namespace ublox
 {
 
-namespace field
+namespace cc_plugin
 {
 
-namespace nav
+namespace message
 {
 
-using ITOW = common::U4;
+class NavPosllh : public
+    ProtocolMessageBase<
+        ublox::message::NavPosllh<ublox::cc_plugin::Message>,
+        NavPosllh>
+{
+public:
+    NavPosllh() = default;
+    NavPosllh(const NavPosllh&) = default;
+    NavPosllh(NavPosllh&&) = default;
+    virtual ~NavPosllh() = default;
 
-using ECEF = common::I4;
+    NavPosllh& operator=(const NavPosllh&) = default;
+    NavPosllh& operator=(NavPosllh&&) = default;
 
-using ECEF_X = ECEF;
-using ECEF_Y = ECEF;
-using ECEF_Z = ECEF;
+protected:
+    virtual const char* nameImpl() const override;
+    virtual const QVariantList& fieldsPropertiesImpl() const override;
+};
 
-using Pacc = common::U4;
-using Hacc = common::U4;
-using Vacc = common::U4;
+}  // namespace message
 
-using LON = common::I4;
-using LAT = common::I4;
-using HEIGHT = common::I4;
-using HMSL = common::I4;
-
-}  // namespace nav
-
-}  // namespace field
+}  // namespace cc_plugin
 
 }  // namespace ublox
-
-
 
 

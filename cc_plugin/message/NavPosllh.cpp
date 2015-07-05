@@ -19,8 +19,8 @@
 #include <functional>
 #include <cassert>
 
-#include "NavPosecefPoll.h"
-#include "cc_plugin/field/common.h"
+#include "NavPosllh.h"
+#include "cc_plugin/field/nav.h"
 
 namespace cc = comms_champion;
 
@@ -33,20 +33,36 @@ namespace cc_plugin
 namespace message
 {
 
-const char* NavPosecefPoll::nameImpl() const
+namespace
 {
-    static const char* Str = "NAV-POSECEF (Poll)";
+
+QVariantList createFieldsProperties()
+{
+    QVariantList props;
+    props.append(cc_plugin::field::nav::itowProperties());
+    props.append(cc_plugin::field::nav::lonProperties());
+    props.append(cc_plugin::field::nav::latProperties());
+    props.append(cc_plugin::field::nav::heightProperties());
+    props.append(cc_plugin::field::nav::hmslProperties());
+    props.append(cc_plugin::field::nav::haccProperties());
+    props.append(cc_plugin::field::nav::vaccProperties());
+
+    assert(props.size() == NavPosllh::FieldIdx_NumOfValues);
+    return props;
+}
+
+}  // namespace
+
+const char* NavPosllh::nameImpl() const
+{
+    static const char* Str = "NAV-POSLLH";
     return Str;
 }
 
-const QVariantList& NavPosecefPoll::fieldsPropertiesImpl() const
+const QVariantList& NavPosllh::fieldsPropertiesImpl() const
 {
-    return field::common::emptyProperties();
-}
-
-bool NavPosecefPoll::isPollImpl() const
-{
-    return true;
+    static const auto Props = createFieldsProperties();
+    return Props;
 }
 
 }  // namespace message

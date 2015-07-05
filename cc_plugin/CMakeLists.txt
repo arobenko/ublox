@@ -19,16 +19,18 @@ function (cc_plugin_ublox)
         TransportMessage.cpp
         message/NavPosecef.cpp
         message/NavPosecefPoll.cpp
+        message/NavPosllh.cpp
+        message/NavPosllhPoll.cpp
         message/AckNak.cpp
         message/AckAck.cpp
         field/MsgId.cpp
+        field/common.cpp
         field/nav.cpp
     )
     
     set (hdr
         Plugin.h
     )
-    
     
     qt5_wrap_cpp(
         moc

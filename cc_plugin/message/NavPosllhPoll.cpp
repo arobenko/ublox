@@ -15,43 +15,43 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+#include <type_traits>
+#include <functional>
+#include <cassert>
 
-#pragma once
+#include "NavPosllhPoll.h"
+#include "cc_plugin/field/common.h"
 
-#include "common.h"
+namespace cc = comms_champion;
 
 namespace ublox
 {
 
-namespace field
+namespace cc_plugin
 {
 
-namespace nav
+namespace message
 {
 
-using ITOW = common::U4;
+const char* NavPosllhPoll::nameImpl() const
+{
+    static const char* Str = "NAV-POSLLH (Poll)";
+    return Str;
+}
 
-using ECEF = common::I4;
+const QVariantList& NavPosllhPoll::fieldsPropertiesImpl() const
+{
+    return field::common::emptyProperties();
+}
 
-using ECEF_X = ECEF;
-using ECEF_Y = ECEF;
-using ECEF_Z = ECEF;
+bool NavPosllhPoll::isPollImpl() const
+{
+    return true;
+}
 
-using Pacc = common::U4;
-using Hacc = common::U4;
-using Vacc = common::U4;
+}  // namespace message
 
-using LON = common::I4;
-using LAT = common::I4;
-using HEIGHT = common::I4;
-using HMSL = common::I4;
-
-}  // namespace nav
-
-}  // namespace field
+}  // namespace cc_plugin
 
 }  // namespace ublox
-
-
-
 

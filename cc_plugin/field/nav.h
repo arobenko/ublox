@@ -37,6 +37,12 @@ const QVariantMap& ecefPropertiesX();
 const QVariantMap& ecefPropertiesY();
 const QVariantMap& ecefPropertiesZ();
 const QVariantMap& paccProperties();
+const QVariantMap& lonProperties();
+const QVariantMap& latProperties();
+const QVariantMap& heightProperties();
+const QVariantMap& hmslProperties();
+const QVariantMap& haccProperties();
+const QVariantMap& vaccProperties();
 
 }  // namespace nav
 

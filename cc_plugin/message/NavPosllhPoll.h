@@ -18,14 +18,10 @@
 
 #pragma once
 
-#include <tuple>
+#include "comms_champion/comms_champion.h"
+#include "ublox/message/NavPosllhPoll.h"
 #include "cc_plugin/Message.h"
-
-#include "cc_plugin/message/NavPosecef.h"
-#include "cc_plugin/message/NavPosllh.h"
-
-#include "cc_plugin/message/AckNak.h"
-#include "cc_plugin/message/AckAck.h"
+#include "cc_plugin/ProtocolMessageBase.h"
 
 namespace ublox
 {
@@ -33,17 +29,33 @@ namespace ublox
 namespace cc_plugin
 {
 
-typedef std::tuple<
-    cc_plugin::message::NavPosecef,
-    cc_plugin::message::NavPosllh,
-    cc_plugin::message::AckNak,
-    cc_plugin::message::AckAck
-> InputMessages;
+namespace message
+{
+
+class NavPosllhPoll : public
+    ProtocolMessageBase<
+        ublox::message::NavPosllhPoll<ublox::cc_plugin::Message>,
+        NavPosllhPoll>
+{
+public:
+    NavPosllhPoll() = default;
+    NavPosllhPoll(const NavPosllhPoll&) = default;
+    NavPosllhPoll(NavPosllhPoll&&) = default;
+    virtual ~NavPosllhPoll() = default;
+
+    NavPosllhPoll& operator=(const NavPosllhPoll&) = default;
+    NavPosllhPoll& operator=(NavPosllhPoll&&) = default;
+
+protected:
+    virtual const char* nameImpl() const override;
+    virtual const QVariantList& fieldsPropertiesImpl() const override;
+    virtual bool isPollImpl() const override;
+};
+
+}  // namespace message
 
 }  // namespace cc_plugin
 
 }  // namespace ublox
-
-
 
 
