@@ -18,6 +18,7 @@ function (cc_plugin_ublox)
         Protocol.cpp
         TransportMessage.cpp
         message/NavPosecef.cpp
+        message/NavPosecefPoll.cpp
         message/AckNak.cpp
         message/AckAck.cpp
         field/MsgId.cpp

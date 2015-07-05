@@ -17,6 +17,11 @@
 
 #include "Protocol.h"
 
+#include "comms/comms.h"
+
+#include "AllMessages.h"
+#include "PollMessages.h"
+
 namespace cc = comms_champion;
 
 namespace ublox
@@ -31,6 +36,58 @@ const std::string& Protocol::nameImpl() const
 {
     static const std::string Str("UBlox");
     return Str;
+}
+
+Protocol::MessagesList Protocol::createAllMessagesImpl()
+{
+    return Base::createAllMessagesInTuple<cc_plugin::AllMessages>();
+}
+
+cc::MessageInfo::MessagePtr Protocol::cloneMessageImpl(
+        const Message& msg)
+{
+    static const QString PollSuffix("-Poll");
+    auto fullIdStr = msg.idAsString();
+    auto pollIdx = fullIdStr.indexOf(PollSuffix);
+    if (pollIdx < 0) {
+        return Base::cloneMessageImpl(msg);
+    }
+
+    cc::MessageInfo::MessagePtr clonedMsg;
+    do {
+        auto idStr = fullIdStr.left(pollIdx);
+        bool ok = false;
+        auto idNum = static_cast<Message::MsgIdType>(idStr.toUInt(&ok, 16));
+        if (!ok) {
+            break;
+        }
+
+        auto pollLenStr = fullIdStr.right(fullIdStr.size() - (pollIdx + PollSuffix.size()));
+        if (pollLenStr.isEmpty()) {
+            clonedMsg = createPollMsg(idNum);
+            break;
+        }
+
+        assert(!"NYI");
+    } while (false);
+
+    if (clonedMsg) {
+        clonedMsg->assign(msg);
+    }
+
+    return clonedMsg;
+}
+
+cc::MessageInfo::MessagePtr Protocol::createPollMsg(Message::MsgIdType id)
+{
+    static const comms::MsgFactory<Message, PollMessages> Factory;
+    auto msg = Factory.createMsg(id);
+    if (!msg) {
+        assert(!"Attempt to create unknown message");
+        return cc::MessageInfo::MessagePtr();
+    }
+
+    return cc::MessageInfo::MessagePtr(msg.release());
 }
 
 }  // namespace cc_plugin

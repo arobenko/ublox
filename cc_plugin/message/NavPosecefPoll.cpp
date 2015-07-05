@@ -15,10 +15,14 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+#include <type_traits>
+#include <functional>
+#include <cassert>
 
-#pragma once
+#include "NavPosecefPoll.h"
+#include "cc_plugin/field/nav.h"
 
-#include "comms_champion/comms_champion.h"
+namespace cc = comms_champion;
 
 namespace ublox
 {
@@ -26,25 +30,40 @@ namespace ublox
 namespace cc_plugin
 {
 
-template <typename TMsgBase, typename TActualMsg>
-class ProtocolMessageBase : public comms_champion::ProtocolMessageBase<TMsgBase, TActualMsg>
+namespace message
 {
-    typedef comms_champion::ProtocolMessageBase<TMsgBase, TActualMsg> Base;
-public:
-    ProtocolMessageBase() = default;
-    ProtocolMessageBase(const ProtocolMessageBase&) = default;
-    ProtocolMessageBase(ProtocolMessageBase&&) = default;
-    virtual ~ProtocolMessageBase() = default;
 
-    ProtocolMessageBase& operator=(const ProtocolMessageBase&) = default;
-    ProtocolMessageBase& operator=(ProtocolMessageBase&&) = default;
+namespace
+{
 
-protected:
+QVariantList createFieldsProperties()
+{
+    QVariantList props;
+    return props;
+}
 
-};
+}  // namespace
+
+const char* NavPosecefPoll::nameImpl() const
+{
+    static const char* Str = "NAV-POSECEF (Poll)";
+    return Str;
+}
+
+const QVariantList& NavPosecefPoll::fieldsPropertiesImpl() const
+{
+    static const auto Props = createFieldsProperties();
+    return Props;
+}
+
+bool NavPosecefPoll::isPollImpl() const
+{
+    return true;
+}
+
+}  // namespace message
 
 }  // namespace cc_plugin
 
 }  // namespace ublox
-
 

@@ -37,6 +37,14 @@ class MessageT : public
         comms::option::MsgIdType<MsgId>,
         comms::option::Handler<DefaultHandler> >
 {
+public:
+    MessageT() = default;
+    MessageT(const MessageT&) = default;
+    MessageT(MessageT&&) = default;
+    virtual ~MessageT() = default;
+
+    MessageT& operator=(const MessageT&) = default;
+    MessageT& operator=(MessageT&&) = default;
 };
 
 typedef MessageT<> Message;

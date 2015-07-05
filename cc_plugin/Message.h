@@ -31,7 +31,56 @@ namespace cc_plugin
 template <typename... TOptions>
 class MessageT : public comms_champion::MessageBase<ublox::MessageT, TOptions...>
 {
+    typedef comms_champion::MessageBase<ublox::MessageT, TOptions...> Base;
 public:
+    virtual ~MessageT() = default;
+
+    bool isPoll() const
+    {
+        return isPollImpl();
+    }
+
+protected:
+    virtual bool isPollImpl() const
+    {
+        return false;
+    }
+
+    virtual QString idAsStringImpl() const override
+    {
+        if (!isPoll()) {
+            return regMsgId();
+        }
+
+        auto len = Base::length();
+
+        if (len == 0) {
+            return pollMsgId();
+        }
+
+        return nonZeroLenPollMsgId(len);
+    }
+
+private:
+    QString regMsgId() const
+    {
+        return QString("0x%1").arg(Base::getId(), 4, 16, QChar('0'));
+    }
+
+    QString pollMsgId() const
+    {
+        static const QString Suffix("-Poll");
+        auto id = regMsgId();
+        id.append(Suffix);
+        return id;
+    }
+
+    QString nonZeroLenPollMsgId(std::size_t len) const
+    {
+        auto id = pollMsgId();
+        id.append(QString("%1").arg(len, 1, 10, QChar('0')));
+        return id;
+    }
 };
 
 typedef MessageT<> Message;

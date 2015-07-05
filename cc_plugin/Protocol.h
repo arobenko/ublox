@@ -45,6 +45,13 @@ public:
 
 protected:
     virtual const std::string& nameImpl() const override;
+    virtual MessagesList createAllMessagesImpl() override;
+    virtual comms_champion::MessageInfo::MessagePtr cloneMessageImpl(
+        const Message& msg) override;
+
+private:
+    comms_champion::MessageInfo::MessagePtr createPollMsg(Message::MsgIdType id);
+
 };
 
 }  // namespace cc_plugin

@@ -18,7 +18,14 @@
 
 #pragma once
 
-#include "comms_champion/comms_champion.h"
+#include <tuple>
+#include "cc_plugin/Message.h"
+
+#include "cc_plugin/message/NavPosecef.h"
+#include "cc_plugin/message/NavPosecefPoll.h"
+
+#include "cc_plugin/message/AckNak.h"
+#include "cc_plugin/message/AckAck.h"
 
 namespace ublox
 {
@@ -26,25 +33,17 @@ namespace ublox
 namespace cc_plugin
 {
 
-template <typename TMsgBase, typename TActualMsg>
-class ProtocolMessageBase : public comms_champion::ProtocolMessageBase<TMsgBase, TActualMsg>
-{
-    typedef comms_champion::ProtocolMessageBase<TMsgBase, TActualMsg> Base;
-public:
-    ProtocolMessageBase() = default;
-    ProtocolMessageBase(const ProtocolMessageBase&) = default;
-    ProtocolMessageBase(ProtocolMessageBase&&) = default;
-    virtual ~ProtocolMessageBase() = default;
-
-    ProtocolMessageBase& operator=(const ProtocolMessageBase&) = default;
-    ProtocolMessageBase& operator=(ProtocolMessageBase&&) = default;
-
-protected:
-
-};
+typedef std::tuple<
+    cc_plugin::message::NavPosecef,
+    cc_plugin::message::NavPosecefPoll,
+    cc_plugin::message::AckNak,
+    cc_plugin::message::AckAck
+> AllMessages;
 
 }  // namespace cc_plugin
 
 }  // namespace ublox
+
+
 
 
