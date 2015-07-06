@@ -15,32 +15,43 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+#include <type_traits>
+#include <functional>
+#include <cassert>
 
-#pragma once
+#include "NavPosutmPoll.h"
+#include "cc_plugin/field/common.h"
 
-#include <tuple>
-
-#include "Message.h"
-
-#include "message/NavPosecef.h"
-#include "message/NavPosllh.h"
-#include "message/NavPosutm.h"
-
-#include "message/AckNak.h"
-#include "message/AckAck.h"
-
+namespace cc = comms_champion;
 
 namespace ublox
 {
 
-template <typename TMessage = Message>
-using InputMessages =
-    std::tuple<
-        message::NavPosecef<TMessage>,
-        message::NavPosllh<TMessage>,
-        message::NavPosutm<TMessage>,
-        message::AckNak<TMessage>,
-        message::AckAck<TMessage>
-    >;
+namespace cc_plugin
+{
+
+namespace message
+{
+
+const char* NavPosutmPoll::nameImpl() const
+{
+    static const char* Str = "NAV-POSUTM (Poll)";
+    return Str;
+}
+
+const QVariantList& NavPosutmPoll::fieldsPropertiesImpl() const
+{
+    return field::common::emptyProperties();
+}
+
+bool NavPosutmPoll::isPollImpl() const
+{
+    return true;
+}
+
+}  // namespace message
+
+}  // namespace cc_plugin
 
 }  // namespace ublox
+

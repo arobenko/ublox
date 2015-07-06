@@ -21,6 +21,8 @@ function (cc_plugin_ublox)
         message/NavPosecefPoll.cpp
         message/NavPosllh.cpp
         message/NavPosllhPoll.cpp
+        message/NavPosutm.cpp
+        message/NavPosutmPoll.cpp
         message/AckNak.cpp
         message/AckAck.cpp
         field/MsgId.cpp

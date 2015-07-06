@@ -23,6 +23,7 @@
 
 #include "cc_plugin/message/NavPosecefPoll.h"
 #include "cc_plugin/message/NavPosllhPoll.h"
+#include "cc_plugin/message/NavPosutmPoll.h"
 
 namespace ublox
 {
@@ -32,7 +33,8 @@ namespace cc_plugin
 
 typedef std::tuple<
     cc_plugin::message::NavPosecefPoll,
-    cc_plugin::message::NavPosllhPoll
+    cc_plugin::message::NavPosllhPoll,
+    cc_plugin::message::NavPosutmPoll
 > PollMessages;
 
 }  // namespace cc_plugin

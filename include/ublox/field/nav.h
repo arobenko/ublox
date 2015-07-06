@@ -46,6 +46,25 @@ using LAT = common::I4;
 using HEIGHT = common::I4;
 using HMSL = common::I4;
 
+using EAST = common::I4;
+using NORTH = common::I4;
+using ALT = common::I4;
+
+using ZONE = common::I1;
+
+enum class HemIndicator : std::int8_t
+{
+    North,
+    South
+};
+
+using HEM =
+    comms::field::EnumValue<
+        common::FieldBase,
+        HemIndicator,
+        comms::option::ValidNumValueRange<(int)HemIndicator::North, (int)HemIndicator::South>
+    >;
+
 }  // namespace nav
 
 }  // namespace field

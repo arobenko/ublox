@@ -43,6 +43,11 @@ const QVariantMap& heightProperties();
 const QVariantMap& hmslProperties();
 const QVariantMap& haccProperties();
 const QVariantMap& vaccProperties();
+const QVariantMap& eastProperties();
+const QVariantMap& northProperties();
+const QVariantMap& altProperties();
+const QVariantMap& zoneProperties();
+const QVariantMap& hemProperties();
 
 }  // namespace nav
 

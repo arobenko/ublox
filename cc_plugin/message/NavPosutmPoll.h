@@ -18,18 +18,10 @@
 
 #pragma once
 
-#include <tuple>
+#include "comms_champion/comms_champion.h"
+#include "ublox/message/NavPosutmPoll.h"
 #include "cc_plugin/Message.h"
-
-#include "cc_plugin/message/NavPosecef.h"
-#include "cc_plugin/message/NavPosecefPoll.h"
-#include "cc_plugin/message/NavPosllh.h"
-#include "cc_plugin/message/NavPosllhPoll.h"
-#include "cc_plugin/message/NavPosutm.h"
-#include "cc_plugin/message/NavPosutmPoll.h"
-
-#include "cc_plugin/message/AckNak.h"
-#include "cc_plugin/message/AckAck.h"
+#include "cc_plugin/ProtocolMessageBase.h"
 
 namespace ublox
 {
@@ -37,21 +29,33 @@ namespace ublox
 namespace cc_plugin
 {
 
-typedef std::tuple<
-    cc_plugin::message::NavPosecef,
-    cc_plugin::message::NavPosecefPoll,
-    cc_plugin::message::NavPosllh,
-    cc_plugin::message::NavPosllhPoll,
-    cc_plugin::message::NavPosutm,
-    cc_plugin::message::NavPosutmPoll,
-    cc_plugin::message::AckNak,
-    cc_plugin::message::AckAck
-> AllMessages;
+namespace message
+{
+
+class NavPosutmPoll : public
+    ProtocolMessageBase<
+        ublox::message::NavPosutmPoll<ublox::cc_plugin::Message>,
+        NavPosutmPoll>
+{
+public:
+    NavPosutmPoll() = default;
+    NavPosutmPoll(const NavPosutmPoll&) = default;
+    NavPosutmPoll(NavPosutmPoll&&) = default;
+    virtual ~NavPosutmPoll() = default;
+
+    NavPosutmPoll& operator=(const NavPosutmPoll&) = default;
+    NavPosutmPoll& operator=(NavPosutmPoll&&) = default;
+
+protected:
+    virtual const char* nameImpl() const override;
+    virtual const QVariantList& fieldsPropertiesImpl() const override;
+    virtual bool isPollImpl() const override;
+};
+
+}  // namespace message
 
 }  // namespace cc_plugin
 
 }  // namespace ublox
-
-
 
 

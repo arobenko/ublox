@@ -99,6 +99,43 @@ QVariantMap createVaccProperties()
     return props;
 }
 
+QVariantMap createEastProperties()
+{
+    QVariantMap props;
+    props.insert(cc::Property::name(), "EAST");
+    return props;
+}
+
+QVariantMap createNorthProperties()
+{
+    QVariantMap props;
+    props.insert(cc::Property::name(), "NORTH");
+    return props;
+}
+
+QVariantMap createAltProperties()
+{
+    QVariantMap props;
+    props.insert(cc::Property::name(), "NORTH");
+    return props;
+}
+
+QVariantMap createZoneProperties()
+{
+    QVariantMap props;
+    props.insert(cc::Property::name(), "ZONE");
+    return props;
+}
+
+QVariantMap createHemProperties()
+{
+    QVariantMap props;
+    props.insert(cc::Property::name(), "HEM");
+    props.insert(cc::Property::indexedName(0), "North");
+    props.insert(cc::Property::indexedName(1), "South");
+    return props;
+}
+
 }  // namespace
 
 const QVariantMap& itowProperties()
@@ -166,6 +203,37 @@ const QVariantMap& vaccProperties()
     static const QVariantMap Props = createVaccProperties();
     return Props;
 }
+
+const QVariantMap& eastProperties()
+{
+    static const QVariantMap Props = createEastProperties();
+    return Props;
+}
+
+const QVariantMap& northProperties()
+{
+    static const QVariantMap Props = createNorthProperties();
+    return Props;
+}
+
+const QVariantMap& altProperties()
+{
+    static const QVariantMap Props = createAltProperties();
+    return Props;
+}
+
+const QVariantMap& zoneProperties()
+{
+    static const QVariantMap Props = createZoneProperties();
+    return Props;
+}
+
+const QVariantMap& hemProperties()
+{
+    static const QVariantMap Props = createHemProperties();
+    return Props;
+}
+
 
 }  // namespace nav
 
