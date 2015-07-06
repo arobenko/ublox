@@ -48,6 +48,13 @@ const QVariantMap& northProperties();
 const QVariantMap& altProperties();
 const QVariantMap& zoneProperties();
 const QVariantMap& hemProperties();
+const QVariantMap& gdopProperties();
+const QVariantMap& pdopProperties();
+const QVariantMap& tdopProperties();
+const QVariantMap& vdopProperties();
+const QVariantMap& hdopProperties();
+const QVariantMap& ndopProperties();
+const QVariantMap& edopProperties();
 
 }  // namespace nav
 

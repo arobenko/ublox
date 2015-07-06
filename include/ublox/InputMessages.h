@@ -24,6 +24,7 @@
 
 #include "message/NavPosecef.h"
 #include "message/NavPosllh.h"
+#include "message/NavDop.h"
 #include "message/NavPosutm.h"
 
 #include "message/AckNak.h"
@@ -38,6 +39,7 @@ using InputMessages =
     std::tuple<
         message::NavPosecef<TMessage>,
         message::NavPosllh<TMessage>,
+        message::NavDop<TMessage>,
         message::NavPosutm<TMessage>,
         message::AckNak<TMessage>,
         message::AckAck<TMessage>

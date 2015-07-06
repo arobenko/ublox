@@ -136,6 +136,16 @@ QVariantMap createHemProperties()
     return props;
 }
 
+QVariantMap createDopProperties(char letter)
+{
+    static const QString Suffix("DOP");
+    QVariantMap props;
+    QString str(letter);
+    str.append(Suffix);
+    props.insert(cc::Property::name(), str);
+    return props;
+}
+
 }  // namespace
 
 const QVariantMap& itowProperties()
@@ -234,6 +244,47 @@ const QVariantMap& hemProperties()
     return Props;
 }
 
+const QVariantMap& gdopProperties()
+{
+    static const QVariantMap Props = createDopProperties('G');
+    return Props;
+}
+
+const QVariantMap& pdopProperties()
+{
+    static const QVariantMap Props = createDopProperties('P');
+    return Props;
+}
+
+const QVariantMap& tdopProperties()
+{
+    static const QVariantMap Props = createDopProperties('T');
+    return Props;
+}
+
+const QVariantMap& vdopProperties()
+{
+    static const QVariantMap Props = createDopProperties('V');
+    return Props;
+}
+
+const QVariantMap& hdopProperties()
+{
+    static const QVariantMap Props = createDopProperties('H');
+    return Props;
+}
+
+const QVariantMap& ndopProperties()
+{
+    static const QVariantMap Props = createDopProperties('N');
+    return Props;
+}
+
+const QVariantMap& edopProperties()
+{
+    static const QVariantMap Props = createDopProperties('E');
+    return Props;
+}
 
 }  // namespace nav
 

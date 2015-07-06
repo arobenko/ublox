@@ -15,16 +15,14 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+#include <type_traits>
+#include <functional>
+#include <cassert>
 
-#pragma once
+#include "NavDopPoll.h"
+#include "cc_plugin/field/common.h"
 
-#include <tuple>
-#include "cc_plugin/Message.h"
-
-#include "cc_plugin/message/NavPosecefPoll.h"
-#include "cc_plugin/message/NavPosllhPoll.h"
-#include "cc_plugin/message/NavDopPoll.h"
-#include "cc_plugin/message/NavPosutmPoll.h"
+namespace cc = comms_champion;
 
 namespace ublox
 {
@@ -32,17 +30,28 @@ namespace ublox
 namespace cc_plugin
 {
 
-typedef std::tuple<
-    cc_plugin::message::NavPosecefPoll,
-    cc_plugin::message::NavPosllhPoll,
-    cc_plugin::message::NavDopPoll,
-    cc_plugin::message::NavPosutmPoll
-> PollMessages;
+namespace message
+{
+
+const char* NavDopPoll::nameImpl() const
+{
+    static const char* Str = "NAV-DOP (Poll)";
+    return Str;
+}
+
+const QVariantList& NavDopPoll::fieldsPropertiesImpl() const
+{
+    return field::common::emptyProperties();
+}
+
+bool NavDopPoll::isPollImpl() const
+{
+    return true;
+}
+
+}  // namespace message
 
 }  // namespace cc_plugin
 
 }  // namespace ublox
-
-
-
 

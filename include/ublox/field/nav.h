@@ -65,6 +65,14 @@ using HEM =
         comms::option::ValidNumValueRange<(int)HemIndicator::North, (int)HemIndicator::South>
     >;
 
+using GDOP = common::U2;
+using PDOP = common::U2;
+using TDOP = common::U2;
+using VDOP = common::U2;
+using HDOP = common::U2;
+using NDOP = common::U2;
+using EDOP = common::U2;
+
 }  // namespace nav
 
 }  // namespace field

@@ -18,13 +18,10 @@
 
 #pragma once
 
-#include <tuple>
+#include "comms_champion/comms_champion.h"
+#include "ublox/message/NavDop.h"
 #include "cc_plugin/Message.h"
-
-#include "cc_plugin/message/NavPosecefPoll.h"
-#include "cc_plugin/message/NavPosllhPoll.h"
-#include "cc_plugin/message/NavDopPoll.h"
-#include "cc_plugin/message/NavPosutmPoll.h"
+#include "cc_plugin/ProtocolMessageBase.h"
 
 namespace ublox
 {
@@ -32,17 +29,32 @@ namespace ublox
 namespace cc_plugin
 {
 
-typedef std::tuple<
-    cc_plugin::message::NavPosecefPoll,
-    cc_plugin::message::NavPosllhPoll,
-    cc_plugin::message::NavDopPoll,
-    cc_plugin::message::NavPosutmPoll
-> PollMessages;
+namespace message
+{
+
+class NavDop : public
+    ProtocolMessageBase<
+        ublox::message::NavDop<ublox::cc_plugin::Message>,
+        NavDop>
+{
+public:
+    NavDop() = default;
+    NavDop(const NavDop&) = default;
+    NavDop(NavDop&&) = default;
+    virtual ~NavDop() = default;
+
+    NavDop& operator=(const NavDop&) = default;
+    NavDop& operator=(NavDop&&) = default;
+
+protected:
+    virtual const char* nameImpl() const override;
+    virtual const QVariantList& fieldsPropertiesImpl() const override;
+};
+
+}  // namespace message
 
 }  // namespace cc_plugin
 
 }  // namespace ublox
-
-
 
 
