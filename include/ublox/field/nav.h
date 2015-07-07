@@ -73,6 +73,51 @@ using HDOP = common::U2;
 using NDOP = common::U2;
 using EDOP = common::U2;
 
+enum class GPSFixType : std::uint8_t
+{
+    NoFix,
+    DeadReckoningOnly,
+    Fix_2D,
+    Fix_3D,
+    GPS_DeadReckoning,
+    TimeOnlyFix,
+    NumOfValues
+};
+
+using GPSfix =
+    comms::field::EnumValue<
+        common::FieldBase,
+        GPSFixType,
+        comms::option::ValidNumValueRange<(int)GPSFixType::NoFix, (int)GPSFixType::NumOfValues - 1>
+    >;
+
+using Flags =
+    comms::field::BitmaskValue<
+        common::FieldBase,
+        comms::option::FixedLength<1>,
+        comms::option::BitmaskReservedBits<0xf0, 0>
+    >;
+
+enum class DiffStatus : std::uint8_t
+{
+    None,
+    PR_PRR,
+    PR_PRR_CP,
+    HighAcc_PR_PRR_CP,
+    NumOfValues
+};
+
+using DiffS =
+    comms::field::EnumValue<
+        common::FieldBase,
+        DiffStatus,
+        comms::option::ValidNumValueRange<(int)DiffStatus::None, (int)DiffStatus::NumOfValues - 1>
+    >;
+
+using TTFF = common::U4;
+using MSSS = common::U4;
+
+
 }  // namespace nav
 
 }  // namespace field

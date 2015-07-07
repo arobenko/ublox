@@ -92,6 +92,10 @@ using I4T =
 
 typedef I4T<> I4;
 
+using res1 = U1;
+
+using res2 = U2;
+
 }  // namespace common
 
 }  // namespace field

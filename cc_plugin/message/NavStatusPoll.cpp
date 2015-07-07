@@ -15,36 +15,43 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+#include <type_traits>
+#include <functional>
+#include <cassert>
 
-#pragma once
+#include "NavStatusPoll.h"
+#include "cc_plugin/field/common.h"
 
-#include <tuple>
-
-#include "Message.h"
-
-#include "message/NavPosecef.h"
-#include "message/NavPosllh.h"
-#include "message/NavStatus.h"
-#include "message/NavDop.h"
-#include "message/NavPosutm.h"
-
-#include "message/AckNak.h"
-#include "message/AckAck.h"
-
+namespace cc = comms_champion;
 
 namespace ublox
 {
 
-template <typename TMessage = Message>
-using InputMessages =
-    std::tuple<
-        message::NavPosecef<TMessage>,
-        message::NavPosllh<TMessage>,
-        message::NavStatus<TMessage>,
-        message::NavDop<TMessage>,
-        message::NavPosutm<TMessage>,
-        message::AckNak<TMessage>,
-        message::AckAck<TMessage>
-    >;
+namespace cc_plugin
+{
+
+namespace message
+{
+
+const char* NavStatusPoll::nameImpl() const
+{
+    static const char* Str = "NAV-STATUS (Poll)";
+    return Str;
+}
+
+const QVariantList& NavStatusPoll::fieldsPropertiesImpl() const
+{
+    return field::common::emptyProperties();
+}
+
+bool NavStatusPoll::isPollImpl() const
+{
+    return true;
+}
+
+}  // namespace message
+
+}  // namespace cc_plugin
 
 }  // namespace ublox
+

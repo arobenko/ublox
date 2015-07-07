@@ -146,6 +146,55 @@ QVariantMap createDopProperties(char letter)
     return props;
 }
 
+QVariantMap createGpsFixProperties()
+{
+    QVariantMap props;
+    props.insert(cc::Property::name(), "GPSfix");
+    props.insert(cc::Property::indexedName(0U), "no fix");
+    props.insert(cc::Property::indexedName(1U), "dead reckoning only");
+    props.insert(cc::Property::indexedName(2U), "2D-fix");
+    props.insert(cc::Property::indexedName(3U), "3D-fix");
+    props.insert(cc::Property::indexedName(4U), "GPS + dead reckoning combined");
+    props.insert(cc::Property::indexedName(5U), "time only fix");
+    return props;
+}
+
+QVariantMap createFlagsProperties()
+{
+    QVariantMap props;
+    props.insert(cc::Property::name(), "Flags");
+    props.insert(cc::Property::indexedName(0U), "GPSfixOK");
+    props.insert(cc::Property::indexedName(1U), "DiffSoln");
+    props.insert(cc::Property::indexedName(2U), "WKNSET");
+    props.insert(cc::Property::indexedName(3U), "TOWSET");
+    return props;
+}
+
+QVariantMap createDiffStatusProperties()
+{
+    QVariantMap props;
+    props.insert(cc::Property::name(), "DiffS");
+    props.insert(cc::Property::indexedName(0U), "none");
+    props.insert(cc::Property::indexedName(1U), "PR+PRR Correction");
+    props.insert(cc::Property::indexedName(2U), "PR+PRR+CP Correction");
+    props.insert(cc::Property::indexedName(3U), "High accuracy PR+PRR+CP Correction");
+    return props;
+}
+
+QVariantMap createTtffProperties()
+{
+    QVariantMap props;
+    props.insert(cc::Property::name(), "TTFF");
+    return props;
+}
+
+QVariantMap createMsssProperties()
+{
+    QVariantMap props;
+    props.insert(cc::Property::name(), "MSSS");
+    return props;
+}
+
 }  // namespace
 
 const QVariantMap& itowProperties()
@@ -285,6 +334,38 @@ const QVariantMap& edopProperties()
     static const QVariantMap Props = createDopProperties('E');
     return Props;
 }
+
+const QVariantMap& gpsFixProperties()
+{
+    static const QVariantMap Props = createGpsFixProperties();
+    return Props;
+}
+
+const QVariantMap& flagsProperties()
+{
+    static const QVariantMap Props = createFlagsProperties();
+    return Props;
+}
+
+const QVariantMap& diffStatusProperties()
+{
+    static const QVariantMap Props = createDiffStatusProperties();
+    return Props;
+}
+
+const QVariantMap& ttffProperties()
+{
+    static const QVariantMap Props = createTtffProperties();
+    return Props;
+}
+
+const QVariantMap& msssProperties()
+{
+    static const QVariantMap Props = createMsssProperties();
+    return Props;
+}
+
+
 
 }  // namespace nav
 

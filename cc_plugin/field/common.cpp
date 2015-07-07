@@ -18,6 +18,10 @@
 
 #include "common.h"
 
+#include "comms_champion/comms_champion.h"
+
+namespace cc = comms_champion;
+
 namespace ublox
 {
 
@@ -30,11 +34,44 @@ namespace field
 namespace common
 {
 
+namespace
+{
+
+QVariantMap createRes1Properties()
+{
+    QVariantMap props;
+    props.insert(cc::Property::name(), "res1");
+    return props;
+}
+
+QVariantMap createRes2Properties()
+{
+    QVariantMap props;
+    props.insert(cc::Property::name(), "res2");
+    return props;
+}
+
+
+}  // namespace
+
 const QVariantList& emptyProperties()
 {
     static const QVariantList Props;
     return Props;
 }
+
+const QVariantMap& res1Properties()
+{
+    static const QVariantMap Props = createRes1Properties();
+    return Props;
+}
+
+const QVariantMap& res2Properties()
+{
+    static const QVariantMap Props = createRes2Properties();
+    return Props;
+}
+
 
 }  // namespace common
 

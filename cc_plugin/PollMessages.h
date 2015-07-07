@@ -23,6 +23,7 @@
 
 #include "cc_plugin/message/NavPosecefPoll.h"
 #include "cc_plugin/message/NavPosllhPoll.h"
+#include "cc_plugin/message/NavStatusPoll.h"
 #include "cc_plugin/message/NavDopPoll.h"
 #include "cc_plugin/message/NavPosutmPoll.h"
 
@@ -35,6 +36,7 @@ namespace cc_plugin
 typedef std::tuple<
     cc_plugin::message::NavPosecefPoll,
     cc_plugin::message::NavPosllhPoll,
+    cc_plugin::message::NavStatusPoll,
     cc_plugin::message::NavDopPoll,
     cc_plugin::message::NavPosutmPoll
 > PollMessages;

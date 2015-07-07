@@ -19,6 +19,7 @@
 #pragma once
 
 #include <QtCore/QVariantList>
+#include <QtCore/QVariantMap>
 
 namespace ublox
 {
@@ -33,6 +34,8 @@ namespace common
 {
 
 const QVariantList& emptyProperties();
+const QVariantMap& res1Properties();
+const QVariantMap& res2Properties();
 
 }  // namespace common
 

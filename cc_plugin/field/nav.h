@@ -55,6 +55,11 @@ const QVariantMap& vdopProperties();
 const QVariantMap& hdopProperties();
 const QVariantMap& ndopProperties();
 const QVariantMap& edopProperties();
+const QVariantMap& gpsFixProperties();
+const QVariantMap& flagsProperties();
+const QVariantMap& diffStatusProperties();
+const QVariantMap& ttffProperties();
+const QVariantMap& msssProperties();
 
 }  // namespace nav
 
