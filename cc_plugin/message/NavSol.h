@@ -18,15 +18,10 @@
 
 #pragma once
 
-#include <tuple>
+#include "comms_champion/comms_champion.h"
+#include "ublox/message/NavSol.h"
 #include "cc_plugin/Message.h"
-
-#include "cc_plugin/message/NavPosecefPoll.h"
-#include "cc_plugin/message/NavPosllhPoll.h"
-#include "cc_plugin/message/NavStatusPoll.h"
-#include "cc_plugin/message/NavDopPoll.h"
-#include "cc_plugin/message/NavSolPoll.h"
-#include "cc_plugin/message/NavPosutmPoll.h"
+#include "cc_plugin/ProtocolMessageBase.h"
 
 namespace ublox
 {
@@ -34,19 +29,32 @@ namespace ublox
 namespace cc_plugin
 {
 
-typedef std::tuple<
-    cc_plugin::message::NavPosecefPoll,
-    cc_plugin::message::NavPosllhPoll,
-    cc_plugin::message::NavStatusPoll,
-    cc_plugin::message::NavDopPoll,
-    cc_plugin::message::NavSolPoll,
-    cc_plugin::message::NavPosutmPoll
-> PollMessages;
+namespace message
+{
+
+class NavSol : public
+    ProtocolMessageBase<
+        ublox::message::NavSol<ublox::cc_plugin::Message>,
+        NavSol>
+{
+public:
+    NavSol() = default;
+    NavSol(const NavSol&) = default;
+    NavSol(NavSol&&) = default;
+    virtual ~NavSol() = default;
+
+    NavSol& operator=(const NavSol&) = default;
+    NavSol& operator=(NavSol&&) = default;
+
+protected:
+    virtual const char* nameImpl() const override;
+    virtual const QVariantList& fieldsPropertiesImpl() const override;
+};
+
+}  // namespace message
 
 }  // namespace cc_plugin
 
 }  // namespace ublox
-
-
 
 

@@ -29,6 +29,8 @@
 #include "cc_plugin/message/NavStatusPoll.h"
 #include "cc_plugin/message/NavDop.h"
 #include "cc_plugin/message/NavDopPoll.h"
+#include "cc_plugin/message/NavSol.h"
+#include "cc_plugin/message/NavSolPoll.h"
 #include "cc_plugin/message/NavPosutm.h"
 #include "cc_plugin/message/NavPosutmPoll.h"
 
@@ -50,6 +52,8 @@ typedef std::tuple<
     cc_plugin::message::NavStatusPoll,
     cc_plugin::message::NavDop,
     cc_plugin::message::NavDopPoll,
+    cc_plugin::message::NavSol,
+    cc_plugin::message::NavSolPoll,
     cc_plugin::message::NavPosutm,
     cc_plugin::message::NavPosutmPoll,
     cc_plugin::message::AckNak,

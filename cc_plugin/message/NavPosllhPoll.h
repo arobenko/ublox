@@ -38,7 +38,7 @@ class NavPosllhPoll : public
         NavPosllhPoll>
 {
 public:
-    NavPosllhPoll() = default;
+    NavPosllhPoll();
     NavPosllhPoll(const NavPosllhPoll&) = default;
     NavPosllhPoll(NavPosllhPoll&&) = default;
     virtual ~NavPosllhPoll() = default;
@@ -48,8 +48,6 @@ public:
 
 protected:
     virtual const char* nameImpl() const override;
-    virtual const QVariantList& fieldsPropertiesImpl() const override;
-    virtual bool isPollImpl() const override;
 };
 
 }  // namespace message

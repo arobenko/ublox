@@ -37,13 +37,13 @@ public:
 
     bool isPoll() const
     {
-        return isPollImpl();
+        return m_isPoll;
     }
 
 protected:
-    virtual bool isPollImpl() const
+    void setPoll()
     {
-        return false;
+        m_isPoll = true;
     }
 
     virtual QString idAsStringImpl() const override
@@ -60,6 +60,13 @@ protected:
 
         return nonZeroLenPollMsgId(len);
     }
+
+    virtual const QVariantList& fieldsPropertiesImpl() const override
+    {
+        static const QVariantList Props;
+        return Props;
+    }
+
 
 private:
     QString regMsgId() const
@@ -81,6 +88,9 @@ private:
         id.append(QString("%1").arg(len, 1, 10, QChar('0')));
         return id;
     }
+
+private:
+    bool m_isPoll = false;
 };
 
 typedef MessageT<> Message;

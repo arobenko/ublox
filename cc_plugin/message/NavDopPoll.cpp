@@ -15,12 +15,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <type_traits>
-#include <functional>
-#include <cassert>
 
 #include "NavDopPoll.h"
-#include "cc_plugin/field/common.h"
 
 namespace cc = comms_champion;
 
@@ -33,20 +29,15 @@ namespace cc_plugin
 namespace message
 {
 
+NavDopPoll::NavDopPoll()
+{
+    setPoll();
+}
+
 const char* NavDopPoll::nameImpl() const
 {
     static const char* Str = "NAV-DOP (Poll)";
     return Str;
-}
-
-const QVariantList& NavDopPoll::fieldsPropertiesImpl() const
-{
-    return field::common::emptyProperties();
-}
-
-bool NavDopPoll::isPollImpl() const
-{
-    return true;
 }
 
 }  // namespace message

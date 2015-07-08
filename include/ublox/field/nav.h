@@ -36,10 +36,14 @@ using ECEF = common::I4;
 using ECEF_X = ECEF;
 using ECEF_Y = ECEF;
 using ECEF_Z = ECEF;
+using ECEFVX = ECEF;
+using ECEFVY = ECEF;
+using ECEFVZ = ECEF;
 
 using Pacc = common::U4;
 using Hacc = common::U4;
 using Vacc = common::U4;
+using Sacc = common::U4;
 
 using LON = common::I4;
 using LAT = common::I4;
@@ -117,6 +121,13 @@ using DiffS =
 using TTFF = common::U4;
 using MSSS = common::U4;
 
+using Frac =
+    common::I4T<
+        comms::option::ValidNumValueRange<-500000, 500000>
+    >;
+
+using week = common::I2;
+using numSV = common::U1;
 
 }  // namespace nav
 

@@ -26,6 +26,7 @@
 #include "message/NavPosllh.h"
 #include "message/NavStatus.h"
 #include "message/NavDop.h"
+#include "message/NavSol.h"
 #include "message/NavPosutm.h"
 
 #include "message/AckNak.h"
@@ -42,6 +43,7 @@ using InputMessages =
         message::NavPosllh<TMessage>,
         message::NavStatus<TMessage>,
         message::NavDop<TMessage>,
+        message::NavSol<TMessage>,
         message::NavPosutm<TMessage>,
         message::AckNak<TMessage>,
         message::AckAck<TMessage>

@@ -15,18 +15,9 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+#include "NavSolPoll.h"
 
-#pragma once
-
-#include <tuple>
-#include "cc_plugin/Message.h"
-
-#include "cc_plugin/message/NavPosecefPoll.h"
-#include "cc_plugin/message/NavPosllhPoll.h"
-#include "cc_plugin/message/NavStatusPoll.h"
-#include "cc_plugin/message/NavDopPoll.h"
-#include "cc_plugin/message/NavSolPoll.h"
-#include "cc_plugin/message/NavPosutmPoll.h"
+namespace cc = comms_champion;
 
 namespace ublox
 {
@@ -34,19 +25,23 @@ namespace ublox
 namespace cc_plugin
 {
 
-typedef std::tuple<
-    cc_plugin::message::NavPosecefPoll,
-    cc_plugin::message::NavPosllhPoll,
-    cc_plugin::message::NavStatusPoll,
-    cc_plugin::message::NavDopPoll,
-    cc_plugin::message::NavSolPoll,
-    cc_plugin::message::NavPosutmPoll
-> PollMessages;
+namespace message
+{
+
+NavSolPoll::NavSolPoll()
+{
+    setPoll();
+}
+
+const char* NavSolPoll::nameImpl() const
+{
+    static const char* Str = "NAV-SOL (Poll)";
+    return Str;
+}
+
+}  // namespace message
 
 }  // namespace cc_plugin
 
 }  // namespace ublox
-
-
-
 

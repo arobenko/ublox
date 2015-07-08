@@ -19,7 +19,7 @@
 #include <functional>
 #include <cassert>
 
-#include "NavStatus.h"
+#include "NavSol.h"
 #include "cc_plugin/field/common.h"
 #include "cc_plugin/field/nav.h"
 
@@ -41,26 +41,36 @@ QVariantList createFieldsProperties()
 {
     QVariantList props;
     props.append(cc_plugin::field::nav::itowProperties());
+    props.append(cc_plugin::field::nav::fracProperties());
+    props.append(cc_plugin::field::nav::weekProperties());
     props.append(cc_plugin::field::nav::gpsFixProperties());
     props.append(cc_plugin::field::nav::flagsProperties());
-    props.append(cc_plugin::field::nav::diffStatusProperties());
-    props.append(cc_plugin::field::common::resProperties(0));
-    props.append(cc_plugin::field::nav::ttffProperties());
-    props.append(cc_plugin::field::nav::msssProperties());
+    props.append(cc_plugin::field::nav::ecefPropertiesX());
+    props.append(cc_plugin::field::nav::ecefPropertiesY());
+    props.append(cc_plugin::field::nav::ecefPropertiesZ());
+    props.append(cc_plugin::field::nav::paccProperties());
+    props.append(cc_plugin::field::nav::ecefPropertiesVX());
+    props.append(cc_plugin::field::nav::ecefPropertiesVY());
+    props.append(cc_plugin::field::nav::ecefPropertiesVZ());
+    props.append(cc_plugin::field::nav::saccProperties());
+    props.append(cc_plugin::field::nav::pdopProperties());
+    props.append(cc_plugin::field::common::resProperties(1));
+    props.append(cc_plugin::field::nav::numSvProperties());
+    props.append(cc_plugin::field::common::resProperties(2));
 
-    assert(props.size() == NavStatus::FieldIdx_NumOfValues);
+    assert(props.size() == NavSol::FieldIdx_NumOfValues);
     return props;
 }
 
 }  // namespace
 
-const char* NavStatus::nameImpl() const
+const char* NavSol::nameImpl() const
 {
-    static const char* Str = "NAV-STATUS";
+    static const char* Str = "NAV-SOL";
     return Str;
 }
 
-const QVariantList& NavStatus::fieldsPropertiesImpl() const
+const QVariantList& NavSol::fieldsPropertiesImpl() const
 {
     static const auto Props = createFieldsProperties();
     return Props;

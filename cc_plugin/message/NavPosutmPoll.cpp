@@ -15,12 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <type_traits>
-#include <functional>
-#include <cassert>
-
 #include "NavPosutmPoll.h"
-#include "cc_plugin/field/common.h"
 
 namespace cc = comms_champion;
 
@@ -33,20 +28,15 @@ namespace cc_plugin
 namespace message
 {
 
+NavPosutmPoll::NavPosutmPoll()
+{
+    setPoll();
+}
+
 const char* NavPosutmPoll::nameImpl() const
 {
     static const char* Str = "NAV-POSUTM (Poll)";
     return Str;
-}
-
-const QVariantList& NavPosutmPoll::fieldsPropertiesImpl() const
-{
-    return field::common::emptyProperties();
-}
-
-bool NavPosutmPoll::isPollImpl() const
-{
-    return true;
 }
 
 }  // namespace message

@@ -18,6 +18,8 @@
 
 #include "common.h"
 
+#include <type_traits>
+
 #include "comms_champion/comms_champion.h"
 
 namespace cc = comms_champion;
@@ -37,17 +39,14 @@ namespace common
 namespace
 {
 
-QVariantMap createRes1Properties()
+QVariantMap createResProperties(unsigned idx)
 {
+    QString str("res");
+    if (0 < idx) {
+        str.append(QString("%1").arg(idx, 1, 10, QChar('0')));
+    }
     QVariantMap props;
-    props.insert(cc::Property::name(), "res1");
-    return props;
-}
-
-QVariantMap createRes2Properties()
-{
-    QVariantMap props;
-    props.insert(cc::Property::name(), "res2");
+    props.insert(cc::Property::name(), str);
     return props;
 }
 
@@ -60,16 +59,23 @@ const QVariantList& emptyProperties()
     return Props;
 }
 
-const QVariantMap& res1Properties()
+const QVariantMap& resProperties(unsigned idx)
 {
-    static const QVariantMap Props = createRes1Properties();
-    return Props;
-}
+    static const QVariantMap Props[] = {
+        createResProperties(0),
+        createResProperties(1),
+        createResProperties(2),
+        QVariantMap(),
+        createResProperties(4)
+    };
 
-const QVariantMap& res2Properties()
-{
-    static const QVariantMap Props = createRes2Properties();
-    return Props;
+    static const auto MapSize = std::extent<decltype(Props)>::value;
+    if (MapSize <= idx) {
+        static const QVariantMap EmptyMap;
+        return EmptyMap;
+    }
+
+    return Props[idx];
 }
 
 

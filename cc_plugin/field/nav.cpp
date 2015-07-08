@@ -46,7 +46,7 @@ QVariantMap createItowProperties()
 QVariantMap createEcefProperties(const char* dir)
 {
     QVariantMap props;
-    props.insert(cc::Property::name(), QString("ECEF_%1").arg(dir));
+    props.insert(cc::Property::name(), QString("ECEF%1").arg(dir));
     return props;
 }
 
@@ -195,6 +195,34 @@ QVariantMap createMsssProperties()
     return props;
 }
 
+QVariantMap createFracProperties()
+{
+    QVariantMap props;
+    props.insert(cc::Property::name(), "Frac");
+    return props;
+}
+
+QVariantMap createWeekProperties()
+{
+    QVariantMap props;
+    props.insert(cc::Property::name(), "week");
+    return props;
+}
+
+QVariantMap createSaccProperties()
+{
+    QVariantMap props;
+    props.insert(cc::Property::name(), "SAcc");
+    return props;
+}
+
+QVariantMap createNumSvProperties()
+{
+    QVariantMap props;
+    props.insert(cc::Property::name(), "numSV");
+    return props;
+}
+
 }  // namespace
 
 const QVariantMap& itowProperties()
@@ -205,19 +233,37 @@ const QVariantMap& itowProperties()
 
 const QVariantMap& ecefPropertiesX()
 {
-    static const QVariantMap Props = createEcefProperties("X");
+    static const QVariantMap Props = createEcefProperties("_X");
     return Props;
 }
 
 const QVariantMap& ecefPropertiesY()
 {
-    static const QVariantMap Props = createEcefProperties("Y");
+    static const QVariantMap Props = createEcefProperties("_Y");
     return Props;
 }
 
 const QVariantMap& ecefPropertiesZ()
 {
-    static const QVariantMap Props = createEcefProperties("Z");
+    static const QVariantMap Props = createEcefProperties("_Z");
+    return Props;
+}
+
+const QVariantMap& ecefPropertiesVX()
+{
+    static const QVariantMap Props = createEcefProperties("VX");
+    return Props;
+}
+
+const QVariantMap& ecefPropertiesVY()
+{
+    static const QVariantMap Props = createEcefProperties("VY");
+    return Props;
+}
+
+const QVariantMap& ecefPropertiesVZ()
+{
+    static const QVariantMap Props = createEcefProperties("VZ");
     return Props;
 }
 
@@ -365,6 +411,29 @@ const QVariantMap& msssProperties()
     return Props;
 }
 
+const QVariantMap& fracProperties()
+{
+    static const QVariantMap Props = createFracProperties();
+    return Props;
+}
+
+const QVariantMap& weekProperties()
+{
+    static const QVariantMap Props = createWeekProperties();
+    return Props;
+}
+
+const QVariantMap& saccProperties()
+{
+    static const QVariantMap Props = createSaccProperties();
+    return Props;
+}
+
+const QVariantMap& numSvProperties()
+{
+    static const QVariantMap Props = createNumSvProperties();
+    return Props;
+}
 
 
 }  // namespace nav

@@ -96,6 +96,8 @@ using res1 = U1;
 
 using res2 = U2;
 
+using res4 = U4;
+
 }  // namespace common
 
 }  // namespace field

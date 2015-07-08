@@ -36,6 +36,9 @@ const QVariantMap& itowProperties();
 const QVariantMap& ecefPropertiesX();
 const QVariantMap& ecefPropertiesY();
 const QVariantMap& ecefPropertiesZ();
+const QVariantMap& ecefPropertiesVX();
+const QVariantMap& ecefPropertiesVY();
+const QVariantMap& ecefPropertiesVZ();
 const QVariantMap& paccProperties();
 const QVariantMap& lonProperties();
 const QVariantMap& latProperties();
@@ -60,6 +63,10 @@ const QVariantMap& flagsProperties();
 const QVariantMap& diffStatusProperties();
 const QVariantMap& ttffProperties();
 const QVariantMap& msssProperties();
+const QVariantMap& fracProperties();
+const QVariantMap& weekProperties();
+const QVariantMap& saccProperties();
+const QVariantMap& numSvProperties();
 
 }  // namespace nav
 
