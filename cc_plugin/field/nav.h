@@ -67,6 +67,13 @@ const QVariantMap& fracProperties();
 const QVariantMap& weekProperties();
 const QVariantMap& saccProperties();
 const QVariantMap& numSvProperties();
+const QVariantMap& velPropertiesN();
+const QVariantMap& velPropertiesE();
+const QVariantMap& velPropertiesD();
+const QVariantMap& speedProperties();
+const QVariantMap& groundSpeedProperties();
+const QVariantMap& headingProperties();
+const QVariantMap& caccProperties();
 
 }  // namespace nav
 

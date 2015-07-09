@@ -223,6 +223,44 @@ QVariantMap createNumSvProperties()
     return props;
 }
 
+QVariantMap createVelProperties(const char* dir)
+{
+    QString str("VEL_");
+    str.append(QString(dir));
+    QVariantMap props;
+    props.insert(cc::Property::name(), str);
+    return props;
+}
+
+QVariantMap createSpeedProperties()
+{
+    QVariantMap props;
+    props.insert(cc::Property::name(), "Speed");
+    return props;
+}
+
+QVariantMap createGroundSpeedProperties()
+{
+    QVariantMap props;
+    props.insert(cc::Property::name(), "GSpeed");
+    return props;
+}
+
+QVariantMap createHeadingProperties()
+{
+    QVariantMap props;
+    props.insert(cc::Property::name(), "Heading");
+    return props;
+}
+
+QVariantMap createCaccProperties()
+{
+    QVariantMap props;
+    props.insert(cc::Property::name(), "CAcc");
+    return props;
+}
+
+
 }  // namespace
 
 const QVariantMap& itowProperties()
@@ -435,6 +473,47 @@ const QVariantMap& numSvProperties()
     return Props;
 }
 
+const QVariantMap& velPropertiesN()
+{
+    static const QVariantMap Props = createVelProperties("N");
+    return Props;
+}
+
+const QVariantMap& velPropertiesE()
+{
+    static const QVariantMap Props = createVelProperties("E");
+    return Props;
+}
+
+const QVariantMap& velPropertiesD()
+{
+    static const QVariantMap Props = createVelProperties("D");
+    return Props;
+}
+
+const QVariantMap& speedProperties()
+{
+    static const QVariantMap Props = createSpeedProperties();
+    return Props;
+}
+
+const QVariantMap& groundSpeedProperties()
+{
+    static const QVariantMap Props = createGroundSpeedProperties();
+    return Props;
+}
+
+const QVariantMap& headingProperties()
+{
+    static const QVariantMap Props = createHeadingProperties();
+    return Props;
+}
+
+const QVariantMap& caccProperties()
+{
+    static const QVariantMap Props = createCaccProperties();
+    return Props;
+}
 
 }  // namespace nav
 

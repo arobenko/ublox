@@ -29,6 +29,7 @@
 #include "message/NavSol.h"
 #include "message/NavPosutm.h"
 #include "message/NavVelecef.h"
+#include "message/NavVelned.h"
 
 #include "message/AckNak.h"
 #include "message/AckAck.h"
@@ -47,6 +48,7 @@ using InputMessages =
         message::NavSol<TMessage>,
         message::NavPosutm<TMessage>,
         message::NavVelecef<TMessage>,
+        message::NavVelned<TMessage>,
         message::AckNak<TMessage>,
         message::AckAck<TMessage>
     >;

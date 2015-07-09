@@ -28,6 +28,7 @@
 #include "cc_plugin/message/NavSol.h"
 #include "cc_plugin/message/NavPosutm.h"
 #include "cc_plugin/message/NavVelecef.h"
+#include "cc_plugin/message/NavVelned.h"
 
 #include "cc_plugin/message/AckNak.h"
 #include "cc_plugin/message/AckAck.h"
@@ -46,6 +47,7 @@ typedef std::tuple<
     cc_plugin::message::NavSol,
     cc_plugin::message::NavPosutm,
     cc_plugin::message::NavVelecef,
+    cc_plugin::message::NavVelned,
     cc_plugin::message::AckNak,
     cc_plugin::message::AckAck
 > InputMessages;

@@ -44,6 +44,7 @@ using Pacc = common::U4;
 using Hacc = common::U4;
 using Vacc = common::U4;
 using Sacc = common::U4;
+using Cacc = common::U4;
 
 using LON = common::I4;
 using LAT = common::I4;
@@ -128,6 +129,15 @@ using Frac =
 
 using week = common::I2;
 using numSV = common::U1;
+
+using VEL = common::I4;
+using VEL_N = VEL;
+using VEL_E = VEL;
+using VEL_D = VEL;
+
+using Speed = common::U4;
+using GSpeed = common::U4;
+using Heading = common::I4;
 
 }  // namespace nav
 

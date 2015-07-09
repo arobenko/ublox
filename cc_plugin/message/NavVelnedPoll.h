@@ -18,17 +18,10 @@
 
 #pragma once
 
-#include <tuple>
+#include "comms_champion/comms_champion.h"
+#include "ublox/message/NavVelnedPoll.h"
 #include "cc_plugin/Message.h"
-
-#include "cc_plugin/message/NavPosecefPoll.h"
-#include "cc_plugin/message/NavPosllhPoll.h"
-#include "cc_plugin/message/NavStatusPoll.h"
-#include "cc_plugin/message/NavDopPoll.h"
-#include "cc_plugin/message/NavSolPoll.h"
-#include "cc_plugin/message/NavPosutmPoll.h"
-#include "cc_plugin/message/NavVelecefPoll.h"
-#include "cc_plugin/message/NavVelnedPoll.h"
+#include "cc_plugin/ProtocolMessageBase.h"
 
 namespace ublox
 {
@@ -36,21 +29,31 @@ namespace ublox
 namespace cc_plugin
 {
 
-typedef std::tuple<
-    cc_plugin::message::NavPosecefPoll,
-    cc_plugin::message::NavPosllhPoll,
-    cc_plugin::message::NavStatusPoll,
-    cc_plugin::message::NavDopPoll,
-    cc_plugin::message::NavSolPoll,
-    cc_plugin::message::NavPosutmPoll,
-    cc_plugin::message::NavVelecefPoll,
-    cc_plugin::message::NavVelnedPoll
-> PollMessages;
+namespace message
+{
+
+class NavVelnedPoll : public
+    ProtocolMessageBase<
+        ublox::message::NavVelnedPoll<ublox::cc_plugin::Message>,
+        NavVelnedPoll>
+{
+public:
+    NavVelnedPoll();
+    NavVelnedPoll(const NavVelnedPoll&) = default;
+    NavVelnedPoll(NavVelnedPoll&&) = default;
+    virtual ~NavVelnedPoll() = default;
+
+    NavVelnedPoll& operator=(const NavVelnedPoll&) = default;
+    NavVelnedPoll& operator=(NavVelnedPoll&&) = default;
+
+protected:
+    virtual const char* nameImpl() const override;
+};
+
+}  // namespace message
 
 }  // namespace cc_plugin
 
 }  // namespace ublox
-
-
 
 
