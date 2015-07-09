@@ -74,6 +74,9 @@ const QVariantMap& speedProperties();
 const QVariantMap& groundSpeedProperties();
 const QVariantMap& headingProperties();
 const QVariantMap& caccProperties();
+const QVariantMap& leapSecProperties();
+const QVariantMap& timeValidProperties();
+const QVariantMap& taccProperties();
 
 }  // namespace nav
 

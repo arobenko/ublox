@@ -260,6 +260,30 @@ QVariantMap createCaccProperties()
     return props;
 }
 
+QVariantMap createLeapSecProperties()
+{
+    QVariantMap props;
+    props.insert(cc::Property::name(), "LeapS");
+    return props;
+}
+
+QVariantMap createTimeValidProperties()
+{
+    QVariantMap props;
+    props.insert(cc::Property::name(), "Valid");
+    props.insert(cc::Property::indexedName(0U), "Valid Time of Week");
+    props.insert(cc::Property::indexedName(1U), "Valid Week Number");
+    props.insert(cc::Property::indexedName(2U), "Valid UTC");
+    return props;
+}
+
+QVariantMap createTaccProperties()
+{
+    QVariantMap props;
+    props.insert(cc::Property::name(), "TAcc");
+    return props;
+}
+
 
 }  // namespace
 
@@ -512,6 +536,24 @@ const QVariantMap& headingProperties()
 const QVariantMap& caccProperties()
 {
     static const QVariantMap Props = createCaccProperties();
+    return Props;
+}
+
+const QVariantMap& leapSecProperties()
+{
+    static const QVariantMap Props = createLeapSecProperties();
+    return Props;
+}
+
+const QVariantMap& timeValidProperties()
+{
+    static const QVariantMap Props = createTimeValidProperties();
+    return Props;
+}
+
+const QVariantMap& taccProperties()
+{
+    static const QVariantMap Props = createTaccProperties();
     return Props;
 }
 

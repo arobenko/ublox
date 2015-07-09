@@ -45,6 +45,7 @@ using Hacc = common::U4;
 using Vacc = common::U4;
 using Sacc = common::U4;
 using Cacc = common::U4;
+using Tacc = common::U4;
 
 using LON = common::I4;
 using LAT = common::I4;
@@ -138,6 +139,14 @@ using VEL_D = VEL;
 using Speed = common::U4;
 using GSpeed = common::U4;
 using Heading = common::I4;
+
+using LeapS = common::I1;
+using TimeValid =
+    comms::field::BitmaskValue<
+        common::FieldBase,
+        comms::option::FixedLength<1>,
+        comms::option::BitmaskReservedBits<0xf8, 0>
+    >;
 
 }  // namespace nav
 

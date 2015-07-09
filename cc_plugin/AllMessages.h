@@ -37,6 +37,8 @@
 #include "cc_plugin/message/NavVelecefPoll.h"
 #include "cc_plugin/message/NavVelned.h"
 #include "cc_plugin/message/NavVelnedPoll.h"
+#include "cc_plugin/message/NavTimegps.h"
+#include "cc_plugin/message/NavTimegpsPoll.h"
 
 #include "cc_plugin/message/AckNak.h"
 #include "cc_plugin/message/AckAck.h"
@@ -64,6 +66,8 @@ typedef std::tuple<
     cc_plugin::message::NavVelecefPoll,
     cc_plugin::message::NavVelned,
     cc_plugin::message::NavVelnedPoll,
+    cc_plugin::message::NavTimegps,
+    cc_plugin::message::NavTimegpsPoll,
     cc_plugin::message::AckNak,
     cc_plugin::message::AckAck
 > AllMessages;
