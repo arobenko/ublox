@@ -37,6 +37,8 @@ function (cc_plugin_ublox)
         message/NavTimegpsPoll.cpp
         message/NavTimeutc.cpp
         message/NavTimeutcPoll.cpp
+        message/NavClock.cpp
+        message/NavClockPoll.cpp
         message/AckNak.cpp
         message/AckAck.cpp
         field/MsgId.cpp

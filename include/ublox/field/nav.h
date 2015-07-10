@@ -46,6 +46,7 @@ using Vacc = common::U4;
 using Sacc = common::U4;
 using Cacc = common::U4;
 using Tacc = common::U4;
+using Facc = common::U4;
 
 using LON = common::I4;
 using LAT = common::I4;
@@ -181,6 +182,8 @@ using Min =
 
 using Sec = Min;
 
+using CLKB = common::I4;
+using CLKD = common::I4;
 
 }  // namespace nav
 

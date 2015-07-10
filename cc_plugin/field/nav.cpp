@@ -444,6 +444,24 @@ const QVariantMap& secProperties()
     return Props;
 }
 
+const QVariantMap& clkbProperties()
+{
+    static const QVariantMap Props = createNameOnlyProperties("CLKB");
+    return Props;
+}
+
+const QVariantMap& clkdProperties()
+{
+    static const QVariantMap Props = createNameOnlyProperties("CLKD");
+    return Props;
+}
+
+const QVariantMap& faccProperties()
+{
+    static const QVariantMap Props = createNameOnlyProperties("FAcc");
+    return Props;
+}
+
 
 }  // namespace nav
 

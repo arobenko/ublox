@@ -32,6 +32,7 @@
 #include "message/NavVelned.h"
 #include "message/NavTimegps.h"
 #include "message/NavTimeutc.h"
+#include "message/NavClock.h"
 
 #include "message/AckNak.h"
 #include "message/AckAck.h"
@@ -53,6 +54,7 @@ using InputMessages =
         message::NavVelned<TMessage>,
         message::NavTimegps<TMessage>,
         message::NavTimeutc<TMessage>,
+        message::NavClock<TMessage>,
         message::AckNak<TMessage>,
         message::AckAck<TMessage>
     >;

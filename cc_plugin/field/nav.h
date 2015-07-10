@@ -84,6 +84,9 @@ const QVariantMap& dayProperties();
 const QVariantMap& hourProperties();
 const QVariantMap& minProperties();
 const QVariantMap& secProperties();
+const QVariantMap& clkbProperties();
+const QVariantMap& clkdProperties();
+const QVariantMap& faccProperties();
 
 }  // namespace nav
 
