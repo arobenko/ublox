@@ -36,10 +36,10 @@ namespace nav
 namespace
 {
 
-QVariantMap createItowProperties()
+QVariantMap createNameOnlyProperties(const char* name)
 {
     QVariantMap props;
-    props.insert(cc::Property::name(), "ITOW");
+    props.insert(cc::Property::name(), name);
     return props;
 }
 
@@ -47,76 +47,6 @@ QVariantMap createEcefProperties(const char* dir)
 {
     QVariantMap props;
     props.insert(cc::Property::name(), QString("ECEF%1").arg(dir));
-    return props;
-}
-
-QVariantMap createPaccProperties()
-{
-    QVariantMap props;
-    props.insert(cc::Property::name(), "Pacc");
-    return props;
-}
-
-QVariantMap createLonProperties()
-{
-    QVariantMap props;
-    props.insert(cc::Property::name(), "LON");
-    return props;
-}
-
-QVariantMap createLatProperties()
-{
-    QVariantMap props;
-    props.insert(cc::Property::name(), "LAT");
-    return props;
-}
-
-QVariantMap createHeightProperties()
-{
-    QVariantMap props;
-    props.insert(cc::Property::name(), "HEIGHT");
-    return props;
-}
-
-QVariantMap createHmslProperties()
-{
-    QVariantMap props;
-    props.insert(cc::Property::name(), "HMSL");
-    return props;
-}
-
-QVariantMap createHaccProperties()
-{
-    QVariantMap props;
-    props.insert(cc::Property::name(), "Hacc");
-    return props;
-}
-
-QVariantMap createVaccProperties()
-{
-    QVariantMap props;
-    props.insert(cc::Property::name(), "Vacc");
-    return props;
-}
-
-QVariantMap createEastProperties()
-{
-    QVariantMap props;
-    props.insert(cc::Property::name(), "EAST");
-    return props;
-}
-
-QVariantMap createNorthProperties()
-{
-    QVariantMap props;
-    props.insert(cc::Property::name(), "NORTH");
-    return props;
-}
-
-QVariantMap createAltProperties()
-{
-    QVariantMap props;
-    props.insert(cc::Property::name(), "NORTH");
     return props;
 }
 
@@ -181,89 +111,12 @@ QVariantMap createDiffStatusProperties()
     return props;
 }
 
-QVariantMap createTtffProperties()
-{
-    QVariantMap props;
-    props.insert(cc::Property::name(), "TTFF");
-    return props;
-}
-
-QVariantMap createMsssProperties()
-{
-    QVariantMap props;
-    props.insert(cc::Property::name(), "MSSS");
-    return props;
-}
-
-QVariantMap createFracProperties()
-{
-    QVariantMap props;
-    props.insert(cc::Property::name(), "Frac");
-    return props;
-}
-
-QVariantMap createWeekProperties()
-{
-    QVariantMap props;
-    props.insert(cc::Property::name(), "week");
-    return props;
-}
-
-QVariantMap createSaccProperties()
-{
-    QVariantMap props;
-    props.insert(cc::Property::name(), "SAcc");
-    return props;
-}
-
-QVariantMap createNumSvProperties()
-{
-    QVariantMap props;
-    props.insert(cc::Property::name(), "numSV");
-    return props;
-}
-
 QVariantMap createVelProperties(const char* dir)
 {
     QString str("VEL_");
     str.append(QString(dir));
     QVariantMap props;
     props.insert(cc::Property::name(), str);
-    return props;
-}
-
-QVariantMap createSpeedProperties()
-{
-    QVariantMap props;
-    props.insert(cc::Property::name(), "Speed");
-    return props;
-}
-
-QVariantMap createGroundSpeedProperties()
-{
-    QVariantMap props;
-    props.insert(cc::Property::name(), "GSpeed");
-    return props;
-}
-
-QVariantMap createHeadingProperties()
-{
-    QVariantMap props;
-    props.insert(cc::Property::name(), "Heading");
-    return props;
-}
-
-QVariantMap createCaccProperties()
-{
-    QVariantMap props;
-    props.insert(cc::Property::name(), "CAcc");
-    return props;
-}
-
-QVariantMap createLeapSecProperties()
-{
-    QVariantMap props;
-    props.insert(cc::Property::name(), "LeapS");
     return props;
 }
 
@@ -277,19 +130,11 @@ QVariantMap createTimeValidProperties()
     return props;
 }
 
-QVariantMap createTaccProperties()
-{
-    QVariantMap props;
-    props.insert(cc::Property::name(), "TAcc");
-    return props;
-}
-
-
 }  // namespace
 
 const QVariantMap& itowProperties()
 {
-    static const QVariantMap Props = createItowProperties();
+    static const QVariantMap Props = createNameOnlyProperties("ITOW");
     return Props;
 }
 
@@ -331,67 +176,67 @@ const QVariantMap& ecefPropertiesVZ()
 
 const QVariantMap& paccProperties()
 {
-    static const QVariantMap Props = createPaccProperties();
+    static const QVariantMap Props = createNameOnlyProperties("Pacc");
     return Props;
 }
 
 const QVariantMap& lonProperties()
 {
-    static const QVariantMap Props = createLonProperties();
+    static const QVariantMap Props = createNameOnlyProperties("LON");
     return Props;
 }
 
 const QVariantMap& latProperties()
 {
-    static const QVariantMap Props = createLatProperties();
+    static const QVariantMap Props = createNameOnlyProperties("LAT");
     return Props;
 }
 
 const QVariantMap& heightProperties()
 {
-    static const QVariantMap Props = createHeightProperties();
+    static const QVariantMap Props = createNameOnlyProperties("HEIGHT");
     return Props;
 }
 
 const QVariantMap& hmslProperties()
 {
-    static const QVariantMap Props = createHmslProperties();
+    static const QVariantMap Props = createNameOnlyProperties("HMSL");
     return Props;
 }
 
 const QVariantMap& haccProperties()
 {
-    static const QVariantMap Props = createHaccProperties();
+    static const QVariantMap Props = createNameOnlyProperties("Hacc");
     return Props;
 }
 
 const QVariantMap& vaccProperties()
 {
-    static const QVariantMap Props = createVaccProperties();
+    static const QVariantMap Props = createNameOnlyProperties("Vacc");
     return Props;
 }
 
 const QVariantMap& eastProperties()
 {
-    static const QVariantMap Props = createEastProperties();
+    static const QVariantMap Props = createNameOnlyProperties("EAST");
     return Props;
 }
 
 const QVariantMap& northProperties()
 {
-    static const QVariantMap Props = createNorthProperties();
+    static const QVariantMap Props = createNameOnlyProperties("NORTH");
     return Props;
 }
 
 const QVariantMap& altProperties()
 {
-    static const QVariantMap Props = createAltProperties();
+    static const QVariantMap Props = createNameOnlyProperties("ALT");
     return Props;
 }
 
 const QVariantMap& zoneProperties()
 {
-    static const QVariantMap Props = createZoneProperties();
+    static const QVariantMap Props = createNameOnlyProperties("ZONE");
     return Props;
 }
 
@@ -463,37 +308,37 @@ const QVariantMap& diffStatusProperties()
 
 const QVariantMap& ttffProperties()
 {
-    static const QVariantMap Props = createTtffProperties();
+    static const QVariantMap Props = createNameOnlyProperties("TTFF");
     return Props;
 }
 
 const QVariantMap& msssProperties()
 {
-    static const QVariantMap Props = createMsssProperties();
+    static const QVariantMap Props = createNameOnlyProperties("MSSS");
     return Props;
 }
 
 const QVariantMap& fracProperties()
 {
-    static const QVariantMap Props = createFracProperties();
+    static const QVariantMap Props = createNameOnlyProperties("Frac");
     return Props;
 }
 
 const QVariantMap& weekProperties()
 {
-    static const QVariantMap Props = createWeekProperties();
+    static const QVariantMap Props = createNameOnlyProperties("week");
     return Props;
 }
 
 const QVariantMap& saccProperties()
 {
-    static const QVariantMap Props = createSaccProperties();
+    static const QVariantMap Props = createNameOnlyProperties("SAcc");
     return Props;
 }
 
 const QVariantMap& numSvProperties()
 {
-    static const QVariantMap Props = createNumSvProperties();
+    static const QVariantMap Props = createNameOnlyProperties("numSV");
     return Props;
 }
 
@@ -517,31 +362,31 @@ const QVariantMap& velPropertiesD()
 
 const QVariantMap& speedProperties()
 {
-    static const QVariantMap Props = createSpeedProperties();
+    static const QVariantMap Props = createNameOnlyProperties("Speed");
     return Props;
 }
 
 const QVariantMap& groundSpeedProperties()
 {
-    static const QVariantMap Props = createGroundSpeedProperties();
+    static const QVariantMap Props = createNameOnlyProperties("GSpeed");
     return Props;
 }
 
 const QVariantMap& headingProperties()
 {
-    static const QVariantMap Props = createHeadingProperties();
+    static const QVariantMap Props = createNameOnlyProperties("Heading");
     return Props;
 }
 
 const QVariantMap& caccProperties()
 {
-    static const QVariantMap Props = createCaccProperties();
+    static const QVariantMap Props = createNameOnlyProperties("CAcc");
     return Props;
 }
 
 const QVariantMap& leapSecProperties()
 {
-    static const QVariantMap Props = createLeapSecProperties();
+    static const QVariantMap Props = createNameOnlyProperties("LeapS");
     return Props;
 }
 
@@ -553,9 +398,52 @@ const QVariantMap& timeValidProperties()
 
 const QVariantMap& taccProperties()
 {
-    static const QVariantMap Props = createTaccProperties();
+    static const QVariantMap Props = createNameOnlyProperties("TAcc");
     return Props;
 }
+
+const QVariantMap& nanoProperties()
+{
+    static const QVariantMap Props = createNameOnlyProperties("Nano");
+    return Props;
+}
+
+const QVariantMap& yearProperties()
+{
+    static const QVariantMap Props = createNameOnlyProperties("Year");
+    return Props;
+}
+
+const QVariantMap& monthProperties()
+{
+    static const QVariantMap Props = createNameOnlyProperties("Month");
+    return Props;
+}
+
+const QVariantMap& dayProperties()
+{
+    static const QVariantMap Props = createNameOnlyProperties("Day");
+    return Props;
+}
+
+const QVariantMap& hourProperties()
+{
+    static const QVariantMap Props = createNameOnlyProperties("Hour");
+    return Props;
+}
+
+const QVariantMap& minProperties()
+{
+    static const QVariantMap Props = createNameOnlyProperties("Min");
+    return Props;
+}
+
+const QVariantMap& secProperties()
+{
+    static const QVariantMap Props = createNameOnlyProperties("Sec");
+    return Props;
+}
+
 
 }  // namespace nav
 

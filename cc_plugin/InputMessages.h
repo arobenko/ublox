@@ -30,6 +30,7 @@
 #include "cc_plugin/message/NavVelecef.h"
 #include "cc_plugin/message/NavVelned.h"
 #include "cc_plugin/message/NavTimegps.h"
+#include "cc_plugin/message/NavTimeutc.h"
 
 #include "cc_plugin/message/AckNak.h"
 #include "cc_plugin/message/AckAck.h"
@@ -50,6 +51,7 @@ typedef std::tuple<
     cc_plugin::message::NavVelecef,
     cc_plugin::message::NavVelned,
     cc_plugin::message::NavTimegps,
+    cc_plugin::message::NavTimeutc,
     cc_plugin::message::AckNak,
     cc_plugin::message::AckAck
 > InputMessages;

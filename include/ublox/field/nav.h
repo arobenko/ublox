@@ -128,6 +128,12 @@ using Frac =
         comms::option::ValidNumValueRange<-500000, 500000>
     >;
 
+using Nano =
+    common::I4T<
+        comms::option::ValidNumValueRange<-500000000, 500000000>
+    >;
+
+
 using week = common::I2;
 using numSV = common::U1;
 
@@ -147,6 +153,34 @@ using TimeValid =
         comms::option::FixedLength<1>,
         comms::option::BitmaskReservedBits<0xf8, 0>
     >;
+
+using Year =
+    common::U2T<
+        comms::option::ValidNumValueRange<1999, 2099>
+    >;
+
+using Month =
+    common::U1T<
+        comms::option::ValidNumValueRange<1, 12>
+    >;
+
+using Day =
+    common::U1T<
+        comms::option::ValidNumValueRange<1, 31>
+    >;
+
+using Hour =
+    common::U1T<
+        comms::option::ValidNumValueRange<0, 23>
+    >;
+
+using Min =
+    common::U1T<
+        comms::option::ValidNumValueRange<0, 59>
+    >;
+
+using Sec = Min;
+
 
 }  // namespace nav
 

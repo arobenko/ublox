@@ -77,6 +77,13 @@ const QVariantMap& caccProperties();
 const QVariantMap& leapSecProperties();
 const QVariantMap& timeValidProperties();
 const QVariantMap& taccProperties();
+const QVariantMap& nanoProperties();
+const QVariantMap& yearProperties();
+const QVariantMap& monthProperties();
+const QVariantMap& dayProperties();
+const QVariantMap& hourProperties();
+const QVariantMap& minProperties();
+const QVariantMap& secProperties();
 
 }  // namespace nav
 
