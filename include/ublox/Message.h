@@ -45,6 +45,18 @@ public:
 
     MessageT& operator=(const MessageT&) = default;
     MessageT& operator=(MessageT&&) = default;
+
+    bool refresh()
+    {
+        return refreshImpl();
+    }
+
+protected:
+    virtual bool refreshImpl()
+    {
+        return false;
+    }
+
 };
 
 typedef MessageT<> Message;

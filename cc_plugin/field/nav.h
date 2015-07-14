@@ -87,6 +87,15 @@ const QVariantMap& secProperties();
 const QVariantMap& clkbProperties();
 const QVariantMap& clkdProperties();
 const QVariantMap& faccProperties();
+const QVariantMap& nchProperties();
+const QVariantMap& svidProperties();
+const QVariantMap& chNumProperties();
+const QVariantMap& infoFlagsProperties();
+const QVariantMap& qiProperties();
+const QVariantMap& cnoProperties();
+const QVariantMap& elevProperties();
+const QVariantMap& azimProperties();
+const QVariantMap& prresProperties();
 
 }  // namespace nav
 
@@ -95,6 +104,7 @@ const QVariantMap& faccProperties();
 }  // namespace cc_plugin
 
 }  // namespace ublox
+
 
 
 

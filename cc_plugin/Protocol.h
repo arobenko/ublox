@@ -50,6 +50,9 @@ protected:
         const Message& msg) override;
     virtual comms_champion::MessageInfoPtr createMessageImpl(const QString& idAsString) override;
 
+    virtual UpdateStatus updateMessageInfoImpl(comms_champion::MessageInfo& msgInfo) override;
+
+
 private:
     comms_champion::MessageInfo::MessagePtr createPollMsg(Message::MsgIdType id);
 

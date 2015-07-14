@@ -33,6 +33,7 @@
 #include "message/NavTimegps.h"
 #include "message/NavTimeutc.h"
 #include "message/NavClock.h"
+#include "message/NavSvinfo.h"
 
 #include "message/AckNak.h"
 #include "message/AckAck.h"
@@ -55,6 +56,7 @@ using InputMessages =
         message::NavTimegps<TMessage>,
         message::NavTimeutc<TMessage>,
         message::NavClock<TMessage>,
+        message::NavSvinfo<TMessage>,
         message::AckNak<TMessage>,
         message::AckAck<TMessage>
     >;

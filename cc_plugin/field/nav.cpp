@@ -130,6 +130,42 @@ QVariantMap createTimeValidProperties()
     return props;
 }
 
+QVariantMap createNchProperties()
+{
+    QVariantMap props;
+    props.insert(cc::Property::name(), "NCH");
+    props.insert(cc::Property::readOnly(), true);
+    return props;
+}
+
+QVariantMap createInfoFlagsProperties()
+{
+    QVariantMap props;
+    props.insert(cc::Property::name(), "Flags");
+    props.insert(cc::Property::indexedName(0U), "SV is used for navigation");
+    props.insert(cc::Property::indexedName(1U), "Diff correction data is available");
+    props.insert(cc::Property::indexedName(2U), "Orbit info is available");
+    props.insert(cc::Property::indexedName(3U), "Orbit info is Ephemeris");
+    props.insert(cc::Property::indexedName(4U), "SV is unhealthy");
+    return props;
+}
+
+QVariantMap createQiProperties()
+{
+    QVariantMap props;
+    props.insert(cc::Property::name(), "QI");
+    props.insert(cc::Property::indexedName(0U), "Idle");
+    props.insert(cc::Property::indexedName(1U), "Searching");
+    props.insert(cc::Property::indexedName(2U), "Searching (2)");
+    props.insert(cc::Property::indexedName(3U), "Signal detected, unusable");
+    props.insert(cc::Property::indexedName(4U), "Code Lock on Signal");
+    props.insert(cc::Property::indexedName(5U), "Code and Carrier locked");
+    props.insert(cc::Property::indexedName(6U), "Code and Carrier locked (2)");
+    props.insert(cc::Property::indexedName(7U), "Code and Carrier locked, 50bps data");
+    return props;
+}
+
+
 }  // namespace
 
 const QVariantMap& itowProperties()
@@ -462,6 +498,59 @@ const QVariantMap& faccProperties()
     return Props;
 }
 
+const QVariantMap& nchProperties()
+{
+    static const QVariantMap Props = createNchProperties();
+    return Props;
+}
+
+const QVariantMap& svidProperties()
+{
+    static const QVariantMap Props = createNameOnlyProperties("SVID");
+    return Props;
+}
+
+const QVariantMap& chNumProperties()
+{
+    static const QVariantMap Props = createNameOnlyProperties("chn");
+    return Props;
+}
+
+const QVariantMap& infoFlagsProperties()
+{
+    static const QVariantMap Props = createInfoFlagsProperties();
+    return Props;
+}
+
+const QVariantMap& qiProperties()
+{
+    static const QVariantMap Props = createQiProperties();
+    return Props;
+}
+
+const QVariantMap& cnoProperties()
+{
+    static const QVariantMap Props = createNameOnlyProperties("CNO");
+    return Props;
+}
+
+const QVariantMap& elevProperties()
+{
+    static const QVariantMap Props = createNameOnlyProperties("Elev");
+    return Props;
+}
+
+const QVariantMap& azimProperties()
+{
+    static const QVariantMap Props = createNameOnlyProperties("Azim");
+    return Props;
+}
+
+const QVariantMap& prresProperties()
+{
+    static const QVariantMap Props = createNameOnlyProperties("PRRes");
+    return Props;
+}
 
 }  // namespace nav
 

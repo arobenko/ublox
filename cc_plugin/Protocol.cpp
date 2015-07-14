@@ -67,6 +67,27 @@ cc::MessageInfoPtr Protocol::createMessageImpl(const QString& idAsString)
     return msgInfo;
 }
 
+
+Protocol::UpdateStatus Protocol::updateMessageInfoImpl(cc::MessageInfo& msgInfo)
+{
+    auto msgPtr = msgInfo.getAppMessage();
+    if (!msgPtr) {
+        return UpdateStatus::NoChangeToAppMsg;
+    }
+
+    auto* castedMsgPtr = dynamic_cast<Message*>(msgPtr.get());
+    if (castedMsgPtr == nullptr) {
+        return UpdateStatus::NoChangeToAppMsg;
+    }
+
+    bool updated = castedMsgPtr->refresh();
+    auto parentStatus = Base::updateMessageInfoImpl(msgInfo);
+    if (updated) {
+        return UpdateStatus::AppMsgWasChanged;
+    }
+    return parentStatus;
+}
+
 cc::MessageInfo::MessagePtr Protocol::createPollMsg(Message::MsgIdType id)
 {
     static const comms::MsgFactory<Message, PollMessages> Factory;
@@ -107,6 +128,7 @@ cc::MessageInfo::MessagePtr Protocol::createMessageInternal(const QString& idAsS
 
     return msg;
 }
+
 
 }  // namespace cc_plugin
 

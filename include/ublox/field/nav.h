@@ -185,6 +185,50 @@ using Sec = Min;
 using CLKB = common::I4;
 using CLKD = common::I4;
 
+using NCH = common::U1T<comms::option::ValidNumValueRange<0, 16> >;
+using chn = NCH;
+
+using SVID = common::U1;
+
+using InfoFlags =
+    comms::field::BitmaskValue<
+        common::FieldBase,
+        comms::option::FixedLength<1>,
+        comms::option::BitmaskReservedBits<0xe0, 0>
+    >;
+
+enum class SigQuality : std::uint8_t
+{
+    Idle,
+    Searching,
+    Searching2,
+    DetectedUnusable,
+    CodeLock,
+    CodeCarrierLock,
+    CodeCarrierLock2,
+    CodeCarrierLock_50bpsData,
+    NumOfValues
+};
+
+using QI =
+    comms::field::EnumValue<
+        common::FieldBase,
+        SigQuality,
+        comms::option::ValidNumValueRange<(int)SigQuality::Idle, (int)SigQuality::NumOfValues - 1>
+    >;
+
+using CNO = common::U1;
+using Elev = common::I1;
+using Azim = common::I2;
+using PRRes = common::I4;
+
+using AGE = common::I4;
+using BASEID = common::I2;
+using BASEHLTH = common::I2;
+using STATUS = DiffS;
+
+
+
 }  // namespace nav
 
 }  // namespace field
