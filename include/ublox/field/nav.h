@@ -185,7 +185,12 @@ using Sec = Min;
 using CLKB = common::I4;
 using CLKD = common::I4;
 
-using NCH = common::U1T<comms::option::ValidNumValueRange<0, 16> >;
+template <typename... TOptions>
+using NCHT = common::U1T<comms::option::ValidNumValueRange<0, 16>, TOptions...>;
+using NCH = NCHT<>;
+
+template <typename... TOptions>
+using chnT = NCHT<TOptions...>;
 using chn = NCH;
 
 using SVID = common::U1;
@@ -227,6 +232,20 @@ using BASEID = common::I2;
 using BASEHLTH = common::I2;
 using STATUS = DiffS;
 
+template <typename... TOptions>
+using DgpsFlagsT =
+    comms::field::BitmaskValue<
+        common::FieldBase,
+        comms::option::FixedLength<1>,
+        comms::option::BitmaskReservedBits<0xfe, 0>,
+        TOptions...
+    >;
+
+using DgpsFlags = DgpsFlagsT<>;
+
+using AGECH = common::U2;
+using PRC = common::R4;
+using PRRC = common::R4;
 
 
 }  // namespace nav

@@ -165,6 +165,28 @@ QVariantMap createQiProperties()
     return props;
 }
 
+QVariantMap createDgpsStatusProperties()
+{
+    auto props = createDiffStatusProperties();
+    props.insert(cc::Property::name(), "STATUS");
+    return props;
+}
+
+QVariantMap createDgpsFlagsProperties()
+{
+    QVariantMap flagsProps;
+    flagsProps.insert(cc::Property::name(), "Flags");
+    flagsProps.insert(cc::Property::indexedName(0U), "DGPS is used");
+    flagsProps.insert(cc::Property::serialisedHidden(), true);
+
+    auto chNumProps = chNumProperties();
+    chNumProps.insert(cc::Property::serialisedHidden(), true);
+
+    QVariantMap props;
+    props.insert(cc::Property::indexedData(0U), std::move(chNumProps));
+    props.insert(cc::Property::indexedData(1U), std::move(flagsProps));
+    return props;
+}
 
 }  // namespace
 
@@ -551,6 +573,55 @@ const QVariantMap& prresProperties()
     static const QVariantMap Props = createNameOnlyProperties("PRRes");
     return Props;
 }
+
+const QVariantMap& ageProperties()
+{
+    static const QVariantMap Props = createNameOnlyProperties("AGE");
+    return Props;
+}
+
+const QVariantMap& baseIdProperties()
+{
+    static const QVariantMap Props = createNameOnlyProperties("BASEID");
+    return Props;
+}
+
+const QVariantMap& baseHealthProperties()
+{
+    static const QVariantMap Props = createNameOnlyProperties("BASEHLTH");
+    return Props;
+}
+
+const QVariantMap& dgpsStatusProperties()
+{
+    static const QVariantMap Props = createDgpsStatusProperties();
+    return Props;
+}
+
+const QVariantMap& dgpsFlagsProperties()
+{
+    static const QVariantMap Props = createDgpsFlagsProperties();
+    return Props;
+}
+
+const QVariantMap& agechProperties()
+{
+    static const QVariantMap Props = createNameOnlyProperties("AGECH");
+    return Props;
+}
+
+const QVariantMap& prcProperties()
+{
+    static const QVariantMap Props = createNameOnlyProperties("PRC");
+    return Props;
+}
+
+const QVariantMap& prrcProperties()
+{
+    static const QVariantMap Props = createNameOnlyProperties("PRRC");
+    return Props;
+}
+
 
 }  // namespace nav
 

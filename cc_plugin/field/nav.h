@@ -96,6 +96,15 @@ const QVariantMap& cnoProperties();
 const QVariantMap& elevProperties();
 const QVariantMap& azimProperties();
 const QVariantMap& prresProperties();
+const QVariantMap& ageProperties();
+const QVariantMap& baseIdProperties();
+const QVariantMap& baseHealthProperties();
+const QVariantMap& dgpsStatusProperties();
+const QVariantMap& dgpsFlagsProperties();
+const QVariantMap& agechProperties();
+const QVariantMap& prcProperties();
+const QVariantMap& prrcProperties();
+
 
 }  // namespace nav
 

@@ -19,6 +19,7 @@
 #pragma once
 
 #include <cstdint>
+#include <limits>
 #include <comms/comms.h>
 
 namespace ublox
@@ -97,6 +98,39 @@ using res1 = U1;
 using res2 = U2;
 
 using res4 = U4;
+
+template <typename... TOptions>
+using R4T =
+    comms::field::FloatValue<
+        FieldBase,
+        float,
+        TOptions...
+    >;
+
+typedef R4T<> R4;
+
+static_assert(std::numeric_limits<float>::is_iec559,
+    "float is expected to have IEEE 754 representation");
+
+static_assert(sizeof(float) == sizeof(std::uint32_t),
+    "float is expected to have size of 4 bytes");
+
+template <typename... TOptions>
+using R8T =
+    comms::field::FloatValue<
+        FieldBase,
+        double,
+        TOptions...
+    >;
+
+typedef R8T<> R8;
+
+static_assert(std::numeric_limits<double>::is_iec559,
+    "double is expected to have IEEE 754 representation");
+
+static_assert(sizeof(double) == sizeof(std::uint64_t),
+    "double is expected to have size of 8 bytes");
+
 
 }  // namespace common
 
