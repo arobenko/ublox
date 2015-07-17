@@ -97,6 +97,13 @@ using res1 = U1;
 
 using res2 = U2;
 
+using res3 =
+    comms::field::IntValue<
+        FieldBase,
+        std::uint32_t,
+        comms::option::FixedLength<3>
+    >;
+
 using res4 = U4;
 
 template <typename... TOptions>

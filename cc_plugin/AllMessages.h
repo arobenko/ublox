@@ -47,6 +47,8 @@
 #include "cc_plugin/message/NavSvinfoPoll.h"
 #include "cc_plugin/message/NavDgps.h"
 #include "cc_plugin/message/NavDgpsPoll.h"
+#include "cc_plugin/message/NavSbas.h"
+#include "cc_plugin/message/NavSbasPoll.h"
 
 #include "cc_plugin/message/AckNak.h"
 #include "cc_plugin/message/AckAck.h"
@@ -84,6 +86,8 @@ typedef std::tuple<
     cc_plugin::message::NavSvinfoPoll,
     cc_plugin::message::NavDgps,
     cc_plugin::message::NavDgpsPoll,
+    cc_plugin::message::NavSbas,
+    cc_plugin::message::NavSbasPoll,
     cc_plugin::message::AckNak,
     cc_plugin::message::AckAck
 > AllMessages;

@@ -247,6 +247,62 @@ using AGECH = common::U2;
 using PRC = common::R4;
 using PRRC = common::R4;
 
+using GEO = common::U1;
+
+enum SbasMode : std::uint8_t
+{
+    Disabled,
+    EnabledIntegrity,
+    EnabledTestmode,
+    NumOfValues
+};
+
+using MODE =
+    comms::field::EnumValue<
+        common::FieldBase,
+        SbasMode,
+        comms::option::ValidNumValueRange<(int)SbasMode::Disabled, (int)SbasMode::NumOfValues - 1>
+    >;
+
+enum SbasSys : std::int8_t
+{
+    Unknown = -1,
+    WAAS = 0,
+    EGNOS = 1,
+    MSAS = 2,
+    GPS = 16
+};
+
+struct SbasSysValidator
+{
+    template <typename TField>
+    bool operator()(const TField& field) const
+    {
+        auto val = field.value();
+        return ((SbasSys::Unknown <= val) && (val <= SbasSys::MSAS)) ||
+               (val == SbasSys::GPS);
+    }
+};
+
+using SYS =
+    comms::field::EnumValue<
+        common::FieldBase,
+        SbasSys,
+        comms::option::ContentsValidator<SbasSysValidator>
+    >;
+
+using SERVICE =
+    comms::field::BitmaskValue<
+        common::FieldBase,
+        comms::option::FixedLength<1>,
+        comms::option::BitmaskReservedBits<0xf0, 0>
+    >;
+
+using PRCcm = common::I2;
+
+using CNT = common::U1;
+using UDRE = common::U1;
+using IC = common::I2;
 
 }  // namespace nav
 

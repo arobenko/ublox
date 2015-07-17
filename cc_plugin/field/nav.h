@@ -104,6 +104,13 @@ const QVariantMap& dgpsFlagsProperties();
 const QVariantMap& agechProperties();
 const QVariantMap& prcProperties();
 const QVariantMap& prrcProperties();
+const QVariantMap& geoProperties();
+const QVariantMap& modeProperties();
+const QVariantMap& sysProperties();
+const QVariantMap& serviceProperties();
+const QVariantMap& cntProperties();
+const QVariantMap& udreProperties();
+const QVariantMap& icProperties();
 
 
 }  // namespace nav

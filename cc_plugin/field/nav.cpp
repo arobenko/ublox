@@ -188,6 +188,48 @@ QVariantMap createDgpsFlagsProperties()
     return props;
 }
 
+QVariantMap createModeProperties()
+{
+    QVariantMap props;
+    props.insert(cc::Property::name(), "MODE");
+    props.insert(cc::Property::indexedName(0), "Disabled");
+    props.insert(cc::Property::indexedName(1), "Enabled Integrity");
+    props.insert(cc::Property::indexedName(2), "Enabled Testmode");
+    return props;
+}
+
+QVariantMap createSysProperties()
+{
+    QVariantMap props;
+    props.insert(cc::Property::name(), "SYS");
+    props.insert(cc::Property::indexedName((unsigned)(-1)), "Unknown");
+    props.insert(cc::Property::indexedName(0), "WAAS");
+    props.insert(cc::Property::indexedName(1), "EGNOS");
+    props.insert(cc::Property::indexedName(2), "MSAS");
+    props.insert(cc::Property::indexedName(16), "GPS");
+    return props;
+}
+
+QVariantMap createServiceProperties()
+{
+    QVariantMap props;
+    props.insert(cc::Property::name(), "SERVICE");
+    props.insert(cc::Property::indexedName(0), "Ranging");
+    props.insert(cc::Property::indexedName(1), "Corrections");
+    props.insert(cc::Property::indexedName(2), "Integrity");
+    props.insert(cc::Property::indexedName(3), "Testmode");
+    return props;
+}
+
+QVariantMap createCntProperties()
+{
+    QVariantMap props;
+    props.insert(cc::Property::name(), "CNT");
+    props.insert(cc::Property::readOnly(), true);
+    return props;
+}
+
+
 }  // namespace
 
 const QVariantMap& itowProperties()
@@ -619,6 +661,48 @@ const QVariantMap& prcProperties()
 const QVariantMap& prrcProperties()
 {
     static const QVariantMap Props = createNameOnlyProperties("PRRC");
+    return Props;
+}
+
+const QVariantMap& geoProperties()
+{
+    static const QVariantMap Props = createNameOnlyProperties("GEO");
+    return Props;
+}
+
+const QVariantMap& modeProperties()
+{
+    static const QVariantMap Props = createModeProperties();
+    return Props;
+}
+
+const QVariantMap& sysProperties()
+{
+    static const QVariantMap Props = createSysProperties();
+    return Props;
+}
+
+const QVariantMap& serviceProperties()
+{
+    static const QVariantMap Props = createServiceProperties();
+    return Props;
+}
+
+const QVariantMap& cntProperties()
+{
+    static const QVariantMap Props = createCntProperties();
+    return Props;
+}
+
+const QVariantMap& udreProperties()
+{
+    static const QVariantMap Props = createNameOnlyProperties("UDRE");
+    return Props;
+}
+
+const QVariantMap& icProperties()
+{
+    static const QVariantMap Props = createNameOnlyProperties("IC");
     return Props;
 }
 
