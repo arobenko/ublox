@@ -253,7 +253,7 @@ enum SbasMode : std::uint8_t
 {
     Disabled,
     EnabledIntegrity,
-    EnabledTestmode,
+    EnabledTestmode = 3,
     NumOfValues
 };
 

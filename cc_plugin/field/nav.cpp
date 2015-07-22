@@ -18,6 +18,7 @@
 #include "nav.h"
 
 #include "comms_champion/comms_champion.h"
+#include "ublox/field/nav.h"
 
 namespace cc = comms_champion;
 
@@ -38,197 +39,172 @@ namespace
 
 QVariantMap createNameOnlyProperties(const char* name)
 {
-    QVariantMap props;
-    props.insert(cc::Property::name(), name);
-    return props;
+    return cc::Property::createPropertiesMap(name);
 }
 
 QVariantMap createEcefProperties(const char* dir)
 {
-    QVariantMap props;
-    props.insert(cc::Property::name(), QString("ECEF%1").arg(dir));
-    return props;
-}
-
-QVariantMap createZoneProperties()
-{
-    QVariantMap props;
-    props.insert(cc::Property::name(), "ZONE");
-    return props;
+    return cc::Property::createPropertiesMap(QString("ECEF%1").arg(dir));
 }
 
 QVariantMap createHemProperties()
 {
-    QVariantMap props;
-    props.insert(cc::Property::name(), "HEM");
-    props.insert(cc::Property::indexedName(0), "North");
-    props.insert(cc::Property::indexedName(1), "South");
-    return props;
+    QVariantList enumValues;
+    cc::Property::appendEnumValue(enumValues, "North");
+    cc::Property::appendEnumValue(enumValues, "South");
+    return cc::Property::createPropertiesMap("HEM", std::move(enumValues));
 }
 
 QVariantMap createDopProperties(char letter)
 {
     static const QString Suffix("DOP");
-    QVariantMap props;
     QString str(letter);
     str.append(Suffix);
-    props.insert(cc::Property::name(), str);
-    return props;
+    return cc::Property::createPropertiesMap(str);
 }
 
 QVariantMap createGpsFixProperties()
 {
-    QVariantMap props;
-    props.insert(cc::Property::name(), "GPSfix");
-    props.insert(cc::Property::indexedName(0U), "no fix");
-    props.insert(cc::Property::indexedName(1U), "dead reckoning only");
-    props.insert(cc::Property::indexedName(2U), "2D-fix");
-    props.insert(cc::Property::indexedName(3U), "3D-fix");
-    props.insert(cc::Property::indexedName(4U), "GPS + dead reckoning combined");
-    props.insert(cc::Property::indexedName(5U), "time only fix");
-    return props;
+    QVariantList enumValues;
+    cc::Property::appendEnumValue(enumValues, "no fix");
+    cc::Property::appendEnumValue(enumValues, "dead reckoning only");
+    cc::Property::appendEnumValue(enumValues, "2D-fix");
+    cc::Property::appendEnumValue(enumValues, "3D-fix");
+    cc::Property::appendEnumValue(enumValues, "GPS + dead reckoning combined");
+    cc::Property::appendEnumValue(enumValues, "time only fix");
+
+    return cc::Property::createPropertiesMap("GPSfix", std::move(enumValues));
 }
 
 QVariantMap createFlagsProperties()
 {
-    QVariantMap props;
-    props.insert(cc::Property::name(), "Flags");
-    props.insert(cc::Property::indexedName(0U), "GPSfixOK");
-    props.insert(cc::Property::indexedName(1U), "DiffSoln");
-    props.insert(cc::Property::indexedName(2U), "WKNSET");
-    props.insert(cc::Property::indexedName(3U), "TOWSET");
-    return props;
+    QVariantList bitNames;
+    bitNames.append("GPSfixOK");
+    bitNames.append("DiffSoln");
+    bitNames.append("WKNSET");
+    bitNames.append("TOWSET");
+    return cc::Property::createPropertiesMap("Flags", std::move(bitNames));
 }
 
 QVariantMap createDiffStatusProperties()
 {
-    QVariantMap props;
-    props.insert(cc::Property::name(), "DiffS");
-    props.insert(cc::Property::indexedName(0U), "none");
-    props.insert(cc::Property::indexedName(1U), "PR+PRR Correction");
-    props.insert(cc::Property::indexedName(2U), "PR+PRR+CP Correction");
-    props.insert(cc::Property::indexedName(3U), "High accuracy PR+PRR+CP Correction");
-    return props;
+    QVariantList enumValues;
+    cc::Property::appendEnumValue(enumValues, "none");
+    cc::Property::appendEnumValue(enumValues, "PR+PRR Correction");
+    cc::Property::appendEnumValue(enumValues, "PR+PRR+CP Correction");
+    cc::Property::appendEnumValue(enumValues, "High accuracy PR+PRR+CP Correction");
+    return cc::Property::createPropertiesMap("DiffS", std::move(enumValues));
 }
 
 QVariantMap createVelProperties(const char* dir)
 {
     QString str("VEL_");
     str.append(QString(dir));
-    QVariantMap props;
-    props.insert(cc::Property::name(), str);
-    return props;
+    return cc::Property::createPropertiesMap(str);
 }
 
 QVariantMap createTimeValidProperties()
 {
-    QVariantMap props;
-    props.insert(cc::Property::name(), "Valid");
-    props.insert(cc::Property::indexedName(0U), "Valid Time of Week");
-    props.insert(cc::Property::indexedName(1U), "Valid Week Number");
-    props.insert(cc::Property::indexedName(2U), "Valid UTC");
-    return props;
+    QVariantList bitNames;
+    bitNames.append("Valid Time of Week");
+    bitNames.append("Valid Week Number");
+    bitNames.append("Valid UTC");
+    return cc::Property::createPropertiesMap("Valid", std::move(bitNames));
 }
 
 QVariantMap createNchProperties()
 {
-    QVariantMap props;
-    props.insert(cc::Property::name(), "NCH");
-    props.insert(cc::Property::readOnly(), true);
+    auto props = cc::Property::createPropertiesMap("NCH");
+    cc::Property::setReadOnly(props);
     return props;
 }
 
 QVariantMap createInfoFlagsProperties()
 {
-    QVariantMap props;
-    props.insert(cc::Property::name(), "Flags");
-    props.insert(cc::Property::indexedName(0U), "SV is used for navigation");
-    props.insert(cc::Property::indexedName(1U), "Diff correction data is available");
-    props.insert(cc::Property::indexedName(2U), "Orbit info is available");
-    props.insert(cc::Property::indexedName(3U), "Orbit info is Ephemeris");
-    props.insert(cc::Property::indexedName(4U), "SV is unhealthy");
-    return props;
+    QVariantList bitNames;
+    bitNames.append("SV is used for navigation");
+    bitNames.append("Diff correction data is available");
+    bitNames.append("Orbit info is available");
+    bitNames.append("Orbit info is Ephemeris");
+    bitNames.append("SV is unhealthy");
+    return cc::Property::createPropertiesMap("Flags", std::move(bitNames));
 }
 
 QVariantMap createQiProperties()
 {
-    QVariantMap props;
-    props.insert(cc::Property::name(), "QI");
-    props.insert(cc::Property::indexedName(0U), "Idle");
-    props.insert(cc::Property::indexedName(1U), "Searching");
-    props.insert(cc::Property::indexedName(2U), "Searching (2)");
-    props.insert(cc::Property::indexedName(3U), "Signal detected, unusable");
-    props.insert(cc::Property::indexedName(4U), "Code Lock on Signal");
-    props.insert(cc::Property::indexedName(5U), "Code and Carrier locked");
-    props.insert(cc::Property::indexedName(6U), "Code and Carrier locked (2)");
-    props.insert(cc::Property::indexedName(7U), "Code and Carrier locked, 50bps data");
-    return props;
+    QVariantList enumValues;
+    cc::Property::appendEnumValue(enumValues, "Idle");
+    cc::Property::appendEnumValue(enumValues, "Searching");
+    cc::Property::appendEnumValue(enumValues, "Searching (2)");
+    cc::Property::appendEnumValue(enumValues, "Signal detected, unusable");
+    cc::Property::appendEnumValue(enumValues, "Code Lock on Signal");
+    cc::Property::appendEnumValue(enumValues, "Code and Carrier locked");
+    cc::Property::appendEnumValue(enumValues, "Code and Carrier locked (2)");
+    cc::Property::appendEnumValue(enumValues, "Code and Carrier locked, 50bps data");
+    return cc::Property::createPropertiesMap("QI", std::move(enumValues));
 }
 
 QVariantMap createDgpsStatusProperties()
 {
     auto props = createDiffStatusProperties();
-    props.insert(cc::Property::name(), "STATUS");
+    cc::Property::setName(props, "STATUS");
     return props;
 }
 
 QVariantMap createDgpsFlagsProperties()
 {
-    QVariantMap flagsProps;
-    flagsProps.insert(cc::Property::name(), "Flags");
-    flagsProps.insert(cc::Property::indexedName(0U), "DGPS is used");
-    flagsProps.insert(cc::Property::serialisedHidden(), true);
+    QVariantList bitNames;
+    bitNames.append("DGPS is used");
+    auto flagsProps = cc::Property::createPropertiesMap("Flags", std::move(bitNames));
+    cc::Property::setSerialisedHidden(flagsProps);
 
     auto chNumProps = chNumProperties();
-    chNumProps.insert(cc::Property::serialisedHidden(), true);
+    cc::Property::setSerialisedHidden(chNumProps);
 
+    QVariantList membersData;
+    membersData.append(std::move(chNumProps));
+    membersData.append(std::move(flagsProps));
     QVariantMap props;
-    props.insert(cc::Property::indexedData(0U), std::move(chNumProps));
-    props.insert(cc::Property::indexedData(1U), std::move(flagsProps));
+    cc::Property::setData(props, std::move(membersData));
     return props;
 }
 
 QVariantMap createModeProperties()
 {
-    QVariantMap props;
-    props.insert(cc::Property::name(), "MODE");
-    props.insert(cc::Property::indexedName(0), "Disabled");
-    props.insert(cc::Property::indexedName(1), "Enabled Integrity");
-    props.insert(cc::Property::indexedName(2), "Enabled Testmode");
-    return props;
+    QVariantList enumValues;
+    cc::Property::appendEnumValue(enumValues, "Disabled", (int)ublox::field::nav::SbasMode::Disabled);
+    cc::Property::appendEnumValue(enumValues, "Enabled Integrity", (int)ublox::field::nav::SbasMode::EnabledIntegrity);
+    cc::Property::appendEnumValue(enumValues, "Enabled Testmode", (int)ublox::field::nav::SbasMode::EnabledTestmode);
+    return cc::Property::createPropertiesMap("MODE", std::move(enumValues));
 }
 
 QVariantMap createSysProperties()
 {
-    QVariantMap props;
-    props.insert(cc::Property::name(), "SYS");
-    props.insert(cc::Property::indexedName((unsigned)(-1)), "Unknown");
-    props.insert(cc::Property::indexedName(0), "WAAS");
-    props.insert(cc::Property::indexedName(1), "EGNOS");
-    props.insert(cc::Property::indexedName(2), "MSAS");
-    props.insert(cc::Property::indexedName(16), "GPS");
-    return props;
+    QVariantList enumValues;
+    cc::Property::appendEnumValue(enumValues, "Unknown", (int)ublox::field::nav::SbasSys::Unknown);
+    cc::Property::appendEnumValue(enumValues, "WAAS", (int)ublox::field::nav::SbasSys::WAAS);
+    cc::Property::appendEnumValue(enumValues, "EGNOS", (int)ublox::field::nav::SbasSys::EGNOS);
+    cc::Property::appendEnumValue(enumValues, "MSAS", (int)ublox::field::nav::SbasSys::MSAS);
+    cc::Property::appendEnumValue(enumValues, "GPS", (int)ublox::field::nav::SbasSys::GPS);
+    return cc::Property::createPropertiesMap("SYS", std::move(enumValues));
 }
 
 QVariantMap createServiceProperties()
 {
-    QVariantMap props;
-    props.insert(cc::Property::name(), "SERVICE");
-    props.insert(cc::Property::indexedName(0), "Ranging");
-    props.insert(cc::Property::indexedName(1), "Corrections");
-    props.insert(cc::Property::indexedName(2), "Integrity");
-    props.insert(cc::Property::indexedName(3), "Testmode");
-    return props;
+    QVariantList bitNames;
+    bitNames.append("Ranging");
+    bitNames.append("Corrections");
+    bitNames.append("Integrity");
+    bitNames.append("Testmode");
+    return cc::Property::createPropertiesMap("SERVICE", std::move(bitNames));
 }
 
 QVariantMap createCntProperties()
 {
-    QVariantMap props;
-    props.insert(cc::Property::name(), "CNT");
-    props.insert(cc::Property::readOnly(), true);
+    auto props = cc::Property::createPropertiesMap("CNT");
+    cc::Property::setReadOnly(props);
     return props;
 }
-
 
 }  // namespace
 

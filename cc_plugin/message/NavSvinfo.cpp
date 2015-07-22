@@ -39,25 +39,25 @@ namespace
 
 QVariantMap createSingleInfoProperties()
 {
-    QVariantMap props;
-    props.insert(cc::Property::indexedData(0U), cc_plugin::field::nav::chNumProperties());
-    props.insert(cc::Property::indexedData(1U), cc_plugin::field::nav::svidProperties());
-    props.insert(cc::Property::indexedData(2U), cc_plugin::field::nav::infoFlagsProperties());
-    props.insert(cc::Property::indexedData(3U), cc_plugin::field::nav::qiProperties());
-    props.insert(cc::Property::indexedData(4U), cc_plugin::field::nav::cnoProperties());
-    props.insert(cc::Property::indexedData(5U), cc_plugin::field::nav::elevProperties());
-    props.insert(cc::Property::indexedData(6U), cc_plugin::field::nav::azimProperties());
-    props.insert(cc::Property::indexedData(7U), cc_plugin::field::nav::prresProperties());
+    QVariantList membersData;
+    membersData.append(cc_plugin::field::nav::chNumProperties());
+    membersData.append(cc_plugin::field::nav::svidProperties());
+    membersData.append(cc_plugin::field::nav::infoFlagsProperties());
+    membersData.append(cc_plugin::field::nav::qiProperties());
+    membersData.append(cc_plugin::field::nav::cnoProperties());
+    membersData.append(cc_plugin::field::nav::elevProperties());
+    membersData.append(cc_plugin::field::nav::azimProperties());
+    membersData.append(cc_plugin::field::nav::prresProperties());
 
+    QVariantMap props;
+    cc::Property::setData(props, std::move(membersData));
     return props;
 }
 
 QVariantMap createInfosListProperties()
 {
-    QVariantMap props;
-    props.insert(cc::Property::name(), "Infos");
-    props.insert(cc::Property::data(), createSingleInfoProperties());
-    props.insert(cc::Property::serialisedHidden(), true);
+    auto props = cc::Property::createPropertiesMap("Infos", createSingleInfoProperties());
+    cc::Property::setSerialisedHidden(props);
     return props;
 }
 

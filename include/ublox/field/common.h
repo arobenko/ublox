@@ -22,6 +22,8 @@
 #include <limits>
 #include <comms/comms.h>
 
+#include "ublox/Message.h"
+
 namespace ublox
 {
 

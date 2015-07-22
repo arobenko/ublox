@@ -39,25 +39,26 @@ namespace
 
 QVariantMap createSingleDataElementProperties()
 {
+    QVariantList membersData;
+    membersData.append(cc_plugin::field::nav::svidProperties());
+    membersData.append(cc_plugin::field::nav::infoFlagsProperties());
+    membersData.append(cc_plugin::field::nav::udreProperties());
+    membersData.append(cc_plugin::field::nav::sysProperties());
+    membersData.append(cc_plugin::field::nav::serviceProperties());
+    membersData.append(cc_plugin::field::common::resProperties(1));
+    membersData.append(cc_plugin::field::nav::prcProperties());
+    membersData.append(cc_plugin::field::common::resProperties(2));
+    membersData.append(cc_plugin::field::nav::icProperties());
+
     QVariantMap props;
-    props.insert(cc::Property::indexedData(0U), cc_plugin::field::nav::svidProperties());
-    props.insert(cc::Property::indexedData(1U), cc_plugin::field::nav::infoFlagsProperties());
-    props.insert(cc::Property::indexedData(2U), cc_plugin::field::nav::udreProperties());
-    props.insert(cc::Property::indexedData(3U), cc_plugin::field::nav::sysProperties());
-    props.insert(cc::Property::indexedData(4U), cc_plugin::field::nav::serviceProperties());
-    props.insert(cc::Property::indexedData(5U), cc_plugin::field::common::resProperties(1));
-    props.insert(cc::Property::indexedData(6U), cc_plugin::field::nav::prcProperties());
-    props.insert(cc::Property::indexedData(7U), cc_plugin::field::common::resProperties(2));
-    props.insert(cc::Property::indexedData(8U), cc_plugin::field::nav::icProperties());
+    cc::Property::setData(props, std::move(membersData));
     return props;
 }
 
 QVariantMap createDataListProperties()
 {
-    QVariantMap props;
-    props.insert(cc::Property::name(), "Data");
-    props.insert(cc::Property::data(), createSingleDataElementProperties());
-    props.insert(cc::Property::serialisedHidden(), true);
+    auto props = cc::Property::createPropertiesMap("Data", createSingleDataElementProperties());
+    cc::Property::setSerialisedHidden(props);
     return props;
 }
 

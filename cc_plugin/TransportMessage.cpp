@@ -36,37 +36,27 @@ namespace
 
 QVariantMap createSync1MemberData()
 {
-    QVariantMap map;
-    map.insert(cc::Property::name(), "SYNC 1");
-    return map;
+    return cc::Property::createPropertiesMap("SYNC 1");
 }
 
 QVariantMap createSync2MemberData()
 {
-    QVariantMap map;
-    map.insert(cc::Property::name(), "SYNC 2");
-    return map;
+    return cc::Property::createPropertiesMap("SYNC 2");
 }
 
 QVariantMap createLengthProperties()
 {
-    QVariantMap map;
-    map.insert(cc::Property::name(), "LENGTH");
-    return map;
+    return cc::Property::createPropertiesMap("LENGTH");
 }
 
 QVariantMap createPayloadProperties()
 {
-    QVariantMap map;
-    map.insert(cc::Property::name(), "PAYLOAD");
-    return map;
+    return cc::Property::createPropertiesMap("PAYLOAD");
 }
 
 QVariantMap createChecksumProperties()
 {
-    QVariantMap map;
-    map.insert(cc::Property::name(), "CK");
-    return map;
+    return cc::Property::createPropertiesMap("CK");
 }
 
 QVariantList createFieldsProperties()

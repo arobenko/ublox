@@ -39,21 +39,22 @@ namespace
 
 QVariantMap createSingleDataElementProperties()
 {
+    QVariantList membersData;
+    membersData.append(cc_plugin::field::nav::svidProperties());
+    membersData.append(cc_plugin::field::nav::dgpsFlagsProperties());
+    membersData.append(cc_plugin::field::nav::agechProperties());
+    membersData.append(cc_plugin::field::nav::prcProperties());
+    membersData.append(cc_plugin::field::nav::prrcProperties());
+
     QVariantMap props;
-    props.insert(cc::Property::indexedData(0U), cc_plugin::field::nav::svidProperties());
-    props.insert(cc::Property::indexedData(1U), cc_plugin::field::nav::dgpsFlagsProperties());
-    props.insert(cc::Property::indexedData(2U), cc_plugin::field::nav::agechProperties());
-    props.insert(cc::Property::indexedData(3U), cc_plugin::field::nav::prcProperties());
-    props.insert(cc::Property::indexedData(4U), cc_plugin::field::nav::prrcProperties());
+    cc::Property::setData(props, std::move(membersData));
     return props;
 }
 
 QVariantMap createDataListProperties()
 {
-    QVariantMap props;
-    props.insert(cc::Property::name(), "Data");
-    props.insert(cc::Property::data(), createSingleDataElementProperties());
-    props.insert(cc::Property::serialisedHidden(), true);
+    auto props = cc::Property::createPropertiesMap("Data", createSingleDataElementProperties());
+    cc::Property::setSerialisedHidden(props);
     return props;
 }
 

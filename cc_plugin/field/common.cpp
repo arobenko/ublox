@@ -45,9 +45,7 @@ QVariantMap createResProperties(unsigned idx)
     if (0 < idx) {
         str.append(QString("%1").arg(idx, 1, 10, QChar('0')));
     }
-    QVariantMap props;
-    props.insert(cc::Property::name(), str);
-    return props;
+    return cc::Property::createPropertiesMap(str);
 }
 
 
