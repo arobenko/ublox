@@ -45,6 +45,8 @@ function (cc_plugin_ublox)
         message/NavDgpsPoll.cpp
         message/NavSbas.cpp
         message/NavSbasPoll.cpp
+        message/NavEkfstatus.cpp
+        message/NavEkfstatusPoll.cpp
         message/AckNak.cpp
         message/AckAck.cpp
         field/MsgId.cpp

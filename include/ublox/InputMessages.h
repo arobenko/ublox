@@ -36,6 +36,7 @@
 #include "message/NavSvinfo.h"
 #include "message/NavDgps.h"
 #include "message/NavSbas.h"
+#include "message/NavEkfstatus.h"
 
 #include "message/AckNak.h"
 #include "message/AckAck.h"
@@ -61,6 +62,7 @@ using InputMessages =
         message::NavSvinfo<TMessage>,
         message::NavDgps<TMessage>,
         message::NavSbas<TMessage>,
+        message::NavEkfstatus<TMessage>,
         message::AckNak<TMessage>,
         message::AckAck<TMessage>
     >;

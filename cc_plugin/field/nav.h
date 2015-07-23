@@ -111,6 +111,19 @@ const QVariantMap& serviceProperties();
 const QVariantMap& cntProperties();
 const QVariantMap& udreProperties();
 const QVariantMap& icProperties();
+const QVariantMap& pulsesProperties();
+const QVariantMap& periodProperties();
+const QVariantMap& gyromeanProperties();
+const QVariantMap& temperatureProperties();
+const QVariantMap& directionProperties();
+const QVariantMap& calibStatusProperties();
+const QVariantMap& pulseScaleProperties();
+const QVariantMap& gyroBiasProperties();
+const QVariantMap& gyroScaleProperties();
+const QVariantMap& accPulseScaleProperties();
+const QVariantMap& accGyroBiasProperties();
+const QVariantMap& accGyroScaleProperties();
+const QVariantMap& measUsedProperties();
 
 
 }  // namespace nav

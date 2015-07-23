@@ -35,6 +35,7 @@
 #include "cc_plugin/message/NavSvinfoPoll.h"
 #include "cc_plugin/message/NavDgpsPoll.h"
 #include "cc_plugin/message/NavSbasPoll.h"
+#include "cc_plugin/message/NavEkfstatusPoll.h"
 
 namespace ublox
 {
@@ -56,7 +57,8 @@ typedef std::tuple<
     cc_plugin::message::NavClockPoll,
     cc_plugin::message::NavSvinfoPoll,
     cc_plugin::message::NavDgpsPoll,
-    cc_plugin::message::NavSbasPoll
+    cc_plugin::message::NavSbasPoll,
+    cc_plugin::message::NavEkfstatusPoll
 > PollMessages;
 
 }  // namespace cc_plugin

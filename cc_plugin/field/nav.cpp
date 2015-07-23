@@ -206,6 +206,49 @@ QVariantMap createCntProperties()
     return props;
 }
 
+QVariantMap createCalibStatusProperties()
+{
+    QVariantList enumValues;
+    cc::Property::appendEnumValue(enumValues, "no calibration");
+    cc::Property::appendEnumValue(enumValues, "calibrating");
+    cc::Property::appendEnumValue(enumValues, "coarse calibration");
+    cc::Property::appendEnumValue(enumValues, "fine calibration");
+
+    auto tachoProps = cc::Property::createPropertiesMap("Tacho", QVariant::fromValue(enumValues));
+    cc::Property::setSerialisedHidden(tachoProps);
+    auto gyroProps = cc::Property::createPropertiesMap("Gyro", QVariant::fromValue(enumValues));
+    cc::Property::setSerialisedHidden(gyroProps);
+    auto biasGyroProps = cc::Property::createPropertiesMap("Bias Gyro", std::move(enumValues));
+    cc::Property::setSerialisedHidden(biasGyroProps);
+    QVariantMap notUsedBits;
+    cc::Property::setFieldHidden(notUsedBits);
+
+    QVariantList membersData;
+    membersData.append(std::move(tachoProps));
+    membersData.append(std::move(gyroProps));
+    membersData.append(std::move(biasGyroProps));
+    membersData.append(std::move(notUsedBits));
+
+    return cc::Property::createPropertiesMap("calib_status", std::move(membersData));
+}
+
+QVariantMap createMeasUsedProperties()
+{
+    QVariantList bitNames;
+    bitNames.append("Tacho pulse used");
+    bitNames.append("Forward/Backward pulse used");
+    bitNames.append("Gyro used");
+    bitNames.append("Temperature used");
+    bitNames.append("GPS Position used");
+    bitNames.append("GPS Velocity used");
+    bitNames.append("GYRO sensor inconsistency");
+    bitNames.append("Speed pulse sensor inconsistency");
+
+    return cc::Property::createPropertiesMap("meas_used", std::move(bitNames));
+}
+
+
+
 }  // namespace
 
 const QVariantMap& itowProperties()
@@ -681,6 +724,85 @@ const QVariantMap& icProperties()
     static const QVariantMap Props = createNameOnlyProperties("IC");
     return Props;
 }
+
+const QVariantMap& pulsesProperties()
+{
+    static const QVariantMap Props = createNameOnlyProperties("pulses");
+    return Props;
+}
+
+const QVariantMap& periodProperties()
+{
+    static const QVariantMap Props = createNameOnlyProperties("period");
+    return Props;
+}
+
+const QVariantMap& gyromeanProperties()
+{
+    static const QVariantMap Props = createNameOnlyProperties("gyromean");
+    return Props;
+}
+
+const QVariantMap& temperatureProperties()
+{
+    static const QVariantMap Props = createNameOnlyProperties("temperature");
+    return Props;
+}
+
+const QVariantMap& directionProperties()
+{
+    static const QVariantMap Props = createNameOnlyProperties("direction");
+    return Props;
+}
+
+const QVariantMap& calibStatusProperties()
+{
+    static const QVariantMap Props = createCalibStatusProperties();
+    return Props;
+}
+
+const QVariantMap& pulseScaleProperties()
+{
+    static const QVariantMap Props = createNameOnlyProperties("pulse_scale");
+    return Props;
+}
+
+const QVariantMap& gyroBiasProperties()
+{
+    static const QVariantMap Props = createNameOnlyProperties("gyro_bias");
+    return Props;
+}
+
+const QVariantMap& gyroScaleProperties()
+{
+    static const QVariantMap Props = createNameOnlyProperties("gyro_scale");
+    return Props;
+}
+
+const QVariantMap& accPulseScaleProperties()
+{
+    static const QVariantMap Props = createNameOnlyProperties("acc_pulse_scale");
+    return Props;
+}
+
+const QVariantMap& accGyroBiasProperties()
+{
+    static const QVariantMap Props = createNameOnlyProperties("acc_gyro_bias");
+    return Props;
+}
+
+const QVariantMap& accGyroScaleProperties()
+{
+    static const QVariantMap Props = createNameOnlyProperties("acc_gyro_scale");
+    return Props;
+}
+
+const QVariantMap& measUsedProperties()
+{
+    static const QVariantMap Props = createMeasUsedProperties();
+    return Props;
+}
+
 
 
 }  // namespace nav

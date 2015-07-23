@@ -249,7 +249,7 @@ using PRRC = common::R4;
 
 using GEO = common::U1;
 
-enum SbasMode : std::uint8_t
+enum class SbasMode : std::uint8_t
 {
     Disabled,
     EnabledIntegrity,
@@ -303,6 +303,52 @@ using PRCcm = common::I2;
 using CNT = common::U1;
 using UDRE = common::U1;
 using IC = common::I2;
+
+using pulses = common::I4;
+using period = common::I4;
+using gyromean = common::U4;
+using temperature = common::I2;
+using direction = common::I1;
+
+enum class CalibStatus : std::uint8_t
+{
+    NoCalibration,
+    Calibrating,
+    CoarseCalibration,
+    FineCalibration,
+    NumOfValues
+};
+
+using CalibStatusField =
+    comms::field::EnumValue<
+        common::FieldBase,
+        CalibStatus,
+        comms::option::FixedBitLength<2>,
+        comms::option::ValidNumValueRange<(int)CalibStatus::NoCalibration, (int)CalibStatus::NumOfValues - 1>
+    >;
+
+using calib_status =
+    comms::field::Bitfield<
+        common::FieldBase,
+        std::tuple<
+            CalibStatusField,
+            CalibStatusField,
+            CalibStatusField,
+            common::U1T<comms::option::FixedBitLength<2>>
+        >
+    >;
+
+using pulse_scale = common::I4;
+using gyro_bias = common::I4;
+using gyro_scale = common::I4;
+using acc_pulse_scale = common::I2;
+using acc_gyro_bias = common::I2;
+using acc_gyro_scale = common::I2;
+using meas_used =
+    comms::field::BitmaskValue<
+        common::FieldBase,
+        comms::option::FixedLength<1>
+    >;
 
 }  // namespace nav
 
