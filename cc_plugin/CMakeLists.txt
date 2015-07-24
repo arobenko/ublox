@@ -47,11 +47,14 @@ function (cc_plugin_ublox)
         message/NavSbasPoll.cpp
         message/NavEkfstatus.cpp
         message/NavEkfstatusPoll.cpp
+        message/RxmRaw.cpp
+        message/RxmRawPoll.cpp
         message/AckNak.cpp
         message/AckAck.cpp
         field/MsgId.cpp
         field/common.cpp
         field/nav.cpp
+        field/rxm.cpp
     )
     
     set (hdr

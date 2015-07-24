@@ -19,6 +19,7 @@
 
 #include "comms_champion/comms_champion.h"
 #include "ublox/field/nav.h"
+#include "common.h"
 
 namespace cc = comms_champion;
 
@@ -253,8 +254,7 @@ QVariantMap createMeasUsedProperties()
 
 const QVariantMap& itowProperties()
 {
-    static const QVariantMap Props = createNameOnlyProperties("ITOW");
-    return Props;
+    return common::itowProperties();
 }
 
 const QVariantMap& ecefPropertiesX()

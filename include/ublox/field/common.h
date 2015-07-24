@@ -140,6 +140,10 @@ static_assert(std::numeric_limits<double>::is_iec559,
 static_assert(sizeof(double) == sizeof(std::uint64_t),
     "double is expected to have size of 8 bytes");
 
+using ITOW = U4;
+using Week = I2;
+
+
 
 }  // namespace common
 

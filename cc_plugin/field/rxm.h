@@ -18,7 +18,6 @@
 
 #pragma once
 
-#include <QtCore/QVariantList>
 #include <QtCore/QVariantMap>
 
 namespace ublox
@@ -30,15 +29,21 @@ namespace cc_plugin
 namespace field
 {
 
-namespace common
+namespace rxm
 {
 
-const QVariantList& emptyProperties();
-const QVariantMap& resProperties(unsigned idx);
 const QVariantMap& itowProperties();
+const QVariantMap& weekProperties();
+const QVariantMap& nsvProperties();
+const QVariantMap& cpMesProperties();
+const QVariantMap& prMesProperties();
+const QVariantMap& doMesProperties();
+const QVariantMap& svProperties();
+const QVariantMap& mesQiProperties();
+const QVariantMap& cnoProperties();
+const QVariantMap& lliProperties();
 
-
-}  // namespace common
+}  // namespace rxm
 
 }  // namespace field
 

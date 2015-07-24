@@ -18,8 +18,10 @@
 
 #pragma once
 
-#include <QtCore/QVariantList>
-#include <QtCore/QVariantMap>
+#include "comms_champion/comms_champion.h"
+#include "ublox/message/RxmRawPoll.h"
+#include "cc_plugin/Message.h"
+#include "cc_plugin/ProtocolMessageBase.h"
 
 namespace ublox
 {
@@ -27,20 +29,28 @@ namespace ublox
 namespace cc_plugin
 {
 
-namespace field
+namespace message
 {
 
-namespace common
+class RxmRawPoll : public
+    ProtocolMessageBase<
+        ublox::message::RxmRawPoll<ublox::cc_plugin::Message>,
+        RxmRawPoll>
 {
+public:
+    RxmRawPoll();
+    RxmRawPoll(const RxmRawPoll&) = default;
+    RxmRawPoll(RxmRawPoll&&) = default;
+    virtual ~RxmRawPoll() = default;
 
-const QVariantList& emptyProperties();
-const QVariantMap& resProperties(unsigned idx);
-const QVariantMap& itowProperties();
+    RxmRawPoll& operator=(const RxmRawPoll&) = default;
+    RxmRawPoll& operator=(RxmRawPoll&&) = default;
 
+protected:
+    virtual const char* nameImpl() const override;
+};
 
-}  // namespace common
-
-}  // namespace field
+}  // namespace message
 
 }  // namespace cc_plugin
 

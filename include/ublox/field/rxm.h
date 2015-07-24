@@ -18,31 +18,32 @@
 
 #pragma once
 
-#include <QtCore/QVariantList>
-#include <QtCore/QVariantMap>
+#include "common.h"
 
 namespace ublox
-{
-
-namespace cc_plugin
 {
 
 namespace field
 {
 
-namespace common
+namespace rxm
 {
 
-const QVariantList& emptyProperties();
-const QVariantMap& resProperties(unsigned idx);
-const QVariantMap& itowProperties();
+using ITOW = common::ITOW;
+using Week = common::Week;
+using NSV = common::U1;
 
+using CPMes = common::R8;
+using PRMes = common::R8;
+using DOMes = common::R4;
+using SV = common::U1;
+using MesQI = common::I1;
+using CNO = common::I1;
+using LLI = common::U1;
 
-}  // namespace common
+}  // namespace rxm
 
 }  // namespace field
-
-}  // namespace cc_plugin
 
 }  // namespace ublox
 

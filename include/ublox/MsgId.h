@@ -40,6 +40,12 @@ enum MsgId : std::uint16_t
     MsgId_NAV_DGPS = 0x0131,
     MsgId_NAV_SBAS = 0x0132,
     MsgId_NAV_EKFSTATUS = 0x0140,
+    MsgId_RXM_RAW = 0x0210,
+    MsgId_RXM_SFRB = 0x0211,
+    MsgId_RXM_SVSI = 0x0220,
+    MsgId_RXM_ALM = 0x0230,
+    MsgId_RXM_EPH = 0x0231,
+    MsgId_RXM_POSREQ = 0x0240,
     MsgId_ACK_NAK = 0x0500,
     MsgId_ACK_ACK = 0x0501
 };

@@ -48,6 +48,10 @@ QVariantMap createResProperties(unsigned idx)
     return cc::Property::createPropertiesMap(str);
 }
 
+QVariantMap createNameOnlyProperties(const char* name)
+{
+    return cc::Property::createPropertiesMap(name);
+}
 
 }  // namespace
 
@@ -75,6 +79,13 @@ const QVariantMap& resProperties(unsigned idx)
 
     return Props[idx];
 }
+
+const QVariantMap& itowProperties()
+{
+    static const QVariantMap Props = createNameOnlyProperties("ITOW");
+    return Props;
+}
+
 
 
 }  // namespace common

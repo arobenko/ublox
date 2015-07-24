@@ -16,10 +16,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-#pragma once
+#include "RxmRawPoll.h"
 
-#include <QtCore/QVariantList>
-#include <QtCore/QVariantMap>
+namespace cc = comms_champion;
 
 namespace ublox
 {
@@ -27,23 +26,23 @@ namespace ublox
 namespace cc_plugin
 {
 
-namespace field
+namespace message
 {
 
-namespace common
+RxmRawPoll::RxmRawPoll()
 {
+    setPoll();
+}
 
-const QVariantList& emptyProperties();
-const QVariantMap& resProperties(unsigned idx);
-const QVariantMap& itowProperties();
+const char* RxmRawPoll::nameImpl() const
+{
+    static const char* Str = "RXM-RAW (Poll)";
+    return Str;
+}
 
-
-}  // namespace common
-
-}  // namespace field
+}  // namespace message
 
 }  // namespace cc_plugin
 
 }  // namespace ublox
-
 

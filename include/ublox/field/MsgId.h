@@ -18,6 +18,8 @@
 
 #pragma once
 
+#include <cstdint>
+#include <limits>
 #include <algorithm>
 #include "comms/comms.h"
 #include "ublox/MsgId.h"
@@ -40,6 +42,7 @@ struct MsgIdValueValidator
 
         static const ValidateFunc Funcs[] = {
             &MsgIdValueValidator::validateNav,
+            &MsgIdValueValidator::validateRxm,
             &MsgIdValueValidator::validateAck
         };
 
@@ -53,8 +56,20 @@ struct MsgIdValueValidator
     }
 
 private:
+    static constexpr std::uint8_t classId(ublox::MsgId id)
+    {
+        return static_cast<std::uint8_t>(
+            (unsigned)id >> std::numeric_limits<std::uint8_t>::digits);
+    }
+
     static bool validateNav(ublox::MsgId id)
     {
+        static const auto NavClassId = classId(MsgId_NAV_POSECEF);
+
+        if (classId(id) != NavClassId) {
+            return false;
+        }
+
         static const ublox::MsgId IDs[] = {
             MsgId_NAV_POSECEF,
             MsgId_NAV_POSLLH,
@@ -71,6 +86,27 @@ private:
             MsgId_NAV_DGPS,
             MsgId_NAV_SBAS,
             MsgId_NAV_EKFSTATUS
+        };
+
+        auto iter = std::lower_bound(std::begin(IDs), std::end(IDs), id);
+        return (iter != std::end(IDs)) && (*iter == id);
+    }
+
+    static bool validateRxm(ublox::MsgId id)
+    {
+        static const auto RxmClassId = classId(MsgId_RXM_RAW);
+
+        if (classId(id) != RxmClassId) {
+            return false;
+        }
+
+        static const ublox::MsgId IDs[] = {
+            MsgId_RXM_RAW,
+            MsgId_RXM_SFRB,
+            MsgId_RXM_SVSI,
+            MsgId_RXM_ALM,
+            MsgId_RXM_EPH,
+            MsgId_RXM_POSREQ,
         };
 
         auto iter = std::lower_bound(std::begin(IDs), std::end(IDs), id);

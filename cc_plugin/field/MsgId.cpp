@@ -53,6 +53,13 @@ QVariantMap createMsgIdProperties()
     cc::Property::appendEnumValue(enumValues, "NAV-SBAS", MsgId_NAV_SBAS);
     cc::Property::appendEnumValue(enumValues, "NAV-EKFSTATUS", MsgId_NAV_EKFSTATUS);
 
+    cc::Property::appendEnumValue(enumValues, "RXM-RAW", MsgId_RXM_RAW);
+    cc::Property::appendEnumValue(enumValues, "RXM-SFRB", MsgId_RXM_SFRB);
+    cc::Property::appendEnumValue(enumValues, "RXM-SVSI", MsgId_RXM_SVSI);
+    cc::Property::appendEnumValue(enumValues, "RXM-ALM", MsgId_RXM_ALM);
+    cc::Property::appendEnumValue(enumValues, "RXM-EPH", MsgId_RXM_EPH);
+    cc::Property::appendEnumValue(enumValues, "RXM-POSREQ", MsgId_RXM_POSREQ);
+
     cc::Property::appendEnumValue(enumValues, "ACK-NAK", MsgId_ACK_NAK);
     cc::Property::appendEnumValue(enumValues, "ACK-ACK", MsgId_ACK_ACK);
 

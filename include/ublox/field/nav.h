@@ -29,7 +29,7 @@ namespace field
 namespace nav
 {
 
-using ITOW = common::U4;
+using ITOW = common::ITOW;
 
 using ECEF = common::I4;
 
@@ -135,7 +135,7 @@ using Nano =
     >;
 
 
-using week = common::I2;
+using week = common::Week;
 using numSV = common::U1;
 
 using VEL = common::I4;
