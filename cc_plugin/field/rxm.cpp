@@ -50,6 +50,52 @@ QVariantMap createNsvProperties()
     return props;
 }
 
+QVariantMap createNumSvProperties()
+{
+    auto props = cc::Property::createPropertiesMap("NumSv");
+    cc::Property::setReadOnly(props);
+    return props;
+}
+
+QVariantMap createStatusInfoSvFlagProperties()
+{
+    auto uraProps = createNameOnlyProperties("URA");
+    cc::Property::setSerialisedHidden(uraProps);
+
+    QVariantList bitNames;
+    bitNames.append("SV healthy");
+    bitNames.append("Ephemeris valid");
+    bitNames.append("Almanach valid");
+    bitNames.append("SV not available");
+
+    auto flagProps = cc::Property::createPropertiesMap("Flags", std::move(bitNames));
+    cc::Property::setSerialisedHidden(flagProps);
+
+    QVariantList members;
+    members.append(std::move(uraProps));
+    members.append(std::move(flagProps));
+
+    QVariantMap props;
+    cc::Property::setData(props, std::move(members));
+    return props;
+}
+
+QVariantMap createAgeProperties()
+{
+    auto almAgeProps = createNameOnlyProperties("Alm. Age");
+    cc::Property::setSerialisedHidden(almAgeProps);
+    auto ephAgeProps = createNameOnlyProperties("Eph. Age");
+    cc::Property::setSerialisedHidden(ephAgeProps);
+
+    QVariantList members;
+    members.append(std::move(almAgeProps));
+    members.append(std::move(ephAgeProps));
+
+    QVariantMap props;
+    cc::Property::setData(props, std::move(members));
+    return props;
+}
+
 
 }  // namespace
 
@@ -111,6 +157,46 @@ const QVariantMap& lliProperties()
     static const QVariantMap Props = createNameOnlyProperties("LLI");
     return Props;
 }
+
+const QVariantMap& numVisProperties()
+{
+    static const QVariantMap Props = createNameOnlyProperties("NumVis");
+    return Props;
+}
+
+const QVariantMap& numSvProperties()
+{
+    static const QVariantMap Props = createNumSvProperties();
+    return Props;
+}
+
+const QVariantMap& svidProperties()
+{
+    return common::svidProperties();
+}
+
+const QVariantMap& statusInfoSvFlagProperties()
+{
+    static const QVariantMap Props = createStatusInfoSvFlagProperties();
+    return Props;
+}
+
+const QVariantMap& azimProperties()
+{
+    return common::azimProperties();
+}
+
+const QVariantMap& elevProperties()
+{
+    return common::elevProperties();
+}
+
+const QVariantMap& ageProperties()
+{
+    static const auto Props = createAgeProperties();
+    return Props;
+}
+
 
 }  // namespace rxm
 

@@ -193,7 +193,7 @@ template <typename... TOptions>
 using chnT = NCHT<TOptions...>;
 using chn = NCH;
 
-using SVID = common::U1;
+using SVID = common::SVID;
 
 using InfoFlags =
     comms::field::BitmaskValue<
@@ -223,8 +223,8 @@ using QI =
     >;
 
 using CNO = common::U1;
-using Elev = common::I1;
-using Azim = common::I2;
+using Elev = common::Elev;
+using Azim = common::Azim;
 using PRRes = common::I4;
 
 using AGE = common::I4;

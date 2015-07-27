@@ -86,6 +86,23 @@ const QVariantMap& itowProperties()
     return Props;
 }
 
+const QVariantMap& svidProperties()
+{
+    static const QVariantMap Props = createNameOnlyProperties("SVID");
+    return Props;
+}
+
+const QVariantMap& elevProperties()
+{
+    static const QVariantMap Props = createNameOnlyProperties("Elev");
+    return Props;
+}
+
+const QVariantMap& azimProperties()
+{
+    static const QVariantMap Props = createNameOnlyProperties("Azim");
+    return Props;
+}
 
 
 }  // namespace common

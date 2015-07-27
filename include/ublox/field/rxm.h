@@ -41,6 +41,52 @@ using MesQI = common::I1;
 using CNO = common::I1;
 using LLI = common::U1;
 
+using NumVis = common::U1;
+using NumSv = common::U1;
+using SVID = common::SVID;
+
+using URA =
+    common::U1T<
+        comms::option::ValidNumValueRange<0, 15>,
+        comms::option::FixedBitLength<4>
+    >;
+
+using StatusInfoFlags =
+    comms::field::BitmaskValue<
+        common::FieldBase,
+        comms::option::FixedBitLength<4>
+    >;
+
+using StatusInfoSvFlag =
+    comms::field::Bitfield<
+        common::FieldBase,
+        std::tuple<
+            URA,
+            StatusInfoFlags
+        >
+    >;
+
+using Azim = common::Azim;
+using Elev = common::Elev;
+
+using AlmAge =
+    common::U1T<
+        comms::option::ValidNumValueRange<0, 15>,
+        comms::option::FixedBitLength<4>
+    >;
+
+using EphAge = AlmAge;
+
+using Age =
+    comms::field::Bitfield<
+        common::FieldBase,
+        std::tuple<
+            AlmAge,
+            EphAge
+        >
+    >;
+
+
 }  // namespace rxm
 
 }  // namespace field

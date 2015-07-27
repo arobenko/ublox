@@ -36,6 +36,9 @@ namespace common
 const QVariantList& emptyProperties();
 const QVariantMap& resProperties(unsigned idx);
 const QVariantMap& itowProperties();
+const QVariantMap& svidProperties();
+const QVariantMap& elevProperties();
+const QVariantMap& azimProperties();
 
 
 }  // namespace common

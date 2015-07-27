@@ -18,7 +18,10 @@
 
 #pragma once
 
-#include <QtCore/QVariantMap>
+#include "comms_champion/comms_champion.h"
+#include "ublox/message/RxmSvsi.h"
+#include "cc_plugin/Message.h"
+#include "cc_plugin/ProtocolMessageBase.h"
 
 namespace ublox
 {
@@ -26,33 +29,29 @@ namespace ublox
 namespace cc_plugin
 {
 
-namespace field
+namespace message
 {
 
-namespace rxm
+class RxmSvsi : public
+    ProtocolMessageBase<
+        ublox::message::RxmSvsi<ublox::cc_plugin::Message>,
+        RxmSvsi>
 {
+public:
+    RxmSvsi() = default;
+    RxmSvsi(const RxmSvsi&) = default;
+    RxmSvsi(RxmSvsi&&) = default;
+    virtual ~RxmSvsi() = default;
 
-const QVariantMap& itowProperties();
-const QVariantMap& weekProperties();
-const QVariantMap& nsvProperties();
-const QVariantMap& cpMesProperties();
-const QVariantMap& prMesProperties();
-const QVariantMap& doMesProperties();
-const QVariantMap& svProperties();
-const QVariantMap& mesQiProperties();
-const QVariantMap& cnoProperties();
-const QVariantMap& lliProperties();
-const QVariantMap& numVisProperties();
-const QVariantMap& numSvProperties();
-const QVariantMap& svidProperties();
-const QVariantMap& statusInfoSvFlagProperties();
-const QVariantMap& azimProperties();
-const QVariantMap& elevProperties();
-const QVariantMap& ageProperties();
+    RxmSvsi& operator=(const RxmSvsi&) = default;
+    RxmSvsi& operator=(RxmSvsi&&) = default;
 
-}  // namespace rxm
+protected:
+    virtual const char* nameImpl() const override;
+    virtual const QVariantList& fieldsPropertiesImpl() const override;
+};
 
-}  // namespace field
+}  // namespace message
 
 }  // namespace cc_plugin
 

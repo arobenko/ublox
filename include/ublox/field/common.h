@@ -143,6 +143,10 @@ static_assert(sizeof(double) == sizeof(std::uint64_t),
 using ITOW = U4;
 using Week = I2;
 
+using SVID = U1T<comms::option::ValidNumValueRange<1, 32> >;
+using Elev = I1;
+using Azim = I2;
+
 
 
 }  // namespace common

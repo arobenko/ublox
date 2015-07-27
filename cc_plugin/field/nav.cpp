@@ -589,8 +589,7 @@ const QVariantMap& nchProperties()
 
 const QVariantMap& svidProperties()
 {
-    static const QVariantMap Props = createNameOnlyProperties("SVID");
-    return Props;
+    return common::svidProperties();
 }
 
 const QVariantMap& chNumProperties()
@@ -619,14 +618,12 @@ const QVariantMap& cnoProperties()
 
 const QVariantMap& elevProperties()
 {
-    static const QVariantMap Props = createNameOnlyProperties("Elev");
-    return Props;
+    return common::elevProperties();
 }
 
 const QVariantMap& azimProperties()
 {
-    static const QVariantMap Props = createNameOnlyProperties("Azim");
-    return Props;
+    return common::azimProperties();
 }
 
 const QVariantMap& prresProperties()

@@ -16,9 +16,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-#pragma once
+#include "RxmSvsiPoll.h"
 
-#include <QtCore/QVariantMap>
+namespace cc = comms_champion;
 
 namespace ublox
 {
@@ -26,36 +26,23 @@ namespace ublox
 namespace cc_plugin
 {
 
-namespace field
+namespace message
 {
 
-namespace rxm
+RxmSvsiPoll::RxmSvsiPoll()
 {
+    setPoll();
+}
 
-const QVariantMap& itowProperties();
-const QVariantMap& weekProperties();
-const QVariantMap& nsvProperties();
-const QVariantMap& cpMesProperties();
-const QVariantMap& prMesProperties();
-const QVariantMap& doMesProperties();
-const QVariantMap& svProperties();
-const QVariantMap& mesQiProperties();
-const QVariantMap& cnoProperties();
-const QVariantMap& lliProperties();
-const QVariantMap& numVisProperties();
-const QVariantMap& numSvProperties();
-const QVariantMap& svidProperties();
-const QVariantMap& statusInfoSvFlagProperties();
-const QVariantMap& azimProperties();
-const QVariantMap& elevProperties();
-const QVariantMap& ageProperties();
+const char* RxmSvsiPoll::nameImpl() const
+{
+    static const char* Str = "RXM-SVSI (Poll)";
+    return Str;
+}
 
-}  // namespace rxm
-
-}  // namespace field
+}  // namespace message
 
 }  // namespace cc_plugin
 
 }  // namespace ublox
-
 

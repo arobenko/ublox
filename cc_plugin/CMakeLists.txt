@@ -49,6 +49,8 @@ function (cc_plugin_ublox)
         message/NavEkfstatusPoll.cpp
         message/RxmRaw.cpp
         message/RxmRawPoll.cpp
+        message/RxmSvsi.cpp
+        message/RxmSvsiPoll.cpp
         message/AckNak.cpp
         message/AckAck.cpp
         field/MsgId.cpp
