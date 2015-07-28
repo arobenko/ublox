@@ -38,6 +38,7 @@
 #include "cc_plugin/message/NavEkfstatus.h"
 
 #include "cc_plugin/message/RxmRaw.h"
+#include "cc_plugin/message/RxmSfrb.h"
 #include "cc_plugin/message/RxmSvsi.h"
 
 #include "cc_plugin/message/AckNak.h"
@@ -66,6 +67,7 @@ typedef std::tuple<
     cc_plugin::message::NavSbas,
     cc_plugin::message::NavEkfstatus,
     cc_plugin::message::RxmRaw,
+    cc_plugin::message::RxmSfrb,
     cc_plugin::message::RxmSvsi,
     cc_plugin::message::AckNak,
     cc_plugin::message::AckAck

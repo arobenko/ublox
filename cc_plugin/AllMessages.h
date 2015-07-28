@@ -54,6 +54,7 @@
 
 #include "cc_plugin/message/RxmRaw.h"
 #include "cc_plugin/message/RxmRawPoll.h"
+#include "cc_plugin/message/RxmSfrb.h"
 #include "cc_plugin/message/RxmSvsi.h"
 #include "cc_plugin/message/RxmSvsiPoll.h"
 
@@ -99,6 +100,7 @@ typedef std::tuple<
     cc_plugin::message::NavEkfstatusPoll,
     cc_plugin::message::RxmRaw,
     cc_plugin::message::RxmRawPoll,
+    cc_plugin::message::RxmSfrb,
     cc_plugin::message::RxmSvsi,
     cc_plugin::message::RxmSvsiPoll,
     cc_plugin::message::AckNak,

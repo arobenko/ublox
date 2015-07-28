@@ -197,6 +197,17 @@ const QVariantMap& ageProperties()
     return Props;
 }
 
+const QVariantMap& chnProperties()
+{
+    static const auto Props = createNameOnlyProperties("CHN");
+    return Props;
+}
+
+const QVariantMap& dwordProperties()
+{
+    static const auto Props = createNameOnlyProperties("DWORD");
+    return Props;
+}
 
 }  // namespace rxm
 

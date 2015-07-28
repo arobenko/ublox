@@ -86,6 +86,8 @@ using Age =
         >
     >;
 
+using CHN = common::U1;
+using DWORD = common::I4;
 
 }  // namespace rxm
 
