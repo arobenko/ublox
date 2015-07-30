@@ -209,6 +209,19 @@ const QVariantMap& dwordProperties()
     return Props;
 }
 
+const QVariantMap& howProperties()
+{
+    static const auto Props = createNameOnlyProperties("HOW");
+    return Props;
+}
+
+const QVariantMap& sfxdxProperties()
+{
+    static const auto Props = createNameOnlyProperties("SFxDx");
+    return Props;
+}
+
+
 }  // namespace rxm
 
 }  // namespace field

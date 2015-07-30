@@ -40,6 +40,7 @@
 #include "cc_plugin/message/RxmRawPoll.h"
 #include "cc_plugin/message/RxmSvsiPoll.h"
 #include "cc_plugin/message/RxmAlmPoll.h"
+#include "cc_plugin/message/RxmEphPoll.h"
 
 namespace ublox
 {
@@ -65,7 +66,8 @@ typedef std::tuple<
     cc_plugin::message::NavEkfstatusPoll,
     cc_plugin::message::RxmRawPoll,
     cc_plugin::message::RxmSvsiPoll,
-    cc_plugin::message::RxmAlmPoll
+    cc_plugin::message::RxmAlmPoll,
+    cc_plugin::message::RxmEphPoll
 > PollMessages;
 
 }  // namespace cc_plugin

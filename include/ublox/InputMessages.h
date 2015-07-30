@@ -42,6 +42,7 @@
 #include "message/RxmSfrb.h"
 #include "message/RxmSvsi.h"
 #include "message/RxmAlm.h"
+#include "message/RxmEph.h"
 
 #include "message/AckNak.h"
 #include "message/AckAck.h"
@@ -72,6 +73,7 @@ using InputMessages =
         message::RxmSfrb<TMessage>,
         message::RxmSvsi<TMessage>,
         message::RxmAlm<TMessage>,
+        message::RxmEph<TMessage>,
         message::AckNak<TMessage>,
         message::AckAck<TMessage>
     >;

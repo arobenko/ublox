@@ -92,6 +92,9 @@ using DWORD = common::I4;
 using SVID_Ext = common::U4T<comms::option::ValidNumValueRange<1, 32> >;
 using WEEK_Ext = common::U4;
 
+using HOW = common::U4;
+using SFxDx = common::U4;
+
 }  // namespace rxm
 
 }  // namespace field

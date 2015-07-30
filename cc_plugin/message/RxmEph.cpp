@@ -15,10 +15,13 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+#include <type_traits>
+#include <functional>
+#include <cassert>
 
-#include "RxmAlmPoll.h"
-
+#include "RxmEph.h"
 #include "cc_plugin/field/rxm.h"
+#include "cc_plugin/field/common.h"
 
 namespace cc = comms_champion;
 
@@ -34,37 +37,38 @@ namespace message
 namespace
 {
 
+QVariantMap createDataListProperties()
+{
+    static const QString Name("Data");
+    auto listProps =
+        cc::Property::createPropertiesMap(
+            Name,
+            QVariant::fromValue(cc_plugin::field::rxm::sfxdxProperties()));
+    cc::Property::setSerialisedHidden(listProps);
+
+    return cc::Property::createPropertiesMap(Name, std::move(listProps));
+}
+
 QVariantList createFieldsProperties()
 {
-    auto svidProps = cc_plugin::field::rxm::svidProperties();
-    auto name = cc::Property::getName(svidProps).toString();
-    auto optSvidProps =
-        cc::Property::createPropertiesMap(
-            name,
-            std::move(svidProps));
-
-
     QVariantList props;
-    props.append(std::move(optSvidProps));
+    props.append(cc_plugin::field::rxm::svidProperties());
+    props.append(cc_plugin::field::rxm::howProperties());
+    props.append(createDataListProperties());
 
-    assert(props.size() == RxmAlmPoll::FieldIdx_NumOfValues);
+    assert(props.size() == RxmEph::FieldIdx_NumOfValues);
     return props;
 }
 
 }  // namespace
 
-RxmAlmPoll::RxmAlmPoll()
+const char* RxmEph::nameImpl() const
 {
-    setPoll();
-}
-
-const char* RxmAlmPoll::nameImpl() const
-{
-    static const char* Str = "RXM-ALM (Poll)";
+    static const char* Str = "RXM-EPH";
     return Str;
 }
 
-const QVariantList& RxmAlmPoll::fieldsPropertiesImpl() const
+const QVariantList& RxmEph::fieldsPropertiesImpl() const
 {
     static const auto Props = createFieldsProperties();
     return Props;

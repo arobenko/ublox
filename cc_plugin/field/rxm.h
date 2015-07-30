@@ -51,6 +51,8 @@ const QVariantMap& elevProperties();
 const QVariantMap& ageProperties();
 const QVariantMap& chnProperties();
 const QVariantMap& dwordProperties();
+const QVariantMap& howProperties();
+const QVariantMap& sfxdxProperties();
 
 }  // namespace rxm
 

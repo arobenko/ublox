@@ -16,7 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-#include "RxmAlmPoll.h"
+#include "RxmEphPoll.h"
 
 #include "cc_plugin/field/rxm.h"
 
@@ -47,24 +47,24 @@ QVariantList createFieldsProperties()
     QVariantList props;
     props.append(std::move(optSvidProps));
 
-    assert(props.size() == RxmAlmPoll::FieldIdx_NumOfValues);
+    assert(props.size() == RxmEphPoll::FieldIdx_NumOfValues);
     return props;
 }
 
 }  // namespace
 
-RxmAlmPoll::RxmAlmPoll()
+RxmEphPoll::RxmEphPoll()
 {
     setPoll();
 }
 
-const char* RxmAlmPoll::nameImpl() const
+const char* RxmEphPoll::nameImpl() const
 {
-    static const char* Str = "RXM-ALM (Poll)";
+    static const char* Str = "RXM-EPH (Poll)";
     return Str;
 }
 
-const QVariantList& RxmAlmPoll::fieldsPropertiesImpl() const
+const QVariantList& RxmEphPoll::fieldsPropertiesImpl() const
 {
     static const auto Props = createFieldsProperties();
     return Props;

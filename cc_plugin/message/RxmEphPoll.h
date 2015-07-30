@@ -16,11 +16,12 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-#include "RxmAlmPoll.h"
+#pragma once
 
-#include "cc_plugin/field/rxm.h"
-
-namespace cc = comms_champion;
+#include "comms_champion/comms_champion.h"
+#include "ublox/message/RxmEphPoll.h"
+#include "cc_plugin/Message.h"
+#include "cc_plugin/ProtocolMessageBase.h"
 
 namespace ublox
 {
@@ -31,48 +32,29 @@ namespace cc_plugin
 namespace message
 {
 
-namespace
+class RxmEphPoll : public
+    ProtocolMessageBase<
+        ublox::message::RxmEphPoll<ublox::cc_plugin::Message>,
+        RxmEphPoll>
 {
+public:
+    RxmEphPoll();
+    RxmEphPoll(const RxmEphPoll&) = default;
+    RxmEphPoll(RxmEphPoll&&) = default;
+    virtual ~RxmEphPoll() = default;
 
-QVariantList createFieldsProperties()
-{
-    auto svidProps = cc_plugin::field::rxm::svidProperties();
-    auto name = cc::Property::getName(svidProps).toString();
-    auto optSvidProps =
-        cc::Property::createPropertiesMap(
-            name,
-            std::move(svidProps));
+    RxmEphPoll& operator=(const RxmEphPoll&) = default;
+    RxmEphPoll& operator=(RxmEphPoll&&) = default;
 
-
-    QVariantList props;
-    props.append(std::move(optSvidProps));
-
-    assert(props.size() == RxmAlmPoll::FieldIdx_NumOfValues);
-    return props;
-}
-
-}  // namespace
-
-RxmAlmPoll::RxmAlmPoll()
-{
-    setPoll();
-}
-
-const char* RxmAlmPoll::nameImpl() const
-{
-    static const char* Str = "RXM-ALM (Poll)";
-    return Str;
-}
-
-const QVariantList& RxmAlmPoll::fieldsPropertiesImpl() const
-{
-    static const auto Props = createFieldsProperties();
-    return Props;
-}
+protected:
+    virtual const char* nameImpl() const override;
+    virtual const QVariantList& fieldsPropertiesImpl() const override;
+};
 
 }  // namespace message
 
 }  // namespace cc_plugin
 
 }  // namespace ublox
+
 

@@ -54,6 +54,8 @@ function (cc_plugin_ublox)
         message/RxmSvsiPoll.cpp
         message/RxmAlm.cpp
         message/RxmAlmPoll.cpp
+        message/RxmEph.cpp
+        message/RxmEphPoll.cpp
         message/AckNak.cpp
         message/AckAck.cpp
         field/MsgId.cpp
