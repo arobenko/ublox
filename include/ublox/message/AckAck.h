@@ -60,9 +60,7 @@ public:
 
     AckAck() = default;
     AckAck(const AckAck&) = default;
-    AckAck(AckAck&& other)
-    {
-    }
+    AckAck(AckAck&& other) = default;
     virtual ~AckAck() = default;
 
     AckAck& operator=(const AckAck&) = default;

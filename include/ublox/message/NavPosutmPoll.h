@@ -54,9 +54,7 @@ public:
 
     NavPosutmPoll() = default;
     NavPosutmPoll(const NavPosutmPoll&) = default;
-    NavPosutmPoll(NavPosutmPoll&& other)
-    {
-    }
+    NavPosutmPoll(NavPosutmPoll&& other) = default;
     virtual ~NavPosutmPoll() = default;
 
     NavPosutmPoll& operator=(const NavPosutmPoll&) = default;

@@ -54,9 +54,7 @@ public:
 
     NavEkfstatusPoll() = default;
     NavEkfstatusPoll(const NavEkfstatusPoll&) = default;
-    NavEkfstatusPoll(NavEkfstatusPoll&& other)
-    {
-    }
+    NavEkfstatusPoll(NavEkfstatusPoll&& other) = default;
     virtual ~NavEkfstatusPoll() = default;
 
     NavEkfstatusPoll& operator=(const NavEkfstatusPoll&) = default;

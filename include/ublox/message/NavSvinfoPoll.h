@@ -54,9 +54,7 @@ public:
 
     NavSvinfoPoll() = default;
     NavSvinfoPoll(const NavSvinfoPoll&) = default;
-    NavSvinfoPoll(NavSvinfoPoll&& other)
-    {
-    }
+    NavSvinfoPoll(NavSvinfoPoll&& other) = default;
     virtual ~NavSvinfoPoll() = default;
 
     NavSvinfoPoll& operator=(const NavSvinfoPoll&) = default;

@@ -54,9 +54,7 @@ public:
 
     NavTimegpsPoll() = default;
     NavTimegpsPoll(const NavTimegpsPoll&) = default;
-    NavTimegpsPoll(NavTimegpsPoll&& other)
-    {
-    }
+    NavTimegpsPoll(NavTimegpsPoll&& other) = default;
     virtual ~NavTimegpsPoll() = default;
 
     NavTimegpsPoll& operator=(const NavTimegpsPoll&) = default;

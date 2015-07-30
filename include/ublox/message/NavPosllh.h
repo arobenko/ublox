@@ -73,9 +73,7 @@ public:
 
     NavPosllh() = default;
     NavPosllh(const NavPosllh&) = default;
-    NavPosllh(NavPosllh&& other)
-    {
-    }
+    NavPosllh(NavPosllh&& other) = default;
     virtual ~NavPosllh() = default;
 
     NavPosllh& operator=(const NavPosllh&) = default;

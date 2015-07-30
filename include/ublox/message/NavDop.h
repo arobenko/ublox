@@ -75,9 +75,7 @@ public:
 
     NavDop() = default;
     NavDop(const NavDop&) = default;
-    NavDop(NavDop&& other)
-    {
-    }
+    NavDop(NavDop&& other) = default;
     virtual ~NavDop() = default;
 
     NavDop& operator=(const NavDop&) = default;

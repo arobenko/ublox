@@ -87,9 +87,7 @@ public:
 
     NavEkfstatus() = default;
     NavEkfstatus(const NavEkfstatus&) = default;
-    NavEkfstatus(NavEkfstatus&& other)
-    {
-    }
+    NavEkfstatus(NavEkfstatus&& other) = default;
     virtual ~NavEkfstatus() = default;
 
     NavEkfstatus& operator=(const NavEkfstatus&) = default;

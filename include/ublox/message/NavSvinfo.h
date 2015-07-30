@@ -102,9 +102,7 @@ public:
 
     NavSvinfo() = default;
     NavSvinfo(const NavSvinfo&) = default;
-    NavSvinfo(NavSvinfo&& other)
-    {
-    }
+    NavSvinfo(NavSvinfo&& other) = default;
     virtual ~NavSvinfo() = default;
 
     NavSvinfo& operator=(const NavSvinfo&) = default;

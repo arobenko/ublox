@@ -69,9 +69,7 @@ public:
 
     NavVelecef() = default;
     NavVelecef(const NavVelecef&) = default;
-    NavVelecef(NavVelecef&& other)
-    {
-    }
+    NavVelecef(NavVelecef&& other) = default;
     virtual ~NavVelecef() = default;
 
     NavVelecef& operator=(const NavVelecef&) = default;

@@ -95,9 +95,7 @@ public:
 
     RxmSvsi() = default;
     RxmSvsi(const RxmSvsi&) = default;
-    RxmSvsi(RxmSvsi&& other)
-    {
-    }
+    RxmSvsi(RxmSvsi&& other) = default;
     virtual ~RxmSvsi() = default;
 
     RxmSvsi& operator=(const RxmSvsi&) = default;

@@ -69,9 +69,7 @@ public:
 
     NavPosecef() = default;
     NavPosecef(const NavPosecef&) = default;
-    NavPosecef(NavPosecef&& other)
-    {
-    }
+    NavPosecef(NavPosecef&& other) = default;
     virtual ~NavPosecef() = default;
 
     NavPosecef& operator=(const NavPosecef&) = default;

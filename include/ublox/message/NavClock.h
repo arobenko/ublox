@@ -69,9 +69,7 @@ public:
 
     NavClock() = default;
     NavClock(const NavClock&) = default;
-    NavClock(NavClock&& other)
-    {
-    }
+    NavClock(NavClock&& other) = default;
     virtual ~NavClock() = default;
 
     NavClock& operator=(const NavClock&) = default;

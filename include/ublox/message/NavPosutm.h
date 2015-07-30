@@ -71,9 +71,7 @@ public:
 
     NavPosutm() = default;
     NavPosutm(const NavPosutm&) = default;
-    NavPosutm(NavPosutm&& other)
-    {
-    }
+    NavPosutm(NavPosutm&& other) = default;
     virtual ~NavPosutm() = default;
 
     NavPosutm& operator=(const NavPosutm&) = default;

@@ -54,9 +54,7 @@ public:
 
     NavSolPoll() = default;
     NavSolPoll(const NavSolPoll&) = default;
-    NavSolPoll(NavSolPoll&& other)
-    {
-    }
+    NavSolPoll(NavSolPoll&& other) = default;
     virtual ~NavSolPoll() = default;
 
     NavSolPoll& operator=(const NavSolPoll&) = default;

@@ -54,9 +54,7 @@ public:
 
     NavSbasPoll() = default;
     NavSbasPoll(const NavSbasPoll&) = default;
-    NavSbasPoll(NavSbasPoll&& other)
-    {
-    }
+    NavSbasPoll(NavSbasPoll&& other) = default;
     virtual ~NavSbasPoll() = default;
 
     NavSbasPoll& operator=(const NavSbasPoll&) = default;

@@ -21,7 +21,7 @@
 #include "comms/Message.h"
 #include "ublox/Message.h"
 
-#include "ublox/field/nav.h"
+#include "ublox/field/rxm.h"
 
 namespace ublox
 {
@@ -29,36 +29,46 @@ namespace ublox
 namespace message
 {
 
-using NavDopPollFields = std::tuple<>;
+using RxmAlmPollFields =
+    std::tuple<
+        comms::field::Optional<field::rxm::SVID>
+    >;
 
 
 template <typename TMsgBase = Message>
-class NavDopPoll : public
+class RxmAlmPoll : public
     comms::MessageBase<
         TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_NAV_DOP>,
-        comms::option::FieldsImpl<NavDopPollFields>,
-        comms::option::DispatchImpl<NavDopPoll<TMsgBase> >
+        comms::option::StaticNumIdImpl<MsgId_RXM_ALM>,
+        comms::option::FieldsImpl<RxmAlmPollFields>,
+        comms::option::DispatchImpl<RxmAlmPoll<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_NAV_DOP>,
-        comms::option::FieldsImpl<NavDopPollFields>,
-        comms::option::DispatchImpl<NavDopPoll<TMsgBase> >
+        comms::option::StaticNumIdImpl<MsgId_RXM_ALM>,
+        comms::option::FieldsImpl<RxmAlmPollFields>,
+        comms::option::DispatchImpl<RxmAlmPoll<TMsgBase> >
     > Base;
 public:
 
-    static_assert(std::tuple_size<typename Base::AllFields>::value == 0U,
+    enum FieldIdx
+    {
+        FieldIdx_Svid,
+        FieldIdx_NumOfValues
+    };
+
+    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_NumOfValues,
         "Number of fields is incorrect");
 
-    NavDopPoll() = default;
-    NavDopPoll(const NavDopPoll&) = default;
-    NavDopPoll(NavDopPoll&& other) = default;
-    virtual ~NavDopPoll() = default;
 
-    NavDopPoll& operator=(const NavDopPoll&) = default;
-    NavDopPoll& operator=(NavDopPoll&&) = default;
+    RxmAlmPoll() = default;
+    RxmAlmPoll(const RxmAlmPoll&) = default;
+    RxmAlmPoll(RxmAlmPoll&& other) = default;
+    virtual ~RxmAlmPoll() = default;
+
+    RxmAlmPoll& operator=(const RxmAlmPoll&) = default;
+    RxmAlmPoll& operator=(RxmAlmPoll&&) = default;
 };
 
 

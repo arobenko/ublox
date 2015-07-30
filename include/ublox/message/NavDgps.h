@@ -115,9 +115,7 @@ public:
 
     NavDgps() = default;
     NavDgps(const NavDgps&) = default;
-    NavDgps(NavDgps&& other)
-    {
-    }
+    NavDgps(NavDgps&& other) = default;
     virtual ~NavDgps() = default;
 
     NavDgps& operator=(const NavDgps&) = default;

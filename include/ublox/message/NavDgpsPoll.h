@@ -54,9 +54,7 @@ public:
 
     NavDgpsPoll() = default;
     NavDgpsPoll(const NavDgpsPoll&) = default;
-    NavDgpsPoll(NavDgpsPoll&& other)
-    {
-    }
+    NavDgpsPoll(NavDgpsPoll&& other) = default;
     virtual ~NavDgpsPoll() = default;
 
     NavDgpsPoll& operator=(const NavDgpsPoll&) = default;

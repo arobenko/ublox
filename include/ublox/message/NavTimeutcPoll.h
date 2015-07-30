@@ -54,9 +54,7 @@ public:
 
     NavTimeutcPoll() = default;
     NavTimeutcPoll(const NavTimeutcPoll&) = default;
-    NavTimeutcPoll(NavTimeutcPoll&& other)
-    {
-    }
+    NavTimeutcPoll(NavTimeutcPoll&& other) = default;
     virtual ~NavTimeutcPoll() = default;
 
     NavTimeutcPoll& operator=(const NavTimeutcPoll&) = default;

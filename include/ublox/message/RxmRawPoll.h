@@ -21,7 +21,7 @@
 #include "comms/Message.h"
 #include "ublox/Message.h"
 
-#include "ublox/field/nav.h"
+#include "ublox/field/rxm.h"
 
 namespace ublox
 {

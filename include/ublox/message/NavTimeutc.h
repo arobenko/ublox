@@ -79,9 +79,7 @@ public:
 
     NavTimeutc() = default;
     NavTimeutc(const NavTimeutc&) = default;
-    NavTimeutc(NavTimeutc&& other)
-    {
-    }
+    NavTimeutc(NavTimeutc&& other) = default;
     virtual ~NavTimeutc() = default;
 
     NavTimeutc& operator=(const NavTimeutc&) = default;

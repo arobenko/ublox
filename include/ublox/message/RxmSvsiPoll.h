@@ -21,7 +21,7 @@
 #include "comms/Message.h"
 #include "ublox/Message.h"
 
-#include "ublox/field/nav.h"
+#include "ublox/field/rxm.h"
 
 namespace ublox
 {
@@ -54,9 +54,7 @@ public:
 
     RxmSvsiPoll() = default;
     RxmSvsiPoll(const RxmSvsiPoll&) = default;
-    RxmSvsiPoll(RxmSvsiPoll&& other)
-    {
-    }
+    RxmSvsiPoll(RxmSvsiPoll&& other) = default;
     virtual ~RxmSvsiPoll() = default;
 
     RxmSvsiPoll& operator=(const RxmSvsiPoll&) = default;

@@ -54,9 +54,7 @@ public:
 
     NavStatusPoll() = default;
     NavStatusPoll(const NavStatusPoll&) = default;
-    NavStatusPoll(NavStatusPoll&& other)
-    {
-    }
+    NavStatusPoll(NavStatusPoll&& other) = default;
     virtual ~NavStatusPoll() = default;
 
     NavStatusPoll& operator=(const NavStatusPoll&) = default;

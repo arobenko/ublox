@@ -71,9 +71,7 @@ public:
 
     NavTimegps() = default;
     NavTimegps(const NavTimegps&) = default;
-    NavTimegps(NavTimegps&& other)
-    {
-    }
+    NavTimegps(NavTimegps&& other) = default;
     virtual ~NavTimegps() = default;
 
     NavTimegps& operator=(const NavTimegps&) = default;

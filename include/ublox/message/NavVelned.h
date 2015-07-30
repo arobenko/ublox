@@ -77,9 +77,7 @@ public:
 
     NavVelned() = default;
     NavVelned(const NavVelned&) = default;
-    NavVelned(NavVelned&& other)
-    {
-    }
+    NavVelned(NavVelned&& other) = default;
     virtual ~NavVelned() = default;
 
     NavVelned& operator=(const NavVelned&) = default;

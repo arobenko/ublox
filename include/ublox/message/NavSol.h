@@ -93,9 +93,7 @@ public:
 
     NavSol() = default;
     NavSol(const NavSol&) = default;
-    NavSol(NavSol&& other)
-    {
-    }
+    NavSol(NavSol&& other) = default;
     virtual ~NavSol() = default;
 
     NavSol& operator=(const NavSol&) = default;

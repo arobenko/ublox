@@ -89,6 +89,9 @@ using Age =
 using CHN = common::U1;
 using DWORD = common::I4;
 
+using SVID_Ext = common::U4T<comms::option::ValidNumValueRange<1, 32> >;
+using WEEK_Ext = common::U4;
+
 }  // namespace rxm
 
 }  // namespace field

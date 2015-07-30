@@ -109,9 +109,7 @@ public:
 
     NavSbas() = default;
     NavSbas(const NavSbas&) = default;
-    NavSbas(NavSbas&& other)
-    {
-    }
+    NavSbas(NavSbas&& other) = default;
     virtual ~NavSbas() = default;
 
     NavSbas& operator=(const NavSbas&) = default;

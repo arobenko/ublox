@@ -31,65 +31,38 @@ namespace ublox
 namespace message
 {
 
-enum RxmRawIndex
-{
-    RxmRawIndex_CPMes,
-    RxmRawIndex_PRMes,
-    RxmRawIndex_DOMes,
-    RxmRawIndex_Sv,
-    RxmRawIndex_MesQI,
-    RxmRawIndex_Cno,
-    RxmRawIndex_Lli,
-    RxmRawIndex_NumOfValues
-};
-
-using RxmRawElement =
-    comms::field::Bundle<
-        std::tuple<
-            field::rxm::CPMes,
-            field::rxm::PRMes,
-            field::rxm::DOMes,
-            field::rxm::SV,
-            field::rxm::MesQI,
-            field::rxm::CNO,
-            field::rxm::LLI
+using RxmAlmFields = std::tuple<
+    field::rxm::SVID_Ext,
+    field::rxm::WEEK_Ext,
+    comms::field::Optional<
+        comms::field::ArrayList<
+            field::common::FieldBase,
+            field::rxm::DWORD,
+            comms::option::SequenceFixedSize<8>
         >
-    >;
-
-using RxmRawFields = std::tuple<
-    field::rxm::ITOW,
-    field::rxm::Week,
-    field::rxm::NSV,
-    field::common::res1,
-    comms::field::ArrayList<
-        field::common::FieldBase,
-        RxmRawElement,
-        comms::option::SequenceSizeForcingEnabled
     >
 >;
 
 template <typename TMsgBase = Message>
-class RxmRaw : public
+class RxmAlm : public
     comms::MessageBase<
         TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_RXM_RAW>,
-        comms::option::FieldsImpl<RxmRawFields>,
-        comms::option::DispatchImpl<RxmRaw<TMsgBase> >
+        comms::option::StaticNumIdImpl<MsgId_RXM_ALM>,
+        comms::option::FieldsImpl<RxmAlmFields>,
+        comms::option::DispatchImpl<RxmAlm<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_RXM_RAW>,
-        comms::option::FieldsImpl<RxmRawFields>,
-        comms::option::DispatchImpl<RxmRaw<TMsgBase> >
+        comms::option::StaticNumIdImpl<MsgId_RXM_ALM>,
+        comms::option::FieldsImpl<RxmAlmFields>,
+        comms::option::DispatchImpl<RxmAlm<TMsgBase> >
     > Base;
 public:
     enum FieldIdx
     {
-        FieldIdx_Itow,
+        FieldIdx_Svid,
         FieldIdx_Week,
-        FieldIdx_Nsv,
-        FieldIdx_Res,
         FieldIdx_Data,
         FieldIdx_NumOfValues
     };
@@ -97,13 +70,18 @@ public:
     static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_NumOfValues,
         "Number of fields is incorrect");
 
-    RxmRaw() = default;
-    RxmRaw(const RxmRaw&) = default;
-    RxmRaw(RxmRaw&& other) = default;
-    virtual ~RxmRaw() = default;
+    RxmAlm()
+    {
+        auto& allFields = Base::fields();
+        auto& dataField = std::get<FieldIdx_Data>(allFields);
+        dataField.setMode(comms::field::OptionalMode::Missing);
+    }
+    RxmAlm(const RxmAlm&) = default;
+    RxmAlm(RxmAlm&& other) = default;
+    virtual ~RxmAlm() = default;
 
-    RxmRaw& operator=(const RxmRaw&) = default;
-    RxmRaw& operator=(RxmRaw&&) = default;
+    RxmAlm& operator=(const RxmAlm&) = default;
+    RxmAlm& operator=(RxmAlm&&) = default;
 
 protected:
     virtual comms::ErrorStatus readImpl(
@@ -116,23 +94,32 @@ protected:
         }
 
         auto& allFields = Base::fields();
-        auto& nsvField = std::get<FieldIdx_Nsv>(allFields);
-        auto& dataField = std::get<FieldIdx_Data>(allFields);
-        dataField.forceReadElemCount(nsvField.value());
+        auto& weekField = std::get<FieldIdx_Week>(allFields);
+        auto dataMode = comms::field::OptionalMode::Exists;
+        if (weekField.value() == 0U) {
+            dataMode = comms::field::OptionalMode::Missing;
+        }
 
+        auto& dataField = std::get<FieldIdx_Data>(allFields);
+        dataField.setMode(dataMode);
         return Base::template readFieldsFrom<FieldIdx_Data>(iter, len);
     }
 
     virtual bool refreshImpl() override
     {
         auto& allFields = Base::fields();
-        auto& nsvField = std::get<FieldIdx_Nsv>(allFields);
+        auto& weekField = std::get<FieldIdx_Week>(allFields);
+        auto expectedMode = comms::field::OptionalMode::Exists;
+        if (weekField.value() == 0U) {
+            expectedMode = comms::field::OptionalMode::Missing;
+        }
+
         auto& dataField = std::get<FieldIdx_Data>(allFields);
-        if (nsvField.value() == dataField.value().size()) {
+        if (dataField.getMode() == expectedMode) {
             return false;
         }
 
-        nsvField.value() = dataField.value().size();
+        dataField.setMode(expectedMode);
         return true;
     }
 

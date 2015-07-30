@@ -53,9 +53,7 @@ public:
 
     NavClockPoll() = default;
     NavClockPoll(const NavClockPoll&) = default;
-    NavClockPoll(NavClockPoll&& other)
-    {
-    }
+    NavClockPoll(NavClockPoll&& other) = default;
     virtual ~NavClockPoll() = default;
 
     NavClockPoll& operator=(const NavClockPoll&) = default;

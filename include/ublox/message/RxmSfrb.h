@@ -70,9 +70,7 @@ public:
 
     RxmSfrb() = default;
     RxmSfrb(const RxmSfrb&) = default;
-    RxmSfrb(RxmSfrb&& other)
-    {
-    }
+    RxmSfrb(RxmSfrb&& other) = default;
     virtual ~RxmSfrb() = default;
 
     RxmSfrb& operator=(const RxmSfrb&) = default;

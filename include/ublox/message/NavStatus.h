@@ -73,9 +73,7 @@ public:
 
     NavStatus() = default;
     NavStatus(const NavStatus&) = default;
-    NavStatus(NavStatus&& other)
-    {
-    }
+    NavStatus(NavStatus&& other) = default;
     virtual ~NavStatus() = default;
 
     NavStatus& operator=(const NavStatus&) = default;

@@ -54,9 +54,7 @@ public:
 
     NavVelnedPoll() = default;
     NavVelnedPoll(const NavVelnedPoll&) = default;
-    NavVelnedPoll(NavVelnedPoll&& other)
-    {
-    }
+    NavVelnedPoll(NavVelnedPoll&& other) = default;
     virtual ~NavVelnedPoll() = default;
 
     NavVelnedPoll& operator=(const NavVelnedPoll&) = default;

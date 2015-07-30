@@ -52,13 +52,15 @@ protected:
             return regMsgId();
         }
 
-        auto len = Base::length();
+        return pollMsgId();
 
-        if (len == 0) {
-            return pollMsgId();
-        }
-
-        return nonZeroLenPollMsgId(len);
+//        auto len = Base::length();
+//
+//        if (len == 0) {
+//
+//        }
+//
+//        return nonZeroLenPollMsgId(len);
     }
 
     virtual const QVariantList& fieldsPropertiesImpl() const override
@@ -82,12 +84,12 @@ private:
         return id;
     }
 
-    QString nonZeroLenPollMsgId(std::size_t len) const
-    {
-        auto id = pollMsgId();
-        id.append(QString("%1").arg(len, 1, 10, QChar('0')));
-        return id;
-    }
+//    QString nonZeroLenPollMsgId(std::size_t len) const
+//    {
+//        auto id = pollMsgId();
+//        id.append(QString("%1").arg(len, 1, 10, QChar('0')));
+//        return id;
+//    }
 
 private:
     bool m_isPoll = false;
