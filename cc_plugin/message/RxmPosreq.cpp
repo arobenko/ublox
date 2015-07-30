@@ -16,11 +16,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-#pragma once
+#include "RxmPosreq.h"
 
-#include "ublox/Stack.h"
-#include "Message.h"
-#include "RegularMessages.h"
+namespace cc = comms_champion;
 
 namespace ublox
 {
@@ -28,14 +26,18 @@ namespace ublox
 namespace cc_plugin
 {
 
-typedef ublox::Stack<
-    cc_plugin::Message,
-    cc_plugin::RegularMessages
-> Stack;
+namespace message
+{
+
+const char* RxmPosreq::nameImpl() const
+{
+    static const char* Str = "RXM-POSREQ";
+    return Str;
+}
+
+}  // namespace message
 
 }  // namespace cc_plugin
 
 }  // namespace ublox
-
-
 

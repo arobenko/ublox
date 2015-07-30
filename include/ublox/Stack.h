@@ -21,7 +21,7 @@
 #include "comms/comms.h"
 
 #include "Message.h"
-#include "InputMessages.h"
+#include "RegularMessages.h"
 #include "protocol/ChecksumCalc.h"
 
 namespace ublox
@@ -69,7 +69,7 @@ using DataField =
 
 template <
     typename TMsgBase = Message,
-    typename TInputMessages = InputMessages<TMsgBase>,
+    typename TMessages = RegularMessages<TMsgBase>,
     typename TMsgAllocOptions = std::tuple<>,
     typename TDataFieldStorageOptions = std::tuple<> >
 using Stack =
@@ -82,7 +82,7 @@ using Stack =
                 protocol::ChecksumCalc,
                 comms::protocol::MsgIdLayer<
                     ublox::field::MsgId,
-                    TInputMessages,
+                    TMessages,
                     comms::protocol::MsgSizeLayer<
                         LengthField<typename TMsgBase::Field>,
                         comms::protocol::MsgDataLayer<

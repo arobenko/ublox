@@ -61,6 +61,7 @@
 #include "cc_plugin/message/RxmAlmPoll.h"
 #include "cc_plugin/message/RxmEph.h"
 #include "cc_plugin/message/RxmEphPoll.h"
+#include "cc_plugin/message/RxmPosreq.h"
 
 #include "cc_plugin/message/AckNak.h"
 #include "cc_plugin/message/AckAck.h"
@@ -111,6 +112,7 @@ typedef std::tuple<
     cc_plugin::message::RxmAlmPoll,
     cc_plugin::message::RxmEph,
     cc_plugin::message::RxmEphPoll,
+    cc_plugin::message::RxmPosreq,
     cc_plugin::message::AckNak,
     cc_plugin::message::AckAck
 > AllMessages;

@@ -18,9 +18,10 @@
 
 #pragma once
 
-#include "ublox/Stack.h"
-#include "Message.h"
-#include "RegularMessages.h"
+#include "comms_champion/comms_champion.h"
+#include "ublox/message/RxmPosreq.h"
+#include "cc_plugin/Message.h"
+#include "cc_plugin/ProtocolMessageBase.h"
 
 namespace ublox
 {
@@ -28,14 +29,31 @@ namespace ublox
 namespace cc_plugin
 {
 
-typedef ublox::Stack<
-    cc_plugin::Message,
-    cc_plugin::RegularMessages
-> Stack;
+namespace message
+{
+
+class RxmPosreq : public
+    ProtocolMessageBase<
+        ublox::message::RxmPosreq<ublox::cc_plugin::Message>,
+        RxmPosreq>
+{
+public:
+    RxmPosreq() = default;
+    RxmPosreq(const RxmPosreq&) = default;
+    RxmPosreq(RxmPosreq&&) = default;
+    virtual ~RxmPosreq() = default;
+
+    RxmPosreq& operator=(const RxmPosreq&) = default;
+    RxmPosreq& operator=(RxmPosreq&&) = default;
+
+protected:
+    virtual const char* nameImpl() const override;
+};
+
+}  // namespace message
 
 }  // namespace cc_plugin
 
 }  // namespace ublox
-
 
 

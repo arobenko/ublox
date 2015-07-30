@@ -29,36 +29,36 @@ namespace ublox
 namespace message
 {
 
-using RxmRawPollFields = std::tuple<>;
+using RxmPosreqFields = std::tuple<>;
 
 
 template <typename TMsgBase = Message>
-class RxmRawPoll : public
+class RxmPosreq : public
     comms::MessageBase<
         TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_RXM_RAW>,
-        comms::option::FieldsImpl<RxmRawPollFields>,
-        comms::option::DispatchImpl<RxmRawPoll<TMsgBase> >
+        comms::option::StaticNumIdImpl<MsgId_RXM_POSREQ>,
+        comms::option::FieldsImpl<RxmPosreqFields>,
+        comms::option::DispatchImpl<RxmPosreq<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_RXM_RAW>,
-        comms::option::FieldsImpl<RxmRawPollFields>,
-        comms::option::DispatchImpl<RxmRawPoll<TMsgBase> >
+        comms::option::StaticNumIdImpl<MsgId_RXM_POSREQ>,
+        comms::option::FieldsImpl<RxmPosreqFields>,
+        comms::option::DispatchImpl<RxmPosreq<TMsgBase> >
     > Base;
 public:
 
     static_assert(std::tuple_size<typename Base::AllFields>::value == 0U,
         "Number of fields is incorrect");
 
-    RxmRawPoll() = default;
-    RxmRawPoll(const RxmRawPoll&) = default;
-    RxmRawPoll(RxmRawPoll&& other) = default;
-    virtual ~RxmRawPoll() = default;
+    RxmPosreq() = default;
+    RxmPosreq(const RxmPosreq&) = default;
+    RxmPosreq(RxmPosreq&& other) = default;
+    virtual ~RxmPosreq() = default;
 
-    RxmRawPoll& operator=(const RxmRawPoll&) = default;
-    RxmRawPoll& operator=(RxmRawPoll&&) = default;
+    RxmPosreq& operator=(const RxmPosreq&) = default;
+    RxmPosreq& operator=(RxmPosreq&&) = default;
 };
 
 

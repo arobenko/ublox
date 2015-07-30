@@ -43,6 +43,7 @@
 #include "message/RxmSvsi.h"
 #include "message/RxmAlm.h"
 #include "message/RxmEph.h"
+#include "message/RxmPosreq.h"
 
 #include "message/AckNak.h"
 #include "message/AckAck.h"
@@ -52,7 +53,7 @@ namespace ublox
 {
 
 template <typename TMessage = Message>
-using InputMessages =
+using RegularMessages =
     std::tuple<
         message::NavPosecef<TMessage>,
         message::NavPosllh<TMessage>,
@@ -74,6 +75,7 @@ using InputMessages =
         message::RxmSvsi<TMessage>,
         message::RxmAlm<TMessage>,
         message::RxmEph<TMessage>,
+        message::RxmPosreq<TMessage>,
         message::AckNak<TMessage>,
         message::AckAck<TMessage>
     >;
