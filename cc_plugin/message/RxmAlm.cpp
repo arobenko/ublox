@@ -46,7 +46,9 @@ QVariantMap createDataListProperties()
             QVariant::fromValue(cc_plugin::field::rxm::dwordProperties()));
     cc::Property::setSerialisedHidden(listProps);
 
-    return cc::Property::createPropertiesMap(Name, std::move(listProps));
+    auto props = cc::Property::createPropertiesMap(Name, std::move(listProps));
+    cc::Property::setUncheckable(props);
+    return props;
 }
 
 QVariantList createFieldsProperties()
