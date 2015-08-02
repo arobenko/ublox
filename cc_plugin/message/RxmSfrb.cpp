@@ -39,10 +39,15 @@ namespace
 
 QVariantMap createDataListProperties()
 {
+    QVariantList elemsProps;
+    for (auto idx = 0U; idx < 10U; ++idx) {
+        elemsProps.append(cc_plugin::field::rxm::dwordProperties(idx));
+    }
+
     auto props =
         cc::Property::createPropertiesMap(
             "Data",
-            QVariant::fromValue(cc_plugin::field::rxm::dwordProperties()));
+            QVariant::fromValue(elemsProps));
     cc::Property::setSerialisedHidden(props);
     return props;
 }

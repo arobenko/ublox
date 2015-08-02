@@ -39,11 +39,18 @@ namespace
 
 QVariantMap createDataListProperties()
 {
+    QVariantList elemsProps;
+    for (auto idx1 = 1U; idx1 < 4; ++idx1) {
+        for (auto idx2 = 0U; idx2 < 8; ++idx2) {
+            elemsProps.append(cc_plugin::field::rxm::sfxdxProperties(idx1, idx2));
+        }
+    }
+
     static const QString Name("Data");
     auto listProps =
         cc::Property::createPropertiesMap(
             Name,
-            QVariant::fromValue(cc_plugin::field::rxm::sfxdxProperties()));
+            QVariant::fromValue(elemsProps));
     cc::Property::setSerialisedHidden(listProps);
 
     return cc::Property::createPropertiesMap(Name, std::move(listProps));

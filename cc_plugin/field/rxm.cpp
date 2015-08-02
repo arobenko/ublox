@@ -96,7 +96,6 @@ QVariantMap createAgeProperties()
     return props;
 }
 
-
 }  // namespace
 
 const QVariantMap& itowProperties()
@@ -203,10 +202,10 @@ const QVariantMap& chnProperties()
     return Props;
 }
 
-const QVariantMap& dwordProperties()
+QVariantMap dwordProperties(unsigned idx)
 {
-    static const auto Props = createNameOnlyProperties("DWORD");
-    return Props;
+    auto name = QString("DWORD%1").arg(idx, 1, 10, QChar('0'));
+    return cc::Property::createPropertiesMap(name);
 }
 
 const QVariantMap& howProperties()
@@ -215,10 +214,14 @@ const QVariantMap& howProperties()
     return Props;
 }
 
-const QVariantMap& sfxdxProperties()
+QVariantMap sfxdxProperties(unsigned idx1, unsigned idx2)
 {
-    static const auto Props = createNameOnlyProperties("SFxDx");
-    return Props;
+    auto name =
+        QString("SF%1D%2")
+            .arg(idx1, 1, 10, QChar('0'))
+            .arg(idx2, 1, 10, QChar('0'));
+
+    return cc::Property::createPropertiesMap(name);
 }
 
 

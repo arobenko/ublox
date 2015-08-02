@@ -50,9 +50,9 @@ const QVariantMap& azimProperties();
 const QVariantMap& elevProperties();
 const QVariantMap& ageProperties();
 const QVariantMap& chnProperties();
-const QVariantMap& dwordProperties();
+QVariantMap dwordProperties(unsigned idx);
 const QVariantMap& howProperties();
-const QVariantMap& sfxdxProperties();
+QVariantMap sfxdxProperties(unsigned idx1, unsigned idx2);
 
 }  // namespace rxm
 
