@@ -60,6 +60,13 @@ QVariantMap createMsgIdProperties()
     cc::Property::appendEnumValue(enumValues, "RXM-EPH", MsgId_RXM_EPH);
     cc::Property::appendEnumValue(enumValues, "RXM-POSREQ", MsgId_RXM_POSREQ);
 
+    cc::Property::appendEnumValue(enumValues, "INF-ERROR", MsgId_INF_ERROR);
+    cc::Property::appendEnumValue(enumValues, "INF-WARNING", MsgId_INF_WARNING);
+    cc::Property::appendEnumValue(enumValues, "INF-NOTICE", MsgId_INF_NOTICE);
+    cc::Property::appendEnumValue(enumValues, "INF-TEST", MsgId_INF_TEST);
+    cc::Property::appendEnumValue(enumValues, "INF-DEBUG", MsgId_INF_DEBUG);
+    cc::Property::appendEnumValue(enumValues, "INF-USER", MsgId_INF_USER);
+
     cc::Property::appendEnumValue(enumValues, "ACK-NAK", MsgId_ACK_NAK);
     cc::Property::appendEnumValue(enumValues, "ACK-ACK", MsgId_ACK_ACK);
 

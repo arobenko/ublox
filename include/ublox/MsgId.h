@@ -46,6 +46,12 @@ enum MsgId : std::uint16_t
     MsgId_RXM_ALM = 0x0230,
     MsgId_RXM_EPH = 0x0231,
     MsgId_RXM_POSREQ = 0x0240,
+    MsgId_INF_ERROR = 0x0400,
+    MsgId_INF_WARNING = 0x0401,
+    MsgId_INF_NOTICE = 0x0402,
+    MsgId_INF_TEST = 0x0403,
+    MsgId_INF_DEBUG = 0x0404,
+    MsgId_INF_USER = 0x0407,
     MsgId_ACK_NAK = 0x0500,
     MsgId_ACK_ACK = 0x0501
 };

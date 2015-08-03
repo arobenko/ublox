@@ -43,6 +43,7 @@ struct MsgIdValueValidator
         static const ValidateFunc Funcs[] = {
             &MsgIdValueValidator::validateNav,
             &MsgIdValueValidator::validateRxm,
+            &MsgIdValueValidator::validateInf,
             &MsgIdValueValidator::validateAck
         };
 
@@ -107,6 +108,27 @@ private:
             MsgId_RXM_ALM,
             MsgId_RXM_EPH,
             MsgId_RXM_POSREQ,
+        };
+
+        auto iter = std::lower_bound(std::begin(IDs), std::end(IDs), id);
+        return (iter != std::end(IDs)) && (*iter == id);
+    }
+
+    static bool validateInf(ublox::MsgId id)
+    {
+        static const auto InfClassId = classId(MsgId_INF_ERROR);
+
+        if (classId(id) != InfClassId) {
+            return false;
+        }
+
+        static const ublox::MsgId IDs[] = {
+            MsgId_INF_ERROR,
+            MsgId_INF_WARNING,
+            MsgId_INF_NOTICE,
+            MsgId_INF_TEST,
+            MsgId_INF_DEBUG,
+            MsgId_INF_USER
         };
 
         auto iter = std::lower_bound(std::begin(IDs), std::end(IDs), id);

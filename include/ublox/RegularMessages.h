@@ -45,6 +45,13 @@
 #include "message/RxmEph.h"
 #include "message/RxmPosreq.h"
 
+#include "message/InfError.h"
+#include "message/InfWarning.h"
+#include "message/InfNotice.h"
+#include "message/InfTest.h"
+#include "message/InfDebug.h"
+#include "message/InfUser.h"
+
 #include "message/AckNak.h"
 #include "message/AckAck.h"
 
@@ -76,6 +83,12 @@ using RegularMessages =
         message::RxmAlm<TMessage>,
         message::RxmEph<TMessage>,
         message::RxmPosreq<TMessage>,
+        message::InfError<TMessage>,
+        message::InfWarning<TMessage>,
+        message::InfNotice<TMessage>,
+        message::InfTest<TMessage>,
+        message::InfDebug<TMessage>,
+        message::InfUser<TMessage>,
         message::AckNak<TMessage>,
         message::AckAck<TMessage>
     >;

@@ -44,6 +44,13 @@
 #include "cc_plugin/message/RxmEph.h"
 #include "cc_plugin/message/RxmPosreq.h"
 
+#include "cc_plugin/message/InfError.h"
+#include "cc_plugin/message/InfWarning.h"
+#include "cc_plugin/message/InfNotice.h"
+#include "cc_plugin/message/InfTest.h"
+#include "cc_plugin/message/InfDebug.h"
+#include "cc_plugin/message/InfUser.h"
+
 #include "cc_plugin/message/AckNak.h"
 #include "cc_plugin/message/AckAck.h"
 
@@ -75,6 +82,12 @@ typedef std::tuple<
     cc_plugin::message::RxmAlm,
     cc_plugin::message::RxmEph,
     cc_plugin::message::RxmPosreq,
+    cc_plugin::message::InfError,
+    cc_plugin::message::InfWarning,
+    cc_plugin::message::InfNotice,
+    cc_plugin::message::InfTest,
+    cc_plugin::message::InfDebug,
+    cc_plugin::message::InfUser,
     cc_plugin::message::AckNak,
     cc_plugin::message::AckAck
 > RegularMessages;

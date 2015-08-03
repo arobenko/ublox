@@ -57,12 +57,19 @@ function (cc_plugin_ublox)
         message/RxmEph.cpp
         message/RxmEphPoll.cpp
         message/RxmPosreq.cpp
+        message/InfError.cpp
+        message/InfWarning.cpp
+        message/InfNotice.cpp
+        message/InfTest.cpp
+        message/InfDebug.cpp
+        message/InfUser.cpp
         message/AckNak.cpp
         message/AckAck.cpp
         field/MsgId.cpp
         field/common.cpp
         field/nav.cpp
         field/rxm.cpp
+        field/inf.cpp
     )
     
     set (hdr
