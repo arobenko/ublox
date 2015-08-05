@@ -44,7 +44,7 @@ QVariantList createFieldsProperties()
     props.append(cc_plugin::field::nav::gpsFixProperties());
     props.append(cc_plugin::field::nav::flagsProperties());
     props.append(cc_plugin::field::nav::diffStatusProperties());
-    props.append(cc_plugin::field::common::resProperties(0));
+    props.append(cc_plugin::field::common::resProperties());
     props.append(cc_plugin::field::nav::ttffProperties());
     props.append(cc_plugin::field::nav::msssProperties());
 

@@ -65,11 +65,14 @@ function (cc_plugin_ublox)
         message/InfUser.cpp
         message/AckNak.cpp
         message/AckAck.cpp
+        message/CfgPrt.cpp
+        message/CfgPrtPoll.cpp
         field/MsgId.cpp
         field/common.cpp
         field/nav.cpp
         field/rxm.cpp
         field/inf.cpp
+        field/cfg.cpp
     )
     
     set (hdr

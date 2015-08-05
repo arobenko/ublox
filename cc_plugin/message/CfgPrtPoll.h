@@ -18,8 +18,10 @@
 
 #pragma once
 
-#include <QtCore/QVariantList>
-#include <QtCore/QVariantMap>
+#include "comms_champion/comms_champion.h"
+#include "ublox/message/CfgPrtPoll.h"
+#include "cc_plugin/Message.h"
+#include "cc_plugin/ProtocolMessageBase.h"
 
 namespace ublox
 {
@@ -27,25 +29,29 @@ namespace ublox
 namespace cc_plugin
 {
 
-namespace field
+namespace message
 {
 
-namespace common
+class CfgPrtPoll : public
+    ProtocolMessageBase<
+        ublox::message::CfgPrtPoll<ublox::cc_plugin::Message>,
+        CfgPrtPoll>
 {
+public:
+    CfgPrtPoll();
+    CfgPrtPoll(const CfgPrtPoll&) = default;
+    CfgPrtPoll(CfgPrtPoll&&) = default;
+    virtual ~CfgPrtPoll() = default;
 
-const QVariantList& emptyProperties();
-const QVariantMap& resProperties();
-const QVariantMap& resProperties(unsigned idx);
-const QVariantMap& padProperties();
-const QVariantMap& itowProperties();
-const QVariantMap& svidProperties();
-const QVariantMap& elevProperties();
-const QVariantMap& azimProperties();
+    CfgPrtPoll& operator=(const CfgPrtPoll&) = default;
+    CfgPrtPoll& operator=(CfgPrtPoll&&) = default;
 
+protected:
+    virtual const char* nameImpl() const override;
+    virtual const QVariantList& fieldsPropertiesImpl() const override;
+};
 
-}  // namespace common
-
-}  // namespace field
+}  // namespace message
 
 }  // namespace cc_plugin
 

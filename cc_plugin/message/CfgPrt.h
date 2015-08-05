@@ -18,8 +18,10 @@
 
 #pragma once
 
-#include <QtCore/QVariantList>
-#include <QtCore/QVariantMap>
+#include "comms_champion/comms_champion.h"
+#include "ublox/message/CfgPrt.h"
+#include "cc_plugin/Message.h"
+#include "cc_plugin/ProtocolMessageBase.h"
 
 namespace ublox
 {
@@ -27,25 +29,29 @@ namespace ublox
 namespace cc_plugin
 {
 
-namespace field
+namespace message
 {
 
-namespace common
+class CfgPrt : public
+    ProtocolMessageBase<
+        ublox::message::CfgPrt<ublox::cc_plugin::Message>,
+        CfgPrt>
 {
+public:
+    CfgPrt() = default;
+    CfgPrt(const CfgPrt&) = default;
+    CfgPrt(CfgPrt&&) = default;
+    virtual ~CfgPrt() = default;
 
-const QVariantList& emptyProperties();
-const QVariantMap& resProperties();
-const QVariantMap& resProperties(unsigned idx);
-const QVariantMap& padProperties();
-const QVariantMap& itowProperties();
-const QVariantMap& svidProperties();
-const QVariantMap& elevProperties();
-const QVariantMap& azimProperties();
+    CfgPrt& operator=(const CfgPrt&) = default;
+    CfgPrt& operator=(CfgPrt&&) = default;
 
+protected:
+    virtual const char* nameImpl() const override;
+    virtual const QVariantList& fieldsPropertiesImpl() const override;
+};
 
-}  // namespace common
-
-}  // namespace field
+}  // namespace message
 
 }  // namespace cc_plugin
 

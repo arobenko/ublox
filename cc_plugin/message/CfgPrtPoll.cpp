@@ -16,10 +16,11 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-#pragma once
+#include "CfgPrtPoll.h"
 
-#include <QtCore/QVariantList>
-#include <QtCore/QVariantMap>
+#include "cc_plugin/field/cfg.h"
+
+namespace cc = comms_champion;
 
 namespace ublox
 {
@@ -27,28 +28,44 @@ namespace ublox
 namespace cc_plugin
 {
 
-namespace field
+namespace message
 {
 
-namespace common
+namespace
 {
 
-const QVariantList& emptyProperties();
-const QVariantMap& resProperties();
-const QVariantMap& resProperties(unsigned idx);
-const QVariantMap& padProperties();
-const QVariantMap& itowProperties();
-const QVariantMap& svidProperties();
-const QVariantMap& elevProperties();
-const QVariantMap& azimProperties();
+QVariantList createFieldsProperties()
+{
 
+    QVariantList props;
+    props.append(cc_plugin::field::cfg::portIdProperties());
 
-}  // namespace common
+    assert(props.size() == CfgPrtPoll::FieldIdx_NumOfValues);
+    return props;
+}
 
-}  // namespace field
+}  // namespace
+
+CfgPrtPoll::CfgPrtPoll()
+{
+    setPoll();
+}
+
+const char* CfgPrtPoll::nameImpl() const
+{
+    static const char* Str = "CFG-PRT (Poll)";
+    return Str;
+}
+
+const QVariantList& CfgPrtPoll::fieldsPropertiesImpl() const
+{
+    static const auto Props = createFieldsProperties();
+    return Props;
+}
+
+}  // namespace message
 
 }  // namespace cc_plugin
 
 }  // namespace ublox
-
 

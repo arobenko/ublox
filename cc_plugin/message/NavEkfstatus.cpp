@@ -53,7 +53,7 @@ QVariantList createFieldsProperties()
     props.append(cc_plugin::field::nav::accGyroBiasProperties());
     props.append(cc_plugin::field::nav::accGyroScaleProperties());
     props.append(cc_plugin::field::nav::measUsedProperties());
-    props.append(cc_plugin::field::common::resProperties(0));
+    props.append(cc_plugin::field::common::resProperties());
 
     assert(props.size() == NavEkfstatus::FieldIdx_NumOfValues);
     return props;

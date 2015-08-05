@@ -70,6 +70,27 @@ QVariantMap createMsgIdProperties()
     cc::Property::appendEnumValue(enumValues, "ACK-NAK", MsgId_ACK_NAK);
     cc::Property::appendEnumValue(enumValues, "ACK-ACK", MsgId_ACK_ACK);
 
+    cc::Property::appendEnumValue(enumValues, "CFG-PRT", MsgId_CFG_PRT);
+    cc::Property::appendEnumValue(enumValues, "CFG-MSG", MsgId_CFG_MSG);
+    cc::Property::appendEnumValue(enumValues, "CFG-INF", MsgId_CFG_INF);
+    cc::Property::appendEnumValue(enumValues, "CFG-RST", MsgId_CFG_RST);
+    cc::Property::appendEnumValue(enumValues, "CFG-DAT", MsgId_CFG_DAT);
+    cc::Property::appendEnumValue(enumValues, "CFG-TP", MsgId_CFG_TP);
+    cc::Property::appendEnumValue(enumValues, "CFG-RATE", MsgId_CFG_RATE);
+    cc::Property::appendEnumValue(enumValues, "CFG-CFG", MsgId_CFG_CFG);
+    cc::Property::appendEnumValue(enumValues, "CFG-FXN", MsgId_CFG_FXN);
+    cc::Property::appendEnumValue(enumValues, "CFG-TM", MsgId_CFG_TM);
+    cc::Property::appendEnumValue(enumValues, "CFG-RXM", MsgId_CFG_RXM);
+    cc::Property::appendEnumValue(enumValues, "CFG-EKF", MsgId_CFG_EKF);
+    cc::Property::appendEnumValue(enumValues, "CFG-ANT", MsgId_CFG_ANT);
+    cc::Property::appendEnumValue(enumValues, "CFG-SBAS", MsgId_CFG_SBAS);
+    cc::Property::appendEnumValue(enumValues, "CFG-NMEA", MsgId_CFG_NMEA);
+    cc::Property::appendEnumValue(enumValues, "CFG-TM2", MsgId_CFG_TM2);
+    cc::Property::appendEnumValue(enumValues, "CFG-NAV2", MsgId_CFG_NAV2);
+    cc::Property::appendEnumValue(enumValues, "CFG-USB", MsgId_CFG_USB);
+    cc::Property::appendEnumValue(enumValues, "CFG-TMODE", MsgId_CFG_TMODE);
+    cc::Property::appendEnumValue(enumValues, "CFG-LIC", MsgId_CFG_LIC);
+
     return cc::Property::createPropertiesMap("CLASS + ID", std::move(enumValues));
 }
 

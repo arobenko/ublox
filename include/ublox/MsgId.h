@@ -53,7 +53,27 @@ enum MsgId : std::uint16_t
     MsgId_INF_DEBUG = 0x0404,
     MsgId_INF_USER = 0x0407,
     MsgId_ACK_NAK = 0x0500,
-    MsgId_ACK_ACK = 0x0501
+    MsgId_ACK_ACK = 0x0501,
+    MsgId_CFG_PRT = 0x0600,
+    MsgId_CFG_MSG = 0x0601,
+    MsgId_CFG_INF = 0x0602,
+    MsgId_CFG_RST = 0x0604,
+    MsgId_CFG_DAT = 0x0606,
+    MsgId_CFG_TP = 0x0607,
+    MsgId_CFG_RATE = 0x0608,
+    MsgId_CFG_CFG = 0x0609,
+    MsgId_CFG_FXN = 0x060E,
+    MsgId_CFG_TM = 0x0610,
+    MsgId_CFG_RXM = 0x0611,
+    MsgId_CFG_EKF = 0x0612,
+    MsgId_CFG_ANT = 0x0613,
+    MsgId_CFG_SBAS = 0x0616,
+    MsgId_CFG_NMEA = 0x0617,
+    MsgId_CFG_TM2 = 0x0619,
+    MsgId_CFG_NAV2 = 0x061a,
+    MsgId_CFG_USB = 0x061b,
+    MsgId_CFG_TMODE = 0x061d,
+    MsgId_CFG_LIC = 0x0680,
 };
 
 }  // namespace ublox

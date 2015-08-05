@@ -95,18 +95,19 @@ using I4T =
 
 typedef I4T<> I4;
 
-using res1 = U1;
+using res1 = U1T<comms::option::ValidNumValueRange<0, 0> >;
 
-using res2 = U2;
+using res2 = U2T<comms::option::ValidNumValueRange<0, 0> >;
 
 using res3 =
     comms::field::IntValue<
         FieldBase,
         std::uint32_t,
-        comms::option::FixedLength<3>
+        comms::option::FixedLength<3>,
+        comms::option::ValidNumValueRange<0, 0>
     >;
 
-using res4 = U4;
+using res4 = U4T<comms::option::ValidNumValueRange<0, 0> >;
 
 template <typename... TOptions>
 using R4T =

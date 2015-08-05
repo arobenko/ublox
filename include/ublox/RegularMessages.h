@@ -55,6 +55,7 @@
 #include "message/AckNak.h"
 #include "message/AckAck.h"
 
+#include "message/CfgPrt.h"
 
 namespace ublox
 {
@@ -90,7 +91,8 @@ using RegularMessages =
         message::InfDebug<TMessage>,
         message::InfUser<TMessage>,
         message::AckNak<TMessage>,
-        message::AckAck<TMessage>
+        message::AckAck<TMessage>,
+        message::CfgPrt<TMessage>
     >;
 
 }  // namespace ublox

@@ -44,7 +44,8 @@ struct MsgIdValueValidator
             &MsgIdValueValidator::validateNav,
             &MsgIdValueValidator::validateRxm,
             &MsgIdValueValidator::validateInf,
-            &MsgIdValueValidator::validateAck
+            &MsgIdValueValidator::validateAck,
+            &MsgIdValueValidator::validateCfg
         };
 
         ublox::MsgId id = field.value();
@@ -139,6 +140,42 @@ private:
     {
         return (ublox::MsgId_ACK_NAK <= id) && (id <= MsgId_ACK_ACK);
     }
+
+    static bool validateCfg(ublox::MsgId id)
+    {
+        static const auto CfgClassId = classId(MsgId_CFG_PRT);
+
+        if (classId(id) != CfgClassId) {
+            return false;
+        }
+
+        static const ublox::MsgId IDs[] = {
+            MsgId_CFG_PRT,
+            MsgId_CFG_MSG,
+            MsgId_CFG_INF,
+            MsgId_CFG_RST,
+            MsgId_CFG_DAT,
+            MsgId_CFG_TP,
+            MsgId_CFG_RATE,
+            MsgId_CFG_CFG,
+            MsgId_CFG_FXN,
+            MsgId_CFG_TM,
+            MsgId_CFG_RXM,
+            MsgId_CFG_EKF,
+            MsgId_CFG_ANT,
+            MsgId_CFG_SBAS,
+            MsgId_CFG_NMEA,
+            MsgId_CFG_TM2,
+            MsgId_CFG_NAV2,
+            MsgId_CFG_USB,
+            MsgId_CFG_TMODE,
+            MsgId_CFG_LIC
+        };
+
+        auto iter = std::lower_bound(std::begin(IDs), std::end(IDs), id);
+        return (iter != std::end(IDs)) && (*iter == id);
+    }
+
 };
 
 }  // namespace details

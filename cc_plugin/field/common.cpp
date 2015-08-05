@@ -41,10 +41,7 @@ namespace
 
 QVariantMap createResProperties(unsigned idx)
 {
-    QString str("res");
-    if (0 < idx) {
-        str.append(QString("%1").arg(idx, 1, 10, QChar('0')));
-    }
+    auto str = QString("res%1").arg(idx, 1, 10, QChar('0'));
     return cc::Property::createPropertiesMap(str);
 }
 
@@ -61,13 +58,19 @@ const QVariantList& emptyProperties()
     return Props;
 }
 
+const QVariantMap& resProperties()
+{
+    static const QVariantMap Props = cc::Property::createPropertiesMap("res");
+    return Props;
+}
+
 const QVariantMap& resProperties(unsigned idx)
 {
     static const QVariantMap Props[] = {
         createResProperties(0),
         createResProperties(1),
         createResProperties(2),
-        QVariantMap(),
+        createResProperties(3),
         createResProperties(4)
     };
 
@@ -78,6 +81,12 @@ const QVariantMap& resProperties(unsigned idx)
     }
 
     return Props[idx];
+}
+
+const QVariantMap& padProperties()
+{
+    static const QVariantMap Props = cc::Property::createPropertiesMap("pad");
+    return Props;
 }
 
 const QVariantMap& itowProperties()

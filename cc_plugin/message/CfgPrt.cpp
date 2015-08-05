@@ -19,8 +19,8 @@
 #include <functional>
 #include <cassert>
 
-#include "NavSbas.h"
-#include "cc_plugin/field/nav.h"
+#include "CfgPrt.h"
+#include "cc_plugin/field/cfg.h"
 #include "cc_plugin/field/common.h"
 
 namespace cc = comms_champion;
@@ -40,15 +40,15 @@ namespace
 QVariantMap createSingleDataElementProperties()
 {
     QVariantList membersData;
-    membersData.append(cc_plugin::field::nav::svidProperties());
-    membersData.append(cc_plugin::field::nav::infoFlagsProperties());
-    membersData.append(cc_plugin::field::nav::udreProperties());
-    membersData.append(cc_plugin::field::nav::sysProperties());
-    membersData.append(cc_plugin::field::nav::serviceProperties());
+    membersData.append(cc_plugin::field::cfg::portIdProperties());
+    membersData.append(cc_plugin::field::common::resProperties(0));
     membersData.append(cc_plugin::field::common::resProperties(1));
-    membersData.append(cc_plugin::field::nav::prcProperties());
-    membersData.append(cc_plugin::field::common::resProperties(2));
-    membersData.append(cc_plugin::field::nav::icProperties());
+    membersData.append(cc_plugin::field::cfg::prtModeProperties());
+    membersData.append(cc_plugin::field::cfg::baudrateProperties());
+    membersData.append(cc_plugin::field::cfg::inProtoMaskProperties());
+    membersData.append(cc_plugin::field::cfg::outProtoMaskProperties());
+    membersData.append(cc_plugin::field::cfg::prtFlagsProperties());
+    membersData.append(cc_plugin::field::common::padProperties());
 
     QVariantMap props;
     cc::Property::setData(props, std::move(membersData));
@@ -57,7 +57,7 @@ QVariantMap createSingleDataElementProperties()
 
 QVariantMap createDataListProperties()
 {
-    auto props = cc::Property::createPropertiesMap("Data", createSingleDataElementProperties());
+    auto props = cc::Property::createPropertiesMap("List", createSingleDataElementProperties());
     cc::Property::setSerialisedHidden(props);
     return props;
 }
@@ -65,28 +65,21 @@ QVariantMap createDataListProperties()
 QVariantList createFieldsProperties()
 {
     QVariantList props;
-    props.append(cc_plugin::field::nav::itowProperties());
-    props.append(cc_plugin::field::nav::geoProperties());
-    props.append(cc_plugin::field::nav::modeProperties());
-    props.append(cc_plugin::field::nav::sysProperties());
-    props.append(cc_plugin::field::nav::serviceProperties());
-    props.append(cc_plugin::field::nav::cntProperties());
-    props.append(cc_plugin::field::common::resProperties());
     props.append(createDataListProperties());
 
-    assert(props.size() == NavSbas::FieldIdx_NumOfValues);
+    assert(props.size() == CfgPrt::FieldIdx_NumOfValues);
     return props;
 }
 
 }  // namespace
 
-const char* NavSbas::nameImpl() const
+const char* CfgPrt::nameImpl() const
 {
-    static const char* Str = "NAV-SBAS";
+    static const char* Str = "CFG-PRT";
     return Str;
 }
 
-const QVariantList& NavSbas::fieldsPropertiesImpl() const
+const QVariantList& CfgPrt::fieldsPropertiesImpl() const
 {
     static const auto Props = createFieldsProperties();
     return Props;

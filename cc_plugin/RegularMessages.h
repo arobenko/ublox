@@ -54,6 +54,8 @@
 #include "cc_plugin/message/AckNak.h"
 #include "cc_plugin/message/AckAck.h"
 
+#include "cc_plugin/message/CfgPrt.h"
+
 namespace ublox
 {
 
@@ -89,7 +91,8 @@ typedef std::tuple<
     cc_plugin::message::InfDebug,
     cc_plugin::message::InfUser,
     cc_plugin::message::AckNak,
-    cc_plugin::message::AckAck
+    cc_plugin::message::AckAck,
+    cc_plugin::message::CfgPrt
 > RegularMessages;
 
 }  // namespace cc_plugin
