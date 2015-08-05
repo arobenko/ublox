@@ -18,7 +18,10 @@
 
 #pragma once
 
-#include <QtCore/QVariantMap>
+#include "comms_champion/comms_champion.h"
+#include "ublox/message/CfgMsg.h"
+#include "cc_plugin/Message.h"
+#include "cc_plugin/ProtocolMessageBase.h"
 
 namespace ublox
 {
@@ -26,26 +29,32 @@ namespace ublox
 namespace cc_plugin
 {
 
-namespace field
+namespace message
 {
 
-namespace cfg
+class CfgMsg : public
+    ProtocolMessageBase<
+        ublox::message::CfgMsg<ublox::cc_plugin::Message>,
+        CfgMsg>
 {
+public:
+    CfgMsg() = default;
+    CfgMsg(const CfgMsg&) = default;
+    CfgMsg(CfgMsg&&) = default;
+    virtual ~CfgMsg() = default;
 
-const QVariantMap& portIdProperties();
-const QVariantMap& prtModeProperties();
-const QVariantMap& baudrateProperties();
-const QVariantMap& inProtoMaskProperties();
-const QVariantMap& outProtoMaskProperties();
-const QVariantMap& prtFlagsProperties();
-const QVariantMap& rateProperties();
-QVariantMap rateProperties(unsigned idx);
+    CfgMsg& operator=(const CfgMsg&) = default;
+    CfgMsg& operator=(CfgMsg&&) = default;
 
-}  // namespace cfg
+protected:
+    virtual const char* nameImpl() const override;
+    virtual const QVariantList& fieldsPropertiesImpl() const override;
+};
 
-}  // namespace field
+}  // namespace message
 
 }  // namespace cc_plugin
 
 }  // namespace ublox
+
 

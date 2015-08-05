@@ -17,6 +17,8 @@
 
 #include "cfg.h"
 
+#include <QtCore/QString>
+
 #include "comms_champion/comms_champion.h"
 #include "ublox/field/cfg.h"
 
@@ -191,6 +193,18 @@ const QVariantMap& prtFlagsProperties()
 {
     static const QVariantMap Props = createPrtFlagsProperties();
     return Props;
+}
+
+const QVariantMap& rateProperties()
+{
+    static const QVariantMap Props = createNameOnlyProperties("Rate");
+    return Props;
+}
+
+QVariantMap rateProperties(unsigned idx)
+{
+    auto name = QString("Rate%1").arg(idx, 1, 10, QChar('0'));
+    return cc::Property::createPropertiesMap(name);
 }
 
 

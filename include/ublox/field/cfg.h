@@ -167,6 +167,8 @@ using PrtFlags =
         comms::option::BitmaskReservedBits<0xfffe, 0>
     >;
 
+using Rate = common::U1;
+
 }  // namespace cfg
 
 }  // namespace field

@@ -67,6 +67,8 @@ function (cc_plugin_ublox)
         message/AckAck.cpp
         message/CfgPrt.cpp
         message/CfgPrtPoll.cpp
+        message/CfgMsg.cpp
+        message/CfgMsgPoll.cpp
         field/MsgId.cpp
         field/common.cpp
         field/nav.cpp

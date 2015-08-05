@@ -15,10 +15,14 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+#include <type_traits>
+#include <functional>
+#include <cassert>
 
-#pragma once
+#include "CfgMsgPoll.h"
+#include "cc_plugin/field/MsgId.h"
 
-#include <QtCore/QVariantMap>
+namespace cc = comms_champion;
 
 namespace ublox
 {
@@ -26,24 +30,36 @@ namespace ublox
 namespace cc_plugin
 {
 
-namespace field
+namespace message
 {
 
-namespace cfg
+namespace
 {
 
-const QVariantMap& portIdProperties();
-const QVariantMap& prtModeProperties();
-const QVariantMap& baudrateProperties();
-const QVariantMap& inProtoMaskProperties();
-const QVariantMap& outProtoMaskProperties();
-const QVariantMap& prtFlagsProperties();
-const QVariantMap& rateProperties();
-QVariantMap rateProperties(unsigned idx);
+QVariantList createFieldsProperties()
+{
+    QVariantList props;
+    props.append(cc_plugin::field::msgIdProperties());
 
-}  // namespace cfg
+    assert(props.size() == CfgMsgPoll::FieldIdx_NumOfValues);
+    return props;
+}
 
-}  // namespace field
+}  // namespace
+
+const char* CfgMsgPoll::nameImpl() const
+{
+    static const char* Str = "CFG-MSG (Poll)";
+    return Str;
+}
+
+const QVariantList& CfgMsgPoll::fieldsPropertiesImpl() const
+{
+    static const auto Props = createFieldsProperties();
+    return Props;
+}
+
+}  // namespace message
 
 }  // namespace cc_plugin
 
