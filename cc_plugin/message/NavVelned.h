@@ -38,13 +38,13 @@ class NavVelned : public
         NavVelned>
 {
 public:
-    NavVelned() = default;
-    NavVelned(const NavVelned&) = default;
-    NavVelned(NavVelned&&) = default;
-    virtual ~NavVelned() = default;
+    NavVelned();
+    NavVelned(const NavVelned&) = delete;
+    NavVelned(NavVelned&&) = delete;
+    virtual ~NavVelned();
 
-    NavVelned& operator=(const NavVelned&) = default;
-    NavVelned& operator=(NavVelned&&) = default;
+    NavVelned& operator=(const NavVelned&);
+    NavVelned& operator=(NavVelned&&);
 
 protected:
     virtual const char* nameImpl() const override;
@@ -57,4 +57,8 @@ protected:
 
 }  // namespace ublox
 
+extern template class ublox::message::NavVelned<ublox::cc_plugin::Message>;
+extern template class ublox::cc_plugin::ProtocolMessageBase<
+    ublox::message::NavVelned<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::NavVelned>;
 

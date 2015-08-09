@@ -18,6 +18,12 @@
 
 #include "NavEkfstatusPoll.h"
 
+template class ublox::message::NavEkfstatusPoll<ublox::cc_plugin::Message>;
+template class ublox::cc_plugin::ProtocolMessageBase<
+    ublox::message::NavEkfstatusPoll<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::NavEkfstatusPoll>;
+
+
 namespace cc = comms_champion;
 
 namespace ublox
@@ -33,6 +39,11 @@ NavEkfstatusPoll::NavEkfstatusPoll()
 {
     setPoll();
 }
+
+NavEkfstatusPoll::~NavEkfstatusPoll() = default;
+
+NavEkfstatusPoll& NavEkfstatusPoll::operator=(const NavEkfstatusPoll&) = default;
+NavEkfstatusPoll& NavEkfstatusPoll::operator=(NavEkfstatusPoll&&) = default;
 
 const char* NavEkfstatusPoll::nameImpl() const
 {

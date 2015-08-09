@@ -39,12 +39,12 @@ class NavTimegpsPoll : public
 {
 public:
     NavTimegpsPoll();
-    NavTimegpsPoll(const NavTimegpsPoll&) = default;
-    NavTimegpsPoll(NavTimegpsPoll&&) = default;
-    virtual ~NavTimegpsPoll() = default;
+    NavTimegpsPoll(const NavTimegpsPoll&) = delete;
+    NavTimegpsPoll(NavTimegpsPoll&&) = delete;
+    virtual ~NavTimegpsPoll();
 
-    NavTimegpsPoll& operator=(const NavTimegpsPoll&) = default;
-    NavTimegpsPoll& operator=(NavTimegpsPoll&&) = default;
+    NavTimegpsPoll& operator=(const NavTimegpsPoll&);
+    NavTimegpsPoll& operator=(NavTimegpsPoll&&);
 
 protected:
     virtual const char* nameImpl() const override;
@@ -56,4 +56,8 @@ protected:
 
 }  // namespace ublox
 
+extern template class ublox::message::NavTimegpsPoll<ublox::cc_plugin::Message>;
+extern template class ublox::cc_plugin::ProtocolMessageBase<
+    ublox::message::NavTimegpsPoll<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::NavTimegpsPoll>;
 

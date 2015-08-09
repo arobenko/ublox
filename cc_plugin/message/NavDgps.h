@@ -38,13 +38,13 @@ class NavDgps : public
         NavDgps>
 {
 public:
-    NavDgps() = default;
-    NavDgps(const NavDgps&) = default;
-    NavDgps(NavDgps&&) = default;
-    virtual ~NavDgps() = default;
+    NavDgps();
+    NavDgps(const NavDgps&) = delete;
+    NavDgps(NavDgps&&) = delete;
+    virtual ~NavDgps();
 
-    NavDgps& operator=(const NavDgps&) = default;
-    NavDgps& operator=(NavDgps&&) = default;
+    NavDgps& operator=(const NavDgps&);
+    NavDgps& operator=(NavDgps&&);
 
 protected:
     virtual const char* nameImpl() const override;
@@ -57,4 +57,8 @@ protected:
 
 }  // namespace ublox
 
+extern template class ublox::message::NavDgps<ublox::cc_plugin::Message>;
+extern template class ublox::cc_plugin::ProtocolMessageBase<
+    ublox::message::NavDgps<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::NavDgps>;
 

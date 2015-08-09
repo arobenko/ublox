@@ -38,13 +38,13 @@ class InfWarning : public
         InfWarning>
 {
 public:
-    InfWarning() = default;
-    InfWarning(const InfWarning&) = default;
-    InfWarning(InfWarning&&) = default;
-    virtual ~InfWarning() = default;
+    InfWarning();
+    InfWarning(const InfWarning&) = delete;
+    InfWarning(InfWarning&&) = delete;
+    virtual ~InfWarning();
 
-    InfWarning& operator=(const InfWarning&) = default;
-    InfWarning& operator=(InfWarning&&) = default;
+    InfWarning& operator=(const InfWarning&);
+    InfWarning& operator=(InfWarning&&);
 
 protected:
     virtual const char* nameImpl() const override;
@@ -57,4 +57,6 @@ protected:
 
 }  // namespace ublox
 
-
+extern template class ublox::cc_plugin::ProtocolMessageBase<
+    ublox::message::InfWarning<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::InfWarning>;

@@ -38,13 +38,13 @@ class AckAck : public
         AckAck>
 {
 public:
-    AckAck() = default;
-    AckAck(const AckAck&) = default;
-    AckAck(AckAck&&) = default;
-    virtual ~AckAck() = default;
+    AckAck();
+    AckAck(const AckAck&) = delete;
+    AckAck(AckAck&&) = delete;
+    virtual ~AckAck();
 
-    AckAck& operator=(const AckAck&) = default;
-    AckAck& operator=(AckAck&&) = default;
+    AckAck& operator=(const AckAck&);
+    AckAck& operator=(AckAck&&);
 
 protected:
     virtual const char* nameImpl() const override;
@@ -57,4 +57,8 @@ protected:
 
 }  // namespace ublox
 
+extern template class ublox::message::AckAck<ublox::cc_plugin::Message>;
+extern template class ublox::cc_plugin::ProtocolMessageBase<
+    ublox::message::AckAck<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::AckAck>;
 

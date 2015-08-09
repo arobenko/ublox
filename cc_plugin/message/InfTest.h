@@ -38,13 +38,13 @@ class InfTest : public
         InfTest>
 {
 public:
-    InfTest() = default;
-    InfTest(const InfTest&) = default;
-    InfTest(InfTest&&) = default;
-    virtual ~InfTest() = default;
+    InfTest();
+    InfTest(const InfTest&) = delete;
+    InfTest(InfTest&&) = delete;
+    virtual ~InfTest();
 
-    InfTest& operator=(const InfTest&) = default;
-    InfTest& operator=(InfTest&&) = default;
+    InfTest& operator=(const InfTest&);
+    InfTest& operator=(InfTest&&);
 
 protected:
     virtual const char* nameImpl() const override;
@@ -57,4 +57,7 @@ protected:
 
 }  // namespace ublox
 
+extern template class ublox::cc_plugin::ProtocolMessageBase<
+    ublox::message::InfTest<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::InfTest>;
 

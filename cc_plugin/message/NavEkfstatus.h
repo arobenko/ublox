@@ -38,13 +38,13 @@ class NavEkfstatus : public
         NavEkfstatus>
 {
 public:
-    NavEkfstatus() = default;
-    NavEkfstatus(const NavEkfstatus&) = default;
-    NavEkfstatus(NavEkfstatus&&) = default;
-    virtual ~NavEkfstatus() = default;
+    NavEkfstatus();
+    NavEkfstatus(const NavEkfstatus&) = delete;
+    NavEkfstatus(NavEkfstatus&&) = delete;
+    virtual ~NavEkfstatus();
 
-    NavEkfstatus& operator=(const NavEkfstatus&) = default;
-    NavEkfstatus& operator=(NavEkfstatus&&) = default;
+    NavEkfstatus& operator=(const NavEkfstatus&);
+    NavEkfstatus& operator=(NavEkfstatus&&);
 
 protected:
     virtual const char* nameImpl() const override;
@@ -57,4 +57,8 @@ protected:
 
 }  // namespace ublox
 
+extern template class ublox::message::NavEkfstatus<ublox::cc_plugin::Message>;
+extern template class ublox::cc_plugin::ProtocolMessageBase<
+    ublox::message::NavEkfstatus<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::NavEkfstatus>;
 

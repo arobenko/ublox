@@ -18,6 +18,11 @@
 
 #include "NavDgpsPoll.h"
 
+template class ublox::message::NavDgpsPoll<ublox::cc_plugin::Message>;
+template class ublox::cc_plugin::ProtocolMessageBase<
+    ublox::message::NavDgpsPoll<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::NavDgpsPoll>;
+
 namespace cc = comms_champion;
 
 namespace ublox
@@ -33,6 +38,12 @@ NavDgpsPoll::NavDgpsPoll()
 {
     setPoll();
 }
+
+NavDgpsPoll::~NavDgpsPoll() = default;
+
+NavDgpsPoll& NavDgpsPoll::operator=(const NavDgpsPoll&) = default;
+NavDgpsPoll& NavDgpsPoll::operator=(NavDgpsPoll&&) = default;
+
 
 const char* NavDgpsPoll::nameImpl() const
 {

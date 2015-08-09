@@ -38,13 +38,13 @@ class NavPosllh : public
         NavPosllh>
 {
 public:
-    NavPosllh() = default;
-    NavPosllh(const NavPosllh&) = default;
-    NavPosllh(NavPosllh&&) = default;
-    virtual ~NavPosllh() = default;
+    NavPosllh();
+    NavPosllh(const NavPosllh&) = delete;
+    NavPosllh(NavPosllh&&) = delete;
+    virtual ~NavPosllh();
 
-    NavPosllh& operator=(const NavPosllh&) = default;
-    NavPosllh& operator=(NavPosllh&&) = default;
+    NavPosllh& operator=(const NavPosllh&);
+    NavPosllh& operator=(NavPosllh&&);
 
 protected:
     virtual const char* nameImpl() const override;
@@ -57,4 +57,8 @@ protected:
 
 }  // namespace ublox
 
+extern template class ublox::message::NavPosllh<ublox::cc_plugin::Message>;
+extern template class ublox::cc_plugin::ProtocolMessageBase<
+    ublox::message::NavPosllh<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::NavPosllh>;
 

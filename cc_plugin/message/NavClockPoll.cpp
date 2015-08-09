@@ -18,6 +18,11 @@
 
 #include "NavClockPoll.h"
 
+template class ublox::message::NavClockPoll<ublox::cc_plugin::Message>;
+template class ublox::cc_plugin::ProtocolMessageBase<
+    ublox::message::NavClockPoll<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::NavClockPoll>;
+
 namespace cc = comms_champion;
 
 namespace ublox
@@ -33,6 +38,11 @@ NavClockPoll::NavClockPoll()
 {
     setPoll();
 }
+
+NavClockPoll::~NavClockPoll() = default;
+
+NavClockPoll& NavClockPoll::operator=(const NavClockPoll&) = default;
+NavClockPoll& NavClockPoll::operator=(NavClockPoll&&) = default;
 
 const char* NavClockPoll::nameImpl() const
 {

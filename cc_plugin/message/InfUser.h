@@ -38,13 +38,13 @@ class InfUser : public
         InfUser>
 {
 public:
-    InfUser() = default;
-    InfUser(const InfUser&) = default;
-    InfUser(InfUser&&) = default;
-    virtual ~InfUser() = default;
+    InfUser();
+    InfUser(const InfUser&) = delete;
+    InfUser(InfUser&&) = delete;
+    virtual ~InfUser();
 
-    InfUser& operator=(const InfUser&) = default;
-    InfUser& operator=(InfUser&&) = default;
+    InfUser& operator=(const InfUser&);
+    InfUser& operator=(InfUser&&);
 
 protected:
     virtual const char* nameImpl() const override;
@@ -57,4 +57,6 @@ protected:
 
 }  // namespace ublox
 
-
+extern template class ublox::cc_plugin::ProtocolMessageBase<
+    ublox::message::InfUser<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::InfUser>;

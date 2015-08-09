@@ -18,6 +18,12 @@
 
 #include "NavSbasPoll.h"
 
+template class ublox::message::NavSbasPoll<ublox::cc_plugin::Message>;
+template class ublox::cc_plugin::ProtocolMessageBase<
+    ublox::message::NavSbasPoll<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::NavSbasPoll>;
+
+
 namespace cc = comms_champion;
 
 namespace ublox
@@ -33,6 +39,11 @@ NavSbasPoll::NavSbasPoll()
 {
     setPoll();
 }
+
+NavSbasPoll::~NavSbasPoll() = default;
+
+NavSbasPoll& NavSbasPoll::operator=(const NavSbasPoll&) = default;
+NavSbasPoll& NavSbasPoll::operator=(NavSbasPoll&&) = default;
 
 const char* NavSbasPoll::nameImpl() const
 {

@@ -38,13 +38,13 @@ class NavVelecef : public
         NavVelecef>
 {
 public:
-    NavVelecef() = default;
-    NavVelecef(const NavVelecef&) = default;
-    NavVelecef(NavVelecef&&) = default;
-    virtual ~NavVelecef() = default;
+    NavVelecef();
+    NavVelecef(const NavVelecef&) = delete;
+    NavVelecef(NavVelecef&&) = delete;
+    virtual ~NavVelecef();
 
-    NavVelecef& operator=(const NavVelecef&) = default;
-    NavVelecef& operator=(NavVelecef&&) = default;
+    NavVelecef& operator=(const NavVelecef&);
+    NavVelecef& operator=(NavVelecef&&);
 
 protected:
     virtual const char* nameImpl() const override;
@@ -57,4 +57,8 @@ protected:
 
 }  // namespace ublox
 
+extern template class ublox::message::NavVelecef<ublox::cc_plugin::Message>;
+extern template class ublox::cc_plugin::ProtocolMessageBase<
+    ublox::message::NavVelecef<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::NavVelecef>;
 

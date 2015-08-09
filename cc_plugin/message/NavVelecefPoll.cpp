@@ -17,6 +17,12 @@
 
 #include "NavVelecefPoll.h"
 
+template class ublox::message::NavVelecefPoll<ublox::cc_plugin::Message>;
+template class ublox::cc_plugin::ProtocolMessageBase<
+    ublox::message::NavVelecefPoll<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::NavVelecefPoll>;
+
+
 namespace cc = comms_champion;
 
 namespace ublox
@@ -32,6 +38,11 @@ NavVelecefPoll::NavVelecefPoll()
 {
     setPoll();
 }
+
+NavVelecefPoll::~NavVelecefPoll() = default;
+
+NavVelecefPoll& NavVelecefPoll::operator=(const NavVelecefPoll&) = default;
+NavVelecefPoll& NavVelecefPoll::operator=(NavVelecefPoll&&) = default;
 
 const char* NavVelecefPoll::nameImpl() const
 {

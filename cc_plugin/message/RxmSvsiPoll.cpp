@@ -18,6 +18,11 @@
 
 #include "RxmSvsiPoll.h"
 
+template class ublox::message::RxmSvsiPoll<ublox::cc_plugin::Message>;
+template class ublox::cc_plugin::ProtocolMessageBase<
+    ublox::message::RxmSvsiPoll<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::RxmSvsiPoll>;
+
 namespace cc = comms_champion;
 
 namespace ublox
@@ -33,6 +38,11 @@ RxmSvsiPoll::RxmSvsiPoll()
 {
     setPoll();
 }
+
+RxmSvsiPoll::~RxmSvsiPoll() = default;
+
+RxmSvsiPoll& RxmSvsiPoll::operator=(const RxmSvsiPoll&) = default;
+RxmSvsiPoll& RxmSvsiPoll::operator=(RxmSvsiPoll&&) = default;
 
 const char* RxmSvsiPoll::nameImpl() const
 {

@@ -20,6 +20,11 @@
 
 #include "cc_plugin/field/cfg.h"
 
+template class ublox::message::CfgPrtPoll<ublox::cc_plugin::Message>;
+template class ublox::cc_plugin::ProtocolMessageBase<
+    ublox::message::CfgPrtPoll<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::CfgPrtPoll>;
+
 namespace cc = comms_champion;
 
 namespace ublox
@@ -50,6 +55,12 @@ CfgPrtPoll::CfgPrtPoll()
 {
     setPoll();
 }
+
+CfgPrtPoll::~CfgPrtPoll() = default;
+
+CfgPrtPoll& CfgPrtPoll::operator=(const CfgPrtPoll&) = default;
+CfgPrtPoll& CfgPrtPoll::operator=(CfgPrtPoll&&) = default;
+
 
 const char* CfgPrtPoll::nameImpl() const
 {

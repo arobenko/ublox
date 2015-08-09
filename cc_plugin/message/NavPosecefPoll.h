@@ -39,12 +39,12 @@ class NavPosecefPoll : public
 {
 public:
     NavPosecefPoll();
-    NavPosecefPoll(const NavPosecefPoll&) = default;
-    NavPosecefPoll(NavPosecefPoll&&) = default;
-    virtual ~NavPosecefPoll() = default;
+    NavPosecefPoll(const NavPosecefPoll&) = delete;
+    NavPosecefPoll(NavPosecefPoll&&) = delete;
+    virtual ~NavPosecefPoll();
 
-    NavPosecefPoll& operator=(const NavPosecefPoll&) = default;
-    NavPosecefPoll& operator=(NavPosecefPoll&&) = default;
+    NavPosecefPoll& operator=(const NavPosecefPoll&);
+    NavPosecefPoll& operator=(NavPosecefPoll&&);
 
 protected:
     virtual const char* nameImpl() const override;
@@ -56,4 +56,8 @@ protected:
 
 }  // namespace ublox
 
+extern template class ublox::message::NavPosecefPoll<ublox::cc_plugin::Message>;
+extern template class ublox::cc_plugin::ProtocolMessageBase<
+    ublox::message::NavPosecefPoll<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::NavPosecefPoll>;
 

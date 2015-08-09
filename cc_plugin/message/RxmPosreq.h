@@ -38,13 +38,13 @@ class RxmPosreq : public
         RxmPosreq>
 {
 public:
-    RxmPosreq() = default;
-    RxmPosreq(const RxmPosreq&) = default;
-    RxmPosreq(RxmPosreq&&) = default;
-    virtual ~RxmPosreq() = default;
+    RxmPosreq();
+    RxmPosreq(const RxmPosreq&) = delete;
+    RxmPosreq(RxmPosreq&&) = delete;
+    virtual ~RxmPosreq();
 
-    RxmPosreq& operator=(const RxmPosreq&) = default;
-    RxmPosreq& operator=(RxmPosreq&&) = default;
+    RxmPosreq& operator=(const RxmPosreq&);
+    RxmPosreq& operator=(RxmPosreq&&);
 
 protected:
     virtual const char* nameImpl() const override;
@@ -56,4 +56,8 @@ protected:
 
 }  // namespace ublox
 
+extern template class ublox::message::RxmPosreq<ublox::cc_plugin::Message>;
+extern template class ublox::cc_plugin::ProtocolMessageBase<
+    ublox::message::RxmPosreq<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::RxmPosreq>;
 

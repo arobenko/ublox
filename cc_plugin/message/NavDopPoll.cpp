@@ -18,6 +18,11 @@
 
 #include "NavDopPoll.h"
 
+template class ublox::message::NavDopPoll<ublox::cc_plugin::Message>;
+template class ublox::cc_plugin::ProtocolMessageBase<
+    ublox::message::NavDopPoll<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::NavDopPoll>;
+
 namespace cc = comms_champion;
 
 namespace ublox
@@ -33,6 +38,11 @@ NavDopPoll::NavDopPoll()
 {
     setPoll();
 }
+
+NavDopPoll::~NavDopPoll() = default;
+
+NavDopPoll& NavDopPoll::operator=(const NavDopPoll&) = default;
+NavDopPoll& NavDopPoll::operator=(NavDopPoll&&) = default;
 
 const char* NavDopPoll::nameImpl() const
 {

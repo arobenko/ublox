@@ -39,12 +39,12 @@ class NavSvinfoPoll : public
 {
 public:
     NavSvinfoPoll();
-    NavSvinfoPoll(const NavSvinfoPoll&) = default;
-    NavSvinfoPoll(NavSvinfoPoll&&) = default;
-    virtual ~NavSvinfoPoll() = default;
+    NavSvinfoPoll(const NavSvinfoPoll&) = delete;
+    NavSvinfoPoll(NavSvinfoPoll&&) = delete;
+    virtual ~NavSvinfoPoll();
 
-    NavSvinfoPoll& operator=(const NavSvinfoPoll&) = default;
-    NavSvinfoPoll& operator=(NavSvinfoPoll&&) = default;
+    NavSvinfoPoll& operator=(const NavSvinfoPoll&);
+    NavSvinfoPoll& operator=(NavSvinfoPoll&&);
 
 protected:
     virtual const char* nameImpl() const override;
@@ -56,4 +56,8 @@ protected:
 
 }  // namespace ublox
 
+extern template class ublox::message::NavSvinfoPoll<ublox::cc_plugin::Message>;
+extern template class ublox::cc_plugin::ProtocolMessageBase<
+    ublox::message::NavSvinfoPoll<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::NavSvinfoPoll>;
 

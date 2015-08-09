@@ -15,12 +15,15 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <type_traits>
-#include <functional>
 #include <cassert>
 
 #include "InfError.h"
 #include "cc_plugin/field/inf.h"
+
+template class ublox::cc_plugin::ProtocolMessageBase<
+    ublox::message::InfError<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::InfError>;
+
 
 namespace cc = comms_champion;
 
@@ -46,6 +49,13 @@ QVariantList createFieldsProperties()
 }
 
 }  // namespace
+
+InfError::InfError() = default;
+InfError::~InfError() = default;
+
+InfError& InfError::operator=(const InfError&) = default;
+InfError& InfError::operator=(InfError&&) = default;
+
 
 const char* InfError::nameImpl() const
 {

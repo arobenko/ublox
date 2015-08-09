@@ -39,12 +39,12 @@ class RxmRawPoll : public
 {
 public:
     RxmRawPoll();
-    RxmRawPoll(const RxmRawPoll&) = default;
-    RxmRawPoll(RxmRawPoll&&) = default;
-    virtual ~RxmRawPoll() = default;
+    RxmRawPoll(const RxmRawPoll&) = delete;
+    RxmRawPoll(RxmRawPoll&&) = delete;
+    virtual ~RxmRawPoll();
 
-    RxmRawPoll& operator=(const RxmRawPoll&) = default;
-    RxmRawPoll& operator=(RxmRawPoll&&) = default;
+    RxmRawPoll& operator=(const RxmRawPoll&);
+    RxmRawPoll& operator=(RxmRawPoll&&);
 
 protected:
     virtual const char* nameImpl() const override;
@@ -56,4 +56,8 @@ protected:
 
 }  // namespace ublox
 
+extern template class ublox::message::RxmRawPoll<ublox::cc_plugin::Message>;
+extern template class ublox::cc_plugin::ProtocolMessageBase<
+    ublox::message::RxmRawPoll<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::RxmRawPoll>;
 

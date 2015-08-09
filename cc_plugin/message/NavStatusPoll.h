@@ -39,12 +39,12 @@ class NavStatusPoll : public
 {
 public:
     NavStatusPoll();
-    NavStatusPoll(const NavStatusPoll&) = default;
-    NavStatusPoll(NavStatusPoll&&) = default;
-    virtual ~NavStatusPoll() = default;
+    NavStatusPoll(const NavStatusPoll&) = delete;
+    NavStatusPoll(NavStatusPoll&&) = delete;
+    virtual ~NavStatusPoll();
 
-    NavStatusPoll& operator=(const NavStatusPoll&) = default;
-    NavStatusPoll& operator=(NavStatusPoll&&) = default;
+    NavStatusPoll& operator=(const NavStatusPoll&);
+    NavStatusPoll& operator=(NavStatusPoll&&);
 
 protected:
     virtual const char* nameImpl() const override;
@@ -56,4 +56,8 @@ protected:
 
 }  // namespace ublox
 
+extern template class ublox::message::NavStatusPoll<ublox::cc_plugin::Message>;
+extern template class ublox::cc_plugin::ProtocolMessageBase<
+    ublox::message::NavStatusPoll<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::NavStatusPoll>;
 

@@ -38,13 +38,13 @@ class NavDop : public
         NavDop>
 {
 public:
-    NavDop() = default;
-    NavDop(const NavDop&) = default;
-    NavDop(NavDop&&) = default;
-    virtual ~NavDop() = default;
+    NavDop();
+    NavDop(const NavDop&) = delete;
+    NavDop(NavDop&&) = delete;
+    virtual ~NavDop();
 
-    NavDop& operator=(const NavDop&) = default;
-    NavDop& operator=(NavDop&&) = default;
+    NavDop& operator=(const NavDop&);
+    NavDop& operator=(NavDop&&);
 
 protected:
     virtual const char* nameImpl() const override;
@@ -58,3 +58,7 @@ protected:
 }  // namespace ublox
 
 
+extern template class ublox::message::NavDop<ublox::cc_plugin::Message>;
+extern template class ublox::cc_plugin::ProtocolMessageBase<
+    ublox::message::NavDop<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::NavDop>;

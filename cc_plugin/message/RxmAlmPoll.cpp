@@ -20,6 +20,11 @@
 
 #include "cc_plugin/field/rxm.h"
 
+template class ublox::message::RxmAlmPoll<ublox::cc_plugin::Message>;
+template class ublox::cc_plugin::ProtocolMessageBase<
+    ublox::message::RxmAlmPoll<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::RxmAlmPoll>;
+
 namespace cc = comms_champion;
 
 namespace ublox
@@ -57,6 +62,11 @@ RxmAlmPoll::RxmAlmPoll()
 {
     setPoll();
 }
+
+RxmAlmPoll::~RxmAlmPoll() = default;
+
+RxmAlmPoll& RxmAlmPoll::operator=(const RxmAlmPoll&) = default;
+RxmAlmPoll& RxmAlmPoll::operator=(RxmAlmPoll&&) = default;
 
 const char* RxmAlmPoll::nameImpl() const
 {

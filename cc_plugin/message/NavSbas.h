@@ -38,13 +38,13 @@ class NavSbas : public
         NavSbas>
 {
 public:
-    NavSbas() = default;
-    NavSbas(const NavSbas&) = default;
-    NavSbas(NavSbas&&) = default;
-    virtual ~NavSbas() = default;
+    NavSbas();
+    NavSbas(const NavSbas&) = delete;
+    NavSbas(NavSbas&&) = delete;
+    virtual ~NavSbas();
 
-    NavSbas& operator=(const NavSbas&) = default;
-    NavSbas& operator=(NavSbas&&) = default;
+    NavSbas& operator=(const NavSbas&);
+    NavSbas& operator=(NavSbas&&);
 
 protected:
     virtual const char* nameImpl() const override;
@@ -57,4 +57,8 @@ protected:
 
 }  // namespace ublox
 
+extern template class ublox::message::NavSbas<ublox::cc_plugin::Message>;
+extern template class ublox::cc_plugin::ProtocolMessageBase<
+    ublox::message::NavSbas<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::NavSbas>;
 

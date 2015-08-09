@@ -15,12 +15,15 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <type_traits>
-#include <functional>
 #include <cassert>
 
 #include "InfWarning.h"
 #include "cc_plugin/field/inf.h"
+
+template class ublox::cc_plugin::ProtocolMessageBase<
+    ublox::message::InfWarning<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::InfWarning>;
+
 
 namespace cc = comms_champion;
 
@@ -46,6 +49,12 @@ QVariantList createFieldsProperties()
 }
 
 }  // namespace
+
+InfWarning::InfWarning() = default;
+InfWarning::~InfWarning() = default;
+
+InfWarning& InfWarning::operator=(const InfWarning&) = default;
+InfWarning& InfWarning::operator=(InfWarning&&) = default;
 
 const char* InfWarning::nameImpl() const
 {

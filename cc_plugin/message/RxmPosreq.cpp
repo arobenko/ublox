@@ -18,6 +18,11 @@
 
 #include "RxmPosreq.h"
 
+template class ublox::message::RxmPosreq<ublox::cc_plugin::Message>;
+template class ublox::cc_plugin::ProtocolMessageBase<
+    ublox::message::RxmPosreq<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::RxmPosreq>;
+
 namespace cc = comms_champion;
 
 namespace ublox
@@ -28,6 +33,12 @@ namespace cc_plugin
 
 namespace message
 {
+
+RxmPosreq::RxmPosreq() = default;
+RxmPosreq::~RxmPosreq() = default;
+
+RxmPosreq& RxmPosreq::operator=(const RxmPosreq&) = default;
+RxmPosreq& RxmPosreq::operator=(RxmPosreq&&) = default;
 
 const char* RxmPosreq::nameImpl() const
 {

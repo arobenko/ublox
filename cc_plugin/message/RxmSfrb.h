@@ -38,13 +38,13 @@ class RxmSfrb : public
         RxmSfrb>
 {
 public:
-    RxmSfrb() = default;
-    RxmSfrb(const RxmSfrb&) = default;
-    RxmSfrb(RxmSfrb&&) = default;
-    virtual ~RxmSfrb() = default;
+    RxmSfrb();
+    RxmSfrb(const RxmSfrb&) = delete;
+    RxmSfrb(RxmSfrb&&) = delete;
+    virtual ~RxmSfrb();
 
-    RxmSfrb& operator=(const RxmSfrb&) = default;
-    RxmSfrb& operator=(RxmSfrb&&) = default;
+    RxmSfrb& operator=(const RxmSfrb&);
+    RxmSfrb& operator=(RxmSfrb&&);
 
 protected:
     virtual const char* nameImpl() const override;
@@ -57,4 +57,8 @@ protected:
 
 }  // namespace ublox
 
+extern template class ublox::message::RxmSfrb<ublox::cc_plugin::Message>;
+extern template class ublox::cc_plugin::ProtocolMessageBase<
+    ublox::message::RxmSfrb<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::RxmSfrb>;
 

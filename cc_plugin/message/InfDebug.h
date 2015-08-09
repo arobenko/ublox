@@ -38,13 +38,13 @@ class InfDebug : public
         InfDebug>
 {
 public:
-    InfDebug() = default;
-    InfDebug(const InfDebug&) = default;
-    InfDebug(InfDebug&&) = default;
-    virtual ~InfDebug() = default;
+    InfDebug();
+    InfDebug(const InfDebug&) = delete;
+    InfDebug(InfDebug&&) = delete;
+    virtual ~InfDebug();
 
-    InfDebug& operator=(const InfDebug&) = default;
-    InfDebug& operator=(InfDebug&&) = default;
+    InfDebug& operator=(const InfDebug&);
+    InfDebug& operator=(InfDebug&&);
 
 protected:
     virtual const char* nameImpl() const override;
@@ -57,4 +57,6 @@ protected:
 
 }  // namespace ublox
 
-
+extern template class ublox::cc_plugin::ProtocolMessageBase<
+    ublox::message::InfDebug<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::InfDebug>;

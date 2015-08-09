@@ -38,13 +38,13 @@ class NavPosecef : public
         NavPosecef>
 {
 public:
-    NavPosecef() = default;
-    NavPosecef(const NavPosecef&) = default;
-    NavPosecef(NavPosecef&&) = default;
-    virtual ~NavPosecef() = default;
+    NavPosecef();
+    NavPosecef(const NavPosecef&) = delete;
+    NavPosecef(NavPosecef&&) = delete;
+    virtual ~NavPosecef();
 
-    NavPosecef& operator=(const NavPosecef&) = default;
-    NavPosecef& operator=(NavPosecef&&) = default;
+    NavPosecef& operator=(const NavPosecef&);
+    NavPosecef& operator=(NavPosecef&&);
 
 protected:
     virtual const char* nameImpl() const override;
@@ -57,4 +57,8 @@ protected:
 
 }  // namespace ublox
 
+extern template class ublox::message::NavPosecef<ublox::cc_plugin::Message>;
+extern template class ublox::cc_plugin::ProtocolMessageBase<
+    ublox::message::NavPosecef<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::NavPosecef>;
 

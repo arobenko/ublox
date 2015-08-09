@@ -15,12 +15,15 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <type_traits>
-#include <functional>
 #include <cassert>
 
 #include "NavClock.h"
 #include "cc_plugin/field/nav.h"
+
+template class ublox::message::NavClock<ublox::cc_plugin::Message>;
+template class ublox::cc_plugin::ProtocolMessageBase<
+    ublox::message::NavClock<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::NavClock>;
 
 namespace cc = comms_champion;
 
@@ -50,6 +53,12 @@ QVariantList createFieldsProperties()
 }
 
 }  // namespace
+
+NavClock::NavClock() = default;
+NavClock::~NavClock() = default;
+
+NavClock& NavClock::operator=(const NavClock&) = default;
+NavClock& NavClock::operator=(NavClock&&) = default;
 
 const char* NavClock::nameImpl() const
 {

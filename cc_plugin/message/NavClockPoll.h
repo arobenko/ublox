@@ -39,12 +39,12 @@ class NavClockPoll : public
 {
 public:
     NavClockPoll();
-    NavClockPoll(const NavClockPoll&) = default;
-    NavClockPoll(NavClockPoll&&) = default;
-    virtual ~NavClockPoll() = default;
+    NavClockPoll(const NavClockPoll&) = delete;
+    NavClockPoll(NavClockPoll&&) = delete;
+    virtual ~NavClockPoll();
 
-    NavClockPoll& operator=(const NavClockPoll&) = default;
-    NavClockPoll& operator=(NavClockPoll&&) = default;
+    NavClockPoll& operator=(const NavClockPoll&);
+    NavClockPoll& operator=(NavClockPoll&&);
 
 protected:
     virtual const char* nameImpl() const override;
@@ -56,4 +56,8 @@ protected:
 
 }  // namespace ublox
 
+extern template class ublox::message::NavClockPoll<ublox::cc_plugin::Message>;
+extern template class ublox::cc_plugin::ProtocolMessageBase<
+    ublox::message::NavClockPoll<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::NavClockPoll>;
 

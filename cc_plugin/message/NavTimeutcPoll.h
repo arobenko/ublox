@@ -39,12 +39,12 @@ class NavTimeutcPoll : public
 {
 public:
     NavTimeutcPoll();
-    NavTimeutcPoll(const NavTimeutcPoll&) = default;
-    NavTimeutcPoll(NavTimeutcPoll&&) = default;
-    virtual ~NavTimeutcPoll() = default;
+    NavTimeutcPoll(const NavTimeutcPoll&) = delete;
+    NavTimeutcPoll(NavTimeutcPoll&&) = delete;
+    virtual ~NavTimeutcPoll();
 
-    NavTimeutcPoll& operator=(const NavTimeutcPoll&) = default;
-    NavTimeutcPoll& operator=(NavTimeutcPoll&&) = default;
+    NavTimeutcPoll& operator=(const NavTimeutcPoll&);
+    NavTimeutcPoll& operator=(NavTimeutcPoll&&);
 
 protected:
     virtual const char* nameImpl() const override;
@@ -56,4 +56,8 @@ protected:
 
 }  // namespace ublox
 
+extern template class ublox::message::NavTimeutcPoll<ublox::cc_plugin::Message>;
+extern template class ublox::cc_plugin::ProtocolMessageBase<
+    ublox::message::NavTimeutcPoll<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::NavTimeutcPoll>;
 

@@ -15,12 +15,14 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <type_traits>
-#include <functional>
 #include <cassert>
 
 #include "InfDebug.h"
 #include "cc_plugin/field/inf.h"
+
+template class ublox::cc_plugin::ProtocolMessageBase<
+    ublox::message::InfDebug<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::InfDebug>;
 
 namespace cc = comms_champion;
 
@@ -46,6 +48,12 @@ QVariantList createFieldsProperties()
 }
 
 }  // namespace
+
+InfDebug::InfDebug() = default;
+InfDebug::~InfDebug() = default;
+
+InfDebug& InfDebug::operator=(const InfDebug&) = default;
+InfDebug& InfDebug::operator=(InfDebug&&) = default;
 
 const char* InfDebug::nameImpl() const
 {

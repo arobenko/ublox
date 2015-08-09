@@ -15,12 +15,15 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <type_traits>
-#include <functional>
 #include <cassert>
 
 #include "AckAck.h"
 #include "cc_plugin/field/MsgId.h"
+
+template class ublox::message::AckAck<ublox::cc_plugin::Message>;
+template class ublox::cc_plugin::ProtocolMessageBase<
+    ublox::message::AckAck<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::AckAck>;
 
 namespace cc = comms_champion;
 
@@ -46,6 +49,12 @@ QVariantList createFieldsProperties()
 }
 
 }  // namespace
+
+AckAck::AckAck() = default;
+AckAck::~AckAck() = default;
+
+AckAck& AckAck::operator=(const AckAck&) = default;
+AckAck& AckAck::operator=(AckAck&&) = default;
 
 const char* AckAck::nameImpl() const
 {

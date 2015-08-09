@@ -17,6 +17,12 @@
 
 #include "NavTimegpsPoll.h"
 
+template class ublox::message::NavTimegpsPoll<ublox::cc_plugin::Message>;
+template class ublox::cc_plugin::ProtocolMessageBase<
+    ublox::message::NavTimegpsPoll<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::NavTimegpsPoll>;
+
+
 namespace cc = comms_champion;
 
 namespace ublox
@@ -32,6 +38,11 @@ NavTimegpsPoll::NavTimegpsPoll()
 {
     setPoll();
 }
+
+NavTimegpsPoll::~NavTimegpsPoll() = default;
+
+NavTimegpsPoll& NavTimegpsPoll::operator=(const NavTimegpsPoll&) = default;
+NavTimegpsPoll& NavTimegpsPoll::operator=(NavTimegpsPoll&&) = default;
 
 const char* NavTimegpsPoll::nameImpl() const
 {

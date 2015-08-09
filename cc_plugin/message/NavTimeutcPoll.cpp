@@ -17,6 +17,11 @@
 
 #include "NavTimeutcPoll.h"
 
+template class ublox::message::NavTimeutcPoll<ublox::cc_plugin::Message>;
+template class ublox::cc_plugin::ProtocolMessageBase<
+    ublox::message::NavTimeutcPoll<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::NavTimeutcPoll>;
+
 namespace cc = comms_champion;
 
 namespace ublox
@@ -32,6 +37,12 @@ NavTimeutcPoll::NavTimeutcPoll()
 {
     setPoll();
 }
+
+NavTimeutcPoll::~NavTimeutcPoll() = default;
+
+NavTimeutcPoll& NavTimeutcPoll::operator=(const NavTimeutcPoll&) = default;
+NavTimeutcPoll& NavTimeutcPoll::operator=(NavTimeutcPoll&&) = default;
+
 
 const char* NavTimeutcPoll::nameImpl() const
 {

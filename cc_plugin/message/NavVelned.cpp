@@ -15,12 +15,17 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <type_traits>
-#include <functional>
+#include "NavVelned.h"
+
 #include <cassert>
 
-#include "NavVelned.h"
 #include "cc_plugin/field/nav.h"
+
+template class ublox::message::NavVelned<ublox::cc_plugin::Message>;
+template class ublox::cc_plugin::ProtocolMessageBase<
+    ublox::message::NavVelned<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::NavVelned>;
+
 
 namespace cc = comms_champion;
 
@@ -54,6 +59,13 @@ QVariantList createFieldsProperties()
 }
 
 }  // namespace
+
+NavVelned::NavVelned() = default;
+NavVelned::~NavVelned() = default;
+
+NavVelned& NavVelned::operator=(const NavVelned&) = default;
+NavVelned& NavVelned::operator=(NavVelned&&) = default;
+
 
 const char* NavVelned::nameImpl() const
 {

@@ -15,13 +15,16 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <type_traits>
-#include <functional>
 #include <cassert>
 
 #include "RxmAlm.h"
 #include "cc_plugin/field/rxm.h"
 #include "cc_plugin/field/common.h"
+
+template class ublox::message::RxmAlm<ublox::cc_plugin::Message>;
+template class ublox::cc_plugin::ProtocolMessageBase<
+    ublox::message::RxmAlm<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::RxmAlm>;
 
 namespace cc = comms_champion;
 
@@ -68,6 +71,13 @@ QVariantList createFieldsProperties()
 }
 
 }  // namespace
+
+RxmAlm::RxmAlm() = default;
+RxmAlm::~RxmAlm() = default;
+
+RxmAlm& RxmAlm::operator=(const RxmAlm&) = default;
+RxmAlm& RxmAlm::operator=(RxmAlm&&) = default;
+
 
 const char* RxmAlm::nameImpl() const
 {

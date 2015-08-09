@@ -39,12 +39,12 @@ class NavVelnedPoll : public
 {
 public:
     NavVelnedPoll();
-    NavVelnedPoll(const NavVelnedPoll&) = default;
-    NavVelnedPoll(NavVelnedPoll&&) = default;
-    virtual ~NavVelnedPoll() = default;
+    NavVelnedPoll(const NavVelnedPoll&) = delete;
+    NavVelnedPoll(NavVelnedPoll&&) = delete;
+    virtual ~NavVelnedPoll();
 
-    NavVelnedPoll& operator=(const NavVelnedPoll&) = default;
-    NavVelnedPoll& operator=(NavVelnedPoll&&) = default;
+    NavVelnedPoll& operator=(const NavVelnedPoll&);
+    NavVelnedPoll& operator=(NavVelnedPoll&&);
 
 protected:
     virtual const char* nameImpl() const override;
@@ -56,4 +56,8 @@ protected:
 
 }  // namespace ublox
 
+extern template class ublox::message::NavVelnedPoll<ublox::cc_plugin::Message>;
+extern template class ublox::cc_plugin::ProtocolMessageBase<
+    ublox::message::NavVelnedPoll<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::NavVelnedPoll>;
 

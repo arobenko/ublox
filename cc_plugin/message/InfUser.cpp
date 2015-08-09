@@ -15,12 +15,15 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <type_traits>
-#include <functional>
 #include <cassert>
 
 #include "InfUser.h"
 #include "cc_plugin/field/inf.h"
+
+template class ublox::cc_plugin::ProtocolMessageBase<
+    ublox::message::InfUser<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::InfUser>;
+
 
 namespace cc = comms_champion;
 
@@ -46,6 +49,13 @@ QVariantList createFieldsProperties()
 }
 
 }  // namespace
+
+InfUser::InfUser() = default;
+InfUser::~InfUser() = default;
+
+InfUser& InfUser::operator=(const InfUser&) = default;
+InfUser& InfUser::operator=(InfUser&&) = default;
+
 
 const char* InfUser::nameImpl() const
 {

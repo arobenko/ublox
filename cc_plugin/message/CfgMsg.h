@@ -38,13 +38,13 @@ class CfgMsg : public
         CfgMsg>
 {
 public:
-    CfgMsg() = default;
-    CfgMsg(const CfgMsg&) = default;
-    CfgMsg(CfgMsg&&) = default;
-    virtual ~CfgMsg() = default;
+    CfgMsg();
+    CfgMsg(const CfgMsg&) = delete;
+    CfgMsg(CfgMsg&&) = delete;
+    virtual ~CfgMsg();
 
-    CfgMsg& operator=(const CfgMsg&) = default;
-    CfgMsg& operator=(CfgMsg&&) = default;
+    CfgMsg& operator=(const CfgMsg&);
+    CfgMsg& operator=(CfgMsg&&);
 
 protected:
     virtual const char* nameImpl() const override;
@@ -57,4 +57,8 @@ protected:
 
 }  // namespace ublox
 
+extern template class ublox::message::CfgMsg<ublox::cc_plugin::Message>;
+extern template class ublox::cc_plugin::ProtocolMessageBase<
+    ublox::message::CfgMsg<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::CfgMsg>;
 

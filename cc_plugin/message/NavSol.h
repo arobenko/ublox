@@ -38,13 +38,13 @@ class NavSol : public
         NavSol>
 {
 public:
-    NavSol() = default;
-    NavSol(const NavSol&) = default;
-    NavSol(NavSol&&) = default;
-    virtual ~NavSol() = default;
+    NavSol();
+    NavSol(const NavSol&) = delete;
+    NavSol(NavSol&&) = delete;
+    virtual ~NavSol();
 
-    NavSol& operator=(const NavSol&) = default;
-    NavSol& operator=(NavSol&&) = default;
+    NavSol& operator=(const NavSol&);
+    NavSol& operator=(NavSol&&);
 
 protected:
     virtual const char* nameImpl() const override;
@@ -57,4 +57,8 @@ protected:
 
 }  // namespace ublox
 
+extern template class ublox::message::NavSol<ublox::cc_plugin::Message>;
+extern template class ublox::cc_plugin::ProtocolMessageBase<
+    ublox::message::NavSol<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::NavSol>;
 

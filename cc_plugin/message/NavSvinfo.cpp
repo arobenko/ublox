@@ -15,13 +15,18 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <type_traits>
-#include <functional>
+#include "NavSvinfo.h"
+
 #include <cassert>
 
-#include "NavSvinfo.h"
 #include "cc_plugin/field/nav.h"
 #include "cc_plugin/field/common.h"
+
+template class ublox::message::NavSvinfo<ublox::cc_plugin::Message>;
+template class ublox::cc_plugin::ProtocolMessageBase<
+    ublox::message::NavSvinfo<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::NavSvinfo>;
+
 
 namespace cc = comms_champion;
 
@@ -76,6 +81,12 @@ QVariantList createFieldsProperties()
 }
 
 }  // namespace
+
+NavSvinfo::NavSvinfo() = default;
+NavSvinfo::~NavSvinfo() = default;
+
+NavSvinfo& NavSvinfo::operator=(const NavSvinfo&) = default;
+NavSvinfo& NavSvinfo::operator=(NavSvinfo&&) = default;
 
 const char* NavSvinfo::nameImpl() const
 {

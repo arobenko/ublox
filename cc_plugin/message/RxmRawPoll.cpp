@@ -18,6 +18,13 @@
 
 #include "RxmRawPoll.h"
 
+template class ublox::message::RxmRawPoll<ublox::cc_plugin::Message>;
+template class ublox::cc_plugin::ProtocolMessageBase<
+    ublox::message::RxmRawPoll<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::RxmRawPoll>;
+
+
+
 namespace cc = comms_champion;
 
 namespace ublox
@@ -33,6 +40,11 @@ RxmRawPoll::RxmRawPoll()
 {
     setPoll();
 }
+
+RxmRawPoll::~RxmRawPoll() = default;
+
+RxmRawPoll& RxmRawPoll::operator=(const RxmRawPoll&) = default;
+RxmRawPoll& RxmRawPoll::operator=(RxmRawPoll&&) = default;
 
 const char* RxmRawPoll::nameImpl() const
 {

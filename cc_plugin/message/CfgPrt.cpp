@@ -23,6 +23,11 @@
 #include "cc_plugin/field/cfg.h"
 #include "cc_plugin/field/common.h"
 
+template class ublox::message::CfgPrt<ublox::cc_plugin::Message>;
+template class ublox::cc_plugin::ProtocolMessageBase<
+    ublox::message::CfgPrt<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::CfgPrt>;
+
 namespace cc = comms_champion;
 
 namespace ublox
@@ -72,6 +77,13 @@ QVariantList createFieldsProperties()
 }
 
 }  // namespace
+
+CfgPrt::CfgPrt() = default;
+CfgPrt::~CfgPrt() = default;
+
+CfgPrt& CfgPrt::operator=(const CfgPrt&) = default;
+CfgPrt& CfgPrt::operator=(CfgPrt&&) = default;
+
 
 const char* CfgPrt::nameImpl() const
 {

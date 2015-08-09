@@ -38,13 +38,13 @@ class InfError : public
         InfError>
 {
 public:
-    InfError() = default;
-    InfError(const InfError&) = default;
-    InfError(InfError&&) = default;
-    virtual ~InfError() = default;
+    InfError();
+    InfError(const InfError&) = delete;
+    InfError(InfError&&) = delete;
+    virtual ~InfError();
 
-    InfError& operator=(const InfError&) = default;
-    InfError& operator=(InfError&&) = default;
+    InfError& operator=(const InfError&);
+    InfError& operator=(InfError&&);
 
 protected:
     virtual const char* nameImpl() const override;
@@ -57,4 +57,6 @@ protected:
 
 }  // namespace ublox
 
-
+extern template class ublox::cc_plugin::ProtocolMessageBase<
+    ublox::message::InfError<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::InfError>;

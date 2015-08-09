@@ -38,13 +38,13 @@ class RxmRaw : public
         RxmRaw>
 {
 public:
-    RxmRaw() = default;
-    RxmRaw(const RxmRaw&) = default;
-    RxmRaw(RxmRaw&&) = default;
-    virtual ~RxmRaw() = default;
+    RxmRaw();
+    RxmRaw(const RxmRaw&) = delete;
+    RxmRaw(RxmRaw&&) = delete;
+    virtual ~RxmRaw();
 
-    RxmRaw& operator=(const RxmRaw&) = default;
-    RxmRaw& operator=(RxmRaw&&) = default;
+    RxmRaw& operator=(const RxmRaw&);
+    RxmRaw& operator=(RxmRaw&&);
 
 protected:
     virtual const char* nameImpl() const override;
@@ -57,4 +57,8 @@ protected:
 
 }  // namespace ublox
 
+extern template class ublox::message::RxmRaw<ublox::cc_plugin::Message>;
+extern template class ublox::cc_plugin::ProtocolMessageBase<
+    ublox::message::RxmRaw<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::RxmRaw>;
 

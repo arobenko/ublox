@@ -15,13 +15,18 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <type_traits>
-#include <functional>
+#include "NavTimeutc.h"
+
 #include <cassert>
 
-#include "NavTimeutc.h"
 #include "cc_plugin/field/common.h"
 #include "cc_plugin/field/nav.h"
+
+template class ublox::message::NavTimeutc<ublox::cc_plugin::Message>;
+template class ublox::cc_plugin::ProtocolMessageBase<
+    ublox::message::NavTimeutc<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::NavTimeutc>;
+
 
 namespace cc = comms_champion;
 
@@ -56,6 +61,12 @@ QVariantList createFieldsProperties()
 }
 
 }  // namespace
+
+NavTimeutc::NavTimeutc() = default;
+NavTimeutc::~NavTimeutc() = default;
+
+NavTimeutc& NavTimeutc::operator=(const NavTimeutc&) = default;
+NavTimeutc& NavTimeutc::operator=(NavTimeutc&&) = default;
 
 const char* NavTimeutc::nameImpl() const
 {

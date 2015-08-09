@@ -38,13 +38,13 @@ class RxmSvsi : public
         RxmSvsi>
 {
 public:
-    RxmSvsi() = default;
-    RxmSvsi(const RxmSvsi&) = default;
-    RxmSvsi(RxmSvsi&&) = default;
-    virtual ~RxmSvsi() = default;
+    RxmSvsi();
+    RxmSvsi(const RxmSvsi&) = delete;
+    RxmSvsi(RxmSvsi&&) = delete;
+    virtual ~RxmSvsi();
 
-    RxmSvsi& operator=(const RxmSvsi&) = default;
-    RxmSvsi& operator=(RxmSvsi&&) = default;
+    RxmSvsi& operator=(const RxmSvsi&);
+    RxmSvsi& operator=(RxmSvsi&&);
 
 protected:
     virtual const char* nameImpl() const override;
@@ -57,4 +57,8 @@ protected:
 
 }  // namespace ublox
 
+extern template class ublox::message::RxmSvsi<ublox::cc_plugin::Message>;
+extern template class ublox::cc_plugin::ProtocolMessageBase<
+    ublox::message::RxmSvsi<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::RxmSvsi>;
 

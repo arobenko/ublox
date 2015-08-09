@@ -39,12 +39,12 @@ class CfgPrtPoll : public
 {
 public:
     CfgPrtPoll();
-    CfgPrtPoll(const CfgPrtPoll&) = default;
-    CfgPrtPoll(CfgPrtPoll&&) = default;
-    virtual ~CfgPrtPoll() = default;
+    CfgPrtPoll(const CfgPrtPoll&) = delete;
+    CfgPrtPoll(CfgPrtPoll&&) = delete;
+    virtual ~CfgPrtPoll();
 
-    CfgPrtPoll& operator=(const CfgPrtPoll&) = default;
-    CfgPrtPoll& operator=(CfgPrtPoll&&) = default;
+    CfgPrtPoll& operator=(const CfgPrtPoll&);
+    CfgPrtPoll& operator=(CfgPrtPoll&&);
 
 protected:
     virtual const char* nameImpl() const override;
@@ -58,3 +58,7 @@ protected:
 }  // namespace ublox
 
 
+extern template class ublox::message::CfgPrtPoll<ublox::cc_plugin::Message>;
+extern template class ublox::cc_plugin::ProtocolMessageBase<
+    ublox::message::CfgPrtPoll<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::CfgPrtPoll>;

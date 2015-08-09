@@ -39,12 +39,12 @@ class NavDopPoll : public
 {
 public:
     NavDopPoll();
-    NavDopPoll(const NavDopPoll&) = default;
-    NavDopPoll(NavDopPoll&&) = default;
-    virtual ~NavDopPoll() = default;
+    NavDopPoll(const NavDopPoll&) = delete;
+    NavDopPoll(NavDopPoll&&) = delete;
+    virtual ~NavDopPoll();
 
-    NavDopPoll& operator=(const NavDopPoll&) = default;
-    NavDopPoll& operator=(NavDopPoll&&) = default;
+    NavDopPoll& operator=(const NavDopPoll&);
+    NavDopPoll& operator=(NavDopPoll&&);
 
 protected:
     virtual const char* nameImpl() const override;
@@ -57,3 +57,7 @@ protected:
 }  // namespace ublox
 
 
+extern template class ublox::message::NavDopPoll<ublox::cc_plugin::Message>;
+extern template class ublox::cc_plugin::ProtocolMessageBase<
+    ublox::message::NavDopPoll<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::NavDopPoll>;

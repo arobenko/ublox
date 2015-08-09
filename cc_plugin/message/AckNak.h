@@ -38,13 +38,13 @@ class AckNak : public
         AckNak>
 {
 public:
-    AckNak() = default;
-    AckNak(const AckNak&) = default;
-    AckNak(AckNak&&) = default;
-    virtual ~AckNak() = default;
+    AckNak();
+    AckNak(const AckNak&) = delete;
+    AckNak(AckNak&&) = delete;
+    virtual ~AckNak();
 
-    AckNak& operator=(const AckNak&) = default;
-    AckNak& operator=(AckNak&&) = default;
+    AckNak& operator=(const AckNak&);
+    AckNak& operator=(AckNak&&);
 
 protected:
     virtual const char* nameImpl() const override;
@@ -58,3 +58,7 @@ protected:
 }  // namespace ublox
 
 
+extern template class ublox::message::AckNak<ublox::cc_plugin::Message>;
+extern template class ublox::cc_plugin::ProtocolMessageBase<
+    ublox::message::AckNak<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::AckNak>;

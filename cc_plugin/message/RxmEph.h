@@ -38,13 +38,13 @@ class RxmEph : public
         RxmEph>
 {
 public:
-    RxmEph() = default;
-    RxmEph(const RxmEph&) = default;
-    RxmEph(RxmEph&&) = default;
-    virtual ~RxmEph() = default;
+    RxmEph();
+    RxmEph(const RxmEph&) = delete;
+    RxmEph(RxmEph&&) = delete;
+    virtual ~RxmEph();
 
-    RxmEph& operator=(const RxmEph&) = default;
-    RxmEph& operator=(RxmEph&&) = default;
+    RxmEph& operator=(const RxmEph&);
+    RxmEph& operator=(RxmEph&&);
 
 protected:
     virtual const char* nameImpl() const override;
@@ -57,4 +57,8 @@ protected:
 
 }  // namespace ublox
 
+extern template class ublox::message::RxmEph<ublox::cc_plugin::Message>;
+extern template class ublox::cc_plugin::ProtocolMessageBase<
+    ublox::message::RxmEph<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::RxmEph>;
 

@@ -38,13 +38,13 @@ class InfNotice : public
         InfNotice>
 {
 public:
-    InfNotice() = default;
-    InfNotice(const InfNotice&) = default;
-    InfNotice(InfNotice&&) = default;
-    virtual ~InfNotice() = default;
+    InfNotice();
+    InfNotice(const InfNotice&) = delete;
+    InfNotice(InfNotice&&) = delete;
+    virtual ~InfNotice();
 
-    InfNotice& operator=(const InfNotice&) = default;
-    InfNotice& operator=(InfNotice&&) = default;
+    InfNotice& operator=(const InfNotice&);
+    InfNotice& operator=(InfNotice&&);
 
 protected:
     virtual const char* nameImpl() const override;
@@ -57,4 +57,7 @@ protected:
 
 }  // namespace ublox
 
+extern template class ublox::cc_plugin::ProtocolMessageBase<
+    ublox::message::InfNotice<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::InfNotice>;
 

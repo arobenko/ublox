@@ -39,12 +39,12 @@ class RxmSvsiPoll : public
 {
 public:
     RxmSvsiPoll();
-    RxmSvsiPoll(const RxmSvsiPoll&) = default;
-    RxmSvsiPoll(RxmSvsiPoll&&) = default;
-    virtual ~RxmSvsiPoll() = default;
+    RxmSvsiPoll(const RxmSvsiPoll&) = delete;
+    RxmSvsiPoll(RxmSvsiPoll&&) = delete;
+    virtual ~RxmSvsiPoll();
 
-    RxmSvsiPoll& operator=(const RxmSvsiPoll&) = default;
-    RxmSvsiPoll& operator=(RxmSvsiPoll&&) = default;
+    RxmSvsiPoll& operator=(const RxmSvsiPoll&);
+    RxmSvsiPoll& operator=(RxmSvsiPoll&&);
 
 protected:
     virtual const char* nameImpl() const override;
@@ -56,4 +56,8 @@ protected:
 
 }  // namespace ublox
 
+extern template class ublox::message::RxmSvsiPoll<ublox::cc_plugin::Message>;
+extern template class ublox::cc_plugin::ProtocolMessageBase<
+    ublox::message::RxmSvsiPoll<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::RxmSvsiPoll>;
 

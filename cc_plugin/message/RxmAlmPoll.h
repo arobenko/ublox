@@ -39,12 +39,12 @@ class RxmAlmPoll : public
 {
 public:
     RxmAlmPoll();
-    RxmAlmPoll(const RxmAlmPoll&) = default;
-    RxmAlmPoll(RxmAlmPoll&&) = default;
-    virtual ~RxmAlmPoll() = default;
+    RxmAlmPoll(const RxmAlmPoll&) = delete;
+    RxmAlmPoll(RxmAlmPoll&&) = delete;
+    virtual ~RxmAlmPoll();
 
-    RxmAlmPoll& operator=(const RxmAlmPoll&) = default;
-    RxmAlmPoll& operator=(RxmAlmPoll&&) = default;
+    RxmAlmPoll& operator=(const RxmAlmPoll&);
+    RxmAlmPoll& operator=(RxmAlmPoll&&);
 
 protected:
     virtual const char* nameImpl() const override;
@@ -57,4 +57,8 @@ protected:
 
 }  // namespace ublox
 
+extern template class ublox::message::RxmAlmPoll<ublox::cc_plugin::Message>;
+extern template class ublox::cc_plugin::ProtocolMessageBase<
+    ublox::message::RxmAlmPoll<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::RxmAlmPoll>;
 

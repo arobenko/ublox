@@ -38,13 +38,13 @@ class RxmAlm : public
         RxmAlm>
 {
 public:
-    RxmAlm() = default;
-    RxmAlm(const RxmAlm&) = default;
-    RxmAlm(RxmAlm&&) = default;
-    virtual ~RxmAlm() = default;
+    RxmAlm();
+    RxmAlm(const RxmAlm&) = delete;
+    RxmAlm(RxmAlm&&) = delete;
+    virtual ~RxmAlm();
 
-    RxmAlm& operator=(const RxmAlm&) = default;
-    RxmAlm& operator=(RxmAlm&&) = default;
+    RxmAlm& operator=(const RxmAlm&);
+    RxmAlm& operator=(RxmAlm&&);
 
 protected:
     virtual const char* nameImpl() const override;
@@ -57,4 +57,8 @@ protected:
 
 }  // namespace ublox
 
+extern template class ublox::message::RxmAlm<ublox::cc_plugin::Message>;
+extern template class ublox::cc_plugin::ProtocolMessageBase<
+    ublox::message::RxmAlm<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::RxmAlm>;
 

@@ -38,13 +38,13 @@ class CfgPrt : public
         CfgPrt>
 {
 public:
-    CfgPrt() = default;
-    CfgPrt(const CfgPrt&) = default;
-    CfgPrt(CfgPrt&&) = default;
-    virtual ~CfgPrt() = default;
+    CfgPrt();
+    CfgPrt(const CfgPrt&) = delete;
+    CfgPrt(CfgPrt&&) = delete;
+    virtual ~CfgPrt();
 
-    CfgPrt& operator=(const CfgPrt&) = default;
-    CfgPrt& operator=(CfgPrt&&) = default;
+    CfgPrt& operator=(const CfgPrt&);
+    CfgPrt& operator=(CfgPrt&&);
 
 protected:
     virtual const char* nameImpl() const override;
@@ -57,4 +57,8 @@ protected:
 
 }  // namespace ublox
 
+extern template class ublox::message::CfgPrt<ublox::cc_plugin::Message>;
+extern template class ublox::cc_plugin::ProtocolMessageBase<
+    ublox::message::CfgPrt<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::CfgPrt>;
 
