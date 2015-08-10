@@ -169,6 +169,52 @@ using PrtFlags =
 
 using Rate = common::U1;
 
+enum class ProtocolIdVal : std::uint8_t
+{
+    Ubx,
+    Nmea,
+    Rtcm,
+    Raw,
+    User0 = 12,
+    User1,
+    User2,
+    User3
+};
+
+struct ProtocolIdValidator
+{
+    template <typename TField>
+    bool operator()(const TField& field) const
+    {
+        auto value = field.value();
+        return
+            ((ProtocolIdVal::Ubx <= value) && (value <= ProtocolIdVal::Raw)) ||
+            ((ProtocolIdVal::User0 <= value) && (value <= ProtocolIdVal::User3));
+    }
+};
+
+using ProtocolID =
+    comms::field::EnumValue<
+        common::FieldBase,
+        ProtocolIdVal,
+        comms::option::ContentsValidator<ProtocolIdValidator>
+    >;
+
+using INFMSG_mask =
+    comms::field::BitmaskValue<
+        common::FieldBase,
+        comms::option::FixedLength<1U>,
+        comms::option::BitmaskReservedBits<0x60, 0>
+    >;
+
+using INFMSG_mask_res =
+    comms::field::BitmaskValue<
+        common::FieldBase,
+        comms::option::FixedLength<1U>,
+        comms::option::BitmaskReservedBits<0xff, 0>
+    >;
+
+
 }  // namespace cfg
 
 }  // namespace field

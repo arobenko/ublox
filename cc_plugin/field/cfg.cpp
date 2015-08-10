@@ -18,6 +18,7 @@
 #include "cfg.h"
 
 #include <QtCore/QString>
+#include <QtCore/QVariantList>
 
 #include "comms_champion/comms_champion.h"
 #include "ublox/field/cfg.h"
@@ -156,6 +157,20 @@ QVariantMap createPrtFlagsProperties()
     return cc::Property::createPropertiesMap("Flags", std::move(bitNames));
 }
 
+QVariantMap createProtocolIdProperties()
+{
+    QVariantList enumValues;
+    cc::Property::appendEnumValue(enumValues, "UBX Protocol", (int)ublox::field::cfg::ProtocolIdVal::Ubx);
+    cc::Property::appendEnumValue(enumValues, "NMEA Protocol", (int)ublox::field::cfg::ProtocolIdVal::Nmea);
+    cc::Property::appendEnumValue(enumValues, "RTCM Protocol", (int)ublox::field::cfg::ProtocolIdVal::Rtcm);
+    cc::Property::appendEnumValue(enumValues, "RAW Protocol", (int)ublox::field::cfg::ProtocolIdVal::Raw);
+    cc::Property::appendEnumValue(enumValues, "User 0 Protocol", (int)ublox::field::cfg::ProtocolIdVal::User0);
+    cc::Property::appendEnumValue(enumValues, "User 1 Protocol", (int)ublox::field::cfg::ProtocolIdVal::User1);
+    cc::Property::appendEnumValue(enumValues, "User 2 Protocol", (int)ublox::field::cfg::ProtocolIdVal::User2);
+    cc::Property::appendEnumValue(enumValues, "User 3 Protocol", (int)ublox::field::cfg::ProtocolIdVal::User3);
+
+    return cc::Property::createPropertiesMap("ProtocolID", std::move(enumValues));
+}
 
 }  // namespace
 
@@ -205,6 +220,28 @@ QVariantMap rateProperties(unsigned idx)
 {
     auto name = QString("Rate%1").arg(idx, 1, 10, QChar('0'));
     return cc::Property::createPropertiesMap(name);
+}
+
+const QVariantMap& protocolIdProperties()
+{
+    static const QVariantMap Props = createProtocolIdProperties();
+    return Props;
+}
+
+QVariantMap infMsgMaskProperties(unsigned idx)
+{
+    QVariantList bitNames;
+    bitNames.append("INF-ERROR");
+    bitNames.append("INF-WARNING");
+    bitNames.append("INF-NOTICE");
+    bitNames.append("INF-TEST");
+    bitNames.append("INF-DEBUG");
+    bitNames.append(QVariant());
+    bitNames.append(QVariant());
+    bitNames.append("INF-USER");
+
+    auto name = QString("INFMSG_mask%1").arg(idx, 1, 10, QChar('0'));
+    return cc::Property::createPropertiesMap(name, std::move(bitNames));
 }
 
 

@@ -40,6 +40,8 @@ const QVariantMap& outProtoMaskProperties();
 const QVariantMap& prtFlagsProperties();
 const QVariantMap& rateProperties();
 QVariantMap rateProperties(unsigned idx);
+const QVariantMap& protocolIdProperties();
+QVariantMap infMsgMaskProperties(unsigned idx);
 
 }  // namespace cfg
 
