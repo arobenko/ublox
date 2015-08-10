@@ -79,6 +79,7 @@
 #include "cc_plugin/message/CfgMsgPoll.h"
 #include "cc_plugin/message/CfgInf.h"
 #include "cc_plugin/message/CfgInfPoll.h"
+#include "cc_plugin/message/CfgRst.h"
 
 
 namespace ublox
@@ -141,7 +142,8 @@ typedef std::tuple<
     cc_plugin::message::CfgMsg,
     cc_plugin::message::CfgMsgPoll,
     cc_plugin::message::CfgInf,
-    cc_plugin::message::CfgInfPoll
+    cc_plugin::message::CfgInfPoll,
+    cc_plugin::message::CfgRst
 > AllMessages;
 
 }  // namespace cc_plugin

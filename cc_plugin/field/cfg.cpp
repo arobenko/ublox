@@ -172,6 +172,34 @@ QVariantMap createProtocolIdProperties()
     return cc::Property::createPropertiesMap("ProtocolID", std::move(enumValues));
 }
 
+QVariantMap createNavBbrProperties()
+{
+    QVariantList bitNames;
+    bitNames.append("Ephemeris");
+    bitNames.append("Almanach");
+    bitNames.append("Health");
+    bitNames.append("Klobuchart");
+    bitNames.append("Position");
+    bitNames.append("Clock Drift");
+    bitNames.append("Oscilator Parameter");
+    bitNames.append("UTC Correction Parameters");
+    bitNames.append("RTC");
+
+    return cc::Property::createPropertiesMap("nav_bbr", std::move(bitNames));
+}
+
+QVariantMap createResetProperties()
+{
+    QVariantList enumValues;
+    cc::Property::appendEnumValue(enumValues, "Hardware Reset (Watchdog)", (int)ublox::field::cfg::ResetType::Hardware);
+    cc::Property::appendEnumValue(enumValues, "Controlled Software Reset", (int)ublox::field::cfg::ResetType::Software);
+    cc::Property::appendEnumValue(enumValues, "Controlled Software Reset (GPS Only)", (int)ublox::field::cfg::ResetType::GpsOnly);
+    cc::Property::appendEnumValue(enumValues, "Controlled GPS stop", (int)ublox::field::cfg::ResetType::GpsStop);
+    cc::Property::appendEnumValue(enumValues, "Controlled GPS start", (int)ublox::field::cfg::ResetType::GpsStart);
+
+    return cc::Property::createPropertiesMap("Reset", std::move(enumValues));
+}
+
 }  // namespace
 
 const QVariantMap& portIdProperties()
@@ -244,6 +272,17 @@ QVariantMap infMsgMaskProperties(unsigned idx)
     return cc::Property::createPropertiesMap(name, std::move(bitNames));
 }
 
+const QVariantMap& navBbrProperties()
+{
+    static const QVariantMap Props = createNavBbrProperties();
+    return Props;
+}
+
+const QVariantMap& resetProperties()
+{
+    static const QVariantMap Props = createResetProperties();
+    return Props;
+}
 
 }  // namespace cfg
 

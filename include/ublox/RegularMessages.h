@@ -58,6 +58,7 @@
 #include "message/CfgPrt.h"
 #include "message/CfgMsg.h"
 #include "message/CfgInf.h"
+#include "message/CfgRst.h"
 
 namespace ublox
 {
@@ -96,7 +97,8 @@ using RegularMessages =
         message::AckAck<TMessage>,
         message::CfgPrt<TMessage>,
         message::CfgMsg<TMessage>,
-        message::CfgInf<TMessage>
+        message::CfgInf<TMessage>,
+        message::CfgRst<TMessage>
     >;
 
 }  // namespace ublox

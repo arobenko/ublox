@@ -42,6 +42,8 @@ const QVariantMap& rateProperties();
 QVariantMap rateProperties(unsigned idx);
 const QVariantMap& protocolIdProperties();
 QVariantMap infMsgMaskProperties(unsigned idx);
+const QVariantMap& navBbrProperties();
+const QVariantMap& resetProperties();
 
 }  // namespace cfg
 
