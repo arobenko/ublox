@@ -20,7 +20,7 @@
 
 #include "ublox/Stack.h"
 #include "Message.h"
-#include "RegularMessages.h"
+#include "AllMessages.h"
 
 namespace ublox
 {
@@ -30,7 +30,7 @@ namespace cc_plugin
 
 typedef ublox::Stack<
     cc_plugin::Message,
-    cc_plugin::RegularMessages
+    cc_plugin::AllMessages
 > Stack;
 
 }  // namespace cc_plugin

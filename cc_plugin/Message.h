@@ -48,19 +48,7 @@ protected:
 
     virtual QString idAsStringImpl() const override
     {
-        if (!isPoll()) {
-            return regMsgId();
-        }
-
-        return pollMsgId();
-
-//        auto len = Base::length();
-//
-//        if (len == 0) {
-//
-//        }
-//
-//        return nonZeroLenPollMsgId(len);
+        return QString("0x%1").arg(Base::getId(), 4, 16, QChar('0'));
     }
 
     virtual const QVariantList& fieldsPropertiesImpl() const override
@@ -68,28 +56,6 @@ protected:
         static const QVariantList Props;
         return Props;
     }
-
-
-private:
-    QString regMsgId() const
-    {
-        return QString("0x%1").arg(Base::getId(), 4, 16, QChar('0'));
-    }
-
-    QString pollMsgId() const
-    {
-        static const QString Suffix("-Poll");
-        auto id = regMsgId();
-        id.append(Suffix);
-        return id;
-    }
-
-//    QString nonZeroLenPollMsgId(std::size_t len) const
-//    {
-//        auto id = pollMsgId();
-//        id.append(QString("%1").arg(len, 1, 10, QChar('0')));
-//        return id;
-//    }
 
 private:
     bool m_isPoll = false;

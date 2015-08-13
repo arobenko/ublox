@@ -19,9 +19,6 @@
 
 #include "comms/comms.h"
 
-#include "AllMessages.h"
-#include "PollMessages.h"
-
 namespace cc = comms_champion;
 
 namespace ublox
@@ -37,36 +34,6 @@ const std::string& Protocol::nameImpl() const
     static const std::string Str("UBlox");
     return Str;
 }
-
-Protocol::MessagesList Protocol::createAllMessagesImpl()
-{
-    return Base::createAllMessagesInTuple<cc_plugin::AllMessages>();
-}
-
-cc::MessageInfo::MessagePtr Protocol::cloneMessageImpl(
-        const Message& msg)
-{
-    cc::MessageInfo::MessagePtr clonedMsg = createMessageInternal(msg.idAsString());
-    if (!clonedMsg) {
-        return Base::cloneMessageImpl(msg);
-    }
-    clonedMsg->assign(msg);
-    return clonedMsg;
-}
-
-cc::MessageInfoPtr Protocol::createMessageImpl(const QString& idAsString)
-{
-    auto clonedMsg = createMessageInternal(idAsString);
-    if (!clonedMsg) {
-        return Base::createMessageImpl(idAsString);
-    }
-
-    auto msgInfo = cc::makeMessageInfo();
-    msgInfo->setAppMessage(std::move(clonedMsg));
-    updateMessageInfo(*msgInfo);
-    return msgInfo;
-}
-
 
 Protocol::UpdateStatus Protocol::updateMessageInfoImpl(cc::MessageInfo& msgInfo)
 {
@@ -87,48 +54,6 @@ Protocol::UpdateStatus Protocol::updateMessageInfoImpl(cc::MessageInfo& msgInfo)
     }
     return parentStatus;
 }
-
-cc::MessageInfo::MessagePtr Protocol::createPollMsg(Message::MsgIdType id)
-{
-    static const comms::MsgFactory<Message, PollMessages> Factory;
-    auto msg = Factory.createMsg(id);
-    if (!msg) {
-        assert(!"Attempt to create unknown message");
-        return cc::MessageInfo::MessagePtr();
-    }
-
-    return cc::MessageInfo::MessagePtr(msg.release());
-}
-
-cc::MessageInfo::MessagePtr Protocol::createMessageInternal(const QString& idAsString)
-{
-    static const QString PollSuffix("-Poll");
-    auto pollIdx = idAsString.indexOf(PollSuffix);
-    if (pollIdx < 0) {
-        return cc::MessageInfo::MessagePtr();
-    }
-
-    cc::MessageInfo::MessagePtr msg;
-    do {
-        auto idStr = idAsString.left(pollIdx);
-        bool ok = false;
-        auto idNum = static_cast<Message::MsgIdType>(idStr.toUInt(&ok, 16));
-        if (!ok) {
-            break;
-        }
-
-        auto pollLenStr = idAsString.right(idAsString.size() - (pollIdx + PollSuffix.size()));
-        if (pollLenStr.isEmpty()) {
-            msg = createPollMsg(idNum);
-            break;
-        }
-
-        assert(!"NYI");
-    } while (false);
-
-    return msg;
-}
-
 
 }  // namespace cc_plugin
 
