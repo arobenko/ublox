@@ -34,11 +34,7 @@ namespace cc_plugin
 namespace message
 {
 
-NavSvinfoPoll::NavSvinfoPoll()
-{
-    setPoll();
-}
-
+NavSvinfoPoll::NavSvinfoPoll() = default;
 NavSvinfoPoll::~NavSvinfoPoll() = default;
 
 NavSvinfoPoll& NavSvinfoPoll::operator=(const NavSvinfoPoll&) = default;

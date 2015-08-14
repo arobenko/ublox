@@ -36,11 +36,7 @@ namespace cc_plugin
 namespace message
 {
 
-RxmRawPoll::RxmRawPoll()
-{
-    setPoll();
-}
-
+RxmRawPoll::RxmRawPoll() = default;
 RxmRawPoll::~RxmRawPoll() = default;
 
 RxmRawPoll& RxmRawPoll::operator=(const RxmRawPoll&) = default;

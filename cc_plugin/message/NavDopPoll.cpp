@@ -34,11 +34,7 @@ namespace cc_plugin
 namespace message
 {
 
-NavDopPoll::NavDopPoll()
-{
-    setPoll();
-}
-
+NavDopPoll::NavDopPoll() = default;
 NavDopPoll::~NavDopPoll() = default;
 
 NavDopPoll& NavDopPoll::operator=(const NavDopPoll&) = default;

@@ -35,16 +35,7 @@ class MessageT : public comms_champion::MessageBase<ublox::MessageT, TOptions...
 public:
     virtual ~MessageT() = default;
 
-    bool isPoll() const
-    {
-        return m_isPoll;
-    }
-
 protected:
-    void setPoll()
-    {
-        m_isPoll = true;
-    }
 
     virtual QString idAsStringImpl() const override
     {
@@ -56,9 +47,6 @@ protected:
         static const QVariantList Props;
         return Props;
     }
-
-private:
-    bool m_isPoll = false;
 };
 
 typedef MessageT<> Message;

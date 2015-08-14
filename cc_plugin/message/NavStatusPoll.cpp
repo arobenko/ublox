@@ -33,11 +33,7 @@ namespace cc_plugin
 namespace message
 {
 
-NavStatusPoll::NavStatusPoll()
-{
-    setPoll();
-}
-
+NavStatusPoll::NavStatusPoll() = default;
 NavStatusPoll::~NavStatusPoll() = default;
 
 NavStatusPoll& NavStatusPoll::operator=(const NavStatusPoll&) = default;

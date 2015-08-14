@@ -34,11 +34,7 @@ namespace cc_plugin
 namespace message
 {
 
-NavDgpsPoll::NavDgpsPoll()
-{
-    setPoll();
-}
-
+NavDgpsPoll::NavDgpsPoll() = default;
 NavDgpsPoll::~NavDgpsPoll() = default;
 
 NavDgpsPoll& NavDgpsPoll::operator=(const NavDgpsPoll&) = default;

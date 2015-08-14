@@ -34,11 +34,7 @@ namespace cc_plugin
 namespace message
 {
 
-RxmSvsiPoll::RxmSvsiPoll()
-{
-    setPoll();
-}
-
+RxmSvsiPoll::RxmSvsiPoll() = default;
 RxmSvsiPoll::~RxmSvsiPoll() = default;
 
 RxmSvsiPoll& RxmSvsiPoll::operator=(const RxmSvsiPoll&) = default;

@@ -34,11 +34,7 @@ namespace cc_plugin
 namespace message
 {
 
-NavVelecefPoll::NavVelecefPoll()
-{
-    setPoll();
-}
-
+NavVelecefPoll::NavVelecefPoll() = default;
 NavVelecefPoll::~NavVelecefPoll() = default;
 
 NavVelecefPoll& NavVelecefPoll::operator=(const NavVelecefPoll&) = default;

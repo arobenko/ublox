@@ -51,11 +51,7 @@ QVariantList createFieldsProperties()
 
 }  // namespace
 
-CfgInfPoll::CfgInfPoll()
-{
-    setPoll();
-}
-
+CfgInfPoll::CfgInfPoll() = default;
 CfgInfPoll::~CfgInfPoll() = default;
 
 CfgInfPoll& CfgInfPoll::operator=(const CfgInfPoll&) = default;

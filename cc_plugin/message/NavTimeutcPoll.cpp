@@ -33,11 +33,7 @@ namespace cc_plugin
 namespace message
 {
 
-NavTimeutcPoll::NavTimeutcPoll()
-{
-    setPoll();
-}
-
+NavTimeutcPoll::NavTimeutcPoll() = default;
 NavTimeutcPoll::~NavTimeutcPoll() = default;
 
 NavTimeutcPoll& NavTimeutcPoll::operator=(const NavTimeutcPoll&) = default;

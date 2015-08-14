@@ -51,11 +51,7 @@ QVariantList createFieldsProperties()
 
 }  // namespace
 
-CfgPrtPoll::CfgPrtPoll()
-{
-    setPoll();
-}
-
+CfgPrtPoll::CfgPrtPoll() = default;
 CfgPrtPoll::~CfgPrtPoll() = default;
 
 CfgPrtPoll& CfgPrtPoll::operator=(const CfgPrtPoll&) = default;

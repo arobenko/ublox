@@ -35,11 +35,7 @@ namespace cc_plugin
 namespace message
 {
 
-NavEkfstatusPoll::NavEkfstatusPoll()
-{
-    setPoll();
-}
-
+NavEkfstatusPoll::NavEkfstatusPoll() = default;
 NavEkfstatusPoll::~NavEkfstatusPoll() = default;
 
 NavEkfstatusPoll& NavEkfstatusPoll::operator=(const NavEkfstatusPoll&) = default;

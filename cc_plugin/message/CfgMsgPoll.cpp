@@ -50,11 +50,7 @@ QVariantList createFieldsProperties()
 
 }  // namespace
 
-CfgMsgPoll::CfgMsgPoll()
-{
-    setPoll();
-}
-
+CfgMsgPoll::CfgMsgPoll() = default;
 CfgMsgPoll::~CfgMsgPoll() = default;
 
 CfgMsgPoll& CfgMsgPoll::operator=(const CfgMsgPoll&) = default;

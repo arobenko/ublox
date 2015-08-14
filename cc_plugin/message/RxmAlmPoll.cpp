@@ -58,11 +58,7 @@ QVariantList createFieldsProperties()
 
 }  // namespace
 
-RxmAlmPoll::RxmAlmPoll()
-{
-    setPoll();
-}
-
+RxmAlmPoll::RxmAlmPoll() = default;
 RxmAlmPoll::~RxmAlmPoll() = default;
 
 RxmAlmPoll& RxmAlmPoll::operator=(const RxmAlmPoll&) = default;

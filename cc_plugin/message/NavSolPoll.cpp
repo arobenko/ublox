@@ -33,11 +33,7 @@ namespace cc_plugin
 namespace message
 {
 
-NavSolPoll::NavSolPoll()
-{
-    setPoll();
-}
-
+NavSolPoll::NavSolPoll() = default;
 NavSolPoll::~NavSolPoll() = default;
 
 NavSolPoll& NavSolPoll::operator=(const NavSolPoll&) = default;

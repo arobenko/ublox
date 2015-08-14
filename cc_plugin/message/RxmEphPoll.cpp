@@ -58,11 +58,7 @@ QVariantList createFieldsProperties()
 
 }  // namespace
 
-RxmEphPoll::RxmEphPoll()
-{
-    setPoll();
-}
-
+RxmEphPoll::RxmEphPoll() = default;
 RxmEphPoll::~RxmEphPoll() = default;
 
 RxmEphPoll& RxmEphPoll::operator=(const RxmEphPoll&) = default;

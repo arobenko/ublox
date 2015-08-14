@@ -34,11 +34,7 @@ namespace cc_plugin
 namespace message
 {
 
-NavClockPoll::NavClockPoll()
-{
-    setPoll();
-}
-
+NavClockPoll::NavClockPoll() = default;
 NavClockPoll::~NavClockPoll() = default;
 
 NavClockPoll& NavClockPoll::operator=(const NavClockPoll&) = default;
