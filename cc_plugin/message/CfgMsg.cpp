@@ -41,18 +41,7 @@ namespace message
 namespace
 {
 
-QVariantMap createSingleRateProperties()
-{
-    QVariantList membersProps;
-    membersProps.append(cc_plugin::field::msgIdProperties());
-    membersProps.append(cc_plugin::field::cfg::rateProperties());
-
-    static const QString Name("Single Rate");
-    auto bundleProps = cc::Property::createPropertiesMap(Name, std::move(membersProps));
-    return cc::Property::createPropertiesMap(Name, std::move(bundleProps));
-}
-
-QVariantMap createMultiRateProperties()
+QVariantMap createListProperties()
 {
     QVariantList membersProps;
     membersProps.append(cc_plugin::field::msgIdProperties());
@@ -61,20 +50,17 @@ QVariantMap createMultiRateProperties()
     membersProps.append(cc_plugin::field::cfg::rateProperties(2));
     membersProps.append(cc_plugin::field::cfg::rateProperties(3));
 
-    static const QString Name("Multi Rate");
+    static const QString Name("List");
     auto bundleProps = cc::Property::createPropertiesMap(Name, std::move(membersProps));
-    auto listProps = cc::Property::createPropertiesMap(Name, std::move(bundleProps));
-    cc::Property::setSerialisedHidden(listProps);
-    auto optListProps = cc::Property::createPropertiesMap(Name, std::move(listProps));
-    cc::Property::setUncheckable(optListProps);
-    return optListProps;
+    auto props = cc::Property::createPropertiesMap(Name, std::move(bundleProps));
+    cc::Property::setSerialisedHidden(props);
+    return props;
 }
 
 QVariantList createFieldsProperties()
 {
     QVariantList props;
-    props.append(createSingleRateProperties());
-    props.append(createMultiRateProperties());
+    props.append(createListProperties());
 
     assert(props.size() == CfgMsg::FieldIdx_NumOfValues);
     return props;

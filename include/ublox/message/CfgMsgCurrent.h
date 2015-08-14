@@ -28,54 +28,46 @@ namespace ublox
 namespace message
 {
 
-using CfgMsgFields = std::tuple<
-    comms::field::ArrayList<
-        ublox::field::common::FieldBase,
-        comms::field::Bundle<
-            std::tuple<
-                ublox::field::MsgId,
-                ublox::field::cfg::Rate,
-                ublox::field::cfg::Rate,
-                ublox::field::cfg::Rate,
-                ublox::field::cfg::Rate
-            >
-        >
-    >
->;
+using CfgMsgCurrentFields =
+    std::tuple<
+        ublox::field::MsgId,
+        ublox::field::cfg::Rate
+    >;
 
 
 template <typename TMsgBase = Message>
-class CfgMsg : public
+class CfgMsgCurrent : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_MSG>,
-        comms::option::FieldsImpl<CfgMsgFields>,
-        comms::option::DispatchImpl<CfgMsg<TMsgBase> >
+        comms::option::FieldsImpl<CfgMsgCurrentFields>,
+        comms::option::DispatchImpl<CfgMsgCurrent<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_MSG>,
-        comms::option::FieldsImpl<CfgMsgFields>,
-        comms::option::DispatchImpl<CfgMsg<TMsgBase> >
+        comms::option::FieldsImpl<CfgMsgCurrentFields>,
+        comms::option::DispatchImpl<CfgMsgCurrent<TMsgBase> >
     > Base;
 public:
     enum FieldIdx
     {
-        FieldIdx_List,
+        FieldIdx_Id,
+        FieldIdx_Rate,
         FieldIdx_NumOfValues
     };
 
     static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_NumOfValues,
         "Number of fields is incorrect");
 
-    CfgMsg() = default;
-    CfgMsg(const CfgMsg&) = default;
-    CfgMsg(CfgMsg&& other) = default;
-    virtual ~CfgMsg() = default;
+    CfgMsgCurrent() = default;
+    CfgMsgCurrent(const CfgMsgCurrent&) = default;
+    CfgMsgCurrent(CfgMsgCurrent&& other) = default;
+    virtual ~CfgMsgCurrent() = default;
 
-    CfgMsg& operator=(const CfgMsg&) = default;
-    CfgMsg& operator=(CfgMsg&&) = default;
+    CfgMsgCurrent& operator=(const CfgMsgCurrent&) = default;
+    CfgMsgCurrent& operator=(CfgMsgCurrent&&) = default;
 };
 
 

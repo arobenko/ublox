@@ -57,6 +57,7 @@
 
 #include "message/CfgPrt.h"
 #include "message/CfgMsg.h"
+#include "message/CfgMsgCurrent.h"
 #include "message/CfgInf.h"
 #include "message/CfgRst.h"
 
@@ -97,6 +98,7 @@ using RegularMessages =
         message::AckAck<TMessage>,
         message::CfgPrt<TMessage>,
         message::CfgMsg<TMessage>,
+        message::CfgMsgCurrent<TMessage>,
         message::CfgInf<TMessage>,
         message::CfgRst<TMessage>
     >;

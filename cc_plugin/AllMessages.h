@@ -76,6 +76,7 @@
 #include "cc_plugin/message/CfgPrt.h"
 #include "cc_plugin/message/CfgPrtPoll.h"
 #include "cc_plugin/message/CfgMsg.h"
+#include "cc_plugin/message/CfgMsgCurrent.h"
 #include "cc_plugin/message/CfgMsgPoll.h"
 #include "cc_plugin/message/CfgInf.h"
 #include "cc_plugin/message/CfgInfPoll.h"
@@ -140,6 +141,7 @@ typedef std::tuple<
     cc_plugin::message::CfgPrt,
     cc_plugin::message::CfgPrtPoll,
     cc_plugin::message::CfgMsg,
+    cc_plugin::message::CfgMsgCurrent,
     cc_plugin::message::CfgMsgPoll,
     cc_plugin::message::CfgInf,
     cc_plugin::message::CfgInfPoll,
