@@ -392,7 +392,23 @@ const QVariantMap& userDelayProperties()
     return Props;
 }
 
+const QVariantMap& measProperties()
+{
+    static const QVariantMap Props = createNameOnlyProperties("Meas");
+    return Props;
+}
 
+const QVariantMap& navProperties()
+{
+    static const QVariantMap Props = createNameOnlyProperties("Nav");
+    return Props;
+}
+
+const QVariantMap& timeProperties()
+{
+    static const QVariantMap Props = createNameOnlyProperties("Time");
+    return Props;
+}
 
 }  // namespace cfg
 

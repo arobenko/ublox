@@ -277,10 +277,13 @@ using scale = common::R4T<comms::option::ValidNumValueRange<0, 50> >;
 using interval = common::U4;
 using length = common::U4;
 using status = common::I1;
-using time_ref = common::U1;
+using Time = common::U1;
 using antenna_cable_delay = common::I2;
 using RF_group_delay = common::I2;
 using user_delay = common::I4;
+
+using Meas = common::U2;
+using Nav = common::U2;
 
 }  // namespace cfg
 

@@ -62,6 +62,9 @@ const QVariantMap& timeRefProperties();
 const QVariantMap& antennaCableDelayProperties();
 const QVariantMap& rfGroupDelayProperties();
 const QVariantMap& userDelayProperties();
+const QVariantMap& measProperties();
+const QVariantMap& navProperties();
+const QVariantMap& timeProperties();
 
 }  // namespace cfg
 

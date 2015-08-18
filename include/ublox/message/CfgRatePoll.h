@@ -21,7 +21,6 @@
 #include "comms/Message.h"
 #include "ublox/Message.h"
 #include "ublox/field/MsgId.h"
-#include "ublox/field/cfg.h"
 
 namespace ublox
 {
@@ -29,56 +28,39 @@ namespace ublox
 namespace message
 {
 
-using CfgTpFields = std::tuple<
-    ublox::field::cfg::interval,
-    ublox::field::cfg::length,
-    ublox::field::cfg::status,
-    ublox::field::cfg::Time,
-    ublox::field::common::res2,
-    ublox::field::cfg::antenna_cable_delay,
-    ublox::field::cfg::RF_group_delay,
-    ublox::field::cfg::user_delay
->;
+using CfgRatePollFields = std::tuple<>;
 
 template <typename TMsgBase = Message>
-class CfgTp : public
+class CfgRatePoll : public
     comms::MessageBase<
         TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_CFG_TP>,
-        comms::option::FieldsImpl<CfgTpFields>,
-        comms::option::DispatchImpl<CfgTp<TMsgBase> >
+        comms::option::StaticNumIdImpl<MsgId_CFG_RATE>,
+        comms::option::FieldsImpl<CfgRatePollFields>,
+        comms::option::DispatchImpl<CfgRatePoll<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_CFG_TP>,
-        comms::option::FieldsImpl<CfgTpFields>,
-        comms::option::DispatchImpl<CfgTp<TMsgBase> >
+        comms::option::StaticNumIdImpl<MsgId_CFG_RATE>,
+        comms::option::FieldsImpl<CfgRatePollFields>,
+        comms::option::DispatchImpl<CfgRatePoll<TMsgBase> >
     > Base;
 public:
     enum FieldIdx
     {
-        FieldIdx_Interval,
-        FieldIdx_Length,
-        FieldIdx_Status,
-        FieldIdx_TimeRef,
-        FieldIdx_Res,
-        FieldIdx_AntannaCableDelay,
-        FieldIdx_RfGroupDelay,
-        FieldIdx_UserDelay,
         FieldIdx_NumOfValues
     };
 
     static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_NumOfValues,
         "Number of fields is incorrect");
 
-    CfgTp() = default;
-    CfgTp(const CfgTp&) = default;
-    CfgTp(CfgTp&& other) = default;
-    virtual ~CfgTp() = default;
+    CfgRatePoll() = default;
+    CfgRatePoll(const CfgRatePoll&) = default;
+    CfgRatePoll(CfgRatePoll&& other) = default;
+    virtual ~CfgRatePoll() = default;
 
-    CfgTp& operator=(const CfgTp&) = default;
-    CfgTp& operator=(CfgTp&&) = default;
+    CfgRatePoll& operator=(const CfgRatePoll&) = default;
+    CfgRatePoll& operator=(CfgRatePoll&&) = default;
 };
 
 
