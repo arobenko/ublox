@@ -55,6 +55,13 @@ const QVariantMap& rotXProperties();
 const QVariantMap& rotYProperties();
 const QVariantMap& rotZProperties();
 const QVariantMap& scaleProperties();
+const QVariantMap& intervalProperties();
+const QVariantMap& lengthProperties();
+const QVariantMap& statusProperties();
+const QVariantMap& timeRefProperties();
+const QVariantMap& antennaCableDelayProperties();
+const QVariantMap& rfGroupDelayProperties();
+const QVariantMap& userDelayProperties();
 
 }  // namespace cfg
 

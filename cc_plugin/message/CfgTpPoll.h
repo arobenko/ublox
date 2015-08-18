@@ -15,16 +15,13 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <cassert>
 
-#include "CfgDatPoll.h"
+#pragma once
 
-template class ublox::message::CfgDatPoll<ublox::cc_plugin::Message>;
-template class ublox::cc_plugin::ProtocolMessageBase<
-    ublox::message::CfgDatPoll<ublox::cc_plugin::Message>,
-    ublox::cc_plugin::message::CfgDatPoll>;
-
-namespace cc = comms_champion;
+#include "comms_champion/comms_champion.h"
+#include "ublox/message/CfgTpPoll.h"
+#include "cc_plugin/Message.h"
+#include "cc_plugin/ProtocolMessageBase.h"
 
 namespace ublox
 {
@@ -35,23 +32,32 @@ namespace cc_plugin
 namespace message
 {
 
-CfgDatPoll::CfgDatPoll() = default;
-CfgDatPoll::~CfgDatPoll() = default;
-
-CfgDatPoll& CfgDatPoll::operator=(const CfgDatPoll&) = default;
-CfgDatPoll& CfgDatPoll::operator=(CfgDatPoll&&) = default;
-
-
-const char* CfgDatPoll::nameImpl() const
+class CfgTpPoll : public
+    ProtocolMessageBase<
+        ublox::message::CfgTpPoll<ublox::cc_plugin::Message>,
+        CfgTpPoll>
 {
-    static const char* Str = "CFG-DAT (Poll)";
-    return Str;
-}
+public:
+    CfgTpPoll();
+    CfgTpPoll(const CfgTpPoll&) = delete;
+    CfgTpPoll(CfgTpPoll&&) = delete;
+    virtual ~CfgTpPoll();
 
+    CfgTpPoll& operator=(const CfgTpPoll&);
+    CfgTpPoll& operator=(CfgTpPoll&&);
+
+protected:
+    virtual const char* nameImpl() const override;
+};
 
 }  // namespace message
 
 }  // namespace cc_plugin
 
 }  // namespace ublox
+
+extern template class ublox::message::CfgTpPoll<ublox::cc_plugin::Message>;
+extern template class ublox::cc_plugin::ProtocolMessageBase<
+    ublox::message::CfgTpPoll<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::CfgTpPoll>;
 

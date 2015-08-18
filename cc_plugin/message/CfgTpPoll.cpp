@@ -17,12 +17,12 @@
 
 #include <cassert>
 
-#include "CfgDatPoll.h"
+#include "CfgTpPoll.h"
 
-template class ublox::message::CfgDatPoll<ublox::cc_plugin::Message>;
+template class ublox::message::CfgTpPoll<ublox::cc_plugin::Message>;
 template class ublox::cc_plugin::ProtocolMessageBase<
-    ublox::message::CfgDatPoll<ublox::cc_plugin::Message>,
-    ublox::cc_plugin::message::CfgDatPoll>;
+    ublox::message::CfgTpPoll<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::CfgTpPoll>;
 
 namespace cc = comms_champion;
 
@@ -35,16 +35,16 @@ namespace cc_plugin
 namespace message
 {
 
-CfgDatPoll::CfgDatPoll() = default;
-CfgDatPoll::~CfgDatPoll() = default;
+CfgTpPoll::CfgTpPoll() = default;
+CfgTpPoll::~CfgTpPoll() = default;
 
-CfgDatPoll& CfgDatPoll::operator=(const CfgDatPoll&) = default;
-CfgDatPoll& CfgDatPoll::operator=(CfgDatPoll&&) = default;
+CfgTpPoll& CfgTpPoll::operator=(const CfgTpPoll&) = default;
+CfgTpPoll& CfgTpPoll::operator=(CfgTpPoll&&) = default;
 
 
-const char* CfgDatPoll::nameImpl() const
+const char* CfgTpPoll::nameImpl() const
 {
-    static const char* Str = "CFG-DAT (Poll)";
+    static const char* Str = "CFG-TP (Poll)";
     return Str;
 }
 

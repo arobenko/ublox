@@ -350,6 +350,50 @@ const QVariantMap& scaleProperties()
     return Props;
 }
 
+const QVariantMap& intervalProperties()
+{
+    static const QVariantMap Props = createNameOnlyProperties("interval");
+    return Props;
+}
+
+const QVariantMap& lengthProperties()
+{
+    static const QVariantMap Props = createNameOnlyProperties("length");
+    return Props;
+}
+
+const QVariantMap& statusProperties()
+{
+    static const QVariantMap Props = createNameOnlyProperties("status");
+    return Props;
+}
+
+const QVariantMap& timeRefProperties()
+{
+    static const QVariantMap Props = createNameOnlyProperties("time_ref");
+    return Props;
+}
+
+const QVariantMap& antennaCableDelayProperties()
+{
+    static const QVariantMap Props = createNameOnlyProperties("antenna_cable_delay");
+    return Props;
+}
+
+const QVariantMap& rfGroupDelayProperties()
+{
+    static const QVariantMap Props = createNameOnlyProperties("RF_group_delay");
+    return Props;
+}
+
+const QVariantMap& userDelayProperties()
+{
+    static const QVariantMap Props = createNameOnlyProperties("user_delay");
+    return Props;
+}
+
+
+
 }  // namespace cfg
 
 }  // namespace field

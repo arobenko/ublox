@@ -85,6 +85,8 @@
 #include "cc_plugin/message/CfgDatUser.h"
 #include "cc_plugin/message/CfgDatStandard.h"
 #include "cc_plugin/message/CfgDatPoll.h"
+#include "cc_plugin/message/CfgTp.h"
+#include "cc_plugin/message/CfgTpPoll.h"
 
 namespace ublox
 {
@@ -152,7 +154,9 @@ typedef std::tuple<
     cc_plugin::message::CfgDat,
     cc_plugin::message::CfgDatUser,
     cc_plugin::message::CfgDatStandard,
-    cc_plugin::message::CfgDatPoll
+    cc_plugin::message::CfgDatPoll,
+    cc_plugin::message::CfgTp,
+    cc_plugin::message::CfgTpPoll
 > AllMessages;
 
 }  // namespace cc_plugin

@@ -77,6 +77,8 @@ function (cc_plugin_ublox)
         message/CfgDatUser.cpp
         message/CfgDatStandard.cpp
         message/CfgDatPoll.cpp
+        message/CfgTp.cpp
+        message/CfgTpPoll.cpp
         field/MsgId.cpp
         field/common.cpp
         field/nav.cpp

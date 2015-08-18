@@ -274,6 +274,14 @@ using rotY = common::R4T<comms::option::ValidNumValueRange<-20, 20> >;
 using rotZ = common::R4T<comms::option::ValidNumValueRange<-20, 20> >;
 using scale = common::R4T<comms::option::ValidNumValueRange<0, 50> >;
 
+using interval = common::U4;
+using length = common::U4;
+using status = common::I1;
+using time_ref = common::U1;
+using antenna_cable_delay = common::I2;
+using RF_group_delay = common::I2;
+using user_delay = common::I4;
+
 }  // namespace cfg
 
 }  // namespace field
