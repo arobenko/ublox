@@ -44,6 +44,17 @@ const QVariantMap& protocolIdProperties();
 QVariantMap infMsgMaskProperties(unsigned idx);
 const QVariantMap& navBbrProperties();
 const QVariantMap& resetProperties();
+const QVariantMap& datumNumProperties();
+const QVariantMap& datumProperties();
+const QVariantMap& majXProperties();
+const QVariantMap& flatProperties();
+const QVariantMap& dXProperties();
+const QVariantMap& dYProperties();
+const QVariantMap& dZProperties();
+const QVariantMap& rotXProperties();
+const QVariantMap& rotYProperties();
+const QVariantMap& rotZProperties();
+const QVariantMap& scaleProperties();
 
 }  // namespace cfg
 

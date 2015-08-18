@@ -284,6 +284,72 @@ const QVariantMap& resetProperties()
     return Props;
 }
 
+const QVariantMap& datumNumProperties()
+{
+    static const QVariantMap Props = createNameOnlyProperties("Datum#");
+    return Props;
+}
+
+const QVariantMap& datumProperties()
+{
+    static const QVariantMap Props = createNameOnlyProperties("Datum");
+    return Props;
+}
+
+const QVariantMap& majXProperties()
+{
+    static const QVariantMap Props = createNameOnlyProperties("majX");
+    return Props;
+}
+
+const QVariantMap& flatProperties()
+{
+    static const QVariantMap Props = createNameOnlyProperties("flat");
+    return Props;
+}
+
+const QVariantMap& dXProperties()
+{
+    static const QVariantMap Props = createNameOnlyProperties("dX");
+    return Props;
+}
+
+const QVariantMap& dYProperties()
+{
+    static const QVariantMap Props = createNameOnlyProperties("dY");
+    return Props;
+}
+
+const QVariantMap& dZProperties()
+{
+    static const QVariantMap Props = createNameOnlyProperties("dZ");
+    return Props;
+}
+
+const QVariantMap& rotXProperties()
+{
+    static const QVariantMap Props = createNameOnlyProperties("rotX");
+    return Props;
+}
+
+const QVariantMap& rotYProperties()
+{
+    static const QVariantMap Props = createNameOnlyProperties("rotY");
+    return Props;
+}
+
+const QVariantMap& rotZProperties()
+{
+    static const QVariantMap Props = createNameOnlyProperties("rotZ");
+    return Props;
+}
+
+const QVariantMap& scaleProperties()
+{
+    static const QVariantMap Props = createNameOnlyProperties("scale");
+    return Props;
+}
+
 }  // namespace cfg
 
 }  // namespace field

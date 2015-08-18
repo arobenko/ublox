@@ -60,6 +60,7 @@
 #include "message/CfgMsgCurrent.h"
 #include "message/CfgInf.h"
 #include "message/CfgRst.h"
+#include "message/CfgDat.h"
 
 namespace ublox
 {
@@ -100,7 +101,8 @@ using RegularMessages =
         message::CfgMsg<TMessage>,
         message::CfgMsgCurrent<TMessage>,
         message::CfgInf<TMessage>,
-        message::CfgRst<TMessage>
+        message::CfgRst<TMessage>,
+        message::CfgDat<TMessage>
     >;
 
 }  // namespace ublox

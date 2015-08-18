@@ -249,7 +249,30 @@ using Reset =
         comms::option::ContentsValidator<ResetTypeValidator>
     >;
 
+using DatumNum = common::U2;
 
+using Datum =
+    comms::field::String<
+        common::FieldBase,
+        comms::option::SequenceFixedSize<5>,
+        comms::option::SequenceTrailingFieldSuffix<
+            comms::field::IntValue<
+                common::FieldBase,
+                std::uint8_t,
+                comms::option::ValidNumValueRange<0, 0>
+            >
+        >
+    >;
+
+using majA = common::R8T<comms::option::ValidNumValueRange<6300000, 6500000> >;
+using flat = common::R8T<comms::option::ValidNumValueRange<0, 500> >;
+using dX = common::R4T<comms::option::ValidNumValueRange<-5000, 5000> >;
+using dY = common::R4T<comms::option::ValidNumValueRange<-5000, 5000> >;
+using dZ = common::R4T<comms::option::ValidNumValueRange<-5000, 5000> >;
+using rotX = common::R4T<comms::option::ValidNumValueRange<-20, 20> >;
+using rotY = common::R4T<comms::option::ValidNumValueRange<-20, 20> >;
+using rotZ = common::R4T<comms::option::ValidNumValueRange<-20, 20> >;
+using scale = common::R4T<comms::option::ValidNumValueRange<0, 50> >;
 
 }  // namespace cfg
 
