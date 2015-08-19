@@ -65,6 +65,9 @@ const QVariantMap& userDelayProperties();
 const QVariantMap& measProperties();
 const QVariantMap& navProperties();
 const QVariantMap& timeProperties();
+const QVariantMap& cfgClearMaskProperties();
+const QVariantMap& cfgSaveMaskProperties();
+const QVariantMap& cfgLoadMaskProperties();
 
 }  // namespace cfg
 

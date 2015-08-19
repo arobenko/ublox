@@ -200,6 +200,20 @@ QVariantMap createResetProperties()
     return cc::Property::createPropertiesMap("Reset", std::move(enumValues));
 }
 
+QVariantMap createCfgMaskProperties(const char* name)
+{
+    QVariantList bitNames;
+    bitNames.append("I/O Ports, Protocols, Baud Rates");
+    bitNames.append("Message Configuration");
+    bitNames.append("INF Message Configuration");
+    bitNames.append("NAV Configuration");
+    bitNames.append("RXM Configuration");
+    bitNames.append("Low Power Mode Configurations");
+
+    return cc::Property::createPropertiesMap(name, std::move(bitNames));
+}
+
+
 }  // namespace
 
 const QVariantMap& portIdProperties()
@@ -407,6 +421,24 @@ const QVariantMap& navProperties()
 const QVariantMap& timeProperties()
 {
     static const QVariantMap Props = createNameOnlyProperties("Time");
+    return Props;
+}
+
+const QVariantMap& cfgClearMaskProperties()
+{
+    static const QVariantMap Props = createCfgMaskProperties("Clear_mask");
+    return Props;
+}
+
+const QVariantMap& cfgSaveMaskProperties()
+{
+    static const QVariantMap Props = createCfgMaskProperties("Save_mask");
+    return Props;
+}
+
+const QVariantMap& cfgLoadMaskProperties()
+{
+    static const QVariantMap Props = createCfgMaskProperties("Load_mask");
     return Props;
 }
 

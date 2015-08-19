@@ -285,6 +285,13 @@ using user_delay = common::I4;
 using Meas = common::U2;
 using Nav = common::U2;
 
+using Cfg_mask =
+    comms::field::BitmaskValue<
+        common::FieldBase,
+        comms::option::FixedLength<4U>,
+        comms::option::BitmaskReservedBits<0xffff0800, 0>
+    >;
+
 }  // namespace cfg
 
 }  // namespace field
