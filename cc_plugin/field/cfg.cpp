@@ -213,6 +213,17 @@ QVariantMap createCfgMaskProperties(const char* name)
     return cc::Property::createPropertiesMap(name, std::move(bitNames));
 }
 
+QVariantMap createFxnFlagsProperties()
+{
+    QVariantList bitNames;
+    bitNames.append(QVariant());
+    bitNames.append("Sleep Mode");
+    bitNames.append(QVariant());
+    bitNames.append("Absolute Alignment");
+    bitNames.append("Use on/off time");
+    return cc::Property::createPropertiesMap("flags", std::move(bitNames));
+}
+
 
 }  // namespace
 
@@ -439,6 +450,54 @@ const QVariantMap& cfgSaveMaskProperties()
 const QVariantMap& cfgLoadMaskProperties()
 {
     static const QVariantMap Props = createCfgMaskProperties("Load_mask");
+    return Props;
+}
+
+const QVariantMap& fxnFlagsProperties()
+{
+    static const QVariantMap Props = createFxnFlagsProperties();
+    return Props;
+}
+
+const QVariantMap& tReacqProperties()
+{
+    static const QVariantMap Props = createNameOnlyProperties("t_reacq");
+    return Props;
+}
+
+const QVariantMap& tAcqProperties()
+{
+    static const QVariantMap Props = createNameOnlyProperties("t_acq");
+    return Props;
+}
+
+const QVariantMap& tReacqOffProperties()
+{
+    static const QVariantMap Props = createNameOnlyProperties("t_reacq_off");
+    return Props;
+}
+
+const QVariantMap& tAcqOffProperties()
+{
+    static const QVariantMap Props = createNameOnlyProperties("t_acq");
+    return Props;
+}
+
+const QVariantMap& tOnProperties()
+{
+    static const QVariantMap Props = createNameOnlyProperties("t_on");
+    return Props;
+}
+
+const QVariantMap& tOffProperties()
+{
+    static const QVariantMap Props = createNameOnlyProperties("t_off");
+    return Props;
+}
+
+const QVariantMap& baseTowProperties()
+{
+    static const QVariantMap Props = createNameOnlyProperties("base_tow");
     return Props;
 }
 

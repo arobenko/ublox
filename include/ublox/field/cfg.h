@@ -292,6 +292,21 @@ using Cfg_mask =
         comms::option::BitmaskReservedBits<0xffff0800, 0>
     >;
 
+using fxn_flags =
+    comms::field::BitmaskValue<
+        common::FieldBase,
+        comms::option::FixedLength<4U>,
+        comms::option::BitmaskReservedBits<0xffffffe4, 0>
+    >;
+
+using t_reacq = common::U4;
+using t_acq = common::U4;
+using t_reacq_off = common::U4;
+using t_acq_off = common::U4;
+using t_on = common::U4;
+using t_off = common::U4;
+using base_tow = common::U4;
+
 }  // namespace cfg
 
 }  // namespace field

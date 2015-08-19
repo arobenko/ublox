@@ -68,6 +68,16 @@ const QVariantMap& timeProperties();
 const QVariantMap& cfgClearMaskProperties();
 const QVariantMap& cfgSaveMaskProperties();
 const QVariantMap& cfgLoadMaskProperties();
+const QVariantMap& fxnFlagsProperties();
+const QVariantMap& tReacqProperties();
+const QVariantMap& tAcqProperties();
+const QVariantMap& tReacqOffProperties();
+const QVariantMap& tAcqOffProperties();
+const QVariantMap& tOnProperties();
+const QVariantMap& tOffProperties();
+const QVariantMap& baseTowProperties();
+
+
 
 }  // namespace cfg
 
