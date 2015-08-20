@@ -64,6 +64,7 @@
 #include "message/CfgTp.h"
 #include "message/CfgRate.h"
 #include "message/CfgFxn.h"
+#include "message/CfgTm.h"
 
 namespace ublox
 {
@@ -108,7 +109,8 @@ using RegularMessages =
         message::CfgDat<TMessage>,
         message::CfgTp<TMessage>,
         message::CfgRate<TMessage>,
-        message::CfgFxn<TMessage>
+        message::CfgFxn<TMessage>,
+        message::CfgTm<TMessage>
     >;
 
 }  // namespace ublox
