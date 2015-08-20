@@ -86,6 +86,8 @@ function (cc_plugin_ublox)
         message/CfgFxnPoll.cpp
         message/CfgTm.cpp
         message/CfgTmPoll.cpp
+        message/CfgRxm.cpp
+        message/CfgRxmPoll.cpp
         field/MsgId.cpp
         field/common.cpp
         field/nav.cpp
