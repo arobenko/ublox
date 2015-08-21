@@ -88,6 +88,8 @@ function (cc_plugin_ublox)
         message/CfgTmPoll.cpp
         message/CfgRxm.cpp
         message/CfgRxmPoll.cpp
+        message/CfgEkf.cpp
+        message/CfgEkfPoll.cpp
         field/MsgId.cpp
         field/common.cpp
         field/nav.cpp
