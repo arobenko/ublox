@@ -56,6 +56,17 @@ using I1T =
 typedef I1T<> I1;
 
 template <typename... TOptions>
+using X1T =
+    comms::field::BitmaskValue<
+        FieldBase,
+        comms::option::FixedLength<1>,
+        TOptions...
+    >;
+
+typedef X1T<> X1;
+
+
+template <typename... TOptions>
 using U2T =
     comms::field::IntValue<
         FieldBase,
@@ -76,6 +87,16 @@ using I2T =
 typedef I2T<> I2;
 
 template <typename... TOptions>
+using X2T =
+    comms::field::BitmaskValue<
+        FieldBase,
+        comms::option::FixedLength<2>,
+        TOptions...
+    >;
+
+typedef X2T<> X2;
+
+template <typename... TOptions>
 using U4T =
     comms::field::IntValue<
         FieldBase,
@@ -94,6 +115,16 @@ using I4T =
     >;
 
 typedef I4T<> I4;
+
+template <typename... TOptions>
+using X4T =
+    comms::field::BitmaskValue<
+        FieldBase,
+        comms::option::FixedLength<4>,
+        TOptions...
+    >;
+
+typedef X4T<> X4;
 
 using res1 = U1T<comms::option::ValidNumValueRange<0, 0> >;
 
@@ -141,6 +172,17 @@ static_assert(std::numeric_limits<double>::is_iec559,
 static_assert(sizeof(double) == sizeof(std::uint64_t),
     "double is expected to have size of 8 bytes");
 
+using Scaling_cm2m = comms::option::ScalingRatio<1, 1000>;
+using Scaling_ms2s = comms::option::ScalingRatio<1, 1000>;
+
+using iTOW =
+    U4T<
+        Scaling_ms2s,
+        comms::option::ValidNumValueRange<0, 1000L * 60 * 60 * 24 * 7>
+    >;
+
+
+// TODO: remove
 using ITOW = U4;
 using Week = I2;
 

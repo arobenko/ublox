@@ -32,6 +32,13 @@ namespace field
 namespace nav
 {
 
+const QVariantMap& props_iTOW();
+const QVariantMap& props_ecefX();
+const QVariantMap& props_ecefY();
+const QVariantMap& props_ecefZ();
+const QVariantMap& props_pAcc();
+
+// TODO: remove
 const QVariantMap& itowProperties();
 const QVariantMap& ecefPropertiesX();
 const QVariantMap& ecefPropertiesY();

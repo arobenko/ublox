@@ -38,6 +38,13 @@ namespace nav
 namespace
 {
 
+QVariantMap createProps_ecef(const char* dir)
+{
+    return cc::Property::createPropertiesMap(QString("ecef%1").arg(dir));
+}
+
+// TODO: remove
+
 QVariantMap createNameOnlyProperties(const char* name)
 {
     return cc::Property::createPropertiesMap(name);
@@ -249,9 +256,38 @@ QVariantMap createMeasUsedProperties()
 }
 
 
-
 }  // namespace
 
+const QVariantMap& props_iTOW()
+{
+    return common::props_iTOW();
+}
+
+const QVariantMap& props_ecefX()
+{
+    static const QVariantMap Props = createProps_ecef("X");
+    return Props;
+}
+
+const QVariantMap& props_ecefY()
+{
+    static const QVariantMap Props = createProps_ecef("Y");
+    return Props;
+}
+
+const QVariantMap& props_ecefZ()
+{
+    static const QVariantMap Props = createProps_ecef("Z");
+    return Props;
+}
+
+const QVariantMap& props_pAcc()
+{
+    static const QVariantMap Props = cc::Property::createPropertiesMap("pAcc");
+    return Props;
+}
+
+// TODO: remove
 const QVariantMap& itowProperties()
 {
     return common::itowProperties();

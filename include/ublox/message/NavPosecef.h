@@ -29,11 +29,17 @@ namespace ublox
 namespace message
 {
 
+using NavPosecefField_iTOW = field::nav::iTOW;
+using NavPosecefField_ecefX = field::nav::ecefX;
+using NavPosecefField_ecefY = field::nav::ecefY;
+using NavPosecefField_ecefZ = field::nav::ecefZ;
+using NavPosecefField_pAcc = field::nav::pAcc;
+
 using NavPosecefFields = std::tuple<
-    field::nav::ITOW,
-    field::nav::ECEF_X,
-    field::nav::ECEF_Y,
-    field::nav::ECEF_Z,
+    NavPosecefField_iTOW,
+    NavPosecefField_ecefX,
+    NavPosecefField_ecefY,
+    NavPosecefField_ecefZ,
     field::nav::Pacc
 >;
 
@@ -56,11 +62,11 @@ class NavPosecef : public
 public:
     enum FieldIdx
     {
-        FieldIdx_Itow,
-        FieldIdx_EcefX,
-        FieldIdx_EcefY,
-        FieldIdx_EcefZ,
-        FieldIdx_Pacc,
+        FieldIdx_iTow,
+        FieldIdx_ecefX,
+        FieldIdx_ecefY,
+        FieldIdx_ecefZ,
+        FieldIdx_pAcc,
         FieldIdx_NumOfValues
     };
 

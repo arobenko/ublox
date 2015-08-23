@@ -29,6 +29,16 @@ namespace field
 namespace nav
 {
 
+using iTOW = common::iTOW;
+
+using ecef = common::I4T<common::Scaling_cm2m>;
+using ecefX = ecef;
+using ecefY = ecef;
+using ecefZ = ecef;
+
+using pAcc = common::U4T<common::Scaling_cm2m>;
+
+// TODO: remove
 using ITOW = common::ITOW;
 
 using ECEF = common::I4;

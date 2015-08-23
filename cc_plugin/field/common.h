@@ -34,6 +34,10 @@ namespace common
 {
 
 const QVariantList& emptyProperties();
+const QVariantMap& props_iTOW();
+
+// TODO: remove
+
 const QVariantMap& resProperties();
 const QVariantMap& resProperties(unsigned idx);
 const QVariantMap& padProperties();

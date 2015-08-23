@@ -49,7 +49,12 @@ class NavPosecefPoll : public
     > Base;
 public:
 
-    static_assert(std::tuple_size<typename Base::AllFields>::value == 0U,
+    enum FieldIdx
+    {
+        FieldIdx_NumOfValues
+    };
+
+    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_NumOfValues,
         "Number of fields is incorrect");
 
     NavPosecefPoll() = default;

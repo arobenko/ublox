@@ -58,6 +58,18 @@ const QVariantList& emptyProperties()
     return Props;
 }
 
+const QVariantMap& props_iTOW()
+{
+    static const QVariantMap Props = cc::Property::createPropertiesMap("iTOW");
+    return Props;
+}
+
+
+
+
+
+
+// TODO: remove
 const QVariantMap& resProperties()
 {
     static const QVariantMap Props = cc::Property::createPropertiesMap("res");
