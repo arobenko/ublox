@@ -41,18 +41,81 @@ namespace message
 namespace
 {
 
+QVariantMap createProps_flags()
+{
+    QVariantList bitNames;
+    bitNames.append("gpsFixOk");
+    bitNames.append("diffSoln");
+    bitNames.append("wknSet");
+    bitNames.append("towSet");
+
+    return cc::Property::createPropertiesMap("flags", std::move(bitNames));
+}
+
+QVariantMap createProps_fixStat()
+{
+    QVariantList dgpsIStatEnumValues;
+    cc::Property::appendEnumValue(dgpsIStatEnumValues, "none");
+    cc::Property::appendEnumValue(dgpsIStatEnumValues, "PR+PRR Correction");
+    assert(dgpsIStatEnumValues.size() == (int)ublox::message::DgpsIStat::NumOfValues);
+    auto dgpsIStatProps = cc::Property::createPropertiesMap("dgpsIStat", std::move(dgpsIStatEnumValues));
+    cc::Property::setSerialisedHidden(dgpsIStatProps);
+
+    auto reservedProps = cc::Property::createPropertiesMap("reserved");
+    cc::Property::setFieldHidden(reservedProps);
+
+    QVariantList mapMatchingEnumValues;
+    cc::Property::appendEnumValue(mapMatchingEnumValues, "none");
+    cc::Property::appendEnumValue(mapMatchingEnumValues, "valid");
+    cc::Property::appendEnumValue(mapMatchingEnumValues, "used");
+    cc::Property::appendEnumValue(mapMatchingEnumValues, "DR");
+    assert(mapMatchingEnumValues.size() == (int)ublox::message::MapMatching::NumOfValues);
+    auto mapMatchingProps = cc::Property::createPropertiesMap("mapMatching", std::move(mapMatchingEnumValues));
+    cc::Property::setSerialisedHidden(mapMatchingProps);
+
+    QVariantList membersData;
+    membersData.append(std::move(dgpsIStatProps));
+    membersData.append(std::move(reservedProps));
+    membersData.append(std::move(mapMatchingProps));
+    assert(membersData.size() == ublox::message::NavStatusField_fixStat_numOfValues);
+
+    return cc::Property::createPropertiesMap("fixStat", std::move(membersData));
+}
+
+QVariantMap createProps_flags2()
+{
+    QVariantList psmStateEnumValues;
+    cc::Property::appendEnumValue(psmStateEnumValues, "ACQUISITION");
+    cc::Property::appendEnumValue(psmStateEnumValues, "TRACKING");
+    cc::Property::appendEnumValue(psmStateEnumValues, "POWER OPTIMIZED TRACKING");
+    cc::Property::appendEnumValue(psmStateEnumValues, "INACTIVE");
+    assert(psmStateEnumValues.size() == (int)ublox::message::PsmState::NumOfValues);
+    auto psmStateProps = cc::Property::createPropertiesMap("psmState", std::move(psmStateEnumValues));
+    cc::Property::setSerialisedHidden(psmStateProps);
+
+    auto reservedProps = cc::Property::createPropertiesMap("reserved");
+    cc::Property::setFieldHidden(reservedProps);
+
+    QVariantList membersData;
+    membersData.append(std::move(psmStateProps));
+    membersData.append(std::move(reservedProps));
+    assert(membersData.size() == ublox::message::NavStatusField_flags2_numOfValues);
+
+    return cc::Property::createPropertiesMap("flags2", std::move(membersData));
+}
+
 QVariantList createFieldsProperties()
 {
     QVariantList props;
-    props.append(cc_plugin::field::nav::itowProperties());
-    props.append(cc_plugin::field::nav::gpsFixProperties());
-    props.append(cc_plugin::field::nav::flagsProperties());
-    props.append(cc_plugin::field::nav::diffStatusProperties());
-    props.append(cc_plugin::field::common::resProperties());
-    props.append(cc_plugin::field::nav::ttffProperties());
-    props.append(cc_plugin::field::nav::msssProperties());
+    props.append(cc_plugin::field::nav::props_iTOW());
+    props.append(cc_plugin::field::nav::props_gpsFix());
+    props.append(createProps_flags());
+    props.append(createProps_fixStat());
+    props.append(createProps_flags2());
+    props.append(cc::Property::createPropertiesMap("ttff"));
+    props.append(cc::Property::createPropertiesMap("msss"));
 
-    assert(props.size() == NavStatus::FieldIdx_NumOfValues);
+    assert(props.size() == NavStatus::FieldIdx_numOfValues);
     return props;
 }
 

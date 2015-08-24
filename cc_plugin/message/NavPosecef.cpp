@@ -48,7 +48,7 @@ QVariantList createFieldsProperties()
     props.append(cc_plugin::field::nav::props_ecefZ());
     props.append(cc_plugin::field::nav::props_pAcc());
 
-    assert(props.size() == NavPosecef::FieldIdx_NumOfValues);
+    assert(props.size() == NavPosecef::FieldIdx_numOfValues);
     return props;
 }
 

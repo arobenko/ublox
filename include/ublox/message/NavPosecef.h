@@ -67,10 +67,10 @@ public:
         FieldIdx_ecefY,
         FieldIdx_ecefZ,
         FieldIdx_pAcc,
-        FieldIdx_NumOfValues
+        FieldIdx_numOfValues
     };
 
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_NumOfValues,
+    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
     NavPosecef() = default;

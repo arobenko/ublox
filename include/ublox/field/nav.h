@@ -46,6 +46,24 @@ using hMSL = common::I4T<common::Scaling_mm2m>;
 using hAcc = common::U4T<common::Scaling_mm2m>;
 using vAcc = common::U4T<common::Scaling_mm2m>;
 
+enum class GpsFix : std::uint8_t
+{
+    NoFix,
+    DeadReckoningOnly,
+    Fix_2D,
+    Fix_3D,
+    GPS_DeadReckoning,
+    TimeOnlyFix,
+    NumOfValues
+};
+
+using gpsFix =
+    comms::field::EnumValue<
+        common::FieldBase,
+        GpsFix,
+        comms::option::ValidNumValueRange<0, (int)GpsFix::NumOfValues - 1>
+    >;
+
 // TODO: remove
 using ITOW = common::ITOW;
 

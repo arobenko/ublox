@@ -43,6 +43,19 @@ QVariantMap createProps_ecef(const char* dir)
     return cc::Property::createPropertiesMap(QString("ecef%1").arg(dir));
 }
 
+QVariantMap createProps_gpsFix()
+{
+    QVariantList enumValues;
+    cc::Property::appendEnumValue(enumValues, "no fix");
+    cc::Property::appendEnumValue(enumValues, "dead reckoning only");
+    cc::Property::appendEnumValue(enumValues, "2D-fix");
+    cc::Property::appendEnumValue(enumValues, "3D-fix");
+    cc::Property::appendEnumValue(enumValues, "GPS + dead reckoning combined");
+    cc::Property::appendEnumValue(enumValues, "time only fix");
+
+    return cc::Property::createPropertiesMap("gpsFix", std::move(enumValues));
+}
+
 // TODO: remove
 
 QVariantMap createNameOnlyProperties(const char* name)
@@ -320,6 +333,12 @@ const QVariantMap& props_hAcc()
 const QVariantMap& props_vAcc()
 {
     static const QVariantMap Props = cc::Property::createPropertiesMap("vAcc");
+    return Props;
+}
+
+const QVariantMap& props_gpsFix()
+{
+    static const QVariantMap Props = createProps_gpsFix();
     return Props;
 }
 

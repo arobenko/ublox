@@ -43,6 +43,7 @@ const QVariantMap& props_height();
 const QVariantMap& props_hMSL();
 const QVariantMap& props_hAcc();
 const QVariantMap& props_vAcc();
+const QVariantMap& props_gpsFix();
 
 // TODO: remove
 const QVariantMap& itowProperties();

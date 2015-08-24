@@ -51,7 +51,7 @@ QVariantList createFieldsProperties()
     props.append(cc_plugin::field::nav::props_hAcc());
     props.append(cc_plugin::field::nav::props_vAcc());
 
-    assert(props.size() == NavPosllh::FieldIdx_NumOfValues);
+    assert(props.size() == NavPosllh::FieldIdx_numOfValues);
     return props;
 }
 

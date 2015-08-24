@@ -29,14 +29,117 @@ namespace ublox
 namespace message
 {
 
+enum
+{
+    NavStatusField_flags_gpsFixOK,
+    NavStatusField_flags_diffSoln,
+    NavStatusField_flags_wknSet,
+    NavStatusField_flags_towSet,
+    NavStatusField_flags_numOfValues
+};
+
+enum class DgpsIStat : std::uint8_t
+{
+    None,
+    PR_PRR_Correction,
+    NumOfValues
+};
+
+enum class MapMatching : std::uint8_t
+{
+    None,
+    Valid,
+    Used,
+    DR,
+    NumOfValues
+};
+
+enum class PsmState : std::uint8_t
+{
+    Acquisition,
+    Tracking,
+    PowerOptimizedTracking,
+    Inactive,
+    NumOfValues
+};
+
+enum
+{
+    NavStatusField_fixStat_dgpsIStat,
+    NavStatusField_fixStat_reserved,
+    NavStatusField_fixStat_mapMatching,
+    NavStatusField_fixStat_numOfValues
+};
+
+enum
+{
+    NavStatusField_flags2_psmState,
+    NavStatusField_flags2_reserved,
+    NavStatusField_flags2_numOfValues
+};
+
+
+using NavStatusField_iTOW = field::nav::iTOW;
+using NavStatusField_gpsFix = field::nav::gpsFix;
+using NavStatusField_flags =
+    field::common::X1T<
+        comms::option::BitmaskReservedBits<0xf0, 0>
+    >;
+using NavStatusField_fixStat =
+    comms::field::Bitfield<
+        field::common::FieldBase,
+        std::tuple<
+            comms::field::EnumValue<
+                field::common::FieldBase,
+                PsmState,
+                comms::option::ValidNumValueRange<0, (int)PsmState::NumOfValues - 1>,
+                comms::option::FixedBitLength<1>
+            >,
+            comms::field::IntValue<
+                field::common::FieldBase,
+                std::uint8_t,
+                comms::option::ValidNumValueRange<0, 0>,
+                comms::option::FixedBitLength<5>
+            >,
+            comms::field::EnumValue<
+                field::common::FieldBase,
+                MapMatching,
+                comms::option::ValidNumValueRange<0, (int)MapMatching::NumOfValues - 1>,
+                comms::option::FixedBitLength<2>
+            >
+        >
+    >;
+
+using NavStatusField_flags2 =
+    comms::field::Bitfield<
+        field::common::FieldBase,
+        std::tuple<
+            comms::field::EnumValue<
+                field::common::FieldBase,
+                PsmState,
+                comms::option::ValidNumValueRange<0, (int)PsmState::NumOfValues - 1>,
+                comms::option::FixedBitLength<2>
+            >,
+            comms::field::IntValue<
+                field::common::FieldBase,
+                std::uint8_t,
+                comms::option::ValidNumValueRange<0, 0>,
+                comms::option::FixedBitLength<6>
+            >
+        >
+    >;
+
+using NavStatusField_ttff = field::common::U4T<field::common::Scaling_ms2s>;
+using NavStatusField_msss = field::common::U4T<field::common::Scaling_ms2s>;
+
 using NavStatusFields = std::tuple<
-    field::nav::ITOW,
-    field::nav::GPSfix,
-    field::nav::Flags,
-    field::nav::DiffS,
-    field::common::res1,
-    field::nav::TTFF,
-    field::nav::MSSS
+    NavStatusField_iTOW,
+    NavStatusField_gpsFix,
+    NavStatusField_flags,
+    NavStatusField_fixStat,
+    NavStatusField_flags2,
+    NavStatusField_ttff,
+    NavStatusField_msss
 >;
 
 
@@ -58,17 +161,17 @@ class NavStatus : public
 public:
     enum FieldIdx
     {
-        FieldIdx_Itow,
-        FieldIdx_GpsFix,
-        FieldIdx_Flags,
-        FieldIdx_DiffS,
-        FieldIdx_Res,
-        FieldIdx_Ttff,
-        FieldIdx_Msss,
-        FieldIdx_NumOfValues
+        FieldIdx_iTOW,
+        FieldIdx_gpsFix,
+        FieldIdx_flags,
+        FieldIdx_fixStat,
+        FieldIdx_flags2,
+        FieldIdx_ttff,
+        FieldIdx_msss,
+        FieldIdx_numOfValues
     };
 
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_NumOfValues,
+    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
     NavStatus() = default;
