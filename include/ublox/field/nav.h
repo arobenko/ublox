@@ -36,7 +36,15 @@ using ecefX = ecef;
 using ecefY = ecef;
 using ecefZ = ecef;
 
+using lat = common::I4T<comms::option::ScalingRatio<1, 10000000L> >;
+using lon = common::I4T<comms::option::ScalingRatio<1, 10000000L> >;
+using height = common::I4T<common::Scaling_mm2m>;
+
 using pAcc = common::U4T<common::Scaling_cm2m>;
+
+using hMSL = common::I4T<common::Scaling_mm2m>;
+using hAcc = common::U4T<common::Scaling_mm2m>;
+using vAcc = common::U4T<common::Scaling_mm2m>;
 
 // TODO: remove
 using ITOW = common::ITOW;

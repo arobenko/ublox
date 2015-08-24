@@ -29,16 +29,23 @@ namespace ublox
 namespace message
 {
 
-using NavPosllhFields = std::tuple<
-    field::nav::ITOW,
-    field::nav::LON,
-    field::nav::LAT,
-    field::nav::HEIGHT,
-    field::nav::HMSL,
-    field::nav::Hacc,
-    field::nav::Vacc
->;
+using NavPosllhField_iTOW = field::nav::iTOW;
+using NavPosllhField_lat = field::nav::lat;
+using NavPosllhField_lon = field::nav::lon;
+using NavPosllhField_height = field::nav::height;
+using NavPosllhField_hMSL = field::nav::hMSL;
+using NavPosllhField_hAcc = field::nav::hAcc;
+using NavPosllhField_vAcc = field::nav::vAcc;
 
+using NavPosllhFields = std::tuple<
+    NavPosllhField_iTOW,
+    NavPosllhField_lon,
+    NavPosllhField_lat,
+    NavPosllhField_height,
+    NavPosllhField_hMSL,
+    NavPosllhField_hAcc,
+    NavPosllhField_vAcc
+>;
 
 template <typename TMsgBase = Message>
 class NavPosllh : public
@@ -58,13 +65,13 @@ class NavPosllh : public
 public:
     enum FieldIdx
     {
-        FieldIdx_Itow,
-        FieldIdx_Lon,
-        FieldIdx_Lat,
-        FieldIdx_Heght,
-        FieldIdx_HeghtMeanSeaLevel,
-        FieldIdx_Hacc,
-        FieldIdx_Vacc,
+        FieldIdx_iTOW,
+        FieldIdx_lon,
+        FieldIdx_lat,
+        FieldIdx_height,
+        FieldIdx_mHSL,
+        FieldIdx_hAcc,
+        FieldIdx_vAcc,
         FieldIdx_NumOfValues
     };
 

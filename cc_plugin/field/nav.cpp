@@ -287,6 +287,42 @@ const QVariantMap& props_pAcc()
     return Props;
 }
 
+const QVariantMap& props_lon()
+{
+    static const QVariantMap Props = cc::Property::createPropertiesMap("lon");
+    return Props;
+}
+
+const QVariantMap& props_lat()
+{
+    static const QVariantMap Props = cc::Property::createPropertiesMap("lat");
+    return Props;
+}
+
+const QVariantMap& props_height()
+{
+    static const QVariantMap Props = cc::Property::createPropertiesMap("height");
+    return Props;
+}
+
+const QVariantMap& props_hMSL()
+{
+    static const QVariantMap Props = cc::Property::createPropertiesMap("hMSL");
+    return Props;
+}
+
+const QVariantMap& props_hAcc()
+{
+    static const QVariantMap Props = cc::Property::createPropertiesMap("hAcc");
+    return Props;
+}
+
+const QVariantMap& props_vAcc()
+{
+    static const QVariantMap Props = cc::Property::createPropertiesMap("vAcc");
+    return Props;
+}
+
 // TODO: remove
 const QVariantMap& itowProperties()
 {

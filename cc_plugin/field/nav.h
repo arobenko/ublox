@@ -37,6 +37,12 @@ const QVariantMap& props_ecefX();
 const QVariantMap& props_ecefY();
 const QVariantMap& props_ecefZ();
 const QVariantMap& props_pAcc();
+const QVariantMap& props_lon();
+const QVariantMap& props_lat();
+const QVariantMap& props_height();
+const QVariantMap& props_hMSL();
+const QVariantMap& props_hAcc();
+const QVariantMap& props_vAcc();
 
 // TODO: remove
 const QVariantMap& itowProperties();

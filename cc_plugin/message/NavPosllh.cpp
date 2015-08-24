@@ -43,13 +43,13 @@ namespace
 QVariantList createFieldsProperties()
 {
     QVariantList props;
-    props.append(cc_plugin::field::nav::itowProperties());
-    props.append(cc_plugin::field::nav::lonProperties());
-    props.append(cc_plugin::field::nav::latProperties());
-    props.append(cc_plugin::field::nav::heightProperties());
-    props.append(cc_plugin::field::nav::hmslProperties());
-    props.append(cc_plugin::field::nav::haccProperties());
-    props.append(cc_plugin::field::nav::vaccProperties());
+    props.append(cc_plugin::field::nav::props_iTOW());
+    props.append(cc_plugin::field::nav::props_lon());
+    props.append(cc_plugin::field::nav::props_lat());
+    props.append(cc_plugin::field::nav::props_height());
+    props.append(cc_plugin::field::nav::props_hMSL());
+    props.append(cc_plugin::field::nav::props_hAcc());
+    props.append(cc_plugin::field::nav::props_vAcc());
 
     assert(props.size() == NavPosllh::FieldIdx_NumOfValues);
     return props;
