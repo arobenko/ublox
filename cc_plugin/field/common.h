@@ -35,6 +35,7 @@ namespace common
 
 const QVariantList& emptyProperties();
 const QVariantMap& props_iTOW();
+const QVariantMap& props_reserved(unsigned idx);
 
 // TODO: remove
 

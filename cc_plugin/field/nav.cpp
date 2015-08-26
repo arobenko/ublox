@@ -293,6 +293,12 @@ const QVariantMap& props_iTOW()
     return common::props_iTOW();
 }
 
+const QVariantMap& props_fTOW()
+{
+    static const QVariantMap Props = cc::Property::createPropertiesMap("fTOW");
+    return Props;
+}
+
 const QVariantMap& props_ecefX()
 {
     static const QVariantMap Props = createProps_ecef("X");
@@ -311,9 +317,33 @@ const QVariantMap& props_ecefZ()
     return Props;
 }
 
+const QVariantMap& props_ecefVX()
+{
+    static const QVariantMap Props = createProps_ecef("VX");
+    return Props;
+}
+
+const QVariantMap& props_ecefVY()
+{
+    static const QVariantMap Props = createProps_ecef("VY");
+    return Props;
+}
+
+const QVariantMap& props_ecefVZ()
+{
+    static const QVariantMap Props = createProps_ecef("VZ");
+    return Props;
+}
+
 const QVariantMap& props_pAcc()
 {
     static const QVariantMap Props = cc::Property::createPropertiesMap("pAcc");
+    return Props;
+}
+
+const QVariantMap& props_sAcc()
+{
+    static const QVariantMap Props = cc::Property::createPropertiesMap("sAcc");
     return Props;
 }
 
@@ -356,6 +386,32 @@ const QVariantMap& props_vAcc()
 const QVariantMap& props_gpsFix()
 {
     static const QVariantMap Props = createProps_gpsFix();
+    return Props;
+}
+
+QVariantMap createProps_xDOP(char prefix)
+{
+    auto props = cc::Property::createPropertiesMap(QString("%1DOP").arg(prefix));
+    cc::Property::setDisplayScaled(props);
+    cc::Property::setFloatDecimals(props, 2);
+    return props;
+}
+
+const QVariantMap& props_pDOP()
+{
+    static const auto Props = createProps_xDOP('p');
+    return Props;
+}
+
+const QVariantMap& props_week()
+{
+    static const QVariantMap Props = cc::Property::createPropertiesMap("week");
+    return Props;
+}
+
+const QVariantMap& props_numSV()
+{
+    static const QVariantMap Props = cc::Property::createPropertiesMap("numSV");
     return Props;
 }
 

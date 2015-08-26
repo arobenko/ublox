@@ -30,14 +30,13 @@ namespace message
 {
 
 using NavDopField_iTOW = field::nav::iTOW;
-using NavDopField_xDOP = field::common::U2T<comms::option::ScalingRatio<1, 100> >;
-using NavDopField_gDOP = NavDopField_xDOP;
-using NavDopField_pDOP = NavDopField_xDOP;
-using NavDopField_tDOP = NavDopField_xDOP;
-using NavDopField_vDOP = NavDopField_xDOP;
-using NavDopField_hDOP = NavDopField_xDOP;
-using NavDopField_nDOP = NavDopField_xDOP;
-using NavDopField_eDOP = NavDopField_xDOP;
+using NavDopField_gDOP = field::nav::xDOP;
+using NavDopField_pDOP = field::nav::pDOP;
+using NavDopField_tDOP = field::nav::xDOP;
+using NavDopField_vDOP = field::nav::xDOP;
+using NavDopField_hDOP = field::nav::xDOP;
+using NavDopField_nDOP = field::nav::xDOP;
+using NavDopField_eDOP = field::nav::xDOP;
 
 using NavDopFields = std::tuple<
     NavDopField_iTOW,

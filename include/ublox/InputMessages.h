@@ -71,7 +71,7 @@ namespace ublox
 {
 
 template <typename TMessage = Message>
-using RegularMessages =
+using InputMessages =
     std::tuple<
         message::NavPosecef<TMessage>,
         message::NavPosllh<TMessage>,
@@ -87,7 +87,7 @@ using RegularMessages =
         message::NavSvinfo<TMessage>,
         message::NavDgps<TMessage>,
         message::NavSbas<TMessage>,
-        message::NavEkfstatus<TMessage>,
+        message::NavEkfstatus<TMessage>/*,
         message::RxmRaw<TMessage>,
         message::RxmSfrb<TMessage>,
         message::RxmSvsi<TMessage>,
@@ -112,7 +112,7 @@ using RegularMessages =
         message::CfgRate<TMessage>,
         message::CfgFxn<TMessage>,
         message::CfgTm<TMessage>,
-        message::CfgRxm<TMessage>
+        message::CfgRxm<TMessage>*/
     >;
 
 }  // namespace ublox

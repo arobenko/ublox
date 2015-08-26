@@ -33,10 +33,15 @@ namespace nav
 {
 
 const QVariantMap& props_iTOW();
+const QVariantMap& props_fTOW();
 const QVariantMap& props_ecefX();
 const QVariantMap& props_ecefY();
 const QVariantMap& props_ecefZ();
+const QVariantMap& props_ecefVX();
+const QVariantMap& props_ecefVY();
+const QVariantMap& props_ecefVZ();
 const QVariantMap& props_pAcc();
+const QVariantMap& props_sAcc();
 const QVariantMap& props_lon();
 const QVariantMap& props_lat();
 const QVariantMap& props_height();
@@ -44,6 +49,11 @@ const QVariantMap& props_hMSL();
 const QVariantMap& props_hAcc();
 const QVariantMap& props_vAcc();
 const QVariantMap& props_gpsFix();
+QVariantMap createProps_xDOP(char prefix);
+const QVariantMap& props_pDOP();
+const QVariantMap& props_week();
+const QVariantMap& props_numSV();
+
 
 // TODO: remove
 const QVariantMap& itowProperties();

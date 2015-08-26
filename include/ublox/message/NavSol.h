@@ -29,26 +29,57 @@ namespace ublox
 namespace message
 {
 
-using NavSolFields = std::tuple<
-    field::nav::ITOW,
-    field::nav::Frac,
-    field::nav::week,
-    field::nav::GPSfix,
-    field::nav::Flags,
-    field::nav::ECEF_X,
-    field::nav::ECEF_Y,
-    field::nav::ECEF_Z,
-    field::nav::Pacc,
-    field::nav::ECEFVX,
-    field::nav::ECEFVY,
-    field::nav::ECEFVZ,
-    field::nav::Sacc,
-    field::nav::PDOP,
-    field::common::res1,
-    field::nav::numSV,
-    field::common::res4
->;
+enum
+{
+    NavSolField_flags_GPSfixOK,
+    NavSolField_flags_DiffSoln,
+    NavSolField_flags_WKNSET,
+    NavSolField_flags_TOWSET,
+    NavSolField_flags_numOfValues
+};
 
+
+using NavSolField_iTOW = field::nav::iTOW;
+using NavSolField_fTOW = field::nav::fTOW;
+using NavSolField_week = field::nav::week;
+using NavSolField_gpsFix = field::nav::gpsFix;
+using NavSolField_flags =
+    field::common::X1T<
+        comms::option::BitmaskReservedBits<0xf0, 0>
+    >;
+using NavSolField_ecefX = field::nav::ecefX;
+using NavSolField_ecefY = field::nav::ecefY;
+using NavSolField_ecefZ = field::nav::ecefZ;
+using NavSolField_pAcc = field::nav::pAcc;
+using NavSolField_ecefVX = field::nav::ecefVX;
+using NavSolField_ecefVY = field::nav::ecefVY;
+using NavSolField_ecefVZ = field::nav::ecefVZ;
+using NavSolField_sAcc = field::nav::sAcc;
+using NavSolField_pDOP = field::nav::pDOP;
+using NavSolField_reserved1 = field::common::res1;
+using NavSolField_numSV = field::nav::numSV;
+using NavSolField_reserved2 = field::common::res4;
+
+
+using NavSolFields = std::tuple<
+    NavSolField_iTOW,
+    NavSolField_fTOW,
+    NavSolField_week,
+    NavSolField_gpsFix,
+    NavSolField_flags,
+    NavSolField_ecefX,
+    NavSolField_ecefY,
+    NavSolField_ecefZ,
+    NavSolField_pAcc,
+    NavSolField_ecefVX,
+    NavSolField_ecefVY,
+    NavSolField_ecefVZ,
+    NavSolField_sAcc,
+    NavSolField_pDOP,
+    NavSolField_reserved1,
+    NavSolField_numSV,
+    NavSolField_reserved2
+>;
 
 template <typename TMsgBase = Message>
 class NavSol : public
@@ -68,27 +99,27 @@ class NavSol : public
 public:
     enum FieldIdx
     {
-        FieldIdx_Itow,
-        FieldIdx_Frac,
-        FieldIdx_Week,
-        FieldIdx_GpsFix,
-        FieldIdx_Flags,
-        FieldIdx_EcefX,
-        FieldIdx_EcefY,
-        FieldIdx_EcefZ,
-        FieldIdx_Pacc,
-        FieldIdx_EcefVX,
-        FieldIdx_EcefVY,
-        FieldIdx_EcefVZ,
-        FieldIdx_Sacc,
-        FieldIdx_Pdop,
-        FieldIdx_Res1,
-        FieldIdx_NumSV,
-        FieldIdx_Res2,
-        FieldIdx_NumOfValues
+        FieldIdx_iTOW,
+        FieldIdx_fTOW,
+        FieldIdx_week,
+        FieldIdx_gpsFix,
+        FieldIdx_flags,
+        FieldIdx_ecefX,
+        FieldIdx_ecefY,
+        FieldIdx_ecefZ,
+        FieldIdx_pAcc,
+        FieldIdx_ecefVX,
+        FieldIdx_ecefVY,
+        FieldIdx_ecefVZ,
+        FieldIdx_sAcc,
+        FieldIdx_pDop,
+        FieldIdx_reserved1,
+        FieldIdx_numSV,
+        FieldIdx_reserved2,
+        FieldIdx_numOfValues
     };
 
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_NumOfValues,
+    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
     NavSol() = default;

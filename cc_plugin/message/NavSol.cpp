@@ -40,28 +40,39 @@ namespace message
 namespace
 {
 
+QVariantMap createProps_flags()
+{
+    QVariantList bitNames;
+    bitNames.append("GPSfixOK");
+    bitNames.append("DiffSoln");
+    bitNames.append("WKNSET");
+    bitNames.append("TOWSET");
+
+    return cc::Property::createPropertiesMap("flags", std::move(bitNames));
+}
+
 QVariantList createFieldsProperties()
 {
     QVariantList props;
-    props.append(cc_plugin::field::nav::itowProperties());
-    props.append(cc_plugin::field::nav::fracProperties());
-    props.append(cc_plugin::field::nav::weekProperties());
-    props.append(cc_plugin::field::nav::gpsFixProperties());
-    props.append(cc_plugin::field::nav::flagsProperties());
-    props.append(cc_plugin::field::nav::ecefPropertiesX());
-    props.append(cc_plugin::field::nav::ecefPropertiesY());
-    props.append(cc_plugin::field::nav::ecefPropertiesZ());
-    props.append(cc_plugin::field::nav::paccProperties());
-    props.append(cc_plugin::field::nav::ecefPropertiesVX());
-    props.append(cc_plugin::field::nav::ecefPropertiesVY());
-    props.append(cc_plugin::field::nav::ecefPropertiesVZ());
-    props.append(cc_plugin::field::nav::saccProperties());
-    props.append(cc_plugin::field::nav::pdopProperties());
-    props.append(cc_plugin::field::common::resProperties(1));
-    props.append(cc_plugin::field::nav::numSvProperties());
-    props.append(cc_plugin::field::common::resProperties(2));
+    props.append(cc_plugin::field::nav::props_iTOW());
+    props.append(cc_plugin::field::nav::props_fTOW());
+    props.append(cc_plugin::field::nav::props_week());
+    props.append(cc_plugin::field::nav::props_gpsFix());
+    props.append(createProps_flags());
+    props.append(cc_plugin::field::nav::props_ecefX());
+    props.append(cc_plugin::field::nav::props_ecefY());
+    props.append(cc_plugin::field::nav::props_ecefZ());
+    props.append(cc_plugin::field::nav::props_pAcc());
+    props.append(cc_plugin::field::nav::props_ecefVX());
+    props.append(cc_plugin::field::nav::props_ecefVY());
+    props.append(cc_plugin::field::nav::props_ecefVZ());
+    props.append(cc_plugin::field::nav::props_sAcc());
+    props.append(cc_plugin::field::nav::props_pDOP());
+    props.append(cc_plugin::field::common::props_reserved(1));
+    props.append(cc_plugin::field::nav::props_numSV());
+    props.append(cc_plugin::field::common::props_reserved(2));
 
-    assert(props.size() == NavSol::FieldIdx_NumOfValues);
+    assert(props.size() == NavSol::FieldIdx_numOfValues);
     return props;
 }
 

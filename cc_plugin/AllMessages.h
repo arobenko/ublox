@@ -115,7 +115,7 @@ typedef std::tuple<
     cc_plugin::message::NavDop,
     cc_plugin::message::NavDopPoll,
     cc_plugin::message::NavSol,
-    cc_plugin::message::NavSolPoll,
+    cc_plugin::message::NavSolPoll/*,
     cc_plugin::message::NavPosutm,
     cc_plugin::message::NavPosutmPoll,
     cc_plugin::message::NavVelecef,
@@ -178,7 +178,7 @@ typedef std::tuple<
     cc_plugin::message::CfgRxm,
     cc_plugin::message::CfgRxmPoll,
     cc_plugin::message::CfgEkf,
-    cc_plugin::message::CfgEkfPoll
+    cc_plugin::message::CfgEkfPoll*/
 > AllMessages;
 
 }  // namespace cc_plugin

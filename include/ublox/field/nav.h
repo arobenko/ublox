@@ -31,7 +31,7 @@ namespace nav
 
 using iTOW = common::iTOW;
 using fTOW =
-    common::U4T<
+    common::I4T<
         common::Scaling_ns2s,
         comms::option::ValidNumValueRange<-500000, 500000>
     >;
@@ -75,6 +75,12 @@ using gpsFix =
     >;
 
 using week = common::I2;
+
+using xDOP = field::common::U2T<comms::option::ScalingRatio<1, 100> >;
+using pDOP = xDOP;
+
+using numSV = common::U1;
+
 
 // TODO: remove
 using ITOW = common::ITOW;

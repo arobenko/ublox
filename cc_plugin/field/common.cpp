@@ -39,6 +39,13 @@ namespace common
 namespace
 {
 
+QVariantMap createProps_reserved(unsigned idx)
+{
+    auto str = QString("reserved%1").arg(idx, 1, 10, QChar('0'));
+    return cc::Property::createPropertiesMap(str);
+}
+
+// TODO: remove
 QVariantMap createResProperties(unsigned idx)
 {
     auto str = QString("res%1").arg(idx, 1, 10, QChar('0'));
@@ -64,7 +71,24 @@ const QVariantMap& props_iTOW()
     return Props;
 }
 
+const QVariantMap& props_reserved(unsigned idx)
+{
+    static const QVariantMap Props[] = {
+        createProps_reserved(0),
+        createProps_reserved(1),
+        createProps_reserved(2),
+        createProps_reserved(3),
+        createProps_reserved(4)
+    };
 
+    static const auto MapSize = std::extent<decltype(Props)>::value;
+    if (MapSize <= idx) {
+        static const QVariantMap EmptyMap;
+        return EmptyMap;
+    }
+
+    return Props[idx];
+}
 
 
 
