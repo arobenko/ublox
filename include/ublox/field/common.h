@@ -174,6 +174,7 @@ static_assert(sizeof(double) == sizeof(std::uint64_t),
 
 using Scaling_mm2m = comms::option::ScalingRatio<1, 1000000L>;
 using Scaling_cm2m = comms::option::ScalingRatio<1, 1000>;
+using Scaling_ns2s = comms::option::ScalingRatio<1, 1000000L>;
 using Scaling_ms2s = comms::option::ScalingRatio<1, 1000>;
 
 using iTOW =

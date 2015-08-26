@@ -30,17 +30,27 @@ namespace nav
 {
 
 using iTOW = common::iTOW;
+using fTOW =
+    common::U4T<
+        common::Scaling_ns2s,
+        comms::option::ValidNumValueRange<-500000, 500000>
+    >;
+;
 
 using ecef = common::I4T<common::Scaling_cm2m>;
 using ecefX = ecef;
 using ecefY = ecef;
 using ecefZ = ecef;
+using ecefVX = ecef;
+using ecefVY = ecef;
+using ecefVZ = ecef;
 
 using lat = common::I4T<comms::option::ScalingRatio<1, 10000000L> >;
 using lon = common::I4T<comms::option::ScalingRatio<1, 10000000L> >;
 using height = common::I4T<common::Scaling_mm2m>;
 
 using pAcc = common::U4T<common::Scaling_cm2m>;
+using sAcc = common::U4T<common::Scaling_cm2m>;
 
 using hMSL = common::I4T<common::Scaling_mm2m>;
 using hAcc = common::U4T<common::Scaling_mm2m>;
@@ -63,6 +73,8 @@ using gpsFix =
         GpsFix,
         comms::option::ValidNumValueRange<0, (int)GpsFix::NumOfValues - 1>
     >;
+
+using week = common::I2;
 
 // TODO: remove
 using ITOW = common::ITOW;
@@ -171,7 +183,6 @@ using Nano =
     >;
 
 
-using week = common::Week;
 using numSV = common::U1;
 
 using VEL = common::I4;

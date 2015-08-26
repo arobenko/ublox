@@ -56,6 +56,23 @@ QVariantMap createProps_gpsFix()
     return cc::Property::createPropertiesMap("gpsFix", std::move(enumValues));
 }
 
+QVariantMap createProps_lon()
+{
+    auto props = cc::Property::createPropertiesMap("lon");
+    cc::Property::setDisplayScaled(props);
+    cc::Property::setFloatDecimals(props, 7);
+    return props;
+}
+
+QVariantMap createProps_lat()
+{
+    auto props = cc::Property::createPropertiesMap("lat");
+    cc::Property::setDisplayScaled(props);
+    cc::Property::setFloatDecimals(props, 7);
+    return props;
+}
+
+
 // TODO: remove
 
 QVariantMap createNameOnlyProperties(const char* name)
@@ -302,13 +319,13 @@ const QVariantMap& props_pAcc()
 
 const QVariantMap& props_lon()
 {
-    static const QVariantMap Props = cc::Property::createPropertiesMap("lon");
+    static const QVariantMap Props = createProps_lon();
     return Props;
 }
 
 const QVariantMap& props_lat()
 {
-    static const QVariantMap Props = cc::Property::createPropertiesMap("lat");
+    static const QVariantMap Props = createProps_lat();
     return Props;
 }
 

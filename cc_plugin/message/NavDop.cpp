@@ -40,19 +40,27 @@ namespace message
 namespace
 {
 
+QVariantMap createProps_xDOP(char prefix)
+{
+    auto props = cc::Property::createPropertiesMap(QString("%1DOP").arg(prefix));
+    cc::Property::setDisplayScaled(props);
+    cc::Property::setFloatDecimals(props, 2);
+    return props;
+}
+
 QVariantList createFieldsProperties()
 {
     QVariantList props;
-    props.append(cc_plugin::field::nav::itowProperties());
-    props.append(cc_plugin::field::nav::gdopProperties());
-    props.append(cc_plugin::field::nav::pdopProperties());
-    props.append(cc_plugin::field::nav::tdopProperties());
-    props.append(cc_plugin::field::nav::vdopProperties());
-    props.append(cc_plugin::field::nav::hdopProperties());
-    props.append(cc_plugin::field::nav::ndopProperties());
-    props.append(cc_plugin::field::nav::edopProperties());
+    props.append(cc_plugin::field::nav::props_iTOW());
+    props.append(createProps_xDOP('g'));
+    props.append(createProps_xDOP('p'));
+    props.append(createProps_xDOP('t'));
+    props.append(createProps_xDOP('v'));
+    props.append(createProps_xDOP('h'));
+    props.append(createProps_xDOP('n'));
+    props.append(createProps_xDOP('e'));
 
-    assert(props.size() == NavDop::FieldIdx_NumOfValues);
+    assert(props.size() == NavDop::FieldIdx_numOfValues);
     return props;
 }
 

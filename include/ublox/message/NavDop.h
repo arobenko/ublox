@@ -29,17 +29,26 @@ namespace ublox
 namespace message
 {
 
-using NavDopFields = std::tuple<
-    field::nav::ITOW,
-    field::nav::GDOP,
-    field::nav::PDOP,
-    field::nav::TDOP,
-    field::nav::VDOP,
-    field::nav::HDOP,
-    field::nav::NDOP,
-    field::nav::EDOP
->;
+using NavDopField_iTOW = field::nav::iTOW;
+using NavDopField_xDOP = field::common::U2T<comms::option::ScalingRatio<1, 100> >;
+using NavDopField_gDOP = NavDopField_xDOP;
+using NavDopField_pDOP = NavDopField_xDOP;
+using NavDopField_tDOP = NavDopField_xDOP;
+using NavDopField_vDOP = NavDopField_xDOP;
+using NavDopField_hDOP = NavDopField_xDOP;
+using NavDopField_nDOP = NavDopField_xDOP;
+using NavDopField_eDOP = NavDopField_xDOP;
 
+using NavDopFields = std::tuple<
+    NavDopField_iTOW,
+    NavDopField_gDOP,
+    NavDopField_pDOP,
+    NavDopField_tDOP,
+    NavDopField_vDOP,
+    NavDopField_hDOP,
+    NavDopField_nDOP,
+    NavDopField_eDOP
+>;
 
 template <typename TMsgBase = Message>
 class NavDop : public
@@ -59,18 +68,18 @@ class NavDop : public
 public:
     enum FieldIdx
     {
-        FieldIdx_Itow,
-        FieldIdx_Gdop,
-        FieldIdx_Pdop,
-        FieldIdx_Tdop,
-        FieldIdx_Vdop,
-        FieldIdx_Hdop,
-        FieldIdx_Ndop,
-        FieldIdx_Edop,
-        FieldIdx_NumOfValues
+        FieldIdx_iTOW,
+        FieldIdx_gDOP,
+        FieldIdx_pDOP,
+        FieldIdx_tDOP,
+        FieldIdx_vDOP,
+        FieldIdx_hDOP,
+        FieldIdx_nDOP,
+        FieldIdx_eDOP,
+        FieldIdx_numOfValues
     };
 
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_NumOfValues,
+    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
     NavDop() = default;
