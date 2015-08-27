@@ -29,12 +29,18 @@ namespace ublox
 namespace message
 {
 
+using NavVelecefField_iTOW = field::nav::iTOW;
+using NavVelecefField_ecefVX = field::nav::ecefVX;
+using NavVelecefField_ecefVY = field::nav::ecefVY;
+using NavVelecefField_ecefVZ = field::nav::ecefVZ;
+using NavVelecefField_sAcc = field::nav::sAcc;
+
 using NavVelecefFields = std::tuple<
-    field::nav::ITOW,
-    field::nav::ECEFVX,
-    field::nav::ECEFVY,
-    field::nav::ECEFVZ,
-    field::nav::Sacc
+    NavVelecefField_iTOW,
+    NavVelecefField_ecefVX,
+    NavVelecefField_ecefVY,
+    NavVelecefField_ecefVZ,
+    NavVelecefField_sAcc
 >;
 
 
@@ -56,15 +62,15 @@ class NavVelecef : public
 public:
     enum FieldIdx
     {
-        FieldIdx_Itow,
-        FieldIdx_EcefVX,
-        FieldIdx_EcefVY,
-        FieldIdx_EcefVZ,
-        FieldIdx_Sacc,
-        FieldIdx_NumOfValues
+        FieldIdx_iTOW,
+        FieldIdx_ecefVX,
+        FieldIdx_ecefVY,
+        FieldIdx_ecefVZ,
+        FieldIdx_sAcc,
+        FieldIdx_numOfValues
     };
 
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_NumOfValues,
+    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
     NavVelecef() = default;
