@@ -72,6 +72,14 @@ QVariantMap createProps_lat()
     return props;
 }
 
+QVariantMap createProps_heading()
+{
+    auto props = cc::Property::createPropertiesMap("heading");
+    cc::Property::setDisplayScaled(props);
+    cc::Property::setFloatDecimals(props, 5);
+    return props;
+}
+
 
 // TODO: remove
 
@@ -412,6 +420,66 @@ const QVariantMap& props_week()
 const QVariantMap& props_numSV()
 {
     static const QVariantMap Props = cc::Property::createPropertiesMap("numSV");
+    return Props;
+}
+
+const QVariantMap& props_year()
+{
+    static const QVariantMap Props = cc::Property::createPropertiesMap("year");
+    return Props;
+}
+
+const QVariantMap& props_month()
+{
+    static const QVariantMap Props = cc::Property::createPropertiesMap("month");
+    return Props;
+}
+
+const QVariantMap& props_day()
+{
+    static const QVariantMap Props = cc::Property::createPropertiesMap("day");
+    return Props;
+}
+
+const QVariantMap& props_hour()
+{
+    static const QVariantMap Props = cc::Property::createPropertiesMap("hour");
+    return Props;
+}
+
+const QVariantMap& props_min()
+{
+    static const QVariantMap Props = cc::Property::createPropertiesMap("min");
+    return Props;
+}
+
+const QVariantMap& props_sec()
+{
+    static const QVariantMap Props = cc::Property::createPropertiesMap("sec");
+    return Props;
+}
+
+const QVariantMap& props_tAcc()
+{
+    static const QVariantMap Props = cc::Property::createPropertiesMap("tAcc");
+    return Props;
+}
+
+const QVariantMap& props_nano()
+{
+    static const QVariantMap Props = cc::Property::createPropertiesMap("nano");
+    return Props;
+}
+
+const QVariantMap& props_gSpeed()
+{
+    static const QVariantMap Props = cc::Property::createPropertiesMap("gSpeed");
+    return Props;
+}
+
+const QVariantMap& props_heading()
+{
+    static const QVariantMap Props = createProps_heading();
     return Props;
 }
 

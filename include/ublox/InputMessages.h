@@ -27,6 +27,7 @@
 #include "message/NavStatus.h"
 #include "message/NavDop.h"
 #include "message/NavSol.h"
+#include "message/NavPvt.h"
 #include "message/NavPosutm.h"
 #include "message/NavVelecef.h"
 #include "message/NavVelned.h"
@@ -78,6 +79,7 @@ using InputMessages =
         message::NavStatus<TMessage>,
         message::NavDop<TMessage>,
         message::NavSol<TMessage>,
+        message::NavPvt<TMessage>,
         message::NavPosutm<TMessage>,
         message::NavVelecef<TMessage>,
         message::NavVelned<TMessage>,

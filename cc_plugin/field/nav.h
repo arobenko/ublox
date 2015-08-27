@@ -53,6 +53,16 @@ QVariantMap createProps_xDOP(char prefix);
 const QVariantMap& props_pDOP();
 const QVariantMap& props_week();
 const QVariantMap& props_numSV();
+const QVariantMap& props_year();
+const QVariantMap& props_month();
+const QVariantMap& props_day();
+const QVariantMap& props_hour();
+const QVariantMap& props_min();
+const QVariantMap& props_sec();
+const QVariantMap& props_tAcc();
+const QVariantMap& props_nano();
+const QVariantMap& props_gSpeed();
+const QVariantMap& props_heading();
 
 
 // TODO: remove

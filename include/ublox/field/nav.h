@@ -81,6 +81,47 @@ using pDOP = xDOP;
 
 using numSV = common::U1;
 
+using year =
+    common::U2T<
+        comms::option::ValidNumValueRange<1999, 2099>
+    >;
+
+using month =
+    common::U1T<
+        comms::option::ValidNumValueRange<1, 12>
+    >;
+
+using day =
+    common::U1T<
+        comms::option::ValidNumValueRange<1, 31>
+    >;
+
+using hour =
+    common::U1T<
+        comms::option::ValidNumValueRange<0, 23>
+    >;
+
+using min =
+    common::U1T<
+        comms::option::ValidNumValueRange<0, 59>
+    >;
+
+using sec =
+    common::U1T<
+        comms::option::ValidNumValueRange<0, 60>
+    >;
+
+using tAcc = common::U4T<common::Scaling_ns2s>;
+
+using nano =
+    common::I4T<
+        common::Scaling_ns2s,
+        comms::option::ValidNumValueRange<-1000000000L, 1000000000>
+    >;
+
+using heading =
+    common::I4T<
+        comms::option::ScalingRatio<1, 100000> >;
 
 // TODO: remove
 using ITOW = common::ITOW;
@@ -188,8 +229,6 @@ using Nano =
         comms::option::ValidNumValueRange<-500000000, 500000000>
     >;
 
-
-using numSV = common::U1;
 
 using VEL = common::I4;
 using VEL_N = VEL;
