@@ -79,7 +79,6 @@ private:
             MsgId_NAV_DOP,
             MsgId_NAV_SOL,
             MsgId_NAV_PVT,
-            MsgId_NAV_POSUTM,
             MsgId_NAV_VELECEF,
             MsgId_NAV_VELNED,
             MsgId_NAV_TIMEGPS,

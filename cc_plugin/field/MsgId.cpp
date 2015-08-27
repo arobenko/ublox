@@ -43,7 +43,6 @@ QVariantMap createMsgIdProperties()
     cc::Property::appendEnumValue(enumValues, "NAV-DOP", MsgId_NAV_DOP);
     cc::Property::appendEnumValue(enumValues, "NAV-SOL", MsgId_NAV_SOL);
     cc::Property::appendEnumValue(enumValues, "NAV-SOL", MsgId_NAV_PVT);
-    cc::Property::appendEnumValue(enumValues, "NAV-POSUTM", MsgId_NAV_POSUTM);
     cc::Property::appendEnumValue(enumValues, "NAV-VELECEF", MsgId_NAV_VELECEF);
     cc::Property::appendEnumValue(enumValues, "NAV-VELNED", MsgId_NAV_VELNED);
     cc::Property::appendEnumValue(enumValues, "NAV-TIMEGPS", MsgId_NAV_TIMEGPS);

@@ -33,8 +33,6 @@
 #include "cc_plugin/message/NavSolPoll.h"
 #include "cc_plugin/message/NavPvt.h"
 #include "cc_plugin/message/NavPvtPoll.h"
-#include "cc_plugin/message/NavPosutm.h"
-#include "cc_plugin/message/NavPosutmPoll.h"
 #include "cc_plugin/message/NavVelecef.h"
 #include "cc_plugin/message/NavVelecefPoll.h"
 #include "cc_plugin/message/NavVelned.h"
@@ -120,8 +118,6 @@ typedef std::tuple<
     cc_plugin::message::NavSolPoll,
     cc_plugin::message::NavPvt,
     cc_plugin::message::NavPvtPoll/*,
-    cc_plugin::message::NavPosutm,
-    cc_plugin::message::NavPosutmPoll,
     cc_plugin::message::NavVelecef,
     cc_plugin::message::NavVelecefPoll,
     cc_plugin::message::NavVelned,

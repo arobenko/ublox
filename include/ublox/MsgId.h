@@ -31,7 +31,6 @@ enum MsgId : std::uint16_t
     MsgId_NAV_DOP = 0x0104,
     MsgId_NAV_SOL = 0x0106,
     MsgId_NAV_PVT = 0x0107,
-    MsgId_NAV_POSUTM = 0x0108,
     MsgId_NAV_VELECEF = 0x0111,
     MsgId_NAV_VELNED = 0x0112,
     MsgId_NAV_TIMEGPS = 0x0120,
