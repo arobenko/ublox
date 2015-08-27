@@ -41,20 +41,28 @@ namespace message
 namespace
 {
 
+QVariantMap createProps_cAcc()
+{
+    auto props = cc::Property::createPropertiesMap("cAcc");
+    cc::Property::setDisplayScaled(props);
+    cc::Property::setFloatDecimals(props, 5);
+    return props;
+}
+
 QVariantList createFieldsProperties()
 {
     QVariantList props;
-    props.append(cc_plugin::field::nav::itowProperties());
-    props.append(cc_plugin::field::nav::velPropertiesN());
-    props.append(cc_plugin::field::nav::velPropertiesE());
-    props.append(cc_plugin::field::nav::velPropertiesD());
-    props.append(cc_plugin::field::nav::speedProperties());
-    props.append(cc_plugin::field::nav::groundSpeedProperties());
-    props.append(cc_plugin::field::nav::headingProperties());
-    props.append(cc_plugin::field::nav::saccProperties());
-    props.append(cc_plugin::field::nav::caccProperties());
+    props.append(cc_plugin::field::nav::props_iTOW());
+    props.append(cc_plugin::field::nav::props_velN());
+    props.append(cc_plugin::field::nav::props_velE());
+    props.append(cc_plugin::field::nav::props_velD());
+    props.append(cc::Property::createPropertiesMap("speed"));
+    props.append(cc_plugin::field::nav::props_gSpeed());
+    props.append(cc_plugin::field::nav::props_heading());
+    props.append(cc_plugin::field::nav::props_sAcc());
+    props.append(createProps_cAcc());
 
-    assert(props.size() == NavVelned::FieldIdx_NumOfValues);
+    assert(props.size() == NavVelned::FieldIdx_numOfValues);
     return props;
 }
 

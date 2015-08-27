@@ -29,16 +29,27 @@ namespace ublox
 namespace message
 {
 
+using NavVelnedField_iTOW = field::nav::iTOW;
+using NavVelnedField_velN = field::common::I4T<field::common::Scaling_cm2m>;;
+using NavVelnedField_velE = NavVelnedField_velN;
+using NavVelnedField_velD = NavVelnedField_velN;
+using NavVelnedField_speed = field::common::U4T<field::common::Scaling_cm2m>;
+using NavVelnedField_gSpeed = field::common::U4T<field::common::Scaling_cm2m>;
+using NavVelnedField_heading = field::nav::heading;
+using NavVelnedField_sAcc = field::nav::sAcc;
+using NavVelnedField_cAcc =
+    field::common::U4T<comms::option::ScalingRatio<1, 100000> >;
+
 using NavVelnedFields = std::tuple<
-    field::nav::ITOW,
-    field::nav::VEL_N,
-    field::nav::VEL_E,
-    field::nav::VEL_D,
-    field::nav::Speed,
-    field::nav::GSpeed,
-    field::nav::Heading,
-    field::nav::Sacc,
-    field::nav::Cacc
+    NavVelnedField_iTOW,
+    NavVelnedField_velN,
+    NavVelnedField_velE,
+    NavVelnedField_velD,
+    NavVelnedField_speed,
+    NavVelnedField_gSpeed,
+    NavVelnedField_heading,
+    NavVelnedField_sAcc,
+    NavVelnedField_cAcc
 >;
 
 
@@ -60,19 +71,19 @@ class NavVelned : public
 public:
     enum FieldIdx
     {
-        FieldIdx_Itow,
-        FieldIdx_VelN,
-        FieldIdx_VelE,
-        FieldIdx_VelD,
-        FieldIdx_Speed,
-        FieldIdx_GroundSpeed,
-        FieldIdx_Heading,
-        FieldIdx_Sacc,
-        FieldIdx_Cacc,
-        FieldIdx_NumOfValues
+        FieldIdx_iTOW,
+        FieldIdx_velN,
+        FieldIdx_velE,
+        FieldIdx_velD,
+        FieldIdx_speed,
+        FieldIdx_gSpeed,
+        FieldIdx_heading,
+        FieldIdx_sAcc,
+        FieldIdx_cAcc,
+        FieldIdx_numOfValues
     };
 
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_NumOfValues,
+    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
     NavVelned() = default;

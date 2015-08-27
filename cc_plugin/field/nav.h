@@ -63,6 +63,9 @@ const QVariantMap& props_tAcc();
 const QVariantMap& props_nano();
 const QVariantMap& props_gSpeed();
 const QVariantMap& props_heading();
+const QVariantMap& props_velN();
+const QVariantMap& props_velE();
+const QVariantMap& props_velD();
 
 
 // TODO: remove

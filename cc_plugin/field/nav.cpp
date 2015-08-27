@@ -80,6 +80,10 @@ QVariantMap createProps_heading()
     return props;
 }
 
+QVariantMap createProps_velX(char suffix)
+{
+    return cc::Property::createPropertiesMap(QString("vel%1").arg(suffix));
+}
 
 // TODO: remove
 
@@ -482,6 +486,26 @@ const QVariantMap& props_heading()
     static const QVariantMap Props = createProps_heading();
     return Props;
 }
+
+const QVariantMap& props_velN()
+{
+    static const QVariantMap Props = createProps_velX('N');
+    return Props;
+}
+
+const QVariantMap& props_velE()
+{
+    static const QVariantMap Props = createProps_velX('E');
+    return Props;
+}
+
+const QVariantMap& props_velD()
+{
+    static const QVariantMap Props = createProps_velX('D');
+    return Props;
+}
+
+
 
 // TODO: remove
 const QVariantMap& itowProperties()

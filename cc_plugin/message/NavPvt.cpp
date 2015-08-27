@@ -86,11 +86,6 @@ QVariantMap createProps_flags()
     return cc::Property::createPropertiesMap("flags", std::move(membersProps));
 }
 
-QVariantMap createProps_velX(char suffix)
-{
-    return cc::Property::createPropertiesMap(QString("vel%1").arg(suffix));
-}
-
 QVariantMap createProps_headingAcc()
 {
     auto props = cc::Property::createPropertiesMap("headingAcc");
@@ -122,9 +117,9 @@ QVariantList createFieldsProperties()
     props.append(cc_plugin::field::nav::props_hMSL());
     props.append(cc_plugin::field::nav::props_hAcc());
     props.append(cc_plugin::field::nav::props_vAcc());
-    props.append(createProps_velX('N'));
-    props.append(createProps_velX('E'));
-    props.append(createProps_velX('D'));
+    props.append(cc_plugin::field::nav::props_velN());
+    props.append(cc_plugin::field::nav::props_velE());
+    props.append(cc_plugin::field::nav::props_velD());
     props.append(cc_plugin::field::nav::props_gSpeed());
     props.append(cc_plugin::field::nav::props_heading());
     props.append(cc_plugin::field::nav::props_sAcc());
