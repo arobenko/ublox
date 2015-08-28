@@ -29,19 +29,37 @@ namespace ublox
 namespace message
 {
 
-using NavTimeutcFields = std::tuple<
-    field::nav::ITOW,
-    field::nav::Tacc,
-    field::nav::Nano,
-    field::nav::Year,
-    field::nav::Month,
-    field::nav::Day,
-    field::nav::Hour,
-    field::nav::Min,
-    field::nav::Sec,
-    field::nav::TimeValid
->;
+enum
+{
+    NavTimeutcField_valid_validTOW,
+    NavTimeutcField_valid_validWKN,
+    NavTimeutcField_valid_validUTC,
+    NavTimeutcField_valid_numOfValues
+};
 
+using NavTimeutcField_iTOW = field::nav::iTOW;
+using NavTimeutcField_tAcc = field::nav::tAcc;
+using NavTimeutcField_nano = field::nav::nano;
+using NavTimeutcField_year = field::nav::year;
+using NavTimeutcField_month = field::nav::month;
+using NavTimeutcField_day = field::nav::day;
+using NavTimeutcField_hour = field::nav::hour;
+using NavTimeutcField_min = field::nav::min;
+using NavTimeutcField_sec = field::nav::sec;
+using NavTimeutcField_valid = field::common::X1T<comms::option::BitmaskReservedBits<0xf8, 0> >;
+
+using NavTimeutcFields = std::tuple<
+    NavTimeutcField_iTOW,
+    NavTimeutcField_tAcc,
+    NavTimeutcField_nano,
+    NavTimeutcField_year,
+    NavTimeutcField_month,
+    NavTimeutcField_day,
+    NavTimeutcField_hour,
+    NavTimeutcField_min,
+    NavTimeutcField_sec,
+    NavTimeutcField_valid
+>;
 
 template <typename TMsgBase = Message>
 class NavTimeutc : public
@@ -61,20 +79,20 @@ class NavTimeutc : public
 public:
     enum FieldIdx
     {
-        FieldIdx_Itow,
-        FieldIdx_Tacc,
-        FieldIdx_Nano,
-        FieldIdx_Year,
-        FieldIdx_Month,
-        FieldIdx_Day,
-        FieldIdx_Hour,
-        FieldIdx_Min,
-        FieldIdx_Sec,
-        FieldIdx_Valid,
-        FieldIdx_NumOfValues
+        FieldIdx_iTOW,
+        FieldIdx_tAcc,
+        FieldIdx_nano,
+        FieldIdx_year,
+        FieldIdx_month,
+        FieldIdx_day,
+        FieldIdx_hour,
+        FieldIdx_min,
+        FieldIdx_sec,
+        FieldIdx_valid,
+        FieldIdx_numOfValues
     };
 
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_NumOfValues,
+    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
     NavTimeutc() = default;

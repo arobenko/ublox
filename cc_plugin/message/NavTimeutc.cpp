@@ -42,21 +42,31 @@ namespace message
 namespace
 {
 
+QVariantMap createProps_valid()
+{
+    QVariantList bitNames;
+    bitNames.append("validTOW");
+    bitNames.append("validWKN");
+    bitNames.append("validUTC");
+    assert(bitNames.size() == ublox::message::NavTimeutcField_valid_numOfValues);
+    return cc::Property::createPropertiesMap("valid", std::move(bitNames));
+}
+
 QVariantList createFieldsProperties()
 {
     QVariantList props;
-    props.append(cc_plugin::field::nav::itowProperties());
-    props.append(cc_plugin::field::nav::taccProperties());
-    props.append(cc_plugin::field::nav::nanoProperties());
-    props.append(cc_plugin::field::nav::yearProperties());
-    props.append(cc_plugin::field::nav::monthProperties());
-    props.append(cc_plugin::field::nav::dayProperties());
-    props.append(cc_plugin::field::nav::hourProperties());
-    props.append(cc_plugin::field::nav::minProperties());
-    props.append(cc_plugin::field::nav::secProperties());
-    props.append(cc_plugin::field::nav::timeValidProperties());
+    props.append(cc_plugin::field::nav::props_iTOW());
+    props.append(cc_plugin::field::nav::props_tAcc());
+    props.append(cc_plugin::field::nav::props_nano());
+    props.append(cc_plugin::field::nav::props_year());
+    props.append(cc_plugin::field::nav::props_month());
+    props.append(cc_plugin::field::nav::props_day());
+    props.append(cc_plugin::field::nav::props_hour());
+    props.append(cc_plugin::field::nav::props_min());
+    props.append(cc_plugin::field::nav::props_sec());
+    props.append(createProps_valid());
 
-    assert(props.size() == NavTimeutc::FieldIdx_NumOfValues);
+    assert(props.size() == NavTimeutc::FieldIdx_numOfValues);
     return props;
 }
 
