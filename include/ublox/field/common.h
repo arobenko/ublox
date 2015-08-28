@@ -126,7 +126,9 @@ using X4T =
 
 typedef X4T<> X4;
 
-using res1 = U1T<comms::option::ValidNumValueRange<0, 0> >;
+template <typename... TOptions>
+using res1T = U1T<comms::option::ValidNumValueRange<0, 0>, TOptions...>;
+using res1 = res1T<>;
 
 using res2 = U2T<comms::option::ValidNumValueRange<0, 0> >;
 

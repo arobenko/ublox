@@ -31,45 +31,110 @@ namespace ublox
 namespace message
 {
 
-enum NavSvinfoIndex
+enum class NavSvinfo_ChipGen : std::uint8_t
 {
-    NavSvinfoIndex_Chn,
-    NavSvinfoIndex_Svid,
-    NavSvinfoIndex_Flags,
-    NavSvinfoIndex_Qi,
-    NavSvinfoIndex_Cno,
-    NavSvinfoIndex_Elev,
-    NavSvinfoIndex_Azim,
-    NavSvinfoIndex_Prres,
-    NavSvinfoIndex_NumOfValues
+    Antaris,
+    Ublox5,
+    Ublox6,
+    NumOfValues
 };
 
-using NavSvinfoElement =
-    comms::field::Bundle<
+enum class NavSvinfo_QualityInd : std::uint8_t
+{
+    Idle,
+    Searching,
+    SignalAcquired,
+    SignalUnusable,
+    CodeLock,
+    CodeCarrierLocked,
+    CodeCarrierLocked2,
+    CodeCarrierLocked3,
+    NumOfValues
+};
+
+enum {
+    NavSvinfoField_globalFlags_chipGen,
+    NavSvinfoField_globalFlags_reserved,
+    NavSvinfoField_globalFlags_numOfValues
+};
+
+enum {
+    NavSvinfoField_flags_svUsed,
+    NavSvinfoField_flags_diffCorr,
+    NavSvinfoField_flags_orbitAvail,
+    NavSvinfoField_flags_orbitEph,
+    NavSvinfoField_flags_unhealthy,
+    NavSvinfoField_flags_orbitAlm,
+    NavSvinfoField_flags_smoothed,
+    NavSvinfoField_flags_numOfValues
+};
+
+enum {
+    NavSvinfoField_info_chn,
+    NavSvinfoField_info_svid,
+    NavSvinfoField_info_flags,
+    NavSvinfoField_info_quality,
+    NavSvinfoField_info_cno,
+    NavSvinfoField_info_elev,
+    NavSvinfoField_info_azim,
+    NavSvinfoField_info_prRes,
+    NavSvinfoField_info_numOfValues
+};
+
+using NavSvinfoField_iTOW = field::nav::iTOW;
+using NavSvinfoField_numCh = field::nav::numCh;
+using NavSvinfoField_globalFlags =
+    comms::field::Bitfield<
+        field::common::FieldBase,
         std::tuple<
-            field::nav::chn,
-            field::nav::SVID,
-            field::nav::InfoFlags,
-            field::nav::QI,
-            field::nav::CNO,
-            field::nav::Elev,
-            field::nav::Azim,
-            field::nav::PRRes
+            comms::field::EnumValue<
+                field::common::FieldBase,
+                NavSvinfo_ChipGen,
+                comms::option::FixedBitLength<3>,
+                comms::option::ValidNumValueRange<0, (int)NavSvinfo_ChipGen::NumOfValues>
+            >,
+            field::common::res1T<comms::option::FixedBitLength<5> >
         >
+    >;
+using NavSvinfoField_reserved2 = field::common::res2;
+using NavSvinfoField_chn = field::common::U1;
+using NavSvinfoField_svid = field::nav::svid;
+using NavSvinfoField_flags = field::common::X1;
+using NavSvinfoField_quality =
+    comms::field::EnumValue<
+        field::common::FieldBase,
+        NavSvinfo_QualityInd,
+        comms::option::ValidNumValueRange<0, (int)NavSvinfo_QualityInd::NumOfValues>
+    >;
+using NavSvinfoField_cno = field::common::U1;
+using NavSvinfoField_elev = field::common::I1;
+using NavSvinfoField_azim = field::common::I2;
+using NavSvinfoField_prRes = field::common::I4T<field::common::Scaling_cm2m>;
+using NavSvinfoField_info =
+    comms::field::ArrayList<
+        field::common::FieldBase,
+        comms::field::Bundle<
+            std::tuple<
+                NavSvinfoField_chn,
+                NavSvinfoField_svid,
+                NavSvinfoField_flags,
+                NavSvinfoField_quality,
+                NavSvinfoField_cno,
+                NavSvinfoField_elev,
+                NavSvinfoField_azim,
+                NavSvinfoField_prRes
+            >
+        >,
+        comms::option::SequenceSizeForcingEnabled
     >;
 
 using NavSvinfoFields = std::tuple<
-    field::nav::ITOW,
-    field::nav::NCH,
-    field::common::res1,
-    field::common::res2,
-    comms::field::ArrayList<
-        field::common::FieldBase,
-        NavSvinfoElement,
-        comms::option::SequenceSizeForcingEnabled
-    >
+    NavSvinfoField_iTOW,
+    NavSvinfoField_numCh,
+    NavSvinfoField_globalFlags,
+    NavSvinfoField_reserved2,
+    NavSvinfoField_info
 >;
-
 
 template <typename TMsgBase = Message>
 class NavSvinfo : public
@@ -89,15 +154,15 @@ class NavSvinfo : public
 public:
     enum FieldIdx
     {
-        FieldIdx_Itow,
-        FieldIdx_Nch,
-        FieldIdx_Res1,
-        FieldIdx_Res2,
-        FieldIdx_Info,
-        FieldIdx_NumOfValues
+        FieldIdx_iTOW,
+        FieldIdx_numCh,
+        FieldIdx_globalFlags,
+        FieldIdx_reserved2,
+        FieldIdx_info,
+        FieldIdx_numOfValues
     };
 
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_NumOfValues,
+    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
     NavSvinfo() = default;
@@ -113,49 +178,29 @@ protected:
         typename Base::ReadIterator& iter,
         std::size_t len) override
     {
-        auto es = Base::template readFieldsUntil<FieldIdx_Info>(iter, len);
+        auto es = Base::template readFieldsUntil<FieldIdx_info>(iter, len);
         if (es != comms::ErrorStatus::Success) {
             return es;
         }
 
         auto& allFields = Base::fields();
-        auto& nchField = std::get<FieldIdx_Nch>(allFields);
-        auto& infoField = std::get<FieldIdx_Info>(allFields);
-        infoField.forceReadElemCount(nchField.value());
+        auto& numChField = std::get<FieldIdx_numCh>(allFields);
+        auto& infoField = std::get<FieldIdx_info>(allFields);
+        infoField.forceReadElemCount(numChField.value());
 
-        return Base::template readFieldsFrom<FieldIdx_Info>(iter, len);
-    }
-
-    virtual bool validImpl() const override
-    {
-        if (!Base::validImpl()) {
-            return false;
-        }
-
-        auto& allFields = Base::fields();
-        auto& nchField = std::get<FieldIdx_Nch>(allFields);
-        auto& infoField = std::get<FieldIdx_Info>(allFields);
-        for (auto& bundleField : infoField.value()) {
-            auto& members = bundleField.value();
-            auto& chNumField = std::get<NavSvinfoIndex_Chn>(members);
-            if (nchField.value() <= chNumField.value()) {
-                return false;
-            }
-        }
-
-        return true;
+        return Base::template readFieldsFrom<FieldIdx_info>(iter, len);
     }
 
     virtual bool refreshImpl() override
     {
         auto& allFields = Base::fields();
-        auto& nchField = std::get<FieldIdx_Nch>(allFields);
-        auto& infoField = std::get<FieldIdx_Info>(allFields);
-        if (nchField.value() == infoField.value().size()) {
+        auto& numChField = std::get<FieldIdx_numCh>(allFields);
+        auto& infoField = std::get<FieldIdx_info>(allFields);
+        if (numChField.value() == infoField.value().size()) {
             return false;
         }
 
-        nchField.value() = infoField.value().size();
+        numChField.value() = infoField.value().size();
         return true;
     }
 

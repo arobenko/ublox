@@ -123,6 +123,10 @@ using heading =
     common::I4T<
         comms::option::ScalingRatio<1, 100000> >;
 
+using numCh = common::U1;
+
+using svid = common::U1T<comms::option::ValidNumValueRange<1, 96> >;
+
 // TODO: remove
 using ITOW = common::ITOW;
 

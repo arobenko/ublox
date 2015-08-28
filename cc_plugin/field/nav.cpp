@@ -505,6 +505,17 @@ const QVariantMap& props_velD()
     return Props;
 }
 
+const QVariantMap& props_numCh()
+{
+    static const QVariantMap Props = cc::Property::createPropertiesMap("numCh");
+    return Props;
+}
+
+const QVariantMap& props_svid()
+{
+    static const QVariantMap Props = cc::Property::createPropertiesMap("svid");
+    return Props;
+}
 
 
 // TODO: remove

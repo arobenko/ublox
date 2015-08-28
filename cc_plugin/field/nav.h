@@ -66,6 +66,8 @@ const QVariantMap& props_heading();
 const QVariantMap& props_velN();
 const QVariantMap& props_velE();
 const QVariantMap& props_velD();
+const QVariantMap& props_numCh();
+const QVariantMap& props_svid();
 
 
 // TODO: remove

@@ -42,41 +42,86 @@ namespace message
 namespace
 {
 
-QVariantMap createSingleInfoProperties()
+QVariantMap createProps_globalFlags()
 {
-    QVariantList membersData;
-    membersData.append(cc_plugin::field::nav::chNumProperties());
-    membersData.append(cc_plugin::field::nav::svidProperties());
-    membersData.append(cc_plugin::field::nav::infoFlagsProperties());
-    membersData.append(cc_plugin::field::nav::qiProperties());
-    membersData.append(cc_plugin::field::nav::cnoProperties());
-    membersData.append(cc_plugin::field::nav::elevProperties());
-    membersData.append(cc_plugin::field::nav::azimProperties());
-    membersData.append(cc_plugin::field::nav::prresProperties());
+    QVariantList chipGenValues;
+    cc::Property::appendEnumValue(chipGenValues, "Antaris");
+    cc::Property::appendEnumValue(chipGenValues, "ublox-5");
+    cc::Property::appendEnumValue(chipGenValues, "ublox-6");
+    assert(chipGenValues.size() == (int)ublox::message::NavSvinfo_ChipGen::NumOfValues);
+    auto chipGenProps = cc::Property::createPropertiesMap("chipGen", std::move(chipGenValues));
+    cc::Property::setSerialisedHidden(chipGenProps);
 
-    QVariantMap props;
-    cc::Property::setData(props, std::move(membersData));
-    return props;
+    auto reservedProps = cc::Property::createPropertiesMap("reserved");
+    cc::Property::setFieldHidden(reservedProps);
+
+    QVariantList membersData;
+    membersData.append(std::move(chipGenProps));
+    membersData.append(std::move(reservedProps));
+    assert(membersData.size() == ublox::message::NavSvinfoField_globalFlags_numOfValues);
+    return cc::Property::createPropertiesMap("globalFlags", std::move(membersData));
 }
 
-QVariantMap createInfosListProperties()
+QVariantMap createProps_flags()
 {
-    auto props = cc::Property::createPropertiesMap("Infos", createSingleInfoProperties());
+    QVariantList bitNames;
+    bitNames.append("svUsed");
+    bitNames.append("diffCorr");
+    bitNames.append("orbitAvail");
+    bitNames.append("orbitEph");
+    bitNames.append("unhealthy");
+    bitNames.append("orbitAlm");
+    bitNames.append("orbitAop");
+    bitNames.append("smoothed");
+    return cc::Property::createPropertiesMap("flags", std::move(bitNames));
+}
+
+QVariantMap createProps_quality()
+{
+    QVariantList enumValues;
+    cc::Property::appendEnumValue(enumValues, "Idle");
+    cc::Property::appendEnumValue(enumValues, "Searching");
+    cc::Property::appendEnumValue(enumValues, "Signal acquired");
+    cc::Property::appendEnumValue(enumValues, "Signal unusable");
+    cc::Property::appendEnumValue(enumValues, "Code Lock");
+    cc::Property::appendEnumValue(enumValues, "Code and Carrier Locked");
+    cc::Property::appendEnumValue(enumValues, "Code and Carrier Locked");
+    cc::Property::appendEnumValue(enumValues, "Code and Carrier Locked");
+    return cc::Property::createPropertiesMap("quality", std::move(enumValues));
+}
+
+
+QVariantMap createProps_info()
+{
+    QVariantList membersData;
+    membersData.append(cc_plugin::field::nav::props_numCh());
+    membersData.append(cc_plugin::field::nav::props_svid());
+    membersData.append(createProps_flags());
+    membersData.append(createProps_quality());
+    membersData.append(cc::Property::createPropertiesMap("cno"));
+    membersData.append(cc::Property::createPropertiesMap("elev"));
+    membersData.append(cc::Property::createPropertiesMap("azim"));
+    membersData.append(cc::Property::createPropertiesMap("prRes"));
+    assert(membersData.size() == ublox::message::NavSvinfoField_info_numOfValues);
+
+    QVariantMap bundleProps;
+    cc::Property::setData(bundleProps, std::move(membersData));
+
+    auto props = cc::Property::createPropertiesMap("info", std::move(bundleProps));
     cc::Property::setSerialisedHidden(props);
     return props;
 }
 
-
 QVariantList createFieldsProperties()
 {
     QVariantList props;
-    props.append(cc_plugin::field::nav::itowProperties());
-    props.append(cc_plugin::field::nav::nchProperties());
-    props.append(cc_plugin::field::common::resProperties(1));
-    props.append(cc_plugin::field::common::resProperties(2));
-    props.append(createInfosListProperties());
+    props.append(cc_plugin::field::nav::props_iTOW());
+    props.append(cc_plugin::field::nav::props_numCh());
+    props.append(createProps_globalFlags());
+    props.append(cc_plugin::field::common::props_reserved(2));
+    props.append(createProps_info());
 
-    assert(props.size() == NavSvinfo::FieldIdx_NumOfValues);
+    assert(props.size() == NavSvinfo::FieldIdx_numOfValues);
     return props;
 }
 
