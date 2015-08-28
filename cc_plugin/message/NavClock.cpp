@@ -42,13 +42,13 @@ namespace
 QVariantList createFieldsProperties()
 {
     QVariantList props;
-    props.append(cc_plugin::field::nav::itowProperties());
-    props.append(cc_plugin::field::nav::clkbProperties());
-    props.append(cc_plugin::field::nav::clkdProperties());
-    props.append(cc_plugin::field::nav::taccProperties());
-    props.append(cc_plugin::field::nav::faccProperties());
+    props.append(cc_plugin::field::nav::props_iTOW());
+    props.append(cc::Property::createPropertiesMap("clkB"));
+    props.append(cc::Property::createPropertiesMap("clkD"));
+    props.append(cc_plugin::field::nav::props_tAcc());
+    props.append(cc::Property::createPropertiesMap("fAcc"));
 
-    assert(props.size() == NavClock::FieldIdx_NumOfValues);
+    assert(props.size() == NavClock::FieldIdx_numOfValues);
     return props;
 }
 

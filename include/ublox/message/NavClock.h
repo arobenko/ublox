@@ -29,12 +29,18 @@ namespace ublox
 namespace message
 {
 
+using NavClockField_iTOW = field::nav::iTOW;
+using NavClockField_clkB = field::common::I4T<field::common::Scaling_ns2s>;
+using NavClockField_clkD = field::common::I4T<field::common::Scaling_ns2s>;
+using NavClockField_tAcc = field::nav::tAcc;
+using NavClockField_fAcc = field::common::U4;
+
 using NavClockFields = std::tuple<
-    field::nav::ITOW,
-    field::nav::CLKB,
-    field::nav::CLKD,
-    field::nav::Tacc,
-    field::nav::Facc
+    NavClockField_iTOW,
+    NavClockField_clkB,
+    NavClockField_clkD,
+    NavClockField_tAcc,
+    NavClockField_fAcc
 >;
 
 
@@ -56,15 +62,15 @@ class NavClock : public
 public:
     enum FieldIdx
     {
-        FieldIdx_Itow,
-        FieldIdx_ClkB,
-        FieldIdx_ClkD,
-        FieldIdx_Tacc,
-        FieldIdx_Facc,
-        FieldIdx_NumOfValues
+        FieldIdx_iTOW,
+        FieldIdx_clkB,
+        FieldIdx_clkD,
+        FieldIdx_tAcc,
+        FieldIdx_fAcc,
+        FieldIdx_numOfValues
     };
 
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_NumOfValues,
+    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
     NavClock() = default;
