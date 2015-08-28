@@ -33,8 +33,8 @@ function (cc_plugin_ublox)
         message/NavVelecefPoll.cpp
         message/NavVelned.cpp
         message/NavVelnedPoll.cpp
-#        message/NavTimegps.cpp
-#        message/NavTimegpsPoll.cpp
+        message/NavTimegps.cpp
+        message/NavTimegpsPoll.cpp
 #        message/NavTimeutc.cpp
 #        message/NavTimeutcPoll.cpp
 #        message/NavClock.cpp
