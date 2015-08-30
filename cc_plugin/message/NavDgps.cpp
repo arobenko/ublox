@@ -41,23 +41,45 @@ namespace message
 namespace
 {
 
-QVariantMap createSingleDataElementProperties()
+QVariantMap createProps_status()
 {
-    QVariantList membersData;
-    membersData.append(cc_plugin::field::nav::svidProperties());
-    membersData.append(cc_plugin::field::nav::dgpsFlagsProperties());
-    membersData.append(cc_plugin::field::nav::agechProperties());
-    membersData.append(cc_plugin::field::nav::prcProperties());
-    membersData.append(cc_plugin::field::nav::prrcProperties());
-
-    QVariantMap props;
-    cc::Property::setData(props, std::move(membersData));
-    return props;
+    QVariantList enumValues;
+    cc::Property::appendEnumValue(enumValues, "none");
+    cc::Property::appendEnumValue(enumValues, "PR+PRR correction");
+    assert(enumValues.size() == (int)ublox::message::NavDgps_Status::NumOfValues);
+    return cc::Property::createPropertiesMap("status", std::move(enumValues));
 }
 
-QVariantMap createDataListProperties()
+QVariantMap createProps_flags()
 {
-    auto props = cc::Property::createPropertiesMap("Data", createSingleDataElementProperties());
+    auto channelProps = cc::Property::createPropertiesMap("channel");
+    cc::Property::setSerialisedHidden(channelProps);
+
+    QVariantList bitNames;
+    bitNames.append("dgpsUsed");
+    assert(bitNames.size() == ublox::message::NavDgpsField_flags_bits_numOfValues);
+    auto flagsProps = cc::Property::createPropertiesMap("flags", std::move(bitNames));
+    cc::Property::setSerialisedHidden(flagsProps);
+
+    QVariantList membersData;
+    membersData.append(std::move(channelProps));
+    membersData.append(std::move(flagsProps));
+    assert(membersData.size() == ublox::message::NavDgpsField_flags_numOfValues);
+    return cc::Property::createPropertiesMap("flags", std::move(membersData));
+}
+
+QVariantMap createProps_data()
+{
+    QVariantList membersData;
+    membersData.append(cc_plugin::field::nav::props_svid());
+    membersData.append(createProps_flags());
+    membersData.append(cc::Property::createPropertiesMap("ageC"));
+    membersData.append(cc::Property::createPropertiesMap("prc"));
+    membersData.append(cc::Property::createPropertiesMap("prrc"));
+    assert(membersData.size() == ublox::message::NavDgpsField_data_numOfValues);
+    auto elementProps = cc::Property::createPropertiesMap("element", std::move(membersData));
+
+    auto props = cc::Property::createPropertiesMap("data", std::move(elementProps));
     cc::Property::setSerialisedHidden(props);
     return props;
 }
@@ -65,16 +87,16 @@ QVariantMap createDataListProperties()
 QVariantList createFieldsProperties()
 {
     QVariantList props;
-    props.append(cc_plugin::field::nav::itowProperties());
-    props.append(cc_plugin::field::nav::ageProperties());
-    props.append(cc_plugin::field::nav::baseIdProperties());
-    props.append(cc_plugin::field::nav::baseHealthProperties());
-    props.append(cc_plugin::field::nav::nchProperties());
-    props.append(cc_plugin::field::nav::dgpsStatusProperties());
-    props.append(cc_plugin::field::common::resProperties(1));
-    props.append(createDataListProperties());
+    props.append(cc_plugin::field::nav::props_iTOW());
+    props.append(cc::Property::createPropertiesMap("age"));
+    props.append(cc::Property::createPropertiesMap("baseId"));
+    props.append(cc::Property::createPropertiesMap("baseHealth"));
+    props.append(cc_plugin::field::nav::props_numCh());
+    props.append(createProps_status());
+    props.append(cc_plugin::field::common::props_reserved(1));
+    props.append(createProps_data());
 
-    assert(props.size() == NavDgps::FieldIdx_NumOfValues);
+    assert(props.size() == NavDgps::FieldIdx_numOfValues);
     return props;
 }
 

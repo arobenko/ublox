@@ -31,53 +31,94 @@ namespace ublox
 namespace message
 {
 
-enum NavDgpsFlagsIndex
+enum class NavDgps_Status : std::uint8_t
 {
-    NavDgpsFlagsIndex_Chn,
-    NavDgpsFlagsIndex_UsedFlags,
-    NavDgpsFlagsIndex_NumOfValues
+    None,
+    PR_PRR_Correction,
+    NumOfValues
 };
 
-enum NavDgpsIndex
+enum
 {
-    NavDgpsIndex_Svid,
-    NavDgpsIndex_Flags,
-    NavDgpsIndex_AgeCh,
-    NavDgpsIndex_Prc,
-    NavDgpsIndex_Prrc,
-    NavDgpsIndex_NumOfValues
+    NavDgpsField_flags_channel,
+    NavDgpsField_flags_bits,
+    NavDgpsField_flags_numOfValues
 };
 
-using NavDgpsDataElement =
-    comms::field::Bundle<
+enum
+{
+    NavDgpsField_flags_bits_dgpsUsed,
+    NavDgpsField_flags_bits_numOfValues
+};
+
+enum
+{
+    NavDpgsField_data_svid,
+    NavDgpsField_data_flags,
+    NavDgpsField_data_ageC,
+    NavDgpsField_data_prc,
+    NavDgpsField_data_prrc,
+    NavDgpsField_data_numOfValues
+};
+
+
+using NavDgpsField_iTOW = field::nav::iTOW;
+using NavDgpsField_age = field::common::I4T<field::common::Scaling_ms2s>;
+using NavDgpsField_baseId = field::common::I2;
+using NavDgpsField_baseHealth = field::common::I2;
+using NavDgpsField_numCh = field::nav::numCh;
+using NavDgpsField_status =
+    comms::field::EnumValue<
+        field::common::FieldBase,
+        NavDgps_Status,
+        comms::option::ValidNumValueRange<0, (int)NavDgps_Status::NumOfValues>
+    >;
+using NavDgpsField_reserved1 = field::common::res2;
+
+using NavDgpsField_svid = field::nav::svid;
+using NavDgpsField_flags =
+    comms::field::Bitfield<
+        field::common::FieldBase,
         std::tuple<
-            field::nav::SVID,
-            comms::field::Bitfield<
-                field::common::FieldBase,
-                std::tuple<
-                    field::nav::chnT<comms::option::FixedBitLength<4> >,
-                    field::nav::DgpsFlagsT<comms::option::FixedBitLength<4> >
-                >
+            field::common::U1T<
+                comms::option::FixedBitLength<4>,
+                comms::option::ValidNumValueRange<0, 15>
             >,
-            field::nav::AGECH,
-            field::nav::PRC,
-            field::nav::PRRC
+            field::common::X1T<
+                comms::option::FixedBitLength<4>,
+                comms::option::BitmaskReservedBits<0xfe, 0>
+            >
         >
     >;
 
-using NavDgpsFields = std::tuple<
-    field::nav::ITOW,
-    field::nav::AGE,
-    field::nav::BASEID,
-    field::nav::BASEHLTH,
-    field::nav::NCH,
-    field::nav::STATUS,
-    field::common::res2,
+using NavDgpsField_ageC = field::common::U2T<field::common::Scaling_ms2s>;
+using NavDgpsField_prc = field::common::R4;
+using NavDgpsField_prrc = field::common::R4;
+
+using NavDgpsField_data =
     comms::field::ArrayList<
         field::common::FieldBase,
-        NavDgpsDataElement,
+        comms::field::Bundle<
+            std::tuple<
+                NavDgpsField_svid,
+                NavDgpsField_flags,
+                NavDgpsField_ageC,
+                NavDgpsField_prc,
+                NavDgpsField_prrc
+            >
+        >,
         comms::option::SequenceSizeForcingEnabled
-    >
+    >;
+
+using NavDgpsFields = std::tuple<
+    NavDgpsField_iTOW,
+    NavDgpsField_age,
+    NavDgpsField_baseId,
+    NavDgpsField_baseHealth,
+    NavDgpsField_numCh,
+    NavDgpsField_status,
+    NavDgpsField_reserved1,
+    NavDgpsField_data
 >;
 
 
@@ -99,18 +140,18 @@ class NavDgps : public
 public:
     enum FieldIdx
     {
-        FieldIdx_Itow,
-        FieldIdx_Age,
-        FieldIdx_BaseId,
-        FieldIdx_BaseHealth,
-        FieldIdx_Nch,
-        FieldIdx_Status,
-        FieldIdx_Res1,
-        FieldIdx_Data,
-        FieldIdx_NumOfValues
+        FieldIdx_iTOW,
+        FieldIdx_age,
+        FieldIdx_baseId,
+        FieldIdx_baseHealth,
+        FieldIdx_numCh,
+        FieldIdx_status,
+        FieldIdx_reserved1,
+        FieldIdx_data,
+        FieldIdx_numOfValues
     };
 
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_NumOfValues,
+    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
     NavDgps() = default;
@@ -126,51 +167,29 @@ protected:
         typename Base::ReadIterator& iter,
         std::size_t len) override
     {
-        auto es = Base::template readFieldsUntil<FieldIdx_Data>(iter, len);
+        auto es = Base::template readFieldsUntil<FieldIdx_data>(iter, len);
         if (es != comms::ErrorStatus::Success) {
             return es;
         }
 
         auto& allFields = Base::fields();
-        auto& nchField = std::get<FieldIdx_Nch>(allFields);
-        auto& dataField = std::get<FieldIdx_Data>(allFields);
-        dataField.forceReadElemCount(nchField.value());
+        auto& numChField = std::get<FieldIdx_numCh>(allFields);
+        auto& dataField = std::get<FieldIdx_data>(allFields);
+        dataField.forceReadElemCount(numChField.value());
 
-        return Base::template readFieldsFrom<FieldIdx_Data>(iter, len);
-    }
-
-    virtual bool validImpl() const override
-    {
-        if (!Base::validImpl()) {
-            return false;
-        }
-
-        auto& allFields = Base::fields();
-        auto& nchField = std::get<FieldIdx_Nch>(allFields);
-        auto& dataField = std::get<FieldIdx_Data>(allFields);
-        for (auto& bundleField : dataField.value()) {
-            auto& members = bundleField.value();
-            auto& flagsField = std::get<NavDgpsIndex_Flags>(members);
-            auto& bundle = flagsField.value();
-            auto& chNumField = std::get<NavDgpsFlagsIndex_Chn>(bundle);
-            if (nchField.value() <= chNumField.value()) {
-                return false;
-            }
-        }
-
-        return true;
+        return Base::template readFieldsFrom<FieldIdx_data>(iter, len);
     }
 
     virtual bool refreshImpl() override
     {
         auto& allFields = Base::fields();
-        auto& nchField = std::get<FieldIdx_Nch>(allFields);
-        auto& dataField = std::get<FieldIdx_Data>(allFields);
-        if (nchField.value() == dataField.value().size()) {
+        auto& numChField = std::get<FieldIdx_numCh>(allFields);
+        auto& dataField = std::get<FieldIdx_data>(allFields);
+        if (numChField.value() == dataField.value().size()) {
             return false;
         }
 
-        nchField.value() = dataField.value().size();
+        numChField.value() = dataField.value().size();
         return true;
     }
 
