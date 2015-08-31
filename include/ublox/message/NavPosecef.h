@@ -40,7 +40,7 @@ using NavPosecefFields = std::tuple<
     NavPosecefField_ecefX,
     NavPosecefField_ecefY,
     NavPosecefField_ecefZ,
-    field::nav::Pacc
+    NavPosecefField_pAcc
 >;
 
 

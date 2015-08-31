@@ -71,7 +71,7 @@ using NavDgpsField_status =
     comms::field::EnumValue<
         field::common::FieldBase,
         NavDgps_Status,
-        comms::option::ValidNumValueRange<0, (int)NavDgps_Status::NumOfValues>
+        comms::option::ValidNumValueRange<0, (int)NavDgps_Status::NumOfValues - 1>
     >;
 using NavDgpsField_reserved1 = field::common::res2;
 

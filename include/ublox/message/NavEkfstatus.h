@@ -29,21 +29,83 @@ namespace ublox
 namespace message
 {
 
+enum class NavEkfstatus_CalibStatus : std::uint8_t
+{
+    NoCalibration,
+    Calibrating,
+    CoarseCalibration,
+    FineCalibration,
+    NumOfValues
+};
+
+enum
+{
+    NavEkfstatusField_calibStatus_calibTacho,
+    NavEkfstatusField_calibStatus_calibGyro,
+    NavEkfstatusField_calibStatus_calibGyroB,
+    NavEkfstatusField_calibStatus_reserved,
+    NavEkfstatusField_calibStatus_numOfValues
+};
+
+enum
+{
+    NavEkfstatusField_measUsed_pulse,
+    NavEkfstatusField_measUsed_direction,
+    NavEkfstatusField_measUsed_gyro,
+    NavEkfstatusField_measUsed_temp,
+    NavEkfstatusField_measUsed_pos,
+    NavEkfstatusField_measUsed_vel,
+    NavEkfstatusField_measUsed_errGyro,
+    NavEkfstatusField_measUsed_errPulse,
+    NavEkfstatusField_measUsed_numOfValues
+};
+
+using NavEkfstatusField_pulses = field::common::I4;
+using NavEkfstatusField_period = field::common::I4T<field::common::Scaling_ms2s>;
+using NavEkfstatusField_gyroMean = field::common::U4T<comms::option::ScalingRatio<1, 100> >;
+using NavEkfstatusField_temperature = field::common::I2T<comms::option::ScalingRatio<1, 0x100> >;
+using NavEkfstatusField_direction = field::common::I1;
+using NavEkfstatusField_calibStatus_calib =
+    comms::field::EnumValue<
+        field::common::FieldBase,
+        NavEkfstatus_CalibStatus,
+        comms::option::FixedBitLength<2>,
+        comms::option::ValidNumValueRange<0, (int)NavEkfstatus_CalibStatus::NumOfValues - 1>
+    >;
+using NavEkfstatusField_calibStatus =
+    comms::field::Bitfield<
+        field::common::FieldBase,
+        std::tuple<
+            NavEkfstatusField_calibStatus_calib,
+            NavEkfstatusField_calibStatus_calib,
+            NavEkfstatusField_calibStatus_calib,
+            field::common::res1T<comms::option::FixedBitLength<2> >
+        >
+    >;
+using NavEkfstatusField_pulseScale = field::common::I4T<comms::option::ScalingRatio<1, 100000> >;
+using NavEkfstatusField_gyroBias = field::common::I4T<comms::option::ScalingRatio<1, 100000> >;
+using NavEkfstatusField_gyroScale = field::common::I4T<comms::option::ScalingRatio<1, 100000> >;
+using NavEkfstatusField_accPulseScale = field::common::I2T<comms::option::ScalingRatio<1, 10000> >;
+using NavEkfstatusField_accGyroBias = field::common::I2T<comms::option::ScalingRatio<1, 10000> >;
+using NavEkfstatusField_accGyroScale = field::common::I2T<comms::option::ScalingRatio<1, 10000> >;
+using NavEkfstatusField_measUsed = field::common::X1;
+using NavEkfstatusField_reserved2 = field::common::res1;
+
 using NavEkfstatusFields = std::tuple<
-    field::nav::pulses,
-    field::nav::period,
-    field::nav::gyromean,
-    field::nav::temperature,
-    field::nav::direction,
-    field::nav::calib_status,
-    field::nav::pulse_scale,
-    field::nav::gyro_bias,
-    field::nav::gyro_scale,
-    field::nav::acc_pulse_scale,
-    field::nav::acc_gyro_bias,
-    field::nav::acc_gyro_scale,
-    field::nav::meas_used,
-    field::common::res1
+    NavEkfstatusField_pulses,
+    NavEkfstatusField_period,
+    NavEkfstatusField_gyroMean,
+    NavEkfstatusField_temperature,
+    NavEkfstatusField_direction,
+    NavEkfstatusField_calibStatus,
+    NavEkfstatusField_pulseScale,
+    NavEkfstatusField_gyroBias,
+    NavEkfstatusField_gyroScale,
+    NavEkfstatusField_accPulseScale,
+    NavEkfstatusField_accGyroBias,
+    NavEkfstatusField_accGyroScale,
+    NavEkfstatusField_measUsed,
+    NavEkfstatusField_reserved2
 >;
 
 
@@ -65,24 +127,24 @@ class NavEkfstatus : public
 public:
     enum FieldIdx
     {
-        FieldIdx_Pulses,
-        FieldIdx_Period,
-        FieldIdx_Gyromean,
-        FieldIdx_Temperature,
-        FieldIdx_Direction,
-        FieldIdx_CalibStatus,
-        FieldIdx_PulseScale,
-        FieldIdx_GyroBias,
-        FieldIdx_GyroScale,
-        FieldIdx_AccPulseScale,
-        FieldIdx_AccGyroBias,
-        FieldIdx_AccGyroScale,
-        FieldIdx_MeasUsed,
-        FieldIdx_Res,
-        FieldIdx_NumOfValues
+        FieldIdx_pulses,
+        FieldIdx_period,
+        FieldIdx_gyroMean,
+        FieldIdx_temperature,
+        FieldIdx_direction,
+        FieldIdx_calibStatus,
+        FieldIdx_pulseScale,
+        FieldIdx_gyroBias,
+        FieldIdx_gyroScale,
+        FieldIdx_accPulseScale,
+        FieldIdx_accGyroBias,
+        FieldIdx_accGyroScale,
+        FieldIdx_measUsed,
+        FieldIdx_reserved2,
+        FieldIdx_numOfValues
     };
 
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_NumOfValues,
+    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
     NavEkfstatus() = default;

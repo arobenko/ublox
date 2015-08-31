@@ -91,7 +91,7 @@ using NavSvinfoField_globalFlags =
                 field::common::FieldBase,
                 NavSvinfo_ChipGen,
                 comms::option::FixedBitLength<3>,
-                comms::option::ValidNumValueRange<0, (int)NavSvinfo_ChipGen::NumOfValues>
+                comms::option::ValidNumValueRange<0, (int)NavSvinfo_ChipGen::NumOfValues - 1>
             >,
             field::common::res1T<comms::option::FixedBitLength<5> >
         >
@@ -104,7 +104,7 @@ using NavSvinfoField_quality =
     comms::field::EnumValue<
         field::common::FieldBase,
         NavSvinfo_QualityInd,
-        comms::option::ValidNumValueRange<0, (int)NavSvinfo_QualityInd::NumOfValues>
+        comms::option::ValidNumValueRange<0, (int)NavSvinfo_QualityInd::NumOfValues - 1>
     >;
 using NavSvinfoField_cno = field::common::U1;
 using NavSvinfoField_elev = field::common::I1;
