@@ -37,6 +37,7 @@
 #include "message/NavDgps.h"
 #include "message/NavSbas.h"
 #include "message/NavEkfstatus.h"
+#include "message/NavAopstatus.h"
 
 #include "message/RxmRaw.h"
 #include "message/RxmSfrb.h"
@@ -87,7 +88,8 @@ using InputMessages =
         message::NavSvinfo<TMessage>,
         message::NavDgps<TMessage>,
         message::NavSbas<TMessage>,
-        message::NavEkfstatus<TMessage>/*,
+        message::NavEkfstatus<TMessage>,
+        message::NavAopstatus<TMessage>/*,
         message::RxmRaw<TMessage>,
         message::RxmSfrb<TMessage>,
         message::RxmSvsi<TMessage>,

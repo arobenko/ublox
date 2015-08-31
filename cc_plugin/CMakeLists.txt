@@ -47,6 +47,8 @@ function (cc_plugin_ublox)
         message/NavSbasPoll.cpp
         message/NavEkfstatus.cpp
         message/NavEkfstatusPoll.cpp
+        message/NavAopstatus.cpp
+        message/NavAopstatusPoll.cpp
 #        message/RxmRaw.cpp
 #        message/RxmRawPoll.cpp
 #        message/RxmSfrb.cpp

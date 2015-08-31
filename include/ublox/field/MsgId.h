@@ -87,7 +87,8 @@ private:
             MsgId_NAV_SVINFO,
             MsgId_NAV_DGPS,
             MsgId_NAV_SBAS,
-            MsgId_NAV_EKFSTATUS
+            MsgId_NAV_EKFSTATUS,
+            MsgId_NAV_AOPSTATUS
         };
 
         auto iter = std::lower_bound(std::begin(IDs), std::end(IDs), id);

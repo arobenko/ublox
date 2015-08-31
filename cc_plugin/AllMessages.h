@@ -51,53 +51,55 @@
 #include "cc_plugin/message/NavSbasPoll.h"
 #include "cc_plugin/message/NavEkfstatus.h"
 #include "cc_plugin/message/NavEkfstatusPoll.h"
+#include "cc_plugin/message/NavAopstatus.h"
+#include "cc_plugin/message/NavAopstatusPoll.h"
 
-#include "cc_plugin/message/RxmRaw.h"
-#include "cc_plugin/message/RxmRawPoll.h"
-#include "cc_plugin/message/RxmSfrb.h"
-#include "cc_plugin/message/RxmSvsi.h"
-#include "cc_plugin/message/RxmSvsiPoll.h"
-#include "cc_plugin/message/RxmAlm.h"
-#include "cc_plugin/message/RxmAlmPoll.h"
-#include "cc_plugin/message/RxmEph.h"
-#include "cc_plugin/message/RxmEphPoll.h"
-#include "cc_plugin/message/RxmPosreq.h"
-
-#include "cc_plugin/message/InfError.h"
-#include "cc_plugin/message/InfWarning.h"
-#include "cc_plugin/message/InfNotice.h"
-#include "cc_plugin/message/InfTest.h"
-#include "cc_plugin/message/InfDebug.h"
-#include "cc_plugin/message/InfUser.h"
-
-#include "cc_plugin/message/AckNak.h"
-#include "cc_plugin/message/AckAck.h"
-
-#include "cc_plugin/message/CfgPrt.h"
-#include "cc_plugin/message/CfgPrtPoll.h"
-#include "cc_plugin/message/CfgMsg.h"
-#include "cc_plugin/message/CfgMsgCurrent.h"
-#include "cc_plugin/message/CfgMsgPoll.h"
-#include "cc_plugin/message/CfgInf.h"
-#include "cc_plugin/message/CfgInfPoll.h"
-#include "cc_plugin/message/CfgRst.h"
-#include "cc_plugin/message/CfgDat.h"
-#include "cc_plugin/message/CfgDatUser.h"
-#include "cc_plugin/message/CfgDatStandard.h"
-#include "cc_plugin/message/CfgDatPoll.h"
-#include "cc_plugin/message/CfgTp.h"
-#include "cc_plugin/message/CfgTpPoll.h"
-#include "cc_plugin/message/CfgRate.h"
-#include "cc_plugin/message/CfgRatePoll.h"
-#include "cc_plugin/message/CfgCfg.h"
-#include "cc_plugin/message/CfgFxn.h"
-#include "cc_plugin/message/CfgFxnPoll.h"
-#include "cc_plugin/message/CfgTm.h"
-#include "cc_plugin/message/CfgTmPoll.h"
-#include "cc_plugin/message/CfgRxm.h"
-#include "cc_plugin/message/CfgRxmPoll.h"
-#include "cc_plugin/message/CfgEkf.h"
-#include "cc_plugin/message/CfgEkfPoll.h"
+//#include "cc_plugin/message/RxmRaw.h"
+//#include "cc_plugin/message/RxmRawPoll.h"
+//#include "cc_plugin/message/RxmSfrb.h"
+//#include "cc_plugin/message/RxmSvsi.h"
+//#include "cc_plugin/message/RxmSvsiPoll.h"
+//#include "cc_plugin/message/RxmAlm.h"
+//#include "cc_plugin/message/RxmAlmPoll.h"
+//#include "cc_plugin/message/RxmEph.h"
+//#include "cc_plugin/message/RxmEphPoll.h"
+//#include "cc_plugin/message/RxmPosreq.h"
+//
+//#include "cc_plugin/message/InfError.h"
+//#include "cc_plugin/message/InfWarning.h"
+//#include "cc_plugin/message/InfNotice.h"
+//#include "cc_plugin/message/InfTest.h"
+//#include "cc_plugin/message/InfDebug.h"
+//#include "cc_plugin/message/InfUser.h"
+//
+//#include "cc_plugin/message/AckNak.h"
+//#include "cc_plugin/message/AckAck.h"
+//
+//#include "cc_plugin/message/CfgPrt.h"
+//#include "cc_plugin/message/CfgPrtPoll.h"
+//#include "cc_plugin/message/CfgMsg.h"
+//#include "cc_plugin/message/CfgMsgCurrent.h"
+//#include "cc_plugin/message/CfgMsgPoll.h"
+//#include "cc_plugin/message/CfgInf.h"
+//#include "cc_plugin/message/CfgInfPoll.h"
+//#include "cc_plugin/message/CfgRst.h"
+//#include "cc_plugin/message/CfgDat.h"
+//#include "cc_plugin/message/CfgDatUser.h"
+//#include "cc_plugin/message/CfgDatStandard.h"
+//#include "cc_plugin/message/CfgDatPoll.h"
+//#include "cc_plugin/message/CfgTp.h"
+//#include "cc_plugin/message/CfgTpPoll.h"
+//#include "cc_plugin/message/CfgRate.h"
+//#include "cc_plugin/message/CfgRatePoll.h"
+//#include "cc_plugin/message/CfgCfg.h"
+//#include "cc_plugin/message/CfgFxn.h"
+//#include "cc_plugin/message/CfgFxnPoll.h"
+//#include "cc_plugin/message/CfgTm.h"
+//#include "cc_plugin/message/CfgTmPoll.h"
+//#include "cc_plugin/message/CfgRxm.h"
+//#include "cc_plugin/message/CfgRxmPoll.h"
+//#include "cc_plugin/message/CfgEkf.h"
+//#include "cc_plugin/message/CfgEkfPoll.h"
 
 namespace ublox
 {
@@ -135,7 +137,9 @@ typedef std::tuple<
     cc_plugin::message::NavSbas,
     cc_plugin::message::NavSbasPoll,
     cc_plugin::message::NavEkfstatus,
-    cc_plugin::message::NavEkfstatusPoll/*,
+    cc_plugin::message::NavEkfstatusPoll,
+    cc_plugin::message::NavAopstatus,
+    cc_plugin::message::NavAopstatusPoll/*,
     cc_plugin::message::RxmRaw,
     cc_plugin::message::RxmRawPoll,
     cc_plugin::message::RxmSfrb,
