@@ -43,8 +43,8 @@ function (cc_plugin_ublox)
         message/NavSvinfoPoll.cpp
         message/NavDgps.cpp
         message/NavDgpsPoll.cpp
-#        message/NavSbas.cpp
-#        message/NavSbasPoll.cpp
+        message/NavSbas.cpp
+        message/NavSbasPoll.cpp
 #        message/NavEkfstatus.cpp
 #        message/NavEkfstatusPoll.cpp
 #        message/RxmRaw.cpp

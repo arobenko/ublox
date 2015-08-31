@@ -85,6 +85,13 @@ QVariantMap createProps_velX(char suffix)
     return cc::Property::createPropertiesMap(QString("vel%1").arg(suffix));
 }
 
+QVariantMap createProps_numCh()
+{
+    auto props = cc::Property::createPropertiesMap("numCh");
+    cc::Property::setReadOnly(props);
+    return props;
+}
+
 // TODO: remove
 
 QVariantMap createNameOnlyProperties(const char* name)
@@ -507,7 +514,7 @@ const QVariantMap& props_velD()
 
 const QVariantMap& props_numCh()
 {
-    static const QVariantMap Props = cc::Property::createPropertiesMap("numCh");
+    static const QVariantMap Props = createProps_numCh();
     return Props;
 }
 

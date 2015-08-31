@@ -41,44 +41,80 @@ namespace message
 namespace
 {
 
-QVariantMap createSingleDataElementProperties()
+QVariantMap createProps_mode()
 {
-    QVariantList membersData;
-    membersData.append(cc_plugin::field::nav::svidProperties());
-    membersData.append(cc_plugin::field::nav::infoFlagsProperties());
-    membersData.append(cc_plugin::field::nav::udreProperties());
-    membersData.append(cc_plugin::field::nav::sysProperties());
-    membersData.append(cc_plugin::field::nav::serviceProperties());
-    membersData.append(cc_plugin::field::common::resProperties(1));
-    membersData.append(cc_plugin::field::nav::prcProperties());
-    membersData.append(cc_plugin::field::common::resProperties(2));
-    membersData.append(cc_plugin::field::nav::icProperties());
+    QVariantList enumValues;
+    cc::Property::appendEnumValue(enumValues, "Disabled", (int)ublox::message::NavSbas_Mode::Disabled);
+    cc::Property::appendEnumValue(enumValues, "Enabed Integrity", (int)ublox::message::NavSbas_Mode::EnabledIntegrity);
+    cc::Property::appendEnumValue(enumValues, "Enabed Testmode", (int)ublox::message::NavSbas_Mode::EnabledTestmode);
 
-    QVariantMap props;
-    cc::Property::setData(props, std::move(membersData));
+    return cc::Property::createPropertiesMap("mode", std::move(enumValues));
+}
+
+QVariantMap createProps_sys(const QString& name)
+{
+    QVariantList enumValues;
+    cc::Property::appendEnumValue(enumValues, "Unknown", (int)ublox::message::NavSbas_Sys::Unknown);
+    cc::Property::appendEnumValue(enumValues, "WAAS", (int)ublox::message::NavSbas_Sys::WAAS);
+    cc::Property::appendEnumValue(enumValues, "EGNOS", (int)ublox::message::NavSbas_Sys::EGNOS);
+    cc::Property::appendEnumValue(enumValues, "MSAS", (int)ublox::message::NavSbas_Sys::MSAS);
+    cc::Property::appendEnumValue(enumValues, "GPS", (int)ublox::message::NavSbas_Sys::GPS);
+
+    return cc::Property::createPropertiesMap(name, std::move(enumValues));
+}
+
+QVariantMap createProps_service(const QString& name)
+{
+    QVariantList bitNames;
+    bitNames.append("Ranging");
+    bitNames.append("Corrections");
+    bitNames.append("Integrity");
+    bitNames.append("Testmode");
+
+    return cc::Property::createPropertiesMap(name, std::move(bitNames));
+}
+
+QVariantMap createProps_cnt()
+{
+    auto props = cc_plugin::field::nav::props_numCh();
+    cc::Property::setName(props, "cnt");
     return props;
 }
 
-QVariantMap createDataListProperties()
+QVariantMap createProps_data()
 {
-    auto props = cc::Property::createPropertiesMap("Data", createSingleDataElementProperties());
+    QVariantList membersData;
+    membersData.append(cc_plugin::field::nav::props_svid());
+    membersData.append(cc::Property::createPropertiesMap("flags"));
+    membersData.append(cc::Property::createPropertiesMap("udre"));
+    membersData.append(createProps_sys("svSys"));
+    membersData.append(createProps_service("svService"));
+    membersData.append(cc_plugin::field::common::props_reserved(1));
+    membersData.append(cc::Property::createPropertiesMap("prc"));
+    membersData.append(cc_plugin::field::common::props_reserved(2));
+    membersData.append(cc::Property::createPropertiesMap("ic"));
+
+    auto elementProps = cc::Property::createPropertiesMap("element", std::move(membersData));
+
+    auto props = cc::Property::createPropertiesMap("data", std::move(elementProps));
     cc::Property::setSerialisedHidden(props);
     return props;
 }
 
+
 QVariantList createFieldsProperties()
 {
     QVariantList props;
-    props.append(cc_plugin::field::nav::itowProperties());
-    props.append(cc_plugin::field::nav::geoProperties());
-    props.append(cc_plugin::field::nav::modeProperties());
-    props.append(cc_plugin::field::nav::sysProperties());
-    props.append(cc_plugin::field::nav::serviceProperties());
-    props.append(cc_plugin::field::nav::cntProperties());
-    props.append(cc_plugin::field::common::resProperties());
-    props.append(createDataListProperties());
+    props.append(cc_plugin::field::nav::props_iTOW());
+    props.append(cc::Property::createPropertiesMap("geo"));
+    props.append(createProps_mode());
+    props.append(createProps_sys("sys"));
+    props.append(createProps_service("service"));
+    props.append(createProps_cnt());
+    props.append(cc_plugin::field::common::props_reserved(0));
+    props.append(createProps_data());
 
-    assert(props.size() == NavSbas::FieldIdx_NumOfValues);
+    assert(props.size() == NavSbas::FieldIdx_numOfValues);
     return props;
 }
 

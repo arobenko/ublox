@@ -31,48 +31,123 @@ namespace ublox
 namespace message
 {
 
-enum NavSbasIndex
+enum class NavSbas_Mode : std::uint8_t
 {
-    NavSbasIndex_Svid,
-    NavSbasIndex_Flags,
-    NavSbasIndex_Udre,
-    NavSbasIndex_Sys,
-    NavSbasIndex_Service,
-    NavSbasIndex_Res0,
-    NavSbasIndex_Prc,
-    NavSbasIndex_Res1,
-    NavSbasIndex_Ic,
-    NavSbasIndex_NumOfValues
+    Disabled,
+    EnabledIntegrity,
+    EnabledTestmode = 3
 };
 
-using NavSbasElement =
-    comms::field::Bundle<
-        std::tuple<
-            field::nav::SVID,
-            field::nav::InfoFlags,
-            field::nav::UDRE,
-            field::nav::SYS,
-            field::nav::SERVICE,
-            field::common::res1,
-            field::nav::PRCcm,
-            field::common::res2,
-            field::nav::IC
-        >
-    >;
+enum class NavSbas_Sys : std::int8_t
+{
+    Unknown = -1,
+    WAAS = 0,
+    EGNOS = 1,
+    MSAS = 2,
+    GPS = 16,
+};
 
-using NavSbasFields = std::tuple<
-    field::nav::ITOW,
-    field::nav::GEO,
-    field::nav::MODE,
-    field::nav::SYS,
-    field::nav::SERVICE,
-    field::nav::CNT,
-    field::common::res3,
+enum
+{
+    NavSbas_service_Ranging,
+    NavSbas_service_Corrections,
+    NavSbas_service_Integrity,
+    NavSbas_service_Testmode,
+    NavSbas_service_NumOfValues
+};
+
+struct NavSbas_ModeValidator
+{
+    template <typename TField>
+    bool operator()(const TField& field) const
+    {
+        auto value = field.value();
+        return
+            (value == NavSbas_Mode::Disabled) ||
+            (value == NavSbas_Mode::EnabledIntegrity) ||
+            (value == NavSbas_Mode::EnabledTestmode);
+    }
+};
+
+struct NavSbas_SysValidator
+{
+    template <typename TField>
+    bool operator()(const TField& field) const
+    {
+        static const NavSbas_Sys Values[] = {
+            NavSbas_Sys::Unknown,
+            NavSbas_Sys::WAAS,
+            NavSbas_Sys::EGNOS,
+            NavSbas_Sys::MSAS,
+            NavSbas_Sys::GPS,
+        };
+
+        auto value = field.value();
+        auto iter = std::lower_bound(std::begin(Values), std::end(Values), value);
+        return (iter != std::end(Values)) && (*iter == value);
+    }
+};
+
+using NavSbasField_iTOW = field::nav::iTOW;
+using NavSbasField_geo = field::common::U1;
+using NavSbasField_mode =
+    comms::field::EnumValue<
+        field::common::FieldBase,
+        NavSbas_Mode,
+        comms::option::ContentsValidator<NavSbas_ModeValidator>
+    >;
+using NavSbasField_sys =
+    comms::field::EnumValue<
+        field::common::FieldBase,
+        NavSbas_Sys,
+        comms::option::ContentsValidator<NavSbas_SysValidator>
+    >;
+using NavSbasField_service =
+    field::common::X1T<
+        comms::option::BitmaskReservedBits<0xf0, 0>
+    >;
+using NavSbasField_cnt = field::common::U1;
+using NavSbasField_reserved0 = field::common::res3;
+
+using NavSbasField_svid = field::nav::svid;
+using NavSbasField_flags = field::common::U1;
+using NavSbasField_udre = field::common::U1;
+using NavSbasField_svSys = NavSbasField_sys;
+using NavSbasField_svService = NavSbasField_service;
+using NavSbasField_reserved1 = field::common::res1;
+using NavSbasField_prc = field::common::U2T<field::common::Scaling_cm2m>;
+using NavSbasField_reserved2 = field::common::res2;
+using NavSbasField_ic = field::common::U2T<field::common::Scaling_cm2m>;
+
+using NavSbasField_data =
     comms::field::ArrayList<
         field::common::FieldBase,
-        NavSbasElement,
+        comms::field::Bundle<
+            std::tuple<
+                NavSbasField_svid,
+                NavSbasField_flags,
+                NavSbasField_udre,
+                NavSbasField_svSys,
+                NavSbasField_svService,
+                NavSbasField_reserved1,
+                NavSbasField_prc,
+                NavSbasField_reserved2,
+                NavSbasField_ic
+            >
+        >,
         comms::option::SequenceSizeForcingEnabled
-    >
+    >;
+
+
+using NavSbasFields = std::tuple<
+    NavSbasField_iTOW,
+    NavSbasField_geo,
+    NavSbasField_mode,
+    NavSbasField_sys,
+    NavSbasField_service,
+    NavSbasField_cnt,
+    NavSbasField_reserved0,
+    NavSbasField_data
 >;
 
 template <typename TMsgBase = Message>
@@ -93,18 +168,18 @@ class NavSbas : public
 public:
     enum FieldIdx
     {
-        FieldIdx_Itow,
-        FieldIdx_Geo,
-        FieldIdx_Mode,
-        FieldIdx_Sys,
-        FieldIdx_Service,
-        FieldIdx_Cnt,
-        FieldIdx_Res,
-        FieldIdx_Data,
-        FieldIdx_NumOfValues
+        FieldIdx_iTOW,
+        FieldIdx_geo,
+        FieldIdx_mode,
+        FieldIdx_sys,
+        FieldIdx_service,
+        FieldIdx_cnt,
+        FieldIdx_reserved0,
+        FieldIdx_data,
+        FieldIdx_numOfValues
     };
 
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_NumOfValues,
+    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
     NavSbas() = default;
@@ -120,24 +195,24 @@ protected:
         typename Base::ReadIterator& iter,
         std::size_t len) override
     {
-        auto es = Base::template readFieldsUntil<FieldIdx_Data>(iter, len);
+        auto es = Base::template readFieldsUntil<FieldIdx_data>(iter, len);
         if (es != comms::ErrorStatus::Success) {
             return es;
         }
 
         auto& allFields = Base::fields();
-        auto& cntField = std::get<FieldIdx_Cnt>(allFields);
-        auto& dataField = std::get<FieldIdx_Data>(allFields);
+        auto& cntField = std::get<FieldIdx_cnt>(allFields);
+        auto& dataField = std::get<FieldIdx_data>(allFields);
         dataField.forceReadElemCount(cntField.value());
 
-        return Base::template readFieldsFrom<FieldIdx_Data>(iter, len);
+        return Base::template readFieldsFrom<FieldIdx_data>(iter, len);
     }
 
     virtual bool refreshImpl() override
     {
         auto& allFields = Base::fields();
-        auto& cntField = std::get<FieldIdx_Cnt>(allFields);
-        auto& dataField = std::get<FieldIdx_Data>(allFields);
+        auto& cntField = std::get<FieldIdx_cnt>(allFields);
+        auto& dataField = std::get<FieldIdx_data>(allFields);
         if (cntField.value() == dataField.value().size()) {
             return false;
         }
