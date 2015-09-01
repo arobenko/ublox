@@ -40,23 +40,57 @@ namespace message
 namespace
 {
 
-QVariantMap createSingleDataElementProperties()
+QVariantMap createProps_svFlag()
 {
-    QVariantList membersData;
-    membersData.append(cc_plugin::field::rxm::svidProperties());
-    membersData.append(cc_plugin::field::rxm::statusInfoSvFlagProperties());
-    membersData.append(cc_plugin::field::rxm::azimProperties());
-    membersData.append(cc_plugin::field::rxm::elevProperties());
-    membersData.append(cc_plugin::field::rxm::ageProperties());
+    auto uraProps = cc::Property::createPropertiesMap("ura");
+    cc::Property::setSerialisedHidden(uraProps);
 
-    QVariantMap props;
-    cc::Property::setData(props, std::move(membersData));
-    return props;
+    QVariantList bitNames;
+    bitNames.append("healthy");
+    bitNames.append("ephVal");
+    bitNames.append("almVal");
+    bitNames.append("notAvail");
+    assert(bitNames.size() == ublox::message::RxmSvsiField_svFlag_flags_numOfValues);
+    auto flagsProps = cc::Property::createPropertiesMap(QString(), std::move(bitNames));
+    cc::Property::setSerialisedHidden(flagsProps);
+
+    QVariantList membersData;
+    membersData.append(std::move(uraProps));
+    membersData.append(std::move(flagsProps));
+    assert(membersData.size() == ublox::message::RxmSvsiField_svFlag_numOfValues);
+    return cc::Property::createPropertiesMap("svFlag", std::move(membersData));
 }
 
-QVariantMap createDataListProperties()
+QVariantMap createProps_age()
 {
-    auto props = cc::Property::createPropertiesMap("Data", createSingleDataElementProperties());
+    auto createAgePropsFunc =
+        [](const QString& name) -> QVariantMap
+        {
+            auto props = cc::Property::createPropertiesMap(name);
+            cc::Property::setSerialisedHidden(props);
+            return props;
+        };
+
+    QVariantList membersData;
+    membersData.append(createAgePropsFunc("almAge"));
+    membersData.append(createAgePropsFunc("ephAge"));
+    assert(membersData.size() == ublox::message::RxmSvsiField_data_age_numOfValues);
+
+    return cc::Property::createPropertiesMap("age", std::move(membersData));
+}
+
+QVariantMap createProps_data()
+{
+    QVariantList membersData;
+    membersData.append(cc_plugin::field::rxm::props_svid());
+    membersData.append(createProps_svFlag());
+    membersData.append(cc::Property::createPropertiesMap("azim"));
+    membersData.append(cc::Property::createPropertiesMap("elev"));
+    membersData.append(createProps_age());
+    assert(membersData.size() == ublox::message::RxmSvsiField_data_numOfValues);
+
+    QVariantMap elementProps = cc::Property::createPropertiesMap("element", std::move(membersData));
+    auto props = cc::Property::createPropertiesMap("data", std::move(elementProps));
     cc::Property::setSerialisedHidden(props);
     return props;
 }
@@ -64,13 +98,13 @@ QVariantMap createDataListProperties()
 QVariantList createFieldsProperties()
 {
     QVariantList props;
-    props.append(cc_plugin::field::rxm::itowProperties());
-    props.append(cc_plugin::field::rxm::weekProperties());
-    props.append(cc_plugin::field::rxm::numVisProperties());
-    props.append(cc_plugin::field::rxm::numSvProperties());
-    props.append(createDataListProperties());
+    props.append(cc_plugin::field::rxm::props_iTOW());
+    props.append(cc_plugin::field::rxm::props_week());
+    props.append(cc::Property::createPropertiesMap("numVis"));
+    props.append(cc_plugin::field::rxm::props_numSV());
+    props.append(createProps_data());
 
-    assert(props.size() == RxmSvsi::FieldIdx_NumOfValues);
+    assert(props.size() == RxmSvsi::FieldIdx_numOfValues);
     return props;
 }
 

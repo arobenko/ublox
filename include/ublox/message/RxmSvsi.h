@@ -18,8 +18,6 @@
 
 #pragma once
 
-#include <iterator>
-
 #include "comms/Message.h"
 #include "ublox/Message.h"
 
@@ -31,37 +29,97 @@ namespace ublox
 namespace message
 {
 
-enum RxmSvsiIndex
+enum
 {
-    RxmSvsiIndex_Svsi,
-    RxmSvsiIndex_SVFlag,
-    RxmSvsiIndex_Azim,
-    RxmSvsiIndex_Elev,
-    RxmSvsiIndex_Age,
-    RxmSvsiIndex_NumOfValues
+    RxmSvsiField_svFlag_ura,
+    RxmSvsiField_svFlag_flags,
+    RxmSvsiField_svFlag_numOfValues
 };
 
-using RxmSvsiElement =
-    comms::field::Bundle<
+enum
+{
+    RxmSvsiField_data_svid,
+    RxmSvsiField_data_svFlag,
+    RxmSvsiField_data_azim,
+    RxmSvsiField_data_elev,
+    RxmSvsiField_data_age,
+    RxmSvsiField_data_numOfValues
+};
+
+enum
+{
+    RxmSvsiField_svFlag_flags_healthy,
+    RxmSvsiField_svFlag_flags_ephVal,
+    RxmSvsiField_svFlag_flags_almVal,
+    RxmSvsiField_svFlag_flags_notAvail,
+    RxmSvsiField_svFlag_flags_numOfValues
+};
+
+enum
+{
+    RxmSvsiField_data_age_almAge,
+    RxmSvsiField_data_age_ephAge,
+    RxmSvsiField_data_age_numOfValues
+};
+
+using RxmSvsiField_iTOW = field::rxm::iTOW;
+using RxmSvsiField_week = field::rxm::week;
+using RxmSvsiField_numVis = field::common::U1;
+using RxmSvsiField_numSV = field::rxm::numSV;
+
+using RxmSvsiField_svid = field::rxm::svid;
+using RxmSvsiField_svFlag =
+    comms::field::Bitfield<
+        field::common::FieldBase,
         std::tuple<
-            field::rxm::SVID,
-            field::rxm::StatusInfoSvFlag,
-            field::rxm::Azim,
-            field::rxm::Elev,
-            field::rxm::Age
+            field::common::U1T<
+                comms::option::ValidNumValueRange<0, 15>,
+                comms::option::FixedBitLength<4>
+            >,
+            field::common::X1T<
+                comms::option::FixedBitLength<4>
+            >
+        >
+    >;
+using RxmSvsiField_azim = field::common::I2;
+using RxmSvsiField_elev = field::common::I1;
+using RxmSvsiField_age =
+    comms::field::Bitfield<
+        field::common::FieldBase,
+        std::tuple<
+            field::common::U1T<
+                comms::option::FixedBitLength<4>,
+                comms::option::ValidNumValueRange<0, 15>
+            >,
+            field::common::U1T<
+                comms::option::FixedBitLength<4>,
+                comms::option::ValidNumValueRange<0, 15>
+            >
         >
     >;
 
-using RxmSvsiFields = std::tuple<
-    field::rxm::ITOW,
-    field::rxm::Week,
-    field::rxm::NumVis,
-    field::rxm::NumSv,
+using RxmSvsiField_data =
     comms::field::ArrayList<
         field::common::FieldBase,
-        RxmSvsiElement,
+        comms::field::Bundle<
+            std::tuple<
+                RxmSvsiField_svid,
+                RxmSvsiField_svFlag,
+                RxmSvsiField_azim,
+                RxmSvsiField_elev,
+                RxmSvsiField_age
+            >
+        >,
         comms::option::SequenceSizeForcingEnabled
-    >
+    >;
+
+
+using RxmSvsiFields = std::tuple<
+    RxmSvsiField_iTOW,
+    RxmSvsiField_week,
+    RxmSvsiField_numVis,
+    RxmSvsiField_numSV,
+    RxmSvsiField_data
 >;
 
 template <typename TMsgBase = Message>
@@ -82,15 +140,15 @@ class RxmSvsi : public
 public:
     enum FieldIdx
     {
-        FieldIdx_Itow,
-        FieldIdx_Week,
-        FieldIdx_NumVis,
-        FieldIdx_NumSv,
-        FieldIdx_Data,
-        FieldIdx_NumOfValues
+        FieldIdx_iTOW,
+        FieldIdx_week,
+        FieldIdx_numVis,
+        FieldIdx_numSV,
+        FieldIdx_data,
+        FieldIdx_numOfValues
     };
 
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_NumOfValues,
+    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
     RxmSvsi() = default;
@@ -106,29 +164,29 @@ protected:
         typename Base::ReadIterator& iter,
         std::size_t len) override
     {
-        auto es = Base::template readFieldsUntil<FieldIdx_Data>(iter, len);
+        auto es = Base::template readFieldsUntil<FieldIdx_data>(iter, len);
         if (es != comms::ErrorStatus::Success) {
             return es;
         }
 
         auto& allFields = Base::fields();
-        auto& nsvField = std::get<FieldIdx_NumSv>(allFields);
-        auto& dataField = std::get<FieldIdx_Data>(allFields);
-        dataField.forceReadElemCount(nsvField.value());
+        auto& numSvField = std::get<FieldIdx_numSV>(allFields);
+        auto& dataField = std::get<FieldIdx_data>(allFields);
+        dataField.forceReadElemCount(numSvField.value());
 
-        return Base::template readFieldsFrom<FieldIdx_Data>(iter, len);
+        return Base::template readFieldsFrom<FieldIdx_data>(iter, len);
     }
 
     virtual bool refreshImpl() override
     {
         auto& allFields = Base::fields();
-        auto& nsvField = std::get<FieldIdx_NumSv>(allFields);
-        auto& dataField = std::get<FieldIdx_Data>(allFields);
-        if (nsvField.value() == dataField.value().size()) {
+        auto& numSvField = std::get<FieldIdx_numSV>(allFields);
+        auto& dataField = std::get<FieldIdx_data>(allFields);
+        if (numSvField.value() == dataField.value().size()) {
             return false;
         }
 
-        nsvField.value() = dataField.value().size();
+        numSvField.value() = dataField.value().size();
         return true;
     }
 

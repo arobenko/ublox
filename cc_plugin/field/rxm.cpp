@@ -38,6 +38,14 @@ namespace rxm
 namespace
 {
 
+QVariantMap createProps_numSV()
+{
+    auto props = common::props_numSV();
+    cc::Property::setReadOnly(props);
+    return props;
+}
+
+// TODO: remove
 QVariantMap createNameOnlyProperties(const char* name)
 {
     return cc::Property::createPropertiesMap(name);
@@ -98,6 +106,11 @@ QVariantMap createAgeProperties()
 
 }  // namespace
 
+const QVariantMap& props_iTOW()
+{
+    return common::props_iTOW();
+}
+
 const QVariantMap& props_week()
 {
     return common::props_week();
@@ -105,7 +118,8 @@ const QVariantMap& props_week()
 
 const QVariantMap& props_numSV()
 {
-    return common::props_numSV();
+    static const auto Props = createProps_numSV();
+    return Props;
 }
 
 const QVariantMap& props_svid()
