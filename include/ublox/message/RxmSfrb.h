@@ -31,14 +31,19 @@ namespace ublox
 namespace message
 {
 
-using RxmSfrbFields = std::tuple<
-    field::rxm::CHN,
-    field::rxm::SVID,
+using RxmSfrbField_chn = field::common::U1;
+using RxmSfrbField_svid = field::rxm::svid;
+using RxmSfrbField_dword =
     comms::field::ArrayList<
         field::common::FieldBase,
-        field::rxm::DWORD,
+        field::common::U4,
         comms::option::SequenceFixedSize<10>
-    >
+    >;
+
+using RxmSfrbFields = std::tuple<
+    RxmSfrbField_chn,
+    RxmSfrbField_svid,
+    RxmSfrbField_dword
 >;
 
 template <typename TMsgBase = Message>
@@ -59,13 +64,13 @@ class RxmSfrb : public
 public:
     enum FieldIdx
     {
-        FieldIdx_Chn,
-        FieldIdx_Svid,
-        FieldIdx_Data,
-        FieldIdx_NumOfValues
+        FieldIdx_chn,
+        FieldIdx_svid,
+        FieldIdx_dwrd,
+        FieldIdx_numOfValues
     };
 
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_NumOfValues,
+    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
     RxmSfrb() = default;

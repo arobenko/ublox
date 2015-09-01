@@ -107,6 +107,12 @@ const QVariantMap& props_numSV()
 {
     return common::props_numSV();
 }
+
+const QVariantMap& props_svid()
+{
+    return common::props_svid();
+}
+
 // TODO: remove
 
 const QVariantMap& itowProperties()

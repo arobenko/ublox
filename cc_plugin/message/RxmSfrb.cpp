@@ -40,16 +40,16 @@ namespace message
 namespace
 {
 
-QVariantMap createDataListProperties()
+QVariantMap createProps_dwrd()
 {
     QVariantList elemsProps;
     for (auto idx = 0U; idx < 10U; ++idx) {
-        elemsProps.append(cc_plugin::field::rxm::dwordProperties(idx));
+        elemsProps.append(cc::Property::createPropertiesMap(QString("%1").arg(idx, 1, 10, QChar('0'))));
     }
 
     auto props =
         cc::Property::createPropertiesMap(
-            "Data",
+            "dwrd",
             QVariant::fromValue(elemsProps));
     cc::Property::setSerialisedHidden(props);
     return props;
@@ -58,11 +58,11 @@ QVariantMap createDataListProperties()
 QVariantList createFieldsProperties()
 {
     QVariantList props;
-    props.append(cc_plugin::field::rxm::chnProperties());
-    props.append(cc_plugin::field::rxm::svidProperties());
-    props.append(createDataListProperties());
+    props.append(cc::Property::createPropertiesMap("chn"));
+    props.append(cc_plugin::field::rxm::props_svid());
+    props.append(createProps_dwrd());
 
-    assert(props.size() == RxmSfrb::FieldIdx_NumOfValues);
+    assert(props.size() == RxmSfrb::FieldIdx_numOfValues);
     return props;
 }
 

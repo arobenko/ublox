@@ -305,8 +305,7 @@ const QVariantMap& props_numCh()
 
 const QVariantMap& props_svid()
 {
-    static const QVariantMap Props = cc::Property::createPropertiesMap("svid");
-    return Props;
+    return common::props_svid();
 }
 
 }  // namespace nav

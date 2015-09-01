@@ -32,6 +32,7 @@ namespace rxm
 using iTOW = common::iTOW;
 using week = common::week;
 using numSV = common::numSV;
+using svid = common::svid;
 
 // TODO: remove
 using ITOW = common::ITOW;

@@ -83,6 +83,12 @@ const QVariantMap& props_numSV()
     return Props;
 }
 
+const QVariantMap& props_svid()
+{
+    static const QVariantMap Props = cc::Property::createPropertiesMap("svid");
+    return Props;
+}
+
 const QVariantMap& props_reserved(unsigned idx)
 {
     static const QVariantMap Props[] = {

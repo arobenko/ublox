@@ -34,6 +34,8 @@ namespace rxm
 
 const QVariantMap& props_week();
 const QVariantMap& props_numSV();
+const QVariantMap& props_svid();
+
 
 // TODO: remove
 

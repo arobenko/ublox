@@ -125,7 +125,7 @@ using heading =
 
 using numCh = common::U1;
 
-using svid = common::U1T<comms::option::ValidNumValueRange<1, 96> >;
+using svid = common::svid;
 
 }  // namespace nav
 
