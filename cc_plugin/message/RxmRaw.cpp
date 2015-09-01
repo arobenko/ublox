@@ -40,25 +40,20 @@ namespace message
 namespace
 {
 
-QVariantMap createSingleDataElementProperties()
+QVariantMap createProps_data()
 {
     QVariantList membersData;
-    membersData.append(cc_plugin::field::rxm::cpMesProperties());
-    membersData.append(cc_plugin::field::rxm::prMesProperties());
-    membersData.append(cc_plugin::field::rxm::doMesProperties());
-    membersData.append(cc_plugin::field::rxm::svProperties());
-    membersData.append(cc_plugin::field::rxm::mesQiProperties());
-    membersData.append(cc_plugin::field::rxm::cnoProperties());
-    membersData.append(cc_plugin::field::rxm::lliProperties());
+    membersData.append(cc::Property::createPropertiesMap("cpMes"));
+    membersData.append(cc::Property::createPropertiesMap("prMes"));
+    membersData.append(cc::Property::createPropertiesMap("doMes"));
+    membersData.append(cc::Property::createPropertiesMap("sv"));
+    membersData.append(cc::Property::createPropertiesMap("mesQI"));
+    membersData.append(cc::Property::createPropertiesMap("cno"));
+    membersData.append(cc::Property::createPropertiesMap("lli"));
+    assert(membersData.size() == ublox::message::RxmRawField_data_numOfValues);
 
-    QVariantMap props;
-    cc::Property::setData(props, std::move(membersData));
-    return props;
-}
-
-QVariantMap createDataListProperties()
-{
-    auto props = cc::Property::createPropertiesMap("Data", createSingleDataElementProperties());
+    auto elemProps = cc::Property::createPropertiesMap("element", std::move(membersData));
+    auto props = cc::Property::createPropertiesMap("data", std::move(elemProps));
     cc::Property::setSerialisedHidden(props);
     return props;
 }
@@ -66,13 +61,13 @@ QVariantMap createDataListProperties()
 QVariantList createFieldsProperties()
 {
     QVariantList props;
-    props.append(cc_plugin::field::rxm::itowProperties());
-    props.append(cc_plugin::field::rxm::weekProperties());
-    props.append(cc_plugin::field::rxm::nsvProperties());
-    props.append(cc_plugin::field::common::resProperties(1));
-    props.append(createDataListProperties());
+    props.append(cc::Property::createPropertiesMap("rcvTow"));
+    props.append(cc_plugin::field::rxm::props_week());
+    props.append(cc_plugin::field::rxm::props_numSV());
+    props.append(cc_plugin::field::common::props_reserved(1));
+    props.append(createProps_data());
 
-    assert(props.size() == RxmRaw::FieldIdx_NumOfValues);
+    assert(props.size() == RxmRaw::FieldIdx_numOfValues);
     return props;
 }
 

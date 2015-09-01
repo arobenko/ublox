@@ -74,12 +74,12 @@ using gpsFix =
         comms::option::ValidNumValueRange<0, (int)GpsFix::NumOfValues - 1>
     >;
 
-using week = common::I2;
+using week = common::week;
 
 using xDOP = field::common::U2T<comms::option::ScalingRatio<1, 100> >;
 using pDOP = xDOP;
 
-using numSV = common::U1;
+using numSV = common::numSV;
 
 using year =
     common::U2T<

@@ -185,6 +185,9 @@ using iTOW =
         comms::option::ValidNumValueRange<0, 1000L * 60 * 60 * 24 * 7>
     >;
 
+using week = I2;
+using numSV = U1;
+
 
 // TODO: remove
 using ITOW = U4;

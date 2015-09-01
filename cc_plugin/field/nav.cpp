@@ -211,14 +211,12 @@ const QVariantMap& props_pDOP()
 
 const QVariantMap& props_week()
 {
-    static const QVariantMap Props = cc::Property::createPropertiesMap("week");
-    return Props;
+    return common::props_week();
 }
 
 const QVariantMap& props_numSV()
 {
-    static const QVariantMap Props = cc::Property::createPropertiesMap("numSV");
-    return Props;
+    return common::props_numSV();
 }
 
 const QVariantMap& props_year()

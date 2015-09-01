@@ -31,41 +31,54 @@ namespace ublox
 namespace message
 {
 
-enum RxmRawIndex
+enum
 {
-    RxmRawIndex_CPMes,
-    RxmRawIndex_PRMes,
-    RxmRawIndex_DOMes,
-    RxmRawIndex_Sv,
-    RxmRawIndex_MesQI,
-    RxmRawIndex_Cno,
-    RxmRawIndex_Lli,
-    RxmRawIndex_NumOfValues
+    RxmRawField_data_cpMes,
+    RxmRawField_data_prMes,
+    RxmRawField_data_doMes,
+    RxmRawField_data_sv,
+    RxmRawField_data_mesQI,
+    RxmRawField_data_cno,
+    RxmRawField_data_lli,
+    RxmRawField_data_numOfValues
 };
 
-using RxmRawElement =
-    comms::field::Bundle<
-        std::tuple<
-            field::rxm::CPMes,
-            field::rxm::PRMes,
-            field::rxm::DOMes,
-            field::rxm::SV,
-            field::rxm::MesQI,
-            field::rxm::CNO,
-            field::rxm::LLI
-        >
+using RxmRawField_rcvTow = field::common::I4T<field::common::Scaling_ms2s>;
+using RxmRawField_week = field::rxm::week;
+using RxmRawField_numSV = field::rxm::numSV;
+using RxmRawField_reserved1 = field::common::res1;
+
+using RxmRawField_cpMes = field::common::R8;
+using RxmRawField_prMes = field::common::R8;
+using RxmRawField_doMes = field::common::R4;
+using RxmRawField_sv = field::common::U1;
+using RxmRawField_mesQI = field::common::I1;
+using RxmRawField_cno = field::common::I1;
+using RxmRawField_lli = field::common::U1;
+
+using RxmRawField_data =
+    comms::field::ArrayList<
+        field::common::FieldBase,
+        comms::field::Bundle<
+            std::tuple<
+                RxmRawField_cpMes,
+                RxmRawField_prMes,
+                RxmRawField_doMes,
+                RxmRawField_sv,
+                RxmRawField_mesQI,
+                RxmRawField_cno,
+                RxmRawField_lli
+            >
+        >,
+        comms::option::SequenceSizeForcingEnabled
     >;
 
 using RxmRawFields = std::tuple<
-    field::rxm::ITOW,
-    field::rxm::Week,
-    field::rxm::NSV,
-    field::common::res1,
-    comms::field::ArrayList<
-        field::common::FieldBase,
-        RxmRawElement,
-        comms::option::SequenceSizeForcingEnabled
-    >
+    RxmRawField_rcvTow,
+    RxmRawField_week,
+    RxmRawField_numSV,
+    RxmRawField_reserved1,
+    RxmRawField_data
 >;
 
 template <typename TMsgBase = Message>
@@ -86,15 +99,15 @@ class RxmRaw : public
 public:
     enum FieldIdx
     {
-        FieldIdx_Itow,
-        FieldIdx_Week,
-        FieldIdx_Nsv,
-        FieldIdx_Res,
-        FieldIdx_Data,
-        FieldIdx_NumOfValues
+        FieldIdx_rcvTow,
+        FieldIdx_week,
+        FieldIdx_numSV,
+        FieldIdx_reserved1,
+        FieldIdx_data,
+        FieldIdx_numOfValues
     };
 
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_NumOfValues,
+    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
     RxmRaw() = default;
@@ -110,29 +123,29 @@ protected:
         typename Base::ReadIterator& iter,
         std::size_t len) override
     {
-        auto es = Base::template readFieldsUntil<FieldIdx_Data>(iter, len);
+        auto es = Base::template readFieldsUntil<FieldIdx_data>(iter, len);
         if (es != comms::ErrorStatus::Success) {
             return es;
         }
 
         auto& allFields = Base::fields();
-        auto& nsvField = std::get<FieldIdx_Nsv>(allFields);
-        auto& dataField = std::get<FieldIdx_Data>(allFields);
-        dataField.forceReadElemCount(nsvField.value());
+        auto& numSvField = std::get<FieldIdx_numSV>(allFields);
+        auto& dataField = std::get<FieldIdx_data>(allFields);
+        dataField.forceReadElemCount(numSvField.value());
 
-        return Base::template readFieldsFrom<FieldIdx_Data>(iter, len);
+        return Base::template readFieldsFrom<FieldIdx_data>(iter, len);
     }
 
     virtual bool refreshImpl() override
     {
         auto& allFields = Base::fields();
-        auto& nsvField = std::get<FieldIdx_Nsv>(allFields);
-        auto& dataField = std::get<FieldIdx_Data>(allFields);
-        if (nsvField.value() == dataField.value().size()) {
+        auto& numSvField = std::get<FieldIdx_numSV>(allFields);
+        auto& dataField = std::get<FieldIdx_data>(allFields);
+        if (numSvField.value() == dataField.value().size()) {
             return false;
         }
 
-        nsvField.value() = dataField.value().size();
+        numSvField.value() = dataField.value().size();
         return true;
     }
 

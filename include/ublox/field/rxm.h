@@ -29,6 +29,11 @@ namespace field
 namespace rxm
 {
 
+using iTOW = common::iTOW;
+using week = common::week;
+using numSV = common::numSV;
+
+// TODO: remove
 using ITOW = common::ITOW;
 using Week = common::Week;
 using NSV = common::U1;

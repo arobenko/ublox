@@ -32,6 +32,11 @@ namespace field
 namespace rxm
 {
 
+const QVariantMap& props_week();
+const QVariantMap& props_numSV();
+
+// TODO: remove
+
 const QVariantMap& itowProperties();
 const QVariantMap& weekProperties();
 const QVariantMap& nsvProperties();

@@ -98,6 +98,17 @@ QVariantMap createAgeProperties()
 
 }  // namespace
 
+const QVariantMap& props_week()
+{
+    return common::props_week();
+}
+
+const QVariantMap& props_numSV()
+{
+    return common::props_numSV();
+}
+// TODO: remove
+
 const QVariantMap& itowProperties()
 {
     return common::itowProperties();

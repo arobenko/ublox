@@ -71,6 +71,18 @@ const QVariantMap& props_iTOW()
     return Props;
 }
 
+const QVariantMap& props_week()
+{
+    static const QVariantMap Props = cc::Property::createPropertiesMap("week");
+    return Props;
+}
+
+const QVariantMap& props_numSV()
+{
+    static const QVariantMap Props = cc::Property::createPropertiesMap("numSV");
+    return Props;
+}
+
 const QVariantMap& props_reserved(unsigned idx)
 {
     static const QVariantMap Props[] = {
