@@ -31,16 +31,21 @@ namespace ublox
 namespace message
 {
 
-using RxmAlmFields = std::tuple<
-    field::rxm::SVID_Ext,
-    field::rxm::WEEK_Ext,
+using RxmAlmField_svid = field::common::U4T<comms::option::ValidNumValueRange<1, 96> >;
+using RxmAlmField_week = field::common::U4;
+using RxmAlmField_dwrd =
     comms::field::Optional<
         comms::field::ArrayList<
             field::common::FieldBase,
-            field::rxm::DWORD,
+            field::common::U4,
             comms::option::SequenceFixedSize<8>
         >
-    >
+    >;
+
+using RxmAlmFields = std::tuple<
+    RxmAlmField_svid,
+    RxmAlmField_week,
+    RxmAlmField_dwrd
 >;
 
 template <typename TMsgBase = Message>
@@ -61,19 +66,19 @@ class RxmAlm : public
 public:
     enum FieldIdx
     {
-        FieldIdx_Svid,
-        FieldIdx_Week,
-        FieldIdx_Data,
-        FieldIdx_NumOfValues
+        FieldIdx_svid,
+        FieldIdx_week,
+        FieldIdx_dwrd,
+        FieldIdx_numOfValues
     };
 
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_NumOfValues,
+    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
     RxmAlm()
     {
         auto& allFields = Base::fields();
-        auto& dataField = std::get<FieldIdx_Data>(allFields);
+        auto& dataField = std::get<FieldIdx_dwrd>(allFields);
         dataField.setMode(comms::field::OptionalMode::Missing);
     }
     RxmAlm(const RxmAlm&) = default;
@@ -88,33 +93,33 @@ protected:
         typename Base::ReadIterator& iter,
         std::size_t len) override
     {
-        auto es = Base::template readFieldsUntil<FieldIdx_Data>(iter, len);
+        auto es = Base::template readFieldsUntil<FieldIdx_dwrd>(iter, len);
         if (es != comms::ErrorStatus::Success) {
             return es;
         }
 
         auto& allFields = Base::fields();
-        auto& weekField = std::get<FieldIdx_Week>(allFields);
+        auto& weekField = std::get<FieldIdx_week>(allFields);
         auto dataMode = comms::field::OptionalMode::Exists;
         if (weekField.value() == 0U) {
             dataMode = comms::field::OptionalMode::Missing;
         }
 
-        auto& dataField = std::get<FieldIdx_Data>(allFields);
+        auto& dataField = std::get<FieldIdx_dwrd>(allFields);
         dataField.setMode(dataMode);
-        return Base::template readFieldsFrom<FieldIdx_Data>(iter, len);
+        return Base::template readFieldsFrom<FieldIdx_dwrd>(iter, len);
     }
 
     virtual bool refreshImpl() override
     {
         auto& allFields = Base::fields();
-        auto& weekField = std::get<FieldIdx_Week>(allFields);
+        auto& weekField = std::get<FieldIdx_week>(allFields);
         auto expectedMode = comms::field::OptionalMode::Exists;
         if (weekField.value() == 0U) {
             expectedMode = comms::field::OptionalMode::Missing;
         }
 
-        auto& dataField = std::get<FieldIdx_Data>(allFields);
+        auto& dataField = std::get<FieldIdx_dwrd>(allFields);
         if (dataField.getMode() == expectedMode) {
             return false;
         }

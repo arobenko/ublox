@@ -54,8 +54,9 @@ function (cc_plugin_ublox)
         message/RxmSfrb.cpp
         message/RxmSvsi.cpp
         message/RxmSvsiPoll.cpp
-#        message/RxmAlm.cpp
-#        message/RxmAlmPoll.cpp
+        message/RxmAlm.cpp
+        message/RxmAlmPollSv.cpp
+        message/RxmAlmPoll.cpp
 #        message/RxmEph.cpp
 #        message/RxmEphPoll.cpp
 #        message/RxmPosreq.cpp

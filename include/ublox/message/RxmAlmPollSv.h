@@ -21,34 +21,41 @@
 #include "comms/Message.h"
 #include "ublox/Message.h"
 
+#include "ublox/field/rxm.h"
+
 namespace ublox
 {
 
 namespace message
 {
 
-using RxmAlmPollFields = std::tuple<>;
+using RxmAlmPollSv_svid = field::rxm::svid;
+
+using RxmAlmPollSvFields = std::tuple<
+    RxmAlmPollSv_svid
+>;
 
 
 template <typename TMsgBase = Message>
-class RxmAlmPoll : public
+class RxmAlmPollSv : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_RXM_ALM>,
-        comms::option::FieldsImpl<RxmAlmPollFields>,
-        comms::option::DispatchImpl<RxmAlmPoll<TMsgBase> >
+        comms::option::FieldsImpl<RxmAlmPollSvFields>,
+        comms::option::DispatchImpl<RxmAlmPollSv<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_RXM_ALM>,
-        comms::option::FieldsImpl<RxmAlmPollFields>,
-        comms::option::DispatchImpl<RxmAlmPoll<TMsgBase> >
+        comms::option::FieldsImpl<RxmAlmPollSvFields>,
+        comms::option::DispatchImpl<RxmAlmPollSv<TMsgBase> >
     > Base;
 public:
 
     enum FieldIdx
     {
+        FieldIdx_svid,
         FieldIdx_numOfValues
     };
 
@@ -56,13 +63,13 @@ public:
         "Number of fields is incorrect");
 
 
-    RxmAlmPoll() = default;
-    RxmAlmPoll(const RxmAlmPoll&) = default;
-    RxmAlmPoll(RxmAlmPoll&& other) = default;
-    virtual ~RxmAlmPoll() = default;
+    RxmAlmPollSv() = default;
+    RxmAlmPollSv(const RxmAlmPollSv&) = default;
+    RxmAlmPollSv(RxmAlmPollSv&& other) = default;
+    virtual ~RxmAlmPollSv() = default;
 
-    RxmAlmPoll& operator=(const RxmAlmPoll&) = default;
-    RxmAlmPoll& operator=(RxmAlmPoll&&) = default;
+    RxmAlmPollSv& operator=(const RxmAlmPollSv&) = default;
+    RxmAlmPollSv& operator=(RxmAlmPollSv&&) = default;
 };
 
 

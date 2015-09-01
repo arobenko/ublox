@@ -40,18 +40,18 @@ namespace message
 namespace
 {
 
-QVariantMap createDataListProperties()
+QVariantMap createProps_dwrd()
 {
     QVariantList elemsProps;
     for (auto idx = 0U; idx < 8U; ++idx) {
-        elemsProps.append(cc_plugin::field::rxm::dwordProperties(idx));
+        elemsProps.append(cc::Property::createPropertiesMap(QString("%1").arg(idx, 1, 10, QChar('0'))));
     }
 
-    static const QString Name("Data");
+    static const QString Name("dwrd");
     auto listProps =
         cc::Property::createPropertiesMap(
             Name,
-            QVariant::fromValue(elemsProps));
+            std::move(elemsProps));
     cc::Property::setSerialisedHidden(listProps);
 
     auto props = cc::Property::createPropertiesMap(Name, std::move(listProps));
@@ -62,11 +62,11 @@ QVariantMap createDataListProperties()
 QVariantList createFieldsProperties()
 {
     QVariantList props;
-    props.append(cc_plugin::field::rxm::svidProperties());
-    props.append(cc_plugin::field::rxm::weekProperties());
-    props.append(createDataListProperties());
+    props.append(cc_plugin::field::rxm::props_svid());
+    props.append(cc_plugin::field::rxm::props_week());
+    props.append(createProps_dwrd());
 
-    assert(props.size() == RxmAlm::FieldIdx_NumOfValues);
+    assert(props.size() == RxmAlm::FieldIdx_numOfValues);
     return props;
 }
 
