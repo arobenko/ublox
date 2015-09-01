@@ -40,33 +40,35 @@ namespace message
 namespace
 {
 
-QVariantMap createDataListProperties()
+QVariantMap createProps_sfxd(int sfIdx)
 {
     QVariantList elemsProps;
-    for (auto idx1 = 1U; idx1 < 4; ++idx1) {
-        for (auto idx2 = 0U; idx2 < 8; ++idx2) {
-            elemsProps.append(cc_plugin::field::rxm::sfxdxProperties(idx1, idx2));
-        }
+    for (auto idx = 0U; idx < 8; ++idx) {
+        elemsProps.append(cc::Property::createPropertiesMap(QString("%1").arg(idx, 1, 10, QChar('0'))));
     }
 
-    static const QString Name("Data");
+    auto name = QString("sf%1d").arg(sfIdx, 1, 10, QChar('0'));
     auto listProps =
         cc::Property::createPropertiesMap(
-            Name,
-            QVariant::fromValue(elemsProps));
+            name,
+            std::move(elemsProps));
     cc::Property::setSerialisedHidden(listProps);
 
-    return cc::Property::createPropertiesMap(Name, std::move(listProps));
+    auto props = cc::Property::createPropertiesMap(name, std::move(listProps));
+    cc::Property::setUncheckable(props);
+    return props;
 }
 
 QVariantList createFieldsProperties()
 {
     QVariantList props;
-    props.append(cc_plugin::field::rxm::svidProperties());
-    props.append(cc_plugin::field::rxm::howProperties());
-    props.append(createDataListProperties());
+    props.append(cc_plugin::field::rxm::props_svid());
+    props.append(cc::Property::createPropertiesMap("how"));
+    props.append(createProps_sfxd(1));
+    props.append(createProps_sfxd(2));
+    props.append(createProps_sfxd(3));
 
-    assert(props.size() == RxmEph::FieldIdx_NumOfValues);
+    assert(props.size() == RxmEph::FieldIdx_numOfValues);
     return props;
 }
 

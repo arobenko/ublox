@@ -29,28 +29,33 @@ namespace ublox
 namespace message
 {
 
-using RxmEphPollFields = std::tuple<>;
+using RxmEphPollSvField_svid = field::rxm::svid;
+
+using RxmEphPollSvFields = std::tuple<
+    RxmEphPollSvField_svid
+>;
 
 
 template <typename TMsgBase = Message>
-class RxmEphPoll : public
+class RxmEphPollSv : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_RXM_EPH>,
-        comms::option::FieldsImpl<RxmEphPollFields>,
-        comms::option::DispatchImpl<RxmEphPoll<TMsgBase> >
+        comms::option::FieldsImpl<RxmEphPollSvFields>,
+        comms::option::DispatchImpl<RxmEphPollSv<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_RXM_EPH>,
-        comms::option::FieldsImpl<RxmEphPollFields>,
-        comms::option::DispatchImpl<RxmEphPoll<TMsgBase> >
+        comms::option::FieldsImpl<RxmEphPollSvFields>,
+        comms::option::DispatchImpl<RxmEphPollSv<TMsgBase> >
     > Base;
 public:
 
     enum FieldIdx
     {
+        FieldIdx_svid,
         FieldIdx_numOfValues
     };
 
@@ -58,13 +63,13 @@ public:
         "Number of fields is incorrect");
 
 
-    RxmEphPoll() = default;
-    RxmEphPoll(const RxmEphPoll&) = default;
-    RxmEphPoll(RxmEphPoll&& other) = default;
-    virtual ~RxmEphPoll() = default;
+    RxmEphPollSv() = default;
+    RxmEphPollSv(const RxmEphPollSv&) = default;
+    RxmEphPollSv(RxmEphPollSv&& other) = default;
+    virtual ~RxmEphPollSv() = default;
 
-    RxmEphPoll& operator=(const RxmEphPoll&) = default;
-    RxmEphPoll& operator=(RxmEphPoll&&) = default;
+    RxmEphPollSv& operator=(const RxmEphPollSv&) = default;
+    RxmEphPollSv& operator=(RxmEphPollSv&&) = default;
 };
 
 

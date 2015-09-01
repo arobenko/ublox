@@ -33,6 +33,7 @@ using iTOW = common::iTOW;
 using week = common::week;
 using numSV = common::numSV;
 using svid = common::svid;
+using svid_ext = common::U4T<comms::option::ValidNumValueRange<1, 96> >;
 
 // TODO: remove
 using ITOW = common::ITOW;

@@ -19,7 +19,7 @@
 #pragma once
 
 #include "comms_champion/comms_champion.h"
-#include "ublox/message/RxmEphPoll.h"
+#include "ublox/message/RxmEphPollSv.h"
 #include "cc_plugin/Message.h"
 #include "cc_plugin/ProtocolMessageBase.h"
 
@@ -32,22 +32,23 @@ namespace cc_plugin
 namespace message
 {
 
-class RxmEphPoll : public
+class RxmEphPollSv : public
     ProtocolMessageBase<
-        ublox::message::RxmEphPoll<ublox::cc_plugin::Message>,
-        RxmEphPoll>
+        ublox::message::RxmEphPollSv<ublox::cc_plugin::Message>,
+        RxmEphPollSv>
 {
 public:
-    RxmEphPoll();
-    RxmEphPoll(const RxmEphPoll&) = delete;
-    RxmEphPoll(RxmEphPoll&&) = delete;
-    virtual ~RxmEphPoll();
+    RxmEphPollSv();
+    RxmEphPollSv(const RxmEphPollSv&) = delete;
+    RxmEphPollSv(RxmEphPollSv&&) = delete;
+    virtual ~RxmEphPollSv();
 
-    RxmEphPoll& operator=(const RxmEphPoll&);
-    RxmEphPoll& operator=(RxmEphPoll&&);
+    RxmEphPollSv& operator=(const RxmEphPollSv&);
+    RxmEphPollSv& operator=(RxmEphPollSv&&);
 
 protected:
     virtual const char* nameImpl() const override;
+    virtual const QVariantList& fieldsPropertiesImpl() const override;
 };
 
 }  // namespace message
@@ -56,8 +57,8 @@ protected:
 
 }  // namespace ublox
 
-extern template class ublox::message::RxmEphPoll<ublox::cc_plugin::Message>;
+extern template class ublox::message::RxmEphPollSv<ublox::cc_plugin::Message>;
 extern template class ublox::cc_plugin::ProtocolMessageBase<
-    ublox::message::RxmEphPoll<ublox::cc_plugin::Message>,
-    ublox::cc_plugin::message::RxmEphPoll>;
+    ublox::message::RxmEphPollSv<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::RxmEphPollSv>;
 

@@ -31,16 +31,25 @@ namespace ublox
 namespace message
 {
 
-using RxmEphFields = std::tuple<
-    field::rxm::SVID_Ext,
-    field::rxm::HOW,
+using RxmEphField_svid = field::rxm::svid_ext;
+using RxmEphField_how = field::common::U4;
+using RxmEphField_sf1d =
     comms::field::Optional<
         comms::field::ArrayList<
             field::common::FieldBase,
-            field::rxm::SFxDx,
-            comms::option::SequenceFixedSize<24>
+            field::common::U4,
+            comms::option::SequenceFixedSize<8>
         >
-    >
+    >;
+using RxmEphField_sf2d = RxmEphField_sf1d;
+using RxmEphField_sf3d = RxmEphField_sf1d;
+
+using RxmEphFields = std::tuple<
+    RxmEphField_svid,
+    RxmEphField_how,
+    RxmEphField_sf1d,
+    RxmEphField_sf2d,
+    RxmEphField_sf3d
 >;
 
 template <typename TMsgBase = Message>
@@ -61,22 +70,84 @@ class RxmEph : public
 public:
     enum FieldIdx
     {
-        FieldIdx_Svid,
-        FieldIdx_How,
-        FieldIdx_Data,
-        FieldIdx_NumOfValues
+        FieldIdx_svid,
+        FieldIdx_how,
+        FieldIdx_sf1d,
+        FieldIdx_sf2d,
+        FieldIdx_sf3d,
+        FieldIdx_numOfValues
     };
 
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_NumOfValues,
+    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
-    RxmEph() = default;
+    RxmEph()
+    {
+        auto& allFields = Base::fields();
+        auto& sf1dField = std::get<FieldIdx_sf1d>(allFields);
+        auto& sf2dField = std::get<FieldIdx_sf2d>(allFields);
+        auto& sf3dField = std::get<FieldIdx_sf3d>(allFields);
+        sf1dField.setMode(comms::field::OptionalMode::Missing);
+        sf2dField.setMode(comms::field::OptionalMode::Missing);
+        sf3dField.setMode(comms::field::OptionalMode::Missing);
+    }
+
     RxmEph(const RxmEph&) = default;
     RxmEph(RxmEph&& other) = default;
     virtual ~RxmEph() = default;
 
     RxmEph& operator=(const RxmEph&) = default;
     RxmEph& operator=(RxmEph&&) = default;
+
+protected:
+    virtual comms::ErrorStatus readImpl(
+        typename Base::ReadIterator& iter,
+        std::size_t len) override
+    {
+        auto es = Base::template readFieldsUntil<FieldIdx_sf1d>(iter, len);
+        if (es != comms::ErrorStatus::Success) {
+            return es;
+        }
+
+        auto& allFields = Base::fields();
+        auto& howField = std::get<FieldIdx_how>(allFields);
+        auto sfMode = comms::field::OptionalMode::Exists;
+        if (howField.value() == 0U) {
+            sfMode = comms::field::OptionalMode::Missing;
+        }
+
+        auto& sf1dField = std::get<FieldIdx_sf1d>(allFields);
+        auto& sf2dField = std::get<FieldIdx_sf2d>(allFields);
+        auto& sf3dField = std::get<FieldIdx_sf3d>(allFields);
+        sf1dField.setMode(sfMode);
+        sf2dField.setMode(sfMode);
+        sf3dField.setMode(sfMode);
+        return Base::template readFieldsFrom<FieldIdx_sf1d>(iter, len);
+    }
+
+    virtual bool refreshImpl() override
+    {
+        auto& allFields = Base::fields();
+        auto& howField = std::get<FieldIdx_how>(allFields);
+        auto expectedMode = comms::field::OptionalMode::Exists;
+        if (howField.value() == 0U) {
+            expectedMode = comms::field::OptionalMode::Missing;
+        }
+
+        auto& sf1dField = std::get<FieldIdx_sf1d>(allFields);
+        auto& sf2dField = std::get<FieldIdx_sf2d>(allFields);
+        auto& sf3dField = std::get<FieldIdx_sf3d>(allFields);
+        if ((sf1dField.getMode() == expectedMode) &&
+            (sf2dField.getMode() == expectedMode) &&
+            (sf3dField.getMode() == expectedMode)){
+            return false;
+        }
+
+        sf1dField.setMode(expectedMode);
+        sf2dField.setMode(expectedMode);
+        sf3dField.setMode(expectedMode);
+        return true;
+    }
 
 };
 

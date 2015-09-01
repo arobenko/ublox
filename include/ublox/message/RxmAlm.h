@@ -31,7 +31,7 @@ namespace ublox
 namespace message
 {
 
-using RxmAlmField_svid = field::common::U4T<comms::option::ValidNumValueRange<1, 96> >;
+using RxmAlmField_svid = field::rxm::svid_ext;
 using RxmAlmField_week = field::common::U4;
 using RxmAlmField_dwrd =
     comms::field::Optional<
