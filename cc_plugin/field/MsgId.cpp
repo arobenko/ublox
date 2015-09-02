@@ -65,7 +65,6 @@ QVariantMap createMsgIdProperties()
     cc::Property::appendEnumValue(enumValues, "INF-NOTICE", MsgId_INF_NOTICE);
     cc::Property::appendEnumValue(enumValues, "INF-TEST", MsgId_INF_TEST);
     cc::Property::appendEnumValue(enumValues, "INF-DEBUG", MsgId_INF_DEBUG);
-    cc::Property::appendEnumValue(enumValues, "INF-USER", MsgId_INF_USER);
 
     cc::Property::appendEnumValue(enumValues, "ACK-NAK", MsgId_ACK_NAK);
     cc::Property::appendEnumValue(enumValues, "ACK-ACK", MsgId_ACK_ACK);

@@ -129,8 +129,7 @@ private:
             MsgId_INF_WARNING,
             MsgId_INF_NOTICE,
             MsgId_INF_TEST,
-            MsgId_INF_DEBUG,
-            MsgId_INF_USER
+            MsgId_INF_DEBUG
         };
 
         auto iter = std::lower_bound(std::begin(IDs), std::end(IDs), id);

@@ -37,31 +37,6 @@ const QVariantMap& props_week();
 const QVariantMap& props_numSV();
 const QVariantMap& props_svid();
 
-
-// TODO: remove
-
-const QVariantMap& itowProperties();
-const QVariantMap& weekProperties();
-const QVariantMap& nsvProperties();
-const QVariantMap& cpMesProperties();
-const QVariantMap& prMesProperties();
-const QVariantMap& doMesProperties();
-const QVariantMap& svProperties();
-const QVariantMap& mesQiProperties();
-const QVariantMap& cnoProperties();
-const QVariantMap& lliProperties();
-const QVariantMap& numVisProperties();
-const QVariantMap& numSvProperties();
-const QVariantMap& svidProperties();
-const QVariantMap& statusInfoSvFlagProperties();
-const QVariantMap& azimProperties();
-const QVariantMap& elevProperties();
-const QVariantMap& ageProperties();
-const QVariantMap& chnProperties();
-QVariantMap dwordProperties(unsigned idx);
-const QVariantMap& howProperties();
-QVariantMap sfxdxProperties(unsigned idx1, unsigned idx2);
-
 }  // namespace rxm
 
 }  // namespace field

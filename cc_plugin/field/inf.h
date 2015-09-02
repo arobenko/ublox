@@ -32,7 +32,7 @@ namespace field
 namespace inf
 {
 
-const QVariantMap& stringProperties();
+const QVariantMap& props_str();
 
 }  // namespace inf
 

@@ -41,9 +41,9 @@ namespace
 QVariantList createFieldsProperties()
 {
     QVariantList props;
-    props.append(cc_plugin::field::inf::stringProperties());
+    props.append(cc_plugin::field::inf::props_str());
 
-    assert(props.size() == InfDebug::FieldIdx_NumOfValues);
+    assert(props.size() == InfDebug::FieldIdx_numOfValues);
     return props;
 }
 

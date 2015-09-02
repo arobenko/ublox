@@ -52,7 +52,6 @@ enum MsgId : std::uint16_t
     MsgId_INF_NOTICE = 0x0402,
     MsgId_INF_TEST = 0x0403,
     MsgId_INF_DEBUG = 0x0404,
-    MsgId_INF_USER = 0x0407,
     MsgId_ACK_NAK = 0x0500,
     MsgId_ACK_ACK = 0x0501,
     MsgId_CFG_PRT = 0x0600,

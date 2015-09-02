@@ -33,19 +33,9 @@ namespace field
 namespace inf
 {
 
-namespace
+const QVariantMap& props_str()
 {
-
-QVariantMap createStringProperties()
-{
-    return cc::Property::createPropertiesMap("String");
-}
-
-}  // namespace
-
-const QVariantMap& stringProperties()
-{
-    static const QVariantMap Props = createStringProperties();
+    static const QVariantMap Props = cc::Property::createPropertiesMap("str");
     return Props;
 }
 

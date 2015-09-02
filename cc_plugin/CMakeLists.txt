@@ -61,12 +61,11 @@ function (cc_plugin_ublox)
         message/RxmEphPollSv.cpp
         message/RxmEphPoll.cpp
         message/RxmPmreq.cpp
-#        message/InfError.cpp
-#        message/InfWarning.cpp
-#        message/InfNotice.cpp
-#        message/InfTest.cpp
-#        message/InfDebug.cpp
-#        message/InfUser.cpp
+        message/InfError.cpp
+        message/InfWarning.cpp
+        message/InfNotice.cpp
+        message/InfTest.cpp
+        message/InfDebug.cpp
 #        message/AckNak.cpp
 #        message/AckAck.cpp
 #        message/CfgPrt.cpp

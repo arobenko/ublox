@@ -50,7 +50,6 @@
 #include "message/InfNotice.h"
 #include "message/InfTest.h"
 #include "message/InfDebug.h"
-#include "message/InfUser.h"
 
 #include "message/AckNak.h"
 #include "message/AckAck.h"
@@ -93,13 +92,12 @@ using InputMessages =
         message::RxmSfrb<TMessage>,
         message::RxmSvsi<TMessage>,
         message::RxmAlm<TMessage>,
-        message::RxmEph<TMessage>/*,
+        message::RxmEph<TMessage>,
         message::InfError<TMessage>,
         message::InfWarning<TMessage>,
         message::InfNotice<TMessage>,
         message::InfTest<TMessage>,
-        message::InfDebug<TMessage>,
-        message::InfUser<TMessage>,
+        message::InfDebug<TMessage>/*,
         message::AckNak<TMessage>,
         message::AckAck<TMessage>,
         message::CfgPrt<TMessage>,

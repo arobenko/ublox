@@ -29,7 +29,7 @@ namespace ublox
 namespace message
 {
 
-using InfStringMsgFields = std::tuple<
+using InfStringMsgBaseFields = std::tuple<
     comms::field::String<field::common::FieldBase>
 >;
 
@@ -39,24 +39,24 @@ class InfStringMsgBase : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<TId>,
-        comms::option::FieldsImpl<InfStringMsgFields>,
+        comms::option::FieldsImpl<InfStringMsgBaseFields>,
         comms::option::DispatchImpl<InfStringMsgBase<TId, TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<TId>,
-        comms::option::FieldsImpl<InfStringMsgFields>,
+        comms::option::FieldsImpl<InfStringMsgBaseFields>,
         comms::option::DispatchImpl<InfStringMsgBase<TId, TMsgBase> >
     > Base;
 public:
     enum FieldIdx
     {
-        FieldIdx_String,
-        FieldIdx_NumOfValues
+        FieldIdx_str,
+        FieldIdx_numOfValues
     };
 
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_NumOfValues,
+    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
     InfStringMsgBase() = default;
