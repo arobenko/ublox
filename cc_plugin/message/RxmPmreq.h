@@ -19,7 +19,7 @@
 #pragma once
 
 #include "comms_champion/comms_champion.h"
-#include "ublox/message/RxmPosreq.h"
+#include "ublox/message/RxmPmreq.h"
 #include "cc_plugin/Message.h"
 #include "cc_plugin/ProtocolMessageBase.h"
 
@@ -32,22 +32,23 @@ namespace cc_plugin
 namespace message
 {
 
-class RxmPosreq : public
+class RxmPmreq : public
     ProtocolMessageBase<
-        ublox::message::RxmPosreq<ublox::cc_plugin::Message>,
-        RxmPosreq>
+        ublox::message::RxmPmreq<ublox::cc_plugin::Message>,
+        RxmPmreq>
 {
 public:
-    RxmPosreq();
-    RxmPosreq(const RxmPosreq&) = delete;
-    RxmPosreq(RxmPosreq&&) = delete;
-    virtual ~RxmPosreq();
+    RxmPmreq();
+    RxmPmreq(const RxmPmreq&) = delete;
+    RxmPmreq(RxmPmreq&&) = delete;
+    virtual ~RxmPmreq();
 
-    RxmPosreq& operator=(const RxmPosreq&);
-    RxmPosreq& operator=(RxmPosreq&&);
+    RxmPmreq& operator=(const RxmPmreq&);
+    RxmPmreq& operator=(RxmPmreq&&);
 
 protected:
     virtual const char* nameImpl() const override;
+    virtual const QVariantList& fieldsPropertiesImpl() const override;
 };
 
 }  // namespace message
@@ -56,8 +57,8 @@ protected:
 
 }  // namespace ublox
 
-extern template class ublox::message::RxmPosreq<ublox::cc_plugin::Message>;
+extern template class ublox::message::RxmPmreq<ublox::cc_plugin::Message>;
 extern template class ublox::cc_plugin::ProtocolMessageBase<
-    ublox::message::RxmPosreq<ublox::cc_plugin::Message>,
-    ublox::cc_plugin::message::RxmPosreq>;
+    ublox::message::RxmPmreq<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::RxmPmreq>;
 

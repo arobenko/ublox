@@ -46,7 +46,7 @@ enum MsgId : std::uint16_t
     MsgId_RXM_SVSI = 0x0220,
     MsgId_RXM_ALM = 0x0230,
     MsgId_RXM_EPH = 0x0231,
-    MsgId_RXM_POSREQ = 0x0240,
+    MsgId_RXM_PMREQ = 0x0241,
     MsgId_INF_ERROR = 0x0400,
     MsgId_INF_WARNING = 0x0401,
     MsgId_INF_NOTICE = 0x0402,

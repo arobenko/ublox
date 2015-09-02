@@ -60,7 +60,7 @@ function (cc_plugin_ublox)
         message/RxmEph.cpp
         message/RxmEphPollSv.cpp
         message/RxmEphPoll.cpp
-#        message/RxmPosreq.cpp
+        message/RxmPmreq.cpp
 #        message/InfError.cpp
 #        message/InfWarning.cpp
 #        message/InfNotice.cpp

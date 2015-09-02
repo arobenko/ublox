@@ -44,7 +44,6 @@
 #include "message/RxmSvsi.h"
 #include "message/RxmAlm.h"
 #include "message/RxmEph.h"
-#include "message/RxmPosreq.h"
 
 #include "message/InfError.h"
 #include "message/InfWarning.h"
@@ -95,7 +94,6 @@ using InputMessages =
         message::RxmSvsi<TMessage>,
         message::RxmAlm<TMessage>,
         message::RxmEph<TMessage>/*,
-        message::RxmPosreq<TMessage>,
         message::InfError<TMessage>,
         message::InfWarning<TMessage>,
         message::InfNotice<TMessage>,

@@ -109,7 +109,7 @@ private:
             MsgId_RXM_SVSI,
             MsgId_RXM_ALM,
             MsgId_RXM_EPH,
-            MsgId_RXM_POSREQ,
+            MsgId_RXM_PMREQ,
         };
 
         auto iter = std::lower_bound(std::begin(IDs), std::end(IDs), id);
