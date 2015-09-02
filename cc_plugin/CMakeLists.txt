@@ -66,8 +66,8 @@ function (cc_plugin_ublox)
         message/InfNotice.cpp
         message/InfTest.cpp
         message/InfDebug.cpp
-#        message/AckNak.cpp
-#        message/AckAck.cpp
+        message/AckNak.cpp
+        message/AckAck.cpp
 #        message/CfgPrt.cpp
 #        message/CfgPrtPoll.cpp
 #        message/CfgMsg.cpp

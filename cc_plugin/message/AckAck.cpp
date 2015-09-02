@@ -44,7 +44,7 @@ QVariantList createFieldsProperties()
     QVariantList props;
     props.append(cc_plugin::field::msgIdProperties());
 
-    assert(props.size() == AckAck::FieldIdx_NumOfValues);
+    assert(props.size() == AckAck::FieldIdx_numOfValues);
     return props;
 }
 

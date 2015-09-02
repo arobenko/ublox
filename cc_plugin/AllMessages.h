@@ -73,8 +73,8 @@
 #include "cc_plugin/message/InfTest.h"
 #include "cc_plugin/message/InfDebug.h"
 
-//#include "cc_plugin/message/AckNak.h"
-//#include "cc_plugin/message/AckAck.h"
+#include "cc_plugin/message/AckNak.h"
+#include "cc_plugin/message/AckAck.h"
 //
 //#include "cc_plugin/message/CfgPrt.h"
 //#include "cc_plugin/message/CfgPrtPoll.h"
@@ -157,9 +157,9 @@ typedef std::tuple<
     cc_plugin::message::InfWarning,
     cc_plugin::message::InfNotice,
     cc_plugin::message::InfTest,
-    cc_plugin::message::InfDebug/*,
+    cc_plugin::message::InfDebug,
     cc_plugin::message::AckNak,
-    cc_plugin::message::AckAck,
+    cc_plugin::message::AckAck/*,
     cc_plugin::message::CfgPrt,
     cc_plugin::message::CfgPrtPoll,
     cc_plugin::message::CfgMsg,
