@@ -42,7 +42,7 @@ namespace message
 namespace
 {
 
-QVariantMap creatProps_mode()
+QVariantMap createProps_mode()
 {
     QVariantList charLenEnumValues;
     cc::Property::appendEnumValue(charLenEnumValues, "5bit");
@@ -95,7 +95,7 @@ QVariantList createFieldsProperties()
     props.append(cc_plugin::field::cfg::props_readOnlyPortID());
     props.append(cc_plugin::field::common::props_reserved(0));
     props.append(cc_plugin::field::cfg::props_txReady());
-    props.append(creatProps_mode());
+    props.append(createProps_mode());
     props.append(cc::Property::createPropertiesMap("baudRate"));
     props.append(cc_plugin::field::cfg::props_inProtoMask());
     props.append(cc_plugin::field::cfg::props_outProtoMask());

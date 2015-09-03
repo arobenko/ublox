@@ -69,6 +69,9 @@ function (cc_plugin_ublox)
         message/AckNak.cpp
         message/AckAck.cpp
         message/CfgPrtUart.cpp
+        message/CfgPrtUsb.cpp
+        message/CfgPrtSpi.cpp
+        message/CfgPrtDdc.cpp
 #        message/CfgPrtPoll.cpp
 #        message/CfgMsg.cpp
 #        message/CfgMsgCurrent.cpp

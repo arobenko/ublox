@@ -55,6 +55,9 @@
 #include "message/AckAck.h"
 
 #include "message/CfgPrtUart.h"
+#include "message/CfgPrtUsb.h"
+#include "message/CfgPrtSpi.h"
+#include "message/CfgPrtDdc.h"
 #include "message/CfgMsg.h"
 #include "message/CfgMsgCurrent.h"
 #include "message/CfgInf.h"
@@ -100,7 +103,10 @@ using InputMessages =
         message::InfDebug<TMessage>,
         message::AckNak<TMessage>,
         message::AckAck<TMessage>,
-        message::CfgPrtUart<TMessage>/*,
+        message::CfgPrtUart<TMessage>,
+        message::CfgPrtUsb<TMessage>,
+        message::CfgPrtSpi<TMessage>,
+        message::CfgPrtDdc<TMessage>/*,
         message::CfgMsg<TMessage>,
         message::CfgMsgCurrent<TMessage>,
         message::CfgInf<TMessage>,

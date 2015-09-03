@@ -77,6 +77,9 @@
 //#include "cc_plugin/message/AckAck.h"
 //
 #include "cc_plugin/message/CfgPrtUart.h"
+#include "cc_plugin/message/CfgPrtUsb.h"
+#include "cc_plugin/message/CfgPrtSpi.h"
+#include "cc_plugin/message/CfgPrtDdc.h"
 //#include "cc_plugin/message/CfgPrtPoll.h"
 //#include "cc_plugin/message/CfgMsg.h"
 //#include "cc_plugin/message/CfgMsgCurrent.h"
@@ -160,7 +163,10 @@ typedef std::tuple<
 //    cc_plugin::message::InfDebug,
 //    cc_plugin::message::AckNak,
 //    cc_plugin::message::AckAck,
-    cc_plugin::message::CfgPrtUart/*,
+    cc_plugin::message::CfgPrtUart,
+    cc_plugin::message::CfgPrtUsb,
+    cc_plugin::message::CfgPrtSpi,
+    cc_plugin::message::CfgPrtDdc/*,
     cc_plugin::message::CfgPrtPoll,
     cc_plugin::message::CfgMsg,
     cc_plugin::message::CfgMsgCurrent,
