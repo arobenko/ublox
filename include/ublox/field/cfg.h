@@ -18,6 +18,8 @@
 
 #pragma once
 
+#include <algorithm>
+
 #include "common.h"
 
 namespace ublox
@@ -29,6 +31,45 @@ namespace field
 namespace cfg
 {
 
+enum class Polarity : std::uint8_t
+{
+    HighActive,
+    LowActive,
+    NumOfValues
+};
+
+using txReady =
+    comms::field::Bitfield<
+        common::FieldBase,
+        std::tuple<
+            common::X1T<comms::option::FixedBitLength<1> >,
+            comms::field::EnumValue<
+                common::FieldBase,
+                Polarity,
+                comms::option::FixedBitLength<1>,
+                comms::option::ValidNumValueRange<0, (int)Polarity::NumOfValues - 1>
+            >,
+            common::U1T<
+                comms::option::FixedBitLength<5>,
+                comms::option::ValidNumValueRange<0, 31>
+            >,
+            common::U2T<
+                comms::option::FixedBitLength<9>,
+                comms::option::ValidNumValueRange<0, 0x1ff>
+            >
+        >
+    >;
+
+using inProtoMask =
+    common::X2T<comms::option::BitmaskReservedBits<0xfff8, 0> >;
+
+using outProtoMask =
+    common::X2T<comms::option::BitmaskReservedBits<0xfffc, 0> >;
+
+using prtFlags =
+    common::X2T<comms::option::BitmaskReservedBits<0xfffd, 0> >;
+
+// TODO: remove
 using PortID = common::U1;
 
 enum CharLength : std::uint8_t

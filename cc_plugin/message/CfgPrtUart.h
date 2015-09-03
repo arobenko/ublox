@@ -19,7 +19,7 @@
 #pragma once
 
 #include "comms_champion/comms_champion.h"
-#include "ublox/message/CfgPrt.h"
+#include "ublox/message/CfgPrtUart.h"
 #include "cc_plugin/Message.h"
 #include "cc_plugin/ProtocolMessageBase.h"
 
@@ -32,19 +32,19 @@ namespace cc_plugin
 namespace message
 {
 
-class CfgPrt : public
+class CfgPrtUart : public
     ProtocolMessageBase<
-        ublox::message::CfgPrt<ublox::cc_plugin::Message>,
-        CfgPrt>
+        ublox::message::CfgPrtUart<ublox::cc_plugin::Message>,
+        CfgPrtUart>
 {
 public:
-    CfgPrt();
-    CfgPrt(const CfgPrt&) = delete;
-    CfgPrt(CfgPrt&&) = delete;
-    virtual ~CfgPrt();
+    CfgPrtUart();
+    CfgPrtUart(const CfgPrtUart&) = delete;
+    CfgPrtUart(CfgPrtUart&&) = delete;
+    virtual ~CfgPrtUart();
 
-    CfgPrt& operator=(const CfgPrt&);
-    CfgPrt& operator=(CfgPrt&&);
+    CfgPrtUart& operator=(const CfgPrtUart&);
+    CfgPrtUart& operator=(CfgPrtUart&&);
 
 protected:
     virtual const char* nameImpl() const override;
@@ -57,8 +57,8 @@ protected:
 
 }  // namespace ublox
 
-extern template class ublox::message::CfgPrt<ublox::cc_plugin::Message>;
+extern template class ublox::message::CfgPrtUart<ublox::cc_plugin::Message>;
 extern template class ublox::cc_plugin::ProtocolMessageBase<
-    ublox::message::CfgPrt<ublox::cc_plugin::Message>,
-    ublox::cc_plugin::message::CfgPrt>;
+    ublox::message::CfgPrtUart<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::CfgPrtUart>;
 

@@ -68,7 +68,7 @@ function (cc_plugin_ublox)
         message/InfDebug.cpp
         message/AckNak.cpp
         message/AckAck.cpp
-#        message/CfgPrt.cpp
+        message/CfgPrtUart.cpp
 #        message/CfgPrtPoll.cpp
 #        message/CfgMsg.cpp
 #        message/CfgMsgCurrent.cpp

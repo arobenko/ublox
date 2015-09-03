@@ -53,30 +53,30 @@
 //#include "cc_plugin/message/NavEkfstatusPoll.h"
 //#include "cc_plugin/message/NavAopstatus.h"
 //#include "cc_plugin/message/NavAopstatusPoll.h"
-
-#include "cc_plugin/message/RxmRaw.h"
-#include "cc_plugin/message/RxmRawPoll.h"
-#include "cc_plugin/message/RxmSfrb.h"
-#include "cc_plugin/message/RxmSvsi.h"
-#include "cc_plugin/message/RxmSvsiPoll.h"
-#include "cc_plugin/message/RxmAlm.h"
-#include "cc_plugin/message/RxmAlmPollSv.h"
-#include "cc_plugin/message/RxmAlmPoll.h"
-#include "cc_plugin/message/RxmEph.h"
-#include "cc_plugin/message/RxmEphPollSv.h"
-#include "cc_plugin/message/RxmEphPoll.h"
-#include "cc_plugin/message/RxmPmreq.h"
-
-#include "cc_plugin/message/InfError.h"
-#include "cc_plugin/message/InfWarning.h"
-#include "cc_plugin/message/InfNotice.h"
-#include "cc_plugin/message/InfTest.h"
-#include "cc_plugin/message/InfDebug.h"
-
-#include "cc_plugin/message/AckNak.h"
-#include "cc_plugin/message/AckAck.h"
 //
-//#include "cc_plugin/message/CfgPrt.h"
+//#include "cc_plugin/message/RxmRaw.h"
+//#include "cc_plugin/message/RxmRawPoll.h"
+//#include "cc_plugin/message/RxmSfrb.h"
+//#include "cc_plugin/message/RxmSvsi.h"
+//#include "cc_plugin/message/RxmSvsiPoll.h"
+//#include "cc_plugin/message/RxmAlm.h"
+//#include "cc_plugin/message/RxmAlmPollSv.h"
+//#include "cc_plugin/message/RxmAlmPoll.h"
+//#include "cc_plugin/message/RxmEph.h"
+//#include "cc_plugin/message/RxmEphPollSv.h"
+//#include "cc_plugin/message/RxmEphPoll.h"
+//#include "cc_plugin/message/RxmPmreq.h"
+//
+//#include "cc_plugin/message/InfError.h"
+//#include "cc_plugin/message/InfWarning.h"
+//#include "cc_plugin/message/InfNotice.h"
+//#include "cc_plugin/message/InfTest.h"
+//#include "cc_plugin/message/InfDebug.h"
+//
+//#include "cc_plugin/message/AckNak.h"
+//#include "cc_plugin/message/AckAck.h"
+//
+#include "cc_plugin/message/CfgPrtUart.h"
 //#include "cc_plugin/message/CfgPrtPoll.h"
 //#include "cc_plugin/message/CfgMsg.h"
 //#include "cc_plugin/message/CfgMsgCurrent.h"
@@ -141,26 +141,26 @@ typedef std::tuple<
 //    cc_plugin::message::NavEkfstatusPoll,
 //    cc_plugin::message::NavAopstatus,
 //    cc_plugin::message::NavAopstatusPoll,
-    cc_plugin::message::RxmRaw,
-    cc_plugin::message::RxmRawPoll,
-    cc_plugin::message::RxmSfrb,
-    cc_plugin::message::RxmSvsi,
-    cc_plugin::message::RxmSvsiPoll,
-    cc_plugin::message::RxmAlm,
-    cc_plugin::message::RxmAlmPollSv,
-    cc_plugin::message::RxmAlmPoll,
-    cc_plugin::message::RxmEph,
-    cc_plugin::message::RxmEphPollSv,
-    cc_plugin::message::RxmEphPoll,
-    cc_plugin::message::RxmPmreq,
-    cc_plugin::message::InfError,
-    cc_plugin::message::InfWarning,
-    cc_plugin::message::InfNotice,
-    cc_plugin::message::InfTest,
-    cc_plugin::message::InfDebug,
-    cc_plugin::message::AckNak,
-    cc_plugin::message::AckAck/*,
-    cc_plugin::message::CfgPrt,
+//    cc_plugin::message::RxmRaw,
+//    cc_plugin::message::RxmRawPoll,
+//    cc_plugin::message::RxmSfrb,
+//    cc_plugin::message::RxmSvsi,
+//    cc_plugin::message::RxmSvsiPoll,
+//    cc_plugin::message::RxmAlm,
+//    cc_plugin::message::RxmAlmPollSv,
+//    cc_plugin::message::RxmAlmPoll,
+//    cc_plugin::message::RxmEph,
+//    cc_plugin::message::RxmEphPollSv,
+//    cc_plugin::message::RxmEphPoll,
+//    cc_plugin::message::RxmPmreq,
+//    cc_plugin::message::InfError,
+//    cc_plugin::message::InfWarning,
+//    cc_plugin::message::InfNotice,
+//    cc_plugin::message::InfTest,
+//    cc_plugin::message::InfDebug,
+//    cc_plugin::message::AckNak,
+//    cc_plugin::message::AckAck,
+    cc_plugin::message::CfgPrtUart/*,
     cc_plugin::message::CfgPrtPoll,
     cc_plugin::message::CfgMsg,
     cc_plugin::message::CfgMsgCurrent,

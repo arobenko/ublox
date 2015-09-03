@@ -88,6 +88,15 @@ QVariantMap createMsgIdProperties()
     cc::Property::appendEnumValue(enumValues, "CFG-NAV2", MsgId_CFG_NAV2);
     cc::Property::appendEnumValue(enumValues, "CFG-USB", MsgId_CFG_USB);
     cc::Property::appendEnumValue(enumValues, "CFG-TMODE", MsgId_CFG_TMODE);
+    cc::Property::appendEnumValue(enumValues, "CFG-NVS", MsgId_CFG_NVS);
+    cc::Property::appendEnumValue(enumValues, "CFG-NAVX5", MsgId_CFG_NAVX5);
+    cc::Property::appendEnumValue(enumValues, "CFG-NAV5", MsgId_CFG_NAV5);
+    cc::Property::appendEnumValue(enumValues, "CFG-TP5", MsgId_CFG_TP5);
+    cc::Property::appendEnumValue(enumValues, "CFG-RINV", MsgId_CFG_RINV);
+    cc::Property::appendEnumValue(enumValues, "CFG-ITFM", MsgId_CFG_ITFM);
+    cc::Property::appendEnumValue(enumValues, "CFG-PM2", MsgId_CFG_PM2);
+    cc::Property::appendEnumValue(enumValues, "CFG-GNSS", MsgId_CFG_GNSS);
+    cc::Property::appendEnumValue(enumValues, "CFG-LOGFILTER", MsgId_CFG_LOGFILTER);
     cc::Property::appendEnumValue(enumValues, "CFG-LIC", MsgId_CFG_LIC);
 
     return cc::Property::createPropertiesMap("CLASS + ID", std::move(enumValues));

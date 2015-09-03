@@ -169,6 +169,15 @@ private:
             MsgId_CFG_NAV2,
             MsgId_CFG_USB,
             MsgId_CFG_TMODE,
+            MsgId_CFG_NVS,
+            MsgId_CFG_NAVX5,
+            MsgId_CFG_NAV5,
+            MsgId_CFG_TP5,
+            MsgId_CFG_RINV,
+            MsgId_CFG_ITFM,
+            MsgId_CFG_PM2,
+            MsgId_CFG_GNSS,
+            MsgId_CFG_LOGFILTER,
             MsgId_CFG_LIC
         };
 

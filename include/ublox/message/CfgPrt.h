@@ -31,77 +31,44 @@ namespace ublox
 namespace message
 {
 
-enum CfgPrtDataIndex
+enum class CfgPrt_PortId : std::uint8_t
 {
-    CfgPrtDataIndex_PortId,
-    CfgPrtDataIndex_Res0,
-    CfgPrtDataIndex_Res1,
-    CfgPrtDataIndex_Mode,
-    CfgPrtDataIndex_Baudrate,
-    CfgPrtDataIndex_InProtoMask,
-    CfgPrtDataIndex_OutProtoMask,
-    CfgPrtDataIndex_Flags,
-    CfgPrtDataIndex_Pad,
-    CfgPrtDataIndex_NumOfValues
+    DDC = 0,
+    UART = 1,
+    USB = 3,
+    SPI = 4
 };
 
-using CfgPrtElement =
-    comms::field::Bundle<
-        std::tuple<
-            field::cfg::PortID,
-            field::common::res1,
-            field::common::res2,
-            field::cfg::Mode,
-            field::cfg::Baudrate,
-            field::cfg::ProtoMask,
-            field::cfg::ProtoMask,
-            field::cfg::PrtFlags,
-            field::common::res2
-        >
-    >;
-
-using CfgPrtFields = std::tuple<
-    comms::field::ArrayList<
-        field::common::FieldBase,
-        CfgPrtElement
-    >
->;
-
-template <typename TMsgBase = Message>
-class CfgPrt : public
-    comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_CFG_PRT>,
-        comms::option::FieldsImpl<CfgPrtFields>,
-        comms::option::DispatchImpl<CfgPrt<TMsgBase> >
-    >
+enum
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_CFG_PRT>,
-        comms::option::FieldsImpl<CfgPrtFields>,
-        comms::option::DispatchImpl<CfgPrt<TMsgBase> >
-    > Base;
-public:
-    enum FieldIdx
-    {
-        FieldIdx_List,
-        FieldIdx_NumOfValues
-    };
-
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_NumOfValues,
-        "Number of fields is incorrect");
-
-    CfgPrt() = default;
-    CfgPrt(const CfgPrt&) = default;
-    CfgPrt(CfgPrt&& other) = default;
-    virtual ~CfgPrt() = default;
-
-    CfgPrt& operator=(const CfgPrt&) = default;
-    CfgPrt& operator=(CfgPrt&&) = default;
-
+    CfgPrt_txReady_en,
+    CfgPrt_txReady_pol,
+    CfgPrt_txReady_pin,
+    CfgPrt_txReady_thres,
+    CfgPrt_txReady_numOfValues
 };
 
+enum
+{
+    CfgPrt_inProtoMask_inUbx,
+    CfgPrt_inProtoMask_inNmea,
+    CfgPrt_inProtoMask_inRtcm,
+    CfgPrt_inProtoMask_numOfValues
+};
+
+enum
+{
+    CfgPrt_outProtoMask_outUbx,
+    CfgPrt_outProtoMask_outNmea,
+    CfgPrt_outProtoMask_numOfValues
+};
+
+enum
+{
+    CfgPrt_flags_reserved,
+    CfgPrt_flags_extendedTxTimeout,
+    CfgPrt_flags_numOfValues
+};
 
 }  // namespace message
 

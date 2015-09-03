@@ -22,6 +22,7 @@
 
 #include "comms_champion/comms_champion.h"
 #include "ublox/field/cfg.h"
+#include "ublox/message/CfgPrt.h"
 
 namespace cc = comms_champion;
 
@@ -40,6 +41,83 @@ namespace cfg
 namespace
 {
 
+QVariantMap createProps_portID()
+{
+    QVariantList enumValues;
+    cc::Property::appendEnumValue(enumValues, "DDC", (int)ublox::message::CfgPrt_PortId::DDC);
+    cc::Property::appendEnumValue(enumValues, "UART", (int)ublox::message::CfgPrt_PortId::UART);
+    cc::Property::appendEnumValue(enumValues, "USB", (int)ublox::message::CfgPrt_PortId::USB);
+    cc::Property::appendEnumValue(enumValues, "SPI", (int)ublox::message::CfgPrt_PortId::SPI);
+
+    return cc::Property::createPropertiesMap("portID", std::move(enumValues));
+}
+
+QVariantMap createProps_readOnlyPortID()
+{
+    auto props = createProps_portID();
+    cc::Property::setReadOnly(props);
+    return props;
+}
+
+QVariantMap createProps_txReady()
+{
+    QVariantList enBitNames;
+    enBitNames.append("en");
+    auto enProps = cc::Property::createPropertiesMap("txReady", std::move(enBitNames));
+    cc::Property::setSerialisedHidden(enProps);
+
+    QVariantList polEnumValues;
+    cc::Property::appendEnumValue(polEnumValues, "High-active");
+    cc::Property::appendEnumValue(polEnumValues, "Low-active");
+    assert(polEnumValues.size() == (int)ublox::field::cfg::Polarity::NumOfValues);
+    auto polProps = cc::Property::createPropertiesMap("pol", std::move(polEnumValues));
+    cc::Property::setSerialisedHidden(polProps);
+
+    auto pinProps = cc::Property::createPropertiesMap("pin");
+    cc::Property::setSerialisedHidden(pinProps);
+
+    auto thresProps = cc::Property::createPropertiesMap("thres");
+    cc::Property::setSerialisedHidden(thresProps);
+
+    QVariantList membersData;
+    membersData.append(std::move(enProps));
+    membersData.append(std::move(polProps));
+    membersData.append(std::move(pinProps));
+    membersData.append(std::move(thresProps));
+    assert(membersData.size() == ublox::message::CfgPrt_txReady_numOfValues);
+    return cc::Property::createPropertiesMap("txReady", std::move(membersData));
+}
+
+QVariantMap createProps_inProtoMask()
+{
+    QVariantList bitNames;
+    bitNames.append("inUbx");
+    bitNames.append("inNmea");
+    bitNames.append("inRtcm");
+    assert(bitNames.size() == ublox::message::CfgPrt_inProtoMask_numOfValues);
+    return cc::Property::createPropertiesMap("inProtoMask", std::move(bitNames));
+}
+
+QVariantMap createProps_outProtoMask()
+{
+    QVariantList bitNames;
+    bitNames.append("outUbx");
+    bitNames.append("outNmea");
+    assert(bitNames.size() == ublox::message::CfgPrt_outProtoMask_numOfValues);
+    return cc::Property::createPropertiesMap("outProtoMask", std::move(bitNames));
+}
+
+QVariantMap createProps_prtFlags()
+{
+    QVariantList bitNames;
+    bitNames.append(QVariant());
+    bitNames.append("extendedTxTimeout");
+    assert(bitNames.size() == ublox::message::CfgPrt_flags_numOfValues);
+    return cc::Property::createPropertiesMap("flags", std::move(bitNames));
+}
+
+
+// TODO: remove
 QVariantMap createNameOnlyProperties(const char* name)
 {
     return cc::Property::createPropertiesMap(name);
@@ -226,6 +304,45 @@ QVariantMap createFxnFlagsProperties()
 
 
 }  // namespace
+
+const QVariantMap& props_portID()
+{
+    static const auto Props = createProps_portID();
+    return Props;
+}
+
+const QVariantMap& props_readOnlyPortID()
+{
+    static const auto Props = createProps_readOnlyPortID();
+    return Props;
+}
+
+const QVariantMap& props_txReady()
+{
+    static const auto Props = createProps_txReady();
+    return Props;
+}
+
+const QVariantMap& props_inProtoMask()
+{
+    static const auto Props = createProps_inProtoMask();
+    return Props;
+}
+
+const QVariantMap& props_outProtoMask()
+{
+    static const auto Props = createProps_outProtoMask();
+    return Props;
+}
+
+const QVariantMap& props_prtFlags()
+{
+    static const auto Props = createProps_prtFlags();
+    return Props;
+}
+
+
+// TODO: remove
 
 const QVariantMap& portIdProperties()
 {

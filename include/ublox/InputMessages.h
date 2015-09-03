@@ -54,7 +54,7 @@
 #include "message/AckNak.h"
 #include "message/AckAck.h"
 
-#include "message/CfgPrt.h"
+#include "message/CfgPrtUart.h"
 #include "message/CfgMsg.h"
 #include "message/CfgMsgCurrent.h"
 #include "message/CfgInf.h"
@@ -97,10 +97,10 @@ using InputMessages =
         message::InfWarning<TMessage>,
         message::InfNotice<TMessage>,
         message::InfTest<TMessage>,
-        message::InfDebug<TMessage>/*,
+        message::InfDebug<TMessage>,
         message::AckNak<TMessage>,
         message::AckAck<TMessage>,
-        message::CfgPrt<TMessage>,
+        message::CfgPrtUart<TMessage>/*,
         message::CfgMsg<TMessage>,
         message::CfgMsgCurrent<TMessage>,
         message::CfgInf<TMessage>,

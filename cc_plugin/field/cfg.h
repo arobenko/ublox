@@ -32,6 +32,14 @@ namespace field
 namespace cfg
 {
 
+const QVariantMap& props_portID();
+const QVariantMap& props_readOnlyPortID();
+const QVariantMap& props_txReady();
+const QVariantMap& props_inProtoMask();
+const QVariantMap& props_outProtoMask();
+const QVariantMap& props_prtFlags();
+
+// TODO: remove
 const QVariantMap& portIdProperties();
 const QVariantMap& prtModeProperties();
 const QVariantMap& baudrateProperties();
