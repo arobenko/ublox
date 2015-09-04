@@ -19,7 +19,7 @@
 #pragma once
 
 #include "comms_champion/comms_champion.h"
-#include "ublox/message/CfgPrtPoll.h"
+#include "ublox/message/CfgPrtPollPort.h"
 #include "cc_plugin/Message.h"
 #include "cc_plugin/ProtocolMessageBase.h"
 
@@ -32,22 +32,23 @@ namespace cc_plugin
 namespace message
 {
 
-class CfgPrtPoll : public
+class CfgPrtPollPort : public
     ProtocolMessageBase<
-        ublox::message::CfgPrtPoll<ublox::cc_plugin::Message>,
-        CfgPrtPoll>
+        ublox::message::CfgPrtPollPort<ublox::cc_plugin::Message>,
+        CfgPrtPollPort>
 {
 public:
-    CfgPrtPoll();
-    CfgPrtPoll(const CfgPrtPoll&) = delete;
-    CfgPrtPoll(CfgPrtPoll&&) = delete;
-    virtual ~CfgPrtPoll();
+    CfgPrtPollPort();
+    CfgPrtPollPort(const CfgPrtPollPort&) = delete;
+    CfgPrtPollPort(CfgPrtPollPort&&) = delete;
+    virtual ~CfgPrtPollPort();
 
-    CfgPrtPoll& operator=(const CfgPrtPoll&);
-    CfgPrtPoll& operator=(CfgPrtPoll&&);
+    CfgPrtPollPort& operator=(const CfgPrtPollPort&);
+    CfgPrtPollPort& operator=(CfgPrtPollPort&&);
 
 protected:
     virtual const char* nameImpl() const override;
+    virtual const QVariantList& fieldsPropertiesImpl() const override;
 };
 
 }  // namespace message
@@ -57,7 +58,7 @@ protected:
 }  // namespace ublox
 
 
-extern template class ublox::message::CfgPrtPoll<ublox::cc_plugin::Message>;
+extern template class ublox::message::CfgPrtPollPort<ublox::cc_plugin::Message>;
 extern template class ublox::cc_plugin::ProtocolMessageBase<
-    ublox::message::CfgPrtPoll<ublox::cc_plugin::Message>,
-    ublox::cc_plugin::message::CfgPrtPoll>;
+    ublox::message::CfgPrtPollPort<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::CfgPrtPollPort>;

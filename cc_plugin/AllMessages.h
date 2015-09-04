@@ -80,7 +80,8 @@
 #include "cc_plugin/message/CfgPrtUsb.h"
 #include "cc_plugin/message/CfgPrtSpi.h"
 #include "cc_plugin/message/CfgPrtDdc.h"
-//#include "cc_plugin/message/CfgPrtPoll.h"
+#include "cc_plugin/message/CfgPrtPollPort.h"
+#include "cc_plugin/message/CfgPrtPoll.h"
 //#include "cc_plugin/message/CfgMsg.h"
 //#include "cc_plugin/message/CfgMsgCurrent.h"
 //#include "cc_plugin/message/CfgMsgPoll.h"
@@ -166,8 +167,9 @@ typedef std::tuple<
     cc_plugin::message::CfgPrtUart,
     cc_plugin::message::CfgPrtUsb,
     cc_plugin::message::CfgPrtSpi,
-    cc_plugin::message::CfgPrtDdc/*,
-    cc_plugin::message::CfgPrtPoll,
+    cc_plugin::message::CfgPrtDdc,
+    cc_plugin::message::CfgPrtPollPort,
+    cc_plugin::message::CfgPrtPoll/*,
     cc_plugin::message::CfgMsg,
     cc_plugin::message::CfgMsgCurrent,
     cc_plugin::message::CfgMsgPoll,

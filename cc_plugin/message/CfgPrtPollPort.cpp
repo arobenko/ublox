@@ -16,14 +16,14 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-#include "CfgPrtPoll.h"
+#include "CfgPrtPollPort.h"
 
 #include "cc_plugin/field/cfg.h"
 
-template class ublox::message::CfgPrtPoll<ublox::cc_plugin::Message>;
+template class ublox::message::CfgPrtPollPort<ublox::cc_plugin::Message>;
 template class ublox::cc_plugin::ProtocolMessageBase<
-    ublox::message::CfgPrtPoll<ublox::cc_plugin::Message>,
-    ublox::cc_plugin::message::CfgPrtPoll>;
+    ublox::message::CfgPrtPollPort<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::CfgPrtPollPort>;
 
 namespace cc = comms_champion;
 
@@ -36,17 +36,38 @@ namespace cc_plugin
 namespace message
 {
 
-CfgPrtPoll::CfgPrtPoll() = default;
-CfgPrtPoll::~CfgPrtPoll() = default;
-
-CfgPrtPoll& CfgPrtPoll::operator=(const CfgPrtPoll&) = default;
-CfgPrtPoll& CfgPrtPoll::operator=(CfgPrtPoll&&) = default;
-
-
-const char* CfgPrtPoll::nameImpl() const
+namespace
 {
-    static const char* Str = "CFG-PRT (Poll)";
+
+QVariantList createFieldsProperties()
+{
+
+    QVariantList props;
+    props.append(cc_plugin::field::cfg::props_portID());
+
+    assert(props.size() == CfgPrtPollPort::FieldIdx_numOfValues);
+    return props;
+}
+
+}  // namespace
+
+CfgPrtPollPort::CfgPrtPollPort() = default;
+CfgPrtPollPort::~CfgPrtPollPort() = default;
+
+CfgPrtPollPort& CfgPrtPollPort::operator=(const CfgPrtPollPort&) = default;
+CfgPrtPollPort& CfgPrtPollPort::operator=(CfgPrtPollPort&&) = default;
+
+
+const char* CfgPrtPollPort::nameImpl() const
+{
+    static const char* Str = "CFG-PRT (Poll Port)";
     return Str;
+}
+
+const QVariantList& CfgPrtPollPort::fieldsPropertiesImpl() const
+{
+    static const auto Props = createFieldsProperties();
+    return Props;
 }
 
 }  // namespace message

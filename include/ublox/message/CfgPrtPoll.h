@@ -23,17 +23,13 @@
 #include "comms/Message.h"
 #include "ublox/Message.h"
 
-#include "ublox/field/cfg.h"
-
 namespace ublox
 {
 
 namespace message
 {
 
-using CfgPrtPollFields = std::tuple<
-    field::cfg::PortID
->;
+using CfgPrtPollFields = std::tuple<>;
 
 template <typename TMsgBase = Message>
 class CfgPrtPoll : public
@@ -53,11 +49,10 @@ class CfgPrtPoll : public
 public:
     enum FieldIdx
     {
-        FieldIdx_PortId,
-        FieldIdx_NumOfValues
+        FieldIdx_numOfValues
     };
 
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_NumOfValues,
+    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
     CfgPrtPoll() = default;
