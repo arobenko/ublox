@@ -69,6 +69,8 @@ using outProtoMask =
 using prtFlags =
     common::X2T<comms::option::BitmaskReservedBits<0xfffd, 0> >;
 
+using rate = common::U1;
+
 // TODO: remove
 using PortID = common::U1;
 

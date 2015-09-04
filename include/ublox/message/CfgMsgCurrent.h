@@ -28,10 +28,13 @@ namespace ublox
 namespace message
 {
 
+using CfgMsgCurrentField_id = field::MsgId;
+using CfgMsgCurrentField_rate = field::cfg::rate;
+
 using CfgMsgCurrentFields =
     std::tuple<
-        ublox::field::MsgId,
-        ublox::field::cfg::Rate
+        CfgMsgCurrentField_id,
+        CfgMsgCurrentField_rate
     >;
 
 
@@ -53,12 +56,12 @@ class CfgMsgCurrent : public
 public:
     enum FieldIdx
     {
-        FieldIdx_Id,
-        FieldIdx_Rate,
-        FieldIdx_NumOfValues
+        FieldIdx_id,
+        FieldIdx_rate,
+        FieldIdx_numOfValues
     };
 
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_NumOfValues,
+    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
     CfgMsgCurrent() = default;

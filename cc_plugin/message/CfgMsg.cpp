@@ -41,18 +41,14 @@ namespace message
 namespace
 {
 
-QVariantMap createListProperties()
+QVariantMap createProps_rate()
 {
-    QVariantList membersProps;
-    membersProps.append(cc_plugin::field::msgIdProperties());
-    membersProps.append(cc_plugin::field::cfg::rateProperties(0));
-    membersProps.append(cc_plugin::field::cfg::rateProperties(1));
-    membersProps.append(cc_plugin::field::cfg::rateProperties(2));
-    membersProps.append(cc_plugin::field::cfg::rateProperties(3));
+    QVariantList elementsProps;
+    for (auto idx = 0; idx < 6; ++idx) {
+        elementsProps.append(cc::Property::createPropertiesMap(QString("%1").arg(idx)));
+    }
 
-    static const QString Name("List");
-    auto bundleProps = cc::Property::createPropertiesMap(Name, std::move(membersProps));
-    auto props = cc::Property::createPropertiesMap(Name, std::move(bundleProps));
+    auto props = cc::Property::createPropertiesMap("rate", std::move(elementsProps));
     cc::Property::setSerialisedHidden(props);
     return props;
 }
@@ -60,9 +56,11 @@ QVariantMap createListProperties()
 QVariantList createFieldsProperties()
 {
     QVariantList props;
-    props.append(createListProperties());
+    props.append(cc_plugin::field::msgIdProperties());
+    props.append(createProps_rate());
 
-    assert(props.size() == CfgMsg::FieldIdx_NumOfValues);
+
+    assert(props.size() == CfgMsg::FieldIdx_numOfValues);
     return props;
 }
 

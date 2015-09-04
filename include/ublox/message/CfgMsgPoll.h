@@ -28,8 +28,10 @@ namespace ublox
 namespace message
 {
 
+using CfgMsgPollField_id = field::MsgId;
+
 using CfgMsgPollFields = std::tuple<
-    ublox::field::MsgId
+    CfgMsgPollField_id
 >;
 
 
@@ -51,11 +53,11 @@ class CfgMsgPoll : public
 public:
     enum FieldIdx
     {
-        FieldIdx_Id,
-        FieldIdx_NumOfValues
+        FieldIdx_id,
+        FieldIdx_numOfValues
     };
 
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_NumOfValues,
+    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
     CfgMsgPoll() = default;

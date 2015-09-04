@@ -45,9 +45,9 @@ QVariantList createFieldsProperties()
 {
     QVariantList props;
     props.append(cc_plugin::field::msgIdProperties());
-    props.append(cc_plugin::field::cfg::rateProperties());
+    props.append(cc::Property::createPropertiesMap("rate"));
 
-    assert(props.size() == CfgMsgCurrent::FieldIdx_NumOfValues);
+    assert(props.size() == CfgMsgCurrent::FieldIdx_numOfValues);
     return props;
 }
 

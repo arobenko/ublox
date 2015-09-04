@@ -74,9 +74,9 @@ function (cc_plugin_ublox)
         message/CfgPrtDdc.cpp
         message/CfgPrtPollPort.cpp
         message/CfgPrtPoll.cpp
-#        message/CfgMsg.cpp
-#        message/CfgMsgCurrent.cpp
-#        message/CfgMsgPoll.cpp
+        message/CfgMsg.cpp
+        message/CfgMsgCurrent.cpp
+        message/CfgMsgPoll.cpp
 #        message/CfgInf.cpp
 #        message/CfgInfPoll.cpp
 #        message/CfgRst.cpp

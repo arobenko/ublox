@@ -28,19 +28,17 @@ namespace ublox
 namespace message
 {
 
-using CfgMsgFields = std::tuple<
+using CfgMsgField_id = ublox::field::MsgId;
+using CfgMsgField_rate =
     comms::field::ArrayList<
         ublox::field::common::FieldBase,
-        comms::field::Bundle<
-            std::tuple<
-                ublox::field::MsgId,
-                ublox::field::cfg::Rate,
-                ublox::field::cfg::Rate,
-                ublox::field::cfg::Rate,
-                ublox::field::cfg::Rate
-            >
-        >
-    >
+        field::cfg::rate,
+        comms::option::SequenceFixedSize<6>
+    >;
+
+using CfgMsgFields = std::tuple<
+    CfgMsgField_id,
+    CfgMsgField_rate
 >;
 
 
@@ -62,11 +60,12 @@ class CfgMsg : public
 public:
     enum FieldIdx
     {
-        FieldIdx_List,
-        FieldIdx_NumOfValues
+        FieldIdx_id,
+        FieldIdx_rate,
+        FieldIdx_numOfValues
     };
 
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_NumOfValues,
+    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
     CfgMsg() = default;
