@@ -38,6 +38,7 @@ const QVariantMap& props_txReady();
 const QVariantMap& props_inProtoMask();
 const QVariantMap& props_outProtoMask();
 const QVariantMap& props_prtFlags();
+const QVariantMap& props_protocolID();
 
 // TODO: remove
 const QVariantMap& portIdProperties();
@@ -48,7 +49,6 @@ const QVariantMap& outProtoMaskProperties();
 const QVariantMap& prtFlagsProperties();
 const QVariantMap& rateProperties();
 QVariantMap rateProperties(unsigned idx);
-const QVariantMap& protocolIdProperties();
 QVariantMap infMsgMaskProperties(unsigned idx);
 const QVariantMap& navBbrProperties();
 const QVariantMap& resetProperties();

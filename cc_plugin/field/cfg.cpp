@@ -46,6 +46,7 @@ QVariantMap createProps_portID()
     QVariantList enumValues;
     cc::Property::appendEnumValue(enumValues, "DDC", (int)ublox::message::CfgPrt_PortId::DDC);
     cc::Property::appendEnumValue(enumValues, "UART", (int)ublox::message::CfgPrt_PortId::UART);
+    cc::Property::appendEnumValue(enumValues, "UART2", (int)ublox::message::CfgPrt_PortId::UART2);
     cc::Property::appendEnumValue(enumValues, "USB", (int)ublox::message::CfgPrt_PortId::USB);
     cc::Property::appendEnumValue(enumValues, "SPI", (int)ublox::message::CfgPrt_PortId::SPI);
 
@@ -116,6 +117,14 @@ QVariantMap createProps_prtFlags()
     return cc::Property::createPropertiesMap("flags", std::move(bitNames));
 }
 
+QVariantMap createProps_protocolID()
+{
+    QVariantList enumValues;
+    cc::Property::appendEnumValue(enumValues, "UBX");
+    cc::Property::appendEnumValue(enumValues, "NMEA");
+    assert(enumValues.size() == (int)ublox::field::cfg::ProtocolId::NumOfValues);
+    return cc::Property::createPropertiesMap("protocolID", std::move(enumValues));
+}
 
 // TODO: remove
 QVariantMap createNameOnlyProperties(const char* name)
@@ -235,21 +244,6 @@ QVariantMap createPrtFlagsProperties()
     return cc::Property::createPropertiesMap("Flags", std::move(bitNames));
 }
 
-QVariantMap createProtocolIdProperties()
-{
-    QVariantList enumValues;
-    cc::Property::appendEnumValue(enumValues, "UBX Protocol", (int)ublox::field::cfg::ProtocolIdVal::Ubx);
-    cc::Property::appendEnumValue(enumValues, "NMEA Protocol", (int)ublox::field::cfg::ProtocolIdVal::Nmea);
-    cc::Property::appendEnumValue(enumValues, "RTCM Protocol", (int)ublox::field::cfg::ProtocolIdVal::Rtcm);
-    cc::Property::appendEnumValue(enumValues, "RAW Protocol", (int)ublox::field::cfg::ProtocolIdVal::Raw);
-    cc::Property::appendEnumValue(enumValues, "User 0 Protocol", (int)ublox::field::cfg::ProtocolIdVal::User0);
-    cc::Property::appendEnumValue(enumValues, "User 1 Protocol", (int)ublox::field::cfg::ProtocolIdVal::User1);
-    cc::Property::appendEnumValue(enumValues, "User 2 Protocol", (int)ublox::field::cfg::ProtocolIdVal::User2);
-    cc::Property::appendEnumValue(enumValues, "User 3 Protocol", (int)ublox::field::cfg::ProtocolIdVal::User3);
-
-    return cc::Property::createPropertiesMap("ProtocolID", std::move(enumValues));
-}
-
 QVariantMap createNavBbrProperties()
 {
     QVariantList bitNames;
@@ -341,6 +335,12 @@ const QVariantMap& props_prtFlags()
     return Props;
 }
 
+const QVariantMap& props_protocolID()
+{
+    static const auto Props = createProps_protocolID();
+    return Props;
+}
+
 
 // TODO: remove
 
@@ -390,12 +390,6 @@ QVariantMap rateProperties(unsigned idx)
 {
     auto name = QString("Rate%1").arg(idx, 1, 10, QChar('0'));
     return cc::Property::createPropertiesMap(name);
-}
-
-const QVariantMap& protocolIdProperties()
-{
-    static const QVariantMap Props = createProtocolIdProperties();
-    return Props;
 }
 
 QVariantMap infMsgMaskProperties(unsigned idx)

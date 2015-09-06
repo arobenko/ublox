@@ -31,13 +31,7 @@ namespace ublox
 namespace message
 {
 
-enum class CfgPrt_PortId : std::uint8_t
-{
-    DDC = 0,
-    UART = 1,
-    USB = 3,
-    SPI = 4
-};
+using CfgPrt_PortId = field::cfg::PortId;
 
 enum
 {

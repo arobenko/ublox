@@ -43,9 +43,9 @@ QVariantList createFieldsProperties()
 {
 
     QVariantList props;
-    props.append(cc_plugin::field::cfg::protocolIdProperties());
+    props.append(cc_plugin::field::cfg::props_protocolID());
 
-    assert(props.size() == CfgInfPoll::FieldIdx_NumOfValues);
+    assert(props.size() == CfgInfPoll::FieldIdx_numOfValues);
     return props;
 }
 

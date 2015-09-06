@@ -30,7 +30,7 @@ namespace message
 {
 
 using CfgInfPollFields = std::tuple<
-    ublox::field::cfg::ProtocolID
+    ublox::field::cfg::protocolID
 >;
 
 
@@ -52,11 +52,11 @@ class CfgInfPoll : public
 public:
     enum FieldIdx
     {
-        FieldIdx_ProtocolId,
-        FieldIdx_NumOfValues
+        FieldIdx_protocolID,
+        FieldIdx_numOfValues
     };
 
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_NumOfValues,
+    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
     CfgInfPoll() = default;

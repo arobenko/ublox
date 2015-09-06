@@ -90,7 +90,7 @@ using CfgPrtUartField_portID =
     comms::field::EnumValue<
         field::common::FieldBase,
         CfgPrt_PortId,
-        comms::option::ValidNumValueRange<(int)CfgPrt_PortId::UART, (int)CfgPrt_PortId::UART>,
+        comms::option::ValidNumValueRange<(int)CfgPrt_PortId::UART, (int)CfgPrt_PortId::UART2>,
         comms::option::DefaultNumValue<(int)CfgPrt_PortId::UART>
     >;
 using CfgPrtUartField_reserved0 = field::common::res1;
@@ -204,7 +204,8 @@ protected:
 
         auto& allFields = Base::fields();
         auto& portIdField = std::get<FieldIdx_portID>(allFields);
-        if (portIdField.value() != CfgPrt_PortId::UART) {
+        if ((portIdField.value() != CfgPrt_PortId::UART) &&
+            (portIdField.value() != CfgPrt_PortId::UART2)) {
             return comms::ErrorStatus::InvalidMsgData;
         }
 
@@ -215,7 +216,8 @@ protected:
     {
         auto& allFields = Base::fields();
         auto& portIdField = std::get<FieldIdx_portID>(allFields);
-        if (portIdField.value() == CfgPrt_PortId::UART) {
+        if ((portIdField.value() == CfgPrt_PortId::UART) ||
+            (portIdField.value() == CfgPrt_PortId::UART2)) {
             return false;
         }
 

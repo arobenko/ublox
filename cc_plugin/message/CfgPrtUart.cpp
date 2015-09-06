@@ -92,7 +92,7 @@ QVariantMap createProps_mode()
 QVariantList createFieldsProperties()
 {
     QVariantList props;
-    props.append(cc_plugin::field::cfg::props_readOnlyPortID());
+    props.append(cc_plugin::field::cfg::props_portID());
     props.append(cc_plugin::field::common::props_reserved(0));
     props.append(cc_plugin::field::cfg::props_txReady());
     props.append(createProps_mode());

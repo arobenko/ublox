@@ -77,8 +77,8 @@ function (cc_plugin_ublox)
         message/CfgMsg.cpp
         message/CfgMsgCurrent.cpp
         message/CfgMsgPoll.cpp
-#        message/CfgInf.cpp
-#        message/CfgInfPoll.cpp
+        message/CfgInf.cpp
+        message/CfgInfPoll.cpp
 #        message/CfgRst.cpp
 #        message/CfgDat.cpp
 #        message/CfgDatUser.cpp

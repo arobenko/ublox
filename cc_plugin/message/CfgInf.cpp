@@ -42,35 +42,57 @@ namespace message
 namespace
 {
 
-QVariantMap createSingleDataElementProperties()
+QVariantMap createProps_infMsgMask()
 {
-    QVariantList membersData;
-    membersData.append(cc_plugin::field::cfg::protocolIdProperties());
-    membersData.append(cc_plugin::field::common::resProperties(0));
-    membersData.append(cc_plugin::field::common::resProperties(1));
-    membersData.append(cc_plugin::field::cfg::infMsgMaskProperties(0));
-    membersData.append(cc_plugin::field::cfg::infMsgMaskProperties(1));
-    membersData.append(cc_plugin::field::cfg::infMsgMaskProperties(2));
-    membersData.append(cc_plugin::field::cfg::infMsgMaskProperties(3));
+    auto createBitmaskProps =
+        [](const char* name) -> QVariantMap
+        {
+            QVariantList bitNames;
+            bitNames.append("ERROR");
+            bitNames.append("WARNING");
+            bitNames.append("NOTICE");
+            bitNames.append("DEBUG");
+            bitNames.append("TEST");
 
-    QVariantMap props;
-    cc::Property::setData(props, std::move(membersData));
-    return props;
-}
+            return cc::Property::createPropertiesMap(name, std::move(bitNames));
+        };
 
-QVariantMap createListProperties()
-{
-    auto props = cc::Property::createPropertiesMap("List", createSingleDataElementProperties());
+    QVariantList propsList;
+    propsList.append(createBitmaskProps("DDC"));
+    propsList.append(createBitmaskProps("UART"));
+    propsList.append(createBitmaskProps("UART2"));
+    propsList.append(createBitmaskProps("USB"));
+    propsList.append(createBitmaskProps("SPI"));
+    propsList.append(createBitmaskProps("RESERVED"));
+    assert(propsList.size() == ublox::message::CfgInfField_element_infMsgMask_numOfValues);
+    auto props = cc::Property::createPropertiesMap("infMsgMask", std::move(propsList));
     cc::Property::setSerialisedHidden(props);
     return props;
 }
 
+QVariantMap createProps_list()
+{
+    QVariantList membersProps;
+    membersProps.append(field::cfg::props_protocolID());
+    membersProps.append(field::common::props_reserved(0));
+    membersProps.append(field::common::props_reserved(1));
+    membersProps.append(createProps_infMsgMask());
+    assert(membersProps.size() == ublox::message::CfgInfField_element_numOfValues);
+
+    auto elementProps = cc::Property::createPropertiesMap("element", std::move(membersProps));
+
+    auto props = cc::Property::createPropertiesMap("list", std::move(elementProps));
+    cc::Property::setSerialisedHidden(props);
+    return props;
+}
+
+
 QVariantList createFieldsProperties()
 {
     QVariantList props;
-    props.append(createListProperties());
+    props.append(createProps_list());
 
-    assert(props.size() == CfgInf::FieldIdx_NumOfValues);
+    assert(props.size() == CfgInf::FieldIdx_numOfValues);
     return props;
 }
 
