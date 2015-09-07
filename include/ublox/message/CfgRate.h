@@ -21,7 +21,7 @@
 #include "comms/Message.h"
 #include "ublox/Message.h"
 #include "ublox/field/MsgId.h"
-#include "ublox/field/cfg.h"
+#include "ublox/field/common.h"
 
 namespace ublox
 {
@@ -29,10 +29,31 @@ namespace ublox
 namespace message
 {
 
+enum class CfgRate_TimeRef : std::uint16_t
+{
+    UTC,
+    GPS,
+    NumOfValues
+};
+
+using CfgRateField_measRate = field::common::U2T<field::common::Scaling_ms2s>;
+using CfgRateField_navRate =
+    field::common::U2T<
+        comms::option::DefaultNumValue<1>,
+        comms::option::ValidNumValueRange<1, 1>
+    >;
+using CfgRateField_timeRef =
+    comms::field::EnumValue<
+        field::common::FieldBase,
+        CfgRate_TimeRef,
+        comms::option::ValidNumValueRange<0, (int)CfgRate_TimeRef::NumOfValues - 1>
+    >;
+
+
 using CfgRateFields = std::tuple<
-    ublox::field::cfg::Meas,
-    ublox::field::cfg::Nav,
-    ublox::field::cfg::Time
+    CfgRateField_measRate,
+    CfgRateField_navRate,
+    CfgRateField_timeRef
 >;
 
 template <typename TMsgBase = Message>
@@ -53,13 +74,13 @@ class CfgRate : public
 public:
     enum FieldIdx
     {
-        FieldIdx_Meas,
-        FieldIdx_Nav,
-        FieldIdx_Time,
-        FieldIdx_NumOfValues
+        FieldIdx_measRate,
+        FieldIdx_navRate,
+        FieldIdx_timeRef,
+        FieldIdx_numOfValues
     };
 
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_NumOfValues,
+    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
     CfgRate() = default;

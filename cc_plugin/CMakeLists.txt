@@ -86,8 +86,8 @@ function (cc_plugin_ublox)
         message/CfgDatPoll.cpp
         message/CfgTp.cpp
         message/CfgTpPoll.cpp
-#        message/CfgRate.cpp        
-#        message/CfgRatePoll.cpp
+        message/CfgRate.cpp        
+        message/CfgRatePoll.cpp
 #        message/CfgCfg.cpp
 #        message/CfgFxn.cpp
 #        message/CfgFxnPoll.cpp

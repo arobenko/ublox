@@ -18,8 +18,6 @@
 #include <cassert>
 
 #include "CfgRate.h"
-#include "cc_plugin/field/cfg.h"
-#include "cc_plugin/field/common.h"
 
 template class ublox::message::CfgRate<ublox::cc_plugin::Message>;
 template class ublox::cc_plugin::ProtocolMessageBase<
@@ -40,14 +38,23 @@ namespace message
 namespace
 {
 
+QVariantMap createProps_timeRef()
+{
+    QVariantList enumValues;
+    cc::Property::appendEnumValue(enumValues, "UTC time");
+    cc::Property::appendEnumValue(enumValues, "GPS time");
+    assert(enumValues.size() == (int)ublox::message::CfgRate_TimeRef::NumOfValues);
+    return cc::Property::createPropertiesMap("timeRef", std::move(enumValues));
+}
+
 QVariantList createFieldsProperties()
 {
     QVariantList props;
-    props.append(cc_plugin::field::cfg::measProperties());
-    props.append(cc_plugin::field::cfg::navProperties());
-    props.append(cc_plugin::field::cfg::timeProperties());
+    props.append(cc::Property::createPropertiesMap("measRate"));
+    props.append(cc::Property::createPropertiesMap("navRate"));
+    props.append(createProps_timeRef());
 
-    assert(props.size() == CfgRate::FieldIdx_NumOfValues);
+    assert(props.size() == CfgRate::FieldIdx_numOfValues);
     return props;
 }
 

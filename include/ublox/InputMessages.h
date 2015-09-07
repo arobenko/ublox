@@ -110,8 +110,8 @@ using InputMessages =
         message::CfgMsgCurrent<TMessage>,
         message::CfgInf<TMessage>,
         message::CfgDat<TMessage>,
-        message::CfgTp<TMessage>/*,
-        message::CfgRate<TMessage>,
+        message::CfgTp<TMessage>,
+        message::CfgRate<TMessage>/*,
         message::CfgFxn<TMessage>,
         message::CfgTm<TMessage>,
         message::CfgRxm<TMessage>*/
