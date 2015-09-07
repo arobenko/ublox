@@ -260,18 +260,6 @@ QVariantMap createNavBbrProperties()
     return cc::Property::createPropertiesMap("nav_bbr", std::move(bitNames));
 }
 
-QVariantMap createResetProperties()
-{
-    QVariantList enumValues;
-    cc::Property::appendEnumValue(enumValues, "Hardware Reset (Watchdog)", (int)ublox::field::cfg::ResetType::Hardware);
-    cc::Property::appendEnumValue(enumValues, "Controlled Software Reset", (int)ublox::field::cfg::ResetType::Software);
-    cc::Property::appendEnumValue(enumValues, "Controlled Software Reset (GPS Only)", (int)ublox::field::cfg::ResetType::GpsOnly);
-    cc::Property::appendEnumValue(enumValues, "Controlled GPS stop", (int)ublox::field::cfg::ResetType::GpsStop);
-    cc::Property::appendEnumValue(enumValues, "Controlled GPS start", (int)ublox::field::cfg::ResetType::GpsStart);
-
-    return cc::Property::createPropertiesMap("Reset", std::move(enumValues));
-}
-
 QVariantMap createCfgMaskProperties(const char* name)
 {
     QVariantList bitNames;
@@ -411,12 +399,6 @@ QVariantMap infMsgMaskProperties(unsigned idx)
 const QVariantMap& navBbrProperties()
 {
     static const QVariantMap Props = createNavBbrProperties();
-    return Props;
-}
-
-const QVariantMap& resetProperties()
-{
-    static const QVariantMap Props = createResetProperties();
     return Props;
 }
 

@@ -18,6 +18,8 @@
 
 #pragma once
 
+#include <algorithm>
+
 #include "comms/Message.h"
 #include "ublox/Message.h"
 #include "ublox/field/MsgId.h"
@@ -29,10 +31,71 @@ namespace ublox
 namespace message
 {
 
+enum
+{
+    CfgRstField_navBbrMask_eph,
+    CfgRstField_navBbrMask_alm,
+    CfgRstField_navBbrMask_health,
+    CfgRstField_navBbrMask_klob,
+    CfgRstField_navBbrMask_pos,
+    CfgRstField_navBbrMask_clkd,
+    CfgRstField_navBbrMask_osc,
+    CfgRstField_navBbrMask_utc,
+    CfgRstField_navBbrMask_rtc,
+    CfgRstField_navBbrMask_res0,
+    CfgRstField_navBbrMask_res1,
+    CfgRstField_navBbrMask_sfdr,
+    CfgRstField_navBbrMask_vmon,
+    CfgRstField_navBbrMask_tct,
+    CfgRstField_navBbrMask_res2,
+    CfgRstField_navBbrMask_aop,
+    CfgRstField_navBbrMask_numOfValues
+};
+
+enum class CfgRst_ResetMode : std::uint8_t
+{
+    Hardware,
+    Software,
+    GnssOnly,
+    HardwareAfterShutdown = 4,
+    GnssStop = 8,
+    GnssStart
+};
+
+struct CfgRst_ResetModeValidator
+{
+    template <typename TField>
+    bool operator()(const TField& field) const
+    {
+        static const CfgRst_ResetMode Values[] =
+        {
+            CfgRst_ResetMode::Hardware,
+            CfgRst_ResetMode::Software,
+            CfgRst_ResetMode::GnssOnly,
+            CfgRst_ResetMode::HardwareAfterShutdown,
+            CfgRst_ResetMode::GnssStop,
+            CfgRst_ResetMode::GnssStart
+        };
+        auto value = field.value();
+        auto iter = std::lower_bound(std::begin(Values), std::end(Values), value);
+        return (iter != std::end(Values)) && (*iter == value);
+    }
+};
+
+using CfgRstField_navBbrMask = field::common::X2;
+using CfgRstField_resetMode =
+    comms::field::EnumValue<
+        field::common::FieldBase,
+        CfgRst_ResetMode,
+        comms::option::ContentsValidator<CfgRst_ResetModeValidator>
+    >;
+using CfgRstField_reserved1 = field::common::res1;
+
+
 using CfgRstFields = std::tuple<
-    ublox::field::cfg::nav_bbr,
-    ublox::field::cfg::Reset,
-    ublox::field::common::res1
+    CfgRstField_navBbrMask,
+    CfgRstField_resetMode,
+    CfgRstField_reserved1
 >;
 
 template <typename TMsgBase = Message>
@@ -53,13 +116,13 @@ class CfgRst : public
 public:
     enum FieldIdx
     {
-        FieldIdx_NavBbr,
-        FieldIdx_Reset,
-        FieldIdx_Res,
-        FieldIdx_NumOfValues
+        FieldIdx_navBbrMask,
+        FieldIdx_resetMask,
+        FieldIdx_reserved1,
+        FieldIdx_numOfValues
     };
 
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_NumOfValues,
+    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
     CfgRst() = default;

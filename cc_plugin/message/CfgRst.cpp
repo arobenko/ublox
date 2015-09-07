@@ -18,7 +18,6 @@
 #include <cassert>
 
 #include "CfgRst.h"
-#include "cc_plugin/field/cfg.h"
 #include "cc_plugin/field/common.h"
 
 template class ublox::message::CfgRst<ublox::cc_plugin::Message>;
@@ -40,14 +39,52 @@ namespace message
 namespace
 {
 
+QVariantMap createProps_navBbrMask()
+{
+    QVariantList bitNames;
+    bitNames.append("eph");
+    bitNames.append("alm");
+    bitNames.append("health");
+    bitNames.append("klob");
+    bitNames.append("pos");
+    bitNames.append("clkd");
+    bitNames.append("osc");
+    bitNames.append("utc");
+    bitNames.append("rtc");
+    bitNames.append(QVariant());
+    bitNames.append(QVariant());
+    bitNames.append("sfdr");
+    bitNames.append("vmon");
+    bitNames.append("tct");
+    bitNames.append(QVariant());
+    bitNames.append("aop");
+    assert(bitNames.size() == ublox::message::CfgRstField_navBbrMask_numOfValues);
+
+    return cc::Property::createPropertiesMap("navBbrMask", std::move(bitNames));
+}
+
+QVariantMap createProps_resetMode()
+{
+    QVariantList enumValues;
+    cc::Property::appendEnumValue(enumValues, "Hardware Reset (Watchdog)", (int)ublox::message::CfgRst_ResetMode::Hardware);
+    cc::Property::appendEnumValue(enumValues, "Controlled Software Reset", (int)ublox::message::CfgRst_ResetMode::Software);
+    cc::Property::appendEnumValue(enumValues, "Controlled Software Reset (GNSS Only)", (int)ublox::message::CfgRst_ResetMode::GnssOnly);
+    cc::Property::appendEnumValue(enumValues, "Hardware Reset (Watchdog) after shutdown", (int)ublox::message::CfgRst_ResetMode::HardwareAfterShutdown);
+    cc::Property::appendEnumValue(enumValues, "Controlled GNSS stop", (int)ublox::message::CfgRst_ResetMode::GnssStop);
+    cc::Property::appendEnumValue(enumValues, "Controlled GNSS start", (int)ublox::message::CfgRst_ResetMode::GnssStart);
+
+    return cc::Property::createPropertiesMap("resetMode", std::move(enumValues));
+}
+
+
 QVariantList createFieldsProperties()
 {
     QVariantList props;
-    props.append(cc_plugin::field::cfg::navBbrProperties());
-    props.append(cc_plugin::field::cfg::resetProperties());
-    props.append(cc_plugin::field::common::resProperties());
+    props.append(createProps_navBbrMask());
+    props.append(createProps_resetMode());
+    props.append(cc_plugin::field::common::props_reserved(1));
 
-    assert(props.size() == CfgRst::FieldIdx_NumOfValues);
+    assert(props.size() == CfgRst::FieldIdx_numOfValues);
     return props;
 }
 

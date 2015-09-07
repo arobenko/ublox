@@ -259,34 +259,6 @@ using nav_bbr =
         comms::option::BitmaskReservedBits<0xfe00, 0>
     >;
 
-enum class ResetType : std::uint8_t
-{
-    Hardware,
-    Software,
-    GpsOnly,
-    GpsStop = 8,
-    GpsStart
-};
-
-struct ResetTypeValidator
-{
-    template <typename TField>
-    bool operator()(const TField& field) const
-    {
-        auto value = field.value();
-        return
-            ((ResetType::Hardware <= value) && (value <= ResetType::GpsOnly)) ||
-            ((ResetType::GpsStop <= value) && (value <= ResetType::GpsStart));
-    }
-};
-
-using Reset =
-    comms::field::EnumValue<
-        common::FieldBase,
-        ResetType,
-        comms::option::ContentsValidator<ResetTypeValidator>
-    >;
-
 using DatumNum = common::U2;
 
 using Datum =

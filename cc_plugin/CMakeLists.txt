@@ -79,7 +79,7 @@ function (cc_plugin_ublox)
         message/CfgMsgPoll.cpp
         message/CfgInf.cpp
         message/CfgInfPoll.cpp
-#        message/CfgRst.cpp
+        message/CfgRst.cpp
 #        message/CfgDat.cpp
 #        message/CfgDatUser.cpp
 #        message/CfgDatStandard.cpp

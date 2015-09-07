@@ -61,7 +61,6 @@
 #include "message/CfgMsg.h"
 #include "message/CfgMsgCurrent.h"
 #include "message/CfgInf.h"
-#include "message/CfgRst.h"
 #include "message/CfgDat.h"
 #include "message/CfgTp.h"
 #include "message/CfgRate.h"
@@ -110,7 +109,6 @@ using InputMessages =
         message::CfgMsg<TMessage>,
         message::CfgMsgCurrent<TMessage>,
         message::CfgInf<TMessage>/*,
-        message::CfgRst<TMessage>,
         message::CfgDat<TMessage>,
         message::CfgTp<TMessage>,
         message::CfgRate<TMessage>,

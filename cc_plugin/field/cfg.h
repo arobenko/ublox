@@ -51,7 +51,6 @@ const QVariantMap& rateProperties();
 QVariantMap rateProperties(unsigned idx);
 QVariantMap infMsgMaskProperties(unsigned idx);
 const QVariantMap& navBbrProperties();
-const QVariantMap& resetProperties();
 const QVariantMap& datumNumProperties();
 const QVariantMap& datumProperties();
 const QVariantMap& majXProperties();
