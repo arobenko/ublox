@@ -43,19 +43,18 @@ namespace
 QVariantList createFieldsProperties()
 {
     QVariantList props;
-    props.append(cc_plugin::field::cfg::datumNumProperties());
-    props.append(cc_plugin::field::cfg::datumProperties());
-    props.append(cc_plugin::field::cfg::majXProperties());
-    props.append(cc_plugin::field::cfg::flatProperties());
-    props.append(cc_plugin::field::cfg::dXProperties());
-    props.append(cc_plugin::field::cfg::dYProperties());
-    props.append(cc_plugin::field::cfg::dZProperties());
-    props.append(cc_plugin::field::cfg::rotXProperties());
-    props.append(cc_plugin::field::cfg::rotYProperties());
-    props.append(cc_plugin::field::cfg::rotZProperties());
-    props.append(cc_plugin::field::cfg::scaleProperties());
-
-    assert(props.size() == CfgDat::FieldIdx_NumOfValues);
+    props.append(cc_plugin::field::cfg::props_datumNum());
+    props.append(cc_plugin::field::cfg::props_datumName());
+    props.append(cc_plugin::field::cfg::props_datMajA());
+    props.append(cc_plugin::field::cfg::props_datFlat());
+    props.append(cc_plugin::field::cfg::props_datDX());
+    props.append(cc_plugin::field::cfg::props_datDY());
+    props.append(cc_plugin::field::cfg::props_datDZ());
+    props.append(cc_plugin::field::cfg::props_datRotX());
+    props.append(cc_plugin::field::cfg::props_datRotY());
+    props.append(cc_plugin::field::cfg::props_datRotZ());
+    props.append(cc_plugin::field::cfg::props_datScale());
+    assert(props.size() == CfgDat::FieldIdx_numOfValues);
     return props;
 }
 

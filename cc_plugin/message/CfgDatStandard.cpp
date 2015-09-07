@@ -43,8 +43,8 @@ namespace
 QVariantList createFieldsProperties()
 {
     QVariantList props;
-    props.append(cc_plugin::field::cfg::datumNumProperties());
-    assert(props.size() == CfgDatStandard::FieldIdx_NumOfValues);
+    props.append(cc_plugin::field::cfg::props_datumNum());
+    assert(props.size() == CfgDatStandard::FieldIdx_numOfValues);
     return props;
 }
 

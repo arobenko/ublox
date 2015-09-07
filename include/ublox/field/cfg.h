@@ -94,6 +94,26 @@ using protocolID =
         comms::option::ValidNumValueRange<0, (int)ProtocolId::NumOfValues - 1>
     >;
 
+using datumNum = field::common::U2;
+using datumName =
+    comms::field::String<
+        common::FieldBase,
+        comms::option::SequenceFixedSize<5>,
+        comms::option::SequenceTrailingFieldSuffix<
+            common::U1T<
+                comms::option::ValidNumValueRange<0, 0>
+            >
+        >
+    >;
+using datMajA = common::R8;
+using datFlat = common::R8;
+using datDX = common::R4;
+using datDY = common::R4;
+using datDZ = common::R4;
+using datRotX = common::R4;
+using datRotY = common::R4;
+using datRotZ = common::R4;
+using datScale = common::R4;
 
 
 // TODO: remove
@@ -258,31 +278,6 @@ using nav_bbr =
         comms::option::FixedLength<2U>,
         comms::option::BitmaskReservedBits<0xfe00, 0>
     >;
-
-using DatumNum = common::U2;
-
-using Datum =
-    comms::field::String<
-        common::FieldBase,
-        comms::option::SequenceFixedSize<5>,
-        comms::option::SequenceTrailingFieldSuffix<
-            comms::field::IntValue<
-                common::FieldBase,
-                std::uint8_t,
-                comms::option::ValidNumValueRange<0, 0>
-            >
-        >
-    >;
-
-using majA = common::R8T<comms::option::ValidNumValueRange<6300000, 6500000> >;
-using flat = common::R8T<comms::option::ValidNumValueRange<0, 500> >;
-using dX = common::R4T<comms::option::ValidNumValueRange<-5000, 5000> >;
-using dY = common::R4T<comms::option::ValidNumValueRange<-5000, 5000> >;
-using dZ = common::R4T<comms::option::ValidNumValueRange<-5000, 5000> >;
-using rotX = common::R4T<comms::option::ValidNumValueRange<-20, 20> >;
-using rotY = common::R4T<comms::option::ValidNumValueRange<-20, 20> >;
-using rotZ = common::R4T<comms::option::ValidNumValueRange<-20, 20> >;
-using scale = common::R4T<comms::option::ValidNumValueRange<0, 50> >;
 
 using interval = common::U4;
 using length = common::U4;

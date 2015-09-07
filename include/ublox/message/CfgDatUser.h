@@ -29,16 +29,26 @@ namespace ublox
 namespace message
 {
 
+using CfgDatUserField_majA = field::cfg::datMajA;
+using CfgDatUserField_flat = field::cfg::datFlat;
+using CfgDatUserField_dX = field::cfg::datDX;
+using CfgDatUserField_dY = field::cfg::datDY;
+using CfgDatUserField_dZ = field::cfg::datDZ;
+using CfgDatUserField_rotX = field::cfg::datRotX;
+using CfgDatUserField_rotY = field::cfg::datRotY;
+using CfgDatUserField_rotZ = field::cfg::datRotZ;
+using CfgDatUserField_scale = field::cfg::datScale;
+
 using CfgDatUserFields = std::tuple<
-    ublox::field::cfg::majA,
-    ublox::field::cfg::flat,
-    ublox::field::cfg::dX,
-    ublox::field::cfg::dY,
-    ublox::field::cfg::dZ,
-    ublox::field::cfg::rotX,
-    ublox::field::cfg::rotY,
-    ublox::field::cfg::rotZ,
-    ublox::field::cfg::scale
+    CfgDatUserField_majA,
+    CfgDatUserField_flat,
+    CfgDatUserField_dX,
+    CfgDatUserField_dY,
+    CfgDatUserField_dZ,
+    CfgDatUserField_rotX,
+    CfgDatUserField_rotY,
+    CfgDatUserField_rotZ,
+    CfgDatUserField_scale
 >;
 
 template <typename TMsgBase = Message>
@@ -59,19 +69,19 @@ class CfgDatUser : public
 public:
     enum FieldIdx
     {
-        FieldIdx_MajA,
-        FieldIdx_Flat,
+        FieldIdx_majA,
+        FieldIdx_flat,
         FieldIdx_dX,
         FieldIdx_dY,
         FieldIdx_dZ,
-        FieldIdx_RotX,
-        FieldIdx_RotY,
-        FieldIdx_RotZ,
-        FieldIdx_Scale,
-        FieldIdx_NumOfValues
+        FieldIdx_rotX,
+        FieldIdx_rotY,
+        FieldIdx_rotZ,
+        FieldIdx_scale,
+        FieldIdx_numOfValues
     };
 
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_NumOfValues,
+    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
     CfgDatUser() = default;

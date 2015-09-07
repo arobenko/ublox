@@ -80,10 +80,10 @@ function (cc_plugin_ublox)
         message/CfgInf.cpp
         message/CfgInfPoll.cpp
         message/CfgRst.cpp
-#        message/CfgDat.cpp
-#        message/CfgDatUser.cpp
-#        message/CfgDatStandard.cpp
-#        message/CfgDatPoll.cpp
+        message/CfgDat.cpp
+        message/CfgDatUser.cpp
+        message/CfgDatStandard.cpp
+        message/CfgDatPoll.cpp
 #        message/CfgTp.cpp
 #        message/CfgTpPoll.cpp
 #        message/CfgRate.cpp        

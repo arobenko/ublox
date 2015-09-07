@@ -20,7 +20,8 @@
 
 #include <cstdint>
 #include <limits>
-#include <comms/comms.h>
+
+#include "comms/comms.h"
 
 #include "ublox/Message.h"
 

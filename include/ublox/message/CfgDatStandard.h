@@ -29,8 +29,10 @@ namespace ublox
 namespace message
 {
 
+using CfgDatStandardField_datumNum = field::cfg::datumNum;
+
 using CfgDatStandardFields = std::tuple<
-    ublox::field::cfg::DatumNum
+    CfgDatStandardField_datumNum
 >;
 
 template <typename TMsgBase = Message>
@@ -51,11 +53,11 @@ class CfgDatStandard : public
 public:
     enum FieldIdx
     {
-        FieldIdx_DatumNum,
-        FieldIdx_NumOfValues
+        FieldIdx_datumNum,
+        FieldIdx_numOfValues
     };
 
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_NumOfValues,
+    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
     CfgDatStandard() = default;

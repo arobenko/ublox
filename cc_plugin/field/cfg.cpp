@@ -329,6 +329,72 @@ const QVariantMap& props_protocolID()
     return Props;
 }
 
+const QVariantMap& props_datumNum()
+{
+    static const QVariantMap Props = createNameOnlyProperties("datumNum");
+    return Props;
+}
+
+const QVariantMap& props_datumName()
+{
+    static const QVariantMap Props = createNameOnlyProperties("datumName");
+    return Props;
+}
+
+const QVariantMap& props_datMajA()
+{
+    static const QVariantMap Props = cc::Property::createPropertiesMap("majA");
+    return Props;
+}
+
+const QVariantMap& props_datFlat()
+{
+    static const QVariantMap Props = cc::Property::createPropertiesMap("flat");
+    return Props;
+}
+
+const QVariantMap& props_datDX()
+{
+    static const QVariantMap Props = cc::Property::createPropertiesMap("dX");
+    return Props;
+}
+
+const QVariantMap& props_datDY()
+{
+    static const QVariantMap Props = cc::Property::createPropertiesMap("dY");
+    return Props;
+}
+
+const QVariantMap& props_datDZ()
+{
+    static const QVariantMap Props = cc::Property::createPropertiesMap("dZ");
+    return Props;
+}
+
+const QVariantMap& props_datRotX()
+{
+    static const QVariantMap Props = cc::Property::createPropertiesMap("rotX");
+    return Props;
+}
+
+const QVariantMap& props_datRotY()
+{
+    static const QVariantMap Props = cc::Property::createPropertiesMap("rotY");
+    return Props;
+}
+
+const QVariantMap& props_datRotZ()
+{
+    static const QVariantMap Props = cc::Property::createPropertiesMap("rotZ");
+    return Props;
+}
+
+const QVariantMap& props_datScale()
+{
+    static const QVariantMap Props = cc::Property::createPropertiesMap("scale");
+    return Props;
+}
+
 
 // TODO: remove
 
@@ -399,72 +465,6 @@ QVariantMap infMsgMaskProperties(unsigned idx)
 const QVariantMap& navBbrProperties()
 {
     static const QVariantMap Props = createNavBbrProperties();
-    return Props;
-}
-
-const QVariantMap& datumNumProperties()
-{
-    static const QVariantMap Props = createNameOnlyProperties("Datum#");
-    return Props;
-}
-
-const QVariantMap& datumProperties()
-{
-    static const QVariantMap Props = createNameOnlyProperties("Datum");
-    return Props;
-}
-
-const QVariantMap& majXProperties()
-{
-    static const QVariantMap Props = createNameOnlyProperties("majX");
-    return Props;
-}
-
-const QVariantMap& flatProperties()
-{
-    static const QVariantMap Props = createNameOnlyProperties("flat");
-    return Props;
-}
-
-const QVariantMap& dXProperties()
-{
-    static const QVariantMap Props = createNameOnlyProperties("dX");
-    return Props;
-}
-
-const QVariantMap& dYProperties()
-{
-    static const QVariantMap Props = createNameOnlyProperties("dY");
-    return Props;
-}
-
-const QVariantMap& dZProperties()
-{
-    static const QVariantMap Props = createNameOnlyProperties("dZ");
-    return Props;
-}
-
-const QVariantMap& rotXProperties()
-{
-    static const QVariantMap Props = createNameOnlyProperties("rotX");
-    return Props;
-}
-
-const QVariantMap& rotYProperties()
-{
-    static const QVariantMap Props = createNameOnlyProperties("rotY");
-    return Props;
-}
-
-const QVariantMap& rotZProperties()
-{
-    static const QVariantMap Props = createNameOnlyProperties("rotZ");
-    return Props;
-}
-
-const QVariantMap& scaleProperties()
-{
-    static const QVariantMap Props = createNameOnlyProperties("scale");
     return Props;
 }
 

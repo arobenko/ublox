@@ -29,18 +29,30 @@ namespace ublox
 namespace message
 {
 
+using CfgDatField_datumNum = field::cfg::datumNum;
+using CfgDatField_datumName = field::cfg::datumName;
+using CfgDatField_majA = field::cfg::datMajA;
+using CfgDatField_flat = field::cfg::datFlat;
+using CfgDatField_dX = field::cfg::datDX;
+using CfgDatField_dY = field::cfg::datDY;
+using CfgDatField_dZ = field::cfg::datDZ;
+using CfgDatField_rotX = field::cfg::datRotX;
+using CfgDatField_rotY = field::cfg::datRotY;
+using CfgDatField_rotZ = field::cfg::datRotZ;
+using CfgDatField_scale = field::cfg::datScale;
+
 using CfgDatFields = std::tuple<
-    ublox::field::cfg::DatumNum,
-    ublox::field::cfg::Datum,
-    ublox::field::cfg::majA,
-    ublox::field::cfg::flat,
-    ublox::field::cfg::dX,
-    ublox::field::cfg::dY,
-    ublox::field::cfg::dZ,
-    ublox::field::cfg::rotX,
-    ublox::field::cfg::rotY,
-    ublox::field::cfg::rotZ,
-    ublox::field::cfg::scale
+    CfgDatField_datumNum,
+    CfgDatField_datumName,
+    CfgDatField_majA,
+    CfgDatField_flat,
+    CfgDatField_dX,
+    CfgDatField_dY,
+    CfgDatField_dZ,
+    CfgDatField_rotX,
+    CfgDatField_rotY,
+    CfgDatField_rotZ,
+    CfgDatField_scale
 >;
 
 template <typename TMsgBase = Message>
@@ -61,21 +73,21 @@ class CfgDat : public
 public:
     enum FieldIdx
     {
-        FieldIdx_DatumNum,
-        FieldIdx_Datum,
-        FieldIdx_MajA,
-        FieldIdx_Flat,
+        FieldIdx_datumNum,
+        FieldIdx_datumName,
+        FieldIdx_majA,
+        FieldIdx_flat,
         FieldIdx_dX,
         FieldIdx_dY,
         FieldIdx_dZ,
-        FieldIdx_RotX,
-        FieldIdx_RotY,
-        FieldIdx_RotZ,
-        FieldIdx_Scale,
-        FieldIdx_NumOfValues
+        FieldIdx_rotX,
+        FieldIdx_rotY,
+        FieldIdx_rotZ,
+        FieldIdx_scale,
+        FieldIdx_numOfValues
     };
 
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_NumOfValues,
+    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
     CfgDat() = default;
