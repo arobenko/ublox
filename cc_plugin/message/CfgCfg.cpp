@@ -18,8 +18,6 @@
 #include <cassert>
 
 #include "CfgCfg.h"
-#include "cc_plugin/field/cfg.h"
-#include "cc_plugin/field/common.h"
 
 template class ublox::message::CfgCfg<ublox::cc_plugin::Message>;
 template class ublox::cc_plugin::ProtocolMessageBase<
@@ -40,14 +38,47 @@ namespace message
 namespace
 {
 
+QVariantMap createProps_mask(const char* name)
+{
+    QVariantList bitNames;
+    bitNames.append("ioPort");
+    bitNames.append("msgConf");
+    bitNames.append("infMsg");
+    bitNames.append("navConf");
+    bitNames.append("rxmConf");
+    bitNames.append(QVariant());
+    bitNames.append(QVariant());
+    bitNames.append(QVariant());
+    bitNames.append(QVariant());
+    bitNames.append("rinvConf");
+    bitNames.append("antConf");
+    assert(bitNames.size() == ublox::message::CfgCfgField_mask_numOfValues);
+    return cc::Property::createPropertiesMap(name, std::move(bitNames));
+}
+
+QVariantMap createProps_deviceMask()
+{
+    QVariantList bitNames;
+    bitNames.append("devBBR");
+    bitNames.append("devFlash");
+    bitNames.append("devEEPROM");
+    bitNames.append(QVariant());
+    bitNames.append("devSpiFlash");
+    assert(bitNames.size() == ublox::message::CfgCfgField_deviceMask_numOfValues);
+
+    static const QString Name("deviceMask");
+    auto maskProps = cc::Property::createPropertiesMap(Name, std::move(bitNames));
+    return cc::Property::createPropertiesMap(Name, std::move(maskProps));
+}
+
 QVariantList createFieldsProperties()
 {
     QVariantList props;
-    props.append(cc_plugin::field::cfg::cfgClearMaskProperties());
-    props.append(cc_plugin::field::cfg::cfgSaveMaskProperties());
-    props.append(cc_plugin::field::cfg::cfgLoadMaskProperties());
-
-    assert(props.size() == CfgCfg::FieldIdx_NumOfValues);
+    props.append(createProps_mask("clearMask"));
+    props.append(createProps_mask("saveMask"));
+    props.append(createProps_mask("loadMask"));
+    props.append(createProps_deviceMask());
+    assert(props.size() == CfgCfg::FieldIdx_numOfValues);
     return props;
 }
 
