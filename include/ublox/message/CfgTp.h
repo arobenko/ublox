@@ -29,14 +29,56 @@ namespace ublox
 namespace message
 {
 
+enum class CfgTp_Status : std::int8_t
+{
+    Negative = -1,
+    Off = 0,
+    Positive = 1
+};
+
+enum class CfgTp_TimeRef : std::uint8_t
+{
+    Utc,
+    Gps,
+    Local,
+    NumOfValues
+};
+
+enum
+{
+    CfgTpField_flags_syncMode,
+    CfgTpField_flags_numOfValues
+};
+
+using CfgTpField_interval = field::common::U4T<field::common::Scaling_us2s>;
+using CfgTpField_length = field::common::U4T<field::common::Scaling_us2s>;
+using CfgTpField_status =
+    comms::field::EnumValue<
+        field::common::FieldBase,
+        CfgTp_Status,
+        comms::option::ValidNumValueRange<(int)CfgTp_Status::Negative, (int)CfgTp_Status::Positive>
+    >;
+using CfgTpField_timeRef =
+    comms::field::EnumValue<
+        field::common::FieldBase,
+        CfgTp_TimeRef,
+        comms::option::ValidNumValueRange<0, (int)CfgTp_TimeRef::NumOfValues - 1>
+    >;
+using CfgTpField_flags = field::common::X1T<comms::option::BitmaskReservedBits<0xfe, 0> >;
+using CfgTpField_res = field::common::res1;
+using CfgTpField_antennaCableDelay = field::common::I2T<field::common::Scaling_ns2s>;
+using CfgTpField_rfGroupDelay = field::common::I2T<field::common::Scaling_ns2s>;
+using CfgTpField_userDelay = field::common::I4T<field::common::Scaling_ns2s>;
+
 using CfgTpFields = std::tuple<
-    ublox::field::cfg::interval,
-    ublox::field::cfg::length,
-    ublox::field::cfg::status,
-    ublox::field::cfg::Time,
-    ublox::field::common::res2,
-    ublox::field::cfg::antenna_cable_delay,
-    ublox::field::cfg::RF_group_delay,
+    CfgTpField_interval,
+    CfgTpField_length,
+    CfgTpField_status,
+    CfgTpField_timeRef,
+    CfgTpField_flags,
+    CfgTpField_res,
+    CfgTpField_antennaCableDelay,
+    CfgTpField_rfGroupDelay,
     ublox::field::cfg::user_delay
 >;
 
@@ -58,18 +100,19 @@ class CfgTp : public
 public:
     enum FieldIdx
     {
-        FieldIdx_Interval,
-        FieldIdx_Length,
-        FieldIdx_Status,
-        FieldIdx_TimeRef,
-        FieldIdx_Res,
-        FieldIdx_AntannaCableDelay,
-        FieldIdx_RfGroupDelay,
-        FieldIdx_UserDelay,
-        FieldIdx_NumOfValues
+        FieldIdx_interval,
+        FieldIdx_length,
+        FieldIdx_status,
+        FieldIdx_timeRef,
+        FieldIdx_flags,
+        FieldIdx_res,
+        FieldIdx_antannaCableDelay,
+        FieldIdx_rfGroupDelay,
+        FieldIdx_userDelay,
+        FieldIdx_numOfValues
     };
 
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_NumOfValues,
+    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
     CfgTp() = default;

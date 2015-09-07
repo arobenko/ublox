@@ -92,8 +92,8 @@
 #include "cc_plugin/message/CfgDatUser.h"
 #include "cc_plugin/message/CfgDatStandard.h"
 #include "cc_plugin/message/CfgDatPoll.h"
-//#include "cc_plugin/message/CfgTp.h"
-//#include "cc_plugin/message/CfgTpPoll.h"
+#include "cc_plugin/message/CfgTp.h"
+#include "cc_plugin/message/CfgTpPoll.h"
 //#include "cc_plugin/message/CfgRate.h"
 //#include "cc_plugin/message/CfgRatePoll.h"
 //#include "cc_plugin/message/CfgCfg.h"
@@ -179,9 +179,9 @@ typedef std::tuple<
     cc_plugin::message::CfgDat,
     cc_plugin::message::CfgDatUser,
     cc_plugin::message::CfgDatStandard,
-    cc_plugin::message::CfgDatPoll/*,
+    cc_plugin::message::CfgDatPoll,
     cc_plugin::message::CfgTp,
-    cc_plugin::message::CfgTpPoll,
+    cc_plugin::message::CfgTpPoll/*,
     cc_plugin::message::CfgRate,
     cc_plugin::message::CfgRatePoll,
     cc_plugin::message::CfgCfg,

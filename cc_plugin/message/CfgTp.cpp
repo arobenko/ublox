@@ -40,19 +40,47 @@ namespace message
 namespace
 {
 
+QVariantMap createProps_status()
+{
+    QVariantList enumValues;
+    cc::Property::appendEnumValue(enumValues, "negative", (int)ublox::message::CfgTp_Status::Negative);
+    cc::Property::appendEnumValue(enumValues, "off", (int)ublox::message::CfgTp_Status::Off);
+    cc::Property::appendEnumValue(enumValues, "positive", (int)ublox::message::CfgTp_Status::Positive);
+    return cc::Property::createPropertiesMap("status", std::move(enumValues));
+}
+
+QVariantMap createProps_timeRef()
+{
+    QVariantList enumValues;
+    cc::Property::appendEnumValue(enumValues, "UTC time");
+    cc::Property::appendEnumValue(enumValues, "GPS time");
+    cc::Property::appendEnumValue(enumValues, "Local time");
+    assert(enumValues.size() == (int)ublox::message::CfgTp_TimeRef::NumOfValues);
+    return cc::Property::createPropertiesMap("timeRef", std::move(enumValues));
+}
+
+QVariantMap createProps_flags()
+{
+    QVariantList bitNames;
+    bitNames.append("syncMode");
+    assert(bitNames.size() == ublox::message::CfgTpField_flags_numOfValues);
+    return cc::Property::createPropertiesMap("flags", std::move(bitNames));
+}
+
 QVariantList createFieldsProperties()
 {
     QVariantList props;
-    props.append(cc_plugin::field::cfg::intervalProperties());
-    props.append(cc_plugin::field::cfg::lengthProperties());
-    props.append(cc_plugin::field::cfg::statusProperties());
-    props.append(cc_plugin::field::cfg::timeRefProperties());
-    props.append(cc_plugin::field::common::resProperties());
-    props.append(cc_plugin::field::cfg::antennaCableDelayProperties());
-    props.append(cc_plugin::field::cfg::rfGroupDelayProperties());
-    props.append(cc_plugin::field::cfg::userDelayProperties());
+    props.append(cc::Property::createPropertiesMap("interval"));
+    props.append(cc::Property::createPropertiesMap("length"));
+    props.append(createProps_status());
+    props.append(createProps_timeRef());
+    props.append(createProps_flags());
+    props.append(cc_plugin::field::common::props_reserved(0));
+    props.append(cc::Property::createPropertiesMap("antennaCableDelay"));
+    props.append(cc::Property::createPropertiesMap("rfGroupDelay"));
+    props.append(cc::Property::createPropertiesMap("userDelay"));
 
-    assert(props.size() == CfgTp::FieldIdx_NumOfValues);
+    assert(props.size() == CfgTp::FieldIdx_numOfValues);
     return props;
 }
 
