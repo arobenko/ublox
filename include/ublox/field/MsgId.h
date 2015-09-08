@@ -159,7 +159,6 @@ private:
             MsgId_CFG_RATE,
             MsgId_CFG_CFG,
             MsgId_CFG_FXN,
-            MsgId_CFG_TM,
             MsgId_CFG_RXM,
             MsgId_CFG_EKF,
             MsgId_CFG_ANT,

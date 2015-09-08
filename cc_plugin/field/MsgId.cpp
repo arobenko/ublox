@@ -78,7 +78,6 @@ QVariantMap createMsgIdProperties()
     cc::Property::appendEnumValue(enumValues, "CFG-RATE", MsgId_CFG_RATE);
     cc::Property::appendEnumValue(enumValues, "CFG-CFG", MsgId_CFG_CFG);
     cc::Property::appendEnumValue(enumValues, "CFG-FXN", MsgId_CFG_FXN);
-    cc::Property::appendEnumValue(enumValues, "CFG-TM", MsgId_CFG_TM);
     cc::Property::appendEnumValue(enumValues, "CFG-RXM", MsgId_CFG_RXM);
     cc::Property::appendEnumValue(enumValues, "CFG-EKF", MsgId_CFG_EKF);
     cc::Property::appendEnumValue(enumValues, "CFG-ANT", MsgId_CFG_ANT);

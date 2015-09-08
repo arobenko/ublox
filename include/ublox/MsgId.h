@@ -63,7 +63,6 @@ enum MsgId : std::uint16_t
     MsgId_CFG_RATE = 0x0608,
     MsgId_CFG_CFG = 0x0609,
     MsgId_CFG_FXN = 0x060E,
-    MsgId_CFG_TM = 0x0610,
     MsgId_CFG_RXM = 0x0611,
     MsgId_CFG_EKF = 0x0612,
     MsgId_CFG_ANT = 0x0613,

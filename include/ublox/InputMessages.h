@@ -65,7 +65,6 @@
 #include "message/CfgTp.h"
 #include "message/CfgRate.h"
 #include "message/CfgFxn.h"
-#include "message/CfgTm.h"
 #include "message/CfgRxm.h"
 
 namespace ublox
@@ -113,7 +112,6 @@ using InputMessages =
         message::CfgTp<TMessage>,
         message::CfgRate<TMessage>,
         message::CfgFxn<TMessage>/*,
-        message::CfgTm<TMessage>,
         message::CfgRxm<TMessage>*/
     >;
 
