@@ -67,6 +67,7 @@
 #include "message/CfgFxn.h"
 #include "message/CfgRxm.h"
 #include "message/CfgEkf.h"
+#include "message/CfgAnt.h"
 
 namespace ublox
 {
@@ -114,7 +115,8 @@ using InputMessages =
         message::CfgRate<TMessage>,
         message::CfgFxn<TMessage>,
         message::CfgRxm<TMessage>,
-        message::CfgEkf<TMessage>
+        message::CfgEkf<TMessage>,
+        message::CfgAnt<TMessage>
     >;
 
 }  // namespace ublox
