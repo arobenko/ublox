@@ -79,7 +79,7 @@ using CfgTpFields = std::tuple<
     CfgTpField_res,
     CfgTpField_antennaCableDelay,
     CfgTpField_rfGroupDelay,
-    ublox::field::cfg::user_delay
+    CfgTpField_userDelay
 >;
 
 template <typename TMsgBase = Message>

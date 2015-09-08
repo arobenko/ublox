@@ -51,41 +51,6 @@ const QVariantMap& props_datRotY();
 const QVariantMap& props_datRotZ();
 const QVariantMap& props_datScale();
 
-// TODO: remove
-const QVariantMap& portIdProperties();
-const QVariantMap& prtModeProperties();
-const QVariantMap& baudrateProperties();
-const QVariantMap& inProtoMaskProperties();
-const QVariantMap& outProtoMaskProperties();
-const QVariantMap& prtFlagsProperties();
-const QVariantMap& rateProperties();
-QVariantMap rateProperties(unsigned idx);
-QVariantMap infMsgMaskProperties(unsigned idx);
-const QVariantMap& navBbrProperties();
-const QVariantMap& intervalProperties();
-const QVariantMap& lengthProperties();
-const QVariantMap& statusProperties();
-const QVariantMap& timeRefProperties();
-const QVariantMap& antennaCableDelayProperties();
-const QVariantMap& rfGroupDelayProperties();
-const QVariantMap& userDelayProperties();
-const QVariantMap& measProperties();
-const QVariantMap& navProperties();
-const QVariantMap& timeProperties();
-const QVariantMap& cfgClearMaskProperties();
-const QVariantMap& cfgSaveMaskProperties();
-const QVariantMap& cfgLoadMaskProperties();
-const QVariantMap& fxnFlagsProperties();
-const QVariantMap& tReacqProperties();
-const QVariantMap& tAcqProperties();
-const QVariantMap& tReacqOffProperties();
-const QVariantMap& tAcqOffProperties();
-const QVariantMap& tOnProperties();
-const QVariantMap& tOffProperties();
-const QVariantMap& baseTowProperties();
-
-
-
 }  // namespace cfg
 
 }  // namespace field

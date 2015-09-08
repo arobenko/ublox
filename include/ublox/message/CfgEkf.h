@@ -29,21 +29,14 @@ namespace ublox
 namespace message
 {
 
-enum class CfgEkfDisable : std::uint8_t
+enum class CfgEkf_DisableEkf : std::uint8_t
 {
     Enabled,
     Disabled,
     NumOfValues
 };
 
-using CfgEkfDisabledField =
-    comms::field::EnumValue<
-        field::common::FieldBase,
-        CfgEkfDisable,
-        comms::option::ValidNumValueRange<0, (int)CfgEkfDisable::NumOfValues - 1>
-    >;
-
-enum CfgEkfActionFlag
+enum
 {
     CfgEkfActionFlag_ClearTemperatureCompensationTable = 1,
     CfgEkfActionFlag_ClearStoredCalibration = 2,
@@ -53,72 +46,82 @@ enum CfgEkfActionFlag
     CfgEkfActionFlag_SetDirectionPinAndGyroSenseMeaning = 7
 };
 
-using CfgEkfActionFlagsField =
-    comms::field::BitmaskValue<
-        field::common::FieldBase,
-        comms::option::FixedLength<1>,
-        comms::option::BitmaskReservedBits<0x9, 0>
-    >;
-
-enum CfgEkfInverseFlag
+enum
 {
-    CfgEkfInverseFlag_DirectionBackwards,
-    CfgEkfInverseFlag_GyroRotationAntyClockwisePositive
+    CfgEkfField_actionFlags_reserved0,
+    CfgEkfField_actionFlags_clTab,
+    CfgEkfField_actionFlags_clCalib,
+    CfgEkfField_actionFlags_reserved1,
+    CfgEkfField_actionFlags_nomTacho,
+    CfgEkfField_actionFlags_nomGyro,
+    CfgEkfField_actionFlags_setTemp,
+    CfgEkfField_actionFlags_dir,
+    CfgEkfField_actionFlags_numOfValues
 };
 
-using CfgEkfInverseFlagsField =
-    comms::field::BitmaskValue<
+enum
+{
+    CfgEkfField_configFlags_pulsesPerM,
+    CfgEkfField_configFlags_useSerWt,
+    CfgEkfField_configFlags_numOfValues
+};
+
+enum
+{
+    CfgEkfField_inverseFlags_invDir,
+    CfgEkfField_inverseFlags_invGyro,
+    CfgEkfField_inverseFlags_numOfValues
+};
+
+using CfgEkfField_disableEkf =
+    comms::field::EnumValue<
         field::common::FieldBase,
-        comms::option::FixedLength<1>,
+        CfgEkf_DisableEkf,
+        comms::option::ValidNumValueRange<0, (int)CfgEkf_DisableEkf::NumOfValues - 1>
+    >;
+using CfgEkfField_actionFlags =
+    field::common::X1T<
+        comms::option::BitmaskReservedBits<0x9, 0>
+    >;
+using CfgEkfField_configFlags =
+    field::common::X1T<
         comms::option::BitmaskReservedBits<0xfc, 0>
     >;
-
-using CfgEkfNomPpkmField =
-    comms::field::IntValue<
-        field::common::FieldBase,
-        std::uint16_t,
-        comms::option::ValidNumValueRange<1100, 45000>
+using CfgEkfField_inverseFlags =
+    field::common::X1T<
+        comms::option::BitmaskReservedBits<0xfc, 0>
     >;
-
-using CfgEkfNomZeroField =
-    comms::field::IntValue<
-        field::common::FieldBase,
-        std::uint16_t,
+using CfgEkfField_reserved2 = field::common::res4;
+using CfgEkfField_nomPPDist = field::common::U2;
+using CfgEkfField_nomZero =
+    field::common::U2T<
         comms::option::ValidNumValueRange<2000, 3000>
     >;
-
-using CfgEkfNomSenseField =
-    comms::field::IntValue<
-        field::common::FieldBase,
-        std::uint8_t,
+using CfgEkfField_nomSens =
+    field::common::U1T<
         comms::option::ValidNumValueRange<20, 40>
     >;
-
-using CfgEkfRmsTempField =
-    comms::field::IntValue<
-        field::common::FieldBase,
-        std::uint8_t,
-        comms::option::ValidNumValueRange<1, 10>
+using CfgEkfField_rmsTemp =
+    field::common::U1T<
+        comms::option::ValidNumValueRange<1, 10>,
+        comms::option::ScalingRatio<1, 10>
     >;
-
-using CfgEkfTempUpdateField =
-    comms::field::IntValue<
-        field::common::FieldBase,
-        std::uint16_t,
+using CfgEkfField_tempUpdate =
+    field::common::U2T<
         comms::option::ValidNumValueRange<9, 0xffff>
     >;
 
 using CfgEkfFields = std::tuple<
-    CfgEkfDisabledField,
-    CfgEkfActionFlagsField,
-    field::common::res1,
-    CfgEkfInverseFlagsField,
-    field::common::res4,
-    CfgEkfNomPpkmField,
-    CfgEkfNomZeroField,
-    CfgEkfNomSenseField,
-    CfgEkfRmsTempField,
-    CfgEkfTempUpdateField
+    CfgEkfField_disableEkf,
+    CfgEkfField_actionFlags,
+    CfgEkfField_configFlags,
+    CfgEkfField_inverseFlags,
+    CfgEkfField_reserved2,
+    CfgEkfField_nomPPDist,
+    CfgEkfField_nomZero,
+    CfgEkfField_nomSens,
+    CfgEkfField_rmsTemp,
+    CfgEkfField_tempUpdate
 >;
 
 template <typename TMsgBase = Message>
@@ -139,20 +142,20 @@ class CfgEkf : public
 public:
     enum FieldIdx
     {
-        FieldIdx_DisableEkf,
-        FieldIdx_ActionFlags,
-        FieldIdx_Res,
-        FieldIdx_InverseFlags,
-        FieldIdx_Res2,
-        FieldIdx_NomPpkm,
-        FieldIdx_NomZero,
-        FieldIdx_NomSens,
-        FieldIdx_RmsTemp,
-        FieldIdx_TempUpdate,
-        FieldIdx_NumOfValues
+        FieldIdx_disableEkf,
+        FieldIdx_actionFlags,
+        FieldIdx_configFlags,
+        FieldIdx_inverseFlags,
+        FieldIdx_reserved2,
+        FieldIdx_nomPPDist,
+        FieldIdx_nomZero,
+        FieldIdx_nomSens,
+        FieldIdx_rmsTemp,
+        FieldIdx_tempUpdate,
+        FieldIdx_numOfValues
     };
 
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_NumOfValues,
+    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
     CfgEkf() = default;

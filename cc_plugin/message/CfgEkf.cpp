@@ -18,7 +18,6 @@
 #include <cassert>
 
 #include "CfgEkf.h"
-#include "cc_plugin/field/cfg.h"
 #include "cc_plugin/field/common.h"
 
 template class ublox::message::CfgEkf<ublox::cc_plugin::Message>;
@@ -40,54 +39,71 @@ namespace message
 namespace
 {
 
-QVariantMap createDisableEkfProperties()
+QVariantMap createProps_disableEkf()
 {
     QVariantList enumValues;
     cc::Property::appendEnumValue(enumValues, "Enabled");
     cc::Property::appendEnumValue(enumValues, "Disabled");
-
-    return cc::Property::createPropertiesMap("disable_ekf", std::move(enumValues));
+    assert(enumValues.size() == (int)ublox::message::CfgEkf_DisableEkf::NumOfValues);
+    return cc::Property::createPropertiesMap("disableEkf", std::move(enumValues));
 }
 
-QVariantMap createActionFlagsProperties()
+QVariantMap createProps_actionFlags()
 {
     QVariantList bitNames;
     bitNames.append(QVariant());
-    bitNames.append("Clear temperature compensation table");
-    bitNames.append("Clear stored calibration");
+    bitNames.append("clTab");
+    bitNames.append("clCalib");
     bitNames.append(QVariant());
-    bitNames.append("Set nominal tacho pulses");
-    bitNames.append("Set nominal gyro values");
-    bitNames.append("Set temp table config");
-    bitNames.append("Set direction pin and gyro sense meaning");
-
-    return cc::Property::createPropertiesMap("action_flags", std::move(bitNames));
+    bitNames.append("nomTacho");
+    bitNames.append("nomGyro");
+    bitNames.append("setTemp");
+    bitNames.append("dir");
+    assert(bitNames.size() == ublox::message::CfgEkfField_actionFlags_numOfValues);
+    return cc::Property::createPropertiesMap("actionFlags", std::move(bitNames));
 }
 
-QVariantMap createInverseFlagsProperties()
+QVariantMap createProps_configFlags()
 {
     QVariantList bitNames;
-    bitNames.append("Direction pin: Backwards");
-    bitNames.append("Gyro rotation sense: Anty-clockwise positive");
-
-    return cc::Property::createPropertiesMap("inverse_flags", std::move(bitNames));
+    bitNames.append("pulsesPerM");
+    bitNames.append("useSerWt");
+    assert(bitNames.size() == ublox::message::CfgEkfField_configFlags_numOfValues);
+    return cc::Property::createPropertiesMap("configFlags", std::move(bitNames));
 }
+
+QVariantMap createProps_inverseFlags()
+{
+    QVariantList bitNames;
+    bitNames.append("invDir");
+    bitNames.append("invGyro");
+    assert(bitNames.size() == ublox::message::CfgEkfField_inverseFlags_numOfValues);
+    return cc::Property::createPropertiesMap("inverseFlags", std::move(bitNames));
+}
+
+QVariantMap createProps_rmsTemp()
+{
+    auto props = cc::Property::createPropertiesMap("rmsTemp");
+    cc::Property::setDisplayScaled(props);
+    cc::Property::setFloatDecimals(props, 1);
+    return props;
+}
+
 
 QVariantList createFieldsProperties()
 {
     QVariantList props;
-    props.append(createDisableEkfProperties());
-    props.append(createActionFlagsProperties());
-    props.append(field::common::resProperties());
-    props.append(createInverseFlagsProperties());
-    props.append(field::common::resProperties());
-    props.append(cc::Property::createPropertiesMap("nom_ppkm"));
-    props.append(cc::Property::createPropertiesMap("nom_zero"));
-    props.append(cc::Property::createPropertiesMap("nom_sens"));
-    props.append(cc::Property::createPropertiesMap("RMSTemp"));
-    props.append(cc::Property::createPropertiesMap("TempUpdate"));
-
-    assert(props.size() == CfgEkf::FieldIdx_NumOfValues);
+    props.append(createProps_disableEkf());
+    props.append(createProps_actionFlags());
+    props.append(createProps_configFlags());
+    props.append(createProps_inverseFlags());
+    props.append(field::common::props_reserved(2));
+    props.append(cc::Property::createPropertiesMap("nomPPDist"));
+    props.append(cc::Property::createPropertiesMap("nomZero"));
+    props.append(cc::Property::createPropertiesMap("nomSens"));
+    props.append(createProps_rmsTemp());
+    props.append(cc::Property::createPropertiesMap("tempUpdate"));
+    assert(props.size() == CfgEkf::FieldIdx_numOfValues);
     return props;
 }
 
