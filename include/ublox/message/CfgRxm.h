@@ -18,6 +18,8 @@
 
 #pragma once
 
+#include <algorithm>
+
 #include "comms/Message.h"
 #include "ublox/Message.h"
 #include "ublox/field/MsgId.h"
@@ -29,39 +31,46 @@ namespace ublox
 namespace message
 {
 
-enum class CfgRxmGpsSensitivityMode : std::uint8_t
+enum class CfgRxm_LowPowerMode : std::uint8_t
 {
-    Normal,
-    FastAcquisition,
-    HighAcquisition,
-    Auto,
-    NumOfValues
+    MaxPerformance,
+    PowerSave,
+    Eco = 4
 };
 
-using CfgRxmGpsSensitivityModeField =
-    comms::field::EnumValue<
-        field::common::FieldBase,
-        CfgRxmGpsSensitivityMode,
-        comms::option::ValidNumValueRange<(int)CfgRxmGpsSensitivityMode::Normal, (int)CfgRxmGpsSensitivityMode::NumOfValues - 1>
+struct CfgRxm_LowPowerModeValidator
+{
+    template <typename TField>
+    bool operator()(const TField& field) const
+    {
+        auto value = field.value();
+
+        static const CfgRxm_LowPowerMode ValidValues[] = {
+            CfgRxm_LowPowerMode::MaxPerformance,
+            CfgRxm_LowPowerMode::PowerSave,
+            CfgRxm_LowPowerMode::Eco
+        };
+
+        auto iter = std::lower_bound(std::begin(ValidValues), std::end(ValidValues), value);
+        return (iter != std::end(ValidValues)) && (*iter == value);
+    }
+};
+
+using CfgRxmField_reserved1 =
+    field::common::U1T<
+        comms::option::DefaultNumValue<8>,
+        comms::option::ValidNumValueRange<8, 8>
     >;
-
-enum class CfgRxmLowPowerMode : std::uint8_t
-{
-    ContinuousTracking,
-    FixNow,
-    NumOfValues
-};
-
-using CfgRxmLowPowerModeField =
+using CfgRxmField_lpMode =
     comms::field::EnumValue<
         field::common::FieldBase,
-        CfgRxmLowPowerMode,
-        comms::option::ValidNumValueRange<(int)CfgRxmLowPowerMode::ContinuousTracking, (int)CfgRxmLowPowerMode::NumOfValues - 1>
+        CfgRxm_LowPowerMode,
+        comms::option::ContentsValidator<CfgRxm_LowPowerModeValidator>
     >;
 
 using CfgRxmFields = std::tuple<
-    CfgRxmGpsSensitivityModeField,
-    CfgRxmLowPowerModeField
+    CfgRxmField_reserved1,
+    CfgRxmField_lpMode
 >;
 
 template <typename TMsgBase = Message>
@@ -82,12 +91,12 @@ class CfgRxm : public
 public:
     enum FieldIdx
     {
-        FieldIdx_GpsMode,
-        FieldIdx_LowPowerMode,
-        FieldIdx_NumOfValues
+        FieldIdx_reserved1,
+        FieldIdx_lpMode,
+        FieldIdx_numOfValues
     };
 
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_NumOfValues,
+    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
     CfgRxm() = default;

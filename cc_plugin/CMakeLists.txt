@@ -91,8 +91,8 @@ function (cc_plugin_ublox)
         message/CfgCfg.cpp
         message/CfgFxn.cpp
         message/CfgFxnPoll.cpp
-#        message/CfgRxm.cpp
-#        message/CfgRxmPoll.cpp
+        message/CfgRxm.cpp
+        message/CfgRxmPoll.cpp
 #        message/CfgEkf.cpp
 #        message/CfgEkfPoll.cpp
         field/MsgId.cpp

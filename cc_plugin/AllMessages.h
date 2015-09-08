@@ -99,8 +99,8 @@
 #include "cc_plugin/message/CfgCfg.h"
 #include "cc_plugin/message/CfgFxn.h"
 #include "cc_plugin/message/CfgFxnPoll.h"
-//#include "cc_plugin/message/CfgRxm.h"
-//#include "cc_plugin/message/CfgRxmPoll.h"
+#include "cc_plugin/message/CfgRxm.h"
+#include "cc_plugin/message/CfgRxmPoll.h"
 //#include "cc_plugin/message/CfgEkf.h"
 //#include "cc_plugin/message/CfgEkfPoll.h"
 
@@ -184,9 +184,9 @@ typedef std::tuple<
     cc_plugin::message::CfgRatePoll,
     cc_plugin::message::CfgCfg,
     cc_plugin::message::CfgFxn,
-    cc_plugin::message::CfgFxnPoll/*,
+    cc_plugin::message::CfgFxnPoll,
     cc_plugin::message::CfgRxm,
-    cc_plugin::message::CfgRxmPoll,
+    cc_plugin::message::CfgRxmPoll/*,
     cc_plugin::message::CfgEkf,
     cc_plugin::message::CfgEkfPoll*/
 > AllMessages;

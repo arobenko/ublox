@@ -18,7 +18,6 @@
 #include <cassert>
 
 #include "CfgRxm.h"
-#include "cc_plugin/field/cfg.h"
 #include "cc_plugin/field/common.h"
 
 template class ublox::message::CfgRxm<ublox::cc_plugin::Message>;
@@ -40,33 +39,23 @@ namespace message
 namespace
 {
 
-QVariantMap createGpsModeProperties()
+QVariantMap createProps_lpMode()
 {
     QVariantList enumValues;
-    cc::Property::appendEnumValue(enumValues, "Normal");
-    cc::Property::appendEnumValue(enumValues, "Fast Acquisition");
-    cc::Property::appendEnumValue(enumValues, "High Acquisition");
-    cc::Property::appendEnumValue(enumValues, "Auto");
+    cc::Property::appendEnumValue(enumValues, "Max Performance", (int)ublox::message::CfgRxm_LowPowerMode::MaxPerformance);
+    cc::Property::appendEnumValue(enumValues, "Power Save", (int)ublox::message::CfgRxm_LowPowerMode::PowerSave);
+    cc::Property::appendEnumValue(enumValues, "Eco", (int)ublox::message::CfgRxm_LowPowerMode::Eco);
 
-    return cc::Property::createPropertiesMap("gps_mode", std::move(enumValues));
-}
-
-QVariantMap createLowPowerModeProperties()
-{
-    QVariantList enumValues;
-    cc::Property::appendEnumValue(enumValues, "Continuous Tracking");
-    cc::Property::appendEnumValue(enumValues, "Fix Now");
-
-    return cc::Property::createPropertiesMap("lp_mode", std::move(enumValues));
+    return cc::Property::createPropertiesMap("lpMode", std::move(enumValues));
 }
 
 QVariantList createFieldsProperties()
 {
     QVariantList props;
-    props.append(createGpsModeProperties());
-    props.append(createLowPowerModeProperties());
+    props.append(cc_plugin::field::common::props_reserved(1));
+    props.append(createProps_lpMode());
 
-    assert(props.size() == CfgRxm::FieldIdx_NumOfValues);
+    assert(props.size() == CfgRxm::FieldIdx_numOfValues);
     return props;
 }
 

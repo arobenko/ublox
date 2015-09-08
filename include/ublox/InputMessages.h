@@ -111,8 +111,8 @@ using InputMessages =
         message::CfgDat<TMessage>,
         message::CfgTp<TMessage>,
         message::CfgRate<TMessage>,
-        message::CfgFxn<TMessage>/*,
-        message::CfgRxm<TMessage>*/
+        message::CfgFxn<TMessage>,
+        message::CfgRxm<TMessage>
     >;
 
 }  // namespace ublox
