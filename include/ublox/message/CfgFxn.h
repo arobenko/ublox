@@ -29,16 +29,39 @@ namespace ublox
 namespace message
 {
 
+enum
+{
+    CfgFxnField_flags_reserved0,
+    CfgFxnField_flags_sleep,
+    CfgFxnField_flags_reserved1,
+    CfgFxnField_flags_absAlign,
+    CfgFxnField_flags_onOff,
+    CfgFxnField_flags_numOfValues
+};
+
+using CfgFxnField_flags =
+    field::common::X4T<
+        comms::option::BitmaskReservedBits<0xffffffe5, 0>
+    >;
+using CfgFxnField_tReacq = field::common::U4T<field::common::Scaling_ms2s>;
+using CfgFxnField_tAcq = field::common::U4T<field::common::Scaling_ms2s>;
+using CfgFxnField_tReacqOff = field::common::U4T<field::common::Scaling_ms2s>;
+using CfgFxnField_tAcqOff = field::common::U4T<field::common::Scaling_ms2s>;
+using CfgFxnField_tOn = field::common::U4T<field::common::Scaling_ms2s>;
+using CfgFxnField_tOff = field::common::U4T<field::common::Scaling_ms2s>;
+using CfgFxnField_res = field::common::res4;
+using CfgFxnField_baseTow = field::common::U4T<field::common::Scaling_ms2s>;
+
 using CfgFxnFields = std::tuple<
-    ublox::field::cfg::fxn_flags,
-    ublox::field::cfg::t_reacq,
-    ublox::field::cfg::t_acq,
-    ublox::field::cfg::t_reacq_off,
-    ublox::field::cfg::t_acq_off,
-    ublox::field::cfg::t_on,
-    ublox::field::cfg::t_off,
-    ublox::field::common::res4,
-    ublox::field::cfg::base_tow
+    CfgFxnField_flags,
+    CfgFxnField_tReacq,
+    CfgFxnField_tAcq,
+    CfgFxnField_tReacqOff,
+    CfgFxnField_tAcqOff,
+    CfgFxnField_tOn,
+    CfgFxnField_tOff,
+    CfgFxnField_res,
+    CfgFxnField_baseTow
 >;
 
 template <typename TMsgBase = Message>
@@ -59,19 +82,19 @@ class CfgFxn : public
 public:
     enum FieldIdx
     {
-        FieldIdx_Flags,
-        FieldIdx_Treacq,
-        FieldIdx_Tacq,
-        FieldIdx_TreacqOff,
-        FieldIdx_TacqOff,
-        FieldIdx_Ton,
-        FieldIdx_Toff,
-        FieldIdx_Res,
-        FieldIdx_BaseTow,
-        FieldIdx_NumOfValues
+        FieldIdx_flags,
+        FieldIdx_tReacq,
+        FieldIdx_tAcq,
+        FieldIdx_tReacqOff,
+        FieldIdx_tAcqOff,
+        FieldIdx_tOn,
+        FieldIdx_tOff,
+        FieldIdx_res,
+        FieldIdx_baseTow,
+        FieldIdx_numOfValues
     };
 
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_NumOfValues,
+    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
     CfgFxn() = default;

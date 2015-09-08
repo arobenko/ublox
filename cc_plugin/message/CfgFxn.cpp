@@ -18,7 +18,6 @@
 #include <cassert>
 
 #include "CfgFxn.h"
-#include "cc_plugin/field/cfg.h"
 #include "cc_plugin/field/common.h"
 
 template class ublox::message::CfgFxn<ublox::cc_plugin::Message>;
@@ -40,20 +39,32 @@ namespace message
 namespace
 {
 
+QVariantMap createProps_flags()
+{
+    QVariantList bitNames;
+    bitNames.append(QVariant());
+    bitNames.append("sleep");
+    bitNames.append(QVariant());
+    bitNames.append("absAlign");
+    bitNames.append("onOff");
+    assert(bitNames.size() == ublox::message::CfgFxnField_flags_numOfValues);
+    return cc::Property::createPropertiesMap("flags", std::move(bitNames));
+}
+
 QVariantList createFieldsProperties()
 {
     QVariantList props;
-    props.append(cc_plugin::field::cfg::fxnFlagsProperties());
-    props.append(cc_plugin::field::cfg::tReacqProperties());
-    props.append(cc_plugin::field::cfg::tAcqProperties());
-    props.append(cc_plugin::field::cfg::tReacqOffProperties());
-    props.append(cc_plugin::field::cfg::tAcqOffProperties());
-    props.append(cc_plugin::field::cfg::tOnProperties());
-    props.append(cc_plugin::field::cfg::tOffProperties());
-    props.append(cc_plugin::field::common::resProperties());
-    props.append(cc_plugin::field::cfg::baseTowProperties());
+    props.append(createProps_flags());
+    props.append(cc::Property::createPropertiesMap("tReacq"));
+    props.append(cc::Property::createPropertiesMap("tAcq"));
+    props.append(cc::Property::createPropertiesMap("tReacqOff"));
+    props.append(cc::Property::createPropertiesMap("tAcqOff"));
+    props.append(cc::Property::createPropertiesMap("tOn"));
+    props.append(cc::Property::createPropertiesMap("tOff"));
+    props.append(cc_plugin::field::common::props_reserved(0));
+    props.append(cc::Property::createPropertiesMap("baseTow"));
 
-    assert(props.size() == CfgFxn::FieldIdx_NumOfValues);
+    assert(props.size() == CfgFxn::FieldIdx_numOfValues);
     return props;
 }
 
