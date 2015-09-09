@@ -99,6 +99,9 @@ function (cc_plugin_ublox)
         message/CfgAntPoll.cpp
         message/CfgSbas.cpp
         message/CfgSbasPoll.cpp
+        message/CfgNmeaExt.cpp
+        message/CfgNmea.cpp
+        message/CfgNmeaPoll.cpp
         field/MsgId.cpp
         field/common.cpp
         field/nav.cpp

@@ -23,6 +23,7 @@
 #include "comms_champion/comms_champion.h"
 #include "ublox/field/cfg.h"
 #include "ublox/message/CfgPrt.h"
+#include "ublox/message/CfgNmea.h"
 
 namespace cc = comms_champion;
 
@@ -124,6 +125,36 @@ QVariantMap createProps_protocolID()
     cc::Property::appendEnumValue(enumValues, "NMEA");
     assert(enumValues.size() == (int)ublox::field::cfg::ProtocolId::NumOfValues);
     return cc::Property::createPropertiesMap("protocolID", std::move(enumValues));
+}
+
+QVariantMap createProps_nmeaFilter()
+{
+    QVariantList bitNames;
+    bitNames.append("posFilt");
+    bitNames.append("mskPosFilt");
+    bitNames.append("timeFilt");
+    bitNames.append("dateFilt");
+    bitNames.append("gpsOnlyFilter");
+    bitNames.append("trackFilt");
+    assert(bitNames.size() == ublox::message::CfgNmeaField_filter_numOfValues);
+    return cc::Property::createPropertiesMap("filter", std::move(bitNames));
+}
+
+QVariantMap createProps_nmeaVersion()
+{
+    QVariantList enumValues;
+    cc::Property::appendEnumValue(enumValues, "NMEA version 2.1", (int)ublox::message::CfgNmea_NmeaVersion::v21);
+    cc::Property::appendEnumValue(enumValues, "NMEA version 2.3", (int)ublox::message::CfgNmea_NmeaVersion::v23);
+    return cc::Property::createPropertiesMap("nmeaVersion", std::move(enumValues));
+}
+
+QVariantMap createProps_nmeaFlags()
+{
+    QVariantList bitNames;
+    bitNames.append("compat");
+    bitNames.append("consider");
+    assert(bitNames.size() == ublox::message::CfgNmeaField_flags_numOfValues);
+    return cc::Property::createPropertiesMap("filter", std::move(bitNames));
 }
 
 }  // namespace
@@ -233,6 +264,30 @@ const QVariantMap& props_datRotZ()
 const QVariantMap& props_datScale()
 {
     static const QVariantMap Props = cc::Property::createPropertiesMap("scale");
+    return Props;
+}
+
+const QVariantMap& props_nmeaFilter()
+{
+    static const QVariantMap Props = createProps_nmeaFilter();
+    return Props;
+}
+
+const QVariantMap& props_nmeaVersion()
+{
+    static const QVariantMap Props = createProps_nmeaVersion();
+    return Props;
+}
+
+const QVariantMap& props_nmeaNumSV()
+{
+    static const QVariantMap Props = cc::Property::createPropertiesMap("numSV");
+    return Props;
+}
+
+const QVariantMap& props_nmeaFlags()
+{
+    static const QVariantMap Props = createProps_nmeaFlags();
     return Props;
 }
 

@@ -50,6 +50,10 @@ const QVariantMap& props_datRotX();
 const QVariantMap& props_datRotY();
 const QVariantMap& props_datRotZ();
 const QVariantMap& props_datScale();
+const QVariantMap& props_nmeaFilter();
+const QVariantMap& props_nmeaVersion();
+const QVariantMap& props_nmeaNumSV();
+const QVariantMap& props_nmeaFlags();
 
 }  // namespace cfg
 
