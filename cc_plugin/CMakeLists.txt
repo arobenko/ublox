@@ -104,6 +104,8 @@ function (cc_plugin_ublox)
         message/CfgNmeaPoll.cpp
         message/CfgUsb.cpp
         message/CfgUsbPoll.cpp
+        message/CfgTmode.cpp
+        message/CfgTmodePoll.cpp
         field/MsgId.cpp
         field/common.cpp
         field/nav.cpp

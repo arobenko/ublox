@@ -72,6 +72,7 @@
 #include "message/CfgNmeaExt.h"
 #include "message/CfgNmea.h"
 #include "message/CfgUsb.h"
+#include "message/CfgTmode.h"
 
 namespace ublox
 {
@@ -124,7 +125,8 @@ using InputMessages =
         message::CfgSbas<TMessage>,
         message::CfgNmeaExt<TMessage>,
         message::CfgNmea<TMessage>,
-        message::CfgUsb<TMessage>
+        message::CfgUsb<TMessage>,
+        message::CfgTmode<TMessage>
     >;
 
 }  // namespace ublox
