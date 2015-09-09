@@ -110,6 +110,8 @@
 #include "cc_plugin/message/CfgNmeaExt.h"
 #include "cc_plugin/message/CfgNmea.h"
 #include "cc_plugin/message/CfgNmeaPoll.h"
+#include "cc_plugin/message/CfgUsb.h"
+#include "cc_plugin/message/CfgUsbPoll.h"
 
 namespace ublox
 {
@@ -202,7 +204,9 @@ typedef std::tuple<
     cc_plugin::message::CfgSbasPoll,
     cc_plugin::message::CfgNmeaExt,
     cc_plugin::message::CfgNmea,
-    cc_plugin::message::CfgNmeaPoll
+    cc_plugin::message::CfgNmeaPoll,
+    cc_plugin::message::CfgUsb,
+    cc_plugin::message::CfgUsbPoll
 > AllMessages;
 
 }  // namespace cc_plugin

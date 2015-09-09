@@ -164,8 +164,6 @@ private:
             MsgId_CFG_ANT,
             MsgId_CFG_SBAS,
             MsgId_CFG_NMEA,
-            MsgId_CFG_TM2,
-            MsgId_CFG_NAV2,
             MsgId_CFG_USB,
             MsgId_CFG_TMODE,
             MsgId_CFG_NVS,

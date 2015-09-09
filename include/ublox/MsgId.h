@@ -68,8 +68,6 @@ enum MsgId : std::uint16_t
     MsgId_CFG_ANT = 0x0613,
     MsgId_CFG_SBAS = 0x0616,
     MsgId_CFG_NMEA = 0x0617,
-    MsgId_CFG_TM2 = 0x0619,
-    MsgId_CFG_NAV2 = 0x061a,
     MsgId_CFG_USB = 0x061b,
     MsgId_CFG_TMODE = 0x061d,
     MsgId_CFG_NVS = 0x0622,
