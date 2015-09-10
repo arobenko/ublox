@@ -33,6 +33,7 @@ enum
 {
     CfgNvsField_mask_alm = 17,
     CfgNvsField_mask_aop = 29,
+    CfgNvsField_mask_numOfValues
 };
 
 enum

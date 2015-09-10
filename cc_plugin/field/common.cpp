@@ -97,7 +97,17 @@ const QVariantMap& props_reserved(unsigned idx)
         createProps_reserved(2),
         createProps_reserved(3),
         createProps_reserved(4),
-        createProps_reserved(5)
+        createProps_reserved(5),
+        createProps_reserved(6),
+        createProps_reserved(7),
+        createProps_reserved(8),
+        createProps_reserved(9),
+        createProps_reserved(10),
+        createProps_reserved(11),
+        createProps_reserved(12),
+        createProps_reserved(13),
+        createProps_reserved(14),
+        createProps_reserved(15)
     };
 
     static const auto MapSize = std::extent<decltype(Props)>::value;

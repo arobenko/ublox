@@ -50,12 +50,11 @@ QVariantMap createProps_mask(const char* name)
             }
         };
 
-    static const int AlmBitIdx = 17;
-    fillBitNamesFunc(AlmBitIdx);
+    fillBitNamesFunc(ublox::message::CfgNvsField_mask_alm);
     bitNames.append("alm");
-    static const int AopBitIdx = 29;
-    fillBitNamesFunc(AopBitIdx);
+    fillBitNamesFunc(ublox::message::CfgNvsField_mask_aop);
     bitNames.append("aop");
+    assert(bitNames.size() == ublox::message::CfgNvsField_mask_numOfValues);
     return cc::Property::createPropertiesMap(name, std::move(bitNames));
 }
 
