@@ -21,7 +21,7 @@
 #include "comms/Message.h"
 #include "ublox/Message.h"
 #include "ublox/field/MsgId.h"
-#include "ublox/field/cfg.h"
+#include "ublox/field/common.h"
 
 namespace ublox
 {
