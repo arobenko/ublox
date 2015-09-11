@@ -117,6 +117,9 @@
 #include "cc_plugin/message/CfgNvs.h"
 #include "cc_plugin/message/CfgNavx5.h"
 #include "cc_plugin/message/CfgNavx5Poll.h"
+#include "cc_plugin/message/CfgNav5.h"
+#include "cc_plugin/message/CfgNav5Poll.h"
+
 
 namespace ublox
 {
@@ -216,7 +219,9 @@ typedef std::tuple<
     cc_plugin::message::CfgTmodePoll,
     cc_plugin::message::CfgNvs,
     cc_plugin::message::CfgNavx5,
-    cc_plugin::message::CfgNavx5Poll
+    cc_plugin::message::CfgNavx5Poll,
+    cc_plugin::message::CfgNav5,
+    cc_plugin::message::CfgNav5Poll
 > AllMessages;
 
 }  // namespace cc_plugin

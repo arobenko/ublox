@@ -191,16 +191,6 @@ using week = I2;
 using numSV = U1;
 using svid = U1T<comms::option::ValidNumValueRange<1, 96> >;
 
-// TODO: remove
-using ITOW = U4;
-using Week = I2;
-
-using SVID = U1T<comms::option::ValidNumValueRange<1, 32> >;
-using Elev = I1;
-using Azim = I2;
-
-
-
 }  // namespace common
 
 }  // namespace field

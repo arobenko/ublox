@@ -15,30 +15,43 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+#include <cassert>
 
-#pragma once
+#include "CfgNav5Poll.h"
 
-#include "common.h"
+template class ublox::message::CfgNav5Poll<ublox::cc_plugin::Message>;
+template class ublox::cc_plugin::ProtocolMessageBase<
+    ublox::message::CfgNav5Poll<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::CfgNav5Poll>;
+
+namespace cc = comms_champion;
 
 namespace ublox
 {
 
-namespace field
+namespace cc_plugin
 {
 
-namespace rxm
+namespace message
 {
 
-using iTOW = common::iTOW;
-using week = common::week;
-using numSV = common::numSV;
-using svid = common::svid;
-using svid_ext = common::U4T<comms::option::ValidNumValueRange<1, 96> >;
+CfgNav5Poll::CfgNav5Poll() = default;
+CfgNav5Poll::~CfgNav5Poll() = default;
 
-}  // namespace rxm
+CfgNav5Poll& CfgNav5Poll::operator=(const CfgNav5Poll&) = default;
+CfgNav5Poll& CfgNav5Poll::operator=(CfgNav5Poll&&) = default;
 
-}  // namespace field
+
+const char* CfgNav5Poll::nameImpl() const
+{
+    static const char* Str = "CFG-NAV5 (Poll)";
+    return Str;
+}
+
+
+}  // namespace message
+
+}  // namespace cc_plugin
 
 }  // namespace ublox
-
 
