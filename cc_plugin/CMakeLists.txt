@@ -114,6 +114,8 @@ function (cc_plugin_ublox)
         message/CfgTp5.cpp
         message/CfgTp5PollSelect.cpp
         message/CfgTp5Poll.cpp
+        message/CfgRinv.cpp
+        message/CfgRinvPoll.cpp
         field/MsgId.cpp
         field/common.cpp
         field/nav.cpp
