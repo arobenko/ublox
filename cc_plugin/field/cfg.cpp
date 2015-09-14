@@ -157,6 +157,16 @@ QVariantMap createProps_nmeaFlags()
     return cc::Property::createPropertiesMap("filter", std::move(bitNames));
 }
 
+QVariantMap createProps_tpIdx()
+{
+    QVariantList enumValues;
+    cc::Property::appendEnumValue(enumValues, "TIMEPULSE");
+    cc::Property::appendEnumValue(enumValues, "TIMEPULSE2");
+    assert(enumValues.size() == (int)ublox::field::cfg::TpIdx::NumOfValues);
+    return cc::Property::createPropertiesMap("tpIdx", std::move(enumValues));
+}
+
+
 }  // namespace
 
 const QVariantMap& props_portID()
@@ -288,6 +298,12 @@ const QVariantMap& props_nmeaNumSV()
 const QVariantMap& props_nmeaFlags()
 {
     static const QVariantMap Props = createProps_nmeaFlags();
+    return Props;
+}
+
+const QVariantMap& props_tpIdx()
+{
+    static const QVariantMap Props = createProps_tpIdx();
     return Props;
 }
 

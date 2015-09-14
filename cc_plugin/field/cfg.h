@@ -54,6 +54,7 @@ const QVariantMap& props_nmeaFilter();
 const QVariantMap& props_nmeaVersion();
 const QVariantMap& props_nmeaNumSV();
 const QVariantMap& props_nmeaFlags();
+const QVariantMap& props_tpIdx();
 
 }  // namespace cfg
 

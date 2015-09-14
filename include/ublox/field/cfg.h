@@ -115,6 +115,22 @@ using datRotY = common::R4;
 using datRotZ = common::R4;
 using datScale = common::R4;
 
+enum class TpIdx : std::uint8_t
+{
+    TIMEPULSE,
+    TIMEPULSE2,
+    NumOfValues
+};
+
+using tpIdx =
+    comms::field::EnumValue<
+        field::common::FieldBase,
+        TpIdx,
+        comms::option::ValidNumValueRange<0, (int)TpIdx::NumOfValues - 1>
+    >;
+
+
+
 }  // namespace cfg
 
 }  // namespace field
