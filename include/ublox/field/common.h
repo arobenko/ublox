@@ -141,7 +141,9 @@ using res3 =
         comms::option::ValidNumValueRange<0, 0>
     >;
 
-using res4 = U4T<comms::option::ValidNumValueRange<0, 0> >;
+template <typename... TOptions>
+using res4T = U4T<comms::option::ValidNumValueRange<0, 0>, TOptions...>;
+using res4 = res4T<>;
 
 template <typename... TOptions>
 using R4T =
