@@ -45,18 +45,6 @@ QVariantMap createProps_reserved(unsigned idx)
     return cc::Property::createPropertiesMap(str);
 }
 
-// TODO: remove
-QVariantMap createResProperties(unsigned idx)
-{
-    auto str = QString("res%1").arg(idx, 1, 10, QChar('0'));
-    return cc::Property::createPropertiesMap(str);
-}
-
-QVariantMap createNameOnlyProperties(const char* name)
-{
-    return cc::Property::createPropertiesMap(name);
-}
-
 }  // namespace
 
 const QVariantList& emptyProperties()
@@ -118,66 +106,6 @@ const QVariantMap& props_reserved(unsigned idx)
 
     return Props[idx];
 }
-
-
-
-
-// TODO: remove
-const QVariantMap& resProperties()
-{
-    static const QVariantMap Props = cc::Property::createPropertiesMap("res");
-    return Props;
-}
-
-const QVariantMap& resProperties(unsigned idx)
-{
-    static const QVariantMap Props[] = {
-        createResProperties(0),
-        createResProperties(1),
-        createResProperties(2),
-        createResProperties(3),
-        createResProperties(4)
-    };
-
-    static const auto MapSize = std::extent<decltype(Props)>::value;
-    if (MapSize <= idx) {
-        static const QVariantMap EmptyMap;
-        return EmptyMap;
-    }
-
-    return Props[idx];
-}
-
-const QVariantMap& padProperties()
-{
-    static const QVariantMap Props = cc::Property::createPropertiesMap("pad");
-    return Props;
-}
-
-const QVariantMap& itowProperties()
-{
-    static const QVariantMap Props = createNameOnlyProperties("ITOW");
-    return Props;
-}
-
-const QVariantMap& svidProperties()
-{
-    static const QVariantMap Props = createNameOnlyProperties("SVID");
-    return Props;
-}
-
-const QVariantMap& elevProperties()
-{
-    static const QVariantMap Props = createNameOnlyProperties("Elev");
-    return Props;
-}
-
-const QVariantMap& azimProperties()
-{
-    static const QVariantMap Props = createNameOnlyProperties("Azim");
-    return Props;
-}
-
 
 }  // namespace common
 

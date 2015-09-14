@@ -131,7 +131,9 @@ template <typename... TOptions>
 using res1T = U1T<comms::option::ValidNumValueRange<0, 0>, TOptions...>;
 using res1 = res1T<>;
 
-using res2 = U2T<comms::option::ValidNumValueRange<0, 0> >;
+template <typename... TOptions>
+using res2T = U2T<comms::option::ValidNumValueRange<0, 0>, TOptions...>;
+using res2 = res2T<>;
 
 using res3 =
     comms::field::IntValue<

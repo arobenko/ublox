@@ -77,6 +77,8 @@
 #include "message/CfgNav5.h"
 #include "message/CfgTp5.h"
 #include "message/CfgRinv.h"
+#include "message/CfgItfm.h"
+#include "message/CfgPm2.h"
 
 namespace ublox
 {
@@ -134,7 +136,9 @@ using InputMessages =
         message::CfgNavx5<TMessage>,
         message::CfgNav5<TMessage>,
         message::CfgTp5<TMessage>,
-        message::CfgRinv<TMessage>
+        message::CfgRinv<TMessage>,
+        message::CfgItfm<TMessage>,
+        message::CfgPm2<TMessage>
     >;
 
 }  // namespace ublox
