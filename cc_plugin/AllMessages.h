@@ -128,6 +128,8 @@
 #include "cc_plugin/message/CfgItfmPoll.h"
 #include "cc_plugin/message/CfgPm2.h"
 #include "cc_plugin/message/CfgPm2Poll.h"
+#include "cc_plugin/message/CfgGnss.h"
+#include "cc_plugin/message/CfgGnssPoll.h"
 
 namespace ublox
 {
@@ -238,7 +240,9 @@ typedef std::tuple<
     cc_plugin::message::CfgItfm,
     cc_plugin::message::CfgItfmPoll,
     cc_plugin::message::CfgPm2,
-    cc_plugin::message::CfgPm2Poll
+    cc_plugin::message::CfgPm2Poll,
+    cc_plugin::message::CfgGnss,
+    cc_plugin::message::CfgGnssPoll
 > AllMessages;
 
 }  // namespace cc_plugin

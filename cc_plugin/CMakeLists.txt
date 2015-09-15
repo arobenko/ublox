@@ -120,6 +120,8 @@ function (cc_plugin_ublox)
         message/CfgItfmPoll.cpp
         message/CfgPm2.cpp
         message/CfgPm2Poll.cpp
+        message/CfgGnss.cpp
+        message/CfgGnssPoll.cpp
         field/MsgId.cpp
         field/common.cpp
         field/nav.cpp
