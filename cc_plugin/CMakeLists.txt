@@ -122,6 +122,8 @@ function (cc_plugin_ublox)
         message/CfgPm2Poll.cpp
         message/CfgGnss.cpp
         message/CfgGnssPoll.cpp
+        message/CfgLogfilter.cpp
+        message/CfgLogfilterPoll.cpp
         field/MsgId.cpp
         field/common.cpp
         field/nav.cpp

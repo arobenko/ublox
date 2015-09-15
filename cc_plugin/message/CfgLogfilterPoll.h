@@ -19,7 +19,7 @@
 #pragma once
 
 #include "comms_champion/comms_champion.h"
-#include "ublox/message/CfgItfmPoll.h"
+#include "ublox/message/CfgLogfilterPoll.h"
 #include "cc_plugin/Message.h"
 #include "cc_plugin/ProtocolMessageBase.h"
 
@@ -32,19 +32,19 @@ namespace cc_plugin
 namespace message
 {
 
-class CfgItfmPoll : public
+class CfgLogfilterPoll : public
     ProtocolMessageBase<
-        ublox::message::CfgItfmPoll<ublox::cc_plugin::Message>,
-        CfgItfmPoll>
+        ublox::message::CfgLogfilterPoll<ublox::cc_plugin::Message>,
+        CfgLogfilterPoll>
 {
 public:
-    CfgItfmPoll();
-    CfgItfmPoll(const CfgItfmPoll&) = delete;
-    CfgItfmPoll(CfgItfmPoll&&) = delete;
-    virtual ~CfgItfmPoll();
+    CfgLogfilterPoll();
+    CfgLogfilterPoll(const CfgLogfilterPoll&) = delete;
+    CfgLogfilterPoll(CfgLogfilterPoll&&) = delete;
+    virtual ~CfgLogfilterPoll();
 
-    CfgItfmPoll& operator=(const CfgItfmPoll&);
-    CfgItfmPoll& operator=(CfgItfmPoll&&);
+    CfgLogfilterPoll& operator=(const CfgLogfilterPoll&);
+    CfgLogfilterPoll& operator=(CfgLogfilterPoll&&);
 
 protected:
     virtual const char* nameImpl() const override;
@@ -57,7 +57,7 @@ protected:
 }  // namespace ublox
 
 
-extern template class ublox::message::CfgItfmPoll<ublox::cc_plugin::Message>;
+extern template class ublox::message::CfgLogfilterPoll<ublox::cc_plugin::Message>;
 extern template class ublox::cc_plugin::ProtocolMessageBase<
-    ublox::message::CfgItfmPoll<ublox::cc_plugin::Message>,
-    ublox::cc_plugin::message::CfgItfmPoll>;
+    ublox::message::CfgLogfilterPoll<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::CfgLogfilterPoll>;

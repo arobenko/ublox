@@ -80,6 +80,7 @@
 #include "message/CfgItfm.h"
 #include "message/CfgPm2.h"
 #include "message/CfgGnss.h"
+#include "message/CfgLogfilter.h"
 
 namespace ublox
 {
@@ -140,7 +141,8 @@ using InputMessages =
         message::CfgRinv<TMessage>,
         message::CfgItfm<TMessage>,
         message::CfgPm2<TMessage>,
-        message::CfgGnss<TMessage>
+        message::CfgGnss<TMessage>,
+        message::CfgLogfilter<TMessage>
     >;
 
 }  // namespace ublox

@@ -16,14 +16,14 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-#include "CfgItfmPoll.h"
+#include "CfgLogfilterPoll.h"
 
 #include "cc_plugin/field/cfg.h"
 
-template class ublox::message::CfgItfmPoll<ublox::cc_plugin::Message>;
+template class ublox::message::CfgLogfilterPoll<ublox::cc_plugin::Message>;
 template class ublox::cc_plugin::ProtocolMessageBase<
-    ublox::message::CfgItfmPoll<ublox::cc_plugin::Message>,
-    ublox::cc_plugin::message::CfgItfmPoll>;
+    ublox::message::CfgLogfilterPoll<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::CfgLogfilterPoll>;
 
 namespace cc = comms_champion;
 
@@ -36,16 +36,16 @@ namespace cc_plugin
 namespace message
 {
 
-CfgItfmPoll::CfgItfmPoll() = default;
-CfgItfmPoll::~CfgItfmPoll() = default;
+CfgLogfilterPoll::CfgLogfilterPoll() = default;
+CfgLogfilterPoll::~CfgLogfilterPoll() = default;
 
-CfgItfmPoll& CfgItfmPoll::operator=(const CfgItfmPoll&) = default;
-CfgItfmPoll& CfgItfmPoll::operator=(CfgItfmPoll&&) = default;
+CfgLogfilterPoll& CfgLogfilterPoll::operator=(const CfgLogfilterPoll&) = default;
+CfgLogfilterPoll& CfgLogfilterPoll::operator=(CfgLogfilterPoll&&) = default;
 
 
-const char* CfgItfmPoll::nameImpl() const
+const char* CfgLogfilterPoll::nameImpl() const
 {
-    static const char* Str = "CFG-ITFM (Poll)";
+    static const char* Str = "CFG-LOGFILTER (Poll)";
     return Str;
 }
 
