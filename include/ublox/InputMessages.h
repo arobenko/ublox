@@ -77,6 +77,7 @@
 #include "message/CfgNav5.h"
 #include "message/CfgEsfgwt.h"
 #include "message/CfgTp5.h"
+#include "message/CfgPm.h"
 #include "message/CfgRinv.h"
 #include "message/CfgItfm.h"
 #include "message/CfgPm2.h"
@@ -140,6 +141,7 @@ using InputMessages =
         message::CfgNav5<TMessage>,
         message::CfgEsfgwt<TMessage>,
         message::CfgTp5<TMessage>,
+        message::CfgPm<TMessage>,
         message::CfgRinv<TMessage>,
         message::CfgItfm<TMessage>,
         message::CfgPm2<TMessage>,
