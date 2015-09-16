@@ -81,6 +81,7 @@
 #include "message/CfgRinv.h"
 #include "message/CfgItfm.h"
 #include "message/CfgPm2.h"
+#include "message/CfgTmode2.h"
 #include "message/CfgGnss.h"
 #include "message/CfgLogfilter.h"
 
@@ -145,6 +146,7 @@ using InputMessages =
         message::CfgRinv<TMessage>,
         message::CfgItfm<TMessage>,
         message::CfgPm2<TMessage>,
+        message::CfgTmode2<TMessage>,
         message::CfgGnss<TMessage>,
         message::CfgLogfilter<TMessage>
     >;

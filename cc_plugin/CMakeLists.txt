@@ -124,6 +124,8 @@ function (cc_plugin_ublox)
         message/CfgItfmPoll.cpp
         message/CfgPm2.cpp
         message/CfgPm2Poll.cpp
+        message/CfgTmode2.cpp
+        message/CfgTmode2Poll.cpp
         message/CfgGnss.cpp
         message/CfgGnssPoll.cpp
         message/CfgLogfilter.cpp

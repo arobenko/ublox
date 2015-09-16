@@ -132,6 +132,8 @@
 #include "cc_plugin/message/CfgItfmPoll.h"
 #include "cc_plugin/message/CfgPm2.h"
 #include "cc_plugin/message/CfgPm2Poll.h"
+#include "cc_plugin/message/CfgTmode2.h"
+#include "cc_plugin/message/CfgTmode2Poll.h"
 #include "cc_plugin/message/CfgGnss.h"
 #include "cc_plugin/message/CfgGnssPoll.h"
 #include "cc_plugin/message/CfgLogfilter.h"
@@ -251,6 +253,8 @@ typedef std::tuple<
     cc_plugin::message::CfgItfmPoll,
     cc_plugin::message::CfgPm2,
     cc_plugin::message::CfgPm2Poll,
+    cc_plugin::message::CfgTmode2,
+    cc_plugin::message::CfgTmode2Poll,
     cc_plugin::message::CfgGnss,
     cc_plugin::message::CfgGnssPoll,
     cc_plugin::message::CfgLogfilter,
