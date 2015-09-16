@@ -119,6 +119,8 @@
 #include "cc_plugin/message/CfgNavx5Poll.h"
 #include "cc_plugin/message/CfgNav5.h"
 #include "cc_plugin/message/CfgNav5Poll.h"
+#include "cc_plugin/message/CfgEsfgwt.h"
+#include "cc_plugin/message/CfgEsfgwtPoll.h"
 #include "cc_plugin/message/CfgTp5.h"
 #include "cc_plugin/message/CfgTp5PollSelect.h"
 #include "cc_plugin/message/CfgTp5Poll.h"
@@ -234,6 +236,8 @@ typedef std::tuple<
     cc_plugin::message::CfgNavx5Poll,
     cc_plugin::message::CfgNav5,
     cc_plugin::message::CfgNav5Poll,
+    cc_plugin::message::CfgEsfgwt,
+    cc_plugin::message::CfgEsfgwtPoll,
     cc_plugin::message::CfgTp5,
     cc_plugin::message::CfgTp5PollSelect,
     cc_plugin::message::CfgTp5Poll,

@@ -73,13 +73,15 @@ enum MsgId : std::uint16_t
     MsgId_CFG_NVS = 0x0622,
     MsgId_CFG_NAVX5 = 0x0623,
     MsgId_CFG_NAV5 = 0x0624,
+    MsgId_CFG_ESFGWT = 0x0629,
     MsgId_CFG_TP5 = 0x0631,
+    MsgId_CFG_PM = 0x0632,
     MsgId_CFG_RINV = 0x0634,
     MsgId_CFG_ITFM = 0x0639,
     MsgId_CFG_PM2 = 0x063b,
+    MsgId_CFG_TMODE2 = 0x063d,
     MsgId_CFG_GNSS = 0x063e,
     MsgId_CFG_LOGFILTER = 0x0647,
-    MsgId_CFG_LIC = 0x0680,
 };
 
 }  // namespace ublox
