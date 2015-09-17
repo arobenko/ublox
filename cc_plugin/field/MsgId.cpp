@@ -98,6 +98,15 @@ QVariantMap createMsgIdProperties()
     cc::Property::appendEnumValue(enumValues, "CFG-GNSS", MsgId_CFG_GNSS);
     cc::Property::appendEnumValue(enumValues, "CFG-LOGFILTER", MsgId_CFG_LOGFILTER);
 
+    cc::Property::appendEnumValue(enumValues, "MON-IO", MsgId_MON_IO);
+    cc::Property::appendEnumValue(enumValues, "MON-VER", MsgId_MON_VER);
+    cc::Property::appendEnumValue(enumValues, "MON-MSGPP", MsgId_MON_MSGPP);
+    cc::Property::appendEnumValue(enumValues, "MON-RXBUF", MsgId_MON_RXBUF);
+    cc::Property::appendEnumValue(enumValues, "MON-TXBUF", MsgId_MON_TXBUF);
+    cc::Property::appendEnumValue(enumValues, "MON-HW", MsgId_MON_HW);
+    cc::Property::appendEnumValue(enumValues, "MON-HW2", MsgId_MON_HW2);
+    cc::Property::appendEnumValue(enumValues, "MON-RXR", MsgId_MON_RXR);
+
     return cc::Property::createPropertiesMap("CLASS + ID", std::move(enumValues));
 }
 

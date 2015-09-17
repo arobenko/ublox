@@ -82,6 +82,14 @@ enum MsgId : std::uint16_t
     MsgId_CFG_TMODE2 = 0x063d,
     MsgId_CFG_GNSS = 0x063e,
     MsgId_CFG_LOGFILTER = 0x0647,
+    MsgId_MON_IO = 0x0a02,
+    MsgId_MON_VER = 0x0a04,
+    MsgId_MON_MSGPP = 0x0a06,
+    MsgId_MON_RXBUF = 0x0a07,
+    MsgId_MON_TXBUF = 0x0a08,
+    MsgId_MON_HW = 0x0a09,
+    MsgId_MON_HW2 = 0x0a0b,
+    MsgId_MON_RXR = 0x0a21,
 };
 
 }  // namespace ublox

@@ -85,6 +85,8 @@
 #include "message/CfgGnss.h"
 #include "message/CfgLogfilter.h"
 
+#include "message/MonIo.h"
+
 namespace ublox
 {
 
@@ -148,7 +150,8 @@ using InputMessages =
         message::CfgPm2<TMessage>,
         message::CfgTmode2<TMessage>,
         message::CfgGnss<TMessage>,
-        message::CfgLogfilter<TMessage>
+        message::CfgLogfilter<TMessage>,
+        message::MonIo<TMessage>
     >;
 
 }  // namespace ublox

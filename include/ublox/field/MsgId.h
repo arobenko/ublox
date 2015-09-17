@@ -45,7 +45,8 @@ struct MsgIdValueValidator
             &MsgIdValueValidator::validateRxm,
             &MsgIdValueValidator::validateInf,
             &MsgIdValueValidator::validateAck,
-            &MsgIdValueValidator::validateCfg
+            &MsgIdValueValidator::validateCfg,
+            &MsgIdValueValidator::validateMon
         };
 
         ublox::MsgId id = field.value();
@@ -183,6 +184,30 @@ private:
         auto iter = std::lower_bound(std::begin(IDs), std::end(IDs), id);
         return (iter != std::end(IDs)) && (*iter == id);
     }
+
+    static bool validateMon(ublox::MsgId id)
+    {
+        static const auto CfgClassId = classId(MsgId_MON_IO);
+
+        if (classId(id) != CfgClassId) {
+            return false;
+        }
+
+        static const ublox::MsgId IDs[] = {
+            MsgId_MON_IO,
+            MsgId_MON_VER,
+            MsgId_MON_MSGPP,
+            MsgId_MON_RXBUF,
+            MsgId_MON_TXBUF,
+            MsgId_MON_HW,
+            MsgId_MON_HW2,
+            MsgId_MON_RXR
+        };
+
+        auto iter = std::lower_bound(std::begin(IDs), std::end(IDs), id);
+        return (iter != std::end(IDs)) && (*iter == id);
+    }
+
 
 };
 

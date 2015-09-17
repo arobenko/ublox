@@ -130,6 +130,8 @@ function (cc_plugin_ublox)
         message/CfgGnssPoll.cpp
         message/CfgLogfilter.cpp
         message/CfgLogfilterPoll.cpp
+        message/MonIo.cpp
+        message/MonIoPoll.cpp
         field/MsgId.cpp
         field/common.cpp
         field/nav.cpp
