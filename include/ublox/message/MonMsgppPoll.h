@@ -20,7 +20,6 @@
 
 #include "comms/Message.h"
 #include "ublox/Message.h"
-#include "ublox/field/common.h"
 
 namespace ublox
 {
@@ -28,55 +27,40 @@ namespace ublox
 namespace message
 {
 
-using CfgVerField_swVersion = field::common::ZString<30>;
-using CfgVerField_hwVersion = field::common::ZString<10>;
-using CfgVerField_extensions =
-    comms::field::ArrayList<
-        field::common::FieldBase,
-        field::common::ZString<30>
-    >;
-
-using MonVerFields = std::tuple<
-    CfgVerField_swVersion,
-    CfgVerField_hwVersion,
-    CfgVerField_extensions
->;
+using MonMsgppPollFields = std::tuple<>;
 
 
 template <typename TMsgBase = Message>
-class MonVer : public
+class MonMsgppPoll : public
     comms::MessageBase<
         TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_MON_VER>,
-        comms::option::FieldsImpl<MonVerFields>,
-        comms::option::DispatchImpl<MonVer<TMsgBase> >
+        comms::option::StaticNumIdImpl<MsgId_MON_MSGPP>,
+        comms::option::FieldsImpl<MonMsgppPollFields>,
+        comms::option::DispatchImpl<MonMsgppPoll<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_MON_VER>,
-        comms::option::FieldsImpl<MonVerFields>,
-        comms::option::DispatchImpl<MonVer<TMsgBase> >
+        comms::option::StaticNumIdImpl<MsgId_MON_MSGPP>,
+        comms::option::FieldsImpl<MonMsgppPollFields>,
+        comms::option::DispatchImpl<MonMsgppPoll<TMsgBase> >
     > Base;
 public:
     enum FieldIdx
     {
-        FieldIdx_swVersion,
-        FieldIdx_hwVersion,
-        FieldIdx_extensions,
         FieldIdx_numOfValues
     };
 
     static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
-    MonVer() = default;
-    MonVer(const MonVer&) = default;
-    MonVer(MonVer&& other) = default;
-    virtual ~MonVer() = default;
+    MonMsgppPoll() = default;
+    MonMsgppPoll(const MonMsgppPoll&) = default;
+    MonMsgppPoll(MonMsgppPoll&& other) = default;
+    virtual ~MonMsgppPoll() = default;
 
-    MonVer& operator=(const MonVer&) = default;
-    MonVer& operator=(MonVer&&) = default;
+    MonMsgppPoll& operator=(const MonMsgppPoll&) = default;
+    MonMsgppPoll& operator=(MonMsgppPoll&&) = default;
 };
 
 

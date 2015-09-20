@@ -87,6 +87,7 @@
 
 #include "message/MonIo.h"
 #include "message/MonVer.h"
+#include "message/MonMsgpp.h"
 
 namespace ublox
 {
@@ -153,7 +154,8 @@ using InputMessages =
         message::CfgGnss<TMessage>,
         message::CfgLogfilter<TMessage>,
         message::MonIo<TMessage>,
-        message::MonVer<TMessage>
+        message::MonVer<TMessage>,
+        message::MonMsgpp<TMessage>
     >;
 
 }  // namespace ublox
