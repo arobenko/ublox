@@ -132,6 +132,8 @@ function (cc_plugin_ublox)
         message/CfgLogfilterPoll.cpp
         message/MonIo.cpp
         message/MonIoPoll.cpp
+        message/MonVer.cpp
+        message/MonVerPoll.cpp
         field/MsgId.cpp
         field/common.cpp
         field/nav.cpp

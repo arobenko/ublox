@@ -21,6 +21,7 @@
 #include "comms/Message.h"
 #include "ublox/Message.h"
 #include "ublox/field/MsgId.h"
+#include "ublox/field/common.h"
 #include "ublox/field/cfg.h"
 
 namespace ublox
@@ -49,18 +50,9 @@ using CfgUsbField_flags =
     field::common::X2T<
         comms::option::BitmaskReservedBits<0xfffc, 0>
     >;
-using CfgUsbField_vendorString =
-    comms::field::String<
-        field::common::FieldBase,
-        comms::option::SequenceFixedSize<31>,
-        comms::option::SequenceTrailingFieldSuffix<
-            field::common::U1T<
-                comms::option::ValidNumValueRange<0, 0>
-            >
-        >
-    >;
-using CfgUsbField_productString = CfgUsbField_vendorString;
-using CfgUsbField_serialNumber = CfgUsbField_vendorString;
+using CfgUsbField_vendorString = field::common::ZString<32>;
+using CfgUsbField_productString = field::common::ZString<32>;
+using CfgUsbField_serialNumber = field::common::ZString<32>;
 
 using CfgUsbFields = std::tuple<
     CfgUsbField_vendorID,

@@ -185,6 +185,18 @@ using Scaling_us2s = comms::option::ScalingRatio<1, 1000000000L>;
 using Scaling_ns2s = comms::option::ScalingRatio<1, 1000000L>;
 using Scaling_ms2s = comms::option::ScalingRatio<1, 1000>;
 
+template <std::size_t TSize>
+using ZString =
+    comms::field::String<
+            field::common::FieldBase,
+            comms::option::SequenceFixedSize<TSize - 1>,
+            comms::option::SequenceTrailingFieldSuffix<
+                field::common::U1T<
+                    comms::option::ValidNumValueRange<0, 0>
+                >
+            >
+        >;
+
 using iTOW =
     U4T<
         Scaling_ms2s,
