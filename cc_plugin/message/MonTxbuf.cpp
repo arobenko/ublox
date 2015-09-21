@@ -17,12 +17,13 @@
 
 #include <cassert>
 
-#include "MonRxbuf.h"
+#include "MonTxbuf.h"
+#include "cc_plugin/field/common.h"
 
-template class ublox::message::MonRxbuf<ublox::cc_plugin::Message>;
+template class ublox::message::MonTxbuf<ublox::cc_plugin::Message>;
 template class ublox::cc_plugin::ProtocolMessageBase<
-    ublox::message::MonRxbuf<ublox::cc_plugin::Message>,
-    ublox::cc_plugin::message::MonRxbuf>;
+    ublox::message::MonTxbuf<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::MonTxbuf>;
 
 namespace cc = comms_champion;
 
@@ -49,32 +50,54 @@ QVariantMap createProps_list(const char* name)
     return props;
 }
 
+QVariantMap createProps_errors()
+{
+    auto limitProps = cc::Property::createPropertiesMap("limit");
+    cc::Property::setSerialisedHidden(limitProps);
+
+    QVariantList bitNames;
+    bitNames.append("mem");
+    bitNames.append("alloc");
+    assert(bitNames.size() == ublox::message::MonTxbufField_errors_bits_numOfValues);
+    auto bitsProps = cc::Property::createPropertiesMap(QString(), std::move(bitNames));
+    cc::Property::setSerialisedHidden(bitsProps);
+
+    QVariantList membersData;
+    membersData.append(std::move(limitProps));
+    membersData.append(std::move(bitsProps));
+    assert(membersData.size() == ublox::message::MonTxbufField_errors_bits_numOfValues);
+    return cc::Property::createPropertiesMap("errors", std::move(membersData));
+}
+
 QVariantList createFieldsProperties()
 {
     QVariantList props;
     props.append(createProps_list("pending"));
     props.append(createProps_list("usage"));
     props.append(createProps_list("peakUsage"));
-
-    assert(props.size() == MonRxbuf::FieldIdx_numOfValues);
+    props.append(cc::Property::createPropertiesMap("tUsage"));
+    props.append(cc::Property::createPropertiesMap("tPeakUsage"));
+    props.append(createProps_errors());
+    props.append(cc_plugin::field::common::props_reserved(1));
+    assert(props.size() == MonTxbuf::FieldIdx_numOfValues);
     return props;
 }
 
 }  // namespace
 
-MonRxbuf::MonRxbuf() = default;
-MonRxbuf::~MonRxbuf() = default;
+MonTxbuf::MonTxbuf() = default;
+MonTxbuf::~MonTxbuf() = default;
 
-MonRxbuf& MonRxbuf::operator=(const MonRxbuf&) = default;
-MonRxbuf& MonRxbuf::operator=(MonRxbuf&&) = default;
+MonTxbuf& MonTxbuf::operator=(const MonTxbuf&) = default;
+MonTxbuf& MonTxbuf::operator=(MonTxbuf&&) = default;
 
-const char* MonRxbuf::nameImpl() const
+const char* MonTxbuf::nameImpl() const
 {
-    static const char* Str = "MON-RXBUF";
+    static const char* Str = "MON-TXBUF";
     return Str;
 }
 
-const QVariantList& MonRxbuf::fieldsPropertiesImpl() const
+const QVariantList& MonTxbuf::fieldsPropertiesImpl() const
 {
     static const auto Props = createFieldsProperties();
     return Props;

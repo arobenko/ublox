@@ -37,7 +37,7 @@ using MonRxbufField_pending =
 using MonRxbufField_usage =
     comms::field::ArrayList<
         field::common::FieldBase,
-        field::common::U1,
+        field::common::U1T<comms::option::ValidNumValueRange<0, 100> >,
         comms::option::SequenceFixedSize<6>
     >;
 using MonRxbufField_peakUsage = MonRxbufField_usage;
