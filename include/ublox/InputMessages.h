@@ -90,6 +90,7 @@
 #include "message/MonMsgpp.h"
 #include "message/MonRxbuf.h"
 #include "message/MonTxbuf.h"
+#include "message/MonHw.h"
 
 namespace ublox
 {
@@ -159,7 +160,8 @@ using InputMessages =
         message::MonVer<TMessage>,
         message::MonMsgpp<TMessage>,
         message::MonRxbuf<TMessage>,
-        message::MonTxbuf<TMessage>
+        message::MonTxbuf<TMessage>,
+        message::MonHw<TMessage>
     >;
 
 }  // namespace ublox
