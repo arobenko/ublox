@@ -90,6 +90,15 @@ enum MsgId : std::uint16_t
     MsgId_MON_HW = 0x0a09,
     MsgId_MON_HW2 = 0x0a0b,
     MsgId_MON_RXR = 0x0a21,
+    MsgId_AID_REQ = 0x0b00,
+    MsgId_AID_INI = 0x0b01,
+    MsgId_AID_HUI = 0x0b02,
+    MsgId_AID_DATA = 0x0b10,
+    MsgId_AID_ALM = 0x0b30,
+    MsgId_AID_EPH = 0x0b31,
+    MsgId_AID_ALPSRV = 0x0b32,
+    MsgId_AID_AOP = 0x0b33,
+    MsgId_AID_ALP = 0x0b50,
 };
 
 }  // namespace ublox

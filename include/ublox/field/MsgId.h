@@ -46,7 +46,8 @@ struct MsgIdValueValidator
             &MsgIdValueValidator::validateInf,
             &MsgIdValueValidator::validateAck,
             &MsgIdValueValidator::validateCfg,
-            &MsgIdValueValidator::validateMon
+            &MsgIdValueValidator::validateMon,
+            &MsgIdValueValidator::validateAid
         };
 
         ublox::MsgId id = field.value();
@@ -187,9 +188,9 @@ private:
 
     static bool validateMon(ublox::MsgId id)
     {
-        static const auto CfgClassId = classId(MsgId_MON_IO);
+        static const auto MonClassId = classId(MsgId_MON_IO);
 
-        if (classId(id) != CfgClassId) {
+        if (classId(id) != MonClassId) {
             return false;
         }
 
@@ -208,6 +209,29 @@ private:
         return (iter != std::end(IDs)) && (*iter == id);
     }
 
+    static bool validateAid(ublox::MsgId id)
+    {
+        static const auto AidClassId = classId(MsgId_AID_REQ);
+
+        if (classId(id) != AidClassId) {
+            return false;
+        }
+
+        static const ublox::MsgId IDs[] = {
+            MsgId_AID_REQ,
+            MsgId_AID_INI,
+            MsgId_AID_HUI,
+            MsgId_AID_DATA,
+            MsgId_AID_ALM,
+            MsgId_AID_EPH,
+            MsgId_AID_ALPSRV,
+            MsgId_AID_AOP,
+            MsgId_AID_ALP
+        };
+
+        auto iter = std::lower_bound(std::begin(IDs), std::end(IDs), id);
+        return (iter != std::end(IDs)) && (*iter == id);
+    }
 
 };
 

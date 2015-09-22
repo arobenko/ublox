@@ -139,21 +139,23 @@
 //#include "cc_plugin/message/CfgLogfilter.h"
 //#include "cc_plugin/message/CfgLogfilterPoll.h"
 
-#include "cc_plugin/message/MonIo.h"
-#include "cc_plugin/message/MonIoPoll.h"
-#include "cc_plugin/message/MonVer.h"
-#include "cc_plugin/message/MonVerPoll.h"
-#include "cc_plugin/message/MonMsgpp.h"
-#include "cc_plugin/message/MonMsgppPoll.h"
-#include "cc_plugin/message/MonRxbuf.h"
-#include "cc_plugin/message/MonRxbufPoll.h"
-#include "cc_plugin/message/MonTxbuf.h"
-#include "cc_plugin/message/MonTxbufPoll.h"
-#include "cc_plugin/message/MonHw.h"
-#include "cc_plugin/message/MonHwPoll.h"
-#include "cc_plugin/message/MonHw2.h"
-#include "cc_plugin/message/MonHw2Poll.h"
-#include "cc_plugin/message/MonRxr.h"
+//#include "cc_plugin/message/MonIo.h"
+//#include "cc_plugin/message/MonIoPoll.h"
+//#include "cc_plugin/message/MonVer.h"
+//#include "cc_plugin/message/MonVerPoll.h"
+//#include "cc_plugin/message/MonMsgpp.h"
+//#include "cc_plugin/message/MonMsgppPoll.h"
+//#include "cc_plugin/message/MonRxbuf.h"
+//#include "cc_plugin/message/MonRxbufPoll.h"
+//#include "cc_plugin/message/MonTxbuf.h"
+//#include "cc_plugin/message/MonTxbufPoll.h"
+//#include "cc_plugin/message/MonHw.h"
+//#include "cc_plugin/message/MonHwPoll.h"
+//#include "cc_plugin/message/MonHw2.h"
+//#include "cc_plugin/message/MonHw2Poll.h"
+//#include "cc_plugin/message/MonRxr.h"
+
+#include "cc_plugin/message/AidReq.h"
 
 namespace ublox
 {
@@ -275,21 +277,22 @@ typedef std::tuple<
 //    cc_plugin::message::CfgGnssPoll,
 //    cc_plugin::message::CfgLogfilter,
 //    cc_plugin::message::CfgLogfilterPoll,
-    cc_plugin::message::MonIo,
-    cc_plugin::message::MonIoPoll,
-    cc_plugin::message::MonVer,
-    cc_plugin::message::MonVerPoll,
-    cc_plugin::message::MonMsgpp,
-    cc_plugin::message::MonMsgppPoll,
-    cc_plugin::message::MonRxbuf,
-    cc_plugin::message::MonRxbufPoll,
-    cc_plugin::message::MonTxbuf,
-    cc_plugin::message::MonTxbufPoll,
-    cc_plugin::message::MonHw,
-    cc_plugin::message::MonHwPoll,
-    cc_plugin::message::MonHw2,
-    cc_plugin::message::MonHw2Poll,
-    cc_plugin::message::MonRxr
+//    cc_plugin::message::MonIo,
+//    cc_plugin::message::MonIoPoll,
+//    cc_plugin::message::MonVer,
+//    cc_plugin::message::MonVerPoll,
+//    cc_plugin::message::MonMsgpp,
+//    cc_plugin::message::MonMsgppPoll,
+//    cc_plugin::message::MonRxbuf,
+//    cc_plugin::message::MonRxbufPoll,
+//    cc_plugin::message::MonTxbuf,
+//    cc_plugin::message::MonTxbufPoll,
+//    cc_plugin::message::MonHw,
+//    cc_plugin::message::MonHwPoll,
+//    cc_plugin::message::MonHw2,
+//    cc_plugin::message::MonHw2Poll,
+//    cc_plugin::message::MonRxr,
+    cc_plugin::message::AidReq
 > AllMessages;
 
 }  // namespace cc_plugin
