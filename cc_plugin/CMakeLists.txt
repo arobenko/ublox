@@ -142,6 +142,8 @@ function (cc_plugin_ublox)
         message/MonTxbufPoll.cpp
         message/MonHw.cpp
         message/MonHwPoll.cpp
+        message/MonHw2.cpp
+        message/MonHw2Poll.cpp
         field/MsgId.cpp
         field/common.cpp
         field/nav.cpp

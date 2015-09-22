@@ -151,6 +151,8 @@
 #include "cc_plugin/message/MonTxbufPoll.h"
 #include "cc_plugin/message/MonHw.h"
 #include "cc_plugin/message/MonHwPoll.h"
+#include "cc_plugin/message/MonHw2.h"
+#include "cc_plugin/message/MonHw2Poll.h"
 
 namespace ublox
 {
@@ -283,7 +285,9 @@ typedef std::tuple<
     cc_plugin::message::MonTxbuf,
     cc_plugin::message::MonTxbufPoll,
     cc_plugin::message::MonHw,
-    cc_plugin::message::MonHwPoll
+    cc_plugin::message::MonHwPoll,
+    cc_plugin::message::MonHw2,
+    cc_plugin::message::MonHw2Poll
 > AllMessages;
 
 }  // namespace cc_plugin
