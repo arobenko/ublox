@@ -146,6 +146,8 @@ function (cc_plugin_ublox)
         message/MonHw2Poll.cpp
         message/MonRxr.cpp
         message/AidReq.cpp
+        message/AidIni.cpp
+        message/AidIniPoll.cpp
         field/MsgId.cpp
         field/common.cpp
         field/nav.cpp
