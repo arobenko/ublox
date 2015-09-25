@@ -95,6 +95,7 @@
 #include "message/MonRxr.h"
 
 #include "message/AidIni.h"
+#include "message/AidHui.h"
 
 namespace ublox
 {
@@ -168,7 +169,8 @@ using InputMessages =
         message::MonHw<TMessage>,
         message::MonHw2<TMessage>,
         message::MonRxr<TMessage>,
-        message::AidIni<TMessage>
+        message::AidIni<TMessage>,
+        message::AidHui<TMessage>
     >;
 
 }  // namespace ublox

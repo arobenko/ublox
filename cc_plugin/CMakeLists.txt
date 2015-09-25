@@ -148,6 +148,8 @@ function (cc_plugin_ublox)
         message/AidReq.cpp
         message/AidIni.cpp
         message/AidIniPoll.cpp
+        message/AidHui.cpp        
+        message/AidHuiPoll.cpp
         field/MsgId.cpp
         field/common.cpp
         field/nav.cpp

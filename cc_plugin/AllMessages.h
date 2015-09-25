@@ -158,6 +158,8 @@
 #include "cc_plugin/message/AidReq.h"
 #include "cc_plugin/message/AidIni.h"
 #include "cc_plugin/message/AidIniPoll.h"
+#include "cc_plugin/message/AidHui.h"
+#include "cc_plugin/message/AidHuiPoll.h"
 
 namespace ublox
 {
@@ -296,7 +298,9 @@ typedef std::tuple<
 //    cc_plugin::message::MonRxr,
     cc_plugin::message::AidReq,
     cc_plugin::message::AidIni,
-    cc_plugin::message::AidIniPoll
+    cc_plugin::message::AidIniPoll,
+    cc_plugin::message::AidHui,
+    cc_plugin::message::AidHuiPoll
 > AllMessages;
 
 }  // namespace cc_plugin
