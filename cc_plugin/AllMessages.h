@@ -164,6 +164,10 @@
 #include "cc_plugin/message/AidAlm.h"
 #include "cc_plugin/message/AidAlmPollSv.h"
 #include "cc_plugin/message/AidAlmPoll.h"
+#include "cc_plugin/message/AidEph.h"
+#include "cc_plugin/message/AidEphPollSv.h"
+#include "cc_plugin/message/AidEphPoll.h"
+
 
 namespace ublox
 {
@@ -308,7 +312,11 @@ typedef std::tuple<
     cc_plugin::message::AidData,
     cc_plugin::message::AidAlm,
     cc_plugin::message::AidAlmPollSv,
-    cc_plugin::message::AidAlmPoll
+    cc_plugin::message::AidAlmPoll,
+    cc_plugin::message::AidEph,
+    cc_plugin::message::AidEphPollSv,
+    cc_plugin::message::AidEphPoll
+
 > AllMessages;
 
 }  // namespace cc_plugin
