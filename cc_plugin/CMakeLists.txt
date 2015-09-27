@@ -151,6 +151,9 @@ function (cc_plugin_ublox)
         message/AidHui.cpp        
         message/AidHuiPoll.cpp
         message/AidData.cpp
+        message/AidAlm.cpp
+        message/AidAlmPollSv.cpp
+        message/AidAlmPoll.cpp
         field/MsgId.cpp
         field/common.cpp
         field/nav.cpp
