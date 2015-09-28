@@ -100,6 +100,7 @@
 #include "message/AidEph.h"
 #include "message/AidAlpsrv.h"
 #include "message/AidAlpsrvUpdate.h"
+#include "message/AidAop.h"
 
 namespace ublox
 {
@@ -178,7 +179,8 @@ using InputMessages =
         message::AidAlm<TMessage>,
         message::AidEph<TMessage>,
         message::AidAlpsrv<TMessage>,
-        message::AidAlpsrvUpdate<TMessage>
+        message::AidAlpsrvUpdate<TMessage>,
+        message::AidAop<TMessage>
     >;
 
 }  // namespace ublox
