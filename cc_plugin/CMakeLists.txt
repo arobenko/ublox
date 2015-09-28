@@ -157,6 +157,8 @@ function (cc_plugin_ublox)
         message/AidEph.cpp
         message/AidEphPollSv.cpp
         message/AidEphPoll.cpp
+        message/AidAlpsrv.cpp
+        message/AidAlpsrvUpdate.cpp
         field/MsgId.cpp
         field/common.cpp
         field/nav.cpp
