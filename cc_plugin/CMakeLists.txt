@@ -162,6 +162,9 @@ function (cc_plugin_ublox)
         message/AidAop.cpp
         message/AidAopPollSv.cpp
         message/AidAopPoll.cpp
+        message/AidAlp.cpp
+        message/AidAlpStatus.cpp
+        message/AidAlpData.cpp
         field/MsgId.cpp
         field/common.cpp
         field/nav.cpp

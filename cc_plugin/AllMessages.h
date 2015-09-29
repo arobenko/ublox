@@ -172,6 +172,9 @@
 #include "cc_plugin/message/AidAop.h"
 #include "cc_plugin/message/AidAopPollSv.h"
 #include "cc_plugin/message/AidAopPoll.h"
+#include "cc_plugin/message/AidAlp.h"
+#include "cc_plugin/message/AidAlpStatus.h"
+#include "cc_plugin/message/AidAlpData.h"
 
 namespace ublox
 {
@@ -324,7 +327,10 @@ typedef std::tuple<
     cc_plugin::message::AidAlpsrvUpdate,
     cc_plugin::message::AidAop,
     cc_plugin::message::AidAopPollSv,
-    cc_plugin::message::AidAopPoll
+    cc_plugin::message::AidAopPoll,
+    cc_plugin::message::AidAlp,
+    cc_plugin::message::AidAlpStatus,
+    cc_plugin::message::AidAlpData
 > AllMessages;
 
 }  // namespace cc_plugin
