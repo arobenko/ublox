@@ -99,6 +99,10 @@ enum MsgId : std::uint16_t
     MsgId_AID_ALPSRV = 0x0b32,
     MsgId_AID_AOP = 0x0b33,
     MsgId_AID_ALP = 0x0b50,
+    MsgId_TIM_TP = 0x0d01,
+    MsgId_TIM_TM2 = 0x0d03,
+    MsgId_TIM_SVIN = 0x0d04,
+    MsgId_TIM_VRFY = 0x0d06,
 };
 
 }  // namespace ublox

@@ -104,6 +104,8 @@
 #include "message/AidAlp.h"
 #include "message/AidAlpStatus.h"
 
+#include "message/TimTp.h"
+
 namespace ublox
 {
 
@@ -184,7 +186,8 @@ using InputMessages =
         message::AidAlpsrvUpdate<TMessage>,
         message::AidAop<TMessage>,
         message::AidAlp<TMessage>,
-        message::AidAlpStatus<TMessage>
+        message::AidAlpStatus<TMessage>,
+        message::TimTp<TMessage>
     >;
 
 }  // namespace ublox

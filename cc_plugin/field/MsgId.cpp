@@ -117,6 +117,11 @@ QVariantMap createMsgIdProperties()
     cc::Property::appendEnumValue(enumValues, "AID-AOP", MsgId_AID_AOP);
     cc::Property::appendEnumValue(enumValues, "AID-ALP", MsgId_AID_ALP);
 
+    cc::Property::appendEnumValue(enumValues, "TIM-TP", MsgId_TIM_TP);
+    cc::Property::appendEnumValue(enumValues, "TIM-TM2", MsgId_TIM_TM2);
+    cc::Property::appendEnumValue(enumValues, "TIM-SVIN", MsgId_TIM_SVIN);
+    cc::Property::appendEnumValue(enumValues, "TIM-VRFY", MsgId_TIM_VRFY);
+
     return cc::Property::createPropertiesMap("CLASS + ID", std::move(enumValues));
 }
 
