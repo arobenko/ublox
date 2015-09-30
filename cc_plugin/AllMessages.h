@@ -180,6 +180,8 @@
 #include "cc_plugin/message/TimTpPoll.h"
 #include "cc_plugin/message/TimTm2.h"
 #include "cc_plugin/message/TimTm2Poll.h"
+#include "cc_plugin/message/TimSvin.h"
+#include "cc_plugin/message/TimSvinPoll.h"
 
 
 namespace ublox
@@ -340,8 +342,9 @@ typedef std::tuple<
     cc_plugin::message::TimTp,
     cc_plugin::message::TimTpPoll,
     cc_plugin::message::TimTm2,
-    cc_plugin::message::TimTm2Poll
-
+    cc_plugin::message::TimTm2Poll,
+    cc_plugin::message::TimSvin,
+    cc_plugin::message::TimSvinPoll
 > AllMessages;
 
 }  // namespace cc_plugin
