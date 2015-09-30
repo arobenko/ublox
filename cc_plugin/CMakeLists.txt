@@ -167,6 +167,8 @@ function (cc_plugin_ublox)
         message/AidAlpData.cpp
         message/TimTp.cpp
         message/TimTpPoll.cpp
+        message/TimTm2.cpp
+        message/TimTm2Poll.cpp
         field/MsgId.cpp
         field/common.cpp
         field/nav.cpp
