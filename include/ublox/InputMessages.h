@@ -107,6 +107,7 @@
 #include "message/TimTp.h"
 #include "message/TimTm2.h"
 #include "message/TimSvin.h"
+#include "message/TimVrfy.h"
 
 namespace ublox
 {
@@ -191,7 +192,8 @@ using InputMessages =
         message::AidAlpStatus<TMessage>,
         message::TimTp<TMessage>,
         message::TimTm2<TMessage>,
-        message::TimSvin<TMessage>
+        message::TimSvin<TMessage>,
+        message::TimVrfy<TMessage>
     >;
 
 }  // namespace ublox

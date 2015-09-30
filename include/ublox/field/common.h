@@ -179,11 +179,11 @@ static_assert(std::numeric_limits<double>::is_iec559,
 static_assert(sizeof(double) == sizeof(std::uint64_t),
     "double is expected to have size of 8 bytes");
 
-using Scaling_mm2m = comms::option::ScalingRatio<1, 1000L>;
 using Scaling_cm2m = comms::option::ScalingRatio<1, 100>;
-using Scaling_us2s = comms::option::ScalingRatio<1, 1000000000L>;
-using Scaling_ns2s = comms::option::ScalingRatio<1, 1000000L>;
+using Scaling_mm2m = comms::option::ScalingRatio<1, 1000L>;
 using Scaling_ms2s = comms::option::ScalingRatio<1, 1000>;
+using Scaling_us2s = comms::option::ScalingRatio<1, 1000000L>;
+using Scaling_ns2s = comms::option::ScalingRatio<1, 1000000000L>;
 
 template <std::size_t TSize>
 using ZString =

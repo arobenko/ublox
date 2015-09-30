@@ -36,7 +36,7 @@ using TimSvinField_meanV = field::common::U4T<comms::option::ScalingRatio<1, 100
 using TimSvinField_obs = field::common::U4;
 using TimSvinField_valid = field::common::U1;
 using TimSvinField_active = field::common::U1;
-using TimSvinField_reserved = field::common::U2;
+using TimSvinField_reserved = field::common::res2;
 
 using TimSvinFields = std::tuple<
     TimSvinField_dur,

@@ -182,7 +182,8 @@
 #include "cc_plugin/message/TimTm2Poll.h"
 #include "cc_plugin/message/TimSvin.h"
 #include "cc_plugin/message/TimSvinPoll.h"
-
+#include "cc_plugin/message/TimVrfy.h"
+#include "cc_plugin/message/TimVrfyPoll.h"
 
 namespace ublox
 {
@@ -344,7 +345,9 @@ typedef std::tuple<
     cc_plugin::message::TimTm2,
     cc_plugin::message::TimTm2Poll,
     cc_plugin::message::TimSvin,
-    cc_plugin::message::TimSvinPoll
+    cc_plugin::message::TimSvinPoll,
+    cc_plugin::message::TimVrfy,
+    cc_plugin::message::TimVrfyPoll
 > AllMessages;
 
 }  // namespace cc_plugin
