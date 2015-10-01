@@ -20,6 +20,7 @@
 
 #include "comms/Message.h"
 #include "ublox/Message.h"
+#include "ublox/field/common.h"
 
 namespace ublox
 {
@@ -27,39 +28,47 @@ namespace ublox
 namespace message
 {
 
-using LogEraseFields = std::tuple<>;
+using LogStringField_bytes =
+    comms::field::String<
+        field::common::FieldBase
+    >;
+
+using LogStringFields = std::tuple<
+    LogStringField_bytes
+>;
 
 template <typename TMsgBase = Message>
-class LogErase : public
+class LogString : public
     comms::MessageBase<
         TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_LOG_ERASE>,
-        comms::option::FieldsImpl<LogEraseFields>,
-        comms::option::DispatchImpl<LogErase<TMsgBase> >
+        comms::option::StaticNumIdImpl<MsgId_LOG_STRING>,
+        comms::option::FieldsImpl<LogStringFields>,
+        comms::option::DispatchImpl<LogString<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_LOG_ERASE>,
-        comms::option::FieldsImpl<LogEraseFields>,
-        comms::option::DispatchImpl<LogErase<TMsgBase> >
+        comms::option::StaticNumIdImpl<MsgId_LOG_STRING>,
+        comms::option::FieldsImpl<LogStringFields>,
+        comms::option::DispatchImpl<LogString<TMsgBase> >
     > Base;
 public:
     enum FieldIdx
     {
+        FieldIdx_bytes,
         FieldIdx_numOfValues
     };
 
     static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
-    LogErase() = default;
-    LogErase(const LogErase&) = default;
-    LogErase(LogErase&& other) = default;
-    virtual ~LogErase() = default;
+    LogString() = default;
+    LogString(const LogString&) = default;
+    LogString(LogString&& other) = default;
+    virtual ~LogString() = default;
 
-    LogErase& operator=(const LogErase&) = default;
-    LogErase& operator=(LogErase&&) = default;
+    LogString& operator=(const LogString&) = default;
+    LogString& operator=(LogString&&) = default;
 };
 
 
