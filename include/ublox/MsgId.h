@@ -103,6 +103,14 @@ enum MsgId : std::uint16_t
     MsgId_TIM_TM2 = 0x0d03,
     MsgId_TIM_SVIN = 0x0d04,
     MsgId_TIM_VRFY = 0x0d06,
+    MsgId_LOG_ERASE = 0x2103,
+    MsgId_LOG_STRING = 0x2104,
+    MsgId_LOG_CREATE = 0x2107,
+    MsgId_LOG_INFO = 0x2108,
+    MsgId_LOG_RETRIEVE = 0x2109,
+    MsgId_LOG_RETRIEVEPOS = 0x210b,
+    MsgId_LOG_RETRIEVESTRING = 0x210d,
+    MsgId_LOG_FINDTIME = 0x210e
 };
 
 }  // namespace ublox

@@ -122,6 +122,15 @@ QVariantMap createMsgIdProperties()
     cc::Property::appendEnumValue(enumValues, "TIM-SVIN", MsgId_TIM_SVIN);
     cc::Property::appendEnumValue(enumValues, "TIM-VRFY", MsgId_TIM_VRFY);
 
+    cc::Property::appendEnumValue(enumValues, "LOG-ERASE", MsgId_LOG_ERASE);
+    cc::Property::appendEnumValue(enumValues, "LOG-STRING", MsgId_LOG_STRING);
+    cc::Property::appendEnumValue(enumValues, "LOG-CREATE", MsgId_LOG_CREATE);
+    cc::Property::appendEnumValue(enumValues, "LOG-INFO", MsgId_LOG_INFO);
+    cc::Property::appendEnumValue(enumValues, "LOG-RETRIEVE", MsgId_LOG_RETRIEVE);
+    cc::Property::appendEnumValue(enumValues, "LOG-RETRIEVEPOS", MsgId_LOG_RETRIEVEPOS);
+    cc::Property::appendEnumValue(enumValues, "LOG-RETRIEVESTRING", MsgId_LOG_RETRIEVESTRING);
+    cc::Property::appendEnumValue(enumValues, "LOG-FINDTIME", MsgId_LOG_FINDTIME);
+
     return cc::Property::createPropertiesMap("CLASS + ID", std::move(enumValues));
 }
 

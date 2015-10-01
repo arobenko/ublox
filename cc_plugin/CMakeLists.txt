@@ -173,6 +173,8 @@ function (cc_plugin_ublox)
         message/TimSvinPoll.cpp
         message/TimVrfy.cpp        
         message/TimVrfyPoll.cpp
+        message/LogFindtimeCmd.cpp
+        message/LogFindtime.cpp
         field/MsgId.cpp
         field/common.cpp
         field/nav.cpp

@@ -109,6 +109,8 @@
 #include "message/TimSvin.h"
 #include "message/TimVrfy.h"
 
+#include "message/LogFindtime.h"
+
 namespace ublox
 {
 
@@ -193,7 +195,8 @@ using InputMessages =
         message::TimTp<TMessage>,
         message::TimTm2<TMessage>,
         message::TimSvin<TMessage>,
-        message::TimVrfy<TMessage>
+        message::TimVrfy<TMessage>,
+        message::LogFindtime<TMessage>
     >;
 
 }  // namespace ublox
