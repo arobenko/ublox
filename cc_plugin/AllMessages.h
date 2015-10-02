@@ -187,6 +187,9 @@
 
 #include "cc_plugin/message/LogErase.h"
 #include "cc_plugin/message/LogString.h"
+#include "cc_plugin/message/LogCreate.h"
+#include "cc_plugin/message/LogInfo.h"
+#include "cc_plugin/message/LogInfoPoll.h"
 #include "cc_plugin/message/LogFindtimeCmd.h"
 #include "cc_plugin/message/LogFindtime.h"
 
@@ -355,6 +358,9 @@ typedef std::tuple<
 //    cc_plugin::message::TimVrfyPoll,
     cc_plugin::message::LogErase,
     cc_plugin::message::LogString,
+    cc_plugin::message::LogCreate,
+    cc_plugin::message::LogInfo,
+    cc_plugin::message::LogInfoPoll,
     cc_plugin::message::LogFindtimeCmd,
     cc_plugin::message::LogFindtime
 > AllMessages;

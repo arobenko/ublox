@@ -109,6 +109,7 @@
 #include "message/TimSvin.h"
 #include "message/TimVrfy.h"
 
+#include "message/LogInfo.h"
 #include "message/LogFindtime.h"
 
 namespace ublox
@@ -196,6 +197,7 @@ using InputMessages =
         message::TimTm2<TMessage>,
         message::TimSvin<TMessage>,
         message::TimVrfy<TMessage>,
+        message::LogInfo<TMessage>,
         message::LogFindtime<TMessage>
     >;
 

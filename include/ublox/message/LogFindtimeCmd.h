@@ -21,6 +21,7 @@
 #include "comms/Message.h"
 #include "ublox/Message.h"
 #include "ublox/field/common.h"
+#include "ublox/field/log.h"
 
 namespace ublox
 {
@@ -37,30 +38,12 @@ using LogFindtimeCmdField_type  =
         comms::option::ValidNumValueRange<0, 0>
     >;
 using LogFindtimeCmdField_reserved1 = field::common::res2;
-using LogFindtimeCmdField_year  =
-    field::common::U2T<
-        comms::option::ValidNumValueRange<1, 65635>
-    >;
-using LogFindtimeCmdField_month  =
-    field::common::U1T<
-        comms::option::ValidNumValueRange<1, 12>
-    >;
-using LogFindtimeCmdField_day  =
-    field::common::U1T<
-        comms::option::ValidNumValueRange<1, 31>
-    >;
-using LogFindtimeCmdField_hour  =
-    field::common::U1T<
-        comms::option::ValidNumValueRange<0, 23>
-    >;
-using LogFindtimeCmdField_minute  =
-    field::common::U1T<
-        comms::option::ValidNumValueRange<0, 59>
-    >;
-using LogFindtimeCmdField_second  =
-    field::common::U1T<
-        comms::option::ValidNumValueRange<0, 60>
-    >;
+using LogFindtimeCmdField_year = field::log::year;
+using LogFindtimeCmdField_month = field::log::month;
+using LogFindtimeCmdField_day = field::log::day;
+using LogFindtimeCmdField_hour = field::log::hour;
+using LogFindtimeCmdField_minute = field::log::minute;
+using LogFindtimeCmdField_second = field::log::second;
 using LogFindtimeCmdField_reserved2 = field::common::res1;
 
 using LogFindtimeCmdFields = std::tuple<
