@@ -179,6 +179,7 @@ function (cc_plugin_ublox)
         message/LogInfo.cpp
         message/LogInfoPoll.cpp
         message/LogRetrieve.cpp
+        message/LogRetrievepos.cpp
         message/LogFindtimeCmd.cpp
         message/LogFindtime.cpp
         field/MsgId.cpp
