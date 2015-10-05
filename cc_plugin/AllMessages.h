@@ -192,6 +192,7 @@
 #include "cc_plugin/message/LogInfoPoll.h"
 #include "cc_plugin/message/LogRetrieve.h"
 #include "cc_plugin/message/LogRetrievepos.h"
+#include "cc_plugin/message/LogRetrievestring.h"
 #include "cc_plugin/message/LogFindtimeCmd.h"
 #include "cc_plugin/message/LogFindtime.h"
 
@@ -365,6 +366,7 @@ typedef std::tuple<
     cc_plugin::message::LogInfoPoll,
     cc_plugin::message::LogRetrieve,
     cc_plugin::message::LogRetrievepos,
+    cc_plugin::message::LogRetrievestring,
     cc_plugin::message::LogFindtimeCmd,
     cc_plugin::message::LogFindtime
 > AllMessages;
