@@ -34,8 +34,8 @@ Plugin::Plugin()
 Plugin::~Plugin()
 {
     if (isApplied()) {
-        auto* interface = getCtrlInterface();
-        assert(interface != nullptr);
+        auto& interface = getCtrlInterface();
+        assert(interface);
         interface->clearProtocol();
     }
 }
@@ -43,8 +43,8 @@ Plugin::~Plugin()
 
 void Plugin::applyImpl()
 {
-    auto* interface = getCtrlInterface();
-    if (interface != nullptr) {
+    auto& interface = getCtrlInterface();
+    if (interface) {
         interface->setProtocol(cc::ProtocolPtr(new Protocol()));
     }
 }

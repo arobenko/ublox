@@ -2,5 +2,6 @@
     "name" : "UBlox Protocol",
     "desc" : [
         "UBlox Binary Protocol."
-    ]
+    ],
+    "type" : "protocol"
 }
