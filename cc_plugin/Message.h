@@ -29,7 +29,8 @@ namespace cc_plugin
 {
 
 typedef std::tuple<
-    comms::option::ValidCheckInterface
+    comms::option::ValidCheckInterface,
+    comms::option::LengthInfoInterface
 > ExtraMessageOptions;
 
 template <typename... TOptions>
