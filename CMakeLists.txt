@@ -8,7 +8,16 @@ endif ()
 include_directories("${CC_INSTALL_PATH}/include")
 
 if (CMAKE_COMPILER_IS_GNUCC)
-    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Werror --std=c++0x")
+    set (extra_flags_list
+        "--std=c++11"
+        "-Wall" "-Wextra" "-Werror" "-Wcast-align" "-Wcast-qual" "-Wctor-dtor-privacy"
+        "-Wmissing-include-dirs" "-Wnoexcept" "-Wlogical-op" "-Wstrict-null-sentinel"
+        "-Woverloaded-virtual" "-Wredundant-decls" "-Wshadow" "-Wundef" "-Wunused"
+        "-Wno-unknown-pragmas" "-fdiagnostics-show-option"
+    )
+    
+    string(REPLACE ";" " " extra_flags "${extra_flags_list}")
+    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${extra_flags}") 
 endif ()
 
 set (INSTALL_DIR ${CMAKE_BINARY_DIR}/install)

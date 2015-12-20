@@ -17,8 +17,10 @@
 
 #include "cfg.h"
 
+CC_DISABLE_WARNINGS()
 #include <QtCore/QString>
 #include <QtCore/QVariantList>
+CC_ENABLE_WARNINGS()
 
 #include "comms_champion/comms_champion.h"
 #include "ublox/field/cfg.h"

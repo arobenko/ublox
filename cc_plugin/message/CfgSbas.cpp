@@ -61,8 +61,8 @@ QVariantMap createProps_usage()
 QVariantMap createProps_scanmode(int idx, int base, int count)
 {
     QVariantList bitNames;
-    for (auto idx = 0; idx < count; ++idx) {
-        bitNames.append(QString("PRN%1").arg(base + idx));
+    for (auto prnIdx = 0; prnIdx < count; ++prnIdx) {
+        bitNames.append(QString("PRN%1").arg(base + prnIdx));
     }
     return cc::Property::createPropertiesMap(QString("scanmode%1").arg(idx), std::move(bitNames));
 }
