@@ -214,6 +214,16 @@ endfunction()
 
 ######################################################################
 
+if (NOT UBLOX_CC_PLUGIN)
+    return ()
+endif ()
+
+if ("${CC_INSTALL_PATH}" STREQUAL "")
+    message (FATAL_ERROR "Please set CC_INSTALL_PATH with \"comms_champion\" installation path.")
+endif ()
+
+include_directories("${CC_INSTALL_PATH}/include")
+
 find_package(Qt5Core REQUIRED)
 
 include_directories(

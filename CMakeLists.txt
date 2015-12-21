@@ -1,11 +1,24 @@
 cmake_minimum_required (VERSION 2.8.11)
 project ("ublox")
 
-if ("${CC_INSTALL_PATH}" STREQUAL "")
-    message (FATAL_ERROR "Please set CC_INSTALL_PATH with \"comms_champion\" installation path.")
-endif ()
+option (UBLOX_LIB_ONLY "Install only UBLOX protocol library, no other applications/plugings are built." OFF)
+option (UBLOX_CC_PLUGIN "Build and install protocol plugin for CommsChampion." ON)
+option (UBLOX_CC_PLUGIN_COPY_TO_CC_INSTALL_PATH "Copy protocol plugin for CommsChampion to the install path of the latter." ON)
 
-include_directories("${CC_INSTALL_PATH}/include")
+set (INSTALL_DIR ${CMAKE_BINARY_DIR}/install)
+set (LIB_INSTALL_DIR ${INSTALL_DIR}/lib)
+set (BIN_INSTALL_DIR ${INSTALL_DIR}/bin)
+set (INC_INSTALL_DIR ${INSTALL_DIR}/include)
+set (PLUGIN_INSTALL_DIR ${INSTALL_DIR}/plugin)
+
+install (
+    DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/ublox
+    DESTINATION ${INC_INSTALL_DIR}
+)
+
+if (UBLOX_LIB_ONLY)
+    return ()
+endif ()    
 
 if (CMAKE_COMPILER_IS_GNUCC)
     set (extra_flags_list
@@ -19,12 +32,6 @@ if (CMAKE_COMPILER_IS_GNUCC)
     string(REPLACE ";" " " extra_flags "${extra_flags_list}")
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${extra_flags}") 
 endif ()
-
-set (INSTALL_DIR ${CMAKE_BINARY_DIR}/install)
-set (LIB_INSTALL_DIR ${INSTALL_DIR}/lib)
-set (BIN_INSTALL_DIR ${INSTALL_DIR}/bin)
-set (INC_INSTALL_DIR ${INSTALL_DIR}/include)
-set (PLUGIN_INSTALL_DIR ${INSTALL_DIR}/plugin)
 
 include_directories(${CMAKE_SOURCE_DIR})
 include_directories(${CMAKE_SOURCE_DIR}/include)
