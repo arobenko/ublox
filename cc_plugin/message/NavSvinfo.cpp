@@ -94,7 +94,7 @@ QVariantMap createProps_quality()
 QVariantMap createProps_info()
 {
     QVariantList membersData;
-    membersData.append(cc_plugin::field::nav::props_numCh());
+    membersData.append(cc::Property::createPropertiesMap("chn"));
     membersData.append(cc_plugin::field::nav::props_svid());
     membersData.append(createProps_flags());
     membersData.append(createProps_quality());
