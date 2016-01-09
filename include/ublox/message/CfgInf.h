@@ -54,7 +54,7 @@ using CfgInfField_protocolID = field::cfg::protocolID;
 using CfgInfField_reserved0 = field::common::res1;
 using CfgInfField_reserved1 = field::common::res2;
 using CfgInfField_mask =
-    field::common::X1T<comms::option::BitmaskReservedBits<0xe, 0> >;
+    field::common::X1T<comms::option::BitmaskReservedBits<0xe0, 0> >;
 
 using CfgInfField_infMsgMask =
     comms::field::ArrayList<
