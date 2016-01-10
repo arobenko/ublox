@@ -34,7 +34,7 @@ Plugin::Plugin()
 Plugin::~Plugin()
 {
     if (isApplied()) {
-        auto& interface = getCtrlInterface();
+        auto& interface = ctrlInterface();
         interface.clearProtocol();
     }
 }
@@ -42,7 +42,7 @@ Plugin::~Plugin()
 
 void Plugin::applyImpl()
 {
-    auto& interface = getCtrlInterface();
+    auto& interface = ctrlInterface();
     interface.setProtocol(cc::ProtocolPtr(new Protocol()));
 }
 
