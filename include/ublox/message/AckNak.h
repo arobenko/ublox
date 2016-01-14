@@ -28,11 +28,20 @@ namespace ublox
 namespace message
 {
 
+/// @brief Definition of the fields for ACK-NAK message.
+/// @see AckNak
 using AckNakFields = std::tuple<
     ublox::field::MsgId
 >;
 
-
+/// @brief Definition of ACK-NAK message
+/// @details Inherits from
+///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+///     while providing @b TMsgBase as common interface class as well as
+///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
+///     @b comms::option::DispatchImpl as options. @n
+///     See @ref AckNakFields for definition of the fields this message contains.
+/// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class AckNak : public
     comms::MessageBase<
@@ -49,21 +58,33 @@ class AckNak : public
         comms::option::DispatchImpl<AckNak<TMsgBase> >
     > Base;
 public:
+
+    /// @brief Index to access the fields
     enum FieldIdx
     {
-        FieldIdx_id,
-        FieldIdx_numOfValues
+        FieldIdx_id, ///< id field
+        FieldIdx_numOfValues ///< number of available fields
     };
 
     static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
+    /// @brief Default constructor
     AckNak() = default;
+
+    /// @brief Copy constructor
     AckNak(const AckNak&) = default;
+
+    /// @brief Move constructor
     AckNak(AckNak&& other) = default;
+
+    /// @brief Destructor
     virtual ~AckNak() = default;
 
+    /// @brief Copy assignment
     AckNak& operator=(const AckNak&) = default;
+
+    /// @brief Move assignment
     AckNak& operator=(AckNak&&) = default;
 };
 
