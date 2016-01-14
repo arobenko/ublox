@@ -33,12 +33,12 @@ namespace details
 
 using TransportMessageFields =
     std::tuple<
-        ublox::SyncField1<cc_plugin::Stack::Message::Field>,
-        ublox::SyncField2<cc_plugin::Stack::Message::Field>,
+        ublox::details::SyncField1<cc_plugin::Stack::Message::Field>,
+        ublox::details::SyncField2<cc_plugin::Stack::Message::Field>,
         ublox::field::MsgId,
-        ublox::LengthField<cc_plugin::Stack::Message::Field>,
-        ublox::DataField<cc_plugin::Stack::Message::Field>,
-        ublox::ChecksumField<cc_plugin::Stack::Message::Field>
+        ublox::details::LengthField<cc_plugin::Stack::Message::Field>,
+        ublox::details::DataField<cc_plugin::Stack::Message::Field>,
+        ublox::details::ChecksumField<cc_plugin::Stack::Message::Field>
     >;
 
 }  // namespace details

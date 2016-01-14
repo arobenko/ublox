@@ -3,3 +3,6 @@
 ///
 /// @namespace ublox::message
 /// @brief Contains definitions of all the messages defined in Ublox binary protocol.
+///
+/// @namespace ublox::field
+/// @brief Contains definition of common fields for all the messages
