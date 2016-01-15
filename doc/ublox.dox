@@ -5,4 +5,10 @@
 /// @brief Contains definitions of all the messages defined in Ublox binary protocol.
 ///
 /// @namespace ublox::field
-/// @brief Contains definition of common fields for all the messages
+/// @brief Namespace for all the defined fields.
+///
+/// @namespace ublox::field::common
+/// @brief Contains definition of common fields that can be used by multiple independent messages
+///
+/// @namespace ublox::field::aid
+/// @brief Contains definition of common fields that can be used by multiple independent messages of AID class

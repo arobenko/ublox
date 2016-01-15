@@ -31,8 +31,19 @@ namespace ublox
 namespace message
 {
 
+/// @brief Definition of "svid" field in AID-ALM message.
 using AidAlmField_svid = field::aid::svid_ext;
+
+/// @brief Definition of "week" field in AID-ALM message.
 using AidAlmField_week = field::common::U4;
+
+/// @brief Definition of "dwrd" field in AID-ALM message.
+/// @details The field is defined to be
+///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1field_1_1Optional.html">comms::field::Optional</a> that
+///     wraps
+///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1field_1_1ArrayList.html">comms::field::ArrayList</a>
+///     of 4 byte unsigned integer value fields, which
+///     has fixed size of 8 elements.
 using AidAlmField_dwrd =
     comms::field::Optional<
         comms::field::ArrayList<
@@ -42,12 +53,22 @@ using AidAlmField_dwrd =
         >
     >;
 
+/// @brief Definition of the fields for AID-ALM message.
+/// @see AidAlm
 using AidAlmFields = std::tuple<
     AidAlmField_svid,
     AidAlmField_week,
     AidAlmField_dwrd
 >;
 
+/// @brief Definition of AID-ALM message
+/// @details Inherits from
+///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+///     while providing @b TMsgBase as common interface class as well as
+///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
+///     @b comms::option::DispatchImpl as options. @n
+///     See @ref AidAlmFields for definition of the fields this message contains.
+/// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class AidAlm : public
     comms::MessageBase<
@@ -64,31 +85,50 @@ class AidAlm : public
         comms::option::DispatchImpl<AidAlm<TMsgBase> >
     > Base;
 public:
+
+    /// @brief Index to access the fields
     enum FieldIdx
     {
-        FieldIdx_svid,
-        FieldIdx_week,
-        FieldIdx_dwrd,
-        FieldIdx_numOfValues
+        FieldIdx_svid, ///< svid field, see @ref AidAlmField_svid
+        FieldIdx_week, ///< week field, see @ref AidAlmField_week
+        FieldIdx_dwrd, ///< dwrd field, see @ref AidAlmField_dwrd
+        FieldIdx_numOfValues ///< number of available fields
     };
 
     static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
+    /// @brief Default constructor
+    /// @details Marks "dwrd" (see @ref AidAlmField_dwrd) to be missing.
     AidAlm()
     {
         auto& allFields = Base::fields();
         auto& dataField = std::get<FieldIdx_dwrd>(allFields);
         dataField.setMode(comms::field::OptionalMode::Missing);
     }
+
+    /// @brief Copy constructor
     AidAlm(const AidAlm&) = default;
+
+    /// @brief Move constructor
     AidAlm(AidAlm&& other) = default;
+
+    /// @brief Destructor
     virtual ~AidAlm() = default;
 
+    /// @brief Copy assignment
     AidAlm& operator=(const AidAlm&) = default;
+
+    /// @brief Move assignment
     AidAlm& operator=(AidAlm&&) = default;
 
 protected:
+
+    /// @brief Overrides read functionality provided by the base class.
+    /// @details The existence of "dwrd" (see @ref AidAlmField_dwrd) is
+    ///     determined by the contents of "week" (see @ref AidAlmField_week)
+    ///     field. If the value of the latter is 0, the "dwrd" is marked to
+    ///     be missing, otherwise it exists.
     virtual comms::ErrorStatus readImpl(
         typename Base::ReadIterator& iter,
         std::size_t len) override
@@ -110,6 +150,12 @@ protected:
         return Base::template readFieldsFrom<FieldIdx_dwrd>(iter, len);
     }
 
+    /// @brief Overrides default refreshing functionality provided by the interface class.
+    /// @details The existence of "dwrd" (see @ref AidAlmField_dwrd) is
+    ///     determined by the contents of "week" (see @ref AidAlmField_week)
+    ///     field. If the value of the latter is 0, the "dwrd" is marked to
+    ///     be missing, otherwise it exists.
+    /// @return @b true in case the mode of "dwrd" field was modified, @b false otherwise
     virtual bool refreshImpl() override
     {
         auto& allFields = Base::fields();

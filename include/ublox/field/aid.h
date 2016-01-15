@@ -29,7 +29,10 @@ namespace field
 namespace aid
 {
 
+/// @brief Definition of common "svid" field which consumes only 1 byte.
 using svid = common::svid;
+
+/// @brief Definition of common "svid" field which consumes 4 bytes.
 using svid_ext = common::U4T<comms::option::ValidNumValueRange<1, 96> >;
 
 }  // namespace aid
