@@ -63,28 +63,40 @@ class RxmAlm : public
         comms::option::DispatchImpl<RxmAlm<TMsgBase> >
     > Base;
 public:
+
+    /// @brief Index to access the fields
     enum FieldIdx
     {
         FieldIdx_svid,
         FieldIdx_week,
         FieldIdx_dwrd,
-        FieldIdx_numOfValues
+        FieldIdx_numOfValues ///< number of available fields
     };
 
     static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
+    /// @brief Default constructor
     RxmAlm()
     {
         auto& allFields = Base::fields();
         auto& dataField = std::get<FieldIdx_dwrd>(allFields);
         dataField.setMode(comms::field::OptionalMode::Missing);
     }
+
+    /// @brief Copy constructor
     RxmAlm(const RxmAlm&) = default;
+
+    /// @brief Move constructor
     RxmAlm(RxmAlm&& other) = default;
+
+    /// @brief Destructor
     virtual ~RxmAlm() = default;
 
+    /// @brief Copy assignment
     RxmAlm& operator=(const RxmAlm&) = default;
+
+    /// @brief Move assignment
     RxmAlm& operator=(RxmAlm&&) = default;
 
 protected:

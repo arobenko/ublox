@@ -138,6 +138,8 @@ class CfgSbas : public
         comms::option::DispatchImpl<CfgSbas<TMsgBase> >
     > Base;
 public:
+
+    /// @brief Index to access the fields
     enum FieldIdx
     {
         FieldIdx_mode,
@@ -145,18 +147,28 @@ public:
         FieldIdx_maxSBAS,
         FieldIdx_scanmode2,
         FieldIdx_scanmode1,
-        FieldIdx_numOfValues
+        FieldIdx_numOfValues ///< number of available fields
     };
 
     static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
+    /// @brief Default constructor
     CfgSbas() = default;
+
+    /// @brief Copy constructor
     CfgSbas(const CfgSbas&) = default;
+
+    /// @brief Move constructor
     CfgSbas(CfgSbas&& other) = default;
+
+    /// @brief Destructor
     virtual ~CfgSbas() = default;
 
+    /// @brief Copy assignment
     CfgSbas& operator=(const CfgSbas&) = default;
+
+    /// @brief Move assignment
     CfgSbas& operator=(CfgSbas&&) = default;
 };
 

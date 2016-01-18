@@ -96,21 +96,33 @@ class CfgInf : public
         comms::option::DispatchImpl<CfgInf<TMsgBase> >
     > Base;
 public:
+
+    /// @brief Index to access the fields
     enum FieldIdx
     {
         FieldIdx_list,
-        FieldIdx_numOfValues
+        FieldIdx_numOfValues ///< number of available fields
     };
 
     static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
+    /// @brief Default constructor
     CfgInf() = default;
+
+    /// @brief Copy constructor
     CfgInf(const CfgInf&) = default;
+
+    /// @brief Move constructor
     CfgInf(CfgInf&& other) = default;
+
+    /// @brief Destructor
     virtual ~CfgInf() = default;
 
+    /// @brief Copy assignment
     CfgInf& operator=(const CfgInf&) = default;
+
+    /// @brief Move assignment
     CfgInf& operator=(CfgInf&&) = default;
 };
 

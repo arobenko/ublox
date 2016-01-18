@@ -98,6 +98,8 @@ class CfgTp : public
         comms::option::DispatchImpl<CfgTp<TMsgBase> >
     > Base;
 public:
+
+    /// @brief Index to access the fields
     enum FieldIdx
     {
         FieldIdx_interval,
@@ -109,18 +111,28 @@ public:
         FieldIdx_antannaCableDelay,
         FieldIdx_rfGroupDelay,
         FieldIdx_userDelay,
-        FieldIdx_numOfValues
+        FieldIdx_numOfValues ///< number of available fields
     };
 
     static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
+    /// @brief Default constructor
     CfgTp() = default;
+
+    /// @brief Copy constructor
     CfgTp(const CfgTp&) = default;
+
+    /// @brief Move constructor
     CfgTp(CfgTp&& other) = default;
+
+    /// @brief Destructor
     virtual ~CfgTp() = default;
 
+    /// @brief Copy assignment
     CfgTp& operator=(const CfgTp&) = default;
+
+    /// @brief Move assignment
     CfgTp& operator=(CfgTp&&) = default;
 };
 

@@ -69,6 +69,8 @@ class AidAlp : public
         comms::option::DispatchImpl<AidAlp<TMsgBase> >
     > Base;
 public:
+
+    /// @brief Index to access the fields
     enum FieldIdx
     {
         FieldIdx_predTow,
@@ -80,18 +82,28 @@ public:
         FieldIdx_svs,
         FieldIdx_reserved2,
         FieldIdx_reserved3,
-        FieldIdx_numOfValues
+        FieldIdx_numOfValues ///< number of available fields
     };
 
     static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
+    /// @brief Default constructor
     AidAlp() = default;
+
+    /// @brief Copy constructor
     AidAlp(const AidAlp&) = default;
+
+    /// @brief Move constructor
     AidAlp(AidAlp&& other) = default;
+
+    /// @brief Destructor
     virtual ~AidAlp() = default;
 
+    /// @brief Copy assignment
     AidAlp& operator=(const AidAlp&) = default;
+
+    /// @brief Move assignment
     AidAlp& operator=(AidAlp&&) = default;
 };
 

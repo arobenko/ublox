@@ -198,6 +198,8 @@ class AidIni : public
         comms::option::DispatchImpl<AidIni<TMsgBase> >
     > Base;
 public:
+
+    /// @brief Index to access the fields
     enum FieldIdx
     {
         FieldIdx_ecefX,
@@ -220,18 +222,19 @@ public:
         FieldIdx_clkDAcc,
         FieldIdx_freqAcc,
         FieldIdx_flags,
-        FieldIdx_numOfValues
+        FieldIdx_numOfValues ///< number of available fields
     };
 
     static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
+    /// @brief Default constructor
     AidIni()
     {
 
         auto& allFields = Base::fields();
-        auto exists = field::common::OptionalTMode::Exists;
-        auto missing = field::common::OptionalTMode::Missing;
+        auto exists = comms::field::OptionalMode::Exists;
+        auto missing = comms::field::OptionalMode::Missing;
 
         std::get<FieldIdx_ecefX>(allFields).setMode(exists);
         std::get<FieldIdx_lat>(allFields).setMode(missing);
@@ -249,11 +252,19 @@ public:
         std::get<FieldIdx_freqAcc>(allFields).setMode(missing);
     }
 
+    /// @brief Copy constructor
     AidIni(const AidIni&) = default;
+
+    /// @brief Move constructor
     AidIni(AidIni&& other) = default;
+
+    /// @brief Destructor
     virtual ~AidIni() = default;
 
+    /// @brief Copy assignment
     AidIni& operator=(const AidIni&) = default;
+
+    /// @brief Move assignment
     AidIni& operator=(AidIni&&) = default;
 
 protected:
@@ -312,8 +323,8 @@ protected:
         auto& allFields = Base::fields();
         auto& flagsField = std::get<FieldIdx_flags>(allFields);
 
-        auto expectedCartesian = field::common::OptionalTMode::Exists;
-        auto expectedGeodetic = field::common::OptionalTMode::Missing;
+        auto expectedCartesian = comms::field::OptionalMode::Exists;
+        auto expectedGeodetic = comms::field::OptionalMode::Missing;
         if (flagsField.getBitValue(AidIniField_flags_lla)) {
             std::swap(expectedCartesian, expectedGeodetic);
         }
@@ -342,8 +353,8 @@ protected:
             refreshed = true;
         }
 
-        auto expectedWnoTowMode = field::common::OptionalTMode::Exists;
-        auto expectedDateTimeMode = field::common::OptionalTMode::Missing;
+        auto expectedWnoTowMode = comms::field::OptionalMode::Exists;
+        auto expectedDateTimeMode = comms::field::OptionalMode::Missing;
         if (flagsField.getBitValue(AidIniField_flags_utc)) {
             std::swap(expectedWnoTowMode, expectedDateTimeMode);
         }
@@ -364,8 +375,8 @@ protected:
             refreshed = true;
         }
 
-        auto expectedClkDMode = field::common::OptionalTMode::Exists;
-        auto expectedFreqMode = field::common::OptionalTMode::Missing;
+        auto expectedClkDMode = comms::field::OptionalMode::Exists;
+        auto expectedFreqMode = comms::field::OptionalMode::Missing;
         if (flagsField.getBitValue(AidIniField_flags_clockF)) {
             std::swap(expectedClkDMode, expectedFreqMode);
         }
@@ -394,7 +405,7 @@ private:
     template <typename TFrom, typename TTo>
     void reassignToBitfield(TFrom& from, TTo& to)
     {
-        to.setMode(field::common::OptionalTMode::Exists);
+        to.setMode(comms::field::OptionalMode::Exists);
         typedef typename std::decay<decltype(from)>::type FromOptField;
         static const auto BufSize = sizeof(typename FromOptField::Field::ValueType);
         std::uint8_t buf[BufSize];
@@ -406,15 +417,15 @@ private:
         es = to.read(readIter, BufSize);
         static_cast<void>(es);
         GASSERT(es == comms::ErrorStatus::Success);
-        from.setMode(field::common::OptionalTMode::Missing);
+        from.setMode(comms::field::OptionalMode::Missing);
     }
 
     template <typename TFrom, typename TTo>
     void reassignToField(TFrom& from, TTo& to)
     {
-        to.setMode(field::common::OptionalTMode::Exists);
+        to.setMode(comms::field::OptionalMode::Exists);
         to.field().value() = from.field().value();
-        from.setMode(field::common::OptionalTMode::Missing);
+        from.setMode(comms::field::OptionalMode::Missing);
     }
 
 

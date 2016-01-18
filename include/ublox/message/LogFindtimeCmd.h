@@ -76,6 +76,8 @@ class LogFindtimeCmd : public
         comms::option::DispatchImpl<LogFindtimeCmd<TMsgBase> >
     > Base;
 public:
+
+    /// @brief Index to access the fields
     enum FieldIdx
     {
         FieldIdx_version,
@@ -88,18 +90,28 @@ public:
         FieldIdx_minute,
         FieldIdx_second,
         FieldIdx_reserved2,
-        FieldIdx_numOfValues
+        FieldIdx_numOfValues ///< number of available fields
     };
 
     static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
+    /// @brief Default constructor
     LogFindtimeCmd() = default;
+
+    /// @brief Copy constructor
     LogFindtimeCmd(const LogFindtimeCmd&) = default;
+
+    /// @brief Move constructor
     LogFindtimeCmd(LogFindtimeCmd&& other) = default;
+
+    /// @brief Destructor
     virtual ~LogFindtimeCmd() = default;
 
+    /// @brief Copy assignment
     LogFindtimeCmd& operator=(const LogFindtimeCmd&) = default;
+
+    /// @brief Move assignment
     LogFindtimeCmd& operator=(LogFindtimeCmd&&) = default;
 
 protected:

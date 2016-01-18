@@ -137,6 +137,8 @@ class RxmSvsi : public
         comms::option::DispatchImpl<RxmSvsi<TMsgBase> >
     > Base;
 public:
+
+    /// @brief Index to access the fields
     enum FieldIdx
     {
         FieldIdx_iTOW,
@@ -144,18 +146,28 @@ public:
         FieldIdx_numVis,
         FieldIdx_numSV,
         FieldIdx_data,
-        FieldIdx_numOfValues
+        FieldIdx_numOfValues ///< number of available fields
     };
 
     static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
+    /// @brief Default constructor
     RxmSvsi() = default;
+
+    /// @brief Copy constructor
     RxmSvsi(const RxmSvsi&) = default;
+
+    /// @brief Move constructor
     RxmSvsi(RxmSvsi&& other) = default;
+
+    /// @brief Destructor
     virtual ~RxmSvsi() = default;
 
+    /// @brief Copy assignment
     RxmSvsi& operator=(const RxmSvsi&) = default;
+
+    /// @brief Move assignment
     RxmSvsi& operator=(RxmSvsi&&) = default;
 
 protected:

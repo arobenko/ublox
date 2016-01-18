@@ -82,6 +82,8 @@ class CfgUsb : public
         comms::option::DispatchImpl<CfgUsb<TMsgBase> >
     > Base;
 public:
+
+    /// @brief Index to access the fields
     enum FieldIdx
     {
         FieldIdx_vendorID,
@@ -93,18 +95,28 @@ public:
         FieldIdx_vendorString,
         FieldIdx_productString,
         FieldIdx_serialNumber,
-        FieldIdx_numOfValues
+        FieldIdx_numOfValues ///< number of available fields
     };
 
     static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
+    /// @brief Default constructor
     CfgUsb() = default;
+
+    /// @brief Copy constructor
     CfgUsb(const CfgUsb&) = default;
+
+    /// @brief Move constructor
     CfgUsb(CfgUsb&& other) = default;
+
+    /// @brief Destructor
     virtual ~CfgUsb() = default;
 
+    /// @brief Copy assignment
     CfgUsb& operator=(const CfgUsb&) = default;
+
+    /// @brief Move assignment
     CfgUsb& operator=(CfgUsb&&) = default;
 };
 

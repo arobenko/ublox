@@ -140,6 +140,8 @@ class CfgEkf : public
         comms::option::DispatchImpl<CfgEkf<TMsgBase> >
     > Base;
 public:
+
+    /// @brief Index to access the fields
     enum FieldIdx
     {
         FieldIdx_disableEkf,
@@ -152,18 +154,28 @@ public:
         FieldIdx_nomSens,
         FieldIdx_rmsTemp,
         FieldIdx_tempUpdate,
-        FieldIdx_numOfValues
+        FieldIdx_numOfValues ///< number of available fields
     };
 
     static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
+    /// @brief Default constructor
     CfgEkf() = default;
+
+    /// @brief Copy constructor
     CfgEkf(const CfgEkf&) = default;
+
+    /// @brief Move constructor
     CfgEkf(CfgEkf&& other) = default;
+
+    /// @brief Destructor
     virtual ~CfgEkf() = default;
 
+    /// @brief Copy assignment
     CfgEkf& operator=(const CfgEkf&) = default;
+
+    /// @brief Move assignment
     CfgEkf& operator=(CfgEkf&&) = default;
 };
 

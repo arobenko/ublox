@@ -47,21 +47,31 @@ class AidEphPoll : public
     > Base;
 public:
 
+    /// @brief Index to access the fields
     enum FieldIdx
     {
-        FieldIdx_numOfValues
+        FieldIdx_numOfValues ///< number of available fields
     };
 
     static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
-
+    /// @brief Default constructor
     AidEphPoll() = default;
+
+    /// @brief Copy constructor
     AidEphPoll(const AidEphPoll&) = default;
+
+    /// @brief Move constructor
     AidEphPoll(AidEphPoll&& other) = default;
+
+    /// @brief Destructor
     virtual ~AidEphPoll() = default;
 
+    /// @brief Copy assignment
     AidEphPoll& operator=(const AidEphPoll&) = default;
+
+    /// @brief Move assignment
     AidEphPoll& operator=(AidEphPoll&&) = default;
 };
 

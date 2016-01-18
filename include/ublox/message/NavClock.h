@@ -60,6 +60,8 @@ class NavClock : public
         comms::option::DispatchImpl<NavClock<TMsgBase> >
     > Base;
 public:
+
+    /// @brief Index to access the fields
     enum FieldIdx
     {
         FieldIdx_iTOW,
@@ -67,18 +69,28 @@ public:
         FieldIdx_clkD,
         FieldIdx_tAcc,
         FieldIdx_fAcc,
-        FieldIdx_numOfValues
+        FieldIdx_numOfValues ///< number of available fields
     };
 
     static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
+    /// @brief Default constructor
     NavClock() = default;
+
+    /// @brief Copy constructor
     NavClock(const NavClock&) = default;
+
+    /// @brief Move constructor
     NavClock(NavClock&& other) = default;
+
+    /// @brief Destructor
     virtual ~NavClock() = default;
 
+    /// @brief Copy assignment
     NavClock& operator=(const NavClock&) = default;
+
+    /// @brief Move assignment
     NavClock& operator=(NavClock&&) = default;
 };
 

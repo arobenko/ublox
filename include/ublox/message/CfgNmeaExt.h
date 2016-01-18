@@ -122,6 +122,8 @@ class CfgNmeaExt : public
         comms::option::DispatchImpl<CfgNmeaExt<TMsgBase> >
     > Base;
 public:
+
+    /// @brief Index to access the fields
     enum FieldIdx
     {
         FieldIdx_filter,
@@ -133,18 +135,28 @@ public:
         FieldIdx_mainTalkerId,
         FieldIdx_gsvTalkerId,
         FieldIdx_reserved,
-        FieldIdx_numOfValues
+        FieldIdx_numOfValues ///< number of available fields
     };
 
     static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
+    /// @brief Default constructor
     CfgNmeaExt() = default;
+
+    /// @brief Copy constructor
     CfgNmeaExt(const CfgNmeaExt&) = default;
+
+    /// @brief Move constructor
     CfgNmeaExt(CfgNmeaExt&& other) = default;
+
+    /// @brief Destructor
     virtual ~CfgNmeaExt() = default;
 
+    /// @brief Copy assignment
     CfgNmeaExt& operator=(const CfgNmeaExt&) = default;
+
+    /// @brief Move assignment
     CfgNmeaExt& operator=(CfgNmeaExt&&) = default;
 };
 

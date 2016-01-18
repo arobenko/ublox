@@ -46,20 +46,32 @@ class MonHwPoll : public
         comms::option::DispatchImpl<MonHwPoll<TMsgBase> >
     > Base;
 public:
+
+    /// @brief Index to access the fields
     enum FieldIdx
     {
-        FieldIdx_numOfValues
+        FieldIdx_numOfValues ///< number of available fields
     };
 
     static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
+    /// @brief Default constructor
     MonHwPoll() = default;
+
+    /// @brief Copy constructor
     MonHwPoll(const MonHwPoll&) = default;
+
+    /// @brief Move constructor
     MonHwPoll(MonHwPoll&& other) = default;
+
+    /// @brief Destructor
     virtual ~MonHwPoll() = default;
 
+    /// @brief Copy assignment
     MonHwPoll& operator=(const MonHwPoll&) = default;
+
+    /// @brief Move assignment
     MonHwPoll& operator=(MonHwPoll&&) = default;
 };
 

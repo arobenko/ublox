@@ -123,6 +123,8 @@ class CfgTmode2 : public
         comms::option::DispatchImpl<CfgTmode2<TMsgBase> >
     > Base;
 public:
+
+    /// @brief Index to access the fields
     enum FieldIdx
     {
         FieldIdx_timeMode,
@@ -137,12 +139,13 @@ public:
         FieldIdx_fixedPosAcc,
         FieldIdx_svinMinDur,
         FieldIdx_svinAccLimit,
-        FieldIdx_numOfValues
+        FieldIdx_numOfValues ///< number of available fields
     };
 
     static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
+    /// @brief Default constructor
     CfgTmode2()
     {
         auto& allFields = Base::fields();
@@ -166,11 +169,19 @@ public:
         altField.setMode(DefaultGeodeticMode);
     }
 
+    /// @brief Copy constructor
     CfgTmode2(const CfgTmode2&) = default;
+
+    /// @brief Move constructor
     CfgTmode2(CfgTmode2&& other) = default;
+
+    /// @brief Destructor
     virtual ~CfgTmode2() = default;
 
+    /// @brief Copy assignment
     CfgTmode2& operator=(const CfgTmode2&) = default;
+
+    /// @brief Move assignment
     CfgTmode2& operator=(CfgTmode2&&) = default;
 
 protected:

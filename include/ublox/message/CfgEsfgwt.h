@@ -105,6 +105,8 @@ class CfgEsfgwt : public
         comms::option::DispatchImpl<CfgEsfgwt<TMsgBase> >
     > Base;
 public:
+
+    /// @brief Index to access the fields
     enum FieldIdx
     {
         FieldIdx_flags,
@@ -122,18 +124,28 @@ public:
         FieldIdx_speedDeadBand,
         FieldIdx_reserved4,
         FieldIdx_reserved5,
-        FieldIdx_numOfValues
+        FieldIdx_numOfValues ///< number of available fields
     };
 
     static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
+    /// @brief Default constructor
     CfgEsfgwt() = default;
+
+    /// @brief Copy constructor
     CfgEsfgwt(const CfgEsfgwt&) = default;
+
+    /// @brief Move constructor
     CfgEsfgwt(CfgEsfgwt&& other) = default;
+
+    /// @brief Destructor
     virtual ~CfgEsfgwt() = default;
 
+    /// @brief Copy assignment
     CfgEsfgwt& operator=(const CfgEsfgwt&) = default;
+
+    /// @brief Move assignment
     CfgEsfgwt& operator=(CfgEsfgwt&&) = default;
 };
 

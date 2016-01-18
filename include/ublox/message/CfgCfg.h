@@ -94,24 +94,36 @@ class CfgCfg : public
         comms::option::DispatchImpl<CfgCfg<TMsgBase> >
     > Base;
 public:
+
+    /// @brief Index to access the fields
     enum FieldIdx
     {
         FieldIdx_clearMask,
         FieldIdx_saveMask,
         FieldIdx_loadMask,
         FieldIdx_deviceMask,
-        FieldIdx_numOfValues
+        FieldIdx_numOfValues ///< number of available fields
     };
 
     static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
+    /// @brief Default constructor
     CfgCfg() = default;
+
+    /// @brief Copy constructor
     CfgCfg(const CfgCfg&) = default;
+
+    /// @brief Move constructor
     CfgCfg(CfgCfg&& other) = default;
+
+    /// @brief Destructor
     virtual ~CfgCfg() = default;
 
+    /// @brief Copy assignment
     CfgCfg& operator=(const CfgCfg&) = default;
+
+    /// @brief Move assignment
     CfgCfg& operator=(CfgCfg&&) = default;
 };
 

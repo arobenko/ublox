@@ -49,20 +49,31 @@ class NavPosecefPoll : public
     > Base;
 public:
 
+    /// @brief Index to access the fields
     enum FieldIdx
     {
-        FieldIdx_NumOfValues
+        FieldIdx_numOfValues ///< number of available fields
     };
 
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_NumOfValues,
+    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
+    /// @brief Default constructor
     NavPosecefPoll() = default;
+
+    /// @brief Copy constructor
     NavPosecefPoll(const NavPosecefPoll&) = default;
+
+    /// @brief Move constructor
     NavPosecefPoll(NavPosecefPoll&& other) = default;
+
+    /// @brief Destructor
     virtual ~NavPosecefPoll() = default;
 
+    /// @brief Copy assignment
     NavPosecefPoll& operator=(const NavPosecefPoll&) = default;
+
+    /// @brief Move assignment
     NavPosecefPoll& operator=(NavPosecefPoll&&) = default;
 };
 

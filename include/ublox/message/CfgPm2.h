@@ -185,6 +185,8 @@ class CfgPm2 : public
         comms::option::DispatchImpl<CfgPm2<TMsgBase> >
     > Base;
 public:
+
+    /// @brief Index to access the fields
     enum FieldIdx
     {
         FieldIdx_version,
@@ -205,18 +207,28 @@ public:
         FieldIdx_reserved9,
         FieldIdx_reserved10,
         FieldIdx_reserved11,
-        FieldIdx_numOfValues
+        FieldIdx_numOfValues ///< number of available fields
     };
 
     static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
+    /// @brief Default constructor
     CfgPm2() = default;
+
+    /// @brief Copy constructor
     CfgPm2(const CfgPm2&) = default;
+
+    /// @brief Move constructor
     CfgPm2(CfgPm2&& other) = default;
+
+    /// @brief Destructor
     virtual ~CfgPm2() = default;
 
+    /// @brief Copy assignment
     CfgPm2& operator=(const CfgPm2&) = default;
+
+    /// @brief Move assignment
     CfgPm2& operator=(CfgPm2&&) = default;
 };
 

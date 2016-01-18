@@ -63,6 +63,8 @@ class NavPosllh : public
         comms::option::DispatchImpl<NavPosllh<TMsgBase> >
     > Base;
 public:
+
+    /// @brief Index to access the fields
     enum FieldIdx
     {
         FieldIdx_iTOW,
@@ -72,18 +74,28 @@ public:
         FieldIdx_mHSL,
         FieldIdx_hAcc,
         FieldIdx_vAcc,
-        FieldIdx_numOfValues
+        FieldIdx_numOfValues ///< number of available fields
     };
 
     static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
+    /// @brief Default constructor
     NavPosllh() = default;
+
+    /// @brief Copy constructor
     NavPosllh(const NavPosllh&) = default;
+
+    /// @brief Move constructor
     NavPosllh(NavPosllh&& other) = default;
+
+    /// @brief Destructor
     virtual ~NavPosllh() = default;
 
+    /// @brief Copy assignment
     NavPosllh& operator=(const NavPosllh&) = default;
+
+    /// @brief Move assignment
     NavPosllh& operator=(NavPosllh&&) = default;
 };
 

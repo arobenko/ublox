@@ -93,6 +93,8 @@ class TimVrfy : public
         comms::option::DispatchImpl<TimVrfy<TMsgBase> >
     > Base;
 public:
+
+    /// @brief Index to access the fields
     enum FieldIdx
     {
         FieldIdx_itow,
@@ -102,18 +104,28 @@ public:
         FieldIdx_wno,
         FieldIdx_flags,
         FieldIdx_reserved1,
-        FieldIdx_numOfValues
+        FieldIdx_numOfValues ///< number of available fields
     };
 
     static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
+    /// @brief Default constructor
     TimVrfy() = default;
+
+    /// @brief Copy constructor
     TimVrfy(const TimVrfy&) = default;
+
+    /// @brief Move constructor
     TimVrfy(TimVrfy&& other) = default;
+
+    /// @brief Destructor
     virtual ~TimVrfy() = default;
 
+    /// @brief Copy assignment
     TimVrfy& operator=(const TimVrfy&) = default;
+
+    /// @brief Move assignment
     TimVrfy& operator=(TimVrfy&&) = default;
 };
 

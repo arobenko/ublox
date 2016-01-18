@@ -49,15 +49,31 @@ class NavTimeutcPoll : public
     > Base;
 public:
 
-    static_assert(std::tuple_size<typename Base::AllFields>::value == 0U,
+    /// @brief Index to access the fields
+    enum FieldIdx
+    {
+        FieldIdx_numOfValues ///< number of available fields
+    };
+
+    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
+    /// @brief Default constructor
     NavTimeutcPoll() = default;
+
+    /// @brief Copy constructor
     NavTimeutcPoll(const NavTimeutcPoll&) = default;
+
+    /// @brief Move constructor
     NavTimeutcPoll(NavTimeutcPoll&& other) = default;
+
+    /// @brief Destructor
     virtual ~NavTimeutcPoll() = default;
 
+    /// @brief Copy assignment
     NavTimeutcPoll& operator=(const NavTimeutcPoll&) = default;
+
+    /// @brief Move assignment
     NavTimeutcPoll& operator=(NavTimeutcPoll&&) = default;
 };
 

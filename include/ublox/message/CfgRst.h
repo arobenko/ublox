@@ -114,23 +114,35 @@ class CfgRst : public
         comms::option::DispatchImpl<CfgRst<TMsgBase> >
     > Base;
 public:
+
+    /// @brief Index to access the fields
     enum FieldIdx
     {
         FieldIdx_navBbrMask,
         FieldIdx_resetMask,
         FieldIdx_reserved1,
-        FieldIdx_numOfValues
+        FieldIdx_numOfValues ///< number of available fields
     };
 
     static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
+    /// @brief Default constructor
     CfgRst() = default;
+
+    /// @brief Copy constructor
     CfgRst(const CfgRst&) = default;
+
+    /// @brief Move constructor
     CfgRst(CfgRst&& other) = default;
+
+    /// @brief Destructor
     virtual ~CfgRst() = default;
 
+    /// @brief Copy assignment
     CfgRst& operator=(const CfgRst&) = default;
+
+    /// @brief Move assignment
     CfgRst& operator=(CfgRst&&) = default;
 };
 

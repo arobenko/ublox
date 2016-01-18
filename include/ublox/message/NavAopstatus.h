@@ -74,6 +74,8 @@ class NavAopstatus : public
         comms::option::DispatchImpl<NavAopstatus<TMsgBase> >
     > Base;
 public:
+
+    /// @brief Index to access the fields
     enum FieldIdx
     {
         FieldIdx_iTOW,
@@ -84,18 +86,28 @@ public:
         FieldIdx_availGPS,
         FieldIdx_reserved2,
         FieldIdx_reserved3,
-        FieldIdx_numOfValues
+        FieldIdx_numOfValues ///< number of available fields
     };
 
     static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
+    /// @brief Default constructor
     NavAopstatus() = default;
+
+    /// @brief Copy constructor
     NavAopstatus(const NavAopstatus&) = default;
+
+    /// @brief Move constructor
     NavAopstatus(NavAopstatus&& other) = default;
+
+    /// @brief Destructor
     virtual ~NavAopstatus() = default;
 
+    /// @brief Copy assignment
     NavAopstatus& operator=(const NavAopstatus&) = default;
+
+    /// @brief Move assignment
     NavAopstatus& operator=(NavAopstatus&&) = default;
 };
 

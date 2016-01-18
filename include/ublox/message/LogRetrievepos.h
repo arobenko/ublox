@@ -100,6 +100,8 @@ class LogRetrievepos : public
         comms::option::DispatchImpl<LogRetrievepos<TMsgBase> >
     > Base;
 public:
+
+    /// @brief Index to access the fields
     enum FieldIdx
     {
         FieldIdx_entryIndex,
@@ -120,18 +122,28 @@ public:
         FieldIdx_reserved1,
         FieldIdx_numSV,
         FieldIdx_reserved2,
-        FieldIdx_numOfValues
+        FieldIdx_numOfValues ///< number of available fields
     };
 
     static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
+    /// @brief Default constructor
     LogRetrievepos() = default;
+
+    /// @brief Copy constructor
     LogRetrievepos(const LogRetrievepos&) = default;
+
+    /// @brief Move constructor
     LogRetrievepos(LogRetrievepos&& other) = default;
+
+    /// @brief Destructor
     virtual ~LogRetrievepos() = default;
 
+    /// @brief Copy assignment
     LogRetrievepos& operator=(const LogRetrievepos&) = default;
+
+    /// @brief Move assignment
     LogRetrievepos& operator=(LogRetrievepos&&) = default;
 };
 

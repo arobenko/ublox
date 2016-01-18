@@ -106,24 +106,36 @@ class CfgNmea : public
         comms::option::DispatchImpl<CfgNmea<TMsgBase> >
     > Base;
 public:
+
+    /// @brief Index to access the fields
     enum FieldIdx
     {
         FieldIdx_filter,
         FieldIdx_nmeaVersion,
         FieldIdx_numSV,
         FieldIdx_flags,
-        FieldIdx_numOfValues
+        FieldIdx_numOfValues ///< number of available fields
     };
 
     static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
+    /// @brief Default constructor
     CfgNmea() = default;
+
+    /// @brief Copy constructor
     CfgNmea(const CfgNmea&) = default;
+
+    /// @brief Move constructor
     CfgNmea(CfgNmea&& other) = default;
+
+    /// @brief Destructor
     virtual ~CfgNmea() = default;
 
+    /// @brief Copy assignment
     CfgNmea& operator=(const CfgNmea&) = default;
+
+    /// @brief Move assignment
     CfgNmea& operator=(CfgNmea&&) = default;
 };
 

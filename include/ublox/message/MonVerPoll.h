@@ -46,20 +46,32 @@ class MonVerPoll : public
         comms::option::DispatchImpl<MonVerPoll<TMsgBase> >
     > Base;
 public:
+
+    /// @brief Index to access the fields
     enum FieldIdx
     {
-        FieldIdx_numOfValues
+        FieldIdx_numOfValues ///< number of available fields
     };
 
     static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
+    /// @brief Default constructor
     MonVerPoll() = default;
+
+    /// @brief Copy constructor
     MonVerPoll(const MonVerPoll&) = default;
+
+    /// @brief Move constructor
     MonVerPoll(MonVerPoll&& other) = default;
+
+    /// @brief Destructor
     virtual ~MonVerPoll() = default;
 
+    /// @brief Copy assignment
     MonVerPoll& operator=(const MonVerPoll&) = default;
+
+    /// @brief Move assignment
     MonVerPoll& operator=(MonVerPoll&&) = default;
 };
 

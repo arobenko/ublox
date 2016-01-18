@@ -83,24 +83,36 @@ class CfgNvs : public
         comms::option::DispatchImpl<CfgNvs<TMsgBase> >
     > Base;
 public:
+
+    /// @brief Index to access the fields
     enum FieldIdx
     {
         FieldIdx_clearMask,
         FieldIdx_saveMask,
         FieldIdx_loadMask,
         FieldIdx_deviceMask,
-        FieldIdx_numOfValues
+        FieldIdx_numOfValues ///< number of available fields
     };
 
     static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
+    /// @brief Default constructor
     CfgNvs() = default;
+
+    /// @brief Copy constructor
     CfgNvs(const CfgNvs&) = default;
+
+    /// @brief Move constructor
     CfgNvs(CfgNvs&& other) = default;
+
+    /// @brief Destructor
     virtual ~CfgNvs() = default;
 
+    /// @brief Copy assignment
     CfgNvs& operator=(const CfgNvs&) = default;
+
+    /// @brief Move assignment
     CfgNvs& operator=(CfgNvs&&) = default;
 };
 

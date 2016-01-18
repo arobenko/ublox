@@ -79,6 +79,8 @@ class CfgPrtUsb : public
         comms::option::DispatchImpl<CfgPrtUsb<TMsgBase> >
     > Base;
 public:
+
+    /// @brief Index to access the fields
     enum FieldIdx
     {
         FieldIdx_portID,
@@ -90,18 +92,28 @@ public:
         FieldIdx_outProtoMask,
         FieldIdx_reserved4,
         FieldIdx_reserved5,
-        FieldIdx_numOfValues
+        FieldIdx_numOfValues ///< number of available fields
     };
 
     static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
+    /// @brief Default constructor
     CfgPrtUsb() = default;
+
+    /// @brief Copy constructor
     CfgPrtUsb(const CfgPrtUsb&) = default;
+
+    /// @brief Move constructor
     CfgPrtUsb(CfgPrtUsb&& other) = default;
+
+    /// @brief Destructor
     virtual ~CfgPrtUsb() = default;
 
+    /// @brief Copy assignment
     CfgPrtUsb& operator=(const CfgPrtUsb&) = default;
+
+    /// @brief Move assignment
     CfgPrtUsb& operator=(CfgPrtUsb&&) = default;
 
 protected:

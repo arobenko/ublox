@@ -72,23 +72,35 @@ class CfgRate : public
         comms::option::DispatchImpl<CfgRate<TMsgBase> >
     > Base;
 public:
+
+    /// @brief Index to access the fields
     enum FieldIdx
     {
         FieldIdx_measRate,
         FieldIdx_navRate,
         FieldIdx_timeRef,
-        FieldIdx_numOfValues
+        FieldIdx_numOfValues ///< number of available fields
     };
 
     static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
+    /// @brief Default constructor
     CfgRate() = default;
+
+    /// @brief Copy constructor
     CfgRate(const CfgRate&) = default;
+
+    /// @brief Move constructor
     CfgRate(CfgRate&& other) = default;
+
+    /// @brief Destructor
     virtual ~CfgRate() = default;
 
+    /// @brief Copy assignment
     CfgRate& operator=(const CfgRate&) = default;
+
+    /// @brief Move assignment
     CfgRate& operator=(CfgRate&&) = default;
 };
 

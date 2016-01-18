@@ -91,21 +91,33 @@ class MonIo : public
         comms::option::DispatchImpl<MonIo<TMsgBase> >
     > Base;
 public:
+
+    /// @brief Index to access the fields
     enum FieldIdx
     {
         FieldIdx_data,
-        FieldIdx_numOfValues
+        FieldIdx_numOfValues ///< number of available fields
     };
 
     static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
+    /// @brief Default constructor
     MonIo() = default;
+
+    /// @brief Copy constructor
     MonIo(const MonIo&) = default;
+
+    /// @brief Move constructor
     MonIo(MonIo&& other) = default;
+
+    /// @brief Destructor
     virtual ~MonIo() = default;
 
+    /// @brief Copy assignment
     MonIo& operator=(const MonIo&) = default;
+
+    /// @brief Move assignment
     MonIo& operator=(MonIo&&) = default;
 };
 

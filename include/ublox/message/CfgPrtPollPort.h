@@ -79,21 +79,33 @@ class CfgPrtPollPort : public
         comms::option::DispatchImpl<CfgPrtPollPort<TMsgBase> >
     > Base;
 public:
+
+    /// @brief Index to access the fields
     enum FieldIdx
     {
         FieldIdx_portID,
-        FieldIdx_numOfValues
+        FieldIdx_numOfValues ///< number of available fields
     };
 
     static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
+    /// @brief Default constructor
     CfgPrtPollPort() = default;
+
+    /// @brief Copy constructor
     CfgPrtPollPort(const CfgPrtPollPort&) = default;
+
+    /// @brief Move constructor
     CfgPrtPollPort(CfgPrtPollPort&& other) = default;
+
+    /// @brief Destructor
     virtual ~CfgPrtPollPort() = default;
 
+    /// @brief Copy assignment
     CfgPrtPollPort& operator=(const CfgPrtPollPort&) = default;
+
+    /// @brief Move assignment
     CfgPrtPollPort& operator=(CfgPrtPollPort&&) = default;
 
 };

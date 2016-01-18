@@ -46,20 +46,32 @@ class AidHuiPoll : public
         comms::option::DispatchImpl<AidHuiPoll<TMsgBase> >
     > Base;
 public:
+
+    /// @brief Index to access the fields
     enum FieldIdx
     {
-        FieldIdx_numOfValues
+        FieldIdx_numOfValues ///< number of available fields
     };
 
     static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
+    /// @brief Default constructor
     AidHuiPoll() = default;
+
+    /// @brief Copy constructor
     AidHuiPoll(const AidHuiPoll&) = default;
+
+    /// @brief Move constructor
     AidHuiPoll(AidHuiPoll&& other) = default;
+
+    /// @brief Destructor
     virtual ~AidHuiPoll() = default;
 
+    /// @brief Copy assignment
     AidHuiPoll& operator=(const AidHuiPoll&) = default;
+
+    /// @brief Move assignment
     AidHuiPoll& operator=(AidHuiPoll&&) = default;
 };
 

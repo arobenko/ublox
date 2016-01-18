@@ -49,15 +49,31 @@ class NavDgpsPoll : public
     > Base;
 public:
 
+    /// @brief Index to access the fields
+    enum FieldIdx
+    {
+        FieldIdx_numOfValues ///< number of available fields
+    };
+
     static_assert(std::tuple_size<typename Base::AllFields>::value == 0U,
         "Number of fields is incorrect");
 
+    /// @brief Default constructor
     NavDgpsPoll() = default;
+
+    /// @brief Copy constructor
     NavDgpsPoll(const NavDgpsPoll&) = default;
+
+    /// @brief Move constructor
     NavDgpsPoll(NavDgpsPoll&& other) = default;
+
+    /// @brief Destructor
     virtual ~NavDgpsPoll() = default;
 
+    /// @brief Copy assignment
     NavDgpsPoll& operator=(const NavDgpsPoll&) = default;
+
+    /// @brief Move assignment
     NavDgpsPoll& operator=(NavDgpsPoll&&) = default;
 };
 

@@ -71,6 +71,8 @@ class MonMsgpp : public
         comms::option::DispatchImpl<MonMsgpp<TMsgBase> >
     > Base;
 public:
+
+    /// @brief Index to access the fields
     enum FieldIdx
     {
         FieldIdx_msg1,
@@ -80,18 +82,28 @@ public:
         FieldIdx_msg5,
         FieldIdx_msg6,
         FieldIdx_skipped,
-        FieldIdx_numOfValues
+        FieldIdx_numOfValues ///< number of available fields
     };
 
     static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
+    /// @brief Default constructor
     MonMsgpp() = default;
+
+    /// @brief Copy constructor
     MonMsgpp(const MonMsgpp&) = default;
+
+    /// @brief Move constructor
     MonMsgpp(MonMsgpp&& other) = default;
+
+    /// @brief Destructor
     virtual ~MonMsgpp() = default;
 
+    /// @brief Copy assignment
     MonMsgpp& operator=(const MonMsgpp&) = default;
+
+    /// @brief Move assignment
     MonMsgpp& operator=(MonMsgpp&&) = default;
 };
 

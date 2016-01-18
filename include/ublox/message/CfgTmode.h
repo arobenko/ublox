@@ -83,6 +83,8 @@ class CfgTmode : public
         comms::option::DispatchImpl<CfgTmode<TMsgBase> >
     > Base;
 public:
+
+    /// @brief Index to access the fields
     enum FieldIdx
     {
         FieldIdx_timeMode,
@@ -92,18 +94,28 @@ public:
         FieldIdx_fixedPosVar,
         FieldIdx_svinMinDur,
         FieldIdx_svinVarLimit,
-        FieldIdx_numOfValues
+        FieldIdx_numOfValues ///< number of available fields
     };
 
     static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
+    /// @brief Default constructor
     CfgTmode() = default;
+
+    /// @brief Copy constructor
     CfgTmode(const CfgTmode&) = default;
+
+    /// @brief Move constructor
     CfgTmode(CfgTmode&& other) = default;
+
+    /// @brief Destructor
     virtual ~CfgTmode() = default;
 
+    /// @brief Copy assignment
     CfgTmode& operator=(const CfgTmode&) = default;
+
+    /// @brief Move assignment
     CfgTmode& operator=(CfgTmode&&) = default;
 };
 

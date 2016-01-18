@@ -33,7 +33,7 @@ enum
     AidHuiField_flags_healthValid,
     AidHuiField_flags_utcValid,
     AidHuiField_flags_klobValid,
-    AidHuiField_flags_numOfValues
+    AidHuiField_flags_numOfValues ///< number of available fields
 };
 
 using AidHuiField_health = field::common::X4;
@@ -99,6 +99,8 @@ class AidHui : public
         comms::option::DispatchImpl<AidHui<TMsgBase> >
     > Base;
 public:
+
+    /// @brief Index to access the fields
     enum FieldIdx
     {
         FieldIdx_health,
@@ -126,12 +128,22 @@ public:
     static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
+    /// @brief Default constructor
     AidHui() = default;
+
+    /// @brief Copy constructor
     AidHui(const AidHui&) = default;
+
+    /// @brief Move constructor
     AidHui(AidHui&& other) = default;
+
+    /// @brief Destructor
     virtual ~AidHui() = default;
 
+    /// @brief Copy assignment
     AidHui& operator=(const AidHui&) = default;
+
+    /// @brief Move assignment
     AidHui& operator=(AidHui&&) = default;
 };
 

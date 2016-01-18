@@ -50,21 +50,33 @@ class InfStringMsgBase : public
         comms::option::DispatchImpl<InfStringMsgBase<TId, TMsgBase> >
     > Base;
 public:
+
+    /// @brief Index to access the fields
     enum FieldIdx
     {
         FieldIdx_str,
-        FieldIdx_numOfValues
+        FieldIdx_numOfValues ///< number of available fields
     };
 
     static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
+    /// @brief Default constructor
     InfStringMsgBase() = default;
+
+    /// @brief Copy constructor
     InfStringMsgBase(const InfStringMsgBase&) = default;
+
+    /// @brief Move constructor
     InfStringMsgBase(InfStringMsgBase&& other) = default;
+
+    /// @brief Destructor
     virtual ~InfStringMsgBase() = default;
 
+    /// @brief Copy assignment
     InfStringMsgBase& operator=(const InfStringMsgBase&) = default;
+
+    /// @brief Move assignment
     InfStringMsgBase& operator=(InfStringMsgBase&&) = default;
 };
 

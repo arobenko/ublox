@@ -70,6 +70,8 @@ class TimTp : public
         comms::option::DispatchImpl<TimTp<TMsgBase> >
     > Base;
 public:
+
+    /// @brief Index to access the fields
     enum FieldIdx
     {
         FieldIdx_towMS,
@@ -78,18 +80,28 @@ public:
         FieldIdx_week,
         FieldIdx_flags,
         FieldIdx_reserved,
-        FieldIdx_numOfValues
+        FieldIdx_numOfValues ///< number of available fields
     };
 
     static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
+    /// @brief Default constructor
     TimTp() = default;
+
+    /// @brief Copy constructor
     TimTp(const TimTp&) = default;
+
+    /// @brief Move constructor
     TimTp(TimTp&& other) = default;
+
+    /// @brief Destructor
     virtual ~TimTp() = default;
 
+    /// @brief Copy assignment
     TimTp& operator=(const TimTp&) = default;
+
+    /// @brief Move assignment
     TimTp& operator=(TimTp&&) = default;
 };
 

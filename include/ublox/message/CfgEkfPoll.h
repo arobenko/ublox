@@ -46,20 +46,32 @@ class CfgEkfPoll : public
         comms::option::DispatchImpl<CfgEkfPoll<TMsgBase> >
     > Base;
 public:
+
+    /// @brief Index to access the fields
     enum FieldIdx
     {
-        FieldIdx_numOfValues
+        FieldIdx_numOfValues ///< number of available fields
     };
 
     static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
+    /// @brief Default constructor
     CfgEkfPoll() = default;
+
+    /// @brief Copy constructor
     CfgEkfPoll(const CfgEkfPoll&) = default;
+
+    /// @brief Move constructor
     CfgEkfPoll(CfgEkfPoll&& other) = default;
+
+    /// @brief Destructor
     virtual ~CfgEkfPoll() = default;
 
+    /// @brief Copy assignment
     CfgEkfPoll& operator=(const CfgEkfPoll&) = default;
+
+    /// @brief Move assignment
     CfgEkfPoll& operator=(CfgEkfPoll&&) = default;
 };
 

@@ -54,22 +54,34 @@ class CfgMsgCurrent : public
         comms::option::DispatchImpl<CfgMsgCurrent<TMsgBase> >
     > Base;
 public:
+
+    /// @brief Index to access the fields
     enum FieldIdx
     {
         FieldIdx_id,
         FieldIdx_rate,
-        FieldIdx_numOfValues
+        FieldIdx_numOfValues ///< number of available fields
     };
 
     static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
+    /// @brief Default constructor
     CfgMsgCurrent() = default;
+
+    /// @brief Copy constructor
     CfgMsgCurrent(const CfgMsgCurrent&) = default;
+
+    /// @brief Move constructor
     CfgMsgCurrent(CfgMsgCurrent&& other) = default;
+
+    /// @brief Destructor
     virtual ~CfgMsgCurrent() = default;
 
+    /// @brief Copy assignment
     CfgMsgCurrent& operator=(const CfgMsgCurrent&) = default;
+
+    /// @brief Move assignment
     CfgMsgCurrent& operator=(CfgMsgCurrent&&) = default;
 };
 

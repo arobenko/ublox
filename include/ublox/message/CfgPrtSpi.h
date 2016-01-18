@@ -143,6 +143,8 @@ class CfgPrtSpi : public
         comms::option::DispatchImpl<CfgPrtSpi<TMsgBase> >
     > Base;
 public:
+
+    /// @brief Index to access the fields
     enum FieldIdx
     {
         FieldIdx_portID,
@@ -154,18 +156,28 @@ public:
         FieldIdx_outProtoMask,
         FieldIdx_flags,
         FieldIdx_reserved5,
-        FieldIdx_numOfValues
+        FieldIdx_numOfValues ///< number of available fields
     };
 
     static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
+    /// @brief Default constructor
     CfgPrtSpi() = default;
+
+    /// @brief Copy constructor
     CfgPrtSpi(const CfgPrtSpi&) = default;
+
+    /// @brief Move constructor
     CfgPrtSpi(CfgPrtSpi&& other) = default;
+
+    /// @brief Destructor
     virtual ~CfgPrtSpi() = default;
 
+    /// @brief Copy assignment
     CfgPrtSpi& operator=(const CfgPrtSpi&) = default;
+
+    /// @brief Move assignment
     CfgPrtSpi& operator=(CfgPrtSpi&&) = default;
 
 protected:

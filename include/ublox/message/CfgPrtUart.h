@@ -167,6 +167,8 @@ class CfgPrtUart : public
         comms::option::DispatchImpl<CfgPrtUart<TMsgBase> >
     > Base;
 public:
+
+    /// @brief Index to access the fields
     enum FieldIdx
     {
         FieldIdx_portID,
@@ -178,18 +180,28 @@ public:
         FieldIdx_outProtoMask,
         FieldIdx_flags,
         FieldIdx_reserved5,
-        FieldIdx_numOfValues
+        FieldIdx_numOfValues ///< number of available fields
     };
 
     static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
+    /// @brief Default constructor
     CfgPrtUart() = default;
+
+    /// @brief Copy constructor
     CfgPrtUart(const CfgPrtUart&) = default;
+
+    /// @brief Move constructor
     CfgPrtUart(CfgPrtUart&& other) = default;
+
+    /// @brief Destructor
     virtual ~CfgPrtUart() = default;
 
+    /// @brief Copy assignment
     CfgPrtUart& operator=(const CfgPrtUart&) = default;
+
+    /// @brief Move assignment
     CfgPrtUart& operator=(CfgPrtUart&&) = default;
 
 protected:

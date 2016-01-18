@@ -52,21 +52,33 @@ class AidAlpData : public
         comms::option::DispatchImpl<AidAlpData<TMsgBase> >
     > Base;
 public:
+
+    /// @brief Index to access the fields
     enum FieldIdx
     {
         FieldIdx_alpData,
-        FieldIdx_numOfValues
+        FieldIdx_numOfValues ///< number of available fields
     };
 
     static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
+    /// @brief Default constructor
     AidAlpData() = default;
+
+    /// @brief Copy constructor
     AidAlpData(const AidAlpData&) = default;
+
+    /// @brief Move constructor
     AidAlpData(AidAlpData&& other) = default;
+
+    /// @brief Destructor
     virtual ~AidAlpData() = default;
 
+    /// @brief Copy assignment
     AidAlpData& operator=(const AidAlpData&) = default;
+
+    /// @brief Move assignment
     AidAlpData& operator=(AidAlpData&&) = default;
 };
 

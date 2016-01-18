@@ -71,6 +71,8 @@ class CfgDat : public
         comms::option::DispatchImpl<CfgDat<TMsgBase> >
     > Base;
 public:
+
+    /// @brief Index to access the fields
     enum FieldIdx
     {
         FieldIdx_datumNum,
@@ -84,18 +86,28 @@ public:
         FieldIdx_rotY,
         FieldIdx_rotZ,
         FieldIdx_scale,
-        FieldIdx_numOfValues
+        FieldIdx_numOfValues ///< number of available fields
     };
 
     static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
+    /// @brief Default constructor
     CfgDat() = default;
+
+    /// @brief Copy constructor
     CfgDat(const CfgDat&) = default;
+
+    /// @brief Move constructor
     CfgDat(CfgDat&& other) = default;
+
+    /// @brief Destructor
     virtual ~CfgDat() = default;
 
+    /// @brief Copy assignment
     CfgDat& operator=(const CfgDat&) = default;
+
+    /// @brief Move assignment
     CfgDat& operator=(CfgDat&&) = default;
 };
 

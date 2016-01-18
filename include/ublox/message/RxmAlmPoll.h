@@ -47,21 +47,31 @@ class RxmAlmPoll : public
     > Base;
 public:
 
+    /// @brief Index to access the fields
     enum FieldIdx
     {
-        FieldIdx_numOfValues
+        FieldIdx_numOfValues ///< number of available fields
     };
 
     static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
-
+    /// @brief Default constructor
     RxmAlmPoll() = default;
+
+    /// @brief Copy constructor
     RxmAlmPoll(const RxmAlmPoll&) = default;
+
+    /// @brief Move constructor
     RxmAlmPoll(RxmAlmPoll&& other) = default;
+
+    /// @brief Destructor
     virtual ~RxmAlmPoll() = default;
 
+    /// @brief Copy assignment
     RxmAlmPoll& operator=(const RxmAlmPoll&) = default;
+
+    /// @brief Move assignment
     RxmAlmPoll& operator=(RxmAlmPoll&&) = default;
 };
 

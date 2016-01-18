@@ -84,6 +84,8 @@ class LogCreate : public
         comms::option::DispatchImpl<LogCreate<TMsgBase> >
     > Base;
 public:
+
+    /// @brief Index to access the fields
     enum FieldIdx
     {
         FieldIdx_version,
@@ -91,18 +93,28 @@ public:
         FieldIdx_reserved,
         FieldIdx_logSize,
         FieldIdx_userDefinedSize,
-        FieldIdx_numOfValues
+        FieldIdx_numOfValues ///< number of available fields
     };
 
     static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
+    /// @brief Default constructor
     LogCreate() = default;
+
+    /// @brief Copy constructor
     LogCreate(const LogCreate&) = default;
+
+    /// @brief Move constructor
     LogCreate(LogCreate&& other) = default;
+
+    /// @brief Destructor
     virtual ~LogCreate() = default;
 
+    /// @brief Copy assignment
     LogCreate& operator=(const LogCreate&) = default;
+
+    /// @brief Move assignment
     LogCreate& operator=(LogCreate&&) = default;
 };
 

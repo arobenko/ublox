@@ -46,20 +46,32 @@ class TimSvinPoll : public
         comms::option::DispatchImpl<TimSvinPoll<TMsgBase> >
     > Base;
 public:
+
+    /// @brief Index to access the fields
     enum FieldIdx
     {
-        FieldIdx_numOfValues
+        FieldIdx_numOfValues ///< number of available fields
     };
 
     static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
+    /// @brief Default constructor
     TimSvinPoll() = default;
+
+    /// @brief Copy constructor
     TimSvinPoll(const TimSvinPoll&) = default;
+
+    /// @brief Move constructor
     TimSvinPoll(TimSvinPoll&& other) = default;
+
+    /// @brief Destructor
     virtual ~TimSvinPoll() = default;
 
+    /// @brief Copy assignment
     TimSvinPoll& operator=(const TimSvinPoll&) = default;
+
+    /// @brief Move assignment
     TimSvinPoll& operator=(TimSvinPoll&&) = default;
 };
 

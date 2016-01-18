@@ -46,20 +46,32 @@ class AidIniPoll : public
         comms::option::DispatchImpl<AidIniPoll<TMsgBase> >
     > Base;
 public:
+
+    /// @brief Index to access the fields
     enum FieldIdx
     {
-        FieldIdx_numOfValues
+        FieldIdx_numOfValues ///< number of available fields
     };
 
     static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
+    /// @brief Default constructor
     AidIniPoll() = default;
+
+    /// @brief Copy constructor
     AidIniPoll(const AidIniPoll&) = default;
+
+    /// @brief Move constructor
     AidIniPoll(AidIniPoll&& other) = default;
+
+    /// @brief Destructor
     virtual ~AidIniPoll() = default;
 
+    /// @brief Copy assignment
     AidIniPoll& operator=(const AidIniPoll&) = default;
+
+    /// @brief Move assignment
     AidIniPoll& operator=(AidIniPoll&&) = default;
 };
 

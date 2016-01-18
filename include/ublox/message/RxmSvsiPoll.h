@@ -49,15 +49,31 @@ class RxmSvsiPoll : public
     > Base;
 public:
 
-    static_assert(std::tuple_size<typename Base::AllFields>::value == 0U,
+    /// @brief Index to access the fields
+    enum FieldIdx
+    {
+        FieldIdx_numOfValues ///< number of available fields
+    };
+
+    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
+    /// @brief Default constructor
     RxmSvsiPoll() = default;
+
+    /// @brief Copy constructor
     RxmSvsiPoll(const RxmSvsiPoll&) = default;
+
+    /// @brief Move constructor
     RxmSvsiPoll(RxmSvsiPoll&& other) = default;
+
+    /// @brief Destructor
     virtual ~RxmSvsiPoll() = default;
 
+    /// @brief Copy assignment
     RxmSvsiPoll& operator=(const RxmSvsiPoll&) = default;
+
+    /// @brief Move assignment
     RxmSvsiPoll& operator=(RxmSvsiPoll&&) = default;
 };
 

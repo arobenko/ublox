@@ -67,23 +67,35 @@ class AidAop : public
         comms::option::DispatchImpl<AidAop<TMsgBase> >
     > Base;
 public:
+
+    /// @brief Index to access the fields
     enum FieldIdx
     {
         FieldIdx_svid,
         FieldIdx_data,
         FieldIdx_optional,
-        FieldIdx_numOfValues
+        FieldIdx_numOfValues ///< number of available fields
     };
 
     static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
+    /// @brief Default constructor
     AidAop() = default;
+
+    /// @brief Copy constructor
     AidAop(const AidAop&) = default;
+
+    /// @brief Move constructor
     AidAop(AidAop&& other) = default;
+
+    /// @brief Destructor
     virtual ~AidAop() = default;
 
+    /// @brief Copy assignment
     AidAop& operator=(const AidAop&) = default;
+
+    /// @brief Move assignment
     AidAop& operator=(AidAop&&) = default;
 };
 

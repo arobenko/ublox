@@ -153,6 +153,8 @@ class CfgNav5 : public
         comms::option::DispatchImpl<CfgNav5<TMsgBase> >
     > Base;
 public:
+
+    /// @brief Index to access the fields
     enum FieldIdx
     {
         FieldIdx_mask,
@@ -173,18 +175,28 @@ public:
         FieldIdx_reserved2,
         FieldIdx_reserved3,
         FieldIdx_reserved4,
-        FieldIdx_numOfValues
+        FieldIdx_numOfValues ///< number of available fields
     };
 
     static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
+    /// @brief Default constructor
     CfgNav5() = default;
+
+    /// @brief Copy constructor
     CfgNav5(const CfgNav5&) = default;
+
+    /// @brief Move constructor
     CfgNav5(CfgNav5&& other) = default;
+
+    /// @brief Destructor
     virtual ~CfgNav5() = default;
 
+    /// @brief Copy assignment
     CfgNav5& operator=(const CfgNav5&) = default;
+
+    /// @brief Move assignment
     CfgNav5& operator=(CfgNav5&&) = default;
 };
 

@@ -69,6 +69,8 @@ class NavVelned : public
         comms::option::DispatchImpl<NavVelned<TMsgBase> >
     > Base;
 public:
+
+    /// @brief Index to access the fields
     enum FieldIdx
     {
         FieldIdx_iTOW,
@@ -80,18 +82,28 @@ public:
         FieldIdx_heading,
         FieldIdx_sAcc,
         FieldIdx_cAcc,
-        FieldIdx_numOfValues
+        FieldIdx_numOfValues ///< number of available fields
     };
 
     static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
+    /// @brief Default constructor
     NavVelned() = default;
+
+    /// @brief Copy constructor
     NavVelned(const NavVelned&) = default;
+
+    /// @brief Move constructor
     NavVelned(NavVelned&& other) = default;
+
+    /// @brief Destructor
     virtual ~NavVelned() = default;
 
+    /// @brief Copy assignment
     NavVelned& operator=(const NavVelned&) = default;
+
+    /// @brief Move assignment
     NavVelned& operator=(NavVelned&&) = default;
 };
 

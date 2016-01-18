@@ -133,6 +133,8 @@ class CfgGnss : public
         comms::option::DispatchImpl<CfgGnss<TMsgBase> >
     > Base;
 public:
+
+    /// @brief Index to access the fields
     enum FieldIdx
     {
         FieldIdx_msgVer,
@@ -140,18 +142,28 @@ public:
         FieldIdx_numTrkChUse,
         FieldIdx_numConfigBlocks,
         FieldIdx_data,
-        FieldIdx_numOfValues
+        FieldIdx_numOfValues ///< number of available fields
     };
 
     static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
+    /// @brief Default constructor
     CfgGnss() = default;
+
+    /// @brief Copy constructor
     CfgGnss(const CfgGnss&) = default;
+
+    /// @brief Move constructor
     CfgGnss(CfgGnss&& other) = default;
+
+    /// @brief Destructor
     virtual ~CfgGnss() = default;
 
+    /// @brief Copy assignment
     CfgGnss& operator=(const CfgGnss&) = default;
+
+    /// @brief Move assignment
     CfgGnss& operator=(CfgGnss&&) = default;
 
 protected:

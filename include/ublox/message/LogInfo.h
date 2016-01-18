@@ -113,6 +113,8 @@ class LogInfo : public
         comms::option::DispatchImpl<LogInfo<TMsgBase> >
     > Base;
 public:
+
+    /// @brief Index to access the fields
     enum FieldIdx
     {
         FieldIdx_version,
@@ -139,18 +141,28 @@ public:
         FieldIdx_reserved5,
         FieldIdx_status,
         FieldIdx_reserved6,
-        FieldIdx_numOfValues
+        FieldIdx_numOfValues ///< number of available fields
     };
 
     static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
+    /// @brief Default constructor
     LogInfo() = default;
+
+    /// @brief Copy constructor
     LogInfo(const LogInfo&) = default;
+
+    /// @brief Move constructor
     LogInfo(LogInfo&& other) = default;
+
+    /// @brief Destructor
     virtual ~LogInfo() = default;
 
+    /// @brief Copy assignment
     LogInfo& operator=(const LogInfo&) = default;
+
+    /// @brief Move assignment
     LogInfo& operator=(LogInfo&&) = default;
 };
 

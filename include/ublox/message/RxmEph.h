@@ -67,6 +67,8 @@ class RxmEph : public
         comms::option::DispatchImpl<RxmEph<TMsgBase> >
     > Base;
 public:
+
+    /// @brief Index to access the fields
     enum FieldIdx
     {
         FieldIdx_svid,
@@ -74,12 +76,13 @@ public:
         FieldIdx_sf1d,
         FieldIdx_sf2d,
         FieldIdx_sf3d,
-        FieldIdx_numOfValues
+        FieldIdx_numOfValues ///< number of available fields
     };
 
     static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
+    /// @brief Default constructor
     RxmEph()
     {
         auto& allFields = Base::fields();
@@ -91,11 +94,19 @@ public:
         sf3dField.setMode(comms::field::OptionalMode::Missing);
     }
 
+    /// @brief Copy constructor
     RxmEph(const RxmEph&) = default;
+
+    /// @brief Move constructor
     RxmEph(RxmEph&& other) = default;
+
+    /// @brief Destructor
     virtual ~RxmEph() = default;
 
+    /// @brief Copy assignment
     RxmEph& operator=(const RxmEph&) = default;
+
+    /// @brief Move assignment
     RxmEph& operator=(RxmEph&&) = default;
 
 protected:

@@ -63,23 +63,35 @@ class MonRxbuf : public
         comms::option::DispatchImpl<MonRxbuf<TMsgBase> >
     > Base;
 public:
+
+    /// @brief Index to access the fields
     enum FieldIdx
     {
         FieldIdx_pending,
         FieldIdx_usage,
         FieldIdx_peakUsage,
-        FieldIdx_numOfValues
+        FieldIdx_numOfValues ///< number of available fields
     };
 
     static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
+    /// @brief Default constructor
     MonRxbuf() = default;
+
+    /// @brief Copy constructor
     MonRxbuf(const MonRxbuf&) = default;
+
+    /// @brief Move constructor
     MonRxbuf(MonRxbuf&& other) = default;
+
+    /// @brief Destructor
     virtual ~MonRxbuf() = default;
 
+    /// @brief Copy assignment
     MonRxbuf& operator=(const MonRxbuf&) = default;
+
+    /// @brief Move assignment
     MonRxbuf& operator=(MonRxbuf&&) = default;
 };
 

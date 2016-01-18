@@ -48,15 +48,31 @@ class NavClockPoll : public
     > Base;
 public:
 
+    /// @brief Index to access the fields
+    enum FieldIdx
+    {
+        FieldIdx_numOfValues ///< number of available fields
+    };
+
     static_assert(std::tuple_size<typename Base::AllFields>::value == 0U,
         "Number of fields is incorrect");
 
+    /// @brief Default constructor
     NavClockPoll() = default;
+
+    /// @brief Copy constructor
     NavClockPoll(const NavClockPoll&) = default;
+
+    /// @brief Move constructor
     NavClockPoll(NavClockPoll&& other) = default;
+
+    /// @brief Destructor
     virtual ~NavClockPoll() = default;
 
+    /// @brief Copy assignment
     NavClockPoll& operator=(const NavClockPoll&) = default;
+
+    /// @brief Move assignment
     NavClockPoll& operator=(NavClockPoll&&) = default;
 };
 

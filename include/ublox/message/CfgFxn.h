@@ -80,6 +80,8 @@ class CfgFxn : public
         comms::option::DispatchImpl<CfgFxn<TMsgBase> >
     > Base;
 public:
+
+    /// @brief Index to access the fields
     enum FieldIdx
     {
         FieldIdx_flags,
@@ -91,18 +93,28 @@ public:
         FieldIdx_tOff,
         FieldIdx_res,
         FieldIdx_baseTow,
-        FieldIdx_numOfValues
+        FieldIdx_numOfValues ///< number of available fields
     };
 
     static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
+    /// @brief Default constructor
     CfgFxn() = default;
+
+    /// @brief Copy constructor
     CfgFxn(const CfgFxn&) = default;
+
+    /// @brief Move constructor
     CfgFxn(CfgFxn&& other) = default;
+
+    /// @brief Destructor
     virtual ~CfgFxn() = default;
 
+    /// @brief Copy assignment
     CfgFxn& operator=(const CfgFxn&) = default;
+
+    /// @brief Move assignment
     CfgFxn& operator=(CfgFxn&&) = default;
 };
 

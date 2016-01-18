@@ -53,21 +53,33 @@ class LogString : public
         comms::option::DispatchImpl<LogString<TMsgBase> >
     > Base;
 public:
+
+    /// @brief Index to access the fields
     enum FieldIdx
     {
         FieldIdx_bytes,
-        FieldIdx_numOfValues
+        FieldIdx_numOfValues ///< number of available fields
     };
 
     static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
+    /// @brief Default constructor
     LogString() = default;
+
+    /// @brief Copy constructor
     LogString(const LogString&) = default;
+
+    /// @brief Move constructor
     LogString(LogString&& other) = default;
+
+    /// @brief Destructor
     virtual ~LogString() = default;
 
+    /// @brief Copy assignment
     LogString& operator=(const LogString&) = default;
+
+    /// @brief Move assignment
     LogString& operator=(LogString&&) = default;
 };
 

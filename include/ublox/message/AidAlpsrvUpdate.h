@@ -71,6 +71,8 @@ class AidAlpsrvUpdate : public
         comms::option::DispatchImpl<AidAlpsrvUpdate<TMsgBase> >
     > Base;
 public:
+
+    /// @brief Index to access the fields
     enum FieldIdx
     {
         FieldIdx_idSize,
@@ -79,18 +81,28 @@ public:
         FieldIdx_size,
         FieldIdx_fileId,
         FieldIdx_data,
-        FieldIdx_numOfValues
+        FieldIdx_numOfValues ///< number of available fields
     };
 
     static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
+    /// @brief Default constructor
     AidAlpsrvUpdate() = default;
+
+    /// @brief Copy constructor
     AidAlpsrvUpdate(const AidAlpsrvUpdate&) = default;
+
+    /// @brief Move constructor
     AidAlpsrvUpdate(AidAlpsrvUpdate&& other) = default;
+
+    /// @brief Destructor
     virtual ~AidAlpsrvUpdate() = default;
 
+    /// @brief Copy assignment
     AidAlpsrvUpdate& operator=(const AidAlpsrvUpdate&) = default;
+
+    /// @brief Move assignment
     AidAlpsrvUpdate& operator=(AidAlpsrvUpdate&&) = default;
 
 protected:

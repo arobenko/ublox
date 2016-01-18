@@ -46,20 +46,32 @@ class CfgAntPoll : public
         comms::option::DispatchImpl<CfgAntPoll<TMsgBase> >
     > Base;
 public:
+
+    /// @brief Index to access the fields
     enum FieldIdx
     {
-        FieldIdx_numOfValues
+        FieldIdx_numOfValues ///< number of available fields
     };
 
     static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
+    /// @brief Default constructor
     CfgAntPoll() = default;
+
+    /// @brief Copy constructor
     CfgAntPoll(const CfgAntPoll&) = default;
+
+    /// @brief Move constructor
     CfgAntPoll(CfgAntPoll&& other) = default;
+
+    /// @brief Destructor
     virtual ~CfgAntPoll() = default;
 
+    /// @brief Copy assignment
     CfgAntPoll& operator=(const CfgAntPoll&) = default;
+
+    /// @brief Move assignment
     CfgAntPoll& operator=(CfgAntPoll&&) = default;
 };
 

@@ -60,6 +60,8 @@ class NavVelecef : public
         comms::option::DispatchImpl<NavVelecef<TMsgBase> >
     > Base;
 public:
+
+    /// @brief Index to access the fields
     enum FieldIdx
     {
         FieldIdx_iTOW,
@@ -67,18 +69,28 @@ public:
         FieldIdx_ecefVY,
         FieldIdx_ecefVZ,
         FieldIdx_sAcc,
-        FieldIdx_numOfValues
+        FieldIdx_numOfValues ///< number of available fields
     };
 
     static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
+    /// @brief Default constructor
     NavVelecef() = default;
+
+    /// @brief Copy constructor
     NavVelecef(const NavVelecef&) = default;
+
+    /// @brief Move constructor
     NavVelecef(NavVelecef&& other) = default;
+
+    /// @brief Destructor
     virtual ~NavVelecef() = default;
 
+    /// @brief Copy assignment
     NavVelecef& operator=(const NavVelecef&) = default;
+
+    /// @brief Move assignment
     NavVelecef& operator=(NavVelecef&&) = default;
 };
 

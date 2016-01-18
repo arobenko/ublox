@@ -46,20 +46,32 @@ class MonTxbufPoll : public
         comms::option::DispatchImpl<MonTxbufPoll<TMsgBase> >
     > Base;
 public:
+
+    /// @brief Index to access the fields
     enum FieldIdx
     {
-        FieldIdx_numOfValues
+        FieldIdx_numOfValues ///< number of available fields
     };
 
     static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
+    /// @brief Default constructor
     MonTxbufPoll() = default;
+
+    /// @brief Copy constructor
     MonTxbufPoll(const MonTxbufPoll&) = default;
+
+    /// @brief Move constructor
     MonTxbufPoll(MonTxbufPoll&& other) = default;
+
+    /// @brief Destructor
     virtual ~MonTxbufPoll() = default;
 
+    /// @brief Copy assignment
     MonTxbufPoll& operator=(const MonTxbufPoll&) = default;
+
+    /// @brief Move assignment
     MonTxbufPoll& operator=(MonTxbufPoll&&) = default;
 };
 

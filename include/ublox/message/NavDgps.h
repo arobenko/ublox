@@ -137,6 +137,8 @@ class NavDgps : public
         comms::option::DispatchImpl<NavDgps<TMsgBase> >
     > Base;
 public:
+
+    /// @brief Index to access the fields
     enum FieldIdx
     {
         FieldIdx_iTOW,
@@ -147,18 +149,28 @@ public:
         FieldIdx_status,
         FieldIdx_reserved1,
         FieldIdx_data,
-        FieldIdx_numOfValues
+        FieldIdx_numOfValues ///< number of available fields
     };
 
     static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
+    /// @brief Default constructor
     NavDgps() = default;
+
+    /// @brief Copy constructor
     NavDgps(const NavDgps&) = default;
+
+    /// @brief Move constructor
     NavDgps(NavDgps&& other) = default;
+
+    /// @brief Destructor
     virtual ~NavDgps() = default;
 
+    /// @brief Copy assignment
     NavDgps& operator=(const NavDgps&) = default;
+
+    /// @brief Move assignment
     NavDgps& operator=(NavDgps&&) = default;
 
 protected:

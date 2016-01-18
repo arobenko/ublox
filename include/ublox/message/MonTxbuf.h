@@ -97,6 +97,8 @@ class MonTxbuf : public
         comms::option::DispatchImpl<MonTxbuf<TMsgBase> >
     > Base;
 public:
+
+    /// @brief Index to access the fields
     enum FieldIdx
     {
         FieldIdx_pending,
@@ -106,18 +108,28 @@ public:
         FieldIdx_tPeakUsage,
         FieldIdx_errors,
         FieldIdx_reserved1,
-        FieldIdx_numOfValues
+        FieldIdx_numOfValues ///< number of available fields
     };
 
     static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
+    /// @brief Default constructor
     MonTxbuf() = default;
+
+    /// @brief Copy constructor
     MonTxbuf(const MonTxbuf&) = default;
+
+    /// @brief Move constructor
     MonTxbuf(MonTxbuf&& other) = default;
+
+    /// @brief Destructor
     virtual ~MonTxbuf() = default;
 
+    /// @brief Copy assignment
     MonTxbuf& operator=(const MonTxbuf&) = default;
+
+    /// @brief Move assignment
     MonTxbuf& operator=(MonTxbuf&&) = default;
 };
 

@@ -165,6 +165,8 @@ class NavSbas : public
         comms::option::DispatchImpl<NavSbas<TMsgBase> >
     > Base;
 public:
+
+    /// @brief Index to access the fields
     enum FieldIdx
     {
         FieldIdx_iTOW,
@@ -175,18 +177,28 @@ public:
         FieldIdx_cnt,
         FieldIdx_reserved0,
         FieldIdx_data,
-        FieldIdx_numOfValues
+        FieldIdx_numOfValues ///< number of available fields
     };
 
     static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
+    /// @brief Default constructor
     NavSbas() = default;
+
+    /// @brief Copy constructor
     NavSbas(const NavSbas&) = default;
+
+    /// @brief Move constructor
     NavSbas(NavSbas&& other) = default;
+
+    /// @brief Destructor
     virtual ~NavSbas() = default;
 
+    /// @brief Copy assignment
     NavSbas& operator=(const NavSbas&) = default;
+
+    /// @brief Move assignment
     NavSbas& operator=(NavSbas&&) = default;
 
 protected:

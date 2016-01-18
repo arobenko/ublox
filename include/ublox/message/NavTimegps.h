@@ -69,6 +69,8 @@ class NavTimegps : public
         comms::option::DispatchImpl<NavTimegps<TMsgBase> >
     > Base;
 public:
+
+    /// @brief Index to access the fields
     enum FieldIdx
     {
         FieldIdx_iTOW,
@@ -77,18 +79,28 @@ public:
         FieldIdx_leapS,
         FieldIdx_valid,
         FieldIdx_tAcc,
-        FieldIdx_numOfValues
+        FieldIdx_numOfValues ///< number of available fields
     };
 
     static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
+    /// @brief Default constructor
     NavTimegps() = default;
+
+    /// @brief Copy constructor
     NavTimegps(const NavTimegps&) = default;
+
+    /// @brief Move constructor
     NavTimegps(NavTimegps&& other) = default;
+
+    /// @brief Destructor
     virtual ~NavTimegps() = default;
 
+    /// @brief Copy assignment
     NavTimegps& operator=(const NavTimegps&) = default;
+
+    /// @brief Move assignment
     NavTimegps& operator=(NavTimegps&&) = default;
 };
 

@@ -78,6 +78,8 @@ class CfgLogfilter : public
         comms::option::DispatchImpl<CfgLogfilter<TMsgBase> >
     > Base;
 public:
+
+    /// @brief Index to access the fields
     enum FieldIdx
     {
         FieldIdx_version,
@@ -86,18 +88,28 @@ public:
         FieldIdx_timeThreshold,
         FieldIdx_speedThreshold,
         FieldIdx_positionThreshold,
-        FieldIdx_numOfValues
+        FieldIdx_numOfValues ///< number of available fields
     };
 
     static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
+    /// @brief Default constructor
     CfgLogfilter() = default;
+
+    /// @brief Copy constructor
     CfgLogfilter(const CfgLogfilter&) = default;
+
+    /// @brief Move constructor
     CfgLogfilter(CfgLogfilter&& other) = default;
+
+    /// @brief Destructor
     virtual ~CfgLogfilter() = default;
 
+    /// @brief Copy assignment
     CfgLogfilter& operator=(const CfgLogfilter&) = default;
+
+    /// @brief Move assignment
     CfgLogfilter& operator=(CfgLogfilter&&) = default;
 };
 

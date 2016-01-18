@@ -106,6 +106,8 @@ class MonHw2 : public
         comms::option::DispatchImpl<MonHw2<TMsgBase> >
     > Base;
 public:
+
+    /// @brief Index to access the fields
     enum FieldIdx
     {
         FieldIdx_ofsI,
@@ -118,18 +120,28 @@ public:
         FieldIdx_reserved1,
         FieldIdx_postStatus,
         FieldIdx_reserved2,
-        FieldIdx_numOfValues
+        FieldIdx_numOfValues ///< number of available fields
     };
 
     static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
+    /// @brief Default constructor
     MonHw2() = default;
+
+    /// @brief Copy constructor
     MonHw2(const MonHw2&) = default;
+
+    /// @brief Move constructor
     MonHw2(MonHw2&& other) = default;
+
+    /// @brief Destructor
     virtual ~MonHw2() = default;
 
+    /// @brief Copy assignment
     MonHw2& operator=(const MonHw2&) = default;
+
+    /// @brief Move assignment
     MonHw2& operator=(MonHw2&&) = default;
 };
 
