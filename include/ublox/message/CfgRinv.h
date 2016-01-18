@@ -44,10 +44,7 @@ using CfgRinvField_flags =
     >;
 
 using CfgRinvField_data =
-    comms::field::ArrayList<
-        field::common::FieldBase,
-        std::uint8_t
-    >;
+    field::common::ListT<std::uint8_t>;
 
 using CfgRinvFields = std::tuple<
     CfgRinvField_flags,

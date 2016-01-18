@@ -34,8 +34,7 @@ namespace message
 using RxmSfrbField_chn = field::common::U1;
 using RxmSfrbField_svid = field::rxm::svid;
 using RxmSfrbField_dword =
-    comms::field::ArrayList<
-        field::common::FieldBase,
+    field::common::ListT<
         field::common::U4,
         comms::option::SequenceFixedSize<10>
     >;

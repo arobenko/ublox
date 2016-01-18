@@ -96,8 +96,7 @@ using NavDgpsField_prc = field::common::R4;
 using NavDgpsField_prrc = field::common::R4;
 
 using NavDgpsField_data =
-    comms::field::ArrayList<
-        field::common::FieldBase,
+    field::common::ListT<
         comms::field::Bundle<
             std::tuple<
                 NavDgpsField_svid,

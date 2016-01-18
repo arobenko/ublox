@@ -27,9 +27,19 @@ namespace ublox
 namespace message
 {
 
+/// @brief Definition of the fields for AID-ALM (@b poll) message.
+/// @see AidAlmPoll
 using AidAlmPollFields = std::tuple<>;
 
-
+/// @brief Definition of AID-ALM (@b poll) message
+/// @details Poll request for AID-ALM (@ref AidAlm) message(s).@n
+///     Inherits from
+///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+///     while providing @b TMsgBase as common interface class as well as
+///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
+///     @b comms::option::DispatchImpl as options. @n
+///     See @ref AidAlmPollFields for definition of the fields this message contains.
+/// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class AidAlmPoll : public
     comms::MessageBase<
@@ -47,21 +57,32 @@ class AidAlmPoll : public
     > Base;
 public:
 
+    /// @brief Index to access the fields
     enum FieldIdx
     {
-        FieldIdx_numOfValues
+        FieldIdx_numOfValues ///< number of available fields
     };
 
     static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
 
+    /// @brief Default constructor
     AidAlmPoll() = default;
+
+    /// @brief Copy constructor
     AidAlmPoll(const AidAlmPoll&) = default;
+
+    /// @brief Move constructor
     AidAlmPoll(AidAlmPoll&& other) = default;
+
+    /// @brief Destructor
     virtual ~AidAlmPoll() = default;
 
+    /// @brief Copy assignment
     AidAlmPoll& operator=(const AidAlmPoll&) = default;
+
+    /// @brief Move assignment
     AidAlmPoll& operator=(AidAlmPoll&&) = default;
 };
 

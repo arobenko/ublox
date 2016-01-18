@@ -29,8 +29,7 @@ namespace message
 {
 
 using CfgMsgppField_msg1 =
-    comms::field::ArrayList<
-        field::common::FieldBase,
+    field::common::ListT<
         field::common::U2,
         comms::option::SequenceFixedSize<8>
     >;
@@ -40,8 +39,7 @@ using CfgMsgppField_msg4 = CfgMsgppField_msg1;
 using CfgMsgppField_msg5 = CfgMsgppField_msg1;
 using CfgMsgppField_msg6 = CfgMsgppField_msg1;
 using CfgMsgppField_skipped =
-    comms::field::ArrayList<
-        field::common::FieldBase,
+    field::common::ListT<
         field::common::U4,
         comms::option::SequenceFixedSize<6>
     >;

@@ -30,8 +30,7 @@ namespace message
 
 using CfgMsgField_id = ublox::field::MsgId;
 using CfgMsgField_rate =
-    comms::field::ArrayList<
-        ublox::field::common::FieldBase,
+    field::common::ListT<
         field::cfg::rate,
         comms::option::SequenceFixedSize<6>
     >;

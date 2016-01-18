@@ -34,9 +34,8 @@ namespace message
 using RxmAlmField_svid = field::rxm::svid_ext;
 using RxmAlmField_week = field::common::U4;
 using RxmAlmField_dwrd =
-    comms::field::Optional<
-        comms::field::ArrayList<
-            field::common::FieldBase,
+    field::common::OptionalT<
+        field::common::ListT<
             field::common::U4,
             comms::option::SequenceFixedSize<8>
         >

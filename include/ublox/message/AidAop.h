@@ -33,15 +33,13 @@ namespace message
 
 using AidAopField_svid = field::aid::svid;
 using AidAopField_data =
-    comms::field::ArrayList<
-        field::common::FieldBase,
+    field::common::ListT<
         std::uint8_t,
         comms::option::SequenceFixedSize<59>
     >;
 using AidAopField_optional =
-    comms::field::Optional<
-        comms::field::ArrayList<
-            field::common::FieldBase,
+    field::common::OptionalT<
+        field::common::ListT<
             std::uint8_t,
             comms::option::SequenceFixedSize<48 * 3>
         >

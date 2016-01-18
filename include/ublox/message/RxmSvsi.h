@@ -99,8 +99,7 @@ using RxmSvsiField_age =
     >;
 
 using RxmSvsiField_data =
-    comms::field::ArrayList<
-        field::common::FieldBase,
+    field::common::ListT<
         comms::field::Bundle<
             std::tuple<
                 RxmSvsiField_svid,

@@ -120,8 +120,7 @@ using NavSbasField_reserved2 = field::common::res2;
 using NavSbasField_ic = field::common::U2T<field::common::Scaling_cm2m>;
 
 using NavSbasField_data =
-    comms::field::ArrayList<
-        field::common::FieldBase,
+    field::common::ListT<
         comms::field::Bundle<
             std::tuple<
                 NavSbasField_svid,

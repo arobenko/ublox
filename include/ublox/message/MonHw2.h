@@ -69,8 +69,7 @@ using MonHw2Field_cfgSource =
 using MonHw2Field_reserved0 = field::common::res3;
 using MonHw2Field_lowLevelCfg = field::common::U4;
 using MonHw2Field_reserved1 =
-    comms::field::ArrayList<
-        field::common::FieldBase,
+    field::common::ListT<
         field::common::res4,
         comms::option::SequenceFixedSize<2>
     >;

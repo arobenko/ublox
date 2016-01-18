@@ -34,9 +34,8 @@ namespace message
 using RxmEphField_svid = field::rxm::svid_ext;
 using RxmEphField_how = field::common::U4;
 using RxmEphField_sf1d =
-    comms::field::Optional<
-        comms::field::ArrayList<
-            field::common::FieldBase,
+    field::common::OptionalT<
+        field::common::ListT<
             field::common::U4,
             comms::option::SequenceFixedSize<8>
         >

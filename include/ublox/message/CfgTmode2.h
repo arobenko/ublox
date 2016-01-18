@@ -58,27 +58,27 @@ using CfgTmode2Field_flags =
         comms::option::BitmaskReservedBits<0xfffc, 0>
     >;
 using CfgTmode2Field_ecefX =
-    comms::field::Optional<
+    field::common::OptionalT<
         field::common::I4T<field::common::Scaling_cm2m>
     >;
 using CfgTmode2Field_lat =
-    comms::field::Optional<
+    field::common::OptionalT<
         field::common::I4T<comms::option::ScalingRatio<1, 10000000L> >
     >;
 using CfgTmode2Field_ecefY =
-    comms::field::Optional<
+    field::common::OptionalT<
         field::common::I4T<field::common::Scaling_cm2m>
     >;
 using CfgTmode2Field_lon =
-    comms::field::Optional<
+    field::common::OptionalT<
         field::common::I4T<comms::option::ScalingRatio<1, 10000000L> >
     >;
 using CfgTmode2Field_ecefZ =
-    comms::field::Optional<
+    field::common::OptionalT<
         field::common::I4T<field::common::Scaling_cm2m>
     >;
 using CfgTmode2Field_alt =
-    comms::field::Optional<
+    field::common::OptionalT<
         field::common::I4T<field::common::Scaling_cm2m>
     >;
 using CfgTmode2Field_fixedPosAcc =

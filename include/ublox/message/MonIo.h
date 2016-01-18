@@ -68,10 +68,7 @@ using MonIoField_dataListElem =
     >;
 
 using MonIoField_data =
-    comms::field::ArrayList<
-        field::common::FieldBase,
-        MonIoField_dataListElem
-    >;
+    field::common::ListT<MonIoField_dataListElem>;
 
 using MonIoFields = std::tuple<
     MonIoField_data

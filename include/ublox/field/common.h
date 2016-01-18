@@ -306,7 +306,7 @@ using Scaling_ns2s = comms::option::ScalingRatio<1, 1000000000L>;
 template <std::size_t TSize>
 using ZString =
     comms::field::String<
-            field::common::FieldBase,
+            FieldBase,
             comms::option::SequenceFixedSize<TSize - 1>,
             comms::option::SequenceTrailingFieldSuffix<
                 field::common::U1T<
@@ -314,6 +314,29 @@ using ZString =
                 >
             >
         >;
+
+/// @brief Common definition of sequence of fields or raw bytes.
+/// @details Defined to be
+///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1field_1_1ArrayList.html">comms::field::ArrayList</a>
+///     with @ref FieldBase as a base class, @b TElem as the element type, and
+///     @b TOptions as extra options.
+/// @tparam TElem Element of the list.
+/// @tparam Extra options.
+template <typename TElem, typename... TOptions>
+using ListT =
+    comms::field::ArrayList<
+        FieldBase,
+        TElem,
+        TOptions...
+    >;
+
+/// @brief Common definition of optional field.
+/// @details Defined to be
+///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1field_1_1Optional.html">comms::field::Optional</a>
+///     with @b TField as the field type.
+/// @tparam TField Optional field.
+template <typename TField>
+using OptionalT = comms::field::Optional<TField>;
 
 /// @brief Definition of common @b iTOW field used in multiple messages in
 ///     multiple message classes.

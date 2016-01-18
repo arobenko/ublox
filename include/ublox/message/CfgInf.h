@@ -57,8 +57,7 @@ using CfgInfField_mask =
     field::common::X1T<comms::option::BitmaskReservedBits<0xe0, 0> >;
 
 using CfgInfField_infMsgMask =
-    comms::field::ArrayList<
-        field::common::FieldBase,
+    field::common::ListT<
         CfgInfField_mask,
         comms::option::SequenceFixedSize<6>
     >;
@@ -74,10 +73,7 @@ using CfgInfField_element =
     >;
 
 using CfgInfField_list =
-    comms::field::ArrayList<
-        field::common::FieldBase,
-        CfgInfField_element
-    >;
+    field::common::ListT<CfgInfField_element>;
 
 
 using CfgInfFields = std::tuple<

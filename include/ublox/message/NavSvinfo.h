@@ -111,8 +111,7 @@ using NavSvinfoField_elev = field::common::I1;
 using NavSvinfoField_azim = field::common::I2;
 using NavSvinfoField_prRes = field::common::I4T<field::common::Scaling_cm2m>;
 using NavSvinfoField_info =
-    comms::field::ArrayList<
-        field::common::FieldBase,
+    field::common::ListT<
         comms::field::Bundle<
             std::tuple<
                 NavSvinfoField_chn,

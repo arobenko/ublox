@@ -96,8 +96,7 @@ using CfgGnssField_flags =
     >;
 
 using CfgGnssField_data =
-    comms::field::ArrayList<
-        field::common::FieldBase,
+    field::common::ListT<
         comms::field::Bundle<
             std::tuple<
                 CfgGnssField_gnssId,

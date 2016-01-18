@@ -38,16 +38,9 @@ using AidAlmField_svid = field::aid::svid_ext;
 using AidAlmField_week = field::common::U4;
 
 /// @brief Definition of "dwrd" field in AID-ALM message.
-/// @details The field is defined to be
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1field_1_1Optional.html">comms::field::Optional</a> that
-///     wraps
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1field_1_1ArrayList.html">comms::field::ArrayList</a>
-///     of 4 byte unsigned integer value fields, which
-///     has fixed size of 8 elements.
 using AidAlmField_dwrd =
-    comms::field::Optional<
-        comms::field::ArrayList<
-            field::common::FieldBase,
+    field::common::OptionalT<
+        field::common::ListT<
             field::common::U4,
             comms::option::SequenceFixedSize<8>
         >

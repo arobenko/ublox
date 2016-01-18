@@ -30,10 +30,7 @@ namespace message
 {
 
 using AidAlpDataField_alpData =
-    comms::field::ArrayList<
-        field::common::FieldBase,
-        field::common::U2
-    >;
+    field::common::ListT<field::common::U2>;
 
 using AidAlpDataFields = std::tuple<
     AidAlpDataField_alpData

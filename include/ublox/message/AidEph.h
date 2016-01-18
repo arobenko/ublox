@@ -34,9 +34,8 @@ namespace message
 using AidEphField_svid = field::aid::svid_ext;
 using AidEphField_how = field::common::U4;
 using AidEphField_sf1d =
-    comms::field::Optional<
-        comms::field::ArrayList<
-            field::common::FieldBase,
+    field::common::OptionalT<
+        field::common::ListT<
             field::common::U4,
             comms::option::SequenceFixedSize<8>
         >

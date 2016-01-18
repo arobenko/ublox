@@ -57,8 +57,7 @@ using RxmRawField_cno = field::common::I1;
 using RxmRawField_lli = field::common::U1;
 
 using RxmRawField_data =
-    comms::field::ArrayList<
-        field::common::FieldBase,
+    field::common::ListT<
         comms::field::Bundle<
             std::tuple<
                 RxmRawField_cpMes,

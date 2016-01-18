@@ -44,8 +44,7 @@ using AidAlpsrvField_id1 = field::common::U1;
 using AidAlpsrvField_id2 = field::common::U1;
 using AidAlpsrvField_id3 = field::common::U4;
 using AidAlpsrvField_data =
-    comms::field::ArrayList<
-        field::common::FieldBase,
+    field::common::ListT<
         std::uint8_t,
         comms::option::SequenceSizeForcingEnabled
     >;

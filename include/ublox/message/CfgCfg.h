@@ -65,7 +65,7 @@ using CfgCfgField_clearMask = CfgCfgField_mask;
 using CfgCfgField_saveMask = CfgCfgField_mask;
 using CfgCfgField_loadMask = CfgCfgField_mask;
 using CfgCfgField_deviceMask =
-    comms::field::Optional<
+    field::common::OptionalT<
         field::common::X1T<
             comms::option::BitmaskReservedBits<0xe8, 0>
         >

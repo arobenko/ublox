@@ -29,14 +29,12 @@ namespace message
 {
 
 using MonRxbufField_pending =
-    comms::field::ArrayList<
-        field::common::FieldBase,
+    field::common::ListT<
         field::common::U2,
         comms::option::SequenceFixedSize<6>
     >;
 using MonRxbufField_usage =
-    comms::field::ArrayList<
-        field::common::FieldBase,
+    field::common::ListT<
         field::common::U1T<comms::option::ValidNumValueRange<0, 100> >,
         comms::option::SequenceFixedSize<6>
     >;

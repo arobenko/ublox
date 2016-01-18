@@ -110,8 +110,7 @@ using MonHwField_flags =
 using MonHwField_reserved1 = field::common::res1;
 using MonHwField_usedMask = field::common::X4;
 using MonHwField_VP =
-    comms::field::ArrayList<
-        field::common::FieldBase,
+    field::common::ListT<
         field::common::U1,
         comms::option::SequenceFixedSize<17>
     >;

@@ -41,8 +41,7 @@ using AidAlpsrvUpdateField_ofs = field::common::U2;
 using AidAlpsrvUpdateField_size = field::common::U2;
 using AidAlpsrvUpdateField_fileId = field::common::U2;
 using AidAlpsrvUpdateField_data =
-    comms::field::ArrayList<
-        field::common::FieldBase,
+    field::common::ListT<
         field::common::U2,
         comms::option::SequenceSizeForcingEnabled
     >;

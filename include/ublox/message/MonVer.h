@@ -31,8 +31,7 @@ namespace message
 using CfgVerField_swVersion = field::common::ZString<30>;
 using CfgVerField_hwVersion = field::common::ZString<10>;
 using CfgVerField_extensions =
-    comms::field::ArrayList<
-        field::common::FieldBase,
+    field::common::ListT<
         field::common::ZString<30>
     >;
 

@@ -29,13 +29,24 @@ namespace ublox
 namespace message
 {
 
-using AidAlmPollSv_svid = field::aid::svid;
+/// @brief Definition of "svid" field in AID-ALM (<b>poll SV</b>) message.
+using AidAlmPollSvField_svid = field::aid::svid;
 
+/// @brief Definition of the fields for AID-ALM (<b>poll SV</b>) message.
+/// @see AidAlmPollSv
 using AidAlmPollSvFields = std::tuple<
-    AidAlmPollSv_svid
+    AidAlmPollSvField_svid
 >;
 
-
+/// @brief Definition of AID-ALM (<b>poll SV</b>) message
+/// @details Poll request for AID-ALM (@ref AidAlm) message with requested SV.@n
+///     Inherits from
+///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+///     while providing @b TMsgBase as common interface class as well as
+///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
+///     @b comms::option::DispatchImpl as options. @n
+///     See @ref AidAlmPollSvFields for definition of the fields this message contains.
+/// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class AidAlmPollSv : public
     comms::MessageBase<
@@ -53,22 +64,33 @@ class AidAlmPollSv : public
     > Base;
 public:
 
+    /// @brief Index to access the fields
     enum FieldIdx
     {
-        FieldIdx_svid,
-        FieldIdx_numOfValues
+        FieldIdx_svid, ///< svid field, see @ref AidAlmPollSvField_svid
+        FieldIdx_numOfValues  ///< number of available fields
     };
 
     static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
 
 
+    /// @brief Default constructor
     AidAlmPollSv() = default;
+
+    /// @brief Copy constructor
     AidAlmPollSv(const AidAlmPollSv&) = default;
+
+    /// @brief Move constructor
     AidAlmPollSv(AidAlmPollSv&& other) = default;
+
+    /// @brief Destructor
     virtual ~AidAlmPollSv() = default;
 
+    /// @brief Copy assignment
     AidAlmPollSv& operator=(const AidAlmPollSv&) = default;
+
+    /// @brief Move assignment
     AidAlmPollSv& operator=(AidAlmPollSv&&) = default;
 };
 
