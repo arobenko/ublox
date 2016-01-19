@@ -86,8 +86,7 @@ using CfgNavx5Field_maxSVs = field::common::U1;
 using CfgNavx5Field_minCNO = field::common::U1;
 using CfgNavx5Field_reserved5 = field::common::res1;
 using CfgNavx5Field_iniFix3D =
-    comms::field::EnumValue<
-        field::common::FieldBase,
+    field::common::EnumT<
         CfgNavx5_IniFix3D,
         comms::option::ValidNumValueRange<0, (int)CfgNavx5_IniFix3D::NumOfValues - 1>
     >;
@@ -99,8 +98,7 @@ using CfgNavx5Field_reserved9 = field::common::res4;
 using CfgNavx5Field_reserved10 = field::common::res1;
 using CfgNavx5Field_reserved11 = field::common::res1;
 using CfgNavx5Field_usePPP =
-    comms::field::EnumValue<
-        field::common::FieldBase,
+    field::common::EnumT<
         CfgNavx5_UsePPP,
         comms::option::ValidNumValueRange<0, (int)CfgNavx5_UsePPP::NumOfValues - 1>
     >;

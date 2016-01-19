@@ -71,8 +71,7 @@ using CfgNmeaField_filter =
         comms::option::BitmaskReservedBits<0xc0, 0>
     >;
 using CfgNmeaField_nmeaVersion =
-    comms::field::EnumValue<
-        field::common::FieldBase,
+    field::common::EnumT<
         CfgNmea_NmeaVersion,
         comms::option::ContentsValidator<CfgNmea_NmeaVersionValidator>,
         comms::option::DefaultNumValue<(int)CfgNmea_NmeaVersion::v23>

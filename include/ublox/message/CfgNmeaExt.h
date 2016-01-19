@@ -75,20 +75,17 @@ using CfgNmeaExtField_gnssToFilter =
         comms::option::BitmaskReservedBits<0xffffffcc, 0>
     >;
 using CfgNmeaExtField_svNumbering =
-    comms::field::EnumValue<
-        field::common::FieldBase,
+    field::common::EnumT<
         CfgNmea_SvNumbering,
         comms::option::ValidNumValueRange<0, (int)CfgNmea_SvNumbering::NumOfValues - 1>
     >;
 using CfgNmeaExtField_mainTalkerId =
-    comms::field::EnumValue<
-        field::common::FieldBase,
+    field::common::EnumT<
         CfgNmea_MainTalkerId,
         comms::option::ValidNumValueRange<0, (int)CfgNmea_MainTalkerId::NumOfValues - 1>
     >;
 using CfgNmeaExtField_gsvTalkerId =
-    comms::field::EnumValue<
-        field::common::FieldBase,
+    field::common::EnumT<
         CfgNmea_GsvTalkerId,
         comms::option::ValidNumValueRange<0, (int)CfgNmea_GsvTalkerId::NumOfValues - 1>
     >;

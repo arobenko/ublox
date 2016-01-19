@@ -74,8 +74,7 @@ enum
 };
 
 using CfgEkfField_disableEkf =
-    comms::field::EnumValue<
-        field::common::FieldBase,
+    field::common::EnumT<
         CfgEkf_DisableEkf,
         comms::option::ValidNumValueRange<0, (int)CfgEkf_DisableEkf::NumOfValues - 1>
     >;

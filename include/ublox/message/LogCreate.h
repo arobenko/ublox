@@ -52,8 +52,7 @@ using LogCreateField_logCfg =
     >;
 using LogCreateField_reserved = field::common::res1;
 using LogCreateField_logSize  =
-    comms::field::EnumValue<
-        field::common::FieldBase,
+    field::common::EnumT<
         LogCreate_LogSize,
         comms::option::ValidNumValueRange<0, (int)LogCreate_LogSize::NumOfValues - 1>
     >;

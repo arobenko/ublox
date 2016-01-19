@@ -53,7 +53,7 @@ using MonIoField_txBusy = field::common::U1;
 using MonIoField_reserved1 = field::common::U2;
 
 using MonIoField_dataListElem =
-    comms::field::Bundle<
+    field::common::BundleT<
         std::tuple<
             MonIoField_rxBytes,
             MonIoField_txBytes,

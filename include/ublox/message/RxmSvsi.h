@@ -69,8 +69,7 @@ using RxmSvsiField_numSV = field::rxm::numSV;
 
 using RxmSvsiField_svid = field::rxm::svid;
 using RxmSvsiField_svFlag =
-    comms::field::Bitfield<
-        field::common::FieldBase,
+    field::common::BitfieldT<
         std::tuple<
             field::common::U1T<
                 comms::option::ValidNumValueRange<0, 15>,
@@ -84,8 +83,7 @@ using RxmSvsiField_svFlag =
 using RxmSvsiField_azim = field::common::I2;
 using RxmSvsiField_elev = field::common::I1;
 using RxmSvsiField_age =
-    comms::field::Bitfield<
-        field::common::FieldBase,
+    field::common::BitfieldT<
         std::tuple<
             field::common::U1T<
                 comms::option::FixedBitLength<4>,
@@ -100,7 +98,7 @@ using RxmSvsiField_age =
 
 using RxmSvsiField_data =
     field::common::ListT<
-        comms::field::Bundle<
+        field::common::BundleT<
             std::tuple<
                 RxmSvsiField_svid,
                 RxmSvsiField_svFlag,

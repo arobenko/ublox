@@ -68,8 +68,7 @@ using CfgAntField_pinX =
     >;
 
 using CfgAntField_pins =
-    comms::field::Bitfield<
-        field::common::FieldBase,
+    field::common::BitfieldT<
         std::tuple<
             CfgAntField_pinX,
             CfgAntField_pinX,

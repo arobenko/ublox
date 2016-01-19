@@ -28,10 +28,7 @@ namespace ublox
 namespace message
 {
 
-using LogStringField_bytes =
-    comms::field::String<
-        field::common::FieldBase
-    >;
+using LogStringField_bytes = field::common::String;
 
 using LogStringFields = std::tuple<
     LogStringField_bytes

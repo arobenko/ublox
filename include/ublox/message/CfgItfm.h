@@ -63,8 +63,7 @@ enum
 };
 
 using CfgItfmField_config =
-    comms::field::Bitfield<
-        field::common::FieldBase,
+    field::common::BitfieldT<
         std::tuple<
             field::common::U1T<
                 comms::option::FixedBitLength<4>,
@@ -86,16 +85,14 @@ using CfgItfmField_config =
     >;
 
 using CfgItfmField_config2 =
-    comms::field::Bitfield<
-        field::common::FieldBase,
+    field::common::BitfieldT<
         std::tuple<
             field::common::U2T<
                 comms::option::FixedBitLength<12>,
                 comms::option::ValidNumValueRange<0x31e, 0x31e>,
                 comms::option::DefaultNumValue<0x31e>
             >,
-            comms::field::EnumValue<
-                field::common::FieldBase,
+            field::common::EnumT<
                 CfgItfm_AntSetting,
                 comms::option::FixedBitLength<2>,
                 comms::option::ValidNumValueRange<0, (int)CfgItfm_AntSetting::NumOfValues - 1>

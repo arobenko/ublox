@@ -91,14 +91,12 @@ struct NavSbas_SysValidator
 using NavSbasField_iTOW = field::nav::iTOW;
 using NavSbasField_geo = field::common::U1;
 using NavSbasField_mode =
-    comms::field::EnumValue<
-        field::common::FieldBase,
+    field::common::EnumT<
         NavSbas_Mode,
         comms::option::ContentsValidator<NavSbas_ModeValidator>
     >;
 using NavSbasField_sys =
-    comms::field::EnumValue<
-        field::common::FieldBase,
+    field::common::EnumT<
         NavSbas_Sys,
         comms::option::ContentsValidator<NavSbas_SysValidator>
     >;
@@ -121,7 +119,7 @@ using NavSbasField_ic = field::common::U2T<field::common::Scaling_cm2m>;
 
 using NavSbasField_data =
     field::common::ListT<
-        comms::field::Bundle<
+        field::common::BundleT<
             std::tuple<
                 NavSbasField_svid,
                 NavSbasField_flags,

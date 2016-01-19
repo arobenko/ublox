@@ -43,8 +43,7 @@ using CfgRateField_navRate =
         comms::option::ValidNumValueRange<1, 1>
     >;
 using CfgRateField_timeRef =
-    comms::field::EnumValue<
-        field::common::FieldBase,
+    field::common::EnumT<
         CfgRate_TimeRef,
         comms::option::ValidNumValueRange<0, (int)CfgRate_TimeRef::NumOfValues - 1>
     >;

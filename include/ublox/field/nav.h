@@ -68,8 +68,7 @@ enum class GpsFix : std::uint8_t
 };
 
 using gpsFix =
-    comms::field::EnumValue<
-        common::FieldBase,
+    common::EnumT<
         GpsFix,
         comms::option::ValidNumValueRange<0, (int)GpsFix::NumOfValues - 1>
     >;

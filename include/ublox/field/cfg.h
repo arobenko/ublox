@@ -39,12 +39,10 @@ enum class Polarity : std::uint8_t
 };
 
 using txReady =
-    comms::field::Bitfield<
-        common::FieldBase,
+    common::BitfieldT<
         std::tuple<
             common::X1T<comms::option::FixedBitLength<1> >,
-            comms::field::EnumValue<
-                common::FieldBase,
+            common::EnumT<
                 Polarity,
                 comms::option::FixedBitLength<1>,
                 comms::option::ValidNumValueRange<0, (int)Polarity::NumOfValues - 1>
@@ -88,23 +86,13 @@ enum class ProtocolId : std::uint8_t
 };
 
 using protocolID =
-    comms::field::EnumValue<
-        field::common::FieldBase,
+    common::EnumT<
         ProtocolId,
         comms::option::ValidNumValueRange<0, (int)ProtocolId::NumOfValues - 1>
     >;
 
 using datumNum = field::common::U2;
-using datumName =
-    comms::field::String<
-        common::FieldBase,
-        comms::option::SequenceFixedSize<5>,
-        comms::option::SequenceTrailingFieldSuffix<
-            common::U1T<
-                comms::option::ValidNumValueRange<0, 0>
-            >
-        >
-    >;
+using datumName = common::ZString<6>;
 using datMajA = common::R8;
 using datFlat = common::R8;
 using datDX = common::R4;
@@ -123,8 +111,7 @@ enum class TpIdx : std::uint8_t
 };
 
 using tpIdx =
-    comms::field::EnumValue<
-        field::common::FieldBase,
+    common::EnumT<
         TpIdx,
         comms::option::ValidNumValueRange<0, (int)TpIdx::NumOfValues - 1>
     >;

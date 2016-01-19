@@ -53,14 +53,12 @@ enum
 using CfgTpField_interval = field::common::U4T<field::common::Scaling_us2s>;
 using CfgTpField_length = field::common::U4T<field::common::Scaling_us2s>;
 using CfgTpField_status =
-    comms::field::EnumValue<
-        field::common::FieldBase,
+    field::common::EnumT<
         CfgTp_Status,
         comms::option::ValidNumValueRange<(int)CfgTp_Status::Negative, (int)CfgTp_Status::Positive>
     >;
 using CfgTpField_timeRef =
-    comms::field::EnumValue<
-        field::common::FieldBase,
+    field::common::EnumT<
         CfgTp_TimeRef,
         comms::option::ValidNumValueRange<0, (int)CfgTp_TimeRef::NumOfValues - 1>
     >;

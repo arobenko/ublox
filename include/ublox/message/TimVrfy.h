@@ -60,8 +60,7 @@ using TimVrfyField_deltaMS = field::common::I4T<field::common::Scaling_ms2s>;
 using TimVrfyField_deltaNS = field::common::I4T<field::common::Scaling_ns2s>;
 using TimVrfyField_wno = field::common::U2;
 using TimVrfyField_flags =
-    comms::field::EnumValue<
-        field::common::FieldBase,
+    field::common::EnumT<
         TimVrfy_Src,
         comms::option::ContentsValidator<TimVrfy_SrcValidator>
     >;

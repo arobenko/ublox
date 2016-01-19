@@ -87,8 +87,7 @@ enum
 };
 
 using CfgPrtUartField_portID =
-    comms::field::EnumValue<
-        field::common::FieldBase,
+    field::common::EnumT<
         CfgPrt_PortId,
         comms::option::ValidNumValueRange<(int)CfgPrt_PortId::UART, (int)CfgPrt_PortId::UART2>,
         comms::option::DefaultNumValue<(int)CfgPrt_PortId::UART>
@@ -96,16 +95,14 @@ using CfgPrtUartField_portID =
 using CfgPrtUartField_reserved0 = field::common::res1;
 using CfgPrtUartField_txReady = field::cfg::txReady;
 using CfgPrtUartField_mode =
-    comms::field::Bitfield<
-        field::common::FieldBase,
+    field::common::BitfieldT<
         std::tuple<
             field::common::U1T<
                 comms::option::FixedBitLength<6>,
                 comms::option::BitmaskReservedBits<0xff, 0x10>,
                 comms::option::DefaultNumValue<0x10>
             >,
-            comms::field::EnumValue<
-                field::common::FieldBase,
+            field::common::EnumT<
                 CfgPrtUart_BitLength,
                 comms::option::FixedBitLength<2>,
                 comms::option::ValidNumValueRange<0, (int)CfgPrtUart_BitLength::NumOfValues - 1>,
@@ -115,14 +112,12 @@ using CfgPrtUartField_mode =
                 comms::option::FixedBitLength<1>,
                 comms::option::BitmaskReservedBits<0xff, 0x0>
             >,
-            comms::field::EnumValue<
-                field::common::FieldBase,
+            field::common::EnumT<
                 CfgPrtUart_Parity,
                 comms::option::FixedBitLength<3>,
                 comms::option::ContentsValidator<CfgPrtUart_ParityValidator>
             >,
-            comms::field::EnumValue<
-                field::common::FieldBase,
+            field::common::EnumT<
                 CfgPrtUart_StopBits,
                 comms::option::FixedBitLength<2>,
                 comms::option::ValidNumValueRange<0, (int)CfgPrtUart_StopBits::NumOfValues - 1>

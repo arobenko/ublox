@@ -30,7 +30,7 @@ namespace message
 {
 
 using InfStringMsgBaseFields = std::tuple<
-    comms::field::String<field::common::FieldBase>
+    field::common::String
 >;
 
 

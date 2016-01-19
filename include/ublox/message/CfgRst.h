@@ -84,8 +84,7 @@ struct CfgRst_ResetModeValidator
 
 using CfgRstField_navBbrMask = field::common::X2;
 using CfgRstField_resetMode =
-    comms::field::EnumValue<
-        field::common::FieldBase,
+    field::common::EnumT<
         CfgRst_ResetMode,
         comms::option::ContentsValidator<CfgRst_ResetModeValidator>
     >;

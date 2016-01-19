@@ -44,8 +44,7 @@ using LogRetrievestringField_second = field::log::second;
 using LogRetrievestringField_reserved2 = field::common::res1;
 using LogRetrievestringField_byteCount = field::common::U2;
 using LogRetrievestringField_bytes =
-    comms::field::String<
-        field::common::FieldBase,
+    field::common::StringT<
         comms::option::SequenceSizeForcingEnabled
     >;
 

@@ -86,23 +86,18 @@ using NavStatusField_flags =
         comms::option::BitmaskReservedBits<0xf0, 0>
     >;
 using NavStatusField_fixStat =
-    comms::field::Bitfield<
-        field::common::FieldBase,
+    field::common::BitfieldT<
         std::tuple<
-            comms::field::EnumValue<
-                field::common::FieldBase,
+            field::common::EnumT<
                 PsmState,
                 comms::option::ValidNumValueRange<0, (int)PsmState::NumOfValues - 1>,
                 comms::option::FixedBitLength<1>
             >,
-            comms::field::IntValue<
-                field::common::FieldBase,
-                std::uint8_t,
+            field::common::U1T<
                 comms::option::ValidNumValueRange<0, 0>,
                 comms::option::FixedBitLength<5>
             >,
-            comms::field::EnumValue<
-                field::common::FieldBase,
+            field::common::EnumT<
                 MapMatching,
                 comms::option::ValidNumValueRange<0, (int)MapMatching::NumOfValues - 1>,
                 comms::option::FixedBitLength<2>
@@ -111,11 +106,9 @@ using NavStatusField_fixStat =
     >;
 
 using NavStatusField_flags2 =
-    comms::field::Bitfield<
-        field::common::FieldBase,
+    field::common::BitfieldT<
         std::tuple<
-            comms::field::EnumValue<
-                field::common::FieldBase,
+            field::common::EnumT<
                 PsmState,
                 comms::option::ValidNumValueRange<0, (int)PsmState::NumOfValues - 1>,
                 comms::option::FixedBitLength<2>

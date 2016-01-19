@@ -84,11 +84,9 @@ enum {
 using NavSvinfoField_iTOW = field::nav::iTOW;
 using NavSvinfoField_numCh = field::nav::numCh;
 using NavSvinfoField_globalFlags =
-    comms::field::Bitfield<
-        field::common::FieldBase,
+    field::common::BitfieldT<
         std::tuple<
-            comms::field::EnumValue<
-                field::common::FieldBase,
+            field::common::EnumT<
                 NavSvinfo_ChipGen,
                 comms::option::FixedBitLength<3>,
                 comms::option::ValidNumValueRange<0, (int)NavSvinfo_ChipGen::NumOfValues - 1>
@@ -101,8 +99,7 @@ using NavSvinfoField_chn = field::common::U1;
 using NavSvinfoField_svid = field::nav::svid;
 using NavSvinfoField_flags = field::common::X1;
 using NavSvinfoField_quality =
-    comms::field::EnumValue<
-        field::common::FieldBase,
+    field::common::EnumT<
         NavSvinfo_QualityInd,
         comms::option::ValidNumValueRange<0, (int)NavSvinfo_QualityInd::NumOfValues - 1>
     >;
@@ -112,7 +109,7 @@ using NavSvinfoField_azim = field::common::I2;
 using NavSvinfoField_prRes = field::common::I4T<field::common::Scaling_cm2m>;
 using NavSvinfoField_info =
     field::common::ListT<
-        comms::field::Bundle<
+        field::common::BundleT<
             std::tuple<
                 NavSvinfoField_chn,
                 NavSvinfoField_svid,

@@ -82,8 +82,7 @@ using CfgGnssField_numTrkChUse = field::common::U1;
 using CfgGnssField_numConfigBlocks = field::common::U1;
 
 using CfgGnssField_gnssId =
-    comms::field::EnumValue<
-        field::common::FieldBase,
+    field::common::EnumT<
         CfgGnss_GnssId,
         comms::option::ContentsValidator<CfgGnss_GnssIdValidator>
     >;
@@ -97,7 +96,7 @@ using CfgGnssField_flags =
 
 using CfgGnssField_data =
     field::common::ListT<
-        comms::field::Bundle<
+        field::common::BundleT<
             std::tuple<
                 CfgGnssField_gnssId,
                 CfgGnssField_resTrkCh,

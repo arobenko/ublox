@@ -76,8 +76,7 @@ using CfgPmField_reserved1 = field::common::res1;
 using CfgPmField_reserved2 = field::common::res1;
 using CfgPmField_reserved3 = field::common::res1;
 using CfgPmField_flags =
-    comms::field::Bitfield<
-        field::common::FieldBase,
+    field::common::BitfieldT<
         std::tuple<
             field::common::res1T<
                 comms::option::FixedBitLength<2>
@@ -87,20 +86,17 @@ using CfgPmField_flags =
                 comms::option::DefaultNumValue<1>,
                 comms::option::ValidNumValueRange<1, 1>
             >,
-            comms::field::EnumValue<
-                field::common::FieldBase,
+            field::common::EnumT<
                 CfgPm_ExtintSelect,
                 comms::option::ValidNumValueRange<0, (int)CfgPm_ExtintSelect::NumOfValues - 1>,
                 comms::option::FixedBitLength<1>
             >,
-            comms::field::EnumValue<
-                field::common::FieldBase,
+            field::common::EnumT<
                 CfgPm_ExtintWake,
                 comms::option::ValidNumValueRange<0, (int)CfgPm_ExtintWake::NumOfValues - 1>,
                 comms::option::FixedBitLength<1>
             >,
-            comms::field::EnumValue<
-                field::common::FieldBase,
+            field::common::EnumT<
                 CfgPm_ExtintBackup,
                 comms::option::ValidNumValueRange<0, (int)CfgPm_ExtintBackup::NumOfValues - 1>,
                 comms::option::FixedBitLength<1>
@@ -108,8 +104,7 @@ using CfgPmField_flags =
             field::common::res1T<
                 comms::option::FixedBitLength<1>
             >,
-            comms::field::EnumValue<
-                field::common::FieldBase,
+            field::common::EnumT<
                 CfgPm_LimitPeakCurr,
                 comms::option::ValidNumValueRange<0, (int)CfgPm_LimitPeakCurr::NumOfValues - 1>,
                 comms::option::FixedBitLength<2>

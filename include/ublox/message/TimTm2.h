@@ -65,15 +65,13 @@ using TimTm2Field_ch =
         comms::option::ValidNumValueRange<0, 1>
     >;
 using TimTm2Field_flags =
-    comms::field::Bitfield<
-        field::common::FieldBase,
+    field::common::BitfieldT<
         std::tuple<
             field::common::X1T<
                 comms::option::FixedBitLength<3>,
                 comms::option::BitmaskReservedBits<0xf8, 0>
             >,
-            comms::field::EnumValue<
-                field::common::FieldBase,
+            field::common::EnumT<
                 TimTm2_TimeBase,
                 comms::option::FixedBitLength<2>,
                 comms::option::ValidNumValueRange<0, (int)TimTm2_TimeBase::NumOfValues - 1>

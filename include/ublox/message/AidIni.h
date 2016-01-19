@@ -89,8 +89,7 @@ using AidIniField_wno =
     >;
 using AidIniField_date =
     field::common::OptionalT<
-        comms::field::Bitfield<
-            field::common::FieldBase,
+        field::common::BitfieldT<
             std::tuple<
                 field::common::U1T<
                     comms::option::ValidNumValueRange<1, 12>,
@@ -111,8 +110,7 @@ using AidIniField_tow =
     >;
 using AidIniField_time =
     field::common::OptionalT<
-        comms::field::Bitfield<
-            field::common::FieldBase,
+        field::common::BitfieldT<
             std::tuple<
                 field::common::U1T<
                     comms::option::ValidNumValueRange<0, 60>,

@@ -56,8 +56,7 @@ using MonTxbufField_peakUsage = MonTxbufField_usage;
 using MonTxbufField_tUsage = field::common::U1T<comms::option::ValidNumValueRange<0, 100> >;
 using MonTxbufField_tPeakUsage = MonTxbufField_tUsage;
 using MonTxbufField_errors =
-    comms::field::Bitfield<
-        field::common::FieldBase,
+    field::common::BitfieldT<
         std::tuple<
             field::common::U1T<
                 comms::option::ValidNumValueRange<0, 0x3f>,

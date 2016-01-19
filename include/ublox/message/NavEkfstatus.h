@@ -66,15 +66,13 @@ using NavEkfstatusField_gyroMean = field::common::U4T<comms::option::ScalingRati
 using NavEkfstatusField_temperature = field::common::I2T<comms::option::ScalingRatio<1, 0x100> >;
 using NavEkfstatusField_direction = field::common::I1;
 using NavEkfstatusField_calibStatus_calib =
-    comms::field::EnumValue<
-        field::common::FieldBase,
+    field::common::EnumT<
         NavEkfstatus_CalibStatus,
         comms::option::FixedBitLength<2>,
         comms::option::ValidNumValueRange<0, (int)NavEkfstatus_CalibStatus::NumOfValues - 1>
     >;
 using NavEkfstatusField_calibStatus =
-    comms::field::Bitfield<
-        field::common::FieldBase,
+    field::common::BitfieldT<
         std::tuple<
             NavEkfstatusField_calibStatus_calib,
             NavEkfstatusField_calibStatus_calib,

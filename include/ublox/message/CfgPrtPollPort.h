@@ -52,8 +52,7 @@ struct CfgPrtPollPort_PortIdValidator
 
 
 using CfgPrtPollPortField_portID =
-    comms::field::EnumValue<
-        field::common::FieldBase,
+    field::common::EnumT<
         CfgPrt_PortId,
         comms::option::ContentsValidator<CfgPrtPollPort_PortIdValidator>
     >;

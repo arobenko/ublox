@@ -78,26 +78,22 @@ using MonHwField_pinVal = field::common::X4;
 using MonHwField_noisePerMS = field::common::U2;
 using MonHwField_agcCnt = field::common::U2T<comms::option::ValidNumValueRange<0, 8191> >;
 using MonHwField_aStatus =
-    comms::field::EnumValue<
-        field::common::FieldBase,
+    field::common::EnumT<
         MonHw_AStatus,
         comms::option::ValidNumValueRange<0, (int)MonHw_AStatus::NumOfValues - 1>
     >;
 using MonHwField_aPower =
-    comms::field::EnumValue<
-        field::common::FieldBase,
+    field::common::EnumT<
         MonHw_APower,
         comms::option::ValidNumValueRange<0, (int)MonHw_APower::NumOfValues - 1>
     >;
 using MonHwField_flags =
-    comms::field::Bitfield<
-        field::common::FieldBase,
+    field::common::BitfieldT<
         std::tuple<
             field::common::X1T<
                 comms::option::FixedBitLength<2>
             >,
-            comms::field::EnumValue<
-                field::common::FieldBase,
+            field::common::EnumT<
                 MonHw_JammingState,
                 comms::option::ValidNumValueRange<0, (int)MonHw_JammingState::NumOfValues - 1>,
                 comms::option::FixedBitLength<2>

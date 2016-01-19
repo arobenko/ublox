@@ -39,8 +39,7 @@ enum class AidAlpStatus_Status : std::uint8_t
 };
 
 using AidAlpStatusField_status =
-    comms::field::EnumValue<
-        field::common::FieldBase,
+    field::common::EnumT<
         AidAlpStatus_Status,
         comms::option::ValidNumValueRange<0,(int)AidAlpStatus_Status::NumOfValues - 1>
     >;

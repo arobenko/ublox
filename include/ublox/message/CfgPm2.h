@@ -86,26 +86,22 @@ using CfgPm2Field_reserved1 = field::common::res1;
 using CfgPm2Field_reserved2 = field::common::res1;
 using CfgPm2Field_reserved3 = field::common::res1;
 using CfgPm2Field_flags =
-    comms::field::Bitfield<
-        field::common::FieldBase,
+    field::common::BitfieldT<
         std::tuple<
             field::common::res1T<
                 comms::option::FixedBitLength<4>
             >,
-            comms::field::EnumValue<
-                field::common::FieldBase,
+            field::common::EnumT<
                 CfgPm2_ExtintSelect,
                 comms::option::ValidNumValueRange<0, (int)CfgPm2_ExtintSelect::NumOfValues - 1>,
                 comms::option::FixedBitLength<1>
             >,
-            comms::field::EnumValue<
-                field::common::FieldBase,
+            field::common::EnumT<
                 CfgPm2_ExtintWake,
                 comms::option::ValidNumValueRange<0, (int)CfgPm2_ExtintWake::NumOfValues - 1>,
                 comms::option::FixedBitLength<1>
             >,
-            comms::field::EnumValue<
-                field::common::FieldBase,
+            field::common::EnumT<
                 CfgPm2_ExtintBackup,
                 comms::option::ValidNumValueRange<0, (int)CfgPm2_ExtintBackup::NumOfValues - 1>,
                 comms::option::FixedBitLength<1>
@@ -113,8 +109,7 @@ using CfgPm2Field_flags =
             field::common::res1T<
                 comms::option::FixedBitLength<1>
             >,
-            comms::field::EnumValue<
-                field::common::FieldBase,
+            field::common::EnumT<
                 CfgPm2_LimitPeakCurr,
                 comms::option::ValidNumValueRange<0, (int)CfgPm2_LimitPeakCurr::NumOfValues - 1>,
                 comms::option::FixedBitLength<2>
@@ -123,8 +118,7 @@ using CfgPm2Field_flags =
                 comms::option::FixedBitLength<6>,
                 comms::option::BitmaskReservedBits<0xb8, 0>
             >,
-            comms::field::EnumValue<
-                field::common::FieldBase,
+            field::common::EnumT<
                 CfgPm2_Mode,
                 comms::option::ValidNumValueRange<0, (int)CfgPm2_Mode::NumOfValues - 1>,
                 comms::option::FixedBitLength<2>

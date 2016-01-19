@@ -78,12 +78,10 @@ using NavPvtField_tAcc = field::nav::tAcc;
 using NavPvtField_nano = field::nav::nano;
 using NavPvtField_fixType = field::nav::gpsFix;
 using NavPvtField_flags =
-    comms::field::Bitfield<
-        field::common::FieldBase,
+    field::common::BitfieldT<
         std::tuple<
             field::common::X1T<comms::option::FixedBitLength<2> >,
-            comms::field::EnumValue<
-                field::common::FieldBase,
+            field::common::EnumT<
                 NavPvt_PsmState,
                 comms::option::FixedBitLength<6>
             >

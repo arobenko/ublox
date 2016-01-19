@@ -38,8 +38,7 @@ enum class CfgTmode_TimeMode : std::uint32_t
 };
 
 using CfgTmodeField_timeMode =
-    comms::field::EnumValue<
-        field::common::FieldBase,
+    field::common::EnumT<
         CfgTmode_TimeMode,
         comms::option::ValidNumValueRange<0, (int)CfgTmode_TimeMode::NumOfValues - 1>
     >;

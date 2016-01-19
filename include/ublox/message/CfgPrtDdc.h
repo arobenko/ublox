@@ -54,8 +54,7 @@ struct CfgPrtDdc_SlaveAddrValidator
 };
 
 using CfgPrtDdcField_portID =
-    comms::field::EnumValue<
-        field::common::FieldBase,
+    field::common::EnumT<
         CfgPrt_PortId,
         comms::option::ValidNumValueRange<(int)CfgPrt_PortId::DDC, (int)CfgPrt_PortId::DDC>,
         comms::option::DefaultNumValue<(int)CfgPrt_PortId::DDC>
@@ -63,8 +62,7 @@ using CfgPrtDdcField_portID =
 using CfgPrtDdcField_reserved0 = field::common::res1;
 using CfgPrtDdcField_txReady = field::cfg::txReady;
 using CfgPrtDdcField_mode =
-    comms::field::Bitfield<
-        field::common::FieldBase,
+    field::common::BitfieldT<
         std::tuple<
             field::common::U1T<
                 comms::option::FixedBitLength<1>,

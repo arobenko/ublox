@@ -89,14 +89,12 @@ using CfgNav5Field_mask =
         comms::option::BitmaskReservedBits<0xff00, 0>
     >;
 using CfgNav5Field_dynModel =
-    comms::field::EnumValue<
-        field::common::FieldBase,
+    field::common::EnumT<
         CfgNav5_DynModel,
         comms::option::ContentsValidator<CfgNav5_DynModelValidator>
     >;
 using CfgNav5Field_fixMode =
-    comms::field::EnumValue<
-        field::common::FieldBase,
+    field::common::EnumT<
         CfgNav5_FixMode,
         comms::option::ValidNumValueRange<(int)CfgNav5_FixMode::Only_2D, (int)CfgNav5_FixMode::Auto>
     >;

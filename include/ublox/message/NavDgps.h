@@ -68,8 +68,7 @@ using NavDgpsField_baseId = field::common::I2;
 using NavDgpsField_baseHealth = field::common::I2;
 using NavDgpsField_numCh = field::nav::numCh;
 using NavDgpsField_status =
-    comms::field::EnumValue<
-        field::common::FieldBase,
+    field::common::EnumT<
         NavDgps_Status,
         comms::option::ValidNumValueRange<0, (int)NavDgps_Status::NumOfValues - 1>
     >;
@@ -77,8 +76,7 @@ using NavDgpsField_reserved1 = field::common::res2;
 
 using NavDgpsField_svid = field::nav::svid;
 using NavDgpsField_flags =
-    comms::field::Bitfield<
-        field::common::FieldBase,
+    field::common::BitfieldT<
         std::tuple<
             field::common::U1T<
                 comms::option::FixedBitLength<4>,
@@ -97,7 +95,7 @@ using NavDgpsField_prrc = field::common::R4;
 
 using NavDgpsField_data =
     field::common::ListT<
-        comms::field::Bundle<
+        field::common::BundleT<
             std::tuple<
                 NavDgpsField_svid,
                 NavDgpsField_flags,

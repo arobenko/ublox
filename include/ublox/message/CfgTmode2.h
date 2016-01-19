@@ -47,8 +47,7 @@ enum
 };
 
 using CfgTmode2Field_timeMode =
-    comms::field::EnumValue<
-        field::common::FieldBase,
+    field::common::EnumT<
         CfgTmode2_TimeMode,
         comms::option::ValidNumValueRange<0, (int)CfgTmode2_TimeMode::NumOfValues - 1>
     >;

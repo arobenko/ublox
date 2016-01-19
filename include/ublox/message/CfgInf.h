@@ -63,7 +63,7 @@ using CfgInfField_infMsgMask =
     >;
 
 using CfgInfField_element =
-    comms::field::Bundle<
+    field::common::BundleT<
         std::tuple<
             CfgInfField_protocolID,
             CfgInfField_reserved0,

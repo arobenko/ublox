@@ -295,38 +295,33 @@ using Scaling_us2s = comms::option::ScalingRatio<1, 1000000L>;
 /// @brief Common option used to scale nanoseconds to seconds
 using Scaling_ns2s = comms::option::ScalingRatio<1, 1000000000L>;
 
-/// @brief Common definition of zero-terminated string with fixed serialisation
-///     length.
-/// @details Defined to be
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1field_1_1String.html">comms::field::String</a>
-///     with @ref FieldBase as a base class, 1 byte zero value as a trailing suffix, and
-///     having fixed serialisation length.
-/// @tparam TSize Full fixed serialisation length (including zero termination) of the
-///     string value
-template <std::size_t TSize>
-using ZString =
-    comms::field::String<
-            FieldBase,
-            comms::option::SequenceFixedSize<TSize - 1>,
-            comms::option::SequenceTrailingFieldSuffix<
-                field::common::U1T<
-                    comms::option::ValidNumValueRange<0, 0>
-                >
-            >
-        >;
-
 /// @brief Common definition of sequence of fields or raw bytes.
 /// @details Defined to be
 ///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1field_1_1ArrayList.html">comms::field::ArrayList</a>
 ///     with @ref FieldBase as a base class, @b TElem as the element type, and
 ///     @b TOptions as extra options.
 /// @tparam TElem Element of the list.
-/// @tparam Extra options.
+/// @tparam TOptions Extra options.
 template <typename TElem, typename... TOptions>
 using ListT =
     comms::field::ArrayList<
         FieldBase,
         TElem,
+        TOptions...
+    >;
+
+/// @brief Common definition of enum value field.
+/// @details Defined to be
+///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1field_1_1EnumValue.html">comms::field::EnumValue</a>
+///     with @ref FieldBase as a base class, @b TEnum as the enum type, and
+///     @b TOptions as extra options.
+/// @tparam TEnum Enum type.
+/// @tparam TOptions Extra options.
+template <typename TEnum, typename... TOptions>
+using EnumT =
+    comms::field::EnumValue<
+        FieldBase,
+        TEnum,
         TOptions...
     >;
 
@@ -337,6 +332,69 @@ using ListT =
 /// @tparam TField Optional field.
 template <typename TField>
 using OptionalT = comms::field::Optional<TField>;
+
+/// @brief Common definition of bitfield field.
+/// @details Defined to be
+///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1field_1_1Bitfield.html">comms::field::Bitfield</a>
+///     with @ref FieldBase as a base class, all member fields bundled in @b std::tuple, and
+///     @b TOptions as extra options.
+/// @tparam TMemFields Member fields bundled in @b std::tuple.
+/// @tparam TOptions Extra options.
+template <typename TMemFields, typename...TOptions>
+using BitfieldT =
+    comms::field::Bitfield<
+        FieldBase,
+        TMemFields,
+        TOptions...
+    >;
+
+/// @brief Common definition of string field.
+/// @details Defined to be
+///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1field_1_1String.html">comms::field::String</a>
+///     with @ref FieldBase as a base class, and
+///     @b TOptions as extra options.
+/// @tparam TOptions Extra options.
+template <typename...TOptions>
+using StringT =
+    comms::field::String<
+        FieldBase,
+        TOptions...
+    >;
+
+/// @brief Same as @ref StringT without any extra options
+using String = StringT<>;
+
+/// @brief Common definition of zero-terminated string with fixed serialisation
+///     length.
+/// @details Defined to be StringT with 1 byte zero value as a trailing suffix, and
+///     having fixed serialisation length.
+/// @tparam TSize Full fixed serialisation length (including zero termination) of the
+///     string value
+template <std::size_t TSize>
+using ZString =
+    StringT<
+        comms::option::SequenceFixedSize<TSize - 1>,
+        comms::option::SequenceTrailingFieldSuffix<
+            field::common::U1T<
+                comms::option::ValidNumValueRange<0, 0>
+            >
+        >
+    >;
+
+/// @brief Common definition of bundle field.
+/// @details Defined to be
+///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1field_1_1Bundle.html">comms::field::Bundle</a>
+///     with all member fields bundled in @b std::tuple, and
+///     @b TOptions as extra options.
+/// @tparam TMemFields Member fields bundled in @b std::tuple.
+/// @tparam TOptions Extra options.
+template <typename TMemFields, typename...TOptions>
+using BundleT =
+    comms::field::Bundle<
+        TMemFields,
+        TOptions...
+    >;
+
 
 /// @brief Definition of common @b iTOW field used in multiple messages in
 ///     multiple message classes.

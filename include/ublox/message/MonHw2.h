@@ -61,8 +61,7 @@ using MonHw2Field_magI = field::common::U1;
 using MonHw2Field_ofsQ = field::common::I1;
 using MonHw2Field_magQ = field::common::U1;
 using MonHw2Field_cfgSource =
-    comms::field::EnumValue<
-        field::common::FieldBase,
+    field::common::EnumT<
         MonHw2_CfgSource,
         comms::option::ContentsValidator<MonHw2_CfgSourceValidator>
     >;

@@ -62,8 +62,7 @@ using CfgRxmField_reserved1 =
         comms::option::ValidNumValueRange<8, 8>
     >;
 using CfgRxmField_lpMode =
-    comms::field::EnumValue<
-        field::common::FieldBase,
+    field::common::EnumT<
         CfgRxm_LowPowerMode,
         comms::option::ContentsValidator<CfgRxm_LowPowerModeValidator>
     >;

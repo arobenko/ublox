@@ -36,8 +36,7 @@ using CfgPrtUsb_PortId = CfgPrt_PortId;
 using CfgPrtUsb_Polarity = field::cfg::Polarity;
 
 using CfgPrtUsbField_portID =
-    comms::field::EnumValue<
-        field::common::FieldBase,
+    field::common::EnumT<
         CfgPrt_PortId,
         comms::option::ValidNumValueRange<(int)CfgPrt_PortId::USB, (int)CfgPrt_PortId::USB>,
         comms::option::DefaultNumValue<(int)CfgPrt_PortId::USB>

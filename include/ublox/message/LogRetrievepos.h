@@ -47,8 +47,7 @@ using LogRetrieveposField_version =
         comms::option::ValidNumValueRange<0, 0>
     >;
 using LogRetrieveposField_fixType =
-    comms::field::EnumValue<
-        field::common::FieldBase,
+    field::common::EnumT<
         LogRetrievepos_FixType,
         comms::option::ValidNumValueRange<(int)LogRetrievepos_FixType::Fix_2D, (int)LogRetrievepos_FixType::Fix_3D>
     >;
