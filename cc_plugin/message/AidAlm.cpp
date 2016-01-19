@@ -41,7 +41,7 @@ namespace
 QVariantMap createProps_dwrd()
 {
     static const auto NumOfElems =
-        ublox::message::AidAlmField_dwrd::Field::ParsedOptions::SequenceFixedSize;
+        ublox::message::AidAlmFields::dwrd::Field::ParsedOptions::SequenceFixedSize;
     QVariantList elemsProps;
     for (auto idx = 0U; idx < NumOfElems; ++idx) {
         elemsProps.append(cc::Property::createPropertiesMap(QString("%1").arg(idx, 1, 10, QChar('0'))));
