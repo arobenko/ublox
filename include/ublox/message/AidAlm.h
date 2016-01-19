@@ -15,6 +15,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+/// @file
+/// @brief Contains definition of AID-ALM message and its fields.
 
 #pragma once
 
@@ -31,28 +33,32 @@ namespace ublox
 namespace message
 {
 
-/// @brief Definition of "svid" field in AID-ALM message.
-using AidAlmField_svid = field::aid::svid_ext;
-
-/// @brief Definition of "week" field in AID-ALM message.
-using AidAlmField_week = field::common::U4;
-
-/// @brief Definition of "dwrd" field in AID-ALM message.
-using AidAlmField_dwrd =
-    field::common::OptionalT<
-        field::common::ListT<
-            field::common::U4,
-            comms::option::SequenceFixedSize<8>
-        >
-    >;
-
-/// @brief Definition of the fields for AID-ALM message.
+/// @brief Accumulates details of all the AID-ALM message fields.
 /// @see AidAlm
-using AidAlmFields = std::tuple<
-    AidAlmField_svid,
-    AidAlmField_week,
-    AidAlmField_dwrd
->;
+struct AidAlmFields
+{
+    /// @brief Definition of "svid" field.
+    using svid = field::aid::svid_ext;
+
+    /// @brief Definition of "week" field..
+    using week = field::common::U4;
+
+    /// @brief Definition of "dwrd" field.
+    using dwrd =
+        field::common::OptionalT<
+            field::common::ListT<
+                field::common::U4,
+                comms::option::SequenceFixedSize<8>
+            >
+        >;
+
+    /// @brief All the fields bundled in std::tuple.
+    using All = std::tuple<
+        svid,
+        week,
+        dwrd
+    >;
+};
 
 /// @brief Definition of AID-ALM message
 /// @details Inherits from
@@ -60,21 +66,21 @@ using AidAlmFields = std::tuple<
 ///     while providing @b TMsgBase as common interface class as well as
 ///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
 ///     @b comms::option::DispatchImpl as options. @n
-///     See @ref AidAlmFields for definition of the fields this message contains.
+///     See @ref AidAlmFields and for definition of the fields this message contains.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class AidAlm : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_ALM>,
-        comms::option::FieldsImpl<AidAlmFields>,
+        comms::option::FieldsImpl<AidAlmFields::All>,
         comms::option::DispatchImpl<AidAlm<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_ALM>,
-        comms::option::FieldsImpl<AidAlmFields>,
+        comms::option::FieldsImpl<AidAlmFields::All>,
         comms::option::DispatchImpl<AidAlm<TMsgBase> >
     > Base;
 public:
@@ -82,9 +88,9 @@ public:
     /// @brief Index to access the fields
     enum FieldIdx
     {
-        FieldIdx_svid, ///< svid field, see @ref AidAlmField_svid
-        FieldIdx_week, ///< week field, see @ref AidAlmField_week
-        FieldIdx_dwrd, ///< dwrd field, see @ref AidAlmField_dwrd
+        FieldIdx_svid, ///< svid field, see @ref AidAlmFields::svid
+        FieldIdx_week, ///< week field, see @ref AidAlmFields::week
+        FieldIdx_dwrd, ///< dwrd field, see @ref AidAlmFields::dwrd
         FieldIdx_numOfValues ///< number of available fields
     };
 
@@ -92,7 +98,7 @@ public:
         "Number of fields is incorrect");
 
     /// @brief Default constructor
-    /// @details Marks "dwrd" (see @ref AidAlmField_dwrd) to be missing.
+    /// @details Marks "dwrd" (see @ref AidAlmFields::dwrd) to be missing.
     AidAlm()
     {
         auto& allFields = Base::fields();
@@ -118,8 +124,8 @@ public:
 protected:
 
     /// @brief Overrides read functionality provided by the base class.
-    /// @details The existence of "dwrd" (see @ref AidAlmField_dwrd) is
-    ///     determined by the contents of "week" (see @ref AidAlmField_week)
+    /// @details The existence of "dwrd" (see @ref AidAlmFields::dwrd) is
+    ///     determined by the contents of "week" (see @ref AidAlmFields::week)
     ///     field. If the value of the latter is 0, the "dwrd" is marked to
     ///     be missing, otherwise it exists.
     virtual comms::ErrorStatus readImpl(
@@ -144,8 +150,8 @@ protected:
     }
 
     /// @brief Overrides default refreshing functionality provided by the interface class.
-    /// @details The existence of "dwrd" (see @ref AidAlmField_dwrd) is
-    ///     determined by the contents of "week" (see @ref AidAlmField_week)
+    /// @details The existence of "dwrd" (see @ref AidAlmFields::dwrd) is
+    ///     determined by the contents of "week" (see @ref AidAlmFields::week)
     ///     field. If the value of the latter is 0, the "dwrd" is marked to
     ///     be missing, otherwise it exists.
     /// @return @b true in case the mode of "dwrd" field was modified, @b false otherwise

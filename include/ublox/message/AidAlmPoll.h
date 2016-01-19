@@ -15,6 +15,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+/// @file
+/// @brief Contains definition of AID-ALM (@b poll) message and its fields.
 
 #pragma once
 
@@ -27,9 +29,14 @@ namespace ublox
 namespace message
 {
 
-/// @brief Definition of the fields for AID-ALM (@b poll) message.
+/// @brief Accumulates details of all the AID-ALM (@b poll) message fields.
 /// @see AidAlmPoll
-using AidAlmPollFields = std::tuple<>;
+struct AidAlmPollFields
+{
+    /// @brief All the fields bundled in std::tuple.
+    using All = std::tuple<>;
+};
+
 
 /// @brief Definition of AID-ALM (@b poll) message
 /// @details Poll request for AID-ALM (@ref AidAlm) message(s).@n
@@ -45,14 +52,14 @@ class AidAlmPoll : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_ALM>,
-        comms::option::FieldsImpl<AidAlmPollFields>,
+        comms::option::FieldsImpl<AidAlmPollFields::All>,
         comms::option::DispatchImpl<AidAlmPoll<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_ALM>,
-        comms::option::FieldsImpl<AidAlmPollFields>,
+        comms::option::FieldsImpl<AidAlmPollFields::All>,
         comms::option::DispatchImpl<AidAlmPoll<TMsgBase> >
     > Base;
 public:

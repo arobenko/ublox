@@ -15,6 +15,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+/// @file
+/// @brief Contains definition of AID-ALM (<b>poll SV</b>) message and its fields.
 
 #pragma once
 
@@ -29,14 +31,16 @@ namespace ublox
 namespace message
 {
 
-/// @brief Definition of "svid" field in AID-ALM (<b>poll SV</b>) message.
-using AidAlmPollSvField_svid = field::aid::svid;
-
-/// @brief Definition of the fields for AID-ALM (<b>poll SV</b>) message.
+/// @brief Accumulates details of all the AID-ALM (<b> poll</b>) message fields.
 /// @see AidAlmPollSv
-using AidAlmPollSvFields = std::tuple<
-    AidAlmPollSvField_svid
->;
+struct AidAlmPollSvFields
+{
+    /// @brief Definition of "svid" field.
+    using svid = field::aid::svid;
+
+    /// @brief All the fields bundled in std::tuple.
+    using All = std::tuple<svid>;
+};
 
 /// @brief Definition of AID-ALM (<b>poll SV</b>) message
 /// @details Poll request for AID-ALM (@ref AidAlm) message with requested SV.@n
@@ -52,14 +56,14 @@ class AidAlmPollSv : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_ALM>,
-        comms::option::FieldsImpl<AidAlmPollSvFields>,
+        comms::option::FieldsImpl<AidAlmPollSvFields::All>,
         comms::option::DispatchImpl<AidAlmPollSv<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_ALM>,
-        comms::option::FieldsImpl<AidAlmPollSvFields>,
+        comms::option::FieldsImpl<AidAlmPollSvFields::All>,
         comms::option::DispatchImpl<AidAlmPollSv<TMsgBase> >
     > Base;
 public:
@@ -67,7 +71,7 @@ public:
     /// @brief Index to access the fields
     enum FieldIdx
     {
-        FieldIdx_svid, ///< svid field, see @ref AidAlmPollSvField_svid
+        FieldIdx_svid, ///< svid field, see @ref AidAlmPollSvFields::svid
         FieldIdx_numOfValues  ///< number of available fields
     };
 
