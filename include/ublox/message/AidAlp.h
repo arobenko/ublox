@@ -15,6 +15,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+/// @file
+/// @brief Contains definition of AID-ALP message and its fields.
 
 #pragma once
 
@@ -31,41 +33,73 @@ namespace ublox
 namespace message
 {
 
-using AidAlpField_predTow = field::common::U4;
-using AidAlpField_predDur = field::common::U4;
-using AidAlpField_age = field::common::I4;
-using AidAlpField_predWno = field::common::U2;
-using AidAlpField_almWno = field::common::U2;
-using AidAlpField_reserved1 = field::common::res4;
-using AidAlpField_svs = field::common::U1;
-using AidAlpField_reserved2 = field::common::res1;
-using AidAlpField_reserved3 = field::common::res2;
+/// @brief Accumulates details of all the AID-ALP message fields.
+/// @see AidAlp
+struct AidAlpFields
+{
+    /// @brief Definition of "predTow" field.
+    using predTow = field::common::U4;
 
-using AidAlpFields = std::tuple<
-    AidAlpField_predTow,
-    AidAlpField_predDur,
-    AidAlpField_age,
-    AidAlpField_predWno,
-    AidAlpField_almWno,
-    AidAlpField_reserved1,
-    AidAlpField_svs,
-    AidAlpField_reserved2,
-    AidAlpField_reserved3
->;
+    /// @brief Definition of "predDur" field.
+    using predDur = field::common::U4;
 
+    /// @brief Definition of "age" field.
+    using age = field::common::I4;
+
+    /// @brief Definition of "predWno" field.
+    using predWno = field::common::U2;
+
+    /// @brief Definition of "almWno" field.
+    using almWno = field::common::U2;
+
+    /// @brief Definition of "reserved1" field.
+    using reserved1 = field::common::res4;
+
+    /// @brief Definition of "svs" field.
+    using svs = field::common::U1;
+
+    /// @brief Definition of "reserved2" field.
+    using reserved2 = field::common::res1;
+
+    /// @brief Definition of "reserved3" field.
+    using reserved3 = field::common::res2;
+
+    /// @brief All the fields bundled in std::tuple.
+    using All = std::tuple<
+        predTow,
+        predDur,
+        age,
+        predWno,
+        almWno,
+        reserved1,
+        svs,
+        reserved2,
+        reserved3
+    >;
+
+};
+
+/// @brief Definition of AID-ALP message
+/// @details Inherits from
+///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+///     while providing @b TMsgBase as common interface class as well as
+///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
+///     @b comms::option::DispatchImpl as options. @n
+///     See @ref AidAlpFields and for definition of the fields this message contains.
+/// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class AidAlp : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_ALP>,
-        comms::option::FieldsImpl<AidAlpFields>,
+        comms::option::FieldsImpl<AidAlpFields::All>,
         comms::option::DispatchImpl<AidAlp<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_ALP>,
-        comms::option::FieldsImpl<AidAlpFields>,
+        comms::option::FieldsImpl<AidAlpFields::All>,
         comms::option::DispatchImpl<AidAlp<TMsgBase> >
     > Base;
 public:
@@ -73,15 +107,15 @@ public:
     /// @brief Index to access the fields
     enum FieldIdx
     {
-        FieldIdx_predTow,
-        FieldIdx_predDur,
-        FieldIdx_age,
-        FieldIdx_predWno,
-        FieldIdx_almWno,
-        FieldIdx_reserved1,
-        FieldIdx_svs,
-        FieldIdx_reserved2,
-        FieldIdx_reserved3,
+        FieldIdx_predTow, ///< predTow field, see @ref AidAlpFields::predTow
+        FieldIdx_predDur, ///< predDur field, see @ref AidAlpFields::predDur
+        FieldIdx_age, ///< age field, see @ref AidAlpFields::age
+        FieldIdx_predWno, ///< predWno field, see @ref AidAlpFields::predWno
+        FieldIdx_almWno, ///< almWno field, see @ref AidAlpFields::almWno
+        FieldIdx_reserved1, ///< reserved1 field, see @ref AidAlpFields::reserved1
+        FieldIdx_svs, ///< svs field, see @ref AidAlpFields::svs
+        FieldIdx_reserved2, ///< reserved2 field, see @ref AidAlpFields::reserved2
+        FieldIdx_reserved3, ///< reserved3 field, see @ref AidAlpFields::reserved3
         FieldIdx_numOfValues ///< number of available fields
     };
 

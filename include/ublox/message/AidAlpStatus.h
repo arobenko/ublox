@@ -15,6 +15,9 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+/// @file
+/// @brief Contains definition of AID-ALP (<b>data transfer status</b>) message
+///     and its fields.
 
 #pragma once
 
@@ -31,36 +34,58 @@ namespace ublox
 namespace message
 {
 
-enum class AidAlpStatus_Status : std::uint8_t
+/// @brief Accumulates details of all the AID-ALP (<b>data transfer status</b>)
+///     message fields.
+/// @see AidAlpStatus
+struct AidAlpStatusFields
 {
-    NAK,
-    ACK,
-    NumOfValues
+    /// @brief Enumerator for available statuses
+    enum class Status : std::uint8_t
+    {
+        NAK, ///< Indicates NAK status message
+        ACK, ///< Indicates ACK status message
+        NumOfValues ///< Number of available values
+    };
+
+    /// @brief Definition of "status" field.
+    using status =
+        field::common::EnumT<
+            Status,
+            comms::option::ValidNumValueRange<0, (int)Status::NumOfValues - 1>
+        >;
+
+    /// @brief All the fields bundled in std::tuple.
+    using All = std::tuple<
+        status
+    >;
 };
 
-using AidAlpStatusField_status =
-    field::common::EnumT<
-        AidAlpStatus_Status,
-        comms::option::ValidNumValueRange<0,(int)AidAlpStatus_Status::NumOfValues - 1>
-    >;
-
-using AidAlpStatusFields = std::tuple<
-    AidAlpStatusField_status
->;
-
+/// @brief Definition of AID-ALP  (<b>data transfer status</b>) message
+/// @details
+///     This message is sent by the receiver as a response to @ref AidAlpData
+///     message with either @b ack or @b nak status values. @n
+///     @b NOTE, that it can also be sent to the receiver to indicate end of the
+///     data transfer. @b
+///     Inherits from
+///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+///     while providing @b TMsgBase as common interface class as well as
+///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
+///     @b comms::option::DispatchImpl as options. @n
+///     See @ref AidAlpStatusFields and for definition of the fields this message contains.
+/// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class AidAlpStatus : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_ALP>,
-        comms::option::FieldsImpl<AidAlpStatusFields>,
+        comms::option::FieldsImpl<AidAlpStatusFields::All>,
         comms::option::DispatchImpl<AidAlpStatus<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_ALP>,
-        comms::option::FieldsImpl<AidAlpStatusFields>,
+        comms::option::FieldsImpl<AidAlpStatusFields::All>,
         comms::option::DispatchImpl<AidAlpStatus<TMsgBase> >
     > Base;
 public:
@@ -68,7 +93,7 @@ public:
     /// @brief Index to access the fields
     enum FieldIdx
     {
-        FieldIdx_status,
+        FieldIdx_status, ///< status field, see @ref AidAlpStatusFields::status
         FieldIdx_numOfValues ///< number of available fields
     };
 

@@ -45,7 +45,7 @@ QVariantMap createProps_status()
     QVariantList enumValues;
     cc::Property::appendEnumValue(enumValues, "NAK");
     cc::Property::appendEnumValue(enumValues, "ACK");
-    assert(enumValues.size() == (int)ublox::message::AidAlpStatus_Status::NumOfValues);
+    assert(enumValues.size() == (int)ublox::message::AidAlpStatusFields::Status::NumOfValues);
     return cc::Property::createPropertiesMap("status", std::move(enumValues));
 }
 

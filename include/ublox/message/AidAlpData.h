@@ -15,6 +15,9 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+/// @file
+/// @brief Contains definition of AID-ALP (<b>data transfer</b>) message
+///     and its fields.
 
 #pragma once
 
@@ -29,26 +32,44 @@ namespace ublox
 namespace message
 {
 
-using AidAlpDataField_alpData =
-    field::common::ListT<field::common::U2>;
+/// @brief Accumulates details of all the AID-ALP (<b>data transfer</b>)
+///     message fields.
+/// @see AidAlpData
+struct AidAlpDataFields
+{
+    /// @brief Definition of "status" field.
+    using alpData = field::common::ListT<field::common::U2>;
 
-using AidAlpDataFields = std::tuple<
-    AidAlpDataField_alpData
->;
 
+    /// @brief All the fields bundled in std::tuple.
+    using All = std::tuple<
+        alpData
+    >;
+};
+
+/// @brief Definition of AID-ALP  (<b>data transfer</b>) message
+/// @details
+///     This message is sent as an intput to the receiver. @n
+///     Inherits from
+///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+///     while providing @b TMsgBase as common interface class as well as
+///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
+///     @b comms::option::DispatchImpl as options. @n
+///     See @ref AidAlpDataFields and for definition of the fields this message contains.
+/// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class AidAlpData : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_ALP>,
-        comms::option::FieldsImpl<AidAlpDataFields>,
+        comms::option::FieldsImpl<AidAlpDataFields::All>,
         comms::option::DispatchImpl<AidAlpData<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_ALP>,
-        comms::option::FieldsImpl<AidAlpDataFields>,
+        comms::option::FieldsImpl<AidAlpDataFields::All>,
         comms::option::DispatchImpl<AidAlpData<TMsgBase> >
     > Base;
 public:
@@ -56,7 +77,7 @@ public:
     /// @brief Index to access the fields
     enum FieldIdx
     {
-        FieldIdx_alpData,
+        FieldIdx_alpData, ///< alpData field, see @ref AidAlpDataFields::alpData
         FieldIdx_numOfValues ///< number of available fields
     };
 
