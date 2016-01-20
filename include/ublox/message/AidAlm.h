@@ -22,9 +22,7 @@
 
 #include <iterator>
 
-#include "comms/Message.h"
 #include "ublox/Message.h"
-
 #include "ublox/field/aid.h"
 
 namespace ublox

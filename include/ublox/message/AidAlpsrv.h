@@ -15,12 +15,13 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+/// @file
+/// @brief Contains definition of AID-ALPSRV message and its fields.
 
 #pragma once
 
 #include <iterator>
 
-#include "comms/Message.h"
 #include "ublox/Message.h"
 
 #include "ublox/field/common.h"
@@ -31,50 +32,83 @@ namespace ublox
 namespace message
 {
 
-using AidAlpsrvField_idSize = field::common::U1;
-using AidAlpsrvField_type =
-    field::common::U1T<
-        comms::option::ValidNumValueRange<0, 0xfe>
-    >;
-using AidAlpsrvField_ofs = field::common::U2;
-using AidAlpsrvField_size = field::common::U2;
-using AidAlpsrvField_fileId = field::common::U2;
-using AidAlpsrvField_dataSize = field::common::U2;
-using AidAlpsrvField_id1 = field::common::U1;
-using AidAlpsrvField_id2 = field::common::U1;
-using AidAlpsrvField_id3 = field::common::U4;
-using AidAlpsrvField_data =
-    field::common::ListT<
-        std::uint8_t,
-        comms::option::SequenceSizeForcingEnabled
-    >;
+/// @brief Accumulates details of all the AID-ALPSRV message fields.
+/// @see AidAlpsrv
+struct AidAlpsrvFields
+{
+    /// @brief Definition of "idSize" field.
+    using idSize = field::common::U1;
 
-using AidAlpsrvFields = std::tuple<
-    AidAlpsrvField_idSize,
-    AidAlpsrvField_type,
-    AidAlpsrvField_ofs,
-    AidAlpsrvField_size,
-    AidAlpsrvField_fileId,
-    AidAlpsrvField_dataSize,
-    AidAlpsrvField_id1,
-    AidAlpsrvField_id2,
-    AidAlpsrvField_id3,
-    AidAlpsrvField_data
->;
+    /// @brief Definition of "type" field.
+    using type =
+        field::common::U1T<
+            comms::option::ValidNumValueRange<0, 0xfe>
+        >;
 
+    /// @brief Definition of "ofs" field.
+    using ofs = field::common::U2;
+
+    /// @brief Definition of "size" field.
+    using size = field::common::U2;
+
+    /// @brief Definition of "fileId" field.
+    using fileId = field::common::U2;
+
+    /// @brief Definition of "dataSize" field.
+    using dataSize = field::common::U2;
+
+    /// @brief Definition of "id1" field.
+    using id1 = field::common::U1;
+
+    /// @brief Definition of "id2" field.
+    using id2 = field::common::U1;
+
+    /// @brief Definition of "id3" field.
+    using id3 = field::common::U4;
+
+    /// @brief Definition of "data" field.
+    using data =
+        field::common::ListT<
+            std::uint8_t,
+            comms::option::SequenceSizeForcingEnabled
+        >;
+
+    /// @brief All the fields bundled in std::tuple.
+    using All = std::tuple<
+        idSize,
+        type,
+        ofs,
+        size,
+        fileId,
+        dataSize,
+        id1,
+        id2,
+        id3,
+        data
+    >;
+};
+
+/// @brief Definition of AID-ALPSRV message
+/// @details Inherits from
+///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+///     while providing @b TMsgBase as common interface class as well as
+///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
+///     @b comms::option::DispatchImpl as options. @n
+///     See @ref AidAlpsrvFields and for definition of the fields this message contains.
+/// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class AidAlpsrv : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_ALPSRV>,
-        comms::option::FieldsImpl<AidAlpsrvFields>,
+        comms::option::FieldsImpl<AidAlpsrvFields::All>,
         comms::option::DispatchImpl<AidAlpsrv<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_ALPSRV>,
-        comms::option::FieldsImpl<AidAlpsrvFields>,
+        comms::option::FieldsImpl<AidAlpsrvFields::All>,
         comms::option::DispatchImpl<AidAlpsrv<TMsgBase> >
     > Base;
 public:
@@ -82,16 +116,16 @@ public:
     /// @brief Index to access the fields
     enum FieldIdx
     {
-        FieldIdx_idSize,
-        FieldIdx_type,
-        FieldIdx_ofs,
-        FieldIdx_size,
-        FieldIdx_fileId,
-        FieldIdx_dataSize,
-        FieldIdx_id1,
-        FieldIdx_id2,
-        FieldIdx_id3,
-        FieldIdx_data,
+        FieldIdx_idSize, ///< idSize field, see @ref AidAlpsrvFields::idSize
+        FieldIdx_type, ///< type field, see @ref AidAlpsrvFields::type
+        FieldIdx_ofs, ///< ofs field, see @ref AidAlpsrvFields::ofs
+        FieldIdx_size, ///< size field, see @ref AidAlpsrvFields::size
+        FieldIdx_fileId, ///< type fileId, see @ref AidAlpsrvFields::fileId
+        FieldIdx_dataSize, ///< dataSize field, see @ref AidAlpsrvFields::dataSize
+        FieldIdx_id1, ///< id1 field, see @ref AidAlpsrvFields::id1
+        FieldIdx_id2, ///< id2 field, see @ref AidAlpsrvFields::id2
+        FieldIdx_id3, ///< id3 field, see @ref AidAlpsrvFields::id3
+        FieldIdx_data, ///< data field, see @ref AidAlpsrvFields::data
         FieldIdx_numOfValues ///< number of available fields
     };
 
@@ -117,6 +151,14 @@ public:
     AidAlpsrv& operator=(AidAlpsrv&&) = default;
 
 protected:
+
+    /// @brief Overrides read functionality provided by the base class.
+    /// @details The function reads all the fields up and including "type"
+    ///     (see @ref AidAlpsrvFields::type). If its value is invalid (equal to
+    ///     0xff), the read operation fails with comms::ErrorStatus::InvalidMsgData
+    ///     error status, otherwise continues. The size of the "data" list
+    ///     (see @ref AidAlpsrvFields::data) is determined by the value of
+    ///     "dataSize" field (see @ref AidAlpsrvFields::dataSize).
     virtual comms::ErrorStatus readImpl(
         typename Base::ReadIterator& iter,
         std::size_t len) override
@@ -145,6 +187,10 @@ protected:
         return Base::template readFieldsFrom<FieldIdx_data>(iter, len);
     }
 
+    /// @brief Overrides default refreshing functionality provided by the interface class.
+    /// @details The value of "dataSize" field (see @ref AidAlpsrvFields::dataSize) is
+    ///     determined by the size of the "data" list (see @ref AidAlpsrvFields::data).
+    /// @return @b true in case the mode of "dataSize" field was modified, @b false otherwise
     virtual bool refreshImpl() override
     {
         auto& allFields = Base::fields();
