@@ -15,6 +15,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+/// @file
+/// @brief Contains definition of ACK-NAK message and its fields.
 
 #pragma once
 
@@ -28,11 +30,16 @@ namespace ublox
 namespace message
 {
 
-/// @brief Definition of the fields for ACK-NAK message.
+/// @brief Accumulates details of all the ACK-NAK message fields.
 /// @see AckNak
-using AckNakFields = std::tuple<
-    ublox::field::MsgId
->;
+struct AckNakFields
+{
+    /// @brief Definition of "id" field (combining class ID and message ID).
+    using id = ublox::field::MsgId;
+
+    /// @brief All the fields bundled in std::tuple.
+    using All = std::tuple<id>;
+};
 
 /// @brief Definition of ACK-NAK message
 /// @details Inherits from
@@ -47,14 +54,14 @@ class AckNak : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_ACK_NAK>,
-        comms::option::FieldsImpl<AckNakFields>,
+        comms::option::FieldsImpl<AckNakFields::All>,
         comms::option::DispatchImpl<AckNak<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_ACK_NAK>,
-        comms::option::FieldsImpl<AckNakFields>,
+        comms::option::FieldsImpl<AckNakFields::All>,
         comms::option::DispatchImpl<AckNak<TMsgBase> >
     > Base;
 public:
@@ -62,7 +69,7 @@ public:
     /// @brief Index to access the fields
     enum FieldIdx
     {
-        FieldIdx_id, ///< id field
+        FieldIdx_id, ///< id field, see @ref AckNakFields::id
         FieldIdx_numOfValues ///< number of available fields
     };
 
