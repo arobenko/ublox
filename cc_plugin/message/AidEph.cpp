@@ -41,7 +41,7 @@ namespace
 QVariantMap createProps_sfxd(int sfIdx)
 {
     static const auto NumOfElems =
-        ublox::message::AidEphField_sf1d::Field::ParsedOptions::SequenceFixedSize;
+        ublox::message::AidEphFields::sf1d::Field::ParsedOptions::SequenceFixedSize;
     QVariantList elemsProps;
     for (auto idx = 0U; idx < NumOfElems; ++idx) {
         elemsProps.append(cc::Property::createPropertiesMap(QString("%1").arg(idx, 1, 10, QChar('0'))));

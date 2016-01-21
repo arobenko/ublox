@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -15,10 +15,11 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+/// @file
+/// @brief Contains definition of AID-HUI message and its fields.
 
 #pragma once
 
-#include "comms/Message.h"
 #include "ublox/Message.h"
 #include "ublox/field/common.h"
 
@@ -28,74 +29,124 @@ namespace ublox
 namespace message
 {
 
-enum
+/// @brief Accumulates details of all the AID-HUI message fields.
+/// @see AidHui
+struct AidHuiFields
 {
-    AidHuiField_flags_healthValid,
-    AidHuiField_flags_utcValid,
-    AidHuiField_flags_klobValid,
-    AidHuiField_flags_numOfValues ///< number of available fields
+    /// @brief Definition of "health" field.
+    using health = field::common::X4;
+
+    /// @brief Definition of "utcA0" field.
+    using utcA0 = field::common::R8;
+
+    /// @brief Definition of "utcA1" field.
+    using utcA1 = field::common::R8;
+
+    /// @brief Definition of "utcTOW" field.
+    using utcTOW = field::common::I4;
+
+    /// @brief Definition of "utcWNT" field.
+    using utcWNT = field::common::I2;
+
+    /// @brief Definition of "utcLC" field.
+    using utcLC = field::common::I2;
+
+    /// @brief Definition of "utcWNF" field.
+    using utcWNF = field::common::I2;
+
+    /// @brief Definition of "utcDN" field.
+    using utcDN = field::common::I2;
+
+    /// @brief Definition of "utcLSF" field.
+    using utcLSF = field::common::I2;
+
+    /// @brief Definition of "utcSpare" field.
+    using utcSpare = field::common::I2;
+
+    /// @brief Definition of "klobA0" field.
+    using klobA0 = field::common::R4;
+
+    /// @brief Definition of "klobA1" field.
+    using klobA1 = field::common::R4;
+
+    /// @brief Definition of "klobA2" field.
+    using klobA2 = field::common::R4;
+
+    /// @brief Definition of "klobA3" field.
+    using klobA3 = field::common::R4;
+
+    /// @brief Definition of "klobB0" field.
+    using klobB0 = field::common::R4;
+
+    /// @brief Definition of "klobB1" field.
+    using klobB1 = field::common::R4;
+
+    /// @brief Definition of "klobB2" field.
+    using klobB2 = field::common::R4;
+
+    /// @brief Definition of "klobB3" field.
+    using klobB3 = field::common::R4;
+
+    /// @brief Definition of "flags" field.
+    using flags =
+        field::common::X4T<
+            comms::option::BitmaskReservedBits<0xfffffff8, 0>
+        >;
+
+    /// @brief Enumerator to access bits in @ref flags bitmask field
+    enum
+    {
+        flags_healthValid, ///< "healthValid" bit
+        flags_utcValid, ///< "utcValid" bit
+        flags_klobValid, ///< "klobValid" bit
+        flags_numOfValues ///< number of available bits
+    };
+
+    /// @brief All the fields bundled in std::tuple.
+    using All = std::tuple<
+        health,
+        utcA0,
+        utcA1,
+        utcTOW,
+        utcWNT,
+        utcLC,
+        utcWNF,
+        utcDN,
+        utcLSF,
+        utcSpare,
+        klobA0,
+        klobA1,
+        klobA2,
+        klobA3,
+        klobB0,
+        klobB1,
+        klobB2,
+        klobB3,
+        flags
+    >;
 };
 
-using AidHuiField_health = field::common::X4;
-using AidHuiField_utcA0 = field::common::R8;
-using AidHuiField_utcA1 = field::common::R8;
-using AidHuiField_utcTOW = field::common::I4;
-using AidHuiField_utcWNT = field::common::I2;
-using AidHuiField_utcLC = field::common::I2;
-using AidHuiField_utcWNF = field::common::I2;
-using AidHuiField_utcDN = field::common::I2;
-using AidHuiField_utcLSF = field::common::I2;
-using AidHuiField_utcSpare = field::common::I2;
-using AidHuiField_klobA0 = field::common::R4;
-using AidHuiField_klobA1 = field::common::R4;
-using AidHuiField_klobA2 = field::common::R4;
-using AidHuiField_klobA3 = field::common::R4;
-using AidHuiField_klobB0 = field::common::R4;
-using AidHuiField_klobB1 = field::common::R4;
-using AidHuiField_klobB2 = field::common::R4;
-using AidHuiField_klobB3 = field::common::R4;
-using AidHuiField_flags =
-    field::common::X4T<
-        comms::option::BitmaskReservedBits<0xfffffff8, 0>
-    >;
-
-
-using AidHuiFields = std::tuple<
-    AidHuiField_health,
-    AidHuiField_utcA0,
-    AidHuiField_utcA1,
-    AidHuiField_utcTOW,
-    AidHuiField_utcWNT,
-    AidHuiField_utcLC,
-    AidHuiField_utcWNF,
-    AidHuiField_utcDN,
-    AidHuiField_utcLSF,
-    AidHuiField_utcSpare,
-    AidHuiField_klobA0,
-    AidHuiField_klobA1,
-    AidHuiField_klobA2,
-    AidHuiField_klobA3,
-    AidHuiField_klobB0,
-    AidHuiField_klobB1,
-    AidHuiField_klobB2,
-    AidHuiField_klobB3,
-    AidHuiField_flags
->;
-
-
+/// @brief Definition of AID-HUI message
+/// @details Inherits from
+///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+///     while providing @b TMsgBase as common interface class as well as
+///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
+///     @b comms::option::DispatchImpl as options. @n
+///     See @ref AidHuiFields and for definition of the fields this message contains.
+/// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class AidHui : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_HUI>,
-        comms::option::FieldsImpl<AidHuiFields>,
+        comms::option::FieldsImpl<AidHuiFields::All>,
         comms::option::DispatchImpl<AidHui<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_HUI>,
-        comms::option::FieldsImpl<AidHuiFields>,
+        comms::option::FieldsImpl<AidHuiFields::All>,
         comms::option::DispatchImpl<AidHui<TMsgBase> >
     > Base;
 public:
@@ -103,26 +154,26 @@ public:
     /// @brief Index to access the fields
     enum FieldIdx
     {
-        FieldIdx_health,
-        FieldIdx_utcA0,
-        FieldIdx_utcA1,
-        FieldIdx_utcTOW,
-        FieldIdx_utcWNT,
-        FieldIdx_utcLC,
-        FieldIdx_utcWNF,
-        FieldIdx_utcDN,
-        FieldIdx_utcLSF,
-        FieldIdx_utcSpare,
-        FieldIdx_klobA0,
-        FieldIdx_klobA1,
-        FieldIdx_klobA2,
-        FieldIdx_klobA3,
-        FieldIdx_klobB0,
-        FieldIdx_klobB1,
-        FieldIdx_klobB2,
-        FieldIdx_klobB3,
-        FieldIdx_flags,
-        FieldIdx_numOfValues
+        FieldIdx_health, ///< health field, see @ref AidHuiFields::health
+        FieldIdx_utcA0, ///< utcA0 field, see @ref AidHuiFields::utcA0
+        FieldIdx_utcA1, ///< utcA1 field, see @ref AidHuiFields::utcA1
+        FieldIdx_utcTOW, ///< utcTOW field, see @ref AidHuiFields::utcTOW
+        FieldIdx_utcWNT, ///< utcWNT field, see @ref AidHuiFields::utcWNT
+        FieldIdx_utcLC, ///< utcLC field, see @ref AidHuiFields::utcLC
+        FieldIdx_utcWNF, ///< utcWNF field, see @ref AidHuiFields::utcWNF
+        FieldIdx_utcDN, ///< utcDN field, see @ref AidHuiFields::utcDN
+        FieldIdx_utcLSF, ///< utcLSF field, see @ref AidHuiFields::utcLSF
+        FieldIdx_utcSpare, ///< utcSpare field, see @ref AidHuiFields::utcSpare
+        FieldIdx_klobA0, ///< klobA0 field, see @ref AidHuiFields::klobA0
+        FieldIdx_klobA1, ///< klobA1 field, see @ref AidHuiFields::klobA1
+        FieldIdx_klobA2, ///< klobA2 field, see @ref AidHuiFields::klobA2
+        FieldIdx_klobA3, ///< klobA3 field, see @ref AidHuiFields::klobA3
+        FieldIdx_klobB0, ///< klobB0 field, see @ref AidHuiFields::klobB0
+        FieldIdx_klobB1, ///< klobB1 field, see @ref AidHuiFields::klobB1
+        FieldIdx_klobB2, ///< klobB2 field, see @ref AidHuiFields::klobB2
+        FieldIdx_klobB3, ///< klobB3 field, see @ref AidHuiFields::klobB3
+        FieldIdx_flags, ///< flags field, see @ref AidHuiFields::flags
+        FieldIdx_numOfValues ///< number of available fields
     };
 
     static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,

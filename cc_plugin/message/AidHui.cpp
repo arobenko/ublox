@@ -44,7 +44,7 @@ QVariantMap createProps_flags()
     bitNames.append("healthValid");
     bitNames.append("utcValid");
     bitNames.append("klobValid");
-    assert(bitNames.size() == ublox::message::AidHuiField_flags_numOfValues);
+    assert(bitNames.size() == ublox::message::AidHuiFields::flags_numOfValues);
     return cc::Property::createPropertiesMap("flags", std::move(bitNames));
 }
 
