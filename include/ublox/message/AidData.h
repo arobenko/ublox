@@ -15,10 +15,11 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+/// @file
+/// @brief Contains definition of AID-DATA message and its fields.
 
 #pragma once
 
-#include "comms/Message.h"
 #include "ublox/Message.h"
 
 namespace ublox
@@ -27,22 +28,35 @@ namespace ublox
 namespace message
 {
 
-using AidDataFields = std::tuple<>;
+/// @brief Accumulates details of all the AID-DATA message fields.
+/// @see AidData
+struct AidDataFields
+{
+    /// @brief All the fields bundled in std::tuple.
+    using All = std::tuple<>;
+};
 
-
+/// @brief Definition of AID-DATA message
+/// @details Inherits from
+///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+///     while providing @b TMsgBase as common interface class as well as
+///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
+///     @b comms::option::DispatchImpl as options. @n
+///     See @ref AidDataFields and for definition of the fields this message contains.
+/// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class AidData : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_DATA>,
-        comms::option::FieldsImpl<AidDataFields>,
+        comms::option::FieldsImpl<AidDataFields::All>,
         comms::option::DispatchImpl<AidData<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_DATA>,
-        comms::option::FieldsImpl<AidDataFields>,
+        comms::option::FieldsImpl<AidDataFields::All>,
         comms::option::DispatchImpl<AidData<TMsgBase> >
     > Base;
 public:
