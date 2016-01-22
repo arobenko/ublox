@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -16,11 +16,12 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
+/// @file
+/// @brief Contains definition of CFG-CFG message and its fields.
+
 #pragma once
 
-#include "comms/Message.h"
 #include "ublox/Message.h"
-#include "ublox/field/MsgId.h"
 #include "ublox/field/common.h"
 
 namespace ublox
@@ -29,68 +30,88 @@ namespace ublox
 namespace message
 {
 
-enum
+/// @brief Accumulates details of all the CFG-CFG message fields.
+/// @see CfgCfg
+struct CfgCfgFields
 {
-    CfgCfgField_mask_ioPort,
-    CfgCfgField_mask_msgConf,
-    CfgCfgField_mask_infMsg,
-    CfgCfgField_mask_navConf,
-    CfgCfgField_mask_rxmConf,
-    CfgCfgField_mask_reserved0,
-    CfgCfgField_mask_reserved1,
-    CfgCfgField_mask_reserved2,
-    CfgCfgField_mask_reserved3,
-    CfgCfgField_mask_rinvConf,
-    CfgCfgField_mask_antConf,
-    CfgCfgField_mask_numOfValues
+
+    /// @brief Bits access enumerator for @ref clearMask, @ref saveMask, and
+    ///     @ref loadMask bitmask fields.
+    enum
+    {
+        mask_ioPort,  ///< @b ioPort bit number
+        mask_msgConf, ///< @b msgConf bit number
+        mask_infMsg, ///< @b infMsg bit number
+        mask_navConf, ///< @b navConf bit number
+        mask_rxmConf, ///< @b rxmConf bit number
+        mask_rinvConf = 9,  ///< @b rinvConf bit number
+        mask_antConf, ///< @b antConf bit number
+        mask_numOfValues ///< @b upper limit for available bits
+    };
+
+    /// @brief Bits access enumerator for @ref deviceMask bitmask field.
+    enum
+    {
+        deviceMask_devBBR,  ///< @b devBBR bit number
+        deviceMask_devFlash,  ///< @b devFlash bit number
+        deviceMask_devEEPROM,  ///< @b devEEPROM bit number
+        deviceMask_devSpiFlash = 4,  ///< @b devSpiFlash bit number
+        deviceMask_numOfValues ///< @b upper limit for available bits
+    };
+
+    /// @brief common definition for @ref clearMask, @ref saveMask, and @ref loadMask fields
+    using mask =
+        field::common::X4T<
+            comms::option::BitmaskReservedBits<0xfffff9e0, 0>
+        >;
+
+    /// @brief Definition of "clearMask" field.
+    using clearMask = mask;
+
+    /// @brief Definition of "saveMask" field.
+    using saveMask = mask;
+
+    /// @brief Definition of "loadMask" field.
+    using loadMask = mask;
+
+    /// @brief Definition of "deviceMask" field.
+    using deviceMask =
+        field::common::OptionalT<
+            field::common::X1T<
+                comms::option::BitmaskReservedBits<0xe8, 0>
+            >
+        >;
+
+    /// @brief All the fields bundled in std::tuple.
+    using All = std::tuple<
+        clearMask,
+        saveMask,
+        loadMask,
+        deviceMask
+    >;
 };
 
-enum
-{
-    CfgCfgField_deviceMask_devBBR,
-    CfgCfgField_deviceMask_devFlash,
-    CfgCfgField_deviceMask_devEEPROM,
-    CfgCfgField_deviceMask_reserved0,
-    CfgCfgField_deviceMask_devSpiFlash,
-    CfgCfgField_deviceMask_numOfValues
-};
-
-
-using CfgCfgField_mask =
-    field::common::X4T<
-        comms::option::BitmaskReservedBits<0xfffff9e0, 0>
-    >;
-
-using CfgCfgField_clearMask = CfgCfgField_mask;
-using CfgCfgField_saveMask = CfgCfgField_mask;
-using CfgCfgField_loadMask = CfgCfgField_mask;
-using CfgCfgField_deviceMask =
-    field::common::OptionalT<
-        field::common::X1T<
-            comms::option::BitmaskReservedBits<0xe8, 0>
-        >
-    >;
-
-using CfgCfgFields = std::tuple<
-    CfgCfgField_clearMask,
-    CfgCfgField_saveMask,
-    CfgCfgField_loadMask,
-    CfgCfgField_deviceMask
->;
-
+/// @brief Definition of CFG-CFG message
+/// @details Inherits from
+///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+///     while providing @b TMsgBase as common interface class as well as
+///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
+///     @b comms::option::DispatchImpl as options. @n
+///     See @ref CfgCfgFields and for definition of the fields this message contains.
+/// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class CfgCfg : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_CFG>,
-        comms::option::FieldsImpl<CfgCfgFields>,
+        comms::option::FieldsImpl<CfgCfgFields::All>,
         comms::option::DispatchImpl<CfgCfg<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_CFG>,
-        comms::option::FieldsImpl<CfgCfgFields>,
+        comms::option::FieldsImpl<CfgCfgFields::All>,
         comms::option::DispatchImpl<CfgCfg<TMsgBase> >
     > Base;
 public:
@@ -98,10 +119,10 @@ public:
     /// @brief Index to access the fields
     enum FieldIdx
     {
-        FieldIdx_clearMask,
-        FieldIdx_saveMask,
-        FieldIdx_loadMask,
-        FieldIdx_deviceMask,
+        FieldIdx_clearMask, ///< @b clearMask field, see @ref CfgCfgFields::clearMask
+        FieldIdx_saveMask, ///< @b saveMask field, see @ref CfgCfgFields::saveMask
+        FieldIdx_loadMask, ///< @b loadMask field, see @ref CfgCfgFields::loadMask
+        FieldIdx_deviceMask, ///< @b deviceMask field, see @ref CfgCfgFields::deviceMask
         FieldIdx_numOfValues ///< number of available fields
     };
 

@@ -52,7 +52,7 @@ QVariantMap createProps_mask(const char* name)
     bitNames.append(QVariant());
     bitNames.append("rinvConf");
     bitNames.append("antConf");
-    assert(bitNames.size() == ublox::message::CfgCfgField_mask_numOfValues);
+    assert(bitNames.size() == ublox::message::CfgCfgFields::mask_numOfValues);
     return cc::Property::createPropertiesMap(name, std::move(bitNames));
 }
 
@@ -64,7 +64,7 @@ QVariantMap createProps_deviceMask()
     bitNames.append("devEEPROM");
     bitNames.append(QVariant());
     bitNames.append("devSpiFlash");
-    assert(bitNames.size() == ublox::message::CfgCfgField_deviceMask_numOfValues);
+    assert(bitNames.size() == ublox::message::CfgCfgFields::deviceMask_numOfValues);
 
     static const QString Name("deviceMask");
     auto maskProps = cc::Property::createPropertiesMap(Name, std::move(bitNames));
