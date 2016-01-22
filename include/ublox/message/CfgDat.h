@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -15,12 +15,12 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+/// @file
+/// @brief Contains definition of CFG-DAT message and its fields.
 
 #pragma once
 
-#include "comms/Message.h"
 #include "ublox/Message.h"
-#include "ublox/field/MsgId.h"
 #include "ublox/field/cfg.h"
 
 namespace ublox
@@ -29,45 +29,80 @@ namespace ublox
 namespace message
 {
 
-using CfgDatField_datumNum = field::cfg::datumNum;
-using CfgDatField_datumName = field::cfg::datumName;
-using CfgDatField_majA = field::cfg::datMajA;
-using CfgDatField_flat = field::cfg::datFlat;
-using CfgDatField_dX = field::cfg::datDX;
-using CfgDatField_dY = field::cfg::datDY;
-using CfgDatField_dZ = field::cfg::datDZ;
-using CfgDatField_rotX = field::cfg::datRotX;
-using CfgDatField_rotY = field::cfg::datRotY;
-using CfgDatField_rotZ = field::cfg::datRotZ;
-using CfgDatField_scale = field::cfg::datScale;
+/// @brief Accumulates details of all the CFG-DAT message fields.
+/// @see CfgDat
+struct CfgDatFields
+{
+    /// @brief Definition of "datumNum" field.
+    using datumNum = field::cfg::datumNum;
 
-using CfgDatFields = std::tuple<
-    CfgDatField_datumNum,
-    CfgDatField_datumName,
-    CfgDatField_majA,
-    CfgDatField_flat,
-    CfgDatField_dX,
-    CfgDatField_dY,
-    CfgDatField_dZ,
-    CfgDatField_rotX,
-    CfgDatField_rotY,
-    CfgDatField_rotZ,
-    CfgDatField_scale
->;
+    /// @brief Definition of "datumName" field.
+    using datumName = field::cfg::datumName;
 
+    /// @brief Definition of "majA" field.
+    using majA = field::cfg::datMajA;
+
+    /// @brief Definition of "flat" field.
+    using flat = field::cfg::datFlat;
+
+    /// @brief Definition of "dX" field.
+    using dX = field::cfg::datDX;
+
+    /// @brief Definition of "dY" field.
+    using dY = field::cfg::datDY;
+
+    /// @brief Definition of "dZ" field.
+    using dZ = field::cfg::datDZ;
+
+    /// @brief Definition of "rotX" field.
+    using rotX = field::cfg::datRotX;
+
+    /// @brief Definition of "rotY" field.
+    using rotY = field::cfg::datRotY;
+
+    /// @brief Definition of "rotZ" field.
+    using rotZ = field::cfg::datRotZ;
+
+    /// @brief Definition of "scale" field.
+    using scale = field::cfg::datScale;
+
+    /// @brief All the fields bundled in std::tuple.
+    using All = std::tuple<
+        datumNum,
+        datumName,
+        majA,
+        flat,
+        dX,
+        dY,
+        dZ,
+        rotX,
+        rotY,
+        rotZ,
+        scale
+    >;
+};
+
+/// @brief Definition of CFG-DAT message
+/// @details Inherits from
+///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+///     while providing @b TMsgBase as common interface class as well as
+///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
+///     @b comms::option::DispatchImpl as options. @n
+///     See @ref CfgDatFields and for definition of the fields this message contains.
+/// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class CfgDat : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_DAT>,
-        comms::option::FieldsImpl<CfgDatFields>,
+        comms::option::FieldsImpl<CfgDatFields::All>,
         comms::option::DispatchImpl<CfgDat<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_DAT>,
-        comms::option::FieldsImpl<CfgDatFields>,
+        comms::option::FieldsImpl<CfgDatFields::All>,
         comms::option::DispatchImpl<CfgDat<TMsgBase> >
     > Base;
 public:
@@ -75,17 +110,17 @@ public:
     /// @brief Index to access the fields
     enum FieldIdx
     {
-        FieldIdx_datumNum,
-        FieldIdx_datumName,
-        FieldIdx_majA,
-        FieldIdx_flat,
-        FieldIdx_dX,
-        FieldIdx_dY,
-        FieldIdx_dZ,
-        FieldIdx_rotX,
-        FieldIdx_rotY,
-        FieldIdx_rotZ,
-        FieldIdx_scale,
+        FieldIdx_datumNum,  ///< @b datumNum field, see @ref CfgDatFields::datumNum
+        FieldIdx_datumName,  ///< @b datumName field, see @ref CfgDatFields::datumName
+        FieldIdx_majA,  ///< @b majA field, see @ref CfgDatFields::majA
+        FieldIdx_flat,  ///< @b flat field, see @ref CfgDatFields::flat
+        FieldIdx_dX,  ///< @b dX field, see @ref CfgDatFields::dX
+        FieldIdx_dY,  ///< @b dY field, see @ref CfgDatFields::dY
+        FieldIdx_dZ,  ///< @b dZ field, see @ref CfgDatFields::dZ
+        FieldIdx_rotX,  ///< @b rotX field, see @ref CfgDatFields::rotX
+        FieldIdx_rotY,  ///< @b rotY field, see @ref CfgDatFields::rotY
+        FieldIdx_rotZ,  ///< @b rotZ field, see @ref CfgDatFields::rotZ
+        FieldIdx_scale,  ///< @b scal field, see @ref CfgDatFields::scale
         FieldIdx_numOfValues ///< number of available fields
     };
 

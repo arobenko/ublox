@@ -12,3 +12,6 @@
 ///
 /// @namespace ublox::field::aid
 /// @brief Contains definition of common fields that can be used by multiple independent messages of AID class
+///
+/// @namespace ublox::field::cfg
+/// @brief Contains definition of common fields that can be used by multiple independent messages of CFG class

@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -15,12 +15,12 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+/// @file
+/// @brief Contains definition of CFG-DAT (<b>user input</b>) message and its fields.
 
 #pragma once
 
-#include "comms/Message.h"
 #include "ublox/Message.h"
-#include "ublox/field/MsgId.h"
 #include "ublox/field/cfg.h"
 
 namespace ublox
@@ -29,41 +29,72 @@ namespace ublox
 namespace message
 {
 
-using CfgDatUserField_majA = field::cfg::datMajA;
-using CfgDatUserField_flat = field::cfg::datFlat;
-using CfgDatUserField_dX = field::cfg::datDX;
-using CfgDatUserField_dY = field::cfg::datDY;
-using CfgDatUserField_dZ = field::cfg::datDZ;
-using CfgDatUserField_rotX = field::cfg::datRotX;
-using CfgDatUserField_rotY = field::cfg::datRotY;
-using CfgDatUserField_rotZ = field::cfg::datRotZ;
-using CfgDatUserField_scale = field::cfg::datScale;
+/// @brief Accumulates details of all the CFG-DAT (<b>user input</b>) message fields.
+/// @see CfgDatUser
+struct CfgDatUserFields
+{
+    /// @brief Definition of "majA" field.
+    using majA = field::cfg::datMajA;
 
-using CfgDatUserFields = std::tuple<
-    CfgDatUserField_majA,
-    CfgDatUserField_flat,
-    CfgDatUserField_dX,
-    CfgDatUserField_dY,
-    CfgDatUserField_dZ,
-    CfgDatUserField_rotX,
-    CfgDatUserField_rotY,
-    CfgDatUserField_rotZ,
-    CfgDatUserField_scale
->;
+    /// @brief Definition of "flat" field.
+    using flat = field::cfg::datFlat;
 
+    /// @brief Definition of "dX" field.
+    using dX = field::cfg::datDX;
+
+    /// @brief Definition of "dY" field.
+    using dY = field::cfg::datDY;
+
+    /// @brief Definition of "dZ" field.
+    using dZ = field::cfg::datDZ;
+
+    /// @brief Definition of "rotX" field.
+    using rotX = field::cfg::datRotX;
+
+    /// @brief Definition of "rotY" field.
+    using rotY = field::cfg::datRotY;
+
+    /// @brief Definition of "rotZ" field.
+    using rotZ = field::cfg::datRotZ;
+
+    /// @brief Definition of "scale" field.
+    using scale = field::cfg::datScale;
+
+    /// @brief All the fields bundled in std::tuple.
+    using All = std::tuple<
+        majA,
+        flat,
+        dX,
+        dY,
+        dZ,
+        rotX,
+        rotY,
+        rotZ,
+        scale
+    >;
+};
+
+/// @brief Definition of CFG-DAT (<b>user input</b>) message
+/// @details Inherits from
+///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+///     while providing @b TMsgBase as common interface class as well as
+///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
+///     @b comms::option::DispatchImpl as options. @n
+///     See @ref CfgDatUserFields and for definition of the fields this message contains.
+/// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class CfgDatUser : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_DAT>,
-        comms::option::FieldsImpl<CfgDatUserFields>,
+        comms::option::FieldsImpl<CfgDatUserFields::All>,
         comms::option::DispatchImpl<CfgDatUser<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_DAT>,
-        comms::option::FieldsImpl<CfgDatUserFields>,
+        comms::option::FieldsImpl<CfgDatUserFields::All>,
         comms::option::DispatchImpl<CfgDatUser<TMsgBase> >
     > Base;
 public:
@@ -71,15 +102,15 @@ public:
     /// @brief Index to access the fields
     enum FieldIdx
     {
-        FieldIdx_majA,
-        FieldIdx_flat,
-        FieldIdx_dX,
-        FieldIdx_dY,
-        FieldIdx_dZ,
-        FieldIdx_rotX,
-        FieldIdx_rotY,
-        FieldIdx_rotZ,
-        FieldIdx_scale,
+        FieldIdx_majA,  ///< @b majA field, see @ref CfgDatUserFields::majA
+        FieldIdx_flat,  ///< @b flat field, see @ref CfgDatUserFields::flat
+        FieldIdx_dX,  ///< @b dX field, see @ref CfgDatUserFields::dX
+        FieldIdx_dY,  ///< @b dY field, see @ref CfgDatUserFields::dY
+        FieldIdx_dZ,  ///< @b dZ field, see @ref CfgDatUserFields::dZ
+        FieldIdx_rotX,  ///< @b rotX field, see @ref CfgDatUserFields::rotX
+        FieldIdx_rotY,  ///< @b rotY field, see @ref CfgDatUserFields::rotY
+        FieldIdx_rotZ,  ///< @b rotZ field, see @ref CfgDatUserFields::rotZ
+        FieldIdx_scale,  ///< @b scal field, see @ref CfgDatUserFields::scale
         FieldIdx_numOfValues ///< number of available fields
     };
 

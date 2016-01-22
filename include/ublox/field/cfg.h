@@ -15,6 +15,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+/// @file
+/// @brief Contains definition of common fields used in CFG class messages.
 
 #pragma once
 
@@ -91,16 +93,37 @@ using protocolID =
         comms::option::ValidNumValueRange<0, (int)ProtocolId::NumOfValues - 1>
     >;
 
-using datumNum = field::common::U2;
+/// @brief Definition of common "datumNum" field.
+using datumNum = common::U2;
+
+/// @brief Definition of common "datumName" field.
 using datumName = common::ZString<6>;
+
+/// @brief Definition of common "majA" field used CFG-DAT messages.
 using datMajA = common::R8;
+
+/// @brief Definition of common "flat" field used CFG-DAT messages.
 using datFlat = common::R8;
+
+/// @brief Definition of common "dX" field used CFG-DAT messages.
 using datDX = common::R4;
+
+/// @brief Definition of common "dY" field used CFG-DAT messages.
 using datDY = common::R4;
+
+/// @brief Definition of common "dZ" field used CFG-DAT messages.
 using datDZ = common::R4;
+
+/// @brief Definition of common "rotX" field used CFG-DAT messages.
 using datRotX = common::R4;
+
+/// @brief Definition of common "rotY" field used CFG-DAT messages.
 using datRotY = common::R4;
+
+/// @brief Definition of common "rotZ" field used CFG-DAT messages.
 using datRotZ = common::R4;
+
+/// @brief Definition of common "scale" field used CFG-DAT messages.
 using datScale = common::R4;
 
 enum class TpIdx : std::uint8_t
