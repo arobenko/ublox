@@ -46,7 +46,7 @@ QVariantMap createProps_flags()
     bitNames.append("ocd");
     bitNames.append("pdwnOnSCD");
     bitNames.append("recovery");
-    assert(bitNames.size() == ublox::message::CfgAntField_flags_numOfValues);
+    assert(bitNames.size() == ublox::message::CfgAntFields::flags_numOfValues);
     return cc::Property::createPropertiesMap("flags", std::move(bitNames));
 }
 
@@ -62,7 +62,7 @@ QVariantMap createProps_pins()
 
     QVariantList bitNames;
     bitNames.append("reconfig");
-    assert(bitNames.size() == ublox::message::CfgAntField_pins_reconfig_numOfValues);
+    assert(bitNames.size() == ublox::message::CfgAntFields::pins_reconfig_numOfValues);
     auto reconfigProps = cc::Property::createPropertiesMap(QString(), std::move(bitNames));
     cc::Property::setSerialisedHidden(reconfigProps);
 
@@ -71,7 +71,7 @@ QVariantMap createProps_pins()
     membersData.append(createPinPropsFunc("pinSCD"));
     membersData.append(createPinPropsFunc("pinOCD"));
     membersData.append(std::move(reconfigProps));
-    assert(membersData.size() == ublox::message::CfgAntField_pins_numOfValues);
+    assert(membersData.size() == ublox::message::CfgAntFields::pins_numOfValues);
     return cc::Property::createPropertiesMap("pins", std::move(membersData));
 }
 
