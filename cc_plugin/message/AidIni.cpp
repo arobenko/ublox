@@ -62,13 +62,13 @@ QVariantMap createProps_tmCfg()
             }
         };
 
-    fillUntilFunc(ublox::message::AidIniField_tmCfg_fEdge);
+    fillUntilFunc(ublox::message::AidIniFields::tmCfg_fEdge);
     bitNames.append("fEdge");
-    fillUntilFunc(ublox::message::AidIniField_tmCfg_tm1);
+    fillUntilFunc(ublox::message::AidIniFields::tmCfg_tm1);
     bitNames.append("tm1");
-    fillUntilFunc(ublox::message::AidIniField_tmCfg_f1);
+    fillUntilFunc(ublox::message::AidIniFields::tmCfg_f1);
     bitNames.append("f1");
-    assert(bitNames.size() == ublox::message::AidIniField_tmCfg_numOfValues);
+    assert(bitNames.size() == ublox::message::AidIniFields::tmCfg_numOfValues);
     return cc::Property::createPropertiesMap("tmCfg", std::move(bitNames));
 }
 
@@ -83,7 +83,7 @@ QVariantMap createProps_date()
     QVariantList membersData;
     membersData.append(std::move(monthProps));
     membersData.append(std::move(yearProps));
-    assert(membersData.size() == ublox::message::AidIniField_date_numOfValues);
+    assert(membersData.size() == ublox::message::AidIniFields::date_numOfValues);
     static const QString Name("date");
     auto valProps = cc::Property::createPropertiesMap(Name, std::move(membersData));
     auto props = cc::Property::createPropertiesMap(Name, std::move(valProps));
@@ -110,7 +110,7 @@ QVariantMap createProps_time()
     membersData.append(std::move(minProps));
     membersData.append(std::move(hourProps));
     membersData.append(std::move(dayProps));
-    assert(membersData.size() == ublox::message::AidIniField_time_numOfValues);
+    assert(membersData.size() == ublox::message::AidIniFields::time_numOfValues);
     static const QString Name("time");
     auto valProps = cc::Property::createPropertiesMap(Name, std::move(membersData));
     auto props = cc::Property::createPropertiesMap(Name, std::move(valProps));
@@ -132,7 +132,7 @@ QVariantMap createProps_flags()
     bitNames.append(QVariant());
     bitNames.append(QVariant());
     bitNames.append("utc");
-    assert(bitNames.size() == ublox::message::AidIniField_flags_numOfValues);
+    assert(bitNames.size() == ublox::message::AidIniFields::flags_numOfValues);
     return cc::Property::createPropertiesMap("flags", std::move(bitNames));
 }
 
