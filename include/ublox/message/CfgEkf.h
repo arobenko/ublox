@@ -15,12 +15,12 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+/// @file
+/// @brief Contains definition of CFG-EKF message and its fields.
 
 #pragma once
 
-#include "comms/Message.h"
 #include "ublox/Message.h"
-#include "ublox/field/MsgId.h"
 #include "ublox/field/common.h"
 
 namespace ublox
@@ -29,113 +29,138 @@ namespace ublox
 namespace message
 {
 
-enum class CfgEkf_DisableEkf : std::uint8_t
+/// @brief Accumulates details of all the CFG-EKF message fields.
+/// @see CfgEkf
+struct CfgEkfFields
 {
-    Enabled,
-    Disabled,
-    NumOfValues
+    /// @brief Enumerator for @ref disableEkf field
+    enum class DisableEkf : std::uint8_t
+    {
+        Enabled, ///< Solution enabled
+        Disabled, ///< Solution disabled
+        NumOfValues ///< Number of values
+    };
+
+    /// @brief Bits access enumerator for @ref actionFlags bitmask field.
+    enum
+    {
+        actionFlags_clTab = 1, ///< @b clTab bit number
+        actionFlags_clCalib = 2, ///< @b clCalib bit number
+        actionFlags_nomTacho = 4, ///< @b nomTacho bit number
+        actionFlags_nomGyro = 5, ///< @b nomGyro bit number
+        actionFlags_setTemp = 6, ///< @b setTemp bit number
+        actionFlags_dir = 7, ///< @b dir bit number
+        actionFlags_numOfValues ///< upper limit of available bits
+    };
+
+    /// @brief Bits access enumerator for @ref configFlags bitmask field.
+    enum
+    {
+        configFlags_pulsesPerM, ///< @b pulsesPerM bit number
+        configFlags_useSerWt, ///< @b useSerWt bit number
+        configFlags_numOfValues ///< number of available bits
+    };
+
+    /// @brief Bits access enumerator for @ref inverseFlags bitmask field.
+    enum
+    {
+        inverseFlags_invDir, ///< @b invDir bit number
+        inverseFlags_invGyro, ///< @b invGyro bit number
+        inverseFlags_numOfValues ///< number of available bits
+    };
+
+    /// @brief Definition of "disableEkf" field.
+    using disableEkf =
+        field::common::EnumT<
+            DisableEkf,
+            comms::option::ValidNumValueRange<0, (int)CfgEkf_DisableEkf::NumOfValues - 1>
+        >;
+
+    /// @brief Definition of "actionFlags" field.
+    using actionFlags =
+        field::common::X1T<
+            comms::option::BitmaskReservedBits<0x9, 0>
+        >;
+
+    /// @brief Definition of "configFlags" field.
+    using configFlags =
+        field::common::X1T<
+            comms::option::BitmaskReservedBits<0xfc, 0>
+        >;
+
+    /// @brief Definition of "inverseFlags" field.
+    using inverseFlags =
+        field::common::X1T<
+            comms::option::BitmaskReservedBits<0xfc, 0>
+        >;
+
+    /// @brief Definition of "reserved2" field.
+    using reserved2 = field::common::res4;
+
+    /// @brief Definition of "nomPPDist" field.
+    using nomPPDist = field::common::U2;
+
+    /// @brief Definition of "nomZero" field.
+    using nomZero =
+        field::common::U2T<
+            comms::option::ValidNumValueRange<2000, 3000>
+        >;
+
+    /// @brief Definition of "nomSens" field.
+    using nomSens =
+        field::common::U1T<
+            comms::option::ValidNumValueRange<20, 40>
+        >;
+
+    /// @brief Definition of "rmsTemp" field.
+    using rmsTemp =
+        field::common::U1T<
+            comms::option::ValidNumValueRange<1, 10>,
+            comms::option::ScalingRatio<1, 10>
+        >;
+
+    /// @brief Definition of "tempUpdate" field.
+    using tempUpdate =
+        field::common::U2T<
+            comms::option::ValidNumValueRange<9, 0xffff>
+        >;
+
+    /// @brief All the fields bundled in std::tuple.
+    using All = std::tuple<
+        disableEkf,
+        actionFlags,
+        configFlags,
+        inverseFlags,
+        reserved2,
+        nomPPDist,
+        nomZero,
+        nomSens,
+        rmsTemp,
+        tempUpdate
+    >;
 };
 
-enum
-{
-    CfgEkfActionFlag_ClearTemperatureCompensationTable = 1,
-    CfgEkfActionFlag_ClearStoredCalibration = 2,
-    CfgEkfActionFlag_SetNominalTachoPulses = 4,
-    CfgEkfActionFlag_SetNominalGyroValues = 5,
-    CfgEkfActionFlag_SetTempTableConfig = 6,
-    CfgEkfActionFlag_SetDirectionPinAndGyroSenseMeaning = 7
-};
-
-enum
-{
-    CfgEkfField_actionFlags_reserved0,
-    CfgEkfField_actionFlags_clTab,
-    CfgEkfField_actionFlags_clCalib,
-    CfgEkfField_actionFlags_reserved1,
-    CfgEkfField_actionFlags_nomTacho,
-    CfgEkfField_actionFlags_nomGyro,
-    CfgEkfField_actionFlags_setTemp,
-    CfgEkfField_actionFlags_dir,
-    CfgEkfField_actionFlags_numOfValues
-};
-
-enum
-{
-    CfgEkfField_configFlags_pulsesPerM,
-    CfgEkfField_configFlags_useSerWt,
-    CfgEkfField_configFlags_numOfValues
-};
-
-enum
-{
-    CfgEkfField_inverseFlags_invDir,
-    CfgEkfField_inverseFlags_invGyro,
-    CfgEkfField_inverseFlags_numOfValues
-};
-
-using CfgEkfField_disableEkf =
-    field::common::EnumT<
-        CfgEkf_DisableEkf,
-        comms::option::ValidNumValueRange<0, (int)CfgEkf_DisableEkf::NumOfValues - 1>
-    >;
-using CfgEkfField_actionFlags =
-    field::common::X1T<
-        comms::option::BitmaskReservedBits<0x9, 0>
-    >;
-using CfgEkfField_configFlags =
-    field::common::X1T<
-        comms::option::BitmaskReservedBits<0xfc, 0>
-    >;
-using CfgEkfField_inverseFlags =
-    field::common::X1T<
-        comms::option::BitmaskReservedBits<0xfc, 0>
-    >;
-using CfgEkfField_reserved2 = field::common::res4;
-using CfgEkfField_nomPPDist = field::common::U2;
-using CfgEkfField_nomZero =
-    field::common::U2T<
-        comms::option::ValidNumValueRange<2000, 3000>
-    >;
-using CfgEkfField_nomSens =
-    field::common::U1T<
-        comms::option::ValidNumValueRange<20, 40>
-    >;
-using CfgEkfField_rmsTemp =
-    field::common::U1T<
-        comms::option::ValidNumValueRange<1, 10>,
-        comms::option::ScalingRatio<1, 10>
-    >;
-using CfgEkfField_tempUpdate =
-    field::common::U2T<
-        comms::option::ValidNumValueRange<9, 0xffff>
-    >;
-
-using CfgEkfFields = std::tuple<
-    CfgEkfField_disableEkf,
-    CfgEkfField_actionFlags,
-    CfgEkfField_configFlags,
-    CfgEkfField_inverseFlags,
-    CfgEkfField_reserved2,
-    CfgEkfField_nomPPDist,
-    CfgEkfField_nomZero,
-    CfgEkfField_nomSens,
-    CfgEkfField_rmsTemp,
-    CfgEkfField_tempUpdate
->;
-
+/// @brief Definition of CFG-EKF message
+/// @details Inherits from
+///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+///     while providing @b TMsgBase as common interface class as well as
+///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
+///     @b comms::option::DispatchImpl as options. @n
+///     See @ref CfgEkfFields and for definition of the fields this message contains.
+/// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class CfgEkf : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_EKF>,
-        comms::option::FieldsImpl<CfgEkfFields>,
+        comms::option::FieldsImpl<CfgEkfFields::All>,
         comms::option::DispatchImpl<CfgEkf<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_EKF>,
-        comms::option::FieldsImpl<CfgEkfFields>,
+        comms::option::FieldsImpl<CfgEkfFields::All>,
         comms::option::DispatchImpl<CfgEkf<TMsgBase> >
     > Base;
 public:
@@ -143,16 +168,16 @@ public:
     /// @brief Index to access the fields
     enum FieldIdx
     {
-        FieldIdx_disableEkf,
-        FieldIdx_actionFlags,
-        FieldIdx_configFlags,
-        FieldIdx_inverseFlags,
-        FieldIdx_reserved2,
-        FieldIdx_nomPPDist,
-        FieldIdx_nomZero,
-        FieldIdx_nomSens,
-        FieldIdx_rmsTemp,
-        FieldIdx_tempUpdate,
+        FieldIdx_disableEkf, ///< @b disableEkf field, see @ref CfgEkfFields::disableEkf
+        FieldIdx_actionFlags, ///< @b actionFlags field, see @ref CfgEkfFields::actionFlags
+        FieldIdx_configFlags, ///< @b configFlags field, see @ref CfgEkfFields::configFlags
+        FieldIdx_inverseFlags, ///< @b inverseFlags field, see @ref CfgEkfFields::inverseFlags
+        FieldIdx_reserved2, ///< @b reserved2 field, see @ref CfgEkfFields::reserved2
+        FieldIdx_nomPPDist, ///< @b nomPPDist field, see @ref CfgEkfFields::nomPPDist
+        FieldIdx_nomZero, ///< @b nomZero field, see @ref CfgEkfFields::nomZero
+        FieldIdx_nomSens, ///< @b nomSens field, see @ref CfgEkfFields::nomSens
+        FieldIdx_rmsTemp, ///< @b rmsTemp field, see @ref CfgEkfFields::rmsTemp
+        FieldIdx_tempUpdate, ///< @b tempUpdate field, see @ref CfgEkfFields::tempUpdate
         FieldIdx_numOfValues ///< number of available fields
     };
 

@@ -44,7 +44,7 @@ QVariantMap createProps_disableEkf()
     QVariantList enumValues;
     cc::Property::appendEnumValue(enumValues, "Enabled");
     cc::Property::appendEnumValue(enumValues, "Disabled");
-    assert(enumValues.size() == (int)ublox::message::CfgEkf_DisableEkf::NumOfValues);
+    assert(enumValues.size() == (int)ublox::message::CfgEkfFields::DisableEkf::NumOfValues);
     return cc::Property::createPropertiesMap("disableEkf", std::move(enumValues));
 }
 
@@ -59,7 +59,7 @@ QVariantMap createProps_actionFlags()
     bitNames.append("nomGyro");
     bitNames.append("setTemp");
     bitNames.append("dir");
-    assert(bitNames.size() == ublox::message::CfgEkfField_actionFlags_numOfValues);
+    assert(bitNames.size() == ublox::message::CfgEkfFields::actionFlags_numOfValues);
     return cc::Property::createPropertiesMap("actionFlags", std::move(bitNames));
 }
 
@@ -68,7 +68,7 @@ QVariantMap createProps_configFlags()
     QVariantList bitNames;
     bitNames.append("pulsesPerM");
     bitNames.append("useSerWt");
-    assert(bitNames.size() == ublox::message::CfgEkfField_configFlags_numOfValues);
+    assert(bitNames.size() == ublox::message::CfgEkfFields::configFlags_numOfValues);
     return cc::Property::createPropertiesMap("configFlags", std::move(bitNames));
 }
 
@@ -77,7 +77,7 @@ QVariantMap createProps_inverseFlags()
     QVariantList bitNames;
     bitNames.append("invDir");
     bitNames.append("invGyro");
-    assert(bitNames.size() == ublox::message::CfgEkfField_inverseFlags_numOfValues);
+    assert(bitNames.size() == ublox::message::CfgEkfFields::inverseFlags_numOfValues);
     return cc::Property::createPropertiesMap("inverseFlags", std::move(bitNames));
 }
 
