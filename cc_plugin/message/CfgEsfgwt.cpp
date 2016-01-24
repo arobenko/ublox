@@ -42,13 +42,13 @@ namespace
 QVariantMap createProps_flags()
 {
     QVariantList bitNames;
-    while (bitNames.size() < ublox::message::CfgEsfgwtField_flags_setVehicle) {
+    while (bitNames.size() < ublox::message::CfgEsfgwtFields::flags_setVehicle) {
         bitNames.append(QVariant());
     }
     bitNames.append("setVehicle");
     bitNames.append("setTime");
     bitNames.append("setWt");
-    assert(bitNames.size() == ublox::message::CfgEsfgwtField_flags_numOfValues);
+    assert(bitNames.size() == ublox::message::CfgEsfgwtFields::flags_numOfValues);
     return cc::Property::createPropertiesMap("flags", std::move(bitNames));
 }
 

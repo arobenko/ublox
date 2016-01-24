@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -73,7 +73,7 @@ struct CfgEkfFields
     using disableEkf =
         field::common::EnumT<
             DisableEkf,
-            comms::option::ValidNumValueRange<0, (int)CfgEkf_DisableEkf::NumOfValues - 1>
+            comms::option::ValidNumValueRange<0, (int)DisableEkf::NumOfValues - 1>
         >;
 
     /// @brief Definition of "actionFlags" field.
