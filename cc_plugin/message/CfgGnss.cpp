@@ -49,10 +49,10 @@ QVariantMap createProps_numConfigBlocks()
 QVariantMap createProps_gnssId()
 {
     QVariantList enumValues;
-    cc::Property::appendEnumValue(enumValues, "GPS", (int)ublox::message::CfgGnss_GnssId::GPS);
-    cc::Property::appendEnumValue(enumValues, "SBAS", (int)ublox::message::CfgGnss_GnssId::SBAS);
-    cc::Property::appendEnumValue(enumValues, "QZSS", (int)ublox::message::CfgGnss_GnssId::QZSS);
-    cc::Property::appendEnumValue(enumValues, "GLONASS", (int)ublox::message::CfgGnss_GnssId::GLONASS);
+    cc::Property::appendEnumValue(enumValues, "GPS", (int)ublox::message::CfgGnssFields::GnssId::GPS);
+    cc::Property::appendEnumValue(enumValues, "SBAS", (int)ublox::message::CfgGnssFields::GnssId::SBAS);
+    cc::Property::appendEnumValue(enumValues, "QZSS", (int)ublox::message::CfgGnssFields::GnssId::QZSS);
+    cc::Property::appendEnumValue(enumValues, "GLONASS", (int)ublox::message::CfgGnssFields::GnssId::GLONASS);
     return cc::Property::createPropertiesMap("gnssId", std::move(enumValues));
 }
 
@@ -60,7 +60,7 @@ QVariantMap createProps_flags()
 {
     QVariantList bitNames;
     bitNames.append("enable");
-    assert(bitNames.size() == ublox::message::CfgGnssField_data_flags_numOfValues);
+    assert(bitNames.size() == ublox::message::CfgGnssFields::flags_numOfValues);
     return cc::Property::createPropertiesMap("flags", std::move(bitNames));
 }
 
@@ -72,7 +72,7 @@ QVariantMap createProps_data()
     membersData.append(cc::Property::createPropertiesMap("maxTrkCh"));
     membersData.append(cc_plugin::field::common::props_reserved(1));
     membersData.append(createProps_flags());
-    assert(membersData.size() == ublox::message::CfgGnssField_data_numOfValues);
+    assert(membersData.size() == ublox::message::CfgGnssFields::block_numOfValues);
 
     auto elemProps = cc::Property::createPropertiesMap("element", std::move(membersData));
     auto props = cc::Property::createPropertiesMap("data", std::move(elemProps));
