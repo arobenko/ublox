@@ -47,7 +47,7 @@ QVariantMap createProps_flags()
     bitNames.append(QVariant());
     bitNames.append("absAlign");
     bitNames.append("onOff");
-    assert(bitNames.size() == ublox::message::CfgFxnField_flags_numOfValues);
+    assert(bitNames.size() == ublox::message::CfgFxnFields::flags_numOfValues);
     return cc::Property::createPropertiesMap("flags", std::move(bitNames));
 }
 

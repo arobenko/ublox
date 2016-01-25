@@ -15,13 +15,13 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+/// @file
+/// @brief Contains definition of CFG-FXN message and its fields.
 
 #pragma once
 
-#include "comms/Message.h"
 #include "ublox/Message.h"
-#include "ublox/field/MsgId.h"
-#include "ublox/field/cfg.h"
+#include "ublox/field/common.h"
 
 namespace ublox
 {
@@ -29,54 +29,84 @@ namespace ublox
 namespace message
 {
 
-enum
+/// @brief Accumulates details of all the CFG-FXN message fields.
+/// @see CfgFxn
+struct CfgFxnFields
 {
-    CfgFxnField_flags_reserved0,
-    CfgFxnField_flags_sleep,
-    CfgFxnField_flags_reserved1,
-    CfgFxnField_flags_absAlign,
-    CfgFxnField_flags_onOff,
-    CfgFxnField_flags_numOfValues
+    /// @brief Bits access enumerator for @ref flags bitmask field.
+    enum
+    {
+        flags_sleep = 1, ///< @b sleep bit number
+        flags_absAlign = 3, ///< @b absAlign bit number
+        flags_onOff, ///< @b onOff bit number
+        flags_numOfValues ///< upper limit of available bits
+    };
+
+    /// @brief Definition of "flags" field.
+    using flags =
+        field::common::X4T<
+            comms::option::BitmaskReservedBits<0xffffffe5, 0>
+        >;
+
+    /// @brief Definition of "tReacq" field.
+    using tReacq = field::common::U4T<field::common::Scaling_ms2s>;
+
+    /// @brief Definition of "tAcq" field.
+    using tAcq = field::common::U4T<field::common::Scaling_ms2s>;
+
+    /// @brief Definition of "tReacqOff" field.
+    using tReacqOff = field::common::U4T<field::common::Scaling_ms2s>;
+
+    /// @brief Definition of "tAcqOff" field.
+    using tAcqOff = field::common::U4T<field::common::Scaling_ms2s>;
+
+    /// @brief Definition of "tOn" field.
+    using tOn = field::common::U4T<field::common::Scaling_ms2s>;
+
+    /// @brief Definition of "tOff" field.
+    using tOff = field::common::U4T<field::common::Scaling_ms2s>;
+
+    /// @brief Definition of "res" field.
+    using res = field::common::res4;
+
+    /// @brief Definition of "baseTow" field.
+    using baseTow = field::common::U4T<field::common::Scaling_ms2s>;
+
+    /// @brief All the fields bundled in std::tuple.
+    using All = std::tuple<
+        flags,
+        tReacq,
+        tAcq,
+        tReacqOff,
+        tAcqOff,
+        tOn,
+        tOff,
+        res,
+        baseTow
+    >;
 };
 
-using CfgFxnField_flags =
-    field::common::X4T<
-        comms::option::BitmaskReservedBits<0xffffffe5, 0>
-    >;
-using CfgFxnField_tReacq = field::common::U4T<field::common::Scaling_ms2s>;
-using CfgFxnField_tAcq = field::common::U4T<field::common::Scaling_ms2s>;
-using CfgFxnField_tReacqOff = field::common::U4T<field::common::Scaling_ms2s>;
-using CfgFxnField_tAcqOff = field::common::U4T<field::common::Scaling_ms2s>;
-using CfgFxnField_tOn = field::common::U4T<field::common::Scaling_ms2s>;
-using CfgFxnField_tOff = field::common::U4T<field::common::Scaling_ms2s>;
-using CfgFxnField_res = field::common::res4;
-using CfgFxnField_baseTow = field::common::U4T<field::common::Scaling_ms2s>;
-
-using CfgFxnFields = std::tuple<
-    CfgFxnField_flags,
-    CfgFxnField_tReacq,
-    CfgFxnField_tAcq,
-    CfgFxnField_tReacqOff,
-    CfgFxnField_tAcqOff,
-    CfgFxnField_tOn,
-    CfgFxnField_tOff,
-    CfgFxnField_res,
-    CfgFxnField_baseTow
->;
-
+/// @brief Definition of CFG-FXN message
+/// @details Inherits from
+///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+///     while providing @b TMsgBase as common interface class as well as
+///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
+///     @b comms::option::DispatchImpl as options. @n
+///     See @ref CfgFxnFields and for definition of the fields this message contains.
+/// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class CfgFxn : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_FXN>,
-        comms::option::FieldsImpl<CfgFxnFields>,
+        comms::option::FieldsImpl<CfgFxnFields::All>,
         comms::option::DispatchImpl<CfgFxn<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_FXN>,
-        comms::option::FieldsImpl<CfgFxnFields>,
+        comms::option::FieldsImpl<CfgFxnFields::All>,
         comms::option::DispatchImpl<CfgFxn<TMsgBase> >
     > Base;
 public:
@@ -84,15 +114,15 @@ public:
     /// @brief Index to access the fields
     enum FieldIdx
     {
-        FieldIdx_flags,
-        FieldIdx_tReacq,
-        FieldIdx_tAcq,
-        FieldIdx_tReacqOff,
-        FieldIdx_tAcqOff,
-        FieldIdx_tOn,
-        FieldIdx_tOff,
-        FieldIdx_res,
-        FieldIdx_baseTow,
+        FieldIdx_flags, ///< @b flags field, see @ref CfgFxnFields::flags
+        FieldIdx_tReacq, ///< @b tReacq field, see @ref CfgFxnFields::tReacq
+        FieldIdx_tAcq, ///< @b tAcq field, see @ref CfgFxnFields::tAcq
+        FieldIdx_tReacqOff, ///< @b tReacqOff field, see @ref CfgFxnFields::tReacqOff
+        FieldIdx_tAcqOff, ///< @b tAcqOff field, see @ref CfgFxnFields::tAcqOff
+        FieldIdx_tOn, ///< @b tOn field, see @ref CfgFxnFields::tOn
+        FieldIdx_tOff, ///< @b tOff field, see @ref CfgFxnFields::tOff
+        FieldIdx_res, ///< @b res field, see @ref CfgFxnFields::res
+        FieldIdx_baseTow, ///< @b baseTow field, see @ref CfgFxnFields::baseTow
         FieldIdx_numOfValues ///< number of available fields
     };
 
