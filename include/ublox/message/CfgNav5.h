@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -15,12 +15,14 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+/// @file
+/// @brief Contains definition of CFG-NAV5 message and its fields.
 
 #pragma once
 
-#include "comms/Message.h"
+#include <algorithm>
+
 #include "ublox/Message.h"
-#include "ublox/field/MsgId.h"
 #include "ublox/field/common.h"
 
 namespace ublox
@@ -29,125 +31,177 @@ namespace ublox
 namespace message
 {
 
-enum
+/// @brief Accumulates details of all the CFG-NAV5 message fields.
+/// @see CfgNav5
+struct CfgNav5Fields
 {
-    CfgNav5Field_mask_dyn,
-    CfgNav5Field_mask_minEl,
-    CfgNav5Field_mask_posFixMode,
-    CfgNav5Field_mask_drLim,
-    CfgNav5Field_mask_posMask,
-    CfgNav5Field_mask_timeMask,
-    CfgNav5Field_mask_staticHoldMask,
-    CfgNav5Field_mask_dgpsMask,
-    CfgNav5Field_mask_numOfValues
-};
-
-enum class CfgNav5_DynModel : std::uint8_t
-{
-    Portable,
-    Stationary = 2,
-    Pedestrian,
-    Automotive,
-    Sea,
-    Airborne_1g,
-    Airborne_2g,
-    Airborne_4g,
-};
-
-struct CfgNav5_DynModelValidator
-{
-    template <typename TField>
-    bool operator()(const TField& field) const
+    /// @brief Bits access enumeration for @ref mask bitmask field.
+    enum
     {
-        static const CfgNav5_DynModel Values[] = {
-            CfgNav5_DynModel::Portable,
-            CfgNav5_DynModel::Stationary,
-            CfgNav5_DynModel::Pedestrian,
-            CfgNav5_DynModel::Automotive,
-            CfgNav5_DynModel::Sea,
-            CfgNav5_DynModel::Airborne_1g,
-            CfgNav5_DynModel::Airborne_2g,
-            CfgNav5_DynModel::Airborne_4g
-        };
+        mask_dyn, ///< @b dyn bit number
+        mask_minEl, ///< @b minEl bit number
+        mask_posFixMode, ///< @b posFixMode bit number
+        mask_drLim, ///< @b drLim bit number
+        mask_posMask, ///< @b posMask bit number
+        mask_timeMask, ///< @b timeMask bit number
+        mask_staticHoldMask, ///< @b staticHoldMask bit number
+        mask_dgpsMask, ///< @b dgps bit number
+        mask_numOfValues ///< number of available bits
+    };
 
-        auto value = field.value();
-        auto iter = std::lower_bound(std::begin(Values), std::end(Values), value);
-        return (iter != std::end(Values)) && (*iter == value);
-    }
+    /// @brief Value enumeration for @ref dynModel enum value field.
+    enum class DynModel : std::uint8_t
+    {
+        Portable, ///< Portable model
+        Stationary = 2, ///< Stationary model
+        Pedestrian, ///< Pedestrian model
+        Automotive, ///< Automotive model
+        Sea, ///< Sea model
+        Airborne_1g, ///< Airborne with <1g Acceleration
+        Airborne_2g,///< Airborne with <2g Acceleration
+        Airborne_4g,///< Airborne with <4g Acceleration
+    };
+
+    /// @brief Custom value validator for @ref dynModel field.
+    struct DynModelValidator
+    {
+        template <typename TField>
+        bool operator()(const TField& field) const
+        {
+            static const DynModel Values[] = {
+                DynModel::Portable,
+                DynModel::Stationary,
+                DynModel::Pedestrian,
+                DynModel::Automotive,
+                DynModel::Sea,
+                DynModel::Airborne_1g,
+                DynModel::Airborne_2g,
+                DynModel::Airborne_4g
+            };
+
+            auto value = field.value();
+            auto iter = std::lower_bound(std::begin(Values), std::end(Values), value);
+            return (iter != std::end(Values)) && (*iter == value);
+        }
+    };
+
+    /// @brief Value enumeration for @ref fixMode enum value field.
+    enum class FixMode : std::uint8_t
+    {
+        Only_2D = 1,
+        Only_3D,
+        Auto,
+    };
+
+    /// @brief Definition of "mask" field.
+    using mask =
+        field::common::X2T<
+            comms::option::BitmaskReservedBits<0xff00, 0>
+        >;
+
+    /// @brief Definition of "dynModel" field.
+    using dynModel =
+        field::common::EnumT<
+            DynModel,
+            comms::option::ContentsValidator<DynModelValidator>
+        >;
+
+    /// @brief Definition of "fixMode" field.
+    using fixMode =
+        field::common::EnumT<
+            FixMode,
+            comms::option::ValidNumValueRange<(int)FixMode::Only_2D, (int)FixMode::Auto>
+        >;
+
+    /// @brief Definition of "fixedAlt" field.
+    using fixedAlt = field::common::I4T<comms::option::ScalingRatio<1, 100> >;
+
+    /// @brief Definition of "fixedAltVar" field.
+    using fixedAltVar = field::common::U4T<comms::option::ScalingRatio<1, 10000> >;
+
+    /// @brief Definition of "minElev" field.
+    using minElev = field::common::I1;
+
+    /// @brief Definition of "drLimit" field.
+    using drLimit = field::common::U1;
+
+    /// @brief Definition of "pDOP" field.
+    using pDOP = field::common::U2T<comms::option::ScalingRatio<1, 10> >;
+
+    /// @brief Definition of "tDOP" field.
+    using tDOP = field::common::U2T<comms::option::ScalingRatio<1, 10> >;
+
+    /// @brief Definition of "pAcc" field.
+    using pAcc = field::common::U2;
+
+    /// @brief Definition of "tAcc" field.
+    using tAcc = field::common::U2;
+
+    /// @brief Definition of "staticHoldThreash" field.
+    using staticHoldThreash = field::common::U1T<field::common::Scaling_cm2m>;
+
+    /// @brief Definition of "dgpsTimeOut" field.
+    using dgpsTimeOut = field::common::U1;
+
+    /// @brief Definition of "cnoThreshNumSVs" field.
+    using cnoThreshNumSVs = field::common::U1;
+
+    /// @brief Definition of "cnoThresh" field.
+    using cnoThresh = field::common::U1;
+
+    /// @brief Definition of "reserved2" field.
+    using reserved2 = field::common::res2;
+
+    /// @brief Definition of "reserved3" field.
+    using reserved3 = field::common::res4;
+
+    /// @brief Definition of "reserved4" field.
+    using reserved4 = field::common::res4;
+
+    /// @brief All the fields bundled in std::tuple.
+    using All = std::tuple<
+        mask,
+        dynModel,
+        fixMode,
+        fixedAlt,
+        fixedAltVar,
+        minElev,
+        drLimit,
+        pDOP,
+        tDOP,
+        pAcc,
+        tAcc,
+        staticHoldThreash,
+        dgpsTimeOut,
+        cnoThreshNumSVs,
+        cnoThresh,
+        reserved2,
+        reserved3,
+        reserved4
+    >;
 };
 
-enum class CfgNav5_FixMode : std::uint8_t
-{
-    Only_2D = 1,
-    Only_3D,
-    Auto,
-};
-
-
-using CfgNav5Field_mask =
-    field::common::X2T<
-        comms::option::BitmaskReservedBits<0xff00, 0>
-    >;
-using CfgNav5Field_dynModel =
-    field::common::EnumT<
-        CfgNav5_DynModel,
-        comms::option::ContentsValidator<CfgNav5_DynModelValidator>
-    >;
-using CfgNav5Field_fixMode =
-    field::common::EnumT<
-        CfgNav5_FixMode,
-        comms::option::ValidNumValueRange<(int)CfgNav5_FixMode::Only_2D, (int)CfgNav5_FixMode::Auto>
-    >;
-using CfgNav5Field_fixedAlt = field::common::I4T<comms::option::ScalingRatio<1, 100> >;
-using CfgNav5Field_fixedAltVar = field::common::U4T<comms::option::ScalingRatio<1, 10000> >;
-using CfgNav5Field_minElev = field::common::I1;
-using CfgNav5Field_drLimit = field::common::U1;
-using CfgNav5Field_pDOP = field::common::U2T<comms::option::ScalingRatio<1, 10> >;
-using CfgNav5Field_tDOP = field::common::U2T<comms::option::ScalingRatio<1, 10> >;
-using CfgNav5Field_pAcc = field::common::U2;
-using CfgNav5Field_tAcc = field::common::U2;
-using CfgNav5Field_staticHoldThreash = field::common::U1T<field::common::Scaling_cm2m>;
-using CfgNav5Field_dgpsTimeOut = field::common::U1;
-using CfgNav5Field_cnoThreshNumSVs = field::common::U1;
-using CfgNav5Field_cnoThresh = field::common::U1;
-using CfgNav5Field_reserved2 = field::common::res2;
-using CfgNav5Field_reserved3 = field::common::res4;
-using CfgNav5Field_reserved4 = field::common::res4;
-
-using CfgNav5Fields = std::tuple<
-    CfgNav5Field_mask,
-    CfgNav5Field_dynModel,
-    CfgNav5Field_fixMode,
-    CfgNav5Field_fixedAlt,
-    CfgNav5Field_fixedAltVar,
-    CfgNav5Field_minElev,
-    CfgNav5Field_drLimit,
-    CfgNav5Field_pDOP,
-    CfgNav5Field_tDOP,
-    CfgNav5Field_pAcc,
-    CfgNav5Field_tAcc,
-    CfgNav5Field_staticHoldThreash,
-    CfgNav5Field_dgpsTimeOut,
-    CfgNav5Field_cnoThreshNumSVs,
-    CfgNav5Field_cnoThresh,
-    CfgNav5Field_reserved2,
-    CfgNav5Field_reserved3,
-    CfgNav5Field_reserved4
->;
-
+/// @brief Definition of CFG-NAV5 message
+/// @details Inherits from
+///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+///     while providing @b TMsgBase as common interface class as well as
+///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
+///     @b comms::option::DispatchImpl as options. @n
+///     See @ref CfgNav5Fields and for definition of the fields this message contains.
+/// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class CfgNav5 : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_NAV5>,
-        comms::option::FieldsImpl<CfgNav5Fields>,
+        comms::option::FieldsImpl<CfgNav5Fields::All>,
         comms::option::DispatchImpl<CfgNav5<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_NAV5>,
-        comms::option::FieldsImpl<CfgNav5Fields>,
+        comms::option::FieldsImpl<CfgNav5Fields::All>,
         comms::option::DispatchImpl<CfgNav5<TMsgBase> >
     > Base;
 public:
@@ -155,24 +209,24 @@ public:
     /// @brief Index to access the fields
     enum FieldIdx
     {
-        FieldIdx_mask,
-        FieldIdx_dynModel,
-        FieldIdx_fixMode,
-        FieldIdx_fixedAlt,
-        FieldIdx_fixedAltVar,
-        FieldIdx_minElev,
-        FieldIdx_drLimit,
-        FieldIdx_pDOP,
-        FieldIdx_tDOP,
-        FieldIdx_pAcc,
-        FieldIdx_tAcc,
-        FieldIdx_staticHoldThreash,
-        FieldIdx_dgpsTimeOut,
-        FieldIdx_cnoThreshNumSVs,
-        FieldIdx_cnoThresh,
-        FieldIdx_reserved2,
-        FieldIdx_reserved3,
-        FieldIdx_reserved4,
+        FieldIdx_mask, ///< @b mask field, see @ref CfgNav5Fields::mask
+        FieldIdx_dynModel, ///< @b dynModel field, see @ref CfgNav5Fields::dynModel
+        FieldIdx_fixMode, ///< @b fixMode field, see @ref CfgNav5Fields::fixMode
+        FieldIdx_fixedAlt, ///< @b fixedAlt field, see @ref CfgNav5Fields::fixedAlt
+        FieldIdx_fixedAltVar, ///< @b fixedAltVar field, see @ref CfgNav5Fields::fixedAltVar
+        FieldIdx_minElev, ///< @b minElev field, see @ref CfgNav5Fields::minElev
+        FieldIdx_drLimit, ///< @b drLimit field, see @ref CfgNav5Fields::drLimit
+        FieldIdx_pDOP, ///< @b pDOP field, see @ref CfgNav5Fields::pDOP
+        FieldIdx_tDOP, ///< @b tDOP field, see @ref CfgNav5Fields::tDOP
+        FieldIdx_pAcc, ///< @b pAcc field, see @ref CfgNav5Fields::pAcc
+        FieldIdx_tAcc, ///< @b tAcc field, see @ref CfgNav5Fields::tAcc
+        FieldIdx_staticHoldThreash, ///< @b staticHoldThreash field, see @ref CfgNav5Fields::staticHoldThreash
+        FieldIdx_dgpsTimeOut, ///< @b dgpsTimeOut field, see @ref CfgNav5Fields::dgpsTimeOut
+        FieldIdx_cnoThreshNumSVs, ///< @b cnoThreshNumSVs field, see @ref CfgNav5Fields::cnoThreshNumSVs
+        FieldIdx_cnoThresh, ///< @b cnoThresh field, see @ref CfgNav5Fields::cnoThresh
+        FieldIdx_reserved2, ///< @b reserved2 field, see @ref CfgNav5Fields::reserved2
+        FieldIdx_reserved3, ///< @b reserved3 field, see @ref CfgNav5Fields::reserved3
+        FieldIdx_reserved4, ///< @b reserved4 field, see @ref CfgNav5Fields::reserved4
         FieldIdx_numOfValues ///< number of available fields
     };
 

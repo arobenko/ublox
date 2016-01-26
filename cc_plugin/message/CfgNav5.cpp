@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -53,30 +53,30 @@ QVariantMap createProps_mask()
     bitNames.append("timeMask");
     bitNames.append("staticHoldMask");
     bitNames.append("dgpsMask");
-    assert(bitNames.size() == ublox::message::CfgNav5Field_mask_numOfValues);
+    assert(bitNames.size() == ublox::message::CfgNav5Fields::mask_numOfValues);
     return cc::Property::createPropertiesMap("mask", std::move(bitNames));
 }
 
 QVariantMap createProps_dynModel()
 {
     QVariantList enumValues;
-    cc::Property::appendEnumValue(enumValues, "Portable", (int)ublox::message::CfgNav5_DynModel::Portable);
-    cc::Property::appendEnumValue(enumValues, "Stationary", (int)ublox::message::CfgNav5_DynModel::Stationary);
-    cc::Property::appendEnumValue(enumValues, "Pedestrian", (int)ublox::message::CfgNav5_DynModel::Pedestrian);
-    cc::Property::appendEnumValue(enumValues, "Automotive", (int)ublox::message::CfgNav5_DynModel::Automotive);
-    cc::Property::appendEnumValue(enumValues, "Sea", (int)ublox::message::CfgNav5_DynModel::Sea);
-    cc::Property::appendEnumValue(enumValues, "Airborne <1g Acceleration", (int)ublox::message::CfgNav5_DynModel::Airborne_1g);
-    cc::Property::appendEnumValue(enumValues, "Airborne <2g Acceleration", (int)ublox::message::CfgNav5_DynModel::Airborne_2g);
-    cc::Property::appendEnumValue(enumValues, "Airborne <4g Acceleration", (int)ublox::message::CfgNav5_DynModel::Airborne_4g);
+    cc::Property::appendEnumValue(enumValues, "Portable", (int)ublox::message::CfgNav5Fields::DynModel::Portable);
+    cc::Property::appendEnumValue(enumValues, "Stationary", (int)ublox::message::CfgNav5Fields::DynModel::Stationary);
+    cc::Property::appendEnumValue(enumValues, "Pedestrian", (int)ublox::message::CfgNav5Fields::DynModel::Pedestrian);
+    cc::Property::appendEnumValue(enumValues, "Automotive", (int)ublox::message::CfgNav5Fields::DynModel::Automotive);
+    cc::Property::appendEnumValue(enumValues, "Sea", (int)ublox::message::CfgNav5Fields::DynModel::Sea);
+    cc::Property::appendEnumValue(enumValues, "Airborne <1g Acceleration", (int)ublox::message::CfgNav5Fields::DynModel::Airborne_1g);
+    cc::Property::appendEnumValue(enumValues, "Airborne <2g Acceleration", (int)ublox::message::CfgNav5Fields::DynModel::Airborne_2g);
+    cc::Property::appendEnumValue(enumValues, "Airborne <4g Acceleration", (int)ublox::message::CfgNav5Fields::DynModel::Airborne_4g);
     return cc::Property::createPropertiesMap("dynModel", std::move(enumValues));
 }
 
 QVariantMap createProps_fixMode()
 {
     QVariantList enumValues;
-    cc::Property::appendEnumValue(enumValues, "2D Only", (int)ublox::message::CfgNav5_FixMode::Only_2D);
-    cc::Property::appendEnumValue(enumValues, "3D Only", (int)ublox::message::CfgNav5_FixMode::Only_3D);
-    cc::Property::appendEnumValue(enumValues, "Auto 2D/3D", (int)ublox::message::CfgNav5_FixMode::Auto);
+    cc::Property::appendEnumValue(enumValues, "2D Only", (int)ublox::message::CfgNav5Fields::FixMode::Only_2D);
+    cc::Property::appendEnumValue(enumValues, "3D Only", (int)ublox::message::CfgNav5Fields::FixMode::Only_3D);
+    cc::Property::appendEnumValue(enumValues, "Auto 2D/3D", (int)ublox::message::CfgNav5Fields::FixMode::Auto);
     return cc::Property::createPropertiesMap("fixMode", std::move(enumValues));
 }
 
