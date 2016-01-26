@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -15,6 +15,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+/// @file
+/// @brief Contains definition of CFG-MSG message and its fields.
 
 #pragma once
 
@@ -28,32 +30,48 @@ namespace ublox
 namespace message
 {
 
-using CfgMsgField_id = ublox::field::MsgId;
-using CfgMsgField_rate =
-    field::common::ListT<
-        field::cfg::rate,
-        comms::option::SequenceFixedSize<6>
+/// @brief Accumulates details of all the CFG-MSG message fields.
+/// @see CfgMsg
+struct CfgMsgFields
+{
+    /// @brief Definition of "id" field (combining class ID and message ID).
+    using id = ublox::field::MsgId;
+
+    /// @brief Definition of "rate" field.
+    using rate =
+        field::common::ListT<
+            field::common::U1,
+            comms::option::SequenceFixedSize<6>
+        >;
+
+    /// @brief All the fields bundled in std::tuple.
+    using All = std::tuple<
+        id,
+        rate
     >;
+};
 
-using CfgMsgFields = std::tuple<
-    CfgMsgField_id,
-    CfgMsgField_rate
->;
-
-
+/// @brief Definition of CFG-MSG message
+/// @details Inherits from
+///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+///     while providing @b TMsgBase as common interface class as well as
+///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
+///     @b comms::option::DispatchImpl as options. @n
+///     See @ref CfgMsgFields and for definition of the fields this message contains.
+/// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class CfgMsg : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_MSG>,
-        comms::option::FieldsImpl<CfgMsgFields>,
+        comms::option::FieldsImpl<CfgMsgFields::All>,
         comms::option::DispatchImpl<CfgMsg<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_MSG>,
-        comms::option::FieldsImpl<CfgMsgFields>,
+        comms::option::FieldsImpl<CfgMsgFields::All>,
         comms::option::DispatchImpl<CfgMsg<TMsgBase> >
     > Base;
 public:
@@ -61,8 +79,8 @@ public:
     /// @brief Index to access the fields
     enum FieldIdx
     {
-        FieldIdx_id,
-        FieldIdx_rate,
+        FieldIdx_id, ///< @b id field, see @ref CfgMsgFields::id
+        FieldIdx_rate, ///< @b rate field, see @ref CfgMsgFields::rate
         FieldIdx_numOfValues ///< number of available fields
     };
 
