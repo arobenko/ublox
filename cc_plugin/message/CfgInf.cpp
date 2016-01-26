@@ -53,6 +53,7 @@ QVariantMap createProps_infMsgMask()
             bitNames.append("NOTICE");
             bitNames.append("DEBUG");
             bitNames.append("TEST");
+            assert(bitNames.size() == ublox::message::CfgInfFields::mask_numOfValues);
 
             return cc::Property::createPropertiesMap(name, std::move(bitNames));
         };
@@ -64,7 +65,7 @@ QVariantMap createProps_infMsgMask()
     propsList.append(createBitmaskProps("USB"));
     propsList.append(createBitmaskProps("SPI"));
     propsList.append(createBitmaskProps("RESERVED"));
-    assert(propsList.size() == ublox::message::CfgInfField_element_infMsgMask_numOfValues);
+    assert(propsList.size() == ublox::message::CfgInfFields::infMsgMask_numOfValues);
     auto props = cc::Property::createPropertiesMap("infMsgMask", std::move(propsList));
     cc::Property::setSerialisedHidden(props);
     return props;
@@ -77,7 +78,7 @@ QVariantMap createProps_list()
     membersProps.append(field::common::props_reserved(0));
     membersProps.append(field::common::props_reserved(1));
     membersProps.append(createProps_infMsgMask());
-    assert(membersProps.size() == ublox::message::CfgInfField_element_numOfValues);
+    assert(membersProps.size() == ublox::message::CfgInfFields::element_numOfValues);
 
     auto elementProps = cc::Property::createPropertiesMap("element", std::move(membersProps));
 

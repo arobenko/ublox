@@ -80,13 +80,15 @@ enum class PortId : std::uint8_t
     SPI = 4
 };
 
+/// @brief Common enumeration for protocol ID value
 enum class ProtocolId : std::uint8_t
 {
-    UBX,
-    NMEA,
-    NumOfValues
+    UBX, ///< UBX protocol being used/configured
+    NMEA, ///< NMEA protocol being used/configured
+    NumOfValues ///< number of available values
 };
 
+/// @brief Definition of common "protocolID" field.
 using protocolID =
     common::EnumT<
         ProtocolId,

@@ -34,7 +34,7 @@ namespace message
 struct CfgAntFields
 {
 
-    /// @brief Bits access enumerator for @ref flags bitmask field.
+    /// @brief Bits access enumeration for @ref flags bitmask field.
     enum
     {
         flags_svcs, ///< @b svcs bit number
@@ -45,7 +45,7 @@ struct CfgAntFields
         flags_numOfValues ///< number of available bits
     };
 
-    /// @brief Use this enumerator to access member fields of @ref pins bitfield.
+    /// @brief Use this enumeration to access member fields of @ref pins bitfield.
     enum
     {
         pins_pinSwitch, ///< @b index of @b pinSwith member field
@@ -55,7 +55,7 @@ struct CfgAntFields
         pins_numOfValues ///< number of member fields
     };
 
-    /// @brief Bits access enumerator for bits in @b reconfig member of
+    /// @brief Bits access enumeration for bits in @b reconfig member of
     ///     @ref pins bitfield field.
     enum
     {

@@ -15,12 +15,12 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+/// @file
+/// @brief Contains definition of CFG-INF (@b poll) message and its fields.
 
 #pragma once
 
-#include "comms/Message.h"
 #include "ublox/Message.h"
-#include "ublox/field/MsgId.h"
 #include "ublox/field/cfg.h"
 
 namespace ublox
@@ -29,24 +29,43 @@ namespace ublox
 namespace message
 {
 
-using CfgInfPollFields = std::tuple<
-    ublox::field::cfg::protocolID
->;
+/// @brief Accumulates details of all the CFG-INF (@b poll) message fields.
+/// @see CfgInfPoll
+struct CfgInfPollFields
+{
+    /// @brief Protocol ID enumeration.
+    using ProtocolId = field::cfg::ProtocolId;
 
+    /// @brief Definition of "protocolID" field.
+    using protocolID = field::cfg::protocolID;
 
+    /// @brief All the fields bundled in std::tuple.
+    using All = std::tuple<
+        protocolID
+    >;
+};
+
+/// @brief Definition of CFG-INF (@b poll) message
+/// @details Inherits from
+///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+///     while providing @b TMsgBase as common interface class as well as
+///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
+///     @b comms::option::DispatchImpl as options. @n
+///     See @ref CfgInfPollFields and for definition of the fields this message contains.
+/// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class CfgInfPoll : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_INF>,
-        comms::option::FieldsImpl<CfgInfPollFields>,
+        comms::option::FieldsImpl<CfgInfPollFields::All>,
         comms::option::DispatchImpl<CfgInfPoll<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_INF>,
-        comms::option::FieldsImpl<CfgInfPollFields>,
+        comms::option::FieldsImpl<CfgInfPollFields::All>,
         comms::option::DispatchImpl<CfgInfPoll<TMsgBase> >
     > Base;
 public:
@@ -54,7 +73,7 @@ public:
     /// @brief Index to access the fields
     enum FieldIdx
     {
-        FieldIdx_protocolID,
+        FieldIdx_protocolID, ///< @b protocolID field, see @ref CfgInfPollFields::protocolID
         FieldIdx_numOfValues ///< number of available fields
     };
 
