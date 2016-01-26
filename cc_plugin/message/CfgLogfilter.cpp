@@ -47,7 +47,7 @@ QVariantMap createProps_flags()
     bitNames.append("recordEnabled");
     bitNames.append("psmOncePerWakupEnabled");
     bitNames.append("applyAllFilterSettings");
-    assert(bitNames.size() == ublox::message::CfgLogfilterField_flags_numOfValues);
+    assert(bitNames.size() == ublox::message::CfgLogfilterFields::flags_numOfValues);
     return cc::Property::createPropertiesMap("flags", std::move(bitNames));
 }
 
