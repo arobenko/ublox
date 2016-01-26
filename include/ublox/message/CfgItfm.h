@@ -47,7 +47,7 @@ struct CfgItfmFields
     /// @brief Bits access enumeration for @ref enable bitmask member field in @ref config bitfield.
     enum
     {
-        config_enable_enable, ///< @b enable bit number
+        config_enable_enable, ///< @b enable bit index
         config_enable_numOfValues ///< number of available bits
     };
 

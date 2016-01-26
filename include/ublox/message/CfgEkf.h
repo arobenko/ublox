@@ -44,28 +44,28 @@ struct CfgEkfFields
     /// @brief Bits access enumerator for @ref actionFlags bitmask field.
     enum
     {
-        actionFlags_clTab = 1, ///< @b clTab bit number
-        actionFlags_clCalib = 2, ///< @b clCalib bit number
-        actionFlags_nomTacho = 4, ///< @b nomTacho bit number
-        actionFlags_nomGyro = 5, ///< @b nomGyro bit number
-        actionFlags_setTemp = 6, ///< @b setTemp bit number
-        actionFlags_dir = 7, ///< @b dir bit number
+        actionFlags_clTab = 1, ///< @b clTab bit index
+        actionFlags_clCalib = 2, ///< @b clCalib bit index
+        actionFlags_nomTacho = 4, ///< @b nomTacho bit index
+        actionFlags_nomGyro = 5, ///< @b nomGyro bit index
+        actionFlags_setTemp = 6, ///< @b setTemp bit index
+        actionFlags_dir = 7, ///< @b dir bit index
         actionFlags_numOfValues ///< upper limit of available bits
     };
 
     /// @brief Bits access enumerator for @ref configFlags bitmask field.
     enum
     {
-        configFlags_pulsesPerM, ///< @b pulsesPerM bit number
-        configFlags_useSerWt, ///< @b useSerWt bit number
+        configFlags_pulsesPerM, ///< @b pulsesPerM bit index
+        configFlags_useSerWt, ///< @b useSerWt bit index
         configFlags_numOfValues ///< number of available bits
     };
 
     /// @brief Bits access enumerator for @ref inverseFlags bitmask field.
     enum
     {
-        inverseFlags_invDir, ///< @b invDir bit number
-        inverseFlags_invGyro, ///< @b invGyro bit number
+        inverseFlags_invDir, ///< @b invDir bit index
+        inverseFlags_invGyro, ///< @b invGyro bit index
         inverseFlags_numOfValues ///< number of available bits
     };
 

@@ -36,9 +36,9 @@ struct CfgLogfilterFields
     /// @brief Bits access enumeration for @ref flags bitmask field.
     enum
     {
-        flags_recordEnabled, ///< @b recordEnabled bit number
-        flags_psmOncePerWakupEnabled, ///< @b psmOncePerWakupEnabled bit number
-        flags_applyAllFilterSettings, ///< @b applyAllFilterSettings bit number
+        flags_recordEnabled, ///< @b recordEnabled bit index
+        flags_psmOncePerWakupEnabled, ///< @b psmOncePerWakupEnabled bit index
+        flags_applyAllFilterSettings, ///< @b applyAllFilterSettings bit index
         flags_numOfValues ///< number of available bits
     };
 

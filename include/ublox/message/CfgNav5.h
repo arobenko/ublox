@@ -38,14 +38,14 @@ struct CfgNav5Fields
     /// @brief Bits access enumeration for @ref mask bitmask field.
     enum
     {
-        mask_dyn, ///< @b dyn bit number
-        mask_minEl, ///< @b minEl bit number
-        mask_posFixMode, ///< @b posFixMode bit number
-        mask_drLim, ///< @b drLim bit number
-        mask_posMask, ///< @b posMask bit number
-        mask_timeMask, ///< @b timeMask bit number
-        mask_staticHoldMask, ///< @b staticHoldMask bit number
-        mask_dgpsMask, ///< @b dgps bit number
+        mask_dyn, ///< @b dyn bit index
+        mask_minEl, ///< @b minEl bit index
+        mask_posFixMode, ///< @b posFixMode bit index
+        mask_drLim, ///< @b drLim bit index
+        mask_posMask, ///< @b posMask bit index
+        mask_timeMask, ///< @b timeMask bit index
+        mask_staticHoldMask, ///< @b staticHoldMask bit index
+        mask_dgpsMask, ///< @b dgps bit index
         mask_numOfValues ///< number of available bits
     };
 

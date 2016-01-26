@@ -37,11 +37,11 @@ struct CfgAntFields
     /// @brief Bits access enumeration for @ref flags bitmask field.
     enum
     {
-        flags_svcs, ///< @b svcs bit number
-        flags_csd, ///< @b csd bit number
-        flags_ocd, ///< @b ocd bit number
-        flags_pdwnOnSCD, ///< @b pdwnOnSCD bit number
-        flags_recovery, ///< @b recovery bit number
+        flags_svcs, ///< @b svcs bit index
+        flags_csd, ///< @b csd bit index
+        flags_ocd, ///< @b ocd bit index
+        flags_pdwnOnSCD, ///< @b pdwnOnSCD bit index
+        flags_recovery, ///< @b recovery bit index
         flags_numOfValues ///< number of available bits
     };
 

@@ -52,17 +52,17 @@ QVariantMap createProps_mask1()
             }
         };
 
-    fillBitNamesUntilFunc(ublox::message::CfgNavx5Field_mask1_minMax);
+    fillBitNamesUntilFunc(ublox::message::CfgNavx5Fields::mask1_minMax);
     bitNames.append("minMax");
     bitNames.append("minCno");
-    fillBitNamesUntilFunc(ublox::message::CfgNavx5Field_mask1_initial3dfix);
+    fillBitNamesUntilFunc(ublox::message::CfgNavx5Fields::mask1_initial3dfix);
     bitNames.append("initial3dfix");
-    fillBitNamesUntilFunc(ublox::message::CfgNavx5Field_mask1_wknRoll);
+    fillBitNamesUntilFunc(ublox::message::CfgNavx5Fields::mask1_wknRoll);
     bitNames.append("wknRoll");
-    fillBitNamesUntilFunc(ublox::message::CfgNavx5Field_mask1_ppp);
+    fillBitNamesUntilFunc(ublox::message::CfgNavx5Fields::mask1_ppp);
     bitNames.append("ppp");
     bitNames.append("aop");
-    assert(bitNames.size() == ublox::message::CfgNavx5Field_mask1_numOfValues);
+    assert(bitNames.size() == ublox::message::CfgNavx5Fields::mask1_numOfValues);
     return cc::Property::createPropertiesMap("mask1", std::move(bitNames));
 }
 
@@ -71,7 +71,7 @@ QVariantMap createProps_boolVal(const char* name)
     QVariantList enumValues;
     cc::Property::appendEnumValue(enumValues, "false");
     cc::Property::appendEnumValue(enumValues, "true");
-    assert(enumValues.size() == (int)ublox::message::CfgNavx5_BoolVal::NumOfValues);
+    assert(enumValues.size() == (int)ublox::message::CfgNavx5Fields::BoolVal::NumOfValues);
     return cc::Property::createPropertiesMap(name, std::move(enumValues));
 }
 
@@ -79,7 +79,7 @@ QVariantMap createProps_aopCfg()
 {
     QVariantList bitNames;
     bitNames.append("useAOP");
-    assert(bitNames.size() == ublox::message::CfgNavx5Field_aopCfg_numOfValues);
+    assert(bitNames.size() == ublox::message::CfgNavx5Fields::aopCfg_numOfValues);
     return cc::Property::createPropertiesMap("aopCfg", std::move(bitNames));
 }
 

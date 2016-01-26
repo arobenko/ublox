@@ -36,9 +36,9 @@ struct AidIniFields
     /// @brief Bits access enumerator for @ref tmCfg bitmask field.
     enum
     {
-        tmCfg_fEdge = 1, ///< @b fEdge bit number
-        tmCfg_tm1 = 4, ///< @b tm1 bit number
-        tmCfg_f1 = 6, ///< @b f1 bit number
+        tmCfg_fEdge = 1, ///< @b fEdge bit index
+        tmCfg_tm1 = 4, ///< @b tm1 bit index
+        tmCfg_f1 = 6, ///< @b f1 bit index
         tmCfg_numOfValues ///< Upper limit for access bits
     };
 
@@ -63,15 +63,15 @@ struct AidIniFields
     /// @brief Bits access enumerator for @ref flags bitmask field.
     enum
     {
-        flags_pos, ///< @b pos bit number
-        flags_time, ///< @b time bit number
-        flags_clockD, ///< @b clockD bit number
-        flags_tp, ///< @b tp bit number
-        flags_clockF, ///< @b clockF bit number
-        flags_lla, ///< @b lla bit number
-        flags_altInv, ///< @b altInv bit number
-        flags_prevTm, ///< @b prevTm bit number
-        flags_utc = 10, ///< @b utc bit number
+        flags_pos, ///< @b pos bit index
+        flags_time, ///< @b time bit index
+        flags_clockD, ///< @b clockD bit index
+        flags_tp, ///< @b tp bit index
+        flags_clockF, ///< @b clockF bit index
+        flags_lla, ///< @b lla bit index
+        flags_altInv, ///< @b altInv bit index
+        flags_prevTm, ///< @b prevTm bit index
+        flags_utc = 10, ///< @b utc bit index
         flags_numOfValues ///< Upper limit for access bits
     };
 

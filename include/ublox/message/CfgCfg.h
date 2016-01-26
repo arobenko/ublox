@@ -39,23 +39,23 @@ struct CfgCfgFields
     ///     @ref loadMask bitmask fields.
     enum
     {
-        mask_ioPort,  ///< @b ioPort bit number
-        mask_msgConf, ///< @b msgConf bit number
-        mask_infMsg, ///< @b infMsg bit number
-        mask_navConf, ///< @b navConf bit number
-        mask_rxmConf, ///< @b rxmConf bit number
-        mask_rinvConf = 9,  ///< @b rinvConf bit number
-        mask_antConf, ///< @b antConf bit number
+        mask_ioPort,  ///< @b ioPort bit index
+        mask_msgConf, ///< @b msgConf bit index
+        mask_infMsg, ///< @b infMsg bit index
+        mask_navConf, ///< @b navConf bit index
+        mask_rxmConf, ///< @b rxmConf bit index
+        mask_rinvConf = 9,  ///< @b rinvConf bit index
+        mask_antConf, ///< @b antConf bit index
         mask_numOfValues ///< @b upper limit for available bits
     };
 
     /// @brief Bits access enumerator for @ref deviceMask bitmask field.
     enum
     {
-        deviceMask_devBBR,  ///< @b devBBR bit number
-        deviceMask_devFlash,  ///< @b devFlash bit number
-        deviceMask_devEEPROM,  ///< @b devEEPROM bit number
-        deviceMask_devSpiFlash = 4,  ///< @b devSpiFlash bit number
+        deviceMask_devBBR,  ///< @b devBBR bit index
+        deviceMask_devFlash,  ///< @b devFlash bit index
+        deviceMask_devEEPROM,  ///< @b devEEPROM bit index
+        deviceMask_devSpiFlash = 4,  ///< @b devSpiFlash bit index
         deviceMask_numOfValues ///< @b upper limit for available bits
     };
 

@@ -36,9 +36,9 @@ struct CfgEsfgwtFields
     /// @brief Bits access enumerator for @ref flags bitmask field.
     enum
     {
-        flags_setVehicle = 12,  ///< @b setVehicle bit number
-        flags_setTime, ///< @b setTime bit number
-        flags_setWt, ///< @b setWt bit number
+        flags_setVehicle = 12,  ///< @b setVehicle bit index
+        flags_setTime, ///< @b setTime bit index
+        flags_setWt, ///< @b setWt bit index
         flags_numOfValues ///< upper limit of available bits
     };
 

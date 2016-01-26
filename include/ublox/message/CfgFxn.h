@@ -36,9 +36,9 @@ struct CfgFxnFields
     /// @brief Bits access enumerator for @ref flags bitmask field.
     enum
     {
-        flags_sleep = 1, ///< @b sleep bit number
-        flags_absAlign = 3, ///< @b absAlign bit number
-        flags_onOff, ///< @b onOff bit number
+        flags_sleep = 1, ///< @b sleep bit index
+        flags_absAlign = 3, ///< @b absAlign bit index
+        flags_onOff, ///< @b onOff bit index
         flags_numOfValues ///< upper limit of available bits
     };
 

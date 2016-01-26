@@ -61,11 +61,11 @@ struct CfgInfFields
     /// @brief Bits access enumeration for @ref mask bitmask field from @ref infMsgMask list.
     enum
     {
-        mask_ERROR, ///< @b ERROR bit number
-        mask_WARNING, ///< @b WARNING bit number
-        mask_NOTICE, ///< @b NOTICE bit number
-        mask_DEBUG, ///< @b DEBUG bit number
-        mask_TEST, ///< @b TEST bit number
+        mask_ERROR, ///< @b ERROR bit index
+        mask_WARNING, ///< @b WARNING bit index
+        mask_NOTICE, ///< @b NOTICE bit index
+        mask_DEBUG, ///< @b DEBUG bit index
+        mask_TEST, ///< @b TEST bit index
         mask_numOfValues ///< number of available bits
     };
 
