@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -15,14 +15,12 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+/// @file
+/// @brief Contains definition of CFG-ITFM message and its fields.
 
 #pragma once
 
-#include <algorithm>
-
-#include "comms/Message.h"
 #include "ublox/Message.h"
-#include "ublox/field/MsgId.h"
 #include "ublox/field/common.h"
 
 namespace ublox
@@ -31,96 +29,146 @@ namespace ublox
 namespace message
 {
 
-enum
+/// @brief Accumulates details of all the CFG-ITFM message fields.
+/// @see CfgItfm
+struct CfgItfmFields
 {
-    CfgItfmField_config_bbThreshold,
-    CfgItfmField_config_cwThreshold,
-    CfgItfmField_config_reserved1,
-    CfgItfmField_config_enable,
-    CfgItfmField_config_numOfValues
-};
 
-enum
-{
-    CfgItfmField_config_enable_enable,
-    CfgItfmField_config_enable_numOfValues
-};
+    /// @brief Use this enumeration to access member fields of @ref config bitfield.
+    enum
+    {
+        config_bbThreshold, ///< @b index of @ref bbThreshold member field
+        config_cwThreshold, ///< @b index of @ref cwThreshold member field
+        config_reserved1, ///< @b index of @ref reserved1 member field
+        config_enable, ///< @b index of @ref enable member field
+        config_numOfValues ///< number of member fields
+    };
 
-enum class CfgItfm_AntSetting : std::uint8_t
-{
-    Unknown,
-    Passive,
-    Active,
-    NumOfValues
-};
+    /// @brief Bits access enumeration for @ref enable bitmask member field in @ref config bitfield.
+    enum
+    {
+        config_enable_enable, ///< @b enable bit number
+        config_enable_numOfValues ///< number of available bits
+    };
 
-enum
-{
-    CfgItfmField_config2_reserved2,
-    CfgItfmField_config2_antSetting,
-    CfgItfmField_config2_reserved3,
-    CfgItfmField_config2_numOfValues
-};
+    /// @brief Value enumeration for @ref antSetting member field in @ref config2 bitmask.
+    enum class AntSetting : std::uint8_t
+    {
+        Unknown, ///< @b unknown
+        Passive, ///< @b passive
+        Active, ///< @b active
+        NumOfValues ///< number of available values
+    };
 
-using CfgItfmField_config =
-    field::common::BitfieldT<
-        std::tuple<
-            field::common::U1T<
-                comms::option::FixedBitLength<4>,
-                comms::option::ValidNumValueRange<0, 0xf>
-            >,
-            field::common::U1T<
-                comms::option::FixedBitLength<5>,
-                comms::option::ValidNumValueRange<0, 0x1f>
-            >,
-            field::common::U4T<
-                comms::option::FixedBitLength<22>,
-                comms::option::ValidNumValueRange<0x16b156, 0x16b156>,
-                comms::option::DefaultNumValue<0x16b156>
-            >,
-            field::common::X1T<
-                comms::option::FixedBitLength<1>
+    /// @brief Use this enumeration to access member fields of @ref config2 bitfield.
+    enum
+    {
+        config2_reserved2, ///< @b index of @ref reserved2 member field
+        config2_antSetting, ///< @b index of @ref antSetting member field
+        config2_reserved3, ///< @b index of @ref reserved3 member field
+        config2_numOfValues ///< number of member fields
+    };
+
+    /// @brief Definition of "bbThreshold" member field in @ref config bitmask.
+    using bbThreshold =
+        field::common::U1T<
+            comms::option::FixedBitLength<4>,
+            comms::option::ValidNumValueRange<0, 0xf>
+        >;
+
+    /// @brief Definition of "cwThreshold" member field in @ref config bitmask.
+    using cwThreshold =
+        field::common::U1T<
+            comms::option::FixedBitLength<5>,
+            comms::option::ValidNumValueRange<0, 0x1f>
+        >;
+
+    /// @brief Definition of "reserved1" member field in @ref config bitmask.
+    using reserved1 =
+        field::common::U4T<
+            comms::option::FixedBitLength<22>,
+            comms::option::ValidNumValueRange<0x16b156, 0x16b156>,
+            comms::option::DefaultNumValue<0x16b156>
+        >;
+
+    /// @brief Definition of the bitmask member field with single "enable" bit
+    ///     in @ref config bitmask.
+    using enable =
+        field::common::X1T<
+            comms::option::FixedBitLength<1>
+        >;
+
+    /// @brief Definition of "reserved2" member field in @ref config2 bitmask.
+    using reserved2 =
+        field::common::U2T<
+            comms::option::FixedBitLength<12>,
+            comms::option::ValidNumValueRange<0x31e, 0x31e>,
+            comms::option::DefaultNumValue<0x31e>
+        >;
+
+    /// @brief Definition of "antSetting" member field in @ref config2 bitmask.
+    using antSetting =
+        field::common::EnumT<
+            AntSetting,
+            comms::option::FixedBitLength<2>,
+            comms::option::ValidNumValueRange<0, (int)AntSetting::NumOfValues - 1>
+        >;
+
+    /// @brief Definition of "reserved3" member field in @ref config2 bitmask.
+    using reserved3 =
+        field::common::res4T<
+            comms::option::FixedBitLength<18>
+        >;
+
+    /// @brief Definition of "config" field.
+    using config =
+        field::common::BitfieldT<
+            std::tuple<
+                bbThreshold,
+                cwThreshold,
+                reserved1,
+                enable
             >
-        >
-    >;
+        >;
 
-using CfgItfmField_config2 =
-    field::common::BitfieldT<
-        std::tuple<
-            field::common::U2T<
-                comms::option::FixedBitLength<12>,
-                comms::option::ValidNumValueRange<0x31e, 0x31e>,
-                comms::option::DefaultNumValue<0x31e>
-            >,
-            field::common::EnumT<
-                CfgItfm_AntSetting,
-                comms::option::FixedBitLength<2>,
-                comms::option::ValidNumValueRange<0, (int)CfgItfm_AntSetting::NumOfValues - 1>
-            >,
-            field::common::res4T<
-                comms::option::FixedBitLength<18>
+    /// @brief Definition of "config2" field.
+    using config2 =
+        field::common::BitfieldT<
+            std::tuple<
+                reserved2,
+                antSetting,
+                reserved3
             >
-        >
+        >;
+
+    /// @brief All the fields bundled in std::tuple.
+    using All = std::tuple<
+        config,
+        config2
     >;
+};
 
-using CfgItfmFields = std::tuple<
-    CfgItfmField_config,
-    CfgItfmField_config2
->;
-
+/// @brief Definition of CFG-ITFM message
+/// @details Inherits from
+///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+///     while providing @b TMsgBase as common interface class as well as
+///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
+///     @b comms::option::DispatchImpl as options. @n
+///     See @ref CfgItfmFields and for definition of the fields this message contains.
+/// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class CfgItfm : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_ITFM>,
-        comms::option::FieldsImpl<CfgItfmFields>,
+        comms::option::FieldsImpl<CfgItfmFields::All>,
         comms::option::DispatchImpl<CfgItfm<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_ITFM>,
-        comms::option::FieldsImpl<CfgItfmFields>,
+        comms::option::FieldsImpl<CfgItfmFields::All>,
         comms::option::DispatchImpl<CfgItfm<TMsgBase> >
     > Base;
 public:
@@ -128,8 +176,8 @@ public:
     /// @brief Index to access the fields
     enum FieldIdx
     {
-        FieldIdx_config,
-        FieldIdx_config2,
+        FieldIdx_config, ///< @b config field, see @ref CfgItfmFields::config
+        FieldIdx_config2, ///< @b config2 field, see @ref CfgItfmFields::config2
         FieldIdx_numOfValues ///< number of available fields
     };
 

@@ -55,7 +55,7 @@ QVariantMap createProps_config()
 
     QVariantList bitNames;
     bitNames.append("enable");
-    assert(bitNames.size() == ublox::message::CfgItfmField_config_enable_numOfValues);
+    assert(bitNames.size() == ublox::message::CfgItfmFields::config_enable_numOfValues);
     auto enableProps = cc::Property::createPropertiesMap(QString(), std::move(bitNames));
     cc::Property::setSerialisedHidden(enableProps);
 
@@ -64,7 +64,7 @@ QVariantMap createProps_config()
     membersData.append(std::move(cwThresholdProps));
     membersData.append(std::move(reserved1Props));
     membersData.append(std::move(enableProps));
-    assert(membersData.size() == ublox::message::CfgItfmField_config_numOfValues);
+    assert(membersData.size() == ublox::message::CfgItfmFields::config_numOfValues);
     return cc::Property::createPropertiesMap("config", std::move(membersData));
 }
 
@@ -77,7 +77,7 @@ QVariantMap createProps_config2()
     cc::Property::appendEnumValue(enumValues, "unknown");
     cc::Property::appendEnumValue(enumValues, "passive");
     cc::Property::appendEnumValue(enumValues, "active");
-    assert(enumValues.size() == (int)ublox::message::CfgItfm_AntSetting::NumOfValues);
+    assert(enumValues.size() == (int)ublox::message::CfgItfmFields::AntSetting::NumOfValues);
     auto antSettingProps = cc::Property::createPropertiesMap("antSetting", std::move(enumValues));
     cc::Property::setSerialisedHidden(antSettingProps);
 
@@ -88,7 +88,7 @@ QVariantMap createProps_config2()
     membersData.append(std::move(reserved2Props));
     membersData.append(std::move(antSettingProps));
     membersData.append(std::move(reserved3Props));
-    assert(membersData.size() == ublox::message::CfgItfmField_config2_numOfValues);
+    assert(membersData.size() == ublox::message::CfgItfmFields::config2_numOfValues);
     return cc::Property::createPropertiesMap("config2", std::move(membersData));
 }
 
