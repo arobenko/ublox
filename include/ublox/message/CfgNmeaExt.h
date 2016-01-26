@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -15,14 +15,12 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+/// @file
+/// @brief Contains definition of CFG-NMEA (@b extended) message and its fields.
 
 #pragma once
 
-#include <algorithm>
-
-#include "comms/Message.h"
 #include "ublox/Message.h"
-#include "ublox/field/MsgId.h"
 #include "ublox/field/common.h"
 #include "CfgNmea.h"
 
@@ -32,90 +30,112 @@ namespace ublox
 namespace message
 {
 
-enum
+/// @brief Accumulates details of all the CFG-NMEA (@b extended) message fields.
+/// @see CfgNmeaExt
+struct CfgNmeaExtFields : public CfgNmeaFields
 {
-    CfgNmeaField_gnssToFilter_gps,
-    CfgNmeaField_gnssToFilter_sbas,
-    CfgNmeaField_gnssToFilter_reserved0,
-    CfgNmeaField_gnssToFilter_reserved1,
-    CfgNmeaField_gnssToFilter_qzss,
-    CfgNmeaField_gnssToFilter_glonass,
-    CfgNmeaField_gnssToFilter_numOfValues
+    /// @brief Bits access enumeration for @ref gnssToFilter bitmask field.
+    enum
+    {
+        gnssToFilter_gps, ///< @b gps bit index
+        gnssToFilter_sbas, ///< @b sbas bit index
+        gnssToFilter_qzss = 4, ///< @b qzss bit index
+        gnssToFilter_glonass, ///< @b glonass bit index
+        gnssToFilter_numOfValues ///< upper limit for available bits
+    };
+
+    /// @brief Value enumeration for @ref svNumbering field.
+    enum class SvNumbering : std::uint8_t
+    {
+        Strict, ///< strict
+        Extended, ///< extended
+        NumOfValues ///< number of available values
+    };
+
+    /// @brief Value enumeration for @ref mainTalkerId field.
+    enum class MainTalkerId : std::uint8_t
+    {
+        NotOverriden, ///< not overridden
+        GP, ///< GP
+        GL, ///< GL
+        GN, ///< GN
+        NumOfValues ///< number of available values
+    };
+
+    /// @brief Value enumeration for @ref gsvTalkerId field.
+    enum class GsvTalkerId : std::uint8_t
+    {
+        GnssSpecific, ///<  use GNSS specific talker id
+        Main, ///< use main talker id
+        NumOfValues ///< number of available values
+    };
+
+    /// @brief Definition of "gnssToFilter" field.
+    using gnssToFilter =
+        field::common::X4T<
+            comms::option::BitmaskReservedBits<0xffffffcc, 0>
+        >;
+
+    /// @brief Definition of "svNumbering" field.
+    using svNumbering =
+        field::common::EnumT<
+            SvNumbering,
+            comms::option::ValidNumValueRange<0, (int)SvNumbering::NumOfValues - 1>
+        >;
+
+    /// @brief Definition of "mainTalkerId" field.
+    using mainTalkerId =
+        field::common::EnumT<
+            MainTalkerId,
+            comms::option::ValidNumValueRange<0, (int)MainTalkerId::NumOfValues - 1>
+        >;
+
+    /// @brief Definition of "gsvTalkerId" field.
+    using gsvTalkerId =
+        field::common::EnumT<
+            GsvTalkerId,
+            comms::option::ValidNumValueRange<0, (int)GsvTalkerId::NumOfValues - 1>
+        >;
+
+    /// @brief Definition of "reserved" field.
+    using reserved = field::common::res1;
+
+    /// @brief All the fields bundled in std::tuple.
+    using All = std::tuple<
+        filter,
+        nmeaVersion,
+        numSV,
+        flags,
+        gnssToFilter,
+        svNumbering,
+        mainTalkerId,
+        gsvTalkerId,
+        reserved
+    >;
+
 };
 
-enum class CfgNmea_SvNumbering : std::uint8_t
-{
-    String,
-    Extended,
-    NumOfValues
-};
-
-enum class CfgNmea_MainTalkerId : std::uint8_t
-{
-    NotOverriden,
-    GP,
-    GL,
-    GN,
-    NumOfValues
-};
-
-enum class CfgNmea_GsvTalkerId : std::uint8_t
-{
-    GnssSpecific,
-    Main,
-    NumOfValues
-};
-
-using CfgNmeaExtField_filter = CfgNmeaField_filter;
-using CfgNmeaExtField_nmeaVersion = CfgNmeaField_nmeaVersion;
-using CfgNmeaExtField_numSV = CfgNmeaField_numSV;
-using CfgNmeaExtField_flags = CfgNmeaField_flags;
-using CfgNmeaExtField_gnssToFilter =
-    field::common::X4T<
-        comms::option::BitmaskReservedBits<0xffffffcc, 0>
-    >;
-using CfgNmeaExtField_svNumbering =
-    field::common::EnumT<
-        CfgNmea_SvNumbering,
-        comms::option::ValidNumValueRange<0, (int)CfgNmea_SvNumbering::NumOfValues - 1>
-    >;
-using CfgNmeaExtField_mainTalkerId =
-    field::common::EnumT<
-        CfgNmea_MainTalkerId,
-        comms::option::ValidNumValueRange<0, (int)CfgNmea_MainTalkerId::NumOfValues - 1>
-    >;
-using CfgNmeaExtField_gsvTalkerId =
-    field::common::EnumT<
-        CfgNmea_GsvTalkerId,
-        comms::option::ValidNumValueRange<0, (int)CfgNmea_GsvTalkerId::NumOfValues - 1>
-    >;
-using CfgNmeaExtField_reserved = field::common::res1;
-
-using CfgNmeaExtFields = std::tuple<
-    CfgNmeaExtField_filter,
-    CfgNmeaExtField_nmeaVersion,
-    CfgNmeaExtField_numSV,
-    CfgNmeaExtField_flags,
-    CfgNmeaExtField_gnssToFilter,
-    CfgNmeaExtField_svNumbering,
-    CfgNmeaExtField_mainTalkerId,
-    CfgNmeaExtField_gsvTalkerId,
-    CfgNmeaExtField_reserved
->;
-
+/// @brief Definition of CFG-NMEA (@b extended) message
+/// @details Inherits from
+///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+///     while providing @b TMsgBase as common interface class as well as
+///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
+///     @b comms::option::DispatchImpl as options. @n
+///     See @ref CfgNmeaExtFields and for definition of the fields this message contains.
+/// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class CfgNmeaExt : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_NMEA>,
-        comms::option::FieldsImpl<CfgNmeaExtFields>,
+        comms::option::FieldsImpl<CfgNmeaExtFields::All>,
         comms::option::DispatchImpl<CfgNmeaExt<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_NMEA>,
-        comms::option::FieldsImpl<CfgNmeaExtFields>,
+        comms::option::FieldsImpl<CfgNmeaExtFields::All>,
         comms::option::DispatchImpl<CfgNmeaExt<TMsgBase> >
     > Base;
 public:
@@ -123,15 +143,15 @@ public:
     /// @brief Index to access the fields
     enum FieldIdx
     {
-        FieldIdx_filter,
-        FieldIdx_nmeaVersion,
-        FieldIdx_numSV,
-        FieldIdx_flags,
-        FieldIdx_gnssToFilter,
-        FieldIdx_svNumbering,
-        FieldIdx_mainTalkerId,
-        FieldIdx_gsvTalkerId,
-        FieldIdx_reserved,
+        FieldIdx_filter, ///< @b filter field, see @ref CfgNmeaExtFields::filter
+        FieldIdx_nmeaVersion, ///< @b nmeaVersion field, see @ref CfgNmeaExtFields::nmeaVersion
+        FieldIdx_numSV, ///< @b numSV field, see @ref CfgNmeaExtFields::numSV
+        FieldIdx_flags, ///< @b flags field, see @ref CfgNmeaExtFields::flags
+        FieldIdx_gnssToFilter, ///< @b gnssToFilter field, see @ref CfgNmeaExtFields::gnssToFilter
+        FieldIdx_svNumbering, ///< @b svNumbering field, see @ref CfgNmeaExtFields::svNumbering
+        FieldIdx_mainTalkerId, ///< @b mainTalkerId field, see @ref CfgNmeaExtFields::mainTalkerId
+        FieldIdx_gsvTalkerId, ///< @b gsvTalkerId field, see @ref CfgNmeaExtFields::gsvTalkerId
+        FieldIdx_reserved, ///< @b reserved field, see @ref CfgNmeaExtFields::reserved
         FieldIdx_numOfValues ///< number of available fields
     };
 

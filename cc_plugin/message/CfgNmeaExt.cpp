@@ -49,7 +49,7 @@ QVariantMap createProps_gnssToFilter()
     bitNames.append(QVariant());
     bitNames.append("qzss");
     bitNames.append("qlonass");
-    assert(bitNames.size() == ublox::message::CfgNmeaField_gnssToFilter_numOfValues);
+    assert(bitNames.size() == ublox::message::CfgNmeaExtFields::gnssToFilter_numOfValues);
     return cc::Property::createPropertiesMap("gnssToFilter", std::move(bitNames));
 }
 
@@ -58,7 +58,7 @@ QVariantMap createProps_svNumbering()
     QVariantList enumValues;
     cc::Property::appendEnumValue(enumValues, "Strict");
     cc::Property::appendEnumValue(enumValues, "Extended");
-    assert(enumValues.size() == (int)ublox::message::CfgNmea_SvNumbering::NumOfValues);
+    assert(enumValues.size() == (int)ublox::message::CfgNmeaExtFields::SvNumbering::NumOfValues);
     return cc::Property::createPropertiesMap("svNumbering", std::move(enumValues));
 }
 
@@ -69,7 +69,7 @@ QVariantMap createProps_mainTalkerId()
     cc::Property::appendEnumValue(enumValues, "GP");
     cc::Property::appendEnumValue(enumValues, "GL");
     cc::Property::appendEnumValue(enumValues, "GN");
-    assert(enumValues.size() == (int)ublox::message::CfgNmea_MainTalkerId::NumOfValues);
+    assert(enumValues.size() == (int)ublox::message::CfgNmeaExtFields::MainTalkerId::NumOfValues);
     return cc::Property::createPropertiesMap("mainTalkerId", std::move(enumValues));
 }
 
@@ -78,7 +78,7 @@ QVariantMap createProps_gsvTalkerId()
     QVariantList enumValues;
     cc::Property::appendEnumValue(enumValues, "GNSS Specific");
     cc::Property::appendEnumValue(enumValues, "Main");
-    assert(enumValues.size() == (int)ublox::message::CfgNmea_GsvTalkerId::NumOfValues);
+    assert(enumValues.size() == (int)ublox::message::CfgNmeaExtFields::GsvTalkerId::NumOfValues);
     return cc::Property::createPropertiesMap("gsvTalkerId", std::move(enumValues));
 }
 

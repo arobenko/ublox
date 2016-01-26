@@ -138,15 +138,15 @@ QVariantMap createProps_nmeaFilter()
     bitNames.append("dateFilt");
     bitNames.append("gpsOnlyFilter");
     bitNames.append("trackFilt");
-    assert(bitNames.size() == ublox::message::CfgNmeaField_filter_numOfValues);
+    assert(bitNames.size() == ublox::message::CfgNmeaFields::filter_numOfValues);
     return cc::Property::createPropertiesMap("filter", std::move(bitNames));
 }
 
 QVariantMap createProps_nmeaVersion()
 {
     QVariantList enumValues;
-    cc::Property::appendEnumValue(enumValues, "NMEA version 2.1", (int)ublox::message::CfgNmea_NmeaVersion::v21);
-    cc::Property::appendEnumValue(enumValues, "NMEA version 2.3", (int)ublox::message::CfgNmea_NmeaVersion::v23);
+    cc::Property::appendEnumValue(enumValues, "NMEA version 2.1", (int)ublox::message::CfgNmeaFields::NmeaVersion::v21);
+    cc::Property::appendEnumValue(enumValues, "NMEA version 2.3", (int)ublox::message::CfgNmeaFields::NmeaVersion::v23);
     return cc::Property::createPropertiesMap("nmeaVersion", std::move(enumValues));
 }
 
@@ -155,7 +155,7 @@ QVariantMap createProps_nmeaFlags()
     QVariantList bitNames;
     bitNames.append("compat");
     bitNames.append("consider");
-    assert(bitNames.size() == ublox::message::CfgNmeaField_flags_numOfValues);
+    assert(bitNames.size() == ublox::message::CfgNmeaFields::flags_numOfValues);
     return cc::Property::createPropertiesMap("filter", std::move(bitNames));
 }
 

@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -15,14 +15,12 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+/// @file
+/// @brief Contains definition of CFG-NMEA message and its fields.
 
 #pragma once
 
-#include <algorithm>
-
-#include "comms/Message.h"
 #include "ublox/Message.h"
-#include "ublox/field/MsgId.h"
 #include "ublox/field/common.h"
 
 namespace ublox
@@ -31,77 +29,102 @@ namespace ublox
 namespace message
 {
 
-enum
+/// @brief Accumulates details of all the CFG-NMEA message fields.
+/// @see CfgNmea
+struct CfgNmeaFields
 {
-    CfgNmeaField_filter_posFilt,
-    CfgNmeaField_filter_mskPosFilt,
-    CfgNmeaField_filter_timeFilt,
-    CfgNmeaField_filter_dateFilt,
-    CfgNmeaField_filter_gpsOnlyFilter,
-    CfgNmeaField_filter_trackFilt,
-    CfgNmeaField_filter_numOfValues
-};
-
-enum class CfgNmea_NmeaVersion : std::uint8_t
-{
-    v21 = 0x21,
-    v23 = 0x23
-};
-
-struct CfgNmea_NmeaVersionValidator
-{
-    template <typename TField>
-    bool operator()(const TField& field) const
+    /// @brief Bits access enumeration for @ref filter bitmask field.
+    enum
     {
-        auto value = field.value();
-        return ((value == CfgNmea_NmeaVersion::v21) ||
-                (value == CfgNmea_NmeaVersion::v23));
-    }
+        filter_posFilt, ///< @b posFilt bit index
+        filter_mskPosFilt, ///< @b mskPosFilt bit index
+        filter_timeFilt, ///< @b timeFilt bit index
+        filter_dateFilt, ///< @b dateFilt bit index
+        filter_gpsOnlyFilter, ///< @b gpsOnlyFilter bit index
+        filter_trackFilt, ///< @b trackFilt bit index
+        filter_numOfValues ///< number of available bits
+    };
+
+    /// @brief Value enumeration for @ref nmeaVersion field.
+    enum class NmeaVersion : std::uint8_t
+    {
+        v21 = 0x21, ///< NMEA version 2.1
+        v23 = 0x23 ///< NMEA version 2.3
+    };
+
+    /// @brief Custom validator class for @ref nmeaVersion field
+    struct NmeaVersionValidator
+    {
+        template <typename TField>
+        bool operator()(const TField& field) const
+        {
+            auto value = field.value();
+            return ((value == NmeaVersion::v21) ||
+                    (value == NmeaVersion::v23));
+        }
+    };
+
+    /// @brief Bits access enumeration for @ref flags bitmask field.
+    enum
+    {
+        flags_compat, ///< @b compat bit index
+        flags_consider, ///< @b consider bit index
+        flags_numOfValues ///< number of available bits
+    };
+
+    /// @brief Definition of "filter" field.
+    using filter =
+        field::common::X1T<
+            comms::option::BitmaskReservedBits<0xc0, 0>
+        >;
+
+    /// @brief Definition of "nmeaVersion" field.
+    using nmeaVersion =
+        field::common::EnumT<
+            NmeaVersion,
+            comms::option::ContentsValidator<NmeaVersionValidator>,
+            comms::option::DefaultNumValue<(int)NmeaVersion::v23>
+        >;
+
+    /// @brief Definition of "numSV" field.
+    using numSV = field::common::U1;
+
+    /// @brief Definition of "flags" field.
+    using flags =
+        field::common::X1T<
+            comms::option::BitmaskReservedBits<0xfc, 0>
+        >;
+
+    /// @brief All the fields bundled in std::tuple.
+    using All = std::tuple<
+        filter,
+        nmeaVersion,
+        numSV,
+        flags
+    >;
 };
 
-enum
-{
-    CfgNmeaField_flags_compat,
-    CfgNmeaField_flags_consider,
-    CfgNmeaField_flags_numOfValues
-};
-
-using CfgNmeaField_filter =
-    field::common::X1T<
-        comms::option::BitmaskReservedBits<0xc0, 0>
-    >;
-using CfgNmeaField_nmeaVersion =
-    field::common::EnumT<
-        CfgNmea_NmeaVersion,
-        comms::option::ContentsValidator<CfgNmea_NmeaVersionValidator>,
-        comms::option::DefaultNumValue<(int)CfgNmea_NmeaVersion::v23>
-    >;
-using CfgNmeaField_numSV = field::common::U1;
-using CfgNmeaField_flags =
-    field::common::X1T<
-        comms::option::BitmaskReservedBits<0xfc, 0>
-    >;
-
-using CfgNmeaFields = std::tuple<
-    CfgNmeaField_filter,
-    CfgNmeaField_nmeaVersion,
-    CfgNmeaField_numSV,
-    CfgNmeaField_flags
->;
-
+/// @brief Definition of CFG-NMEA message
+/// @details Inherits from
+///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+///     while providing @b TMsgBase as common interface class as well as
+///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
+///     @b comms::option::DispatchImpl as options. @n
+///     See @ref CfgNmeaFields and for definition of the fields this message contains.
+/// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class CfgNmea : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_NMEA>,
-        comms::option::FieldsImpl<CfgNmeaFields>,
+        comms::option::FieldsImpl<CfgNmeaFields::All>,
         comms::option::DispatchImpl<CfgNmea<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_NMEA>,
-        comms::option::FieldsImpl<CfgNmeaFields>,
+        comms::option::FieldsImpl<CfgNmeaFields::All>,
         comms::option::DispatchImpl<CfgNmea<TMsgBase> >
     > Base;
 public:
@@ -109,10 +132,10 @@ public:
     /// @brief Index to access the fields
     enum FieldIdx
     {
-        FieldIdx_filter,
-        FieldIdx_nmeaVersion,
-        FieldIdx_numSV,
-        FieldIdx_flags,
+        FieldIdx_filter, ///< @b filter field, see @ref CfgNmeaFields::filter
+        FieldIdx_nmeaVersion, ///< @b nmeaVersion field, see @ref CfgNmeaFields::nmeaVersion
+        FieldIdx_numSV, ///< @b numSV field, see @ref CfgNmeaFields::numSV
+        FieldIdx_flags, ///< @b flags field, see @ref CfgNmeaFields::flags
         FieldIdx_numOfValues ///< number of available fields
     };
 
