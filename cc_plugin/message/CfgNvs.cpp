@@ -50,11 +50,11 @@ QVariantMap createProps_mask(const char* name)
             }
         };
 
-    fillBitNamesFunc(ublox::message::CfgNvsField_mask_alm);
+    fillBitNamesFunc(ublox::message::CfgNvsFields::mask_alm);
     bitNames.append("alm");
-    fillBitNamesFunc(ublox::message::CfgNvsField_mask_aop);
+    fillBitNamesFunc(ublox::message::CfgNvsFields::mask_aop);
     bitNames.append("aop");
-    assert(bitNames.size() == ublox::message::CfgNvsField_mask_numOfValues);
+    assert(bitNames.size() == ublox::message::CfgNvsFields::mask_numOfValues);
     return cc::Property::createPropertiesMap(name, std::move(bitNames));
 }
 
@@ -66,7 +66,7 @@ QVariantMap createProps_deviceMask()
     bitNames.append("devEEPROM");
     bitNames.append(QVariant());
     bitNames.append("devSpiFlash");
-    assert(bitNames.size() == ublox::message::CfgNvsField_deviceMask_numOfValues);
+    assert(bitNames.size() == ublox::message::CfgNvsFields::deviceMask_numOfValues);
 
     return cc::Property::createPropertiesMap("deviceMask", std::move(bitNames));
 }
