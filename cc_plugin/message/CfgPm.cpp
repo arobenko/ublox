@@ -56,7 +56,7 @@ QVariantMap createProps_flags()
     QVariantList extintSelectValues;
     cc::Property::appendEnumValue(extintSelectValues, "EXTINT0");
     cc::Property::appendEnumValue(extintSelectValues, "EXTINT1");
-    assert(extintSelectValues.size() == (int)ublox::message::CfgPm_ExtintSelect::NumOfValues);
+    assert(extintSelectValues.size() == (int)ublox::message::CfgPmFields::ExtintSelect::NumOfValues);
     auto extintSelectProps = cc::Property::createPropertiesMap("extintSelect", std::move(extintSelectValues));
     cc::Property::setSerialisedHidden(extintSelectProps);
 
@@ -66,7 +66,7 @@ QVariantMap createProps_flags()
             QVariantList enumValues;
             cc::Property::appendEnumValue(enumValues, "disabled");
             cc::Property::appendEnumValue(enumValues, "enabled");
-            assert(enumValues.size() == (int)ublox::message::CfgPm_DisabledEnabled::NumOfValues);
+            assert(enumValues.size() == (int)ublox::message::CfgPmFields::DisabledEnabled::NumOfValues);
             auto props = cc::Property::createPropertiesMap(name, std::move(enumValues));
             cc::Property::setSerialisedHidden(props);
             return props;
@@ -76,7 +76,7 @@ QVariantMap createProps_flags()
     flagsBitNames.append("waitTimeFix");
     flagsBitNames.append("updateRtc");
     flagsBitNames.append("updateEPH");
-    assert(flagsBitNames.size() == ublox::message::CfgPmField_flags_flags_numOfValues);
+    assert(flagsBitNames.size() == ublox::message::CfgPmFields::remainingFlags_numOfValues);
     auto flagsProps = cc::Property::createPropertiesMap(QString(), std::move(flagsBitNames));
     cc::Property::setSerialisedHidden(flagsProps);
 
@@ -89,7 +89,7 @@ QVariantMap createProps_flags()
     membersData.append(createReservedProps());
     membersData.append(createEnableDisableProps("limitPeakCurr"));
     membersData.append(std::move(flagsProps));
-    assert(membersData.size() == ublox::message::CfgPmField_flags_numOfValues);
+    assert(membersData.size() == ublox::message::CfgPmFields::flags_numOfValues);
     return cc::Property::createPropertiesMap("flags", std::move(membersData));
 }
 
