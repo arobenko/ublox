@@ -36,18 +36,18 @@ struct CfgPmFields
     /// @brief Value enumeration for @ref extintSelect field.
     enum class ExtintSelect : std::uint8_t
     {
-        EXTINT0,
-        EXTINT1,
-        NumOfValues
+        EXTINT0, ///< EXTINT0
+        EXTINT1, ///< EXTINT1
+        NumOfValues ///< number of available values
     };
 
     /// @brief Common value enumeration for @ref extintWake, @ref extintBackup,
     ///     and @ref limitPeakCurr member fields.
     enum class DisabledEnabled : std::uint8_t
     {
-        Disabled,
-        Enabled,
-        NumOfValues
+        Disabled, ///< disabled
+        Enabled, ///< enabled
+        NumOfValues ///< number of available values
     };
 
     /// @brief Value enumeration for @ref extintWake field.

@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -50,10 +50,20 @@ QVariantMap createProps_flags()
             return props;
         };
 
+    auto createSingleBitMask =
+        [](const QString& name) -> QVariantMap
+        {
+            QVariantList bits;
+            bits.append(name);
+            auto props = cc::Property::createPropertiesMap(QString(), std::move(bits));
+            cc::Property::setSerialisedHidden(props);
+            return props;
+        };
+
     QVariantList extintSelectValues;
     cc::Property::appendEnumValue(extintSelectValues, "EXTINT0");
     cc::Property::appendEnumValue(extintSelectValues, "EXTINT1");
-    assert(extintSelectValues.size() == (int)ublox::message::CfgPm2_ExtintSelect::NumOfValues);
+    assert(extintSelectValues.size() == (int)ublox::message::CfgPm2Fields::ExtintSelect::NumOfValues);
     auto extintSelectProps = cc::Property::createPropertiesMap("extintSelect", std::move(extintSelectValues));
     cc::Property::setSerialisedHidden(extintSelectProps);
 
@@ -63,28 +73,16 @@ QVariantMap createProps_flags()
             QVariantList enumValues;
             cc::Property::appendEnumValue(enumValues, "disabled");
             cc::Property::appendEnumValue(enumValues, "enabled");
-            assert(enumValues.size() == (int)ublox::message::CfgPm2_DisabledEnabled::NumOfValues);
+            assert(enumValues.size() == (int)ublox::message::CfgPm2Fields::DisabledEnabled::NumOfValues);
             auto props = cc::Property::createPropertiesMap(name, std::move(enumValues));
             cc::Property::setSerialisedHidden(props);
             return props;
         };
 
-    QVariantList flagsBitNames;
-    flagsBitNames.append("waitTimeFix");
-    flagsBitNames.append("updateRtc");
-    flagsBitNames.append("updateEPH");
-    flagsBitNames.append(QVariant());
-    flagsBitNames.append(QVariant());
-    flagsBitNames.append(QVariant());
-    flagsBitNames.append("doNotEnterOff");
-    assert(flagsBitNames.size() == ublox::message::CfgPm2Field_flags_flags_numOfValues);
-    auto flagsProps = cc::Property::createPropertiesMap(QString(), std::move(flagsBitNames));
-    cc::Property::setSerialisedHidden(flagsProps);
-
     QVariantList modeEnumValues;
     cc::Property::appendEnumValue(modeEnumValues, "ON/OFF");
     cc::Property::appendEnumValue(modeEnumValues, "Cyclic tracking");
-    assert(modeEnumValues.size() == (int)ublox::message::CfgPm2_Mode::NumOfValues);
+    assert(modeEnumValues.size() == (int)ublox::message::CfgPm2Fields::Mode::NumOfValues);
     auto modeProps = cc::Property::createPropertiesMap("mode", std::move(modeEnumValues));
     cc::Property::setSerialisedHidden(modeProps);
 
@@ -95,10 +93,14 @@ QVariantMap createProps_flags()
     membersData.append(createEnableDisableProps("extintBackup"));
     membersData.append(createReservedProps());
     membersData.append(createEnableDisableProps("limitPeakCurr"));
-    membersData.append(std::move(flagsProps));
+    membersData.append(createSingleBitMask("waitTimeFix"));
+    membersData.append(createSingleBitMask("updateRTC"));
+    membersData.append(createSingleBitMask("updateEPH"));
+    membersData.append(createReservedProps());
+    membersData.append(createSingleBitMask("doNotEnterOff"));
     membersData.append(std::move(modeProps));
     membersData.append(createReservedProps());
-    assert(membersData.size() == ublox::message::CfgPm2Field_flags_numOfValues);
+    assert(membersData.size() == ublox::message::CfgPm2Fields::flags_numOfValues);
     return cc::Property::createPropertiesMap("flags", std::move(membersData));
 }
 
