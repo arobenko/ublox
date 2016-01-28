@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -15,15 +15,12 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+/// @file
+/// @brief Contains definition of CFG-PRT (@b USB) message and its fields.
 
 #pragma once
 
-#include <iterator>
-
-#include "comms/Message.h"
 #include "ublox/Message.h"
-
-#include "ublox/field/cfg.h"
 #include "CfgPrt.h"
 
 namespace ublox
@@ -32,49 +29,59 @@ namespace ublox
 namespace message
 {
 
-using CfgPrtUsb_PortId = CfgPrt_PortId;
-using CfgPrtUsb_Polarity = field::cfg::Polarity;
+/// @brief Accumulates details of all the CFG-PRT (@b USB) message fields.
+/// @see CfgPrtUsb
+struct CfgPrtUsbFields : public CfgPrtFields
+{
+    /// @brief Definition of "portID" field.
+    using portID =
+        field::common::EnumT<
+            PortId,
+            comms::option::ValidNumValueRange<(int)PortId::USB, (int)PortId::USB>,
+            comms::option::DefaultNumValue<(int)PortId::USB>
+        >;
 
-using CfgPrtUsbField_portID =
-    field::common::EnumT<
-        CfgPrt_PortId,
-        comms::option::ValidNumValueRange<(int)CfgPrt_PortId::USB, (int)CfgPrt_PortId::USB>,
-        comms::option::DefaultNumValue<(int)CfgPrt_PortId::USB>
+    /// @brief Definition of "reserved2" field
+    using reserved2 = field::common::res4;
+
+    /// @brief Definition of "reserved4" field
+    using reserved4 = field::common::res2;
+
+    /// @brief All the fields bundled in std::tuple.
+    using All = std::tuple<
+        portID,
+        reserved0,
+        txReady,
+        reserved2,
+        reserved3,
+        inProtoMask,
+        outProtoMask,
+        reserved4,
+        reserved5
     >;
-using CfgPrtUsbField_reserved0 = field::common::res1;
-using CfgPrtUsbField_txReady = field::cfg::txReady;
-using CfgPrtUsbField_reserved2 = field::common::res4;
-using CfgPrtUsbField_reserved3 = field::common::res4;
-using CfgPrtUsbField_inProtoMask = field::cfg::inProtoMask;
-using CfgPrtUsbField_outProtoMask = field::cfg::outProtoMask;
-using CfgPrtUsbField_reserved4 = field::common::res2;
-using CfgPrtUsbField_reserved5 = field::common::res2;
+};
 
-using CfgPrtUsbFields = std::tuple<
-    CfgPrtUsbField_portID,
-    CfgPrtUsbField_reserved0,
-    CfgPrtUsbField_txReady,
-    CfgPrtUsbField_reserved2,
-    CfgPrtUsbField_reserved3,
-    CfgPrtUsbField_inProtoMask,
-    CfgPrtUsbField_outProtoMask,
-    CfgPrtUsbField_reserved4,
-    CfgPrtUsbField_reserved5
->;
-
+/// @brief Definition of CFG-PRT (@b USB) message
+/// @details Inherits from
+///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+///     while providing @b TMsgBase as common interface class as well as
+///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
+///     @b comms::option::DispatchImpl as options. @n
+///     See @ref CfgPrtUsbFields and for definition of the fields this message contains.
+/// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class CfgPrtUsb : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_PRT>,
-        comms::option::FieldsImpl<CfgPrtUsbFields>,
+        comms::option::FieldsImpl<CfgPrtUsbFields::All>,
         comms::option::DispatchImpl<CfgPrtUsb<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_PRT>,
-        comms::option::FieldsImpl<CfgPrtUsbFields>,
+        comms::option::FieldsImpl<CfgPrtUsbFields::All>,
         comms::option::DispatchImpl<CfgPrtUsb<TMsgBase> >
     > Base;
 public:
@@ -82,15 +89,15 @@ public:
     /// @brief Index to access the fields
     enum FieldIdx
     {
-        FieldIdx_portID,
-        FieldIdx_reserved0,
-        FieldIdx_txReady,
-        FieldIdx_reserved2,
-        FieldIdx_reserved3,
-        FieldIdx_inProtoMask,
-        FieldIdx_outProtoMask,
-        FieldIdx_reserved4,
-        FieldIdx_reserved5,
+        FieldIdx_portID, ///< @b portID field, see @ref CfgPrtUsbFields::portID
+        FieldIdx_reserved0, ///< @b reserved0 field, see @ref CfgPrtUsbFields::reserved0
+        FieldIdx_txReady, ///< @b txReady field, see @ref CfgPrtUsbFields::txReady
+        FieldIdx_reserved2, ///< @b reserved2 field, see @ref CfgPrtUsbFields::reserved2
+        FieldIdx_reserved3, ///< @b reserved3 field, see @ref CfgPrtUsbFields::reserved3
+        FieldIdx_inProtoMask, ///< @b inProtoMask field, see @ref CfgPrtUsbFields::inProtoMask
+        FieldIdx_outProtoMask, ///< @b outProtoMask field, see @ref CfgPrtUsbFields::outProtoMask
+        FieldIdx_reserved4, ///< @b reserved4 field, see @ref CfgPrtUsbFields::reserved4
+        FieldIdx_reserved5, ///< @b reserved5 field, see @ref CfgPrtUsbFields::reserved5
         FieldIdx_numOfValues ///< number of available fields
     };
 
@@ -116,6 +123,11 @@ public:
     CfgPrtUsb& operator=(CfgPrtUsb&&) = default;
 
 protected:
+    /// @brief Overrides read functionality provided by the base class.
+    /// @details Reads only first "portID" field (@ref CfgPrtUsbFields::portID) and
+    ///     checks its value. If the value is @b NOT CfgPrtUsbFields::PortId::USB,
+    ///     the read operation fails with comms::ErrorStatus::InvalidMsgData error
+    ///     status. Otherwise the read operation continues as expected.
     virtual comms::ErrorStatus readImpl(
         typename Base::ReadIterator& iter,
         std::size_t len) override
@@ -127,22 +139,26 @@ protected:
 
         auto& allFields = Base::fields();
         auto& portIdField = std::get<FieldIdx_portID>(allFields);
-        if (portIdField.value() != CfgPrt_PortId::USB) {
+        if (portIdField.value() != CfgPrtUsbFields::PortId::USB) {
             return comms::ErrorStatus::InvalidMsgData;
         }
 
         return Base::template readFieldsFrom<FieldIdx_reserved0>(iter, len);
     }
 
+    /// @brief Overrides default refreshing functionality provided by the interface class.
+    /// @details This function makes sure that the value of the
+    ///     "portID" field (@ref CfgPrtUsbFields::portID) remains CfgPrtUsbFields::PortId::USB.
+    /// @return @b true in case the "portID" field was modified, @b false otherwise
     virtual bool refreshImpl() override
     {
         auto& allFields = Base::fields();
         auto& portIdField = std::get<FieldIdx_portID>(allFields);
-        if (portIdField.value() == CfgPrt_PortId::USB) {
+        if (portIdField.value() == CfgPrtUsbFields::PortId::USB) {
             return false;
         }
 
-        portIdField.value() = CfgPrt_PortId::USB;
+        portIdField.value() = CfgPrtUsbFields::PortId::USB;
         return true;
     }
 

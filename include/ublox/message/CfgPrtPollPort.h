@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -15,15 +15,12 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+/// @file
+/// @brief Contains definition of CFG-PRT (<b>poll port</b>) message and its fields.
 
 #pragma once
 
-#include <iterator>
-#include <algorithm>
-
-#include "comms/Message.h"
 #include "ublox/Message.h"
-
 #include "CfgPrt.h"
 
 namespace ublox
@@ -32,49 +29,44 @@ namespace ublox
 namespace message
 {
 
-struct CfgPrtPollPort_PortIdValidator
+/// @brief Accumulates details of all the CFG-PRT (<b>poll port</b>) message fields.
+/// @see CfgPrtPollPort
+struct CfgPrtPollPortFields : public CfgPrtFields
 {
-    template <typename TField>
-    bool operator()(const TField& field)
-    {
-        static const CfgPrt_PortId Values[] = {
-            CfgPrt_PortId::DDC,
-            CfgPrt_PortId::UART,
-            CfgPrt_PortId::USB,
-            CfgPrt_PortId::SPI
-        };
+    /// @brief Definition of "portID" field.
+    using portID =
+        field::common::EnumT<
+            PortId,
+            comms::option::ValidNumValueRange<(int)PortId::DDC, (int)PortId::SPI>
+        >;
 
-        auto value = field.value();
-        auto iter = std::lower_bound(std::begin(Values), std::end(Values), value);
-        return ((iter != std::end(Values)) && (*iter == value));
-    }
+    /// @brief All the fields bundled in std::tuple.
+    using All = std::tuple<
+        portID
+    >;
 };
 
-
-using CfgPrtPollPortField_portID =
-    field::common::EnumT<
-        CfgPrt_PortId,
-        comms::option::ContentsValidator<CfgPrtPollPort_PortIdValidator>
-    >;
-
-
-using CfgPrtPollPortFields = std::tuple<
-    CfgPrtPollPortField_portID
->;
-
+/// @brief Definition of CFG-PRT (<b>poll port</b>) message
+/// @details Inherits from
+///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+///     while providing @b TMsgBase as common interface class as well as
+///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
+///     @b comms::option::DispatchImpl as options. @n
+///     See @ref CfgPrtPollPortFields and for definition of the fields this message contains.
+/// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class CfgPrtPollPort : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_PRT>,
-        comms::option::FieldsImpl<CfgPrtPollPortFields>,
+        comms::option::FieldsImpl<CfgPrtPollPortFields::All>,
         comms::option::DispatchImpl<CfgPrtPollPort<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_PRT>,
-        comms::option::FieldsImpl<CfgPrtPollPortFields>,
+        comms::option::FieldsImpl<CfgPrtPollPortFields::All>,
         comms::option::DispatchImpl<CfgPrtPollPort<TMsgBase> >
     > Base;
 public:
@@ -82,7 +74,7 @@ public:
     /// @brief Index to access the fields
     enum FieldIdx
     {
-        FieldIdx_portID,
+        FieldIdx_portID, ///< @b portID field, see @ref CfgPrtPollPortFields::portID
         FieldIdx_numOfValues ///< number of available fields
     };
 

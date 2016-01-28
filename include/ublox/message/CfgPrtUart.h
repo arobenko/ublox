@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -15,15 +15,12 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+/// @file
+/// @brief Contains definition of CFG-PRT (@b UART) message and its fields.
 
 #pragma once
 
-#include <iterator>
-
-#include "comms/Message.h"
 #include "ublox/Message.h"
-
-#include "ublox/field/cfg.h"
 #include "CfgPrt.h"
 
 namespace ublox
@@ -32,133 +29,153 @@ namespace ublox
 namespace message
 {
 
-using CfgPrtUart_PortId = CfgPrt_PortId;
-using CfgPrtUart_Polarity = field::cfg::Polarity;
-
-enum class CfgPrtUart_BitLength : std::uint8_t
+/// @brief Accumulates details of all the CFG-PRT (@b SPI) message fields.
+/// @see CfgPrtUart
+struct CfgPrtUartFields : public CfgPrtFields
 {
-    Bits_5,
-    Bits_6,
-    Bits_7,
-    Bits_8,
-    NumOfValues
-};
-
-enum class CfgPrtUart_Parity : std::uint8_t
-{
-    Even,
-    Odd,
-    NoParity = 4,
-    NoParity2
-};
-
-enum class CfgPrtUart_StopBits : std::uint8_t
-{
-    One,
-    OneAndHalf,
-    Two,
-    Half,
-    NumOfValues
-};
-
-struct CfgPrtUart_ParityValidator
-{
-    template <typename TField>
-    bool operator()(const TField& field) const
+    /// @brief Value enumeration for @ref charLen member field of @ref mode bitfield.
+    enum class CharLen : std::uint8_t
     {
-        auto value = field.value();
-        return
-            (value == CfgPrtUart_Parity::Even) ||
-            (value == CfgPrtUart_Parity::Odd) ||
-            (value == CfgPrtUart_Parity::NoParity) ||
-            (value == CfgPrtUart_Parity::NoParity2);
-    }
-};
+        Bits_5, ///< 5 bits
+        Bits_6, ///< 6 bits
+        Bits_7, ///< 7 bits
+        Bits_8, ///< 8 bits
+        NumOfValues ///< number of available values
+    };
 
-enum
-{
-    CfgPrtUartField_mode_reserved1,
-    CfgPrtUartField_mode_charLen,
-    CfgPrtUartField_mode_reserved2,
-    CfgPrtUartField_mode_parity,
-    CfgPrtUartField_mode_nStopBits,
-    CfgPrtUartField_mode_reserved3,
-    CfgPrtUartField_mode_numOfValues
-};
+    /// @brief Value enumeration for @ref parity member field of @ref mode bitfield.
+    enum class Parity : std::uint8_t
+    {
+        Even, ///< even
+        Odd, ///< odd
+        NoParity = 4, ///< none
+        NoParity2 ///< none
+    };
 
-using CfgPrtUartField_portID =
-    field::common::EnumT<
-        CfgPrt_PortId,
-        comms::option::ValidNumValueRange<(int)CfgPrt_PortId::UART, (int)CfgPrt_PortId::UART2>,
-        comms::option::DefaultNumValue<(int)CfgPrt_PortId::UART>
-    >;
-using CfgPrtUartField_reserved0 = field::common::res1;
-using CfgPrtUartField_txReady = field::cfg::txReady;
-using CfgPrtUartField_mode =
-    field::common::BitfieldT<
-        std::tuple<
-            field::common::U1T<
-                comms::option::FixedBitLength<6>,
-                comms::option::BitmaskReservedBits<0xff, 0x10>,
-                comms::option::DefaultNumValue<0x10>
-            >,
-            field::common::EnumT<
-                CfgPrtUart_BitLength,
-                comms::option::FixedBitLength<2>,
-                comms::option::ValidNumValueRange<0, (int)CfgPrtUart_BitLength::NumOfValues - 1>,
-                comms::option::DefaultNumValue<(int)CfgPrtUart_BitLength::Bits_8>
-            >,
-            field::common::U1T<
-                comms::option::FixedBitLength<1>,
-                comms::option::BitmaskReservedBits<0xff, 0x0>
-            >,
-            field::common::EnumT<
-                CfgPrtUart_Parity,
-                comms::option::FixedBitLength<3>,
-                comms::option::ContentsValidator<CfgPrtUart_ParityValidator>
-            >,
-            field::common::EnumT<
-                CfgPrtUart_StopBits,
-                comms::option::FixedBitLength<2>,
-                comms::option::ValidNumValueRange<0, (int)CfgPrtUart_StopBits::NumOfValues - 1>
-            >,
-            field::common::U4T<
-                comms::option::FixedBitLength<18>,
-                comms::option::BitmaskReservedBits<0xffffffff, 0x0>
+    /// @brief Value enumeration for @ref nStopBits member field of @ref mode bitfield.
+    enum class StopBits : std::uint8_t
+    {
+        One, ///< 1 stop bit
+        OneAndHalf, ///< 1.5 stop bits
+        Two, ///< 2 stop bits
+        Half, ///< 0.5 stop bits
+        NumOfValues /// number of available values
+    };
+
+    /// @brief Custom validator for @ref parity member field
+    struct ParityValidator
+    {
+        template <typename TField>
+        bool operator()(const TField& field) const
+        {
+            auto value = field.value();
+            return
+                (value == Parity::Even) ||
+                (value == Parity::Odd) ||
+                (value == Parity::NoParity) ||
+                (value == Parity::NoParity2);
+        }
+    };
+
+    enum
+    {
+        mode_reserved1,
+        mode_charLen,
+        mode_reserved2,
+        mode_parity,
+        mode_nStopBits,
+        mode_reserved3,
+        mode_numOfValues
+    };
+
+    /// @brief Definition of "portID" field.
+    using portID =
+        field::common::EnumT<
+            PortId,
+            comms::option::ValidNumValueRange<(int)PortId::UART, (int)PortId::UART2>,
+            comms::option::DefaultNumValue<(int)PortId::UART>
+        >;
+
+    /// @brief Definition of "charLen" member field of @ref mode bitfield.
+    using charLen =
+        field::common::EnumT<
+            CharLen,
+            comms::option::FixedBitLength<2>,
+            comms::option::ValidNumValueRange<0, (int)CharLen::NumOfValues - 1>,
+            comms::option::DefaultNumValue<(int)CharLen::Bits_8>
+        >;
+
+    /// @brief Definition of "parity" member field of @ref mode bitfield.
+    using parity =
+        field::common::EnumT<
+            Parity,
+            comms::option::FixedBitLength<3>,
+            comms::option::ContentsValidator<ParityValidator>
+        >;
+
+    /// @brief Definition of "nStopBits" member field of @ref mode bitfield.
+    using nStopBits =
+        field::common::EnumT<
+            StopBits,
+            comms::option::FixedBitLength<2>,
+            comms::option::ValidNumValueRange<0, (int)StopBits::NumOfValues - 1>
+        >;
+
+    /// @brief Definition of "mode" field.
+    using mode =
+        field::common::BitfieldT<
+            std::tuple<
+                field::common::X1T<
+                    comms::option::FixedBitLength<6>,
+                    comms::option::BitmaskReservedBits<0xff, 0x10>,
+                    comms::option::DefaultNumValue<0x10>
+                >,
+                charLen,
+                field::common::res1T<comms::option::FixedBitLength<1> >,
+                parity,
+                nStopBits,
+                field::common::res4T<comms::option::FixedBitLength<18> >
             >
-        >
+        >;
+
+    /// @brief Definition of "baudRate" field.
+    using baudRate = field::common::U4;
+
+    /// @brief All the fields bundled in std::tuple.
+    using All = std::tuple<
+        portID,
+        reserved0,
+        txReady,
+        mode,
+        baudRate,
+        inProtoMask,
+        outProtoMask,
+        flags,
+        reserved5
     >;
-using CfgPrtUartField_baudRate = field::common::U4;
-using CfgPrtUartField_inProtoMask = field::cfg::inProtoMask;
-using CfgPrtUartField_outProtoMask = field::cfg::outProtoMask;
-using CfgPrtUartField_flags = field::cfg::prtFlags;
-using CfgPrtUartField_reserved5 = field::common::res2;
+};
 
-using CfgPrtUartFields = std::tuple<
-    CfgPrtUartField_portID,
-    CfgPrtUartField_reserved0,
-    CfgPrtUartField_txReady,
-    CfgPrtUartField_mode,
-    CfgPrtUartField_baudRate,
-    CfgPrtUartField_inProtoMask,
-    CfgPrtUartField_outProtoMask,
-    CfgPrtUartField_flags,
-    CfgPrtUartField_reserved5
->;
-
+/// @brief Definition of CFG-PRT (@b UART) message
+/// @details Inherits from
+///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+///     while providing @b TMsgBase as common interface class as well as
+///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
+///     @b comms::option::DispatchImpl as options. @n
+///     See @ref CfgPrtUartFields and for definition of the fields this message contains.
+/// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class CfgPrtUart : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_PRT>,
-        comms::option::FieldsImpl<CfgPrtUartFields>,
+        comms::option::FieldsImpl<CfgPrtUartFields::All>,
         comms::option::DispatchImpl<CfgPrtUart<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_PRT>,
-        comms::option::FieldsImpl<CfgPrtUartFields>,
+        comms::option::FieldsImpl<CfgPrtUartFields::All>,
         comms::option::DispatchImpl<CfgPrtUart<TMsgBase> >
     > Base;
 public:
@@ -166,15 +183,15 @@ public:
     /// @brief Index to access the fields
     enum FieldIdx
     {
-        FieldIdx_portID,
-        FieldIdx_reserved0,
-        FieldIdx_txReady,
-        FieldIdx_mode,
-        FieldIdx_baudRate,
-        FieldIdx_inProtoMask,
-        FieldIdx_outProtoMask,
-        FieldIdx_flags,
-        FieldIdx_reserved5,
+        FieldIdx_portID, ///< @b portID field, see @ref CfgPrtUartFields::portID
+        FieldIdx_reserved0, ///< @b reserved0 field, see @ref CfgPrtUartFields::reserved0
+        FieldIdx_txReady, ///< @b txReady field, see @ref CfgPrtUartFields::txReady
+        FieldIdx_mode, ///< @b mode field, see @ref CfgPrtUartFields::mode
+        FieldIdx_baudRate, ///< @b baudRate field, see @ref CfgPrtUartFields::baudRate
+        FieldIdx_inProtoMask, ///< @b inProtoMask field, see @ref CfgPrtUartFields::inProtoMask
+        FieldIdx_outProtoMask, ///< @b outProtoMask field, see @ref CfgPrtUartFields::outProtoMask
+        FieldIdx_flags, ///< @b flags field, see @ref CfgPrtUartFields::flags
+        FieldIdx_reserved5, ///< @b reserved5 field, see @ref CfgPrtUartFields::reserved5
         FieldIdx_numOfValues ///< number of available fields
     };
 
@@ -200,6 +217,12 @@ public:
     CfgPrtUart& operator=(CfgPrtUart&&) = default;
 
 protected:
+
+    /// @brief Overrides read functionality provided by the base class.
+    /// @details Reads only first "portID" field (@ref CfgPrtUartFields::portID) and
+    ///     checks its value. If the value is @b NOT CfgPrtUartFields::PortId::UART,
+    ///     the read operation fails with comms::ErrorStatus::InvalidMsgData error
+    ///     status. Otherwise the read operation continues as expected.
     virtual comms::ErrorStatus readImpl(
         typename Base::ReadIterator& iter,
         std::size_t len) override
@@ -211,24 +234,28 @@ protected:
 
         auto& allFields = Base::fields();
         auto& portIdField = std::get<FieldIdx_portID>(allFields);
-        if ((portIdField.value() != CfgPrt_PortId::UART) &&
-            (portIdField.value() != CfgPrt_PortId::UART2)) {
+        if ((portIdField.value() != CfgPrtUartFields::PortId::UART) &&
+            (portIdField.value() != CfgPrtUartFields::PortId::UART2)) {
             return comms::ErrorStatus::InvalidMsgData;
         }
 
         return Base::template readFieldsFrom<FieldIdx_reserved0>(iter, len);
     }
 
+    /// @brief Overrides default refreshing functionality provided by the interface class.
+    /// @details This function makes sure that the value of the
+    ///     "portID" field (@ref CfgPrtUartFields::portID) remains CfgPrtUartFields::PortId::UART.
+    /// @return @b true in case the "portID" field was modified, @b false otherwise
     virtual bool refreshImpl() override
     {
         auto& allFields = Base::fields();
         auto& portIdField = std::get<FieldIdx_portID>(allFields);
-        if ((portIdField.value() == CfgPrt_PortId::UART) ||
-            (portIdField.value() == CfgPrt_PortId::UART2)) {
+        if ((portIdField.value() == CfgPrtUartFields::PortId::UART) ||
+            (portIdField.value() == CfgPrtUartFields::PortId::UART2)) {
             return false;
         }
 
-        portIdField.value() = CfgPrt_PortId::UART;
+        portIdField.value() = CfgPrtUartFields::PortId::UART;
         return true;
     }
 

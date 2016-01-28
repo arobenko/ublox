@@ -47,11 +47,11 @@ namespace
 QVariantMap createProps_portID()
 {
     QVariantList enumValues;
-    cc::Property::appendEnumValue(enumValues, "DDC", (int)ublox::message::CfgPrt_PortId::DDC);
-    cc::Property::appendEnumValue(enumValues, "UART", (int)ublox::message::CfgPrt_PortId::UART);
-    cc::Property::appendEnumValue(enumValues, "UART2", (int)ublox::message::CfgPrt_PortId::UART2);
-    cc::Property::appendEnumValue(enumValues, "USB", (int)ublox::message::CfgPrt_PortId::USB);
-    cc::Property::appendEnumValue(enumValues, "SPI", (int)ublox::message::CfgPrt_PortId::SPI);
+    cc::Property::appendEnumValue(enumValues, "DDC", (int)ublox::message::CfgPrtFields::PortId::DDC);
+    cc::Property::appendEnumValue(enumValues, "UART", (int)ublox::message::CfgPrtFields::PortId::UART);
+    cc::Property::appendEnumValue(enumValues, "UART2", (int)ublox::message::CfgPrtFields::PortId::UART2);
+    cc::Property::appendEnumValue(enumValues, "USB", (int)ublox::message::CfgPrtFields::PortId::USB);
+    cc::Property::appendEnumValue(enumValues, "SPI", (int)ublox::message::CfgPrtFields::PortId::SPI);
 
     return cc::Property::createPropertiesMap("portID", std::move(enumValues));
 }
@@ -73,7 +73,7 @@ QVariantMap createProps_txReady()
     QVariantList polEnumValues;
     cc::Property::appendEnumValue(polEnumValues, "High-active");
     cc::Property::appendEnumValue(polEnumValues, "Low-active");
-    assert(polEnumValues.size() == (int)ublox::field::cfg::Polarity::NumOfValues);
+    assert(polEnumValues.size() == (int)ublox::message::CfgPrtFields::Polarity::NumOfValues);
     auto polProps = cc::Property::createPropertiesMap("pol", std::move(polEnumValues));
     cc::Property::setSerialisedHidden(polProps);
 
@@ -88,7 +88,7 @@ QVariantMap createProps_txReady()
     membersData.append(std::move(polProps));
     membersData.append(std::move(pinProps));
     membersData.append(std::move(thresProps));
-    assert(membersData.size() == ublox::message::CfgPrt_txReady_numOfValues);
+    assert(membersData.size() == ublox::message::CfgPrtFields::txReady_numOfValues);
     return cc::Property::createPropertiesMap("txReady", std::move(membersData));
 }
 
@@ -98,7 +98,7 @@ QVariantMap createProps_inProtoMask()
     bitNames.append("inUbx");
     bitNames.append("inNmea");
     bitNames.append("inRtcm");
-    assert(bitNames.size() == ublox::message::CfgPrt_inProtoMask_numOfValues);
+    assert(bitNames.size() == ublox::message::CfgPrtFields::inProtoMask_numOfValues);
     return cc::Property::createPropertiesMap("inProtoMask", std::move(bitNames));
 }
 
@@ -107,7 +107,7 @@ QVariantMap createProps_outProtoMask()
     QVariantList bitNames;
     bitNames.append("outUbx");
     bitNames.append("outNmea");
-    assert(bitNames.size() == ublox::message::CfgPrt_outProtoMask_numOfValues);
+    assert(bitNames.size() == ublox::message::CfgPrtFields::outProtoMask_numOfValues);
     return cc::Property::createPropertiesMap("outProtoMask", std::move(bitNames));
 }
 
@@ -116,7 +116,7 @@ QVariantMap createProps_prtFlags()
     QVariantList bitNames;
     bitNames.append(QVariant());
     bitNames.append("extendedTxTimeout");
-    assert(bitNames.size() == ublox::message::CfgPrt_flags_numOfValues);
+    assert(bitNames.size() == ublox::message::CfgPrtFields::flags_numOfValues);
     return cc::Property::createPropertiesMap("flags", std::move(bitNames));
 }
 

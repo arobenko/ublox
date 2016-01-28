@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -60,7 +60,7 @@ QVariantMap createProps_mode()
     membersData.append(createReservedFunc());
     membersData.append(std::move(slaveAddrProps));
     membersData.append(createReservedFunc());
-    assert(membersData.size() == ublox::message::CfgPrtDdcField_mode_numOfValues);
+    assert(membersData.size() == ublox::message::CfgPrtDdcFields::mode_numOfValues);
     return cc::Property::createPropertiesMap("mode", std::move(membersData));
 }
 

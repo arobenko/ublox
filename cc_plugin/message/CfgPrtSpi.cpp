@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -49,14 +49,14 @@ QVariantMap createProps_mode()
     cc::Property::appendEnumValue(spiModeEnumValues, "Mode 1: CPOL=0, CPHA=1");
     cc::Property::appendEnumValue(spiModeEnumValues, "Mode 2: CPOL=1, CPHA=0");
     cc::Property::appendEnumValue(spiModeEnumValues, "Mode 3: CPOL=1, CPHA=1");
-    assert(spiModeEnumValues.size() == (int)ublox::message::CfgPrtSpi_SpiMode::NumOfValues);
+    assert(spiModeEnumValues.size() == (int)ublox::message::CfgPrtSpiFields::SpiMode::NumOfValues);
     auto spiModeProps = cc::Property::createPropertiesMap("spiMode", std::move(spiModeEnumValues));
     cc::Property::setSerialisedHidden(spiModeProps);
 
     QVariantList flowControlEnumValues;
     cc::Property::appendEnumValue(flowControlEnumValues, "Disabled");
     cc::Property::appendEnumValue(flowControlEnumValues, "Enabled");
-    assert(flowControlEnumValues.size() == (int)ublox::message::CfgPrtSpi_FlowControl::NumOfValues);
+    assert(flowControlEnumValues.size() == (int)ublox::message::CfgPrtSpiFields::FlowControl::NumOfValues);
     auto flowControlProps = cc::Property::createPropertiesMap("flowControl", std::move(flowControlEnumValues));
     cc::Property::setSerialisedHidden(flowControlProps);
 
@@ -79,7 +79,7 @@ QVariantMap createProps_mode()
     membersData.append(createReservedFunc());
     membersData.append(std::move(ffCntProps));
     membersData.append(createReservedFunc());
-    assert(membersData.size() == ublox::message::CfgPrtSpiField_mode_numOfValues);
+    assert(membersData.size() == ublox::message::CfgPrtSpiFields::mode_numOfValues);
     return cc::Property::createPropertiesMap("mode", std::move(membersData));
 }
 

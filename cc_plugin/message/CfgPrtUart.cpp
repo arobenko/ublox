@@ -49,15 +49,15 @@ QVariantMap createProps_mode()
     cc::Property::appendEnumValue(charLenEnumValues, "6bit");
     cc::Property::appendEnumValue(charLenEnumValues, "7bit");
     cc::Property::appendEnumValue(charLenEnumValues, "8bit");
-    assert(charLenEnumValues.size() == (int)ublox::message::CfgPrtUart_BitLength::NumOfValues);
+    assert(charLenEnumValues.size() == (int)ublox::message::CfgPrtUartFields::CharLen::NumOfValues);
     auto charLenProps = cc::Property::createPropertiesMap("charLen", std::move(charLenEnumValues));
     cc::Property::setSerialisedHidden(charLenProps);
 
     QVariantList parityEnumValues;
-    cc::Property::appendEnumValue(parityEnumValues, "Even", (int)ublox::message::CfgPrtUart_Parity::Even);
-    cc::Property::appendEnumValue(parityEnumValues, "Odd", (int)ublox::message::CfgPrtUart_Parity::Odd);
-    cc::Property::appendEnumValue(parityEnumValues, "No Parity", (int)ublox::message::CfgPrtUart_Parity::NoParity);
-    cc::Property::appendEnumValue(parityEnumValues, "No Parity(2)", (int)ublox::message::CfgPrtUart_Parity::NoParity2);
+    cc::Property::appendEnumValue(parityEnumValues, "Even", (int)ublox::message::CfgPrtUartFields::Parity::Even);
+    cc::Property::appendEnumValue(parityEnumValues, "Odd", (int)ublox::message::CfgPrtUartFields::Parity::Odd);
+    cc::Property::appendEnumValue(parityEnumValues, "No Parity", (int)ublox::message::CfgPrtUartFields::Parity::NoParity);
+    cc::Property::appendEnumValue(parityEnumValues, "No Parity(2)", (int)ublox::message::CfgPrtUartFields::Parity::NoParity2);
     auto parityProps = cc::Property::createPropertiesMap("parity", std::move(parityEnumValues));
     cc::Property::setSerialisedHidden(parityProps);
 
@@ -66,7 +66,7 @@ QVariantMap createProps_mode()
     cc::Property::appendEnumValue(nStopBitsEnumValues, "1.5");
     cc::Property::appendEnumValue(nStopBitsEnumValues, "2");
     cc::Property::appendEnumValue(nStopBitsEnumValues, "0.5");
-    assert(nStopBitsEnumValues.size() == (int)ublox::message::CfgPrtUart_StopBits::NumOfValues);
+    assert(nStopBitsEnumValues.size() == (int)ublox::message::CfgPrtUartFields::StopBits::NumOfValues);
     auto nStopBitsProps = cc::Property::createPropertiesMap("nStopBits", std::move(nStopBitsEnumValues));
     cc::Property::setSerialisedHidden(nStopBitsProps);
 
@@ -85,7 +85,7 @@ QVariantMap createProps_mode()
     membersData.append(std::move(parityProps));
     membersData.append(std::move(nStopBitsProps));
     membersData.append(createReservedFunc());
-    assert(membersData.size() == ublox::message::CfgPrtUartField_mode_numOfValues);
+    assert(membersData.size() == ublox::message::CfgPrtUartFields::mode_numOfValues);
     return cc::Property::createPropertiesMap("mode", std::move(membersData));
 }
 

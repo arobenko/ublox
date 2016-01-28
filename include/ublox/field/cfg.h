@@ -33,51 +33,6 @@ namespace field
 namespace cfg
 {
 
-enum class Polarity : std::uint8_t
-{
-    HighActive,
-    LowActive,
-    NumOfValues
-};
-
-using txReady =
-    common::BitfieldT<
-        std::tuple<
-            common::X1T<comms::option::FixedBitLength<1> >,
-            common::EnumT<
-                Polarity,
-                comms::option::FixedBitLength<1>,
-                comms::option::ValidNumValueRange<0, (int)Polarity::NumOfValues - 1>
-            >,
-            common::U1T<
-                comms::option::FixedBitLength<5>,
-                comms::option::ValidNumValueRange<0, 31>
-            >,
-            common::U2T<
-                comms::option::FixedBitLength<9>,
-                comms::option::ValidNumValueRange<0, 0x1ff>
-            >
-        >
-    >;
-
-using inProtoMask =
-    common::X2T<comms::option::BitmaskReservedBits<0xfff8, 0> >;
-
-using outProtoMask =
-    common::X2T<comms::option::BitmaskReservedBits<0xfffc, 0> >;
-
-using prtFlags =
-    common::X2T<comms::option::BitmaskReservedBits<0xfffd, 0> >;
-
-enum class PortId : std::uint8_t
-{
-    DDC = 0,
-    UART = 1,
-    UART2 = 2,
-    USB = 3,
-    SPI = 4
-};
-
 /// @brief Common enumeration for protocol ID value
 enum class ProtocolId : std::uint8_t
 {
