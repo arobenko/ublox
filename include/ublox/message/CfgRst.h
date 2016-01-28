@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -15,15 +15,15 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+/// @file
+/// @brief Contains definition of CFG-RST message and its fields.
 
 #pragma once
 
 #include <algorithm>
 
-#include "comms/Message.h"
 #include "ublox/Message.h"
-#include "ublox/field/MsgId.h"
-#include "ublox/field/cfg.h"
+#include "ublox/field/common.h"
 
 namespace ublox
 {
@@ -31,85 +31,104 @@ namespace ublox
 namespace message
 {
 
-enum
+/// @brief Accumulates details of all the CFG-RST message fields.
+/// @see CfgRst
+struct CfgRstFields
 {
-    CfgRstField_navBbrMask_eph,
-    CfgRstField_navBbrMask_alm,
-    CfgRstField_navBbrMask_health,
-    CfgRstField_navBbrMask_klob,
-    CfgRstField_navBbrMask_pos,
-    CfgRstField_navBbrMask_clkd,
-    CfgRstField_navBbrMask_osc,
-    CfgRstField_navBbrMask_utc,
-    CfgRstField_navBbrMask_rtc,
-    CfgRstField_navBbrMask_res0,
-    CfgRstField_navBbrMask_res1,
-    CfgRstField_navBbrMask_sfdr,
-    CfgRstField_navBbrMask_vmon,
-    CfgRstField_navBbrMask_tct,
-    CfgRstField_navBbrMask_res2,
-    CfgRstField_navBbrMask_aop,
-    CfgRstField_navBbrMask_numOfValues
-};
-
-enum class CfgRst_ResetMode : std::uint8_t
-{
-    Hardware,
-    Software,
-    GnssOnly,
-    HardwareAfterShutdown = 4,
-    GnssStop = 8,
-    GnssStart
-};
-
-struct CfgRst_ResetModeValidator
-{
-    template <typename TField>
-    bool operator()(const TField& field) const
+    /// @brief Bits access enumeration for @ref navBbrMask bitmask field.
+    enum
     {
-        static const CfgRst_ResetMode Values[] =
+        navBbrMask_eph, ///< @b eph bit index
+        navBbrMask_alm, ///< @b alm bit index
+        navBbrMask_health, ///< @b health bit index
+        navBbrMask_klob, ///< @b klob bit index
+        navBbrMask_pos, ///< @b pos bit index
+        navBbrMask_clkd, ///< @b clkd bit index
+        navBbrMask_osc, ///< @b osc bit index
+        navBbrMask_utc, ///< @b utc bit index
+        navBbrMask_rtc, ///< @b rtc bit index
+        navBbrMask_sfdr = 11, ///< @b sfdr bit index
+        navBbrMask_vmon, ///< @b vmon bit index
+        navBbrMask_tct, ///< @b tct bit index
+        navBbrMask_aop = 15, ///< @b aop bit index
+        navBbrMask_numOfValues ///< upper limit for available bits
+    };
+
+    /// @brief Value enumeration for @ref resetMode field
+    enum class ResetMode : std::uint8_t
+    {
+        Hardware, ///< Hardware reset
+        Software, ///< Software reset
+        GnssOnly, ///< Software reset (GNSS only)
+        HardwareAfterShutdown = 4, ///< Hardware reset after shutdown
+        GnssStop = 8, ///< Controlled GNSS stop
+        GnssStart ///< Controlled GNSS start
+    };
+
+    /// @brief Custom value validator for @ref resetMode field
+    struct ResetModeValidator
+    {
+        template <typename TField>
+        bool operator()(const TField& field) const
         {
-            CfgRst_ResetMode::Hardware,
-            CfgRst_ResetMode::Software,
-            CfgRst_ResetMode::GnssOnly,
-            CfgRst_ResetMode::HardwareAfterShutdown,
-            CfgRst_ResetMode::GnssStop,
-            CfgRst_ResetMode::GnssStart
-        };
-        auto value = field.value();
-        auto iter = std::lower_bound(std::begin(Values), std::end(Values), value);
-        return (iter != std::end(Values)) && (*iter == value);
-    }
+            static const ResetMode Values[] =
+            {
+                ResetMode::Hardware,
+                ResetMode::Software,
+                ResetMode::GnssOnly,
+                ResetMode::HardwareAfterShutdown,
+                ResetMode::GnssStop,
+                ResetMode::GnssStart
+            };
+            auto value = field.value();
+            auto iter = std::lower_bound(std::begin(Values), std::end(Values), value);
+            return (iter != std::end(Values)) && (*iter == value);
+        }
+    };
+
+    /// @brief Definition of "navBbrMask" field.
+    using navBbrMask = field::common::X2;
+
+    /// @brief Definition of "resetMode" field.
+    using resetMode =
+        field::common::EnumT<
+            ResetMode,
+            comms::option::ContentsValidator<ResetModeValidator>
+        >;
+
+    /// @brief Definition of "reserved1" field.
+    using reserved1 = field::common::res1;
+
+    /// @brief All the fields bundled in std::tuple.
+    using All = std::tuple<
+        navBbrMask,
+        resetMode,
+        reserved1
+    >;
+
 };
 
-using CfgRstField_navBbrMask = field::common::X2;
-using CfgRstField_resetMode =
-    field::common::EnumT<
-        CfgRst_ResetMode,
-        comms::option::ContentsValidator<CfgRst_ResetModeValidator>
-    >;
-using CfgRstField_reserved1 = field::common::res1;
-
-
-using CfgRstFields = std::tuple<
-    CfgRstField_navBbrMask,
-    CfgRstField_resetMode,
-    CfgRstField_reserved1
->;
-
+/// @brief Definition of CFG-RST message
+/// @details Inherits from
+///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+///     while providing @b TMsgBase as common interface class as well as
+///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
+///     @b comms::option::DispatchImpl as options. @n
+///     See @ref CfgRstFields and for definition of the fields this message contains.
+/// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class CfgRst : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_RST>,
-        comms::option::FieldsImpl<CfgRstFields>,
+        comms::option::FieldsImpl<CfgRstFields::All>,
         comms::option::DispatchImpl<CfgRst<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_RST>,
-        comms::option::FieldsImpl<CfgRstFields>,
+        comms::option::FieldsImpl<CfgRstFields::All>,
         comms::option::DispatchImpl<CfgRst<TMsgBase> >
     > Base;
 public:
@@ -117,9 +136,9 @@ public:
     /// @brief Index to access the fields
     enum FieldIdx
     {
-        FieldIdx_navBbrMask,
-        FieldIdx_resetMask,
-        FieldIdx_reserved1,
+        FieldIdx_navBbrMask, ///< @b navBbrMask field, see @ref CfgRstFields::navBbrMask
+        FieldIdx_resetMode, ///< @b resetMode field, see @ref CfgRstFields::resetMode
+        FieldIdx_reserved1, ///< @b reserved1 field, see @ref CfgRstFields::reserved1
         FieldIdx_numOfValues ///< number of available fields
     };
 

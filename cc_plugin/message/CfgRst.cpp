@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -58,7 +58,7 @@ QVariantMap createProps_navBbrMask()
     bitNames.append("tct");
     bitNames.append(QVariant());
     bitNames.append("aop");
-    assert(bitNames.size() == ublox::message::CfgRstField_navBbrMask_numOfValues);
+    assert(bitNames.size() == ublox::message::CfgRstFields::navBbrMask_numOfValues);
 
     return cc::Property::createPropertiesMap("navBbrMask", std::move(bitNames));
 }
@@ -66,12 +66,12 @@ QVariantMap createProps_navBbrMask()
 QVariantMap createProps_resetMode()
 {
     QVariantList enumValues;
-    cc::Property::appendEnumValue(enumValues, "Hardware Reset (Watchdog)", (int)ublox::message::CfgRst_ResetMode::Hardware);
-    cc::Property::appendEnumValue(enumValues, "Controlled Software Reset", (int)ublox::message::CfgRst_ResetMode::Software);
-    cc::Property::appendEnumValue(enumValues, "Controlled Software Reset (GNSS Only)", (int)ublox::message::CfgRst_ResetMode::GnssOnly);
-    cc::Property::appendEnumValue(enumValues, "Hardware Reset (Watchdog) after shutdown", (int)ublox::message::CfgRst_ResetMode::HardwareAfterShutdown);
-    cc::Property::appendEnumValue(enumValues, "Controlled GNSS stop", (int)ublox::message::CfgRst_ResetMode::GnssStop);
-    cc::Property::appendEnumValue(enumValues, "Controlled GNSS start", (int)ublox::message::CfgRst_ResetMode::GnssStart);
+    cc::Property::appendEnumValue(enumValues, "Hardware Reset (Watchdog)", (int)ublox::message::CfgRstFields::ResetMode::Hardware);
+    cc::Property::appendEnumValue(enumValues, "Controlled Software Reset", (int)ublox::message::CfgRstFields::ResetMode::Software);
+    cc::Property::appendEnumValue(enumValues, "Controlled Software Reset (GNSS Only)", (int)ublox::message::CfgRstFields::ResetMode::GnssOnly);
+    cc::Property::appendEnumValue(enumValues, "Hardware Reset (Watchdog) after shutdown", (int)ublox::message::CfgRstFields::ResetMode::HardwareAfterShutdown);
+    cc::Property::appendEnumValue(enumValues, "Controlled GNSS stop", (int)ublox::message::CfgRstFields::ResetMode::GnssStop);
+    cc::Property::appendEnumValue(enumValues, "Controlled GNSS start", (int)ublox::message::CfgRstFields::ResetMode::GnssStart);
 
     return cc::Property::createPropertiesMap("resetMode", std::move(enumValues));
 }
