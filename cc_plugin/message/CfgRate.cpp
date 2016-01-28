@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -43,7 +43,7 @@ QVariantMap createProps_timeRef()
     QVariantList enumValues;
     cc::Property::appendEnumValue(enumValues, "UTC time");
     cc::Property::appendEnumValue(enumValues, "GPS time");
-    assert(enumValues.size() == (int)ublox::message::CfgRate_TimeRef::NumOfValues);
+    assert(enumValues.size() == (int)ublox::message::CfgRateFields::TimeRef::NumOfValues);
     return cc::Property::createPropertiesMap("timeRef", std::move(enumValues));
 }
 

@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -15,12 +15,12 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+/// @file
+/// @brief Contains definition of CFG-RATE message and its fields.
 
 #pragma once
 
-#include "comms/Message.h"
 #include "ublox/Message.h"
-#include "ublox/field/MsgId.h"
 #include "ublox/field/common.h"
 
 namespace ublox
@@ -29,45 +29,64 @@ namespace ublox
 namespace message
 {
 
-enum class CfgRate_TimeRef : std::uint16_t
+/// @brief Accumulates details of all the CFG-RATE message fields.
+/// @see CfgRate
+struct CfgRateFields
 {
-    UTC,
-    GPS,
-    NumOfValues
+    /// @brief Value enumeration for @ref timeRef field
+    enum class TimeRef : std::uint16_t
+    {
+        UTC, ///< UTC time
+        GPS, ///< GPS time
+        NumOfValues ///< number of available values
+    };
+
+    /// @brief Definition of "measRate" field.
+    using measRate = field::common::U2T<field::common::Scaling_ms2s>;
+
+    /// @brief Definition of "navRate" field.
+    using navRate =
+        field::common::U2T<
+            comms::option::DefaultNumValue<1>,
+            comms::option::ValidNumValueRange<1, 1>
+        >;
+
+    /// @brief Definition of "timeRef" field.
+    using timeRef =
+        field::common::EnumT<
+            TimeRef,
+            comms::option::ValidNumValueRange<0, (int)TimeRef::NumOfValues - 1>
+        >;
+
+    /// @brief All the fields bundled in std::tuple.
+    using All = std::tuple<
+        measRate,
+        navRate,
+        timeRef
+    >;
 };
 
-using CfgRateField_measRate = field::common::U2T<field::common::Scaling_ms2s>;
-using CfgRateField_navRate =
-    field::common::U2T<
-        comms::option::DefaultNumValue<1>,
-        comms::option::ValidNumValueRange<1, 1>
-    >;
-using CfgRateField_timeRef =
-    field::common::EnumT<
-        CfgRate_TimeRef,
-        comms::option::ValidNumValueRange<0, (int)CfgRate_TimeRef::NumOfValues - 1>
-    >;
-
-
-using CfgRateFields = std::tuple<
-    CfgRateField_measRate,
-    CfgRateField_navRate,
-    CfgRateField_timeRef
->;
-
+/// @brief Definition of CFG-RATE message
+/// @details Inherits from
+///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+///     while providing @b TMsgBase as common interface class as well as
+///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
+///     @b comms::option::DispatchImpl as options. @n
+///     See @ref CfgRateFields and for definition of the fields this message contains.
+/// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class CfgRate : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_RATE>,
-        comms::option::FieldsImpl<CfgRateFields>,
+        comms::option::FieldsImpl<CfgRateFields::All>,
         comms::option::DispatchImpl<CfgRate<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_RATE>,
-        comms::option::FieldsImpl<CfgRateFields>,
+        comms::option::FieldsImpl<CfgRateFields::All>,
         comms::option::DispatchImpl<CfgRate<TMsgBase> >
     > Base;
 public:
@@ -75,9 +94,9 @@ public:
     /// @brief Index to access the fields
     enum FieldIdx
     {
-        FieldIdx_measRate,
-        FieldIdx_navRate,
-        FieldIdx_timeRef,
+        FieldIdx_measRate, ///< @b measRate field, see @ref CfgRateFields::measRate
+        FieldIdx_navRate, ///< @b navRate field, see @ref CfgRateFields::navRate
+        FieldIdx_timeRef, ///< @b timeRef field, see @ref CfgRateFields::timeRef
         FieldIdx_numOfValues ///< number of available fields
     };
 
