@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -43,7 +43,7 @@ QVariantMap createProps_flags()
     QVariantList bitNames;
     bitNames.append("dump");
     bitNames.append("binary");
-    assert(bitNames.size() == ublox::message::CfgRinvField_data_numOfValues);
+    assert(bitNames.size() == ublox::message::CfgRinvFields::data_numOfValues);
     return cc::Property::createPropertiesMap("flags", std::move(bitNames));
 }
 
