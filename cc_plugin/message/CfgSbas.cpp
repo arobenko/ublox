@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -44,7 +44,7 @@ QVariantMap createProps_mode()
     QVariantList bitNames;
     bitNames.append("enabled");
     bitNames.append("test");
-    assert(bitNames.size() == ublox::message::CfgSbasField_mode_numOfValues);
+    assert(bitNames.size() == ublox::message::CfgSbasFields::mode_numOfValues);
     return cc::Property::createPropertiesMap("mode", std::move(bitNames));
 }
 
@@ -54,7 +54,7 @@ QVariantMap createProps_usage()
     bitNames.append("range");
     bitNames.append("diffCorr");
     bitNames.append("integrity");
-    assert(bitNames.size() == ublox::message::CfgSbasField_usage_numOfValues);
+    assert(bitNames.size() == ublox::message::CfgSbasFields::usage_numOfValues);
     return cc::Property::createPropertiesMap("usage", std::move(bitNames));
 }
 
@@ -74,8 +74,8 @@ QVariantList createFieldsProperties()
     props.append(createProps_mode());
     props.append(createProps_usage());
     props.append(cc::Property::createPropertiesMap("maxSBAS"));
-    props.append(createProps_scanmode(2, 152, ublox::message::CfgSbasField_scanmode2_numOfValues));
-    props.append(createProps_scanmode(1, 120, ublox::message::CfgSbasField_scanmode1_numOfValues));
+    props.append(createProps_scanmode(2, 152, ublox::message::CfgSbasFields::scanmode2_numOfValues));
+    props.append(createProps_scanmode(1, 120, ublox::message::CfgSbasFields::scanmode1_numOfValues));
     assert(props.size() == CfgSbas::FieldIdx_numOfValues);
     return props;
 }
