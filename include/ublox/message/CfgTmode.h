@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -15,12 +15,12 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+/// @file
+/// @brief Contains definition of CFG-TMODE message and its fields.
 
 #pragma once
 
-#include "comms/Message.h"
 #include "ublox/Message.h"
-#include "ublox/field/MsgId.h"
 #include "ublox/field/common.h"
 
 namespace ublox
@@ -29,56 +29,83 @@ namespace ublox
 namespace message
 {
 
-enum class CfgTmode_TimeMode : std::uint32_t
+/// @brief Accumulates details of all the CFG-TMODE message fields.
+/// @see CfgTmode
+struct CfgTmodeFields
 {
-    Disabled,
-    SurveyIn,
-    FixedMode,
-    NumOfValues
+    /// @brief Value enumeration for @ref timeMode field
+    enum class TimeMode : std::uint32_t
+    {
+        Disabled, ///< disabled
+        SurveyIn, ///< survey in
+        FixedMode, ///< fixed mode
+        NumOfValues ///< number of available values
+    };
+
+    /// @brief Definition of "timeMode" field.
+    using timeMode =
+        field::common::EnumT<
+            TimeMode,
+            comms::option::ValidNumValueRange<0, (int)TimeMode::NumOfValues - 1>
+        >;
+
+    /// @brief Definition of "fixedPosX" field.
+    using fixedPosX = field::common::I4T<field::common::Scaling_cm2m>;
+
+    /// @brief Definition of "fixedPosY" field.
+    using fixedPosY = fixedPosX;
+
+    /// @brief Definition of "fixedPosZ" field.
+    using fixedPosZ = fixedPosX;
+
+    /// @brief Definition of "fixedPosVar" field.
+    using fixedPosVar =
+        field::common::U4T<
+            comms::option::ScalingRatio<1, 1000000L>
+        >;
+
+    /// @brief Definition of "svinMinDur" field.
+    using svinMinDur = field::common::U4;
+
+    /// @brief Definition of "svinVarLimit" field.
+    using svinVarLimit =
+        field::common::U4T<
+            comms::option::ScalingRatio<1, 1000000L>
+        >;
+
+    /// @brief All the fields bundled in std::tuple.
+    using All = std::tuple<
+        timeMode,
+        fixedPosX,
+        fixedPosY,
+        fixedPosZ,
+        fixedPosVar,
+        svinMinDur,
+        svinVarLimit
+    >;
 };
 
-using CfgTmodeField_timeMode =
-    field::common::EnumT<
-        CfgTmode_TimeMode,
-        comms::option::ValidNumValueRange<0, (int)CfgTmode_TimeMode::NumOfValues - 1>
-    >;
-using CfgTmodeField_fixedPosX = field::common::I4T<field::common::Scaling_cm2m>;
-using CfgTmodeField_fixedPosY = CfgTmodeField_fixedPosX;
-using CfgTmodeField_fixedPosZ = CfgTmodeField_fixedPosX;
-using CfgTmodeField_fixedPosVar =
-    field::common::U4T<
-        comms::option::ScalingRatio<1, 1000000L>
-    >;
-using CfgTmodeField_svinMinDur = field::common::U4;
-using CfgTmodeField_svinVarLimit =
-    field::common::U4T<
-        comms::option::ScalingRatio<1, 1000000L>
-    >;
-
-
-using CfgTmodeFields = std::tuple<
-    CfgTmodeField_timeMode,
-    CfgTmodeField_fixedPosX,
-    CfgTmodeField_fixedPosY,
-    CfgTmodeField_fixedPosZ,
-    CfgTmodeField_fixedPosVar,
-    CfgTmodeField_svinMinDur,
-    CfgTmodeField_svinVarLimit
->;
-
+/// @brief Definition of CFG-TMODE message
+/// @details Inherits from
+///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+///     while providing @b TMsgBase as common interface class as well as
+///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
+///     @b comms::option::DispatchImpl as options. @n
+///     See @ref CfgTmodeFields and for definition of the fields this message contains.
+/// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class CfgTmode : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_TMODE>,
-        comms::option::FieldsImpl<CfgTmodeFields>,
+        comms::option::FieldsImpl<CfgTmodeFields::All>,
         comms::option::DispatchImpl<CfgTmode<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_TMODE>,
-        comms::option::FieldsImpl<CfgTmodeFields>,
+        comms::option::FieldsImpl<CfgTmodeFields::All>,
         comms::option::DispatchImpl<CfgTmode<TMsgBase> >
     > Base;
 public:
@@ -86,13 +113,13 @@ public:
     /// @brief Index to access the fields
     enum FieldIdx
     {
-        FieldIdx_timeMode,
-        FieldIdx_fixedPosX,
-        FieldIdx_fixedPosY,
-        FieldIdx_fixedPosZ,
-        FieldIdx_fixedPosVar,
-        FieldIdx_svinMinDur,
-        FieldIdx_svinVarLimit,
+        FieldIdx_timeMode, ///< @b timeMode field, see @ref CfgTmodeFields::timeMode
+        FieldIdx_fixedPosX, ///< @b fixedPosX field, see @ref CfgTmodeFields::fixedPosX
+        FieldIdx_fixedPosY, ///< @b fixedPosY field, see @ref CfgTmodeFields::fixedPosY
+        FieldIdx_fixedPosZ, ///< @b fixedPosZ field, see @ref CfgTmodeFields::fixedPosZ
+        FieldIdx_fixedPosVar, ///< @b fixedPosVar field, see @ref CfgTmodeFields::fixedPosVar
+        FieldIdx_svinMinDur, ///< @b svinMinDur field, see @ref CfgTmodeFields::svinMinDur
+        FieldIdx_svinVarLimit, ///< @b svinVarLimit field, see @ref CfgTmodeFields::svinVarLimit
         FieldIdx_numOfValues ///< number of available fields
     };
 

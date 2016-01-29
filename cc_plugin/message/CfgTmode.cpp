@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -44,7 +44,7 @@ QVariantMap createProps_timeMode()
     cc::Property::appendEnumValue(enumValues, "Disabled");
     cc::Property::appendEnumValue(enumValues, "Survey In");
     cc::Property::appendEnumValue(enumValues, "Fixed Mode");
-    assert(enumValues.size() == (int)ublox::message::CfgTmode_TimeMode::NumOfValues);
+    assert(enumValues.size() == (int)ublox::message::CfgTmodeFields::TimeMode::NumOfValues);
     return cc::Property::createPropertiesMap("timeMode", std::move(enumValues));
 }
 
