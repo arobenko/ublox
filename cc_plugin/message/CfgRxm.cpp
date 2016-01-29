@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -42,9 +42,9 @@ namespace
 QVariantMap createProps_lpMode()
 {
     QVariantList enumValues;
-    cc::Property::appendEnumValue(enumValues, "Max Performance", (int)ublox::message::CfgRxm_LowPowerMode::MaxPerformance);
-    cc::Property::appendEnumValue(enumValues, "Power Save", (int)ublox::message::CfgRxm_LowPowerMode::PowerSave);
-    cc::Property::appendEnumValue(enumValues, "Eco", (int)ublox::message::CfgRxm_LowPowerMode::Eco);
+    cc::Property::appendEnumValue(enumValues, "Max Performance", (int)ublox::message::CfgRxmFields::LowPowerMode::MaxPerformance);
+    cc::Property::appendEnumValue(enumValues, "Power Save", (int)ublox::message::CfgRxmFields::LowPowerMode::PowerSave);
+    cc::Property::appendEnumValue(enumValues, "Eco", (int)ublox::message::CfgRxmFields::LowPowerMode::Eco);
 
     return cc::Property::createPropertiesMap("lpMode", std::move(enumValues));
 }

@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -15,14 +15,14 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+/// @file
+/// @brief Contains definition of CFG-RXM message and its fields.
 
 #pragma once
 
 #include <algorithm>
 
-#include "comms/Message.h"
 #include "ublox/Message.h"
-#include "ublox/field/MsgId.h"
 #include "ublox/field/common.h"
 
 namespace ublox
@@ -31,60 +31,79 @@ namespace ublox
 namespace message
 {
 
-enum class CfgRxm_LowPowerMode : std::uint8_t
+/// @brief Accumulates details of all the CFG-RXM message fields.
+/// @see CfgRxm
+struct CfgRxmFields
 {
-    MaxPerformance,
-    PowerSave,
-    Eco = 4
-};
-
-struct CfgRxm_LowPowerModeValidator
-{
-    template <typename TField>
-    bool operator()(const TField& field) const
+    /// @brief Value enumeration for @ref lpMode field.
+    enum class LowPowerMode : std::uint8_t
     {
-        auto value = field.value();
+        MaxPerformance, ///< Max performance mode
+        PowerSave, ///< Power save mode
+        Eco = 4 ///< Eco mode
+    };
 
-        static const CfgRxm_LowPowerMode ValidValues[] = {
-            CfgRxm_LowPowerMode::MaxPerformance,
-            CfgRxm_LowPowerMode::PowerSave,
-            CfgRxm_LowPowerMode::Eco
-        };
+    /// @brief Custom value validator for @ref lpMode field.
+    struct LowPowerModeValidator
+    {
+        template <typename TField>
+        bool operator()(const TField& field) const
+        {
+            auto value = field.value();
 
-        auto iter = std::lower_bound(std::begin(ValidValues), std::end(ValidValues), value);
-        return (iter != std::end(ValidValues)) && (*iter == value);
-    }
+            static const LowPowerMode ValidValues[] = {
+                LowPowerMode::MaxPerformance,
+                LowPowerMode::PowerSave,
+                LowPowerMode::Eco
+            };
+
+            auto iter = std::lower_bound(std::begin(ValidValues), std::end(ValidValues), value);
+            return (iter != std::end(ValidValues)) && (*iter == value);
+        }
+    };
+
+    /// @brief Definition of "reserved1" field.
+    using reserved1 =
+        field::common::U1T<
+            comms::option::DefaultNumValue<8>,
+            comms::option::ValidNumValueRange<8, 8>
+        >;
+
+    /// @brief Definition of "lpMode" field.
+    using lpMode =
+        field::common::EnumT<
+            LowPowerMode,
+            comms::option::ContentsValidator<LowPowerModeValidator>
+        >;
+
+    /// @brief All the fields bundled in std::tuple.
+    using All = std::tuple<
+        reserved1,
+        lpMode
+    >;
 };
 
-using CfgRxmField_reserved1 =
-    field::common::U1T<
-        comms::option::DefaultNumValue<8>,
-        comms::option::ValidNumValueRange<8, 8>
-    >;
-using CfgRxmField_lpMode =
-    field::common::EnumT<
-        CfgRxm_LowPowerMode,
-        comms::option::ContentsValidator<CfgRxm_LowPowerModeValidator>
-    >;
-
-using CfgRxmFields = std::tuple<
-    CfgRxmField_reserved1,
-    CfgRxmField_lpMode
->;
-
+/// @brief Definition of CFG-RXM message
+/// @details Inherits from
+///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+///     while providing @b TMsgBase as common interface class as well as
+///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
+///     @b comms::option::DispatchImpl as options. @n
+///     See @ref CfgRxmFields and for definition of the fields this message contains.
+/// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class CfgRxm : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_RXM>,
-        comms::option::FieldsImpl<CfgRxmFields>,
+        comms::option::FieldsImpl<CfgRxmFields::All>,
         comms::option::DispatchImpl<CfgRxm<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_RXM>,
-        comms::option::FieldsImpl<CfgRxmFields>,
+        comms::option::FieldsImpl<CfgRxmFields::All>,
         comms::option::DispatchImpl<CfgRxm<TMsgBase> >
     > Base;
 public:
@@ -92,8 +111,8 @@ public:
     /// @brief Index to access the fields
     enum FieldIdx
     {
-        FieldIdx_reserved1,
-        FieldIdx_lpMode,
+        FieldIdx_reserved1, ///< @b reserved1 field, see @ref CfgRxmFields::reserved1
+        FieldIdx_lpMode,  ///< @b lpMode field, see @ref CfgRxmFields::lpMode
         FieldIdx_numOfValues ///< number of available fields
     };
 
