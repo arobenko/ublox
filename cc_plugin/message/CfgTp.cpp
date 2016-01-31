@@ -43,9 +43,9 @@ namespace
 QVariantMap createProps_status()
 {
     QVariantList enumValues;
-    cc::Property::appendEnumValue(enumValues, "negative", (int)ublox::message::CfgTp_Status::Negative);
-    cc::Property::appendEnumValue(enumValues, "off", (int)ublox::message::CfgTp_Status::Off);
-    cc::Property::appendEnumValue(enumValues, "positive", (int)ublox::message::CfgTp_Status::Positive);
+    cc::Property::appendEnumValue(enumValues, "negative", (int)ublox::message::CfgTpFields::Status::Negative);
+    cc::Property::appendEnumValue(enumValues, "off", (int)ublox::message::CfgTpFields::Status::Off);
+    cc::Property::appendEnumValue(enumValues, "positive", (int)ublox::message::CfgTpFields::Status::Positive);
     return cc::Property::createPropertiesMap("status", std::move(enumValues));
 }
 
@@ -55,7 +55,7 @@ QVariantMap createProps_timeRef()
     cc::Property::appendEnumValue(enumValues, "UTC time");
     cc::Property::appendEnumValue(enumValues, "GPS time");
     cc::Property::appendEnumValue(enumValues, "Local time");
-    assert(enumValues.size() == (int)ublox::message::CfgTp_TimeRef::NumOfValues);
+    assert(enumValues.size() == (int)ublox::message::CfgTpFields::TimeRef::NumOfValues);
     return cc::Property::createPropertiesMap("timeRef", std::move(enumValues));
 }
 
@@ -63,7 +63,7 @@ QVariantMap createProps_flags()
 {
     QVariantList bitNames;
     bitNames.append("syncMode");
-    assert(bitNames.size() == ublox::message::CfgTpField_flags_numOfValues);
+    assert(bitNames.size() == ublox::message::CfgTpFields::flags_numOfValues);
     return cc::Property::createPropertiesMap("flags", std::move(bitNames));
 }
 
