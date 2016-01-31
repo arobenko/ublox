@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -15,14 +15,12 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+/// @file
+/// @brief Contains definition of CFG-TMODE2 message and its fields.
 
 #pragma once
 
-#include <algorithm>
-
-#include "comms/Message.h"
 #include "ublox/Message.h"
-#include "ublox/field/MsgId.h"
 #include "ublox/field/common.h"
 
 namespace ublox
@@ -31,94 +29,142 @@ namespace ublox
 namespace message
 {
 
-enum class CfgTmode2_TimeMode : std::uint8_t
+/// @brief Accumulates details of all the CFG-TMODE2 message fields.
+/// @see CfgTmode2
+struct CfgTmode2Fields
 {
-    Disabled,
-    SurveyIn,
-    FixedMode,
-    NumOfValues
+    /// @brief Value enumeration for @ref timeMode field.
+    enum class TimeMode : std::uint8_t
+    {
+        Disabled, ///< Disabled
+        SurveyIn, ///< Survey in
+        FixedMode, ///< Fixed mode
+        NumOfValues ///< number of available values
+    };
+
+    /// @brief Bits access enumeration for @ref flags bitmask field.
+    enum
+    {
+        flags_lla, ///< @b lla bit index
+        flags_altInv, ///< @b altInv bit index
+        flags_numOfValues ///< number of available bits
+    };
+
+    /// @brief Definition of "timeMode" field.
+    using timeMode =
+        field::common::EnumT<
+            TimeMode,
+            comms::option::ValidNumValueRange<0, (int)TimeMode::NumOfValues - 1>
+        >;
+
+    /// @brief Definition of "reserved1" field.
+    using reserved1 = field::common::res1;
+
+    /// @brief Definition of "flags" field.
+    using flags =
+        field::common::X2T<
+            comms::option::BitmaskReservedBits<0xfffc, 0>
+        >;
+
+    /// @brief Definition of "ecefX" field.
+    using ecefX =
+        field::common::OptionalT<
+            field::common::I4T<field::common::Scaling_cm2m>
+        >;
+
+    /// @brief Definition of "lat" field.
+    using lat =
+        field::common::OptionalT<
+            field::common::I4T<comms::option::ScalingRatio<1, 10000000L> >
+        >;
+
+    /// @brief Definition of "ecefY" field.
+    using ecefY =
+        field::common::OptionalT<
+            field::common::I4T<field::common::Scaling_cm2m>
+        >;
+
+    /// @brief Definition of "lon" field.
+    using lon =
+        field::common::OptionalT<
+            field::common::I4T<comms::option::ScalingRatio<1, 10000000L> >
+        >;
+
+    /// @brief Definition of "ecefZ" field.
+    using ecefZ =
+        field::common::OptionalT<
+            field::common::I4T<field::common::Scaling_cm2m>
+        >;
+
+    /// @brief Definition of "alt" field.
+    using alt =
+        field::common::OptionalT<
+            field::common::I4T<field::common::Scaling_cm2m>
+        >;
+
+    /// @brief Definition of "fixedPosAcc" field.
+    using fixedPosAcc =
+        field::common::U4T<
+            field::common::Scaling_mm2m
+        >;
+
+    /// @brief Definition of "svinMinDur" field.
+    using svinMinDur = field::common::U4;
+
+    /// @brief Definition of "svinAccLimit" field.
+    using svinAccLimit =
+        field::common::U4T<
+            field::common::Scaling_mm2m
+        >;
+
+    /// @brief All the fields bundled in std::tuple.
+    using All = std::tuple<
+        timeMode,
+        reserved1,
+        flags,
+        ecefX,
+        lat,
+        ecefY,
+        lon,
+        ecefZ,
+        alt,
+        fixedPosAcc,
+        svinMinDur,
+        svinAccLimit
+    >;
 };
 
-enum
-{
-    CfgTmode2Field_flags_lla,
-    CfgTmode2Field_flags_altInv,
-    CfgTmode2Field_flags_numOfValues
-};
-
-using CfgTmode2Field_timeMode =
-    field::common::EnumT<
-        CfgTmode2_TimeMode,
-        comms::option::ValidNumValueRange<0, (int)CfgTmode2_TimeMode::NumOfValues - 1>
-    >;
-using CfgTmode2Field_reserved1 = field::common::res1;
-using CfgTmode2Field_flags =
-    field::common::X2T<
-        comms::option::BitmaskReservedBits<0xfffc, 0>
-    >;
-using CfgTmode2Field_ecefX =
-    field::common::OptionalT<
-        field::common::I4T<field::common::Scaling_cm2m>
-    >;
-using CfgTmode2Field_lat =
-    field::common::OptionalT<
-        field::common::I4T<comms::option::ScalingRatio<1, 10000000L> >
-    >;
-using CfgTmode2Field_ecefY =
-    field::common::OptionalT<
-        field::common::I4T<field::common::Scaling_cm2m>
-    >;
-using CfgTmode2Field_lon =
-    field::common::OptionalT<
-        field::common::I4T<comms::option::ScalingRatio<1, 10000000L> >
-    >;
-using CfgTmode2Field_ecefZ =
-    field::common::OptionalT<
-        field::common::I4T<field::common::Scaling_cm2m>
-    >;
-using CfgTmode2Field_alt =
-    field::common::OptionalT<
-        field::common::I4T<field::common::Scaling_cm2m>
-    >;
-using CfgTmode2Field_fixedPosAcc =
-    field::common::U4T<
-        field::common::Scaling_mm2m
-    >;
-using CfgTmode2Field_svinMinDur = field::common::U4;
-using CfgTmode2Field_svinAccLimit =
-    field::common::U4T<
-        field::common::Scaling_mm2m
-    >;
-
-
-using CfgTmode2Fields = std::tuple<
-    CfgTmode2Field_timeMode,
-    CfgTmode2Field_reserved1,
-    CfgTmode2Field_flags,
-    CfgTmode2Field_ecefX,
-    CfgTmode2Field_lat,
-    CfgTmode2Field_ecefY,
-    CfgTmode2Field_lon,
-    CfgTmode2Field_ecefZ,
-    CfgTmode2Field_alt,
-    CfgTmode2Field_fixedPosAcc,
-    CfgTmode2Field_svinMinDur,
-    CfgTmode2Field_svinAccLimit
->;
-
+/// @brief Definition of AID-TMODE message
+/// @details Inherits from
+///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+///     while providing @b TMsgBase as common interface class as well as
+///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
+///     @b comms::option::DispatchImpl as options. @n
+///     See @ref CfgTmode2Fields and for definition of the fields this message contains.
+///
+///     @b NOTE, that Ublox binary protocol specification reinterprets value of
+///     some fields based on the value of @b lla bit in @b flags (see @ref CfgTmode2Fields::flags)
+///     field. It also combines the dual meaning of the field in a single name, such as
+///     @b ecefXOrLat, @b ecefYOrLon, @b ecefZOrAlt. @n
+///     The implementation of this message splits these names into two separate
+///     fields: @b ecefX + @b lat, @b ecefY + @b lon, @b ecefZ + @b alt.
+///     These fields are @b optional (see @ref field::common::OptionalT), and
+///     marked as @b missing or @b existing based on the value of @b lla bit
+///     in @b flags (see @ref CfgTmode2Fields::flags) field.
+/// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class CfgTmode2 : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_TMODE2>,
-        comms::option::FieldsImpl<CfgTmode2Fields>,
+        comms::option::FieldsImpl<CfgTmode2Fields::All>,
         comms::option::DispatchImpl<CfgTmode2<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_TMODE2>,
-        comms::option::FieldsImpl<CfgTmode2Fields>,
+        comms::option::FieldsImpl<CfgTmode2Fields::All>,
         comms::option::DispatchImpl<CfgTmode2<TMsgBase> >
     > Base;
 public:
@@ -126,18 +172,18 @@ public:
     /// @brief Index to access the fields
     enum FieldIdx
     {
-        FieldIdx_timeMode,
-        FieldIdx_reserved1,
-        FieldIdx_flags,
-        FieldIdx_ecefX,
-        FieldIdx_lat,
-        FieldIdx_ecefY,
-        FieldIdx_lon,
-        FieldIdx_ecefZ,
-        FieldIdx_alt,
-        FieldIdx_fixedPosAcc,
-        FieldIdx_svinMinDur,
-        FieldIdx_svinAccLimit,
+        FieldIdx_timeMode, ///< @b timeMode field, see @ref CfgTmode2Fields::timeMode
+        FieldIdx_reserved1, ///< @b reserved1 field, see @ref CfgTmode2Fields::reserved1
+        FieldIdx_flags, ///< @b flags field, see @ref CfgTmode2Fields::flags
+        FieldIdx_ecefX, ///< @b ecefX field, see @ref CfgTmode2Fields::ecefX
+        FieldIdx_lat, ///< @b lat field, see @ref CfgTmode2Fields::lat
+        FieldIdx_ecefY, ///< @b ecefY field, see @ref CfgTmode2Fields::ecefY
+        FieldIdx_lon, ///< @b lon field, see @ref CfgTmode2Fields::lon
+        FieldIdx_ecefZ, ///< @b ecefZ field, see @ref CfgTmode2Fields::ecefZ
+        FieldIdx_alt, ///< @b alt field, see @ref CfgTmode2Fields::alt
+        FieldIdx_fixedPosAcc, ///< @b fixedPosAcc field, see @ref CfgTmode2Fields::fixedPosAcc
+        FieldIdx_svinMinDur, ///< @b svinMinDur field, see @ref CfgTmode2Fields::svinMinDur
+        FieldIdx_svinAccLimit, ///< @b svinAccLimit field, see @ref CfgTmode2Fields::svinAccLimit
         FieldIdx_numOfValues ///< number of available fields
     };
 
@@ -145,6 +191,12 @@ public:
         "Number of fields is incorrect");
 
     /// @brief Default constructor
+    /// @details The existing/missing mode of the optional fields is determined
+    ///     by the default value of the @b flags (see @ref CfgTmode2Fields::flags)
+    ///     field, i.e. the @ref CfgTmode2Fields::ecefX, @ref CfgTmode2Fields::ecefY,
+    ///     and @ref CfgTmode2Fields::ecefZ fields are marked as @b existing, while
+    ///     @ref CfgTmode2Fields::lat, @ref CfgTmode2Fields::lon, and
+    ///     @ref CfgTmode2Fields::alt are marked as @b missing.
     CfgTmode2()
     {
         auto& allFields = Base::fields();
@@ -184,6 +236,12 @@ public:
     CfgTmode2& operator=(CfgTmode2&&) = default;
 
 protected:
+
+    /// @brief Overrides read functionality provided by the base class.
+    /// @details This function performs read of the first fields up to the
+    ///     @b flags (see @ref CfgTmode2Fields::flags). Based on the value of
+    ///     @b lla bit, the relevant optional fields are marked as either
+    ///     @b existing or @b missing and the read continues until the end.
     virtual comms::ErrorStatus readImpl(
         typename Base::ReadIterator& iter,
         std::size_t len) override
@@ -198,7 +256,7 @@ protected:
 
         auto cartesianMode = comms::field::OptionalMode::Exists;
         auto geodeticMode = comms::field::OptionalMode::Missing;
-        if (flagsField.getBitValue(CfgTmode2Field_flags_lla)) {
+        if (flagsField.getBitValue(CfgTmode2Fields::flags_lla)) {
             std::swap(cartesianMode, geodeticMode);
         }
 
@@ -219,6 +277,11 @@ protected:
         return Base::template readFieldsFrom<FieldIdx_ecefX>(iter, len);
     }
 
+    /// @brief Overrides default refreshing functionality provided by the interface class.
+    /// @details The function checks the value of @b lla bit in the @b flags
+    ///     (see @ref CfgTmode2Fields::flags) field and modifies mode of relevant
+    ///     @b optional fields accordingly.
+    /// @return @b true in case the mode of any optional field was modified, @b false otherwise
     virtual bool refreshImpl() override
     {
         auto& allFields = Base::fields();
@@ -226,7 +289,7 @@ protected:
 
         auto cartesianMode = comms::field::OptionalMode::Exists;
         auto geodeticMode = comms::field::OptionalMode::Missing;
-        if (flagsField.getBitValue(CfgTmode2Field_flags_lla)) {
+        if (flagsField.getBitValue(CfgTmode2Fields::flags_lla)) {
             std::swap(cartesianMode, geodeticMode);
         }
 
