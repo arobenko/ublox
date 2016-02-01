@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -15,10 +15,11 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+/// @file
+/// @brief Contains definition of LOG-RETRIEVE message and its fields.
 
 #pragma once
 
-#include "comms/Message.h"
 #include "ublox/Message.h"
 #include "ublox/field/common.h"
 
@@ -28,39 +29,58 @@ namespace ublox
 namespace message
 {
 
-using LogRetrieveField_startNumber = field::common::U4;
-using LogRetrieveField_entryCount =
-    field::common::U4T<
-        comms::option::ValidNumValueRange<0, 256>
+/// @brief Accumulates details of all the LOG-RETRIEVE message fields.
+/// @see LogRetrieve
+struct LogRetrieveFields
+{
+    /// @brief Definition of "startNumber" field.
+    using startNumber = field::common::U4;
+
+    /// @brief Definition of "entryCount" field.
+    using entryCount =
+        field::common::U4T<
+            comms::option::ValidNumValueRange<0, 256>
+        >;
+
+    /// @brief Definition of "version" field.
+    using version =
+        field::common::U1T<
+            comms::option::ValidNumValueRange<0, 0>
+        >;
+
+    /// @brief Definition of "reserved" field.
+    using reserved = field::common::res3;
+
+    /// @brief All the fields bundled in std::tuple.
+    using All = std::tuple<
+        startNumber,
+        entryCount,
+        version,
+        reserved
     >;
+};
 
-using LogRetrieveField_version =
-    field::common::U1T<
-        comms::option::ValidNumValueRange<0, 0>
-    >;
-using LogRetrieveField_reserved = field::common::res3;
-
-using LogRetrieveFields = std::tuple<
-    LogRetrieveField_startNumber,
-    LogRetrieveField_entryCount,
-    LogRetrieveField_version,
-    LogRetrieveField_reserved
->;
-
-
+/// @brief Definition of LOG-RETRIEVE message
+/// @details Inherits from
+///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+///     while providing @b TMsgBase as common interface class as well as
+///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
+///     @b comms::option::DispatchImpl as options. @n
+///     See @ref LogRetrieveFields and for definition of the fields this message contains.
+/// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class LogRetrieve : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_LOG_RETRIEVE>,
-        comms::option::FieldsImpl<LogRetrieveFields>,
+        comms::option::FieldsImpl<LogRetrieveFields::All>,
         comms::option::DispatchImpl<LogRetrieve<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_LOG_RETRIEVE>,
-        comms::option::FieldsImpl<LogRetrieveFields>,
+        comms::option::FieldsImpl<LogRetrieveFields::All>,
         comms::option::DispatchImpl<LogRetrieve<TMsgBase> >
     > Base;
 public:
@@ -68,10 +88,10 @@ public:
     /// @brief Index to access the fields
     enum FieldIdx
     {
-        FieldIdx_startNumber,
-        FieldIdx_entryCount,
-        FieldIdx_version,
-        FieldIdx_reserved,
+        FieldIdx_startNumber, ///< @b startNumber field, see @ref LogRetrieveFields::startNumber
+        FieldIdx_entryCount, ///< @b entryCount field, see @ref LogRetrieveFields::entryCount
+        FieldIdx_version, ///< @b version field, see @ref LogRetrieveFields::version
+        FieldIdx_reserved, ///< @b reserved field, see @ref LogRetrieveFields::reserved
         FieldIdx_numOfValues ///< number of available fields
     };
 
