@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -15,6 +15,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+/// @file
+/// @brief Contains definition of INF-TEST message.
 
 #pragma once
 
@@ -26,8 +28,30 @@ namespace ublox
 namespace message
 {
 
+/// @brief Definition of INF-TEST message
+/// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
-using InfTest = InfStringMsgBase<MsgId_INF_TEST, TMsgBase>;
+class InfTest : public InfStringMsgBase<MsgId_INF_TEST, TMsgBase>
+{
+public:
+    /// @brief Default constructor
+    InfTest() = default;
+
+    /// @brief Copy constructor
+    InfTest(const InfTest&) = default;
+
+    /// @brief Move constructor
+    InfTest(InfTest&& other) = default;
+
+    /// @brief Destructor
+    virtual ~InfTest() = default;
+
+    /// @brief Copy assignment
+    InfTest& operator=(const InfTest&) = default;
+
+    /// @brief Move assignment
+    InfTest& operator=(InfTest&&) = default;
+};
 
 }  // namespace message
 

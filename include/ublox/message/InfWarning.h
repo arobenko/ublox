@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -15,6 +15,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+/// @file
+/// @brief Contains definition of INF-WARNING message.
 
 #pragma once
 
@@ -26,8 +28,30 @@ namespace ublox
 namespace message
 {
 
+/// @brief Definition of INF-WARNING message
+/// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
-using InfWarning = InfStringMsgBase<MsgId_INF_WARNING, TMsgBase>;
+class InfWarning : public InfStringMsgBase<MsgId_INF_WARNING, TMsgBase>
+{
+public:
+    /// @brief Default constructor
+    InfWarning() = default;
+
+    /// @brief Copy constructor
+    InfWarning(const InfWarning&) = default;
+
+    /// @brief Move constructor
+    InfWarning(InfWarning&& other) = default;
+
+    /// @brief Destructor
+    virtual ~InfWarning() = default;
+
+    /// @brief Copy assignment
+    InfWarning& operator=(const InfWarning&) = default;
+
+    /// @brief Move assignment
+    InfWarning& operator=(InfWarning&&) = default;
+};
 
 }  // namespace message
 

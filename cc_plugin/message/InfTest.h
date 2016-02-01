@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -57,6 +57,7 @@ protected:
 
 }  // namespace ublox
 
+extern template class ublox::message::InfTest<ublox::cc_plugin::Message>;
 extern template class ublox::cc_plugin::ProtocolMessageBase<
     ublox::message::InfTest<ublox::cc_plugin::Message>,
     ublox::cc_plugin::message::InfTest>;

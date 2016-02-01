@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -15,6 +15,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+/// @file
+/// @brief Contains definition of INF-DEBUG message.
 
 #pragma once
 
@@ -26,8 +28,31 @@ namespace ublox
 namespace message
 {
 
+/// @brief Definition of INF-DEBUG message
+/// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
-using InfDebug = InfStringMsgBase<MsgId_INF_DEBUG, TMsgBase>;
+class InfDebug : public InfStringMsgBase<MsgId_INF_DEBUG, TMsgBase>
+{
+public:
+    /// @brief Default constructor
+    InfDebug() = default;
+
+    /// @brief Copy constructor
+    InfDebug(const InfDebug&) = default;
+
+    /// @brief Move constructor
+    InfDebug(InfDebug&& other) = default;
+
+    /// @brief Destructor
+    virtual ~InfDebug() = default;
+
+    /// @brief Copy assignment
+    InfDebug& operator=(const InfDebug&) = default;
+
+    /// @brief Move assignment
+    InfDebug& operator=(InfDebug&&) = default;
+
+};
 
 }  // namespace message
 

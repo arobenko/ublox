@@ -20,6 +20,7 @@
 #include "InfDebug.h"
 #include "cc_plugin/field/inf.h"
 
+template class ublox::message::InfDebug<ublox::cc_plugin::Message>;
 template class ublox::cc_plugin::ProtocolMessageBase<
     ublox::message::InfDebug<ublox::cc_plugin::Message>,
     ublox::cc_plugin::message::InfDebug>;

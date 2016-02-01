@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -15,6 +15,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+/// @file
+/// @brief Contains definition of INF-NOTICE message.
 
 #pragma once
 
@@ -26,8 +28,30 @@ namespace ublox
 namespace message
 {
 
+/// @brief Definition of INF-NOTICE message
+/// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
-using InfNotice = InfStringMsgBase<MsgId_INF_NOTICE, TMsgBase>;
+class InfNotice : public InfStringMsgBase<MsgId_INF_NOTICE, TMsgBase>
+{
+public:
+    /// @brief Default constructor
+    InfNotice() = default;
+
+    /// @brief Copy constructor
+    InfNotice(const InfNotice&) = default;
+
+    /// @brief Move constructor
+    InfNotice(InfNotice&& other) = default;
+
+    /// @brief Destructor
+    virtual ~InfNotice() = default;
+
+    /// @brief Copy assignment
+    InfNotice& operator=(const InfNotice&) = default;
+
+    /// @brief Move assignment
+    InfNotice& operator=(InfNotice&&) = default;
+};
 
 }  // namespace message
 

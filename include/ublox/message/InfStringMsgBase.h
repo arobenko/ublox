@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -15,12 +15,12 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+/// @file
+/// @brief Contains base class of all the INF messages.
 
 #pragma once
 
-#include "comms/comms.h"
 #include "ublox/Message.h"
-#include "ublox/field/MsgId.h"
 #include "ublox/field/common.h"
 
 namespace ublox
@@ -29,24 +29,41 @@ namespace ublox
 namespace message
 {
 
-using InfStringMsgBaseFields = std::tuple<
-    field::common::String
->;
+/// @brief Accumulates details of all the INF-* message fields.
+/// @see InfStringMsgBase
+struct InfStringMsgBaseFields
+{
+    /// @brief Definition of "str" field.
+    using str = field::common::String;
 
+    /// @brief All the fields bundled in std::tuple.
+    using All = std::tuple<
+        str
+    >;
+};
 
+/// @brief Base class of any INF-* message
+/// @details Inherits from
+///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+///     while providing @b TMsgBase as common interface class as well as
+///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
+///     @b comms::option::DispatchImpl as options. @n
+///     See @ref InfStringMsgBaseFields and for definition of the fields this message contains.
+/// @tparam TId ID of actual INF-* message
+/// @tparam TMsgBase Common interface class for all the messages.
 template <MsgId TId, typename TMsgBase = Message>
 class InfStringMsgBase : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<TId>,
-        comms::option::FieldsImpl<InfStringMsgBaseFields>,
+        comms::option::FieldsImpl<InfStringMsgBaseFields::All>,
         comms::option::DispatchImpl<InfStringMsgBase<TId, TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<TId>,
-        comms::option::FieldsImpl<InfStringMsgBaseFields>,
+        comms::option::FieldsImpl<InfStringMsgBaseFields::All>,
         comms::option::DispatchImpl<InfStringMsgBase<TId, TMsgBase> >
     > Base;
 public:
@@ -54,7 +71,7 @@ public:
     /// @brief Index to access the fields
     enum FieldIdx
     {
-        FieldIdx_str,
+        FieldIdx_str, ///< @b str field, see @ref InfStringMsgBaseFields::str
         FieldIdx_numOfValues ///< number of available fields
     };
 

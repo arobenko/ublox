@@ -20,6 +20,7 @@
 #include "InfError.h"
 #include "cc_plugin/field/inf.h"
 
+template class ublox::message::InfError<ublox::cc_plugin::Message>;
 template class ublox::cc_plugin::ProtocolMessageBase<
     ublox::message::InfError<ublox::cc_plugin::Message>,
     ublox::cc_plugin::message::InfError>;
