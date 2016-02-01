@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -43,7 +43,7 @@ QVariantMap createProps_logCfg()
 {
     QVariantList bitNames;
     bitNames.append("circular");
-    assert(bitNames.size() == ublox::message::LogCreateField_logCfg_numOfValues);
+    assert(bitNames.size() == ublox::message::LogCreateFields::logCfg_numOfValues);
     return cc::Property::createPropertiesMap("logCfg", std::move(bitNames));
 }
 
@@ -53,7 +53,7 @@ QVariantMap createProps_logSize()
     cc::Property::appendEnumValue(enumValues, "maximum safe");
     cc::Property::appendEnumValue(enumValues, "minimum");
     cc::Property::appendEnumValue(enumValues, "user defined");
-    assert(enumValues.size() == (int)ublox::message::LogCreate_LogSize::NumOfValues);
+    assert(enumValues.size() == (int)ublox::message::LogCreateFields::LogSize::NumOfValues);
     return cc::Property::createPropertiesMap("logSize", std::move(enumValues));
 }
 
