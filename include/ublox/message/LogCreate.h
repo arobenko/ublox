@@ -30,7 +30,7 @@ namespace message
 {
 
 /// @brief Accumulates details of all the LOG-CREATE message fields.
-/// @see CfgCreate
+/// @see LogCreate
 struct LogCreateFields
 {
     /// @brief Value enumeration for @ref logSize field

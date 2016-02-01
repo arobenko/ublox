@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -15,10 +15,11 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+/// @file
+/// @brief Contains definition of LOG-ERASE message and its fields.
 
 #pragma once
 
-#include "comms/Message.h"
 #include "ublox/Message.h"
 
 namespace ublox
@@ -27,21 +28,35 @@ namespace ublox
 namespace message
 {
 
-using LogEraseFields = std::tuple<>;
+/// @brief Accumulates details of all the LOG-ERASE message fields.
+/// @see LogErase
+struct LogEraseFields
+{
+    /// @brief All the fields bundled in std::tuple.
+    using All = std::tuple<>;
+};
 
+/// @brief Definition of LOG-ERASE message
+/// @details Inherits from
+///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+///     while providing @b TMsgBase as common interface class as well as
+///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
+///     @b comms::option::DispatchImpl as options. @n
+///     See @ref LogEraseFields and for definition of the fields this message contains.
+/// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class LogErase : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_LOG_ERASE>,
-        comms::option::FieldsImpl<LogEraseFields>,
+        comms::option::FieldsImpl<LogEraseFields::All>,
         comms::option::DispatchImpl<LogErase<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_LOG_ERASE>,
-        comms::option::FieldsImpl<LogEraseFields>,
+        comms::option::FieldsImpl<LogEraseFields::All>,
         comms::option::DispatchImpl<LogErase<TMsgBase> >
     > Base;
 public:
