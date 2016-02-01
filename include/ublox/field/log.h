@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -15,6 +15,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+/// @file
+/// @brief Contains definition of common fields used in LOG class messages.
 
 #pragma once
 
@@ -29,26 +31,37 @@ namespace field
 namespace log
 {
 
+/// @brief Definition of common "year" field.
 using year  =
     field::common::U2T<
         comms::option::ValidNumValueRange<1, 65635>
     >;
+
+/// @brief Definition of common "month" field.
 using month  =
     field::common::U1T<
         comms::option::ValidNumValueRange<1, 12>
     >;
+
+/// @brief Definition of common "day" field.
 using day  =
     field::common::U1T<
         comms::option::ValidNumValueRange<1, 31>
     >;
+
+/// @brief Definition of common "hour" field.
 using hour  =
     field::common::U1T<
         comms::option::ValidNumValueRange<0, 23>
     >;
+
+/// @brief Definition of common "minute" field.
 using minute  =
     field::common::U1T<
         comms::option::ValidNumValueRange<0, 59>
     >;
+
+/// @brief Definition of common "second" field.
 using second  =
     field::common::U1T<
         comms::option::ValidNumValueRange<0, 60>

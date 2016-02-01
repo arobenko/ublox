@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -15,10 +15,11 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+/// @file
+/// @brief Contains definition of LOG-FINDTIME message and its fields.
 
 #pragma once
 
-#include "comms/Message.h"
 #include "ublox/Message.h"
 #include "ublox/field/common.h"
 
@@ -28,40 +29,60 @@ namespace ublox
 namespace message
 {
 
-using LogFindtimeField_version =
-    field::common::U1T<
-        comms::option::DefaultNumValue<1>,
-        comms::option::ValidNumValueRange<1, 1>
+/// @brief Accumulates details of all the LOG-FINDTIME message fields.
+/// @see LogFindtime
+struct LogFindtimeFields
+{
+    /// @brief Definition of "version" field.
+    using version =
+        field::common::U1T<
+            comms::option::DefaultNumValue<1>,
+            comms::option::ValidNumValueRange<1, 1>
+        >;
+
+    /// @brief Definition of "type" field.
+    using type  =
+        field::common::U1T<
+            comms::option::DefaultNumValue<1>,
+            comms::option::ValidNumValueRange<1, 1>
+        >;
+
+    /// @brief Definition of "reserved1" field.
+    using reserved1 = field::common::res2;
+
+    /// @brief Definition of "entryNumber" field.
+    using entryNumber  = field::common::U4;
+
+    /// @brief All the fields bundled in std::tuple.
+    using All = std::tuple<
+        version,
+        type,
+        reserved1,
+        entryNumber
     >;
-using LogFindtimeField_type  =
-    field::common::U1T<
-        comms::option::DefaultNumValue<1>,
-        comms::option::ValidNumValueRange<1, 1>
-    >;
-using LogFindtimeField_reserved1 = field::common::res2;
-using LogFindtimeField_entryNumber  = field::common::U4;
+};
 
-using LogFindtimeFields = std::tuple<
-    LogFindtimeField_version,
-    LogFindtimeField_type,
-    LogFindtimeField_reserved1,
-    LogFindtimeField_entryNumber
->;
-
-
+/// @brief Definition of LOG-FINDTIME message
+/// @details Inherits from
+///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+///     while providing @b TMsgBase as common interface class as well as
+///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
+///     @b comms::option::DispatchImpl as options. @n
+///     See @ref LogFindtimeFields and for definition of the fields this message contains.
+/// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class LogFindtime : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_LOG_FINDTIME>,
-        comms::option::FieldsImpl<LogFindtimeFields>,
+        comms::option::FieldsImpl<LogFindtimeFields::All>,
         comms::option::DispatchImpl<LogFindtime<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_LOG_FINDTIME>,
-        comms::option::FieldsImpl<LogFindtimeFields>,
+        comms::option::FieldsImpl<LogFindtimeFields::All>,
         comms::option::DispatchImpl<LogFindtime<TMsgBase> >
     > Base;
 public:
@@ -69,10 +90,10 @@ public:
     /// @brief Index to access the fields
     enum FieldIdx
     {
-        FieldIdx_version,
-        FieldIdx_type,
-        FieldIdx_reserved1,
-        FieldIdx_entryNumber,
+        FieldIdx_version, ///< @b version field, see @ref LogFindtimeFields::version
+        FieldIdx_type, ///< @b type field, see @ref LogFindtimeFields::type
+        FieldIdx_reserved1, ///< @b reserved1 field, see @ref LogFindtimeFields::reserved1
+        FieldIdx_entryNumber, ///< @b entryNumber field, see @ref LogFindtimeFields::entryNumber
         FieldIdx_numOfValues ///< number of available fields
     };
 
@@ -98,6 +119,12 @@ public:
     LogFindtime& operator=(LogFindtime&&) = default;
 
 protected:
+
+    /// @brief Overrides read functionality provided by the base class.
+    /// @details The function performs read up to the @b type field (@ref
+    /// LogFindtimeFields::type) and checks its value. If it's valid (has value 1),
+    /// the read continues for the rest of the fields. Otherwise
+    /// comms::ErrorStatus::InvalidMsgData is returned.
     virtual comms::ErrorStatus readImpl(
         typename Base::ReadIterator& iter,
         std::size_t len) override

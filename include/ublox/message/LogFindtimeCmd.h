@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -15,12 +15,12 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+/// @file
+/// @brief Contains definition of LOG-FINDTIME (@b command) message and its fields.
 
 #pragma once
 
-#include "comms/Message.h"
 #include "ublox/Message.h"
-#include "ublox/field/common.h"
 #include "ublox/field/log.h"
 
 namespace ublox
@@ -29,50 +29,82 @@ namespace ublox
 namespace message
 {
 
-using LogFindtimeCmdField_version =
-    field::common::U1T<
-        comms::option::ValidNumValueRange<0, 0>
+/// @brief Accumulates details of all the LOG-FINDTIME (@b command) message fields.
+/// @see LogFindtimeCmd
+struct LogFindtimeCmdFields
+{
+    /// @brief Definition of "version" field.
+    using version =
+        field::common::U1T<
+            comms::option::ValidNumValueRange<0, 0>
+        >;
+
+    /// @brief Definition of "type" field.
+    using type  =
+        field::common::U1T<
+            comms::option::ValidNumValueRange<0, 0>
+        >;
+
+    /// @brief Definition of "reserved1" field.
+    using reserved1 = field::common::res2;
+
+    /// @brief Definition of "year" field.
+    using year = field::log::year;
+
+    /// @brief Definition of "month" field.
+    using month = field::log::month;
+
+    /// @brief Definition of "day" field.
+    using day = field::log::day;
+
+    /// @brief Definition of "hour" field.
+    using hour = field::log::hour;
+
+    /// @brief Definition of "minute" field.
+    using minute = field::log::minute;
+
+    /// @brief Definition of "second" field.
+    using second = field::log::second;
+
+    /// @brief Definition of "reserved2" field.
+    using reserved2 = field::common::res1;
+
+    /// @brief All the fields bundled in std::tuple.
+    using All = std::tuple<
+        version,
+        type,
+        reserved1,
+        year,
+        month,
+        day,
+        hour,
+        minute,
+        second,
+        reserved2
     >;
-using LogFindtimeCmdField_type  =
-    field::common::U1T<
-        comms::option::ValidNumValueRange<0, 0>
-    >;
-using LogFindtimeCmdField_reserved1 = field::common::res2;
-using LogFindtimeCmdField_year = field::log::year;
-using LogFindtimeCmdField_month = field::log::month;
-using LogFindtimeCmdField_day = field::log::day;
-using LogFindtimeCmdField_hour = field::log::hour;
-using LogFindtimeCmdField_minute = field::log::minute;
-using LogFindtimeCmdField_second = field::log::second;
-using LogFindtimeCmdField_reserved2 = field::common::res1;
+};
 
-using LogFindtimeCmdFields = std::tuple<
-    LogFindtimeCmdField_version,
-    LogFindtimeCmdField_type,
-    LogFindtimeCmdField_reserved1,
-    LogFindtimeCmdField_year,
-    LogFindtimeCmdField_month,
-    LogFindtimeCmdField_day,
-    LogFindtimeCmdField_hour,
-    LogFindtimeCmdField_minute,
-    LogFindtimeCmdField_second,
-    LogFindtimeCmdField_reserved2
->;
-
-
+/// @brief Definition of LOG-FINDTIME (@b command) message
+/// @details Inherits from
+///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+///     while providing @b TMsgBase as common interface class as well as
+///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
+///     @b comms::option::DispatchImpl as options. @n
+///     See @ref LogFindtimeCmdFields and for definition of the fields this message contains.
+/// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class LogFindtimeCmd : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_LOG_FINDTIME>,
-        comms::option::FieldsImpl<LogFindtimeCmdFields>,
+        comms::option::FieldsImpl<LogFindtimeCmdFields::All>,
         comms::option::DispatchImpl<LogFindtimeCmd<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_LOG_FINDTIME>,
-        comms::option::FieldsImpl<LogFindtimeCmdFields>,
+        comms::option::FieldsImpl<LogFindtimeCmdFields::All>,
         comms::option::DispatchImpl<LogFindtimeCmd<TMsgBase> >
     > Base;
 public:
@@ -80,16 +112,16 @@ public:
     /// @brief Index to access the fields
     enum FieldIdx
     {
-        FieldIdx_version,
-        FieldIdx_type,
-        FieldIdx_reserved1,
-        FieldIdx_year,
-        FieldIdx_month,
-        FieldIdx_day,
-        FieldIdx_hour,
-        FieldIdx_minute,
-        FieldIdx_second,
-        FieldIdx_reserved2,
+        FieldIdx_version, ///< @b version field, see @ref LogFindtimeCmdFields::version
+        FieldIdx_type, ///< @b type field, see @ref LogFindtimeCmdFields::type
+        FieldIdx_reserved1, ///< @b reserved1 field, see @ref LogFindtimeCmdFields::reserved1
+        FieldIdx_year, ///< @b year field, see @ref LogFindtimeCmdFields::year
+        FieldIdx_month, ///< @b month field, see @ref LogFindtimeCmdFields::month
+        FieldIdx_day, ///< @b day field, see @ref LogFindtimeCmdFields::day
+        FieldIdx_hour, ///< @b hour field, see @ref LogFindtimeCmdFields::hour
+        FieldIdx_minute, ///< @b minute field, see @ref LogFindtimeCmdFields::minute
+        FieldIdx_second, ///< @b second field, see @ref LogFindtimeCmdFields::second
+        FieldIdx_reserved2, ///< @b reserved2 field, see @ref LogFindtimeCmdFields::reserved2
         FieldIdx_numOfValues ///< number of available fields
     };
 
@@ -115,6 +147,11 @@ public:
     LogFindtimeCmd& operator=(LogFindtimeCmd&&) = default;
 
 protected:
+    /// @brief Overrides read functionality provided by the base class.
+    /// @details The function performs read up to the @b type field (@ref
+    /// LogFindtimeCmdFields::type) and checks its value. If it's valid (has value 0),
+    /// the read continues for the rest of the fields. Otherwise
+    /// comms::ErrorStatus::InvalidMsgData is returned.
     virtual comms::ErrorStatus readImpl(
         typename Base::ReadIterator& iter,
         std::size_t len) override

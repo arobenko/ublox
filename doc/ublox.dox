@@ -15,3 +15,6 @@
 ///
 /// @namespace ublox::field::cfg
 /// @brief Contains definition of common fields that can be used by multiple independent messages of CFG class
+///
+/// @namespace ublox::field::log
+/// @brief Contains definition of common fields that can be used by multiple independent messages of LOG class
