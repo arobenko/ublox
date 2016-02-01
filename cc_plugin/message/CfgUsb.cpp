@@ -44,7 +44,7 @@ QVariantMap createProps_flags()
     QVariantList bitNames;
     bitNames.append("reEnum");
     bitNames.append("powerMode");
-    assert(bitNames.size() == ublox::message::CfgUsbField_flags_numOfValues);
+    assert(bitNames.size() == ublox::message::CfgUsbFields::flags_numOfValues);
     return cc::Property::createPropertiesMap("flags", std::move(bitNames));
 }
 
