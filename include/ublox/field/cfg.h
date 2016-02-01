@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -54,40 +54,42 @@ using datumNum = common::U2;
 /// @brief Definition of common "datumName" field.
 using datumName = common::ZString<6>;
 
-/// @brief Definition of common "majA" field used CFG-DAT messages.
+/// @brief Definition of common "majA" field used in CFG-DAT messages.
 using datMajA = common::R8;
 
-/// @brief Definition of common "flat" field used CFG-DAT messages.
+/// @brief Definition of common "flat" field used in CFG-DAT messages.
 using datFlat = common::R8;
 
-/// @brief Definition of common "dX" field used CFG-DAT messages.
+/// @brief Definition of common "dX" field used in CFG-DAT messages.
 using datDX = common::R4;
 
-/// @brief Definition of common "dY" field used CFG-DAT messages.
+/// @brief Definition of common "dY" field used in CFG-DAT messages.
 using datDY = common::R4;
 
-/// @brief Definition of common "dZ" field used CFG-DAT messages.
+/// @brief Definition of common "dZ" field used in CFG-DAT messages.
 using datDZ = common::R4;
 
-/// @brief Definition of common "rotX" field used CFG-DAT messages.
+/// @brief Definition of common "rotX" field used in CFG-DAT messages.
 using datRotX = common::R4;
 
-/// @brief Definition of common "rotY" field used CFG-DAT messages.
+/// @brief Definition of common "rotY" field used in CFG-DAT messages.
 using datRotY = common::R4;
 
-/// @brief Definition of common "rotZ" field used CFG-DAT messages.
+/// @brief Definition of common "rotZ" field used in CFG-DAT messages.
 using datRotZ = common::R4;
 
-/// @brief Definition of common "scale" field used CFG-DAT messages.
+/// @brief Definition of common "scale" field used in CFG-DAT messages.
 using datScale = common::R4;
 
+/// @brief Value enumeration for @ref ublox::field::cfg::tpIdx field
 enum class TpIdx : std::uint8_t
 {
-    TIMEPULSE,
-    TIMEPULSE2,
-    NumOfValues
+    TIMEPULSE, ///< TIMEPULSE
+    TIMEPULSE2, ///< TIMEPULSE2
+    NumOfValues ///< number of available values
 };
 
+/// @brief Definition of common "tpIdx" field used in CFG-TP5 messages
 using tpIdx =
     common::EnumT<
         TpIdx,

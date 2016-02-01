@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -15,12 +15,12 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+/// @file
+/// @brief Contains definition of CFG-TP5 message and its fields.
 
 #pragma once
 
-#include "comms/Message.h"
 #include "ublox/Message.h"
-#include "ublox/field/MsgId.h"
 #include "ublox/field/cfg.h"
 
 namespace ublox
@@ -29,63 +29,100 @@ namespace ublox
 namespace message
 {
 
-using CfgTp5_TpIdx = field::cfg::TpIdx;
-
-enum
+/// @brief Accumulates details of all the CFG-TP5 message fields.
+/// @see CfgTp5
+struct CfgTp5Fields
 {
-    CfgTp5Field_flags_active,
-    CfgTp5Field_flags_logGpsFreq,
-    CfgTp5Field_flags_lockedOtherSet,
-    CfgTp5Field_flags_isFreq,
-    CfgTp5Field_flags_isLength,
-    CfgTp5Field_flags_alignToTow,
-    CfgTp5Field_flags_polarity,
-    CfgTp5Field_flags_gridUtcGps,
-    CfgTp5Field_flags_numOfValues
+    /// @brief Value enumeration for @ref tpIdx field
+    using TpIdx = field::cfg::TpIdx;
+
+    /// @brief Bits access enumeration for @ref flags bitmask field.
+    enum
+    {
+        flags_active, ///< @b active bit index
+        flags_logGpsFreq, ///< @b logGpsFreq bit index
+        flags_lockedOtherSet, ///< @b lockedOtherSet bit index
+        flags_isFreq, ///< @b isFreq bit index
+        flags_isLength, ///< @b isLength bit index
+        flags_alignToTow, ///< @b alignToTow bit index
+        flags_polarity, ///< @b polarity bit index
+        flags_gridUtcGps, ///< @b gridUtcGps bit index
+        flags_numOfValues///< number of available bits
+    };
+
+    /// @brief Definition of "tpIdx" field.
+    using tpIdx = field::cfg::tpIdx;
+
+    /// @brief Definition of "reserved0" field.
+    using reserved0 = field::common::res1;
+
+    /// @brief Definition of "reserved1" field.
+    using reserved1 = field::common::res2;
+
+    /// @brief Definition of "antCableDelay" field.
+    using antCableDelay = field::common::I2T<field::common::Scaling_ns2s>;
+
+    /// @brief Definition of "rfGroupDelay" field.
+    using rfGroupDelay = field::common::I2T<field::common::Scaling_ns2s>;
+
+    /// @brief Definition of "freqPeriod" field.
+    using freqPeriod = field::common::U4T<field::common::Scaling_us2s>;
+
+    /// @brief Definition of "freqPeriodLock" field.
+    using freqPeriodLock = field::common::U4T<field::common::Scaling_us2s>;
+
+    /// @brief Definition of "pulseLenRatio" field.
+    using pulseLenRatio = field::common::U4;
+
+    /// @brief Definition of "pulseLenRatioLock" field.
+    using pulseLenRatioLock = field::common::U4;
+
+    /// @brief Definition of "userConfigDelay" field.
+    using userConfigDelay = field::common::I4T<field::common::Scaling_ns2s>;
+
+    /// @brief Definition of "flags" field.
+    using flags =
+        field::common::X4T<
+            comms::option::BitmaskReservedBits<0xffffff00, 0>
+        >;
+
+    /// @brief All the fields bundled in std::tuple.
+    using All = std::tuple<
+        tpIdx,
+        reserved0,
+        reserved1,
+        antCableDelay,
+        rfGroupDelay,
+        freqPeriod,
+        freqPeriodLock,
+        pulseLenRatio,
+        pulseLenRatioLock,
+        userConfigDelay,
+        flags
+    >;
 };
 
-using CfgTp5Field_tpIdx = field::cfg::tpIdx;
-using CfgTp5Field_reserved0 = field::common::res1;
-using CfgTp5Field_reserved1 = field::common::res2;
-using CfgTp5Field_antCableDelay = field::common::I2T<field::common::Scaling_ns2s>;
-using CfgTp5Field_rfGroupDelay = field::common::I2T<field::common::Scaling_ns2s>;
-using CfgTp5Field_freqPeriod = field::common::U4T<field::common::Scaling_us2s>;
-using CfgTp5Field_freqPeriodLock = field::common::U4T<field::common::Scaling_us2s>;
-using CfgTp5Field_pulseLenRatio = field::common::U4;
-using CfgTp5Field_pulseLenRatioLock = field::common::U4;
-using CfgTp5Field_userConfigDelay = field::common::I4T<field::common::Scaling_ns2s>;
-using CfgTp5Field_flags =
-    field::common::X4T<
-        comms::option::BitmaskReservedBits<0xffffff00, 0>
-    >;
-
-using CfgTp5Fields = std::tuple<
-    CfgTp5Field_tpIdx,
-    CfgTp5Field_reserved0,
-    CfgTp5Field_reserved1,
-    CfgTp5Field_antCableDelay,
-    CfgTp5Field_rfGroupDelay,
-    CfgTp5Field_freqPeriod,
-    CfgTp5Field_freqPeriodLock,
-    CfgTp5Field_pulseLenRatio,
-    CfgTp5Field_pulseLenRatioLock,
-    CfgTp5Field_userConfigDelay,
-    CfgTp5Field_flags
->;
-
+/// @brief Definition of CFG-TP5 message
+/// @details Inherits from
+///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+///     while providing @b TMsgBase as common interface class as well as
+///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
+///     @b comms::option::DispatchImpl as options. @n
+///     See @ref CfgTp5Fields and for definition of the fields this message contains.
+/// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class CfgTp5 : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_TP5>,
-        comms::option::FieldsImpl<CfgTp5Fields>,
+        comms::option::FieldsImpl<CfgTp5Fields::All>,
         comms::option::DispatchImpl<CfgTp5<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_TP5>,
-        comms::option::FieldsImpl<CfgTp5Fields>,
+        comms::option::FieldsImpl<CfgTp5Fields::All>,
         comms::option::DispatchImpl<CfgTp5<TMsgBase> >
     > Base;
 public:
@@ -93,17 +130,17 @@ public:
     /// @brief Index to access the fields
     enum FieldIdx
     {
-        FieldIdx_tpIdx,
-        FieldIdx_reserved0,
-        FieldIdx_reserved1,
-        FieldIdx_antCableDelay,
-        FieldIdx_rfGroupDelay,
-        FieldIdx_freqPeriod,
-        FieldIdx_freqPeriodLock,
-        FieldIdx_pulseLenRatio,
-        FieldIdx_pulseLenRatioLock,
-        FieldIdx_userConfigDelay,
-        FieldIdx_flags,
+        FieldIdx_tpIdx, ///< @b tpIdx field, see @ref CfgTp5Fields::tpIdx
+        FieldIdx_reserved0, ///< @b reserved0 field, see @ref CfgTp5Fields::reserved0
+        FieldIdx_reserved1, ///< @b reserved1 field, see @ref CfgTp5Fields::reserved1
+        FieldIdx_antCableDelay, ///< @b antCableDelay field, see @ref CfgTp5Fields::antCableDelay
+        FieldIdx_rfGroupDelay, ///< @b rfGroupDelay field, see @ref CfgTp5Fields::rfGroupDelay
+        FieldIdx_freqPeriod, ///< @b freqPeriod field, see @ref CfgTp5Fields::freqPeriod
+        FieldIdx_freqPeriodLock, ///< @b freqPeriodLock field, see @ref CfgTp5Fields::freqPeriodLock
+        FieldIdx_pulseLenRatio, ///< @b pulseLenRatio field, see @ref CfgTp5Fields::pulseLenRatio
+        FieldIdx_pulseLenRatioLock, ///< @b pulseLenRatioLock field, see @ref CfgTp5Fields::pulseLenRatioLock
+        FieldIdx_userConfigDelay, ///< @b userConfigDelay field, see @ref CfgTp5Fields::userConfigDelay
+        FieldIdx_flags, ///< @b flags field, see @ref CfgTp5Fields::flags
         FieldIdx_numOfValues ///< number of available fields
     };
 
