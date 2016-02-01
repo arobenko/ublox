@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -48,6 +48,7 @@ QVariantMap createProps_status()
     bitNames.append("recording");
     bitNames.append("inactive");
     bitNames.append("circular");
+    assert(bitNames.size() == ublox::message::LogInfoFields::status_numOfValues);
     return cc::Property::createPropertiesMap("status", std::move(bitNames));
 }
 
