@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -15,10 +15,11 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+/// @file
+/// @brief Contains definition of MON-IO message and its fields.
 
 #pragma once
 
-#include "comms/Message.h"
 #include "ublox/Message.h"
 #include "ublox/field/common.h"
 
@@ -28,66 +29,99 @@ namespace ublox
 namespace message
 {
 
-enum
+/// @brief Accumulates details of all the MON-IO message fields.
+/// @see MonIo
+struct MonIoFields
 {
-    MonIoField_data_rxBytes,
-    MonIoField_data_txBytes,
-    MonIoField_data_parityErrs,
-    MonIoField_data_framingErrs,
-    MonIoField_data_overrunErrs,
-    MonIoField_data_breakCond,
-    MonIoField_data_rxBusy,
-    MonIoField_data_txBusy,
-    MonIoField_data_reserved1,
-    MonIoField_data_numOfValues
+    /// @brief Use this enumeration to access member fields of @ref block bundle.
+    enum
+    {
+        block_rxBytes, ///< index of @ref rxBytes member field
+        block_txBytes, ///< index of @ref txBytes member field
+        block_parityErrs, ///< index of @ref parityErrs member field
+        block_framingErrs, ///< index of @ref framingErrs member field
+        block_overrunErrs, ///< index of @ref overrunErrs member field
+        block_breakCond, ///< index of @ref breakCond member field
+        block_rxBusy, ///< index of @ref rxBusy member field
+        block_txBusy, ///< index of @ref txBusy member field
+        block_reserved1, ///< index of @ref reserved1 member field
+        block_numOfValues ///< number of available member fields
+    };
+
+    /// @brief Definition of "rxBytes" field.
+    using rxBytes = field::common::U4;
+
+    /// @brief Definition of "txBytes" field.
+    using txBytes = field::common::U4;
+
+    /// @brief Definition of "parityErrs" field.
+    using parityErrs = field::common::U2;
+
+    /// @brief Definition of "framingErrs" field.
+    using framingErrs = field::common::U2;
+
+    /// @brief Definition of "overrunErrs" field.
+    using overrunErrs = field::common::U2;
+
+    /// @brief Definition of "breakCond" field.
+    using breakCond = field::common::U2;
+
+    /// @brief Definition of "rxBusy" field.
+    using rxBusy = field::common::U1;
+
+    /// @brief Definition of "txBusy" field.
+    using txBusy = field::common::U1;
+
+    /// @brief Definition of "reserved1" field.
+    using reserved1 = field::common::U2;
+
+    /// @brief Definition of the single block of data.
+    using block =
+        field::common::BundleT<
+            std::tuple<
+                rxBytes,
+                txBytes,
+                parityErrs,
+                framingErrs,
+                overrunErrs,
+                breakCond,
+                rxBusy,
+                txBusy,
+                reserved1
+            >
+        >;
+
+    /// @brief Definition of the list of blocks.
+    using data =
+        field::common::ListT<block>;
+
+    /// @brief All the fields bundled in std::tuple.
+    using All = std::tuple<
+        data
+    >;
 };
 
-using MonIoField_rxBytes = field::common::U4;
-using MonIoField_txBytes = field::common::U4;
-using MonIoField_parityErrs = field::common::U2;
-using MonIoField_framingErrs = field::common::U2;
-using MonIoField_overrunErrs = field::common::U2;
-using MonIoField_breakCond = field::common::U2;
-using MonIoField_rxBusy = field::common::U1;
-using MonIoField_txBusy = field::common::U1;
-using MonIoField_reserved1 = field::common::U2;
-
-using MonIoField_dataListElem =
-    field::common::BundleT<
-        std::tuple<
-            MonIoField_rxBytes,
-            MonIoField_txBytes,
-            MonIoField_parityErrs,
-            MonIoField_framingErrs,
-            MonIoField_overrunErrs,
-            MonIoField_breakCond,
-            MonIoField_rxBusy,
-            MonIoField_txBusy,
-            MonIoField_reserved1
-        >
-    >;
-
-using MonIoField_data =
-    field::common::ListT<MonIoField_dataListElem>;
-
-using MonIoFields = std::tuple<
-    MonIoField_data
->;
-
-
+/// @brief Definition of MON-IO message
+/// @details Inherits from
+///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+///     while providing @b TMsgBase as common interface class as well as
+///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
+///     @b comms::option::DispatchImpl as options. @n
+///     See @ref MonIoFields and for definition of the fields this message contains.
+/// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class MonIo : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_MON_IO>,
-        comms::option::FieldsImpl<MonIoFields>,
+        comms::option::FieldsImpl<MonIoFields::All>,
         comms::option::DispatchImpl<MonIo<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_MON_IO>,
-        comms::option::FieldsImpl<MonIoFields>,
+        comms::option::FieldsImpl<MonIoFields::All>,
         comms::option::DispatchImpl<MonIo<TMsgBase> >
     > Base;
 public:
@@ -95,7 +129,7 @@ public:
     /// @brief Index to access the fields
     enum FieldIdx
     {
-        FieldIdx_data,
+        FieldIdx_data, ///< @b data field, see @ref MonIoFields::data
         FieldIdx_numOfValues ///< number of available fields
     };
 

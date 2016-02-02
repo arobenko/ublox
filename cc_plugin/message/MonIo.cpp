@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -51,8 +51,9 @@ QVariantMap createProps_data()
     membersData.append(cc::Property::createPropertiesMap("rxBusy"));
     membersData.append(cc::Property::createPropertiesMap("txBusy"));
     membersData.append(cc_plugin::field::common::props_reserved(1));
+    assert(membersData.size() == ublox::message::MonIoFields::block_numOfValues);
 
-    auto bundleProps = cc::Property::createPropertiesMap("element", std::move(membersData));
+    auto bundleProps = cc::Property::createPropertiesMap("block", std::move(membersData));
     auto props = cc::Property::createPropertiesMap("data", std::move(bundleProps));
     cc::Property::setSerialisedHidden(props);
     return props;
