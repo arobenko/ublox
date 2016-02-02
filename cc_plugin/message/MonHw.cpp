@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -47,7 +47,7 @@ QVariantMap createProps_aStatus()
     cc::Property::appendEnumValue(enumValues, "OK");
     cc::Property::appendEnumValue(enumValues, "SHORT");
     cc::Property::appendEnumValue(enumValues, "OPEN");
-    assert(enumValues.size() == (int)ublox::message::MonHw_AStatus::NumOfValues);
+    assert(enumValues.size() == (int)ublox::message::MonHwFields::AStatus::NumOfValues);
     return cc::Property::createPropertiesMap("aStatus", std::move(enumValues));
 }
 
@@ -57,7 +57,7 @@ QVariantMap createProps_aPower()
     cc::Property::appendEnumValue(enumValues, "OFF");
     cc::Property::appendEnumValue(enumValues, "ON");
     cc::Property::appendEnumValue(enumValues, "DONTKNOW");
-    assert(enumValues.size() == (int)ublox::message::MonHw_APower::NumOfValues);
+    assert(enumValues.size() == (int)ublox::message::MonHwFields::APower::NumOfValues);
     return cc::Property::createPropertiesMap("aPower", std::move(enumValues));
 }
 
@@ -65,17 +65,23 @@ QVariantMap createProps_flags()
 {
     QVariantList bitNames;
     bitNames.append("rtcCalib");
-    bitNames.append("safeBoot");
-    assert(bitNames.size() == ublox::message::MonHwField_flags_flags_numOfValues);
-    auto flagsProps = cc::Property::createPropertiesMap("flags", std::move(bitNames));
-    cc::Property::setSerialisedHidden(flagsProps);
+    assert(bitNames.size() == ublox::message::MonHwFields::rtcCalib_numOfValues);
+    auto rtcCalibProps = cc::Property::createPropertiesMap("flags", std::move(bitNames));
+    cc::Property::setSerialisedHidden(rtcCalibProps);
+
+    QVariantList safeBootValues;
+    cc::Property::appendEnumValue(safeBootValues, "Inactive");
+    cc::Property::appendEnumValue(safeBootValues, "Active");
+    assert(safeBootValues.size() == (int)ublox::message::MonHwFields::SafeBoot::NumOfValues);
+    auto safeBootProps = cc::Property::createPropertiesMap("safeBoot", std::move(safeBootValues));
+    cc::Property::setSerialisedHidden(safeBootProps);
 
     QVariantList enumValues;
     cc::Property::appendEnumValue(enumValues, "unknown");
     cc::Property::appendEnumValue(enumValues, "ok");
     cc::Property::appendEnumValue(enumValues, "warning");
     cc::Property::appendEnumValue(enumValues, "critical");
-    assert(enumValues.size() == (int)ublox::message::MonHw_JammingState::NumOfValues);
+    assert(enumValues.size() == (int)ublox::message::MonHwFields::JammingState::NumOfValues);
     auto jammingStateProps = cc::Property::createPropertiesMap("jammingState", std::move(enumValues));
     cc::Property::setSerialisedHidden(jammingStateProps);
 
@@ -83,7 +89,8 @@ QVariantMap createProps_flags()
     cc::Property::setFieldHidden(reservedProps);
 
     QVariantList membersData;
-    membersData.append(std::move(flagsProps));
+    membersData.append(std::move(rtcCalibProps));
+    membersData.append(std::move(safeBootProps));
     membersData.append(std::move(jammingStateProps));
     membersData.append(std::move(reservedProps));
     return cc::Property::createPropertiesMap("flags", std::move(membersData));
@@ -92,7 +99,7 @@ QVariantMap createProps_flags()
 QVariantMap createProps_VP()
 {
     QVariantList elemProps;
-    for (auto idx = 0U; idx < ublox::message::MonHwField_VP::ParsedOptions::SequenceFixedSize; ++idx) {
+    for (auto idx = 0U; idx < ublox::message::MonHwFields::VP::ParsedOptions::SequenceFixedSize; ++idx) {
         elemProps.append(cc::Property::createPropertiesMap(QString("%1").arg(idx)));
     }
 
