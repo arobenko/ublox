@@ -15,10 +15,11 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+/// @file
+/// @brief Contains definition of MON-RXR message and its fields.
 
 #pragma once
 
-#include "comms/Message.h"
 #include "ublox/Message.h"
 #include "ublox/field/common.h"
 
@@ -28,35 +29,50 @@ namespace ublox
 namespace message
 {
 
-enum
+/// @brief Accumulates details of all the MON-RXR message fields.
+/// @see MonRxr
+struct MonRxrFields
 {
-    MonRxrField_flags_awake,
-    MonRxrField_data_numOfValues
+    /// @brief Bits access enumeration for @ref flags bitmask fields
+    enum
+    {
+        flags_awake, ///< @b awake bit index
+        flags_numOfValues ///< number of available bits
+    };
+
+    /// @brief Definition of "flags" field.
+    using flags =
+        field::common::X1T<
+            comms::option::BitmaskReservedBits<0xfe, 0>
+        >;
+
+    /// @brief All the fields bundled in std::tuple.
+    using All = std::tuple<
+        flags
+    >;
 };
 
-using MonRxrField_flags =
-    field::common::X1T<
-        comms::option::BitmaskReservedBits<0xfe, 0>
-    >;
-
-using MonRxrFields = std::tuple<
-    MonRxrField_flags
->;
-
-
+/// @brief Definition of MON-RXR message
+/// @details Inherits from
+///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+///     while providing @b TMsgBase as common interface class as well as
+///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
+///     @b comms::option::DispatchImpl as options. @n
+///     See @ref MonRxrFields and for definition of the fields this message contains.
+/// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class MonRxr : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_MON_RXR>,
-        comms::option::FieldsImpl<MonRxrFields>,
+        comms::option::FieldsImpl<MonRxrFields::All>,
         comms::option::DispatchImpl<MonRxr<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_MON_RXR>,
-        comms::option::FieldsImpl<MonRxrFields>,
+        comms::option::FieldsImpl<MonRxrFields::All>,
         comms::option::DispatchImpl<MonRxr<TMsgBase> >
     > Base;
 public:
@@ -64,7 +80,7 @@ public:
     /// @brief Index to access the fields
     enum FieldIdx
     {
-        FieldIdx_flags,
+        FieldIdx_flags, ///< @b flags field, see @ref MonRxrFields::flags
         FieldIdx_numOfValues ///< number of available fields
     };
 
