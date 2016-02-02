@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -15,12 +15,12 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+/// @file
+/// @brief Contains definition of LOG-RETRIEVESTRING message and its fields.
 
 #pragma once
 
-#include "comms/Message.h"
 #include "ublox/Message.h"
-#include "ublox/field/common.h"
 #include "ublox/field/log.h"
 
 namespace ublox
@@ -29,54 +29,90 @@ namespace ublox
 namespace message
 {
 
-using LogRetrievestringField_entryIndex  = field::common::U4;
-using LogRetrievestringField_version =
-    field::common::U1T<
-        comms::option::ValidNumValueRange<0, 0>
+/// @brief Accumulates details of all the LOG-RETRIEVESTRING message fields.
+/// @see LogRetrievestring
+struct LogRetrievestringFields
+{
+    /// @brief Definition of "entryIndex" field.
+    using entryIndex  = field::common::U4;
+
+    /// @brief Definition of "version" field.
+    using version =
+        field::common::U1T<
+            comms::option::ValidNumValueRange<0, 0>
+        >;
+
+    /// @brief Definition of "reserved1" field.
+    using reserved1 = field::common::res1;
+
+    /// @brief Definition of "year" field.
+    using year = field::log::year;
+
+    /// @brief Definition of "month" field.
+    using month = field::log::month;
+
+    /// @brief Definition of "day" field.
+    using day = field::log::day;
+
+    /// @brief Definition of "hour" field.
+    using hour = field::log::hour;
+
+    /// @brief Definition of "minute" field.
+    using minute = field::log::minute;
+
+    /// @brief Definition of "second" field.
+    using second = field::log::second;
+
+    /// @brief Definition of "reserved2" field.
+    using reserved2 = field::common::res1;
+
+    /// @brief Definition of "byteCount" field.
+    using byteCount = field::common::U2;
+
+    /// @brief Definition of "bytes" field.
+    using bytes =
+        field::common::StringT<
+            comms::option::SequenceSizeForcingEnabled
+        >;
+
+    /// @brief All the fields bundled in std::tuple.
+    using All = std::tuple<
+        entryIndex,
+        version,
+        reserved1,
+        year,
+        month,
+        day,
+        hour,
+        minute,
+        second,
+        reserved2,
+        byteCount,
+        bytes
     >;
-using LogRetrievestringField_reserved1 = field::common::res1;
-using LogRetrievestringField_year = field::log::year;
-using LogRetrievestringField_month = field::log::month;
-using LogRetrievestringField_day = field::log::day;
-using LogRetrievestringField_hour = field::log::hour;
-using LogRetrievestringField_minute = field::log::minute;
-using LogRetrievestringField_second = field::log::second;
-using LogRetrievestringField_reserved2 = field::common::res1;
-using LogRetrievestringField_byteCount = field::common::U2;
-using LogRetrievestringField_bytes =
-    field::common::StringT<
-        comms::option::SequenceSizeForcingEnabled
-    >;
+};
 
-using LogRetrievestringFields = std::tuple<
-    LogRetrievestringField_entryIndex,
-    LogRetrievestringField_version,
-    LogRetrievestringField_reserved1,
-    LogRetrievestringField_year,
-    LogRetrievestringField_month,
-    LogRetrievestringField_day,
-    LogRetrievestringField_hour,
-    LogRetrievestringField_minute,
-    LogRetrievestringField_second,
-    LogRetrievestringField_reserved2,
-    LogRetrievestringField_byteCount,
-    LogRetrievestringField_bytes
->;
-
-
+/// @brief Definition of LOG-RETRIEVESTRING message
+/// @details Inherits from
+///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+///     while providing @b TMsgBase as common interface class as well as
+///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
+///     @b comms::option::DispatchImpl as options. @n
+///     See @ref LogRetrievestringFields and for definition of the fields this message contains.
+/// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class LogRetrievestring : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_LOG_RETRIEVESTRING>,
-        comms::option::FieldsImpl<LogRetrievestringFields>,
+        comms::option::FieldsImpl<LogRetrievestringFields::All>,
         comms::option::DispatchImpl<LogRetrievestring<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_LOG_RETRIEVESTRING>,
-        comms::option::FieldsImpl<LogRetrievestringFields>,
+        comms::option::FieldsImpl<LogRetrievestringFields::All>,
         comms::option::DispatchImpl<LogRetrievestring<TMsgBase> >
     > Base;
 public:
@@ -84,18 +120,18 @@ public:
     /// @brief Index to access the fields
     enum FieldIdx
     {
-        FieldIdx_entryIndex,
-        FieldIdx_version,
-        FieldIdx_reserved1,
-        FieldIdx_year,
-        FieldIdx_month,
-        FieldIdx_day,
-        FieldIdx_hour,
-        FieldIdx_minute,
-        FieldIdx_second,
-        FieldIdx_reserved2,
-        FieldIdx_byteCount,
-        FieldIdx_bytes,
+        FieldIdx_entryIndex, ///< @b entryIndex field, see @ref LogRetrievestringFields::entryIndex
+        FieldIdx_version, ///< @b version field, see @ref LogRetrievestringFields::version
+        FieldIdx_reserved1, ///< @b reserved1 field, see @ref LogRetrievestringFields::reserved1
+        FieldIdx_year, ///< @b year field, see @ref LogRetrievestringFields::year
+        FieldIdx_month, ///< @b month field, see @ref LogRetrievestringFields::month
+        FieldIdx_day, ///< @b day field, see @ref LogRetrievestringFields::day
+        FieldIdx_hour, ///< @b hour field, see @ref LogRetrievestringFields::hour
+        FieldIdx_minute, ///< @b minute field, see @ref LogRetrievestringFields::minute
+        FieldIdx_second, ///< @b second field, see @ref LogRetrievestringFields::second
+        FieldIdx_reserved2, ///< @b reserved2 field, see @ref LogRetrievestringFields::reserved2
+        FieldIdx_byteCount, ///< @b byteCount field, see @ref LogRetrievestringFields::byteCount
+        FieldIdx_bytes, ///< @b bytes field, see @ref LogRetrievestringFields::bytes
         FieldIdx_numOfValues ///< number of available fields
     };
 
@@ -121,6 +157,11 @@ public:
     LogRetrievestring& operator=(LogRetrievestring&&) = default;
 
 protected:
+
+    /// @brief Overrides read functionality provided by the base class.
+    /// @details The number of characters in @b bytes (@ref LogRetrievestringFields::bytes)
+    ///     string is determined by the value of @b byteCount
+    ///     (@ref LogRetrievestringFields::byteCount) field.
     virtual comms::ErrorStatus readImpl(
         typename Base::ReadIterator& iter,
         std::size_t len) override
@@ -138,6 +179,11 @@ protected:
         return Base::template readFieldsFrom<FieldIdx_bytes>(iter, len);
     }
 
+    /// @brief Overrides default refreshing functionality provided by the interface class.
+    /// @details The value of @b byteCount (@ref LogRetrievestringFields::byteCount)
+    ///     field is determined by the size of the internal string of
+    ///     @b bytes (@ref LogRetrievestringFields::bytes) field.
+    /// @return @b true in case the value of "byteCount" field was modified, @b false otherwise
     virtual bool refreshImpl() override
     {
         auto& allFields = Base::fields();
