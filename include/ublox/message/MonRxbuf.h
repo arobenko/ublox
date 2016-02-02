@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -15,10 +15,11 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+/// @file
+/// @brief Contains definition of MON-RXBUF message and its fields.
 
 #pragma once
 
-#include "comms/Message.h"
 #include "ublox/Message.h"
 #include "ublox/field/common.h"
 
@@ -28,38 +29,56 @@ namespace ublox
 namespace message
 {
 
-using MonRxbufField_pending =
-    field::common::ListT<
-        field::common::U2,
-        comms::option::SequenceFixedSize<6>
+/// @brief Accumulates details of all the MON-RXBUF message fields.
+/// @see MonRxbuf
+struct MonRxbufFields
+{
+    /// @brief Definition of "pending" field.
+    using pending =
+        field::common::ListT<
+            field::common::U2,
+            comms::option::SequenceFixedSize<6>
+        >;
+
+    /// @brief Definition of "usage" field.
+    using usage =
+        field::common::ListT<
+            field::common::U1T<comms::option::ValidNumValueRange<0, 100> >,
+            comms::option::SequenceFixedSize<6>
+        >;
+
+    /// @brief Definition of "peakUsage" field.
+    using peakUsage = usage;
+
+    /// @brief All the fields bundled in std::tuple.
+    using All = std::tuple<
+        pending,
+        usage,
+        peakUsage
     >;
-using MonRxbufField_usage =
-    field::common::ListT<
-        field::common::U1T<comms::option::ValidNumValueRange<0, 100> >,
-        comms::option::SequenceFixedSize<6>
-    >;
-using MonRxbufField_peakUsage = MonRxbufField_usage;
+};
 
-using MonRxbufFields = std::tuple<
-    MonRxbufField_pending,
-    MonRxbufField_usage,
-    MonRxbufField_peakUsage
->;
-
-
+/// @brief Definition of MON-RXBUF message
+/// @details Inherits from
+///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+///     while providing @b TMsgBase as common interface class as well as
+///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
+///     @b comms::option::DispatchImpl as options. @n
+///     See @ref MonRxbufFields and for definition of the fields this message contains.
+/// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class MonRxbuf : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_MON_RXBUF>,
-        comms::option::FieldsImpl<MonRxbufFields>,
+        comms::option::FieldsImpl<MonRxbufFields::All>,
         comms::option::DispatchImpl<MonRxbuf<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_MON_RXBUF>,
-        comms::option::FieldsImpl<MonRxbufFields>,
+        comms::option::FieldsImpl<MonRxbufFields::All>,
         comms::option::DispatchImpl<MonRxbuf<TMsgBase> >
     > Base;
 public:
@@ -67,9 +86,9 @@ public:
     /// @brief Index to access the fields
     enum FieldIdx
     {
-        FieldIdx_pending,
-        FieldIdx_usage,
-        FieldIdx_peakUsage,
+        FieldIdx_pending, ///< @b pending field, see @ref MonRxbufFields::pending
+        FieldIdx_usage, ///< @b usage field, see @ref MonRxbufFields::usage
+        FieldIdx_peakUsage, ///< @b peakUsage field, see @ref MonRxbufFields::peakUsage
         FieldIdx_numOfValues ///< number of available fields
     };
 
