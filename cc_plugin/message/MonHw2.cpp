@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -42,10 +42,10 @@ namespace
 QVariantMap createProps_cfgSource()
 {
     QVariantList enumValues;
-    cc::Property::appendEnumValue(enumValues, "flash image", (int)ublox::message::MonHw2_CfgSource::FlashImage);
-    cc::Property::appendEnumValue(enumValues, "OTP", (int)ublox::message::MonHw2_CfgSource::OTP);
-    cc::Property::appendEnumValue(enumValues, "config pins", (int)ublox::message::MonHw2_CfgSource::ConfigPins);
-    cc::Property::appendEnumValue(enumValues, "ROM", (int)ublox::message::MonHw2_CfgSource::ROM);
+    cc::Property::appendEnumValue(enumValues, "flash image", (int)ublox::message::MonHw2Fields::CfgSource::FlashImage);
+    cc::Property::appendEnumValue(enumValues, "OTP", (int)ublox::message::MonHw2Fields::CfgSource::OTP);
+    cc::Property::appendEnumValue(enumValues, "config pins", (int)ublox::message::MonHw2Fields::CfgSource::ConfigPins);
+    cc::Property::appendEnumValue(enumValues, "ROM", (int)ublox::message::MonHw2Fields::CfgSource::ROM);
     return cc::Property::createPropertiesMap("cfgSource", std::move(enumValues));
 }
 
