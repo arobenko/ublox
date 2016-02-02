@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -50,8 +50,8 @@ QVariantMap createProps_latLong(const char* name)
 QVariantMap createProps_fixType()
 {
     QVariantList enumValues;
-    cc::Property::appendEnumValue(enumValues, "2D-Fix", (int)ublox::message::LogRetrievepos_FixType::Fix_2D);
-    cc::Property::appendEnumValue(enumValues, "3D-Fix", (int)ublox::message::LogRetrievepos_FixType::Fix_3D);
+    cc::Property::appendEnumValue(enumValues, "2D-Fix", (int)ublox::message::LogRetrieveposFields::FixType::Fix_2D);
+    cc::Property::appendEnumValue(enumValues, "3D-Fix", (int)ublox::message::LogRetrieveposFields::FixType::Fix_3D);
     return cc::Property::createPropertiesMap("fixType", std::move(enumValues));
 }
 
