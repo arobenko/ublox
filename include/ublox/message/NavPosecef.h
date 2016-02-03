@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -15,12 +15,12 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+/// @file
+/// @brief Contains definition of NAV-POSECEF message and its fields.
 
 #pragma once
 
-#include "comms/Message.h"
 #include "ublox/Message.h"
-
 #include "ublox/field/nav.h"
 
 namespace ublox
@@ -28,35 +28,56 @@ namespace ublox
 
 namespace message
 {
+/// @brief Accumulates details of all the NAV-POSECEF message fields.
+/// @see NavPosecef
+struct NavPosecefFields
+{
+    /// @brief Definition of "iTOW" field.
+    using iTOW = field::nav::iTOW;
 
-using NavPosecefField_iTOW = field::nav::iTOW;
-using NavPosecefField_ecefX = field::nav::ecefX;
-using NavPosecefField_ecefY = field::nav::ecefY;
-using NavPosecefField_ecefZ = field::nav::ecefZ;
-using NavPosecefField_pAcc = field::nav::pAcc;
+    /// @brief Definition of "iTOW" field.
+    using ecefX = field::nav::ecefX;
 
-using NavPosecefFields = std::tuple<
-    NavPosecefField_iTOW,
-    NavPosecefField_ecefX,
-    NavPosecefField_ecefY,
-    NavPosecefField_ecefZ,
-    NavPosecefField_pAcc
->;
+    /// @brief Definition of "iTOW" field.
+    using ecefY = field::nav::ecefY;
 
+    /// @brief Definition of "iTOW" field.
+    using ecefZ = field::nav::ecefZ;
 
+    /// @brief Definition of "iTOW" field.
+    using pAcc = field::nav::pAcc;
+
+    /// @brief All the fields bundled in std::tuple.
+    using All = std::tuple<
+        iTOW,
+        ecefX,
+        ecefY,
+        ecefZ,
+        pAcc
+    >;
+};
+
+/// @brief Definition of NAV-POSECEF message
+/// @details Inherits from
+///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+///     while providing @b TMsgBase as common interface class as well as
+///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
+///     @b comms::option::DispatchImpl as options. @n
+///     See @ref NavPosecefFields and for definition of the fields this message contains.
+/// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class NavPosecef : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_POSECEF>,
-        comms::option::FieldsImpl<NavPosecefFields>,
+        comms::option::FieldsImpl<NavPosecefFields::All>,
         comms::option::DispatchImpl<NavPosecef<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_POSECEF>,
-        comms::option::FieldsImpl<NavPosecefFields>,
+        comms::option::FieldsImpl<NavPosecefFields::All>,
         comms::option::DispatchImpl<NavPosecef<TMsgBase> >
     > Base;
 public:
@@ -64,11 +85,11 @@ public:
     /// @brief Index to access the fields
     enum FieldIdx
     {
-        FieldIdx_iTow,
-        FieldIdx_ecefX,
-        FieldIdx_ecefY,
-        FieldIdx_ecefZ,
-        FieldIdx_pAcc,
+        FieldIdx_iTow, ///< @b iTOW field, see @ref NavPosecefFields::iTOW
+        FieldIdx_ecefX, ///< @b ecefX field, see @ref NavPosecefFields::ecefX
+        FieldIdx_ecefY, ///< @b ecefY field, see @ref NavPosecefFields::ecefY
+        FieldIdx_ecefZ, ///< @b ecefZ field, see @ref NavPosecefFields::ecefZ
+        FieldIdx_pAcc, ///< @b pAcc field, see @ref NavPosecefFields::pAcc
         FieldIdx_numOfValues ///< number of available fields
     };
 
