@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -56,7 +56,7 @@ QVariantMap createProps_calibStatus_calib(const QString& name)
     cc::Property::appendEnumValue(enumValues, "calibrating");
     cc::Property::appendEnumValue(enumValues, "coarse calibration");
     cc::Property::appendEnumValue(enumValues, "fine calibration");
-    assert(enumValues.size() == (int)ublox::message::NavEkfstatus_CalibStatus::NumOfValues);
+    assert(enumValues.size() == (int)ublox::message::NavEkfstatusFields::CalibStatus::NumOfValues);
     auto props = cc::Property::createPropertiesMap(name, std::move(enumValues));
     cc::Property::setSerialisedHidden(props);
     return props;
@@ -76,7 +76,7 @@ QVariantMap createProps_calibStatus()
     membersData.append(createProps_calibStatus_calib("calibGyro"));
     membersData.append(createProps_calibStatus_calib("calibGyroB"));
     membersData.append(createProps_calibStatus_reserved());
-    assert(membersData.size() == ublox::message::NavEkfstatusField_calibStatus_numOfValues);
+    assert(membersData.size() == ublox::message::NavEkfstatusFields::calibStatus_numOfValues);
     return cc::Property::createPropertiesMap("calibStatus", std::move(membersData));
 }
 
@@ -91,7 +91,7 @@ QVariantMap createProps_measUsed()
     bitNames.append("vel");
     bitNames.append("errGyro");
     bitNames.append("errPulse");
-    assert(bitNames.size() == ublox::message::NavEkfstatusField_measUsed_numOfValues);
+    assert(bitNames.size() == ublox::message::NavEkfstatusFields::measUsed_numOfValues);
     return cc::Property::createPropertiesMap("measUsed", std::move(bitNames));
 }
 
