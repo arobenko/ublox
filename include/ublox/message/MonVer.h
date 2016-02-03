@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -15,10 +15,10 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-
+/// @file
+/// @brief Contains definition of MON-VER message and its fields.
 #pragma once
 
-#include "comms/Message.h"
 #include "ublox/Message.h"
 #include "ublox/field/common.h"
 
@@ -28,33 +28,51 @@ namespace ublox
 namespace message
 {
 
-using CfgVerField_swVersion = field::common::ZString<30>;
-using CfgVerField_hwVersion = field::common::ZString<10>;
-using CfgVerField_extensions =
-    field::common::ListT<
-        field::common::ZString<30>
+/// @brief Accumulates details of all the MON-VER message fields.
+/// @see MonVer
+struct MonVerFields
+{
+    /// @brief Definition of "pullL" field.
+    using swVersion = field::common::ZString<30>;
+
+    /// @brief Definition of "pullL" field.
+    using hwVersion = field::common::ZString<10>;
+
+    /// @brief Definition of "pullL" field.
+    using extensions =
+        field::common::ListT<
+            field::common::ZString<30>
+        >;
+
+    /// @brief All the fields bundled in std::tuple.
+    using All = std::tuple<
+        swVersion,
+        hwVersion,
+        extensions
     >;
+};
 
-using MonVerFields = std::tuple<
-    CfgVerField_swVersion,
-    CfgVerField_hwVersion,
-    CfgVerField_extensions
->;
-
-
+/// @brief Definition of MON-VER message
+/// @details Inherits from
+///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+///     while providing @b TMsgBase as common interface class as well as
+///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
+///     @b comms::option::DispatchImpl as options. @n
+///     See @ref MonVerFields and for definition of the fields this message contains.
+/// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class MonVer : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_MON_VER>,
-        comms::option::FieldsImpl<MonVerFields>,
+        comms::option::FieldsImpl<MonVerFields::All>,
         comms::option::DispatchImpl<MonVer<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_MON_VER>,
-        comms::option::FieldsImpl<MonVerFields>,
+        comms::option::FieldsImpl<MonVerFields::All>,
         comms::option::DispatchImpl<MonVer<TMsgBase> >
     > Base;
 public:
@@ -62,9 +80,9 @@ public:
     /// @brief Index to access the fields
     enum FieldIdx
     {
-        FieldIdx_swVersion,
-        FieldIdx_hwVersion,
-        FieldIdx_extensions,
+        FieldIdx_swVersion, ///< @b swVersion field, see @ref MonVerFields::swVersion
+        FieldIdx_hwVersion, ///< @b hwVersion field, see @ref MonVerFields::hwVersion
+        FieldIdx_extensions, ///< @b extensions field, see @ref MonVerFields::extensions
         FieldIdx_numOfValues ///< number of available fields
     };
 
