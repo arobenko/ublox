@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -15,12 +15,12 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+/// @file
+/// @brief Contains definition of NAV-POSLLH message and its fields.
 
 #pragma once
 
-#include "comms/Message.h"
 #include "ublox/Message.h"
-
 #include "ublox/field/nav.h"
 
 namespace ublox
@@ -29,37 +29,64 @@ namespace ublox
 namespace message
 {
 
-using NavPosllhField_iTOW = field::nav::iTOW;
-using NavPosllhField_lat = field::nav::lat;
-using NavPosllhField_lon = field::nav::lon;
-using NavPosllhField_height = field::nav::height;
-using NavPosllhField_hMSL = field::nav::hMSL;
-using NavPosllhField_hAcc = field::nav::hAcc;
-using NavPosllhField_vAcc = field::nav::vAcc;
+/// @brief Accumulates details of all the NAV-POSLLH message fields.
+/// @see NavPosllh
+struct NavPosllhFields
+{
+    /// @brief Definition of "iTOW" field.
+    using iTOW = field::nav::iTOW;
 
-using NavPosllhFields = std::tuple<
-    NavPosllhField_iTOW,
-    NavPosllhField_lon,
-    NavPosllhField_lat,
-    NavPosllhField_height,
-    NavPosllhField_hMSL,
-    NavPosllhField_hAcc,
-    NavPosllhField_vAcc
->;
+    /// @brief Definition of "lat" field.
+    using lat = field::nav::lat;
 
+    /// @brief Definition of "lon" field.
+    using lon = field::nav::lon;
+
+    /// @brief Definition of "height" field.
+    using height = field::nav::height;
+
+    /// @brief Definition of "hMSL" field.
+    using hMSL = field::nav::hMSL;
+
+    /// @brief Definition of "hAcc" field.
+    using hAcc = field::nav::hAcc;
+
+    /// @brief Definition of "vAcc" field.
+    using vAcc = field::nav::vAcc;
+
+    /// @brief All the fields bundled in std::tuple.
+    using All = std::tuple<
+        iTOW,
+        lon,
+        lat,
+        height,
+        hMSL,
+        hAcc,
+        vAcc
+    >;
+};
+
+/// @brief Definition of NAV-POSLLH message
+/// @details Inherits from
+///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+///     while providing @b TMsgBase as common interface class as well as
+///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
+///     @b comms::option::DispatchImpl as options. @n
+///     See @ref NavPosllhFields and for definition of the fields this message contains.
+/// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class NavPosllh : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_POSLLH>,
-        comms::option::FieldsImpl<NavPosllhFields>,
+        comms::option::FieldsImpl<NavPosllhFields::All>,
         comms::option::DispatchImpl<NavPosllh<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_POSLLH>,
-        comms::option::FieldsImpl<NavPosllhFields>,
+        comms::option::FieldsImpl<NavPosllhFields::All>,
         comms::option::DispatchImpl<NavPosllh<TMsgBase> >
     > Base;
 public:
@@ -67,13 +94,13 @@ public:
     /// @brief Index to access the fields
     enum FieldIdx
     {
-        FieldIdx_iTOW,
-        FieldIdx_lon,
-        FieldIdx_lat,
-        FieldIdx_height,
-        FieldIdx_mHSL,
-        FieldIdx_hAcc,
-        FieldIdx_vAcc,
+        FieldIdx_iTOW, ///< @b iTOW field, see @ref NavPosllhFields::iTOW
+        FieldIdx_lon, ///< @b lon field, see @ref NavPosllhFields::lon
+        FieldIdx_lat, ///< @b lat field, see @ref NavPosllhFields::lat
+        FieldIdx_height, ///< @b height field, see @ref NavPosllhFields::height
+        FieldIdx_hMSL, ///< @b hMSL field, see @ref NavPosllhFields::hMSL
+        FieldIdx_hAcc, ///< @b hAcc field, see @ref NavPosllhFields::hAcc
+        FieldIdx_vAcc, ///< @b vAcc field, see @ref NavPosllhFields::vAcc
         FieldIdx_numOfValues ///< number of available fields
     };
 
