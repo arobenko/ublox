@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -46,7 +46,7 @@ QVariantMap createProps_status()
     QVariantList enumValues;
     cc::Property::appendEnumValue(enumValues, "none");
     cc::Property::appendEnumValue(enumValues, "PR+PRR correction");
-    assert(enumValues.size() == (int)ublox::message::NavDgps_Status::NumOfValues);
+    assert(enumValues.size() == (int)ublox::message::NavDgpsFields::Status::NumOfValues);
     return cc::Property::createPropertiesMap("status", std::move(enumValues));
 }
 
@@ -57,14 +57,14 @@ QVariantMap createProps_flags()
 
     QVariantList bitNames;
     bitNames.append("dgpsUsed");
-    assert(bitNames.size() == ublox::message::NavDgpsField_flags_bits_numOfValues);
+    assert(bitNames.size() == ublox::message::NavDgpsFields::flagsBits_numOfValues);
     auto flagsProps = cc::Property::createPropertiesMap("flags", std::move(bitNames));
     cc::Property::setSerialisedHidden(flagsProps);
 
     QVariantList membersData;
     membersData.append(std::move(channelProps));
     membersData.append(std::move(flagsProps));
-    assert(membersData.size() == ublox::message::NavDgpsField_flags_numOfValues);
+    assert(membersData.size() == ublox::message::NavDgpsFields::flags_numOfValues);
     return cc::Property::createPropertiesMap("flags", std::move(membersData));
 }
 
@@ -76,7 +76,7 @@ QVariantMap createProps_data()
     membersData.append(cc::Property::createPropertiesMap("ageC"));
     membersData.append(cc::Property::createPropertiesMap("prc"));
     membersData.append(cc::Property::createPropertiesMap("prrc"));
-    assert(membersData.size() == ublox::message::NavDgpsField_data_numOfValues);
+    assert(membersData.size() == ublox::message::NavDgpsFields::block_numOfValues);
     auto elementProps = cc::Property::createPropertiesMap("element", std::move(membersData));
 
     auto props = cc::Property::createPropertiesMap("data", std::move(elementProps));

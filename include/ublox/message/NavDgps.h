@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -15,14 +15,12 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+/// @file
+/// @brief Contains definition of NAV-DGPS message and its fields.
 
 #pragma once
 
-#include <iterator>
-
-#include "comms/Message.h"
 #include "ublox/Message.h"
-
 #include "ublox/field/nav.h"
 
 namespace ublox
@@ -31,107 +29,159 @@ namespace ublox
 namespace message
 {
 
-enum class NavDgps_Status : std::uint8_t
+/// @brief Accumulates details of all the NAV-DGPS message fields.
+/// @see NavDgps
+struct NavDgpsFields
 {
-    None,
-    PR_PRR_Correction,
-    NumOfValues
-};
-
-enum
-{
-    NavDgpsField_flags_channel,
-    NavDgpsField_flags_bits,
-    NavDgpsField_flags_numOfValues
-};
-
-enum
-{
-    NavDgpsField_flags_bits_dgpsUsed,
-    NavDgpsField_flags_bits_numOfValues
-};
-
-enum
-{
-    NavDpgsField_data_svid,
-    NavDgpsField_data_flags,
-    NavDgpsField_data_ageC,
-    NavDgpsField_data_prc,
-    NavDgpsField_data_prrc,
-    NavDgpsField_data_numOfValues
-};
+    /// @brief Value enumeration for @ref status field.
+    enum class Status : std::uint8_t
+    {
+        None, ///< none
+        PR_PRR_Correction, ///< PR + PRR Correction
+        NumOfValues ///< number of available values
+    };
 
 
-using NavDgpsField_iTOW = field::nav::iTOW;
-using NavDgpsField_age = field::common::I4T<field::common::Scaling_ms2s>;
-using NavDgpsField_baseId = field::common::I2;
-using NavDgpsField_baseHealth = field::common::I2;
-using NavDgpsField_numCh = field::nav::numCh;
-using NavDgpsField_status =
-    field::common::EnumT<
-        NavDgps_Status,
-        comms::option::ValidNumValueRange<0, (int)NavDgps_Status::NumOfValues - 1>
-    >;
-using NavDgpsField_reserved1 = field::common::res2;
+    /// @brief Use this enumeration to access member fields of @ref flags bitfield.
+    enum
+    {
+        flags_channel, ///< index of @ref channel member field
+        flags_bits, ///< index of @ref flagsBits member field
+        flags_numOfValues ///< number of available member fields
+    };
 
-using NavDgpsField_svid = field::nav::svid;
-using NavDgpsField_flags =
-    field::common::BitfieldT<
-        std::tuple<
-            field::common::U1T<
-                comms::option::FixedBitLength<4>,
-                comms::option::ValidNumValueRange<0, 15>
-            >,
-            field::common::X1T<
-                comms::option::FixedBitLength<4>,
-                comms::option::BitmaskReservedBits<0xfe, 0>
+    /// @brief Bits access enumeration for bits in @b flagsBits member of
+    ///     @ref flags bitfield field.
+    enum
+    {
+        flagsBits_dgpsUsed, ///< @b dgpsUsed bit index
+        flagsBits_numOfValues ///< number of available bits
+    };
+
+    /// @brief Use this enumeration to access member fields of @ref block bundle.
+    enum
+    {
+        block_svid, ///< index of @ref svid member field
+        block_flags, ///< index of @ref flags member field
+        block_ageC, ///< index of @ref ageC member field
+        block_prc, ///< index of @ref prc member field
+        block_prrc, ///< index of @ref prrc member field
+        block_numOfValues ///< number of availble member fields
+    };
+
+    /// @brief Definition of "iTOW" field.
+    using iTOW = field::nav::iTOW;
+
+    /// @brief Definition of "age" field.
+    using age = field::common::I4T<field::common::Scaling_ms2s>;
+
+    /// @brief Definition of "baseId" field.
+    using baseId = field::common::I2;
+
+    /// @brief Definition of "baseHealth" field.
+    using baseHealth = field::common::I2;
+
+    /// @brief Definition of "numCh" field.
+    using numCh = field::nav::numCh;
+
+    /// @brief Definition of "status" field.
+    using status =
+        field::common::EnumT<
+            Status,
+            comms::option::ValidNumValueRange<0, (int)Status::NumOfValues - 1>
+        >;
+
+    /// @brief Definition of "reserved1" field.
+    using reserved1 = field::common::res2;
+
+    /// @brief Definition of "svid" field.
+    using svid = field::nav::svid;
+
+    /// @brief Definition of "channel" member field in @ref flags bitfield.
+    using channel =
+        field::common::U1T<
+            comms::option::FixedBitLength<4>,
+            comms::option::ValidNumValueRange<0, 15>
+        >;
+
+    /// @brief Definition of remaining bits as a single bitmask member field in @ref flags bitfield.
+    using flagsBits =
+        field::common::X1T<
+            comms::option::FixedBitLength<4>,
+            comms::option::BitmaskReservedBits<0xfe, 0>
+        >;
+
+    /// @brief Definition of "flags" field.
+    using flags =
+        field::common::BitfieldT<
+            std::tuple<
+                channel,
+                flagsBits
             >
-        >
-    >;
+        >;
 
-using NavDgpsField_ageC = field::common::U2T<field::common::Scaling_ms2s>;
-using NavDgpsField_prc = field::common::R4;
-using NavDgpsField_prrc = field::common::R4;
+    /// @brief Definition of "agec" field.
+    using ageC = field::common::U2T<field::common::Scaling_ms2s>;
 
-using NavDgpsField_data =
-    field::common::ListT<
+    /// @brief Definition of "prc" field.
+    using prc = field::common::R4;
+
+    /// @brief Definition of "prrc" field.
+    using prrc = field::common::R4;
+
+    /// @brief Definition of the repeated block as a single bundle field
+    using block =
         field::common::BundleT<
             std::tuple<
-                NavDgpsField_svid,
-                NavDgpsField_flags,
-                NavDgpsField_ageC,
-                NavDgpsField_prc,
-                NavDgpsField_prrc
+                svid,
+                flags,
+                ageC,
+                prc,
+                prrc
             >
-        >,
-        comms::option::SequenceSizeForcingEnabled
+        >;
+
+    /// @brief Definition of the list of repeated blocks (@ref block).
+    using data =
+        field::common::ListT<
+            block,
+            comms::option::SequenceSizeForcingEnabled
+        >;
+
+    /// @brief All the fields bundled in std::tuple.
+    using All = std::tuple<
+        iTOW,
+        age,
+        baseId,
+        baseHealth,
+        numCh,
+        status,
+        reserved1,
+        data
     >;
+};
 
-using NavDgpsFields = std::tuple<
-    NavDgpsField_iTOW,
-    NavDgpsField_age,
-    NavDgpsField_baseId,
-    NavDgpsField_baseHealth,
-    NavDgpsField_numCh,
-    NavDgpsField_status,
-    NavDgpsField_reserved1,
-    NavDgpsField_data
->;
-
-
+/// @brief Definition of NAV-DGPS message
+/// @details Inherits from
+///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+///     while providing @b TMsgBase as common interface class as well as
+///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
+///     @b comms::option::DispatchImpl as options. @n
+///     See @ref NavDgpsFields and for definition of the fields this message contains.
+/// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class NavDgps : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_DGPS>,
-        comms::option::FieldsImpl<NavDgpsFields>,
+        comms::option::FieldsImpl<NavDgpsFields::All>,
         comms::option::DispatchImpl<NavDgps<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_DGPS>,
-        comms::option::FieldsImpl<NavDgpsFields>,
+        comms::option::FieldsImpl<NavDgpsFields::All>,
         comms::option::DispatchImpl<NavDgps<TMsgBase> >
     > Base;
 public:
@@ -139,14 +189,14 @@ public:
     /// @brief Index to access the fields
     enum FieldIdx
     {
-        FieldIdx_iTOW,
-        FieldIdx_age,
-        FieldIdx_baseId,
-        FieldIdx_baseHealth,
-        FieldIdx_numCh,
-        FieldIdx_status,
-        FieldIdx_reserved1,
-        FieldIdx_data,
+        FieldIdx_iTOW, ///< @b iTOW field, see @ref NavDgpsFields::iTOW
+        FieldIdx_age, ///< @b age field, see @ref NavDgpsFields::age
+        FieldIdx_baseId, ///< @b baseId field, see @ref NavDgpsFields::baseId
+        FieldIdx_baseHealth, ///< @b baseHealth field, see @ref NavDgpsFields::baseHealth
+        FieldIdx_numCh, ///< @b numCh field, see @ref NavDgpsFields::numCh
+        FieldIdx_status, ///< @b status field, see @ref NavDgpsFields::status
+        FieldIdx_reserved1, ///< @b reserved1 field, see @ref NavDgpsFields::reserved1
+        FieldIdx_data, ///< @b data field, see @ref NavDgpsFields::data
         FieldIdx_numOfValues ///< number of available fields
     };
 
@@ -172,6 +222,11 @@ public:
     NavDgps& operator=(NavDgps&&) = default;
 
 protected:
+
+    /// @brief Overrides read functionality provided by the base class.
+    /// @details The number of blocks in @b data (@ref NavDgpsFields::data)
+    ///     list is determined by the value of @b numCh (@ref NavDgpsFields::numCh)
+    ///     field.
     virtual comms::ErrorStatus readImpl(
         typename Base::ReadIterator& iter,
         std::size_t len) override
@@ -189,6 +244,11 @@ protected:
         return Base::template readFieldsFrom<FieldIdx_data>(iter, len);
     }
 
+    /// @brief Overrides default refreshing functionality provided by the interface class.
+    /// @details The value of @b numCh (@ref NavDgpsFields::numCh) field is
+    ///     determined by the number of elements in the internal storage collection
+    ///     of the @b data (@ref NavDgpsFields::data) list.
+    /// @return @b true in case the value of "numCh" field was modified, @b false otherwise
     virtual bool refreshImpl() override
     {
         auto& allFields = Base::fields();
