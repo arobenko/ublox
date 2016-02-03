@@ -109,11 +109,8 @@ using gpsFix =
 /// @brief Definition of common "week" field.
 using week = common::week;
 
-/// @brief Definition of common "xDOP" field.
-using xDOP = field::common::U2T<comms::option::ScalingRatio<1, 100> >;
-
 /// @brief Definition of common "pDOP" field.
-using pDOP = xDOP;
+using pDOP = field::common::U2T<comms::option::ScalingRatio<1, 100> >;
 
 /// @brief Definition of common "numSV" field.
 using numSV = common::numSV;
