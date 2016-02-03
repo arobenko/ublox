@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -58,14 +58,14 @@ QVariantMap createProps_errors()
     QVariantList bitNames;
     bitNames.append("mem");
     bitNames.append("alloc");
-    assert(bitNames.size() == ublox::message::MonTxbufField_errors_bits_numOfValues);
+    assert(bitNames.size() == ublox::message::MonTxbufFields::errorsBits_numOfValues);
     auto bitsProps = cc::Property::createPropertiesMap(QString(), std::move(bitNames));
     cc::Property::setSerialisedHidden(bitsProps);
 
     QVariantList membersData;
     membersData.append(std::move(limitProps));
     membersData.append(std::move(bitsProps));
-    assert(membersData.size() == ublox::message::MonTxbufField_errors_bits_numOfValues);
+    assert(membersData.size() == ublox::message::MonTxbufFields::errors_numOfValues);
     return cc::Property::createPropertiesMap("errors", std::move(membersData));
 }
 

@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -15,10 +15,11 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+/// @file
+/// @brief Contains definition of MON-TXBUF message and its fields.
 
 #pragma once
 
-#include "comms/Message.h"
 #include "ublox/Message.h"
 #include "ublox/field/common.h"
 
@@ -28,71 +29,109 @@ namespace ublox
 namespace message
 {
 
-enum
+/// @brief Accumulates details of all the MON-TXBUF message fields.
+/// @see MonTxbuf
+struct MonTxbufFields
 {
-    MonTxbufField_errors_limit,
-    MonTxbufField_errors_bits,
-    MonTxbufField_errors_numOfValues
-};
+    /// @brief Use this enumeration to access member fields of @ref errors bitfield.
+    enum
+    {
+        errors_limit, ///< index of @ref limit member field
+        errors_bits, ///< index of @ref errorsBits member field.
+        errors_numOfValues ///< number of available member fields
+    };
 
-enum
-{
-    MonTxbufField_errors_bits_mem,
-    MonTxbufField_errors_bits_alloc,
-    MonTxbufField_errors_bits_numOfValues
-};
+    /// @brief Bits access enumeration for bits in @b errorsBits member of
+    ///     @ref errors bitfield field.
+    enum
+    {
+        errorsBits_mem, ///< @b mem bit index
+        errorsBits_alloc, ///< @b alloc bit index
+        errorsBits_numOfValues ///< number of available bits
+    };
 
-using MonTxbufField_pending =
-    field::common::ListT<
-        field::common::U2,
-        comms::option::SequenceFixedSize<6>
-    >;
-using MonTxbufField_usage =
-    field::common::ListT<
-        field::common::U1T<comms::option::ValidNumValueRange<0, 100> >,
-        comms::option::SequenceFixedSize<6>
-    >;
-using MonTxbufField_peakUsage = MonTxbufField_usage;
-using MonTxbufField_tUsage = field::common::U1T<comms::option::ValidNumValueRange<0, 100> >;
-using MonTxbufField_tPeakUsage = MonTxbufField_tUsage;
-using MonTxbufField_errors =
-    field::common::BitfieldT<
-        std::tuple<
-            field::common::U1T<
-                comms::option::ValidNumValueRange<0, 0x3f>,
-                comms::option::FixedBitLength<6>
-            >,
-            field::common::X1T<
-                comms::option::FixedBitLength<2>
+    /// @brief Definition of "pending" field.
+    using pending =
+        field::common::ListT<
+            field::common::U2,
+            comms::option::SequenceFixedSize<6>
+        >;
+
+    /// @brief Definition of "usage" field.
+    using usage =
+        field::common::ListT<
+            field::common::U1T<comms::option::ValidNumValueRange<0, 100> >,
+            comms::option::SequenceFixedSize<6>
+        >;
+
+    /// @brief Definition of "peakUsage" field.
+    using peakUsage = usage;
+
+    /// @brief Definition of "tUsage" field.
+    using tUsage = field::common::U1T<comms::option::ValidNumValueRange<0, 100> >;
+
+    /// @brief Definition of "tPeakUsage" field.
+    using tPeakUsage = tUsage;
+
+    /// @brief Definition of "limit" member field in @ref errors bitfield.
+    using limit =
+        field::common::U1T<
+            comms::option::ValidNumValueRange<0, 0x3f>,
+            comms::option::FixedBitLength<6>
+        >;
+
+    /// @brief Definition of remaining bits in @ref errors bitfield as
+    ///     a single bitmask.
+    using errorsBits =
+        field::common::X1T<
+            comms::option::FixedBitLength<2>
+        >;
+
+    /// @brief Definition of "errors" field.
+    using errors =
+        field::common::BitfieldT<
+            std::tuple<
+                limit,
+                errorsBits
             >
-        >
+        >;
+
+    /// @brief Definition of "reserved1" field.
+    using reserved1 = field::common::res1;
+
+    /// @brief All the fields bundled in std::tuple.
+    using All = std::tuple<
+        pending,
+        usage,
+        peakUsage,
+        tUsage,
+        tPeakUsage,
+        errors,
+        reserved1
     >;
-using MonTxbufField_reserved1 = field::common::res1;
+};
 
-using MonTxbufFields = std::tuple<
-    MonTxbufField_pending,
-    MonTxbufField_usage,
-    MonTxbufField_peakUsage,
-    MonTxbufField_tUsage,
-    MonTxbufField_tPeakUsage,
-    MonTxbufField_errors,
-    MonTxbufField_reserved1
->;
-
-
+/// @brief Definition of MON-TXBUF message
+/// @details Inherits from
+///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+///     while providing @b TMsgBase as common interface class as well as
+///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
+///     @b comms::option::DispatchImpl as options. @n
+///     See @ref MonTxbufFields and for definition of the fields this message contains.
+/// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class MonTxbuf : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_MON_TXBUF>,
-        comms::option::FieldsImpl<MonTxbufFields>,
+        comms::option::FieldsImpl<MonTxbufFields::All>,
         comms::option::DispatchImpl<MonTxbuf<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_MON_TXBUF>,
-        comms::option::FieldsImpl<MonTxbufFields>,
+        comms::option::FieldsImpl<MonTxbufFields::All>,
         comms::option::DispatchImpl<MonTxbuf<TMsgBase> >
     > Base;
 public:
@@ -100,13 +139,13 @@ public:
     /// @brief Index to access the fields
     enum FieldIdx
     {
-        FieldIdx_pending,
-        FieldIdx_usage,
-        FieldIdx_peakUsage,
-        FieldIdx_tUsage,
-        FieldIdx_tPeakUsage,
-        FieldIdx_errors,
-        FieldIdx_reserved1,
+        FieldIdx_pending, ///< @b pending field, see @ref MonTxbufFields::pending
+        FieldIdx_usage, ///< @b usage field, see @ref MonTxbufFields::usage
+        FieldIdx_peakUsage, ///< @b peakUsage field, see @ref MonTxbufFields::peakUsage
+        FieldIdx_tUsage, ///< @b tUsage field, see @ref MonTxbufFields::tUsage
+        FieldIdx_tPeakUsage, ///< @b tPeakUsage field, see @ref MonTxbufFields::tPeakUsage
+        FieldIdx_errors, ///< @b errors field, see @ref MonTxbufFields::errors
+        FieldIdx_reserved1, ///< @b reserved1 field, see @ref MonTxbufFields::reserved1
         FieldIdx_numOfValues ///< number of available fields
     };
 
