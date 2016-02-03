@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -15,12 +15,12 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+/// @file
+/// @brief Contains definition of NAV-AOPSTATUS message and its fields.
 
 #pragma once
 
-#include "comms/Message.h"
 #include "ublox/Message.h"
-
 #include "ublox/field/nav.h"
 
 namespace ublox
@@ -29,48 +29,76 @@ namespace ublox
 namespace message
 {
 
-enum
+/// @brief Accumulates details of all the NAV-AOPSTATUS message fields.
+/// @see NavAopstatus
+struct NavAopstatusFields
 {
-    NavAopstatusField_aopCfg_useAOP,
-    NavAopstatusField_aopCfg_numOfValues
+    /// @brief Bits access enumeration for @ref aopCfg bitmask field.
+    enum
+    {
+        aopCfg_useAOP, ///< @b useAOP bit index
+        aopCfg_numOfValues ///< number of available bits
+    };
+
+    /// @brief Definition of "iTOW" field.
+    using iTOW = field::nav::iTOW;
+
+    /// @brief Definition of "aopCfg" field.
+    using aopCfg =
+        field::common::X1T<comms::option::BitmaskReservedBits<0xfe, 0> >;
+
+    /// @brief Definition of "status" field.
+    using status = field::common::U1;
+
+    /// @brief Definition of "reserved0" field.
+    using reserved0 = field::common::res1;
+
+    /// @brief Definition of "reserved1" field.
+    using reserved1 = field::common::res1;
+
+    /// @brief Definition of "availGPS" field.
+    using availGPS = field::common::X4;
+
+    /// @brief Definition of "reserved2" field.
+    using reserved2 = field::common::res4;
+
+    /// @brief Definition of "reserved3" field.
+    using reserved3 = field::common::res4;
+
+    /// @brief All the fields bundled in std::tuple.
+    using All = std::tuple<
+        iTOW,
+        aopCfg,
+        status,
+        reserved0,
+        reserved1,
+        availGPS,
+        reserved2,
+        reserved3
+    >;
 };
 
-
-using NavAopstatusField_iTOW = field::nav::iTOW;
-using NavAopstatusField_aopCfg =
-    field::common::X1T<comms::option::BitmaskReservedBits<0xfe, 0> >;
-using NavAopstatusField_status = field::common::U1;
-using NavAopstatusField_reserved0 = field::common::res1;
-using NavAopstatusField_reserved1 = field::common::res1;
-using NavAopstatusField_availGPS = field::common::X4;
-using NavAopstatusField_reserved2 = field::common::res4;
-using NavAopstatusField_reserved3 = field::common::res4;
-
-using NavAopstatusFields = std::tuple<
-    NavAopstatusField_iTOW,
-    NavAopstatusField_aopCfg,
-    NavAopstatusField_status,
-    NavAopstatusField_reserved0,
-    NavAopstatusField_reserved1,
-    NavAopstatusField_availGPS,
-    NavAopstatusField_reserved2,
-    NavAopstatusField_reserved3
->;
-
-
+/// @brief Definition of NAV-AOPSTATUS message
+/// @details Inherits from
+///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+///     while providing @b TMsgBase as common interface class as well as
+///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
+///     @b comms::option::DispatchImpl as options. @n
+///     See @ref NavAopstatusFields and for definition of the fields this message contains.
+/// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class NavAopstatus : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_AOPSTATUS>,
-        comms::option::FieldsImpl<NavAopstatusFields>,
+        comms::option::FieldsImpl<NavAopstatusFields::All>,
         comms::option::DispatchImpl<NavAopstatus<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_AOPSTATUS>,
-        comms::option::FieldsImpl<NavAopstatusFields>,
+        comms::option::FieldsImpl<NavAopstatusFields::All>,
         comms::option::DispatchImpl<NavAopstatus<TMsgBase> >
     > Base;
 public:
@@ -78,14 +106,14 @@ public:
     /// @brief Index to access the fields
     enum FieldIdx
     {
-        FieldIdx_iTOW,
-        FieldIdx_aopCfg,
-        FieldIdx_status,
-        FieldIdx_reserved0,
-        FieldIdx_reserved1,
-        FieldIdx_availGPS,
-        FieldIdx_reserved2,
-        FieldIdx_reserved3,
+        FieldIdx_iTOW, ///< @b iTOW field, see @ref NavAopstatusFields::iTOW
+        FieldIdx_aopCfg, ///< @b aopCfg field, see @ref NavAopstatusFields::aopCfg
+        FieldIdx_status, ///< @b status field, see @ref NavAopstatusFields::status
+        FieldIdx_reserved0, ///< @b reserved0 field, see @ref NavAopstatusFields::reserved0
+        FieldIdx_reserved1, ///< @b reserved1 field, see @ref NavAopstatusFields::reserved1
+        FieldIdx_availGPS, ///< @b availGPS field, see @ref NavAopstatusFields::availGPS
+        FieldIdx_reserved2, ///< @b reserved2 field, see @ref NavAopstatusFields::reserved2
+        FieldIdx_reserved3, ///< @b reserved3 field, see @ref NavAopstatusFields::reserved3
         FieldIdx_numOfValues ///< number of available fields
     };
 

@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -44,7 +44,7 @@ QVariantMap createProps_aopCfg()
 {
     QVariantList bitNames;
     bitNames.append("useAOP");
-    assert(bitNames.size() == ublox::message::NavAopstatusField_aopCfg_numOfValues);
+    assert(bitNames.size() == ublox::message::NavAopstatusFields::aopCfg_numOfValues);
     return cc::Property::createPropertiesMap("aopCfg", std::move(bitNames));
 }
 
