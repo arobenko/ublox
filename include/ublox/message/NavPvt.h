@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -15,12 +15,12 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+/// @file
+/// @brief Contains definition of NAV-PVT message and its fields.
 
 #pragma once
 
-#include "comms/Message.h"
 #include "ublox/Message.h"
-
 #include "ublox/field/nav.h"
 
 namespace ublox
@@ -29,130 +29,215 @@ namespace ublox
 namespace message
 {
 
-enum
+/// @brief Accumulates details of all the NAV-PVT message fields.
+/// @see NavPvt
+struct NavPvtFields
 {
-    NavPvtField_valid_validDate,
-    NavPvtField_valid_validTime,
-    NavPvtField_valid_fullyResolved,
-    NavPvtField_valid_numOfValues
-};
+    /// @brief Bits access enumeration for bits in @b valid bitmask field
+    enum
+    {
+        valid_validDate, ///< @b validDate bit index
+        valid_validTime, ///< @b validTime bit index
+        valid_fullyResolved, ///< @b fullyResolved bit index
+        valid_numOfValues ///< number of available bits
+    };
 
-enum
-{
-    NavPvtField_flags_flags,
-    NavPvtField_flags_psmState,
-    NavPvtField_flags_numOfValues
-};
+    /// @brief Use this enumeration to access member fields of @ref flags bitfield.
+    enum
+    {
+        flags_bits, ///< index of @ref flagsBits member field
+        flags_psmState, ///< index of @ref  psmState member field
+        flags_numOfValues ///< number of available fields
+    };
 
-enum
-{
-    NavPvtField_flags_flags_gnssFixOK,
-    NavPvtField_flags_flags_diffSoln,
-    NavPvtField_flags_flags_numOfValues
-};
+    /// @brief Bits access enumeration for bits in @b flagsBits member of
+    ///     @ref flags bitfield field.
+    enum
+    {
+        flagsBits_gnssFixOK, ///< @b gnssFixOK bit index
+        flagsBits_diffSoln, ///< @b diffSoln bit index
+        flagsBits_numOfValues ///< number of available bits
+    };
 
-using NavPvt_FixType = field::nav::GpsFix;
+    /// @brief Value enumeration for @ref psmState field.
+    enum class PsmState : std::uint8_t
+    {
+        Invalid, ///< invalid
+        Enabled, ///< enabled
+        Acquisition, ///< acquisition
+        Tracking, ///< tracking
+        PowerOptimisedTracking, ///< power optimised tracking
+        Inactive, ///< inactive
+        NumOfValues ///< number of available values
+    };
 
-enum class NavPvt_PsmState : std::uint8_t
-{
-    Invalid,
-    Enabled,
-    Acquisition,
-    Tracking,
-    PowerOptimisedTracking,
-    Inactive,
-    NumOfValues
-};
+    /// @brief Definition of "iTOW" field.
+    using iTOW = field::nav::iTOW;
 
-using NavPvtField_iTOW = field::nav::iTOW;
-using NavPvtField_year = field::nav::year;
-using NavPvtField_month = field::nav::month;
-using NavPvtField_day = field::nav::day;
-using NavPvtField_hour = field::nav::hour;
-using NavPvtField_min = field::nav::min;
-using NavPvtField_sec = field::nav::sec;
-using NavPvtField_valid =
-    field::common::X1T<
-        comms::option::BitmaskReservedBits<0xf8, 0> >;
-using NavPvtField_tAcc = field::nav::tAcc;
-using NavPvtField_nano = field::nav::nano;
-using NavPvtField_fixType = field::nav::gpsFix;
-using NavPvtField_flags =
-    field::common::BitfieldT<
-        std::tuple<
-            field::common::X1T<comms::option::FixedBitLength<2> >,
-            field::common::EnumT<
-                NavPvt_PsmState,
-                comms::option::FixedBitLength<6>
+    /// @brief Definition of "year" field.
+    using year = field::nav::year;
+
+    /// @brief Definition of "month" field.
+    using month = field::nav::month;
+
+    /// @brief Definition of "day" field.
+    using day = field::nav::day;
+
+    /// @brief Definition of "hour" field.
+    using hour = field::nav::hour;
+
+    /// @brief Definition of "min" field.
+    using min = field::nav::min;
+
+    /// @brief Definition of "sec" field.
+    using sec = field::nav::sec;
+
+    /// @brief Definition of "valid" field.
+    using valid =
+        field::common::X1T<
+            comms::option::BitmaskReservedBits<0xf8, 0> >;
+
+    /// @brief Definition of "tAcc" field.
+    using tAcc = field::nav::tAcc;
+
+    /// @brief Definition of "nano" field.
+    using nano = field::nav::nano;
+
+    /// @brief Definition of "fixType" field.
+    using fixType = field::nav::gpsFix;
+
+    /// @brief Definition of two first bits (@b gnssFixOn and @b diffSoln) in
+    ///     @ref flags bitfield as separate bitmask member field.
+    using flagsBits =
+        field::common::X1T<comms::option::FixedBitLength<2> >;
+
+    /// @brief Definition of "psmState" member field in @ref flags bitmask field.
+    using psmState =
+        field::common::EnumT<
+            PsmState,
+            comms::option::FixedBitLength<6>,
+            comms::option::ValidNumValueRange<0, (int)PsmState::NumOfValues - 1>
+        >;
+
+    /// @brief Definition of "flags" field.
+    using flags =
+        field::common::BitfieldT<
+            std::tuple<
+                flagsBits,
+                psmState
             >
-        >
+        >;
+
+    /// @brief Definition of "reserved1" field.
+    using reserved1 = field::common::res1;
+
+    /// @brief Definition of "numSV" field.
+    using numSV = field::nav::numSV;
+
+    /// @brief Definition of "lon" field.
+    using lon = field::nav::lon;
+
+    /// @brief Definition of "lat" field.
+    using lat = field::nav::lat;
+
+    /// @brief Definition of "height" field.
+    using height = field::nav::height;
+
+    /// @brief Definition of "hMSL" field.
+    using hMSL = field::nav::hMSL;
+
+    /// @brief Definition of "hAcc" field.
+    using hAcc = field::nav::hAcc;
+
+    /// @brief Definition of "vAcc" field.
+    using vAcc = field::nav::vAcc;
+
+    /// @brief Definition of "velN" field.
+    using velN = field::common::I4T<field::common::Scaling_mm2m>;
+
+    /// @brief Definition of "velE" field.
+    using velE = velN;
+
+    /// @brief Definition of "velD" field.
+    using velD = velN;
+
+    /// @brief Definition of "gSpeed" field.
+    using gSpeed = field::common::I4T<field::common::Scaling_mm2m>;
+
+    /// @brief Definition of "heading" field.
+    using heading = field::nav::heading;
+
+    /// @brief Definition of "sAcc" field.
+    using sAcc = field::common::U4T<field::common::Scaling_mm2m>;
+
+    /// @brief Definition of "headingAcc" field.
+    using headingAcc = field::common::U4T<comms::option::ScalingRatio<1, 100000> >;
+
+    /// @brief Definition of "pDOP" field.
+    using pDOP = field::nav::pDOP;
+
+    /// @brief Definition of "reserved2" field.
+    using reserved2 = field::common::res2;
+
+    /// @brief Definition of "reserved3" field.
+    using reserved3 = field::common::res4;
+
+    /// @brief All the fields bundled in std::tuple.
+    using All = std::tuple<
+        iTOW,
+        year,
+        month,
+        day,
+        hour,
+        min,
+        sec,
+        valid,
+        tAcc,
+        nano,
+        fixType,
+        flags,
+        reserved1,
+        numSV,
+        lon,
+        lat,
+        height,
+        hMSL,
+        hAcc,
+        vAcc,
+        velN,
+        velE,
+        velD,
+        gSpeed,
+        heading,
+        sAcc,
+        headingAcc,
+        pDOP,
+        reserved2,
+        reserved3
     >;
+};
 
-using NavPvtField_reserved1 = field::common::res1;
-using NavPvtField_numSV = field::nav::numSV;
-using NavPvtField_lon = field::nav::lon;
-using NavPvtField_lat = field::nav::lat;
-using NavPvtField_height = field::nav::height;
-using NavPvtField_hMSL = field::nav::hMSL;
-using NavPvtField_hAcc = field::nav::hAcc;
-using NavPvtField_vAcc = field::nav::vAcc;
-using NavPvtField_velN = field::common::I4T<field::common::Scaling_mm2m>;
-using NavPvtField_velE = NavPvtField_velN;
-using NavPvtField_velD = NavPvtField_velN;
-using NavPvtField_gSpeed = field::common::I4T<field::common::Scaling_mm2m>;
-using NavPvtField_heading = field::nav::heading;
-using NavPvtField_sAcc = field::common::U4T<field::common::Scaling_mm2m>;
-using NavPvtField_headingAcc = field::common::U4T<comms::option::ScalingRatio<1, 100000> >;
-using NavPvtField_pDOP = field::nav::pDOP;
-using NavPvtField_reserved2 = field::common::res2;
-using NavPvtField_reserved3 = field::common::res4;
-
-using NavPvtFields = std::tuple<
-    NavPvtField_iTOW,
-    NavPvtField_year,
-    NavPvtField_month,
-    NavPvtField_day,
-    NavPvtField_hour,
-    NavPvtField_min,
-    NavPvtField_sec,
-    NavPvtField_valid,
-    NavPvtField_tAcc,
-    NavPvtField_nano,
-    NavPvtField_fixType,
-    NavPvtField_flags,
-    NavPvtField_reserved1,
-    NavPvtField_numSV,
-    NavPvtField_lon,
-    NavPvtField_lat,
-    NavPvtField_height,
-    NavPvtField_hMSL,
-    NavPvtField_hAcc,
-    NavPvtField_vAcc,
-    NavPvtField_velN,
-    NavPvtField_velE,
-    NavPvtField_velD,
-    NavPvtField_gSpeed,
-    NavPvtField_heading,
-    NavPvtField_sAcc,
-    NavPvtField_headingAcc,
-    NavPvtField_pDOP,
-    NavPvtField_reserved2,
-    NavPvtField_reserved3
->;
-
+/// @brief Definition of NAV-PVT message
+/// @details Inherits from
+///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+///     while providing @b TMsgBase as common interface class as well as
+///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
+///     @b comms::option::DispatchImpl as options. @n
+///     See @ref NavPvtFields and for definition of the fields this message contains.
+/// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class NavPvt : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_PVT>,
-        comms::option::FieldsImpl<NavPvtFields>,
+        comms::option::FieldsImpl<NavPvtFields::All>,
         comms::option::DispatchImpl<NavPvt<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_PVT>,
-        comms::option::FieldsImpl<NavPvtFields>,
+        comms::option::FieldsImpl<NavPvtFields::All>,
         comms::option::DispatchImpl<NavPvt<TMsgBase> >
     > Base;
 public:
@@ -160,36 +245,36 @@ public:
     /// @brief Index to access the fields
     enum FieldIdx
     {
-        FieldIdx_iTOW,
-        FieldIdx_year,
-        FieldIdx_month,
-        FieldIdx_day,
-        FieldIdx_hour,
-        FieldIdx_min,
-        FieldIdx_sec,
-        FieldIdx_valid,
-        FieldIdx_tAcc,
-        FieldIdx_nano,
-        FieldIdx_fixType,
-        FieldIdx_flags,
-        FieldIdx_reserved1,
-        FieldIdx_numSV,
-        FieldIdx_lon,
-        FieldIdx_lat,
-        FieldIdx_height,
-        FieldIdx_hMSL,
-        FieldIdx_hAcc,
-        FieldIdx_vAcc,
-        FieldIdx_velN,
-        FieldIdx_velE,
-        FieldIdx_velD,
-        FieldIdx_gSpeed,
-        FieldIdx_heading,
-        FieldIdx_sAcc,
-        FieldIdx_headingAcc,
-        FieldIdx_pDOP,
-        FieldIdx_reserved2,
-        FieldIdx_reserved3,
+        FieldIdx_iTOW, ///< @b iTOW field, see @ref NavPvtFields::iTOW
+        FieldIdx_year, ///< @b year field, see @ref NavPvtFields::year
+        FieldIdx_month, ///< @b month field, see @ref NavPvtFields::month
+        FieldIdx_day, ///< @b day field, see @ref NavPvtFields::day
+        FieldIdx_hour, ///< @b hour field, see @ref NavPvtFields::hour
+        FieldIdx_min, ///< @b min field, see @ref NavPvtFields::min
+        FieldIdx_sec, ///< @b sec field, see @ref NavPvtFields::sec
+        FieldIdx_valid, ///< @b valid field, see @ref NavPvtFields::valid
+        FieldIdx_tAcc, ///< @b tAcc field, see @ref NavPvtFields::tAcc
+        FieldIdx_nano, ///< @b nano field, see @ref NavPvtFields::nano
+        FieldIdx_fixType, ///< @b fixType field, see @ref NavPvtFields::fixType
+        FieldIdx_flags, ///< @b flags field, see @ref NavPvtFields::flags
+        FieldIdx_reserved1, ///< @b reserved1 field, see @ref NavPvtFields::reserved1
+        FieldIdx_numSV, ///< @b numSV field, see @ref NavPvtFields::numSV
+        FieldIdx_lon, ///< @b lon field, see @ref NavPvtFields::lon
+        FieldIdx_lat, ///< @b lat field, see @ref NavPvtFields::lat
+        FieldIdx_height, ///< @b height field, see @ref NavPvtFields::height
+        FieldIdx_hMSL, ///< @b hMSL field, see @ref NavPvtFields::hMSL
+        FieldIdx_hAcc, ///< @b hAcc field, see @ref NavPvtFields::hAcc
+        FieldIdx_vAcc, ///< @b vAcc field, see @ref NavPvtFields::vAcc
+        FieldIdx_velN, ///< @b velN field, see @ref NavPvtFields::velN
+        FieldIdx_velE, ///< @b velE field, see @ref NavPvtFields::velE
+        FieldIdx_velD, ///< @b velD field, see @ref NavPvtFields::velD
+        FieldIdx_gSpeed, ///< @b gSpeed field, see @ref NavPvtFields::gSpeed
+        FieldIdx_heading, ///< @b heading field, see @ref NavPvtFields::heading
+        FieldIdx_sAcc, ///< @b sAcc field, see @ref NavPvtFields::sAcc
+        FieldIdx_headingAcc, ///< @b headingAcc field, see @ref NavPvtFields::headingAcc
+        FieldIdx_pDOP, ///< @b pDOP field, see @ref NavPvtFields::pDOP
+        FieldIdx_reserved2, ///< @b reserved2 field, see @ref NavPvtFields::reserved2
+        FieldIdx_reserved3, ///< @b reserved3 field, see @ref NavPvtFields::reserved3
         FieldIdx_numOfValues ///< number of available fields
     };
 

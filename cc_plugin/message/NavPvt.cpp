@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -46,7 +46,7 @@ QVariantMap createProps_valid()
     bitNames.append("validDate");
     bitNames.append("validTime");
     bitNames.append("fullyResolved");
-    assert(bitNames.size() == ublox::message::NavPvtField_valid_numOfValues);
+    assert(bitNames.size() == ublox::message::NavPvtFields::valid_numOfValues);
 
     return cc::Property::createPropertiesMap("valid", std::move(bitNames));
 }
@@ -63,7 +63,7 @@ QVariantMap createProps_flags()
     QVariantList bitNames;
     bitNames.append("gnssFixOK");
     bitNames.append("diffSoln");
-    assert(bitNames.size() == ublox::message::NavPvtField_flags_flags_numOfValues);
+    assert(bitNames.size() == ublox::message::NavPvtFields::flagsBits_numOfValues);
     auto flagsProps = cc::Property::createPropertiesMap("flags", std::move(bitNames));
     cc::Property::setSerialisedHidden(flagsProps);
 
@@ -74,14 +74,14 @@ QVariantMap createProps_flags()
     cc::Property::appendEnumValue(enumValues, "TRACKING");
     cc::Property::appendEnumValue(enumValues, "POWER OPTIMIZED TRACKING");
     cc::Property::appendEnumValue(enumValues, "INACTIVE");
-    assert(enumValues.size() == (int)ublox::message::NavPvt_PsmState::NumOfValues);
+    assert(enumValues.size() == (int)ublox::message::NavPvtFields::PsmState::NumOfValues);
     auto psmStateProps = cc::Property::createPropertiesMap("psmState", std::move(enumValues));
     cc::Property::setSerialisedHidden(psmStateProps);
 
     QVariantList membersProps;
     membersProps.append(std::move(flagsProps));
     membersProps.append(std::move(psmStateProps));
-    assert(membersProps.size() == (int)ublox::message::NavPvtField_flags_numOfValues);
+    assert(membersProps.size() == (int)ublox::message::NavPvtFields::flags_numOfValues);
 
     return cc::Property::createPropertiesMap("flags", std::move(membersProps));
 }
