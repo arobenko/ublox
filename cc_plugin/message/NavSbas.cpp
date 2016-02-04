@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -44,9 +44,9 @@ namespace
 QVariantMap createProps_mode()
 {
     QVariantList enumValues;
-    cc::Property::appendEnumValue(enumValues, "Disabled", (int)ublox::message::NavSbas_Mode::Disabled);
-    cc::Property::appendEnumValue(enumValues, "Enabed Integrity", (int)ublox::message::NavSbas_Mode::EnabledIntegrity);
-    cc::Property::appendEnumValue(enumValues, "Enabed Testmode", (int)ublox::message::NavSbas_Mode::EnabledTestmode);
+    cc::Property::appendEnumValue(enumValues, "Disabled", (int)ublox::message::NavSbasFields::Mode::Disabled);
+    cc::Property::appendEnumValue(enumValues, "Enabed Integrity", (int)ublox::message::NavSbasFields::Mode::EnabledIntegrity);
+    cc::Property::appendEnumValue(enumValues, "Enabed Testmode", (int)ublox::message::NavSbasFields::Mode::EnabledTestmode);
 
     return cc::Property::createPropertiesMap("mode", std::move(enumValues));
 }
@@ -54,11 +54,11 @@ QVariantMap createProps_mode()
 QVariantMap createProps_sys(const QString& name)
 {
     QVariantList enumValues;
-    cc::Property::appendEnumValue(enumValues, "Unknown", (int)ublox::message::NavSbas_Sys::Unknown);
-    cc::Property::appendEnumValue(enumValues, "WAAS", (int)ublox::message::NavSbas_Sys::WAAS);
-    cc::Property::appendEnumValue(enumValues, "EGNOS", (int)ublox::message::NavSbas_Sys::EGNOS);
-    cc::Property::appendEnumValue(enumValues, "MSAS", (int)ublox::message::NavSbas_Sys::MSAS);
-    cc::Property::appendEnumValue(enumValues, "GPS", (int)ublox::message::NavSbas_Sys::GPS);
+    cc::Property::appendEnumValue(enumValues, "Unknown", (int)ublox::message::NavSbasFields::Sys::Unknown);
+    cc::Property::appendEnumValue(enumValues, "WAAS", (int)ublox::message::NavSbasFields::Sys::WAAS);
+    cc::Property::appendEnumValue(enumValues, "EGNOS", (int)ublox::message::NavSbasFields::Sys::EGNOS);
+    cc::Property::appendEnumValue(enumValues, "MSAS", (int)ublox::message::NavSbasFields::Sys::MSAS);
+    cc::Property::appendEnumValue(enumValues, "GPS", (int)ublox::message::NavSbasFields::Sys::GPS);
 
     return cc::Property::createPropertiesMap(name, std::move(enumValues));
 }
@@ -70,6 +70,7 @@ QVariantMap createProps_service(const QString& name)
     bitNames.append("Corrections");
     bitNames.append("Integrity");
     bitNames.append("Testmode");
+    assert(bitNames.size() == ublox::message::NavSbasFields::service_NumOfValues);
 
     return cc::Property::createPropertiesMap(name, std::move(bitNames));
 }
@@ -94,7 +95,7 @@ QVariantMap createProps_data()
     membersData.append(cc_plugin::field::common::props_reserved(2));
     membersData.append(cc::Property::createPropertiesMap("ic"));
 
-    auto elementProps = cc::Property::createPropertiesMap("element", std::move(membersData));
+    auto elementProps = cc::Property::createPropertiesMap("block", std::move(membersData));
 
     auto props = cc::Property::createPropertiesMap("data", std::move(elementProps));
     cc::Property::setSerialisedHidden(props);
