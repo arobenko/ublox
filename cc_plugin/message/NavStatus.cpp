@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -49,6 +49,7 @@ QVariantMap createProps_flags()
     bitNames.append("wknSet");
     bitNames.append("towSet");
 
+    assert(bitNames.size() == ublox::message::NavStatusFields::flags_numOfValues);
     return cc::Property::createPropertiesMap("flags", std::move(bitNames));
 }
 
@@ -57,7 +58,7 @@ QVariantMap createProps_fixStat()
     QVariantList dgpsIStatEnumValues;
     cc::Property::appendEnumValue(dgpsIStatEnumValues, "none");
     cc::Property::appendEnumValue(dgpsIStatEnumValues, "PR+PRR Correction");
-    assert(dgpsIStatEnumValues.size() == (int)ublox::message::DgpsIStat::NumOfValues);
+    assert(dgpsIStatEnumValues.size() == (int)ublox::message::NavStatusFields::DgpsIStat::NumOfValues);
     auto dgpsIStatProps = cc::Property::createPropertiesMap("dgpsIStat", std::move(dgpsIStatEnumValues));
     cc::Property::setSerialisedHidden(dgpsIStatProps);
 
@@ -69,7 +70,7 @@ QVariantMap createProps_fixStat()
     cc::Property::appendEnumValue(mapMatchingEnumValues, "valid");
     cc::Property::appendEnumValue(mapMatchingEnumValues, "used");
     cc::Property::appendEnumValue(mapMatchingEnumValues, "DR");
-    assert(mapMatchingEnumValues.size() == (int)ublox::message::MapMatching::NumOfValues);
+    assert(mapMatchingEnumValues.size() == (int)ublox::message::NavStatusFields::MapMatching::NumOfValues);
     auto mapMatchingProps = cc::Property::createPropertiesMap("mapMatching", std::move(mapMatchingEnumValues));
     cc::Property::setSerialisedHidden(mapMatchingProps);
 
@@ -77,7 +78,7 @@ QVariantMap createProps_fixStat()
     membersData.append(std::move(dgpsIStatProps));
     membersData.append(std::move(reservedProps));
     membersData.append(std::move(mapMatchingProps));
-    assert(membersData.size() == ublox::message::NavStatusField_fixStat_numOfValues);
+    assert(membersData.size() == ublox::message::NavStatusFields::fixStat_numOfValues);
 
     return cc::Property::createPropertiesMap("fixStat", std::move(membersData));
 }
@@ -89,7 +90,7 @@ QVariantMap createProps_flags2()
     cc::Property::appendEnumValue(psmStateEnumValues, "TRACKING");
     cc::Property::appendEnumValue(psmStateEnumValues, "POWER OPTIMIZED TRACKING");
     cc::Property::appendEnumValue(psmStateEnumValues, "INACTIVE");
-    assert(psmStateEnumValues.size() == (int)ublox::message::PsmState::NumOfValues);
+    assert(psmStateEnumValues.size() == (int)ublox::message::NavStatusFields::PsmState::NumOfValues);
     auto psmStateProps = cc::Property::createPropertiesMap("psmState", std::move(psmStateEnumValues));
     cc::Property::setSerialisedHidden(psmStateProps);
 
@@ -99,7 +100,7 @@ QVariantMap createProps_flags2()
     QVariantList membersData;
     membersData.append(std::move(psmStateProps));
     membersData.append(std::move(reservedProps));
-    assert(membersData.size() == ublox::message::NavStatusField_flags2_numOfValues);
+    assert(membersData.size() == ublox::message::NavStatusFields::flags2_numOfValues);
 
     return cc::Property::createPropertiesMap("flags2", std::move(membersData));
 }
