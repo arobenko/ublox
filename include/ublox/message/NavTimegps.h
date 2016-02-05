@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -15,12 +15,12 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+/// @file
+/// @brief Contains definition of NAV-TIMEGPS message and its fields.
 
 #pragma once
 
-#include "comms/Message.h"
 #include "ublox/Message.h"
-
 #include "ublox/field/nav.h"
 
 namespace ublox
@@ -29,43 +29,69 @@ namespace ublox
 namespace message
 {
 
-enum
+/// @brief Accumulates details of all the NAV-TIMEGPS message fields.
+/// @see NavTimegps
+struct NavTimegpsFields
 {
-    NavTimegpsField_valid_towValid,
-    NavTimegpsField_valid_weekValid,
-    NavTimegpsField_valid_leapSValid,
-    NavTimegpsField_valid_numOfValues
+    /// @brief Bits access enumeration for bits in @b valid bitmask field
+    enum
+    {
+        valid_towValid, ///< @b towValid bit index
+        valid_weekValid, ///< @b weekValid bit index
+        valid_leapSValid, ///< @b leapSValid bit index
+        valid_numOfValues ///< number of available bits
+    };
+
+    /// @brief Definition of "iTOW" field.
+    using iTOW = field::nav::iTOW;
+
+    /// @brief Definition of "fTOW" field.
+    using fTOW = field::nav::fTOW;
+
+    /// @brief Definition of "week" field.
+    using week = field::nav::week;
+
+    /// @brief Definition of "leapS" field.
+    using leapS = field::common::I1;
+
+    /// @brief Definition of "valid" field.
+    using valid = field::common::X1T<comms::option::BitmaskReservedBits<0xf8, 0> >;
+
+    /// @brief Definition of "tAcc" field.
+    using tAcc = field::nav::tAcc;
+
+    /// @brief All the fields bundled in std::tuple.
+    using All = std::tuple<
+        iTOW,
+        fTOW,
+        week,
+        leapS,
+        valid,
+        tAcc
+    >;
 };
 
-using NavTimegpsField_iTOW = field::nav::iTOW;
-using NavTimegpsField_fTOW = field::nav::fTOW;
-using NavTimegpsField_week = field::nav::week;
-using NavTimegpsField_leapS = field::common::I1;
-using NavTimegpsField_valid = field::common::X1T<comms::option::BitmaskReservedBits<0xf8, 0> >;
-using NavTimegpsField_tAcc = field::nav::tAcc;
-
-using NavTimegpsFields = std::tuple<
-    NavTimegpsField_iTOW,
-    NavTimegpsField_fTOW,
-    NavTimegpsField_week,
-    NavTimegpsField_leapS,
-    NavTimegpsField_valid,
-    NavTimegpsField_tAcc
->;
-
+/// @brief Definition of NAV-TIMEGPS message
+/// @details Inherits from
+///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+///     while providing @b TMsgBase as common interface class as well as
+///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
+///     @b comms::option::DispatchImpl as options. @n
+///     See @ref NavTimegpsFields and for definition of the fields this message contains.
+/// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class NavTimegps : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_TIMEGPS>,
-        comms::option::FieldsImpl<NavTimegpsFields>,
+        comms::option::FieldsImpl<NavTimegpsFields::All>,
         comms::option::DispatchImpl<NavTimegps<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_TIMEGPS>,
-        comms::option::FieldsImpl<NavTimegpsFields>,
+        comms::option::FieldsImpl<NavTimegpsFields::All>,
         comms::option::DispatchImpl<NavTimegps<TMsgBase> >
     > Base;
 public:
@@ -73,12 +99,12 @@ public:
     /// @brief Index to access the fields
     enum FieldIdx
     {
-        FieldIdx_iTOW,
-        FieldIdx_fTOW,
-        FieldIdx_week,
-        FieldIdx_leapS,
-        FieldIdx_valid,
-        FieldIdx_tAcc,
+        FieldIdx_iTOW, ///< @b iTOW field, see @ref NavTimegpsFields::iTOW
+        FieldIdx_fTOW, ///< @b fTOW field, see @ref NavTimegpsFields::fTOW
+        FieldIdx_week, ///< @b week field, see @ref NavTimegpsFields::week
+        FieldIdx_leapS, ///< @b leapS field, see @ref NavTimegpsFields::leapS
+        FieldIdx_valid, ///< @b valid field, see @ref NavTimegpsFields::valid
+        FieldIdx_tAcc, ///< @b tAcc field, see @ref NavTimegpsFields::tAcc
         FieldIdx_numOfValues ///< number of available fields
     };
 
