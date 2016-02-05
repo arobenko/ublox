@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -48,7 +48,7 @@ QVariantMap createProps_globalFlags()
     cc::Property::appendEnumValue(chipGenValues, "Antaris");
     cc::Property::appendEnumValue(chipGenValues, "ublox-5");
     cc::Property::appendEnumValue(chipGenValues, "ublox-6");
-    assert(chipGenValues.size() == (int)ublox::message::NavSvinfo_ChipGen::NumOfValues);
+    assert(chipGenValues.size() == (int)ublox::message::NavSvinfoFields::ChipGen::NumOfValues);
     auto chipGenProps = cc::Property::createPropertiesMap("chipGen", std::move(chipGenValues));
     cc::Property::setSerialisedHidden(chipGenProps);
 
@@ -58,7 +58,7 @@ QVariantMap createProps_globalFlags()
     QVariantList membersData;
     membersData.append(std::move(chipGenProps));
     membersData.append(std::move(reservedProps));
-    assert(membersData.size() == ublox::message::NavSvinfoField_globalFlags_numOfValues);
+    assert(membersData.size() == ublox::message::NavSvinfoFields::globalFlags_numOfValues);
     return cc::Property::createPropertiesMap("globalFlags", std::move(membersData));
 }
 
@@ -91,7 +91,7 @@ QVariantMap createProps_quality()
 }
 
 
-QVariantMap createProps_info()
+QVariantMap createProps_data()
 {
     QVariantList membersData;
     membersData.append(cc::Property::createPropertiesMap("chn"));
@@ -102,12 +102,12 @@ QVariantMap createProps_info()
     membersData.append(cc::Property::createPropertiesMap("elev"));
     membersData.append(cc::Property::createPropertiesMap("azim"));
     membersData.append(cc::Property::createPropertiesMap("prRes"));
-    assert(membersData.size() == ublox::message::NavSvinfoField_info_numOfValues);
+    assert(membersData.size() == ublox::message::NavSvinfoFields::block_numOfValues);
 
     QVariantMap bundleProps;
     cc::Property::setData(bundleProps, std::move(membersData));
 
-    auto props = cc::Property::createPropertiesMap("info", std::move(bundleProps));
+    auto props = cc::Property::createPropertiesMap("data", std::move(bundleProps));
     cc::Property::setSerialisedHidden(props);
     return props;
 }
@@ -119,7 +119,7 @@ QVariantList createFieldsProperties()
     props.append(cc_plugin::field::nav::props_numCh());
     props.append(createProps_globalFlags());
     props.append(cc_plugin::field::common::props_reserved(2));
-    props.append(createProps_info());
+    props.append(createProps_data());
 
     assert(props.size() == NavSvinfo::FieldIdx_numOfValues);
     return props;
