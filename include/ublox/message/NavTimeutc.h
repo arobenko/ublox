@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -15,12 +15,12 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+/// @file
+/// @brief Contains definition of NAV-TIMEUTC message and its fields.
 
 #pragma once
 
-#include "comms/Message.h"
 #include "ublox/Message.h"
-
 #include "ublox/field/nav.h"
 
 namespace ublox
@@ -29,51 +29,85 @@ namespace ublox
 namespace message
 {
 
-enum
+/// @brief Accumulates details of all the NAV-TIMEUTC message fields.
+/// @see NavTimeutc
+struct NavTimeutcFields
 {
-    NavTimeutcField_valid_validTOW,
-    NavTimeutcField_valid_validWKN,
-    NavTimeutcField_valid_validUTC,
-    NavTimeutcField_valid_numOfValues
+    /// @brief Bits access enumeration for bits in @b valid bitmask field
+    enum
+    {
+        valid_validTOW, ///< @b validTOW bit index
+        valid_validWKN, ///< @b validWKN bit index
+        valid_validUTC, ///< @b validUTC bit index
+        valid_numOfValues ///< number of available bits
+    };
+
+    /// @brief Definition of "iTOW" field.
+    using iTOW = field::nav::iTOW;
+
+    /// @brief Definition of "tAcc" field.
+    using tAcc = field::nav::tAcc;
+
+    /// @brief Definition of "nano" field.
+    using nano = field::nav::nano;
+
+    /// @brief Definition of "year" field.
+    using year = field::nav::year;
+
+    /// @brief Definition of "month" field.
+    using month = field::nav::month;
+
+    /// @brief Definition of "day" field.
+    using day = field::nav::day;
+
+    /// @brief Definition of "hour" field.
+    using hour = field::nav::hour;
+
+    /// @brief Definition of "min" field.
+    using min = field::nav::min;
+
+    /// @brief Definition of "sec" field.
+    using sec = field::nav::sec;
+
+    /// @brief Definition of "valid" field.
+    using valid = field::common::X1T<comms::option::BitmaskReservedBits<0xf8, 0> >;
+
+    /// @brief All the fields bundled in std::tuple.
+    using All = std::tuple<
+        iTOW,
+        tAcc,
+        nano,
+        year,
+        month,
+        day,
+        hour,
+        min,
+        sec,
+        valid
+    >;
 };
 
-using NavTimeutcField_iTOW = field::nav::iTOW;
-using NavTimeutcField_tAcc = field::nav::tAcc;
-using NavTimeutcField_nano = field::nav::nano;
-using NavTimeutcField_year = field::nav::year;
-using NavTimeutcField_month = field::nav::month;
-using NavTimeutcField_day = field::nav::day;
-using NavTimeutcField_hour = field::nav::hour;
-using NavTimeutcField_min = field::nav::min;
-using NavTimeutcField_sec = field::nav::sec;
-using NavTimeutcField_valid = field::common::X1T<comms::option::BitmaskReservedBits<0xf8, 0> >;
-
-using NavTimeutcFields = std::tuple<
-    NavTimeutcField_iTOW,
-    NavTimeutcField_tAcc,
-    NavTimeutcField_nano,
-    NavTimeutcField_year,
-    NavTimeutcField_month,
-    NavTimeutcField_day,
-    NavTimeutcField_hour,
-    NavTimeutcField_min,
-    NavTimeutcField_sec,
-    NavTimeutcField_valid
->;
-
+/// @brief Definition of NAV-TIMEUTC message
+/// @details Inherits from
+///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+///     while providing @b TMsgBase as common interface class as well as
+///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
+///     @b comms::option::DispatchImpl as options. @n
+///     See @ref NavTimeutcFields and for definition of the fields this message contains.
+/// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class NavTimeutc : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_TIMEUTC>,
-        comms::option::FieldsImpl<NavTimeutcFields>,
+        comms::option::FieldsImpl<NavTimeutcFields::All>,
         comms::option::DispatchImpl<NavTimeutc<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_TIMEUTC>,
-        comms::option::FieldsImpl<NavTimeutcFields>,
+        comms::option::FieldsImpl<NavTimeutcFields::All>,
         comms::option::DispatchImpl<NavTimeutc<TMsgBase> >
     > Base;
 public:
@@ -81,16 +115,16 @@ public:
     /// @brief Index to access the fields
     enum FieldIdx
     {
-        FieldIdx_iTOW,
-        FieldIdx_tAcc,
-        FieldIdx_nano,
-        FieldIdx_year,
-        FieldIdx_month,
-        FieldIdx_day,
-        FieldIdx_hour,
-        FieldIdx_min,
-        FieldIdx_sec,
-        FieldIdx_valid,
+        FieldIdx_iTOW, ///< @b iTOW field, see @ref NavTimeutcFields::iTOW
+        FieldIdx_tAcc, ///< @b tAcc field, see @ref NavTimeutcFields::tAcc
+        FieldIdx_nano, ///< @b nano field, see @ref NavTimeutcFields::nano
+        FieldIdx_year, ///< @b year field, see @ref NavTimeutcFields::year
+        FieldIdx_month, ///< @b month field, see @ref NavTimeutcFields::month
+        FieldIdx_day, ///< @b day field, see @ref NavTimeutcFields::day
+        FieldIdx_hour, ///< @b hour field, see @ref NavTimeutcFields::hour
+        FieldIdx_min, ///< @b min field, see @ref NavTimeutcFields::min
+        FieldIdx_sec, ///< @b sec field, see @ref NavTimeutcFields::sec
+        FieldIdx_valid, ///< @b valid field, see @ref NavTimeutcFields::valid
         FieldIdx_numOfValues ///< number of available fields
     };
 

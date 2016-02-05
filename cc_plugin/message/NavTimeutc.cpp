@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -48,7 +48,7 @@ QVariantMap createProps_valid()
     bitNames.append("validTOW");
     bitNames.append("validWKN");
     bitNames.append("validUTC");
-    assert(bitNames.size() == ublox::message::NavTimeutcField_valid_numOfValues);
+    assert(bitNames.size() == ublox::message::NavTimeutcFields::valid_numOfValues);
     return cc::Property::createPropertiesMap("valid", std::move(bitNames));
 }
 
