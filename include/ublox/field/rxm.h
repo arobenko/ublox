@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -15,6 +15,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+/// @file
+/// @brief Contains definition of common fields used in RXM class messages.
 
 #pragma once
 
@@ -29,10 +31,19 @@ namespace field
 namespace rxm
 {
 
+/// @brief Definition of common "iTOW" field.
 using iTOW = common::iTOW;
+
+/// @brief Definition of common "week" field.
 using week = common::week;
+
+/// @brief Definition of common "numSV" field.
 using numSV = common::numSV;
+
+/// @brief Definition of common "svid" field which consumes only 1 byte.
 using svid = common::svid;
+
+/// @brief Definition of common "svid" field which consumes 4 bytes.
 using svid_ext = common::U4T<comms::option::ValidNumValueRange<1, 96> >;
 
 }  // namespace rxm

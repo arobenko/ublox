@@ -21,3 +21,6 @@
 ///
 /// @namespace ublox::field::nav
 /// @brief Contains definition of common fields that can be used by multiple independent messages of NAV class
+///
+/// @namespace ublox::field::rxm
+/// @brief Contains definition of common fields that can be used by multiple independent messages of RXM class
