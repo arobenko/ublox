@@ -20,8 +20,6 @@
 
 #pragma once
 
-#include <iterator>
-
 #include "ublox/Message.h"
 #include "ublox/field/aid.h"
 

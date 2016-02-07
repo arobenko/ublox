@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -15,12 +15,12 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+/// @file
+/// @brief Contains definition of RXM-EPH (<b>poll SV</b>) message and its fields.
 
 #pragma once
 
-#include "comms/Message.h"
 #include "ublox/Message.h"
-
 #include "ublox/field/rxm.h"
 
 namespace ublox
@@ -29,26 +29,40 @@ namespace ublox
 namespace message
 {
 
-using RxmEphPollSvField_svid = field::rxm::svid;
+/// @brief Accumulates details of all the RXM-EPH (<b>poll SV</b>) message fields.
+/// @see RxmEphPollSv
+struct RxmEphPollSvFields
+{
+    /// @brief Definition of "svid" field.
+    using svid = field::rxm::svid;
 
-using RxmEphPollSvFields = std::tuple<
-    RxmEphPollSvField_svid
->;
+    /// @brief All the fields bundled in std::tuple.
+    using All = std::tuple<
+        svid
+    >;
+};
 
-
+/// @brief Definition of RXM-EPH (<b>poll SV</b>) message
+/// @details Inherits from
+///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+///     while providing @b TMsgBase as common interface class as well as
+///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
+///     @b comms::option::DispatchImpl as options. @n
+///     See @ref RxmEphPollSvFields and for definition of the fields this message contains.
+/// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class RxmEphPollSv : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_RXM_EPH>,
-        comms::option::FieldsImpl<RxmEphPollSvFields>,
+        comms::option::FieldsImpl<RxmEphPollSvFields::All>,
         comms::option::DispatchImpl<RxmEphPollSv<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_RXM_EPH>,
-        comms::option::FieldsImpl<RxmEphPollSvFields>,
+        comms::option::FieldsImpl<RxmEphPollSvFields::All>,
         comms::option::DispatchImpl<RxmEphPollSv<TMsgBase> >
     > Base;
 public:
@@ -56,7 +70,7 @@ public:
     /// @brief Index to access the fields
     enum FieldIdx
     {
-        FieldIdx_svid,
+        FieldIdx_svid, ///< svid field, see @ref RxmEphPollSvFields::svid
         FieldIdx_numOfValues ///< number of available fields
     };
 
