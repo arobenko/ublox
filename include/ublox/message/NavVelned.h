@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -15,12 +15,12 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+/// @file
+/// @brief Contains definition of NAV-VELNED message and its fields.
 
 #pragma once
 
-#include "comms/Message.h"
 #include "ublox/Message.h"
-
 #include "ublox/field/nav.h"
 
 namespace ublox
@@ -29,43 +29,73 @@ namespace ublox
 namespace message
 {
 
-using NavVelnedField_iTOW = field::nav::iTOW;
-using NavVelnedField_velN = field::common::I4T<field::common::Scaling_cm2m>;;
-using NavVelnedField_velE = NavVelnedField_velN;
-using NavVelnedField_velD = NavVelnedField_velN;
-using NavVelnedField_speed = field::common::U4T<field::common::Scaling_cm2m>;
-using NavVelnedField_gSpeed = field::common::U4T<field::common::Scaling_cm2m>;
-using NavVelnedField_heading = field::nav::heading;
-using NavVelnedField_sAcc = field::nav::sAcc;
-using NavVelnedField_cAcc =
-    field::common::U4T<comms::option::ScalingRatio<1, 100000> >;
+/// @brief Accumulates details of all the NAV-VELNED message fields.
+/// @see NavVelned
+struct NavVelnedFields
+{
+    /// @brief Definition of "iTOW" field.
+    using iTOW = field::nav::iTOW;
 
-using NavVelnedFields = std::tuple<
-    NavVelnedField_iTOW,
-    NavVelnedField_velN,
-    NavVelnedField_velE,
-    NavVelnedField_velD,
-    NavVelnedField_speed,
-    NavVelnedField_gSpeed,
-    NavVelnedField_heading,
-    NavVelnedField_sAcc,
-    NavVelnedField_cAcc
->;
+    /// @brief Definition of "velN" field.
+    using velN = field::common::I4T<field::common::Scaling_cm2m>;;
 
+    /// @brief Definition of "velE" field.
+    using velE = velN;
 
+    /// @brief Definition of "velD" field.
+    using velD = velN;
+
+    /// @brief Definition of "speed" field.
+    using speed = field::common::U4T<field::common::Scaling_cm2m>;
+
+    /// @brief Definition of "gSpeed" field.
+    using gSpeed = field::common::U4T<field::common::Scaling_cm2m>;
+
+    /// @brief Definition of "heading" field.
+    using heading = field::nav::heading;
+
+    /// @brief Definition of "sAcc" field.
+    using sAcc = field::nav::sAcc;
+
+    /// @brief Definition of "cAcc" field.
+    using cAcc =
+        field::common::U4T<comms::option::ScalingRatio<1, 100000> >;
+
+    /// @brief All the fields bundled in std::tuple.
+    using All = std::tuple<
+        iTOW,
+        velN,
+        velE,
+        velD,
+        speed,
+        gSpeed,
+        heading,
+        sAcc,
+        cAcc
+    >;
+};
+
+/// @brief Definition of NAV-VELNED message
+/// @details Inherits from
+///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+///     while providing @b TMsgBase as common interface class as well as
+///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
+///     @b comms::option::DispatchImpl as options. @n
+///     See @ref NavVelnedFields and for definition of the fields this message contains.
+/// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class NavVelned : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_VELNED>,
-        comms::option::FieldsImpl<NavVelnedFields>,
+        comms::option::FieldsImpl<NavVelnedFields::All>,
         comms::option::DispatchImpl<NavVelned<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_VELNED>,
-        comms::option::FieldsImpl<NavVelnedFields>,
+        comms::option::FieldsImpl<NavVelnedFields::All>,
         comms::option::DispatchImpl<NavVelned<TMsgBase> >
     > Base;
 public:
@@ -73,15 +103,15 @@ public:
     /// @brief Index to access the fields
     enum FieldIdx
     {
-        FieldIdx_iTOW,
-        FieldIdx_velN,
-        FieldIdx_velE,
-        FieldIdx_velD,
-        FieldIdx_speed,
-        FieldIdx_gSpeed,
-        FieldIdx_heading,
-        FieldIdx_sAcc,
-        FieldIdx_cAcc,
+        FieldIdx_iTOW, ///< @b iTOW field, see @ref NavVelnedFields::iTOW
+        FieldIdx_velN, ///< @b velN field, see @ref NavVelnedFields::velN
+        FieldIdx_velE, ///< @b velE field, see @ref NavVelnedFields::velE
+        FieldIdx_velD, ///< @b velD field, see @ref NavVelnedFields::velD
+        FieldIdx_speed, ///< @b speed field, see @ref NavVelnedFields::speed
+        FieldIdx_gSpeed, ///< @b gSpeed field, see @ref NavVelnedFields::gSpeed
+        FieldIdx_heading, ///< @b heading field, see @ref NavVelnedFields::heading
+        FieldIdx_sAcc, ///< @b sAcc field, see @ref NavVelnedFields::sAcc
+        FieldIdx_cAcc, ///< @b cAcc field, see @ref NavVelnedFields::cAcc
         FieldIdx_numOfValues ///< number of available fields
     };
 
