@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -15,12 +15,12 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+/// @file
+/// @brief Contains definition of NAV-VELECEF message and its fields.
 
 #pragma once
 
-#include "comms/Message.h"
 #include "ublox/Message.h"
-
 #include "ublox/field/nav.h"
 
 namespace ublox
@@ -29,34 +29,56 @@ namespace ublox
 namespace message
 {
 
-using NavVelecefField_iTOW = field::nav::iTOW;
-using NavVelecefField_ecefVX = field::nav::ecefVX;
-using NavVelecefField_ecefVY = field::nav::ecefVY;
-using NavVelecefField_ecefVZ = field::nav::ecefVZ;
-using NavVelecefField_sAcc = field::nav::sAcc;
+/// @brief Accumulates details of all the NAV-VELECEF message fields.
+/// @see NavVelecef
+struct NavVelecefFields
+{
+    /// @brief Definition of "iTOW" field.
+    using iTOW = field::nav::iTOW;
 
-using NavVelecefFields = std::tuple<
-    NavVelecefField_iTOW,
-    NavVelecefField_ecefVX,
-    NavVelecefField_ecefVY,
-    NavVelecefField_ecefVZ,
-    NavVelecefField_sAcc
->;
+    /// @brief Definition of "ecefVX" field.
+    using ecefVX = field::nav::ecefVX;
 
+    /// @brief Definition of "ecefVY" field.
+    using ecefVY = field::nav::ecefVY;
 
+    /// @brief Definition of "ecefVZ" field.
+    using ecefVZ = field::nav::ecefVZ;
+
+    /// @brief Definition of "sAcc" field.
+    using sAcc = field::nav::sAcc;
+
+    /// @brief All the fields bundled in std::tuple.
+    using All = std::tuple<
+        iTOW,
+        ecefVX,
+        ecefVY,
+        ecefVZ,
+        sAcc
+    >;
+};
+
+/// @brief Definition of NAV-VELECEF message
+/// @details Inherits from
+///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+///     while providing @b TMsgBase as common interface class as well as
+///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
+///     @b comms::option::DispatchImpl as options. @n
+///     See @ref NavVelecefFields and for definition of the fields this message contains.
+/// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class NavVelecef : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_VELECEF>,
-        comms::option::FieldsImpl<NavVelecefFields>,
+        comms::option::FieldsImpl<NavVelecefFields::All>,
         comms::option::DispatchImpl<NavVelecef<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_VELECEF>,
-        comms::option::FieldsImpl<NavVelecefFields>,
+        comms::option::FieldsImpl<NavVelecefFields::All>,
         comms::option::DispatchImpl<NavVelecef<TMsgBase> >
     > Base;
 public:
@@ -64,11 +86,11 @@ public:
     /// @brief Index to access the fields
     enum FieldIdx
     {
-        FieldIdx_iTOW,
-        FieldIdx_ecefVX,
-        FieldIdx_ecefVY,
-        FieldIdx_ecefVZ,
-        FieldIdx_sAcc,
+        FieldIdx_iTOW, ///< @b iTOW field, see @ref NavVelecefFields::iTOW
+        FieldIdx_ecefVX, ///< @b ecefVX field, see @ref NavVelecefFields::ecefVX
+        FieldIdx_ecefVY, ///< @b ecefVY field, see @ref NavVelecefFields::ecefVY
+        FieldIdx_ecefVZ, ///< @b ecefVZ field, see @ref NavVelecefFields::ecefVZ
+        FieldIdx_sAcc, ///< @b sAcc field, see @ref NavVelecefFields::sAcc
         FieldIdx_numOfValues ///< number of available fields
     };
 
