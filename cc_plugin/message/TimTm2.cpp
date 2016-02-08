@@ -52,7 +52,7 @@ QVariantMap createProps_flags()
     lowBitNames.append("mode");
     lowBitNames.append("run");
     lowBitNames.append("newFallingEdge");
-    assert(lowBitNames.size() == ublox::message::TimTm2Field_flags_low_numOfValues);
+    assert(lowBitNames.size() == ublox::message::TimTm2Fields::flagsLowBits_numOfValues);
     auto lowFlagsProps = cc::Property::createPropertiesMap("flags", std::move(lowBitNames));
     cc::Property::setSerialisedHidden(lowFlagsProps);
 
@@ -60,7 +60,7 @@ QVariantMap createProps_flags()
     cc::Property::appendEnumValue(timeBaseEnumValues, "Receiver Time");
     cc::Property::appendEnumValue(timeBaseEnumValues, "GPS");
     cc::Property::appendEnumValue(timeBaseEnumValues, "UTC");
-    assert(timeBaseEnumValues.size() == (int)ublox::message::TimTm2_TimeBase::NumOfValues);
+    assert(timeBaseEnumValues.size() == (int)ublox::message::TimTm2Fields::TimeBase::NumOfValues);
     auto timeBaseProps = cc::Property::createPropertiesMap("timeBase", std::move(timeBaseEnumValues));
     cc::Property::setSerialisedHidden(timeBaseProps);
 
@@ -68,7 +68,7 @@ QVariantMap createProps_flags()
     highBitNames.append("utc");
     highBitNames.append("time");
     highBitNames.append("newRisingEdge");
-    assert(highBitNames.size() == ublox::message::TimTm2Field_flags_high_numOfValues);
+    assert(highBitNames.size() == ublox::message::TimTm2Fields::flagsHighBits_numOfValues);
     auto highFlagsProps = cc::Property::createPropertiesMap(QString(), std::move(highBitNames));
     cc::Property::setSerialisedHidden(highFlagsProps);
 
@@ -76,7 +76,7 @@ QVariantMap createProps_flags()
     membersData.append(std::move(lowFlagsProps));
     membersData.append(std::move(timeBaseProps));
     membersData.append(std::move(highFlagsProps));
-    assert(membersData.size() == ublox::message::TimTm2Field_flags_numOfValues);
+    assert(membersData.size() == ublox::message::TimTm2Fields::flags_numOfValues);
     return cc::Property::createPropertiesMap("flags", std::move(membersData));
 }
 

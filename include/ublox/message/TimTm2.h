@@ -15,10 +15,11 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+/// @file
+/// @brief Contains definition of TIM-TM2 message and its fields.
 
 #pragma once
 
-#include "comms/Message.h"
 #include "ublox/Message.h"
 #include "ublox/field/common.h"
 
@@ -28,95 +29,149 @@ namespace ublox
 namespace message
 {
 
-enum class TimTm2_TimeBase : std::uint8_t
+/// @brief Accumulates details of all the TIM-TM2 message fields.
+/// @see TimTm2
+struct TimTm2Fields
 {
-    ReceiverTime,
-    GPS,
-    UTC,
-    NumOfValues
-};
+    /// @brief Value enumeration for @ref timeBase field.
+    enum class TimeBase : std::uint8_t
+    {
+        ReceiverTime, ///< Receiver Time
+        GPS, ///< GPS
+        UTC, ///< UTC
+        NumOfValues ///< number of available values
+    };
 
-enum
-{
-    TimTm2Field_flags_low,
-    TimTm2Field_flags_timeBase,
-    TimTm2Field_flags_high,
-    TimTm2Field_flags_numOfValues
-};
+    /// @brief Use this enumeration to access member fields of @ref flags bitfield.
+    enum
+    {
+        flags_lowBits, ///< index of @ref flagsLowBits member field
+        flags_timeBase, ///< index of @ref timeBase member field
+        flags_highBits, ///< index of @ref flagsHighBits member field
+        flags_numOfValues ///< number of member fields
+    };
 
-enum
-{
-    TimTm2Field_flags_low_mode,
-    TimTm2Field_flags_low_run,
-    TimTm2Field_flags_low_newFallingEdge,
-    TimTm2Field_flags_low_numOfValues
-};
+    /// @brief Bits access enumeration for bits in @b flagsLowBits member of
+    ///     @ref flags bitfield field.
+    enum
+    {
+        flagsLowBits_mode, ///< @b mode bit index
+        flagsLowBits_run, ///< @b run bit index
+        flagsLowBits_newFallingEdge, ///< @b newFallingEdge bit index
+        flagsLowBits_numOfValues ///< number of available bits
+    };
 
-enum
-{
-    TimTm2Field_flags_high_utc,
-    TimTm2Field_flags_high_time,
-    TimTm2Field_flags_high_newRisingEdge,
-    TimTm2Field_flags_high_numOfValues
-};
+    /// @brief Bits access enumeration for bits in @b flagsHighBits member of
+    ///     @ref flags bitfield field.
+    enum
+    {
+        flagsHighBits_utc, ///< @b utc bit index
+        flagsHighBits_time, ///< @b time bit index
+        flagsHighBits_newRisingEdge, ///< @b newRisingEdge bit index
+        flagsHighBits_numOfValues ///< number of available bits
+    };
 
-using TimTm2Field_ch =
-    field::common::U1T<
-        comms::option::ValidNumValueRange<0, 1>
-    >;
-using TimTm2Field_flags =
-    field::common::BitfieldT<
-        std::tuple<
-            field::common::X1T<
-                comms::option::FixedBitLength<3>,
-                comms::option::BitmaskReservedBits<0xf8, 0>
-            >,
-            field::common::EnumT<
-                TimTm2_TimeBase,
-                comms::option::FixedBitLength<2>,
-                comms::option::ValidNumValueRange<0, (int)TimTm2_TimeBase::NumOfValues - 1>
-            >,
-            field::common::X1T<
+    /// @brief Definition of "ch" field.
+    using ch =
+        field::common::U1T<
+            comms::option::ValidNumValueRange<0, 1>
+        >;
+
+    /// @brief Definition of the 3 least significant bits of @ref flags bitfield
+    ///     as a separate bitmask member field.
+    using flagsLowBits =
+        field::common::X1T<
             comms::option::FixedBitLength<3>,
             comms::option::BitmaskReservedBits<0xf8, 0>
+        >;
+
+    /// @brief Definition of "timeBase" member field of @ref flags bitfield.
+    using timeBase =
+        field::common::EnumT<
+            TimeBase,
+            comms::option::FixedBitLength<2>,
+            comms::option::ValidNumValueRange<0, (int)TimeBase::NumOfValues - 1>
+        >;
+
+    /// @brief Definition of the 3 most significant bits of @ref flags bitfield
+    ///     as a separate bitmask member field.
+    using flagsHighBits =
+        field::common::X1T<
+            comms::option::FixedBitLength<3>,
+            comms::option::BitmaskReservedBits<0xf8, 0>
+        >;
+
+    /// @brief Definition of "flags" field.
+    using flags =
+        field::common::BitfieldT<
+            std::tuple<
+                flagsLowBits,
+                timeBase,
+                flagsHighBits
             >
-        >
+        >;
+
+    /// @brief Definition of "count" field.
+    using count = field::common::U2;
+
+    /// @brief Definition of "wnR" field.
+    using wnR = field::common::U2;
+
+    /// @brief Definition of "wnF" field.
+    using wnF = field::common::U2;
+
+    /// @brief Definition of "towMsR" field.
+    using towMsR = field::common::U4T<field::common::Scaling_ms2s>;
+
+    /// @brief Definition of "towSubMsR" field.
+    using towSubMsR = field::common::U4T<field::common::Scaling_ns2s>;
+
+    /// @brief Definition of "towMsF" field.
+    using towMsF = field::common::U4T<field::common::Scaling_ms2s>;
+
+    /// @brief Definition of "towSubMsF" field.
+    using towSubMsF = field::common::U4T<field::common::Scaling_ns2s>;
+
+    /// @brief Definition of "accEst" field.
+    using accEst = field::common::U4T<field::common::Scaling_ns2s>;
+
+    /// @brief All the fields bundled in std::tuple.
+    using All = std::tuple<
+        ch,
+        flags,
+        count,
+        wnR,
+        wnF,
+        towMsR,
+        towSubMsR,
+        towMsF,
+        towSubMsF,
+        accEst
     >;
-using TimTm2Field_count = field::common::U2;
-using TimTm2Field_wnR = field::common::U2;
-using TimTm2Field_wnF = field::common::U2;
-using TimTm2Field_towMsR = field::common::U4T<field::common::Scaling_ms2s>;
-using TimTm2Field_towSubMsR = field::common::U4T<field::common::Scaling_ns2s>;
-using TimTm2Field_towMsF = field::common::U4T<field::common::Scaling_ms2s>;
-using TimTm2Field_towSubMsF = field::common::U4T<field::common::Scaling_ns2s>;
-using TimTm2Field_accEst = field::common::U4T<field::common::Scaling_ns2s>;
 
-using TimTm2Fields = std::tuple<
-    TimTm2Field_ch,
-    TimTm2Field_flags,
-    TimTm2Field_count,
-    TimTm2Field_wnR,
-    TimTm2Field_wnF,
-    TimTm2Field_towMsR,
-    TimTm2Field_towSubMsR,
-    TimTm2Field_towMsF,
-    TimTm2Field_towSubMsF,
-    TimTm2Field_accEst
->;
+};
 
+/// @brief Definition of TIM-TM2 message
+/// @details Inherits from
+///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+///     while providing @b TMsgBase as common interface class as well as
+///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
+///     @b comms::option::DispatchImpl as options. @n
+///     See @ref TimTm2Fields and for definition of the fields this message contains.
+/// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class TimTm2 : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_TIM_TM2>,
-        comms::option::FieldsImpl<TimTm2Fields>,
+        comms::option::FieldsImpl<TimTm2Fields::All>,
         comms::option::DispatchImpl<TimTm2<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_TIM_TM2>,
-        comms::option::FieldsImpl<TimTm2Fields>,
+        comms::option::FieldsImpl<TimTm2Fields::All>,
         comms::option::DispatchImpl<TimTm2<TMsgBase> >
     > Base;
 public:
@@ -124,16 +179,16 @@ public:
     /// @brief Index to access the fields
     enum FieldIdx
     {
-        FieldIdx_ch,
-        FieldIdx_flags,
-        FieldIdx_count,
-        FieldIdx_wnR,
-        FieldIdx_wnF,
-        FieldIdx_towMsR,
-        FieldIdx_towSubMsR,
-        FieldIdx_towMsF,
-        FieldIdx_towSubMsF,
-        FieldIdx_accEst,
+        FieldIdx_ch, ///< @b ch field, see @ref TimTm2Fields::ch
+        FieldIdx_flags, ///< @b flags field, see @ref TimTm2Fields::flags
+        FieldIdx_count, ///< @b count field, see @ref TimTm2Fields::count
+        FieldIdx_wnR, ///< @b wnR field, see @ref TimTm2Fields::wnR
+        FieldIdx_wnF, ///< @b wnF field, see @ref TimTm2Fields::wnF
+        FieldIdx_towMsR, ///< @b towMsR field, see @ref TimTm2Fields::towMsR
+        FieldIdx_towSubMsR, ///< @b towSubMsR field, see @ref TimTm2Fields::towSubMsR
+        FieldIdx_towMsF, ///< @b towMsF field, see @ref TimTm2Fields::towMsF
+        FieldIdx_towSubMsF, ///< @b towSubMsF field, see @ref TimTm2Fields::towSubMsF
+        FieldIdx_accEst, ///< @b accEst field, see @ref TimTm2Fields::accEst
         FieldIdx_numOfValues ///< number of available fields
     };
 
