@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -15,14 +15,12 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+/// @file
+/// @brief Contains definition of RXM-SFRB message and its fields.
 
 #pragma once
 
-#include <iterator>
-
-#include "comms/Message.h"
 #include "ublox/Message.h"
-
 #include "ublox/field/rxm.h"
 
 namespace ublox
@@ -31,33 +29,52 @@ namespace ublox
 namespace message
 {
 
-using RxmSfrbField_chn = field::common::U1;
-using RxmSfrbField_svid = field::rxm::svid;
-using RxmSfrbField_dword =
-    field::common::ListT<
-        field::common::U4,
-        comms::option::SequenceFixedSize<10>
+/// @brief Accumulates details of all the RXM-SFRB message fields.
+/// @see RxmSfrb
+struct RxmSfrbFields
+{
+    /// @brief Definition of "chn" field.
+    using chn = field::common::U1;
+
+    /// @brief Definition of "svid" field.
+    using svid = field::rxm::svid;
+
+    /// @brief Definition of "dword" field.
+    using dwrd =
+        field::common::ListT<
+            field::common::U4,
+            comms::option::SequenceFixedSize<10>
+        >;
+
+    /// @brief All the fields bundled in std::tuple.
+    using All = std::tuple<
+        chn,
+        svid,
+        dwrd
     >;
+};
 
-using RxmSfrbFields = std::tuple<
-    RxmSfrbField_chn,
-    RxmSfrbField_svid,
-    RxmSfrbField_dword
->;
-
+/// @brief Definition of RXM-SFRB message
+/// @details Inherits from
+///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+///     while providing @b TMsgBase as common interface class as well as
+///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
+///     @b comms::option::DispatchImpl as options. @n
+///     See @ref RxmSfrbFields and for definition of the fields this message contains.
+/// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class RxmSfrb : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_RXM_SFRB>,
-        comms::option::FieldsImpl<RxmSfrbFields>,
+        comms::option::FieldsImpl<RxmSfrbFields::All>,
         comms::option::DispatchImpl<RxmSfrb<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_RXM_SFRB>,
-        comms::option::FieldsImpl<RxmSfrbFields>,
+        comms::option::FieldsImpl<RxmSfrbFields::All>,
         comms::option::DispatchImpl<RxmSfrb<TMsgBase> >
     > Base;
 public:
@@ -65,9 +82,9 @@ public:
     /// @brief Index to access the fields
     enum FieldIdx
     {
-        FieldIdx_chn,
-        FieldIdx_svid,
-        FieldIdx_dwrd,
+        FieldIdx_chn, ///< @b chn field, see @ref RxmSfrbFields::chn
+        FieldIdx_svid, ///< @b svid field, see @ref RxmSfrbFields::svid
+        FieldIdx_dwrd, ///< @b dwrd field, see @ref RxmSfrbFields::dwrd
         FieldIdx_numOfValues ///< number of available fields
     };
 
