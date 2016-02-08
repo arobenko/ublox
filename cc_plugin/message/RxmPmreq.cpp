@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -17,6 +17,8 @@
 
 
 #include "RxmPmreq.h"
+
+#include <cassert>
 
 template class ublox::message::RxmPmreq<ublox::cc_plugin::Message>;
 template class ublox::cc_plugin::ProtocolMessageBase<
@@ -42,6 +44,7 @@ QVariantMap createProps_flags()
     QVariantList bitNames;
     bitNames.append(QVariant());
     bitNames.append("backup");
+    assert(bitNames.size() == ublox::message::RxmPmreqFields::flags_numOfValues);
     return cc::Property::createPropertiesMap("flags", std::move(bitNames));
 }
 

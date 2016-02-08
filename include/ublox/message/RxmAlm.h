@@ -84,9 +84,9 @@ public:
     /// @brief Index to access the fields
     enum FieldIdx
     {
-        FieldIdx_svid, ///< svid field, see @ref RxmAlmFields::svid
-        FieldIdx_week, ///< week field, see @ref RxmAlmFields::week
-        FieldIdx_dwrd, ///< dwrd field, see @ref RxmAlmFields::dwrd
+        FieldIdx_svid, ///< @b svid field, see @ref RxmAlmFields::svid
+        FieldIdx_week, ///< @b week field, see @ref RxmAlmFields::week
+        FieldIdx_dwrd, ///< @b dwrd field, see @ref RxmAlmFields::dwrd
         FieldIdx_numOfValues ///< number of available fields
     };
 

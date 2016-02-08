@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -15,13 +15,13 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+/// @file
+/// @brief Contains definition of RXM-PMREQ message and its fields.
 
 #pragma once
 
-#include "comms/Message.h"
 #include "ublox/Message.h"
-
-#include "ublox/field/rxm.h"
+#include "ublox/field/common.h"
 
 namespace ublox
 {
@@ -29,36 +29,54 @@ namespace ublox
 namespace message
 {
 
-enum
+/// @brief Accumulates details of all the RXM-PMREQ message fields.
+/// @see RxmPmreq
+struct RxmPmreqFields
 {
-    RxmPmreqField_flags_backup = 1
+    /// @brief Bits access enumeration for bits in @b flags bitmask field
+    enum
+    {
+        flags_backup = 1, ///< @b backup bit index
+        flags_numOfValues ///< upper limit for available bits
+    };
+
+    /// @brief Definition of "duration" field.
+    using duration = field::common::U4T<field::common::Scaling_ms2s>;
+
+    /// @brief Definition of "flags" field.
+    using flags =
+        field::common::X4T<
+            comms::option::BitmaskReservedBits<0xfffffffd, 0>
+        >;
+
+    /// @brief All the fields bundled in std::tuple.
+    using All = std::tuple<
+        duration,
+        flags
+    >;
 };
 
-using RxmPmreqField_duration = field::common::U4T<field::common::Scaling_ms2s>;
-using RxmPmreqField_flags =
-    field::common::X4T<
-        comms::option::BitmaskReservedBits<0xfffffffd, 0>
-    >;
-
-using RxmPmreqFields = std::tuple<
-    RxmPmreqField_duration,
-    RxmPmreqField_flags
->;
-
-
+/// @brief Definition of RXM-PMREQ message
+/// @details Inherits from
+///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+///     while providing @b TMsgBase as common interface class as well as
+///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
+///     @b comms::option::DispatchImpl as options. @n
+///     See @ref RxmPmreqFields and for definition of the fields this message contains.
+/// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class RxmPmreq : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_RXM_PMREQ>,
-        comms::option::FieldsImpl<RxmPmreqFields>,
+        comms::option::FieldsImpl<RxmPmreqFields::All>,
         comms::option::DispatchImpl<RxmPmreq<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_RXM_PMREQ>,
-        comms::option::FieldsImpl<RxmPmreqFields>,
+        comms::option::FieldsImpl<RxmPmreqFields::All>,
         comms::option::DispatchImpl<RxmPmreq<TMsgBase> >
     > Base;
 public:
@@ -66,8 +84,8 @@ public:
     /// @brief Index to access the fields
     enum FieldIdx
     {
-        FieldIdx_duration,
-        FieldIdx_flags,
+        FieldIdx_duration, ///< @b duration field, see @ref RxmPmreqFields::duration
+        FieldIdx_flags, ///< @b flags field, see @ref RxmPmreqFields::flags
         FieldIdx_numOfValues ///< number of available fields
     };
 
