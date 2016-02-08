@@ -16,7 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 /// @file
-/// @brief Contains definition of TIM-TM2 message and its fields.
+/// @brief Contains definition of TIM-TM2 (@b poll) message and its fields.
 
 #pragma once
 
@@ -28,7 +28,7 @@ namespace ublox
 namespace message
 {
 
-/// @brief Accumulates details of all the TIM-TM2 message fields.
+/// @brief Accumulates details of all the TIM-TM2 (@b poll) message fields.
 /// @see TimTm2Poll
 struct TimTm2PollFields
 {
@@ -36,7 +36,7 @@ struct TimTm2PollFields
     using All = std::tuple<>;
 };
 
-/// @brief Definition of TIM-TM2 message
+/// @brief Definition of TIM-TM2 (@b poll) message
 /// @details Inherits from
 ///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
 ///     while providing @b TMsgBase as common interface class as well as

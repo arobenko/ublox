@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -15,10 +15,11 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+/// @file
+/// @brief Contains definition of TIM-TP message and its fields.
 
 #pragma once
 
-#include "comms/Message.h"
 #include "ublox/Message.h"
 #include "ublox/field/common.h"
 
@@ -28,45 +29,71 @@ namespace ublox
 namespace message
 {
 
-enum
+/// @brief Accumulates details of all the TIM-TP message fields.
+/// @see TimTp
+struct TimTpFields
 {
-    TimTpField_flags_timeBase,
-    TimTpField_flags_utc,
-    TimTpField_flags_numOfValues
+    /// @brief Bits access enumeration for bits in @ref flags bitmask field.
+    enum
+    {
+        flags_timeBase, ///< @b timeBase bit index
+        flags_utc, ///< @b utc bit index
+        flags_numOfValues ///< number of available bits
+    };
+
+    /// @brief Definition of "towMS" field.
+    using towMS = field::common::U4T<field::common::Scaling_ms2s>;
+
+    /// @brief Definition of "towSubMS" field.
+    using towSubMS = field::common::U4T<comms::option::ScalingRatio<1, 0x20> >;
+
+    /// @brief Definition of "qErr" field.
+    using qErr = field::common::I4;
+
+    /// @brief Definition of "week" field.
+    using week = field::common::U2;
+
+    /// @brief Definition of "flags" field.
+    using flags =
+        field::common::X1T<
+            comms::option::BitmaskReservedBits<0xfc, 0>
+        >;
+
+    /// @brief Definition of "reserved" field.
+    using reserved = field::common::res1;
+
+    /// @brief All the fields bundled in std::tuple.
+    using All = std::tuple<
+        towMS,
+        towSubMS,
+        qErr,
+        week,
+        flags,
+        reserved
+    >;
 };
 
-using TimTpField_towMS = field::common::U4T<field::common::Scaling_ms2s>;
-using TimTpField_towSubMS = field::common::U4T<comms::option::ScalingRatio<1, 0x20> >;
-using TimTpField_qErr = field::common::I4;
-using TimTpField_week = field::common::U2;
-using TimTpField_flags =
-    field::common::X1T<
-        comms::option::BitmaskReservedBits<0xfc, 0>
-    >;
-using TimTpField_reserved = field::common::res1;
-
-using TimTpFields = std::tuple<
-    TimTpField_towMS,
-    TimTpField_towSubMS,
-    TimTpField_qErr,
-    TimTpField_week,
-    TimTpField_flags,
-    TimTpField_reserved
->;
-
+/// @brief Definition of TIM-TP message
+/// @details Inherits from
+///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+///     while providing @b TMsgBase as common interface class as well as
+///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
+///     @b comms::option::DispatchImpl as options. @n
+///     See @ref TimTpFields and for definition of the fields this message contains.
+/// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class TimTp : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_TIM_TP>,
-        comms::option::FieldsImpl<TimTpFields>,
+        comms::option::FieldsImpl<TimTpFields::All>,
         comms::option::DispatchImpl<TimTp<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_TIM_TP>,
-        comms::option::FieldsImpl<TimTpFields>,
+        comms::option::FieldsImpl<TimTpFields::All>,
         comms::option::DispatchImpl<TimTp<TMsgBase> >
     > Base;
 public:
@@ -74,12 +101,12 @@ public:
     /// @brief Index to access the fields
     enum FieldIdx
     {
-        FieldIdx_towMS,
-        FieldIdx_towSubMS,
-        FieldIdx_qErr,
-        FieldIdx_week,
-        FieldIdx_flags,
-        FieldIdx_reserved,
+        FieldIdx_towMS, ///< @b towMS field, see @ref TimTpFields::towMS
+        FieldIdx_towSubMS, ///< @b towSubMS field, see @ref TimTpFields::towSubMS
+        FieldIdx_qErr, ///< @b qErr field, see @ref TimTpFields::qErr
+        FieldIdx_week, ///< @b week field, see @ref TimTpFields::week
+        FieldIdx_flags, ///< @b flags field, see @ref TimTpFields::flags
+        FieldIdx_reserved, ///< @b reserved field, see @ref TimTpFields::reserved
         FieldIdx_numOfValues ///< number of available fields
     };
 

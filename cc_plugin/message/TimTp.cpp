@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -52,7 +52,7 @@ QVariantMap createProps_flags()
     QVariantList bitNames;
     bitNames.append("timeBase");
     bitNames.append("utc");
-    assert(bitNames.size() == ublox::message::TimTpField_flags_numOfValues);
+    assert(bitNames.size() == ublox::message::TimTpFields::flags_numOfValues);
     return cc::Property::createPropertiesMap("flags", std::move(bitNames));
 }
 
