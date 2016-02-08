@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -42,9 +42,9 @@ namespace
 QVariantMap createProps_flags()
 {
     QVariantList enumValues;
-    cc::Property::appendEnumValue(enumValues, "None", (int)ublox::message::TimVrfy_Src::None);
-    cc::Property::appendEnumValue(enumValues, "RTC", (int)ublox::message::TimVrfy_Src::Rtc);
-    cc::Property::appendEnumValue(enumValues, "AID-INI", (int)ublox::message::TimVrfy_Src::AidIni);
+    cc::Property::appendEnumValue(enumValues, "None", (int)ublox::message::TimVrfyFields::Src::None);
+    cc::Property::appendEnumValue(enumValues, "RTC", (int)ublox::message::TimVrfyFields::Src::Rtc);
+    cc::Property::appendEnumValue(enumValues, "AID-INI", (int)ublox::message::TimVrfyFields::Src::AidIni);
     return cc::Property::createPropertiesMap("src", std::move(enumValues));
 }
 
