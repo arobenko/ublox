@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -15,12 +15,12 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+/// @file
+/// @brief Contains definition of RXM-SVSI message and its fields.
 
 #pragma once
 
-#include "comms/Message.h"
 #include "ublox/Message.h"
-
 #include "ublox/field/rxm.h"
 
 namespace ublox
@@ -29,109 +29,161 @@ namespace ublox
 namespace message
 {
 
-enum
+/// @brief Accumulates details of all the RXM-SVSI message fields.
+/// @see RxmSvsi
+struct RxmSvsiFields
 {
-    RxmSvsiField_svFlag_ura,
-    RxmSvsiField_svFlag_flags,
-    RxmSvsiField_svFlag_numOfValues
-};
+    /// @brief Use this enumeration to access member fields of @ref svFlag bitfield.
+    enum
+    {
+        svFlag_ura, ///< index of @ref ura member field.
+        svFlag_bits, ///< index of @ref svFlagBits member field.
+        svFlag_numOfValues ///< number of available member fields.
+    };
 
-enum
-{
-    RxmSvsiField_data_svid,
-    RxmSvsiField_data_svFlag,
-    RxmSvsiField_data_azim,
-    RxmSvsiField_data_elev,
-    RxmSvsiField_data_age,
-    RxmSvsiField_data_numOfValues
-};
+    /// @brief Bits access enumeration for bits in @b svFlagBits member of
+    ///     @ref svFlag bitfield field.
+    enum
+    {
+        svFlagBits_healthy, ///< @b healthy bit index
+        svFlagBits_ephVal, ///< @b ephVal bit index
+        svFlagBits_almVal, ///< @b almVal bit index
+        svFlagBits_notAvail, ///< @b notAvail bit index
+        svFlagBits_numOfValues ///< number of available bits
+    };
 
-enum
-{
-    RxmSvsiField_svFlag_flags_healthy,
-    RxmSvsiField_svFlag_flags_ephVal,
-    RxmSvsiField_svFlag_flags_almVal,
-    RxmSvsiField_svFlag_flags_notAvail,
-    RxmSvsiField_svFlag_flags_numOfValues
-};
+    /// @brief Use this enumeration to access member fields of @ref age bitfield.
+    enum
+    {
+        age_almAge, ///< index of @ref almAge member field.
+        age_ephAge, ///< index of @ref ephAge member field.
+        age_numOfValues  ///< number of available member fields.
+    };
 
-enum
-{
-    RxmSvsiField_data_age_almAge,
-    RxmSvsiField_data_age_ephAge,
-    RxmSvsiField_data_age_numOfValues
-};
+    /// @brief Use this enumeration to access member fields of @ref block bundle.
+    enum
+    {
+        block_svid,
+        block_svFlag,
+        block_azim,
+        block_elev,
+        block_age,
+        block_numOfValues
+    };
 
-using RxmSvsiField_iTOW = field::rxm::iTOW;
-using RxmSvsiField_week = field::rxm::week;
-using RxmSvsiField_numVis = field::common::U1;
-using RxmSvsiField_numSV = field::rxm::numSV;
+    /// @brief Definition of "iTOW" field.
+    using iTOW = field::rxm::iTOW;
 
-using RxmSvsiField_svid = field::rxm::svid;
-using RxmSvsiField_svFlag =
-    field::common::BitfieldT<
-        std::tuple<
-            field::common::U1T<
-                comms::option::ValidNumValueRange<0, 15>,
-                comms::option::FixedBitLength<4>
-            >,
-            field::common::X1T<
-                comms::option::FixedBitLength<4>
+    /// @brief Definition of "week" field.
+    using week = field::rxm::week;
+
+    /// @brief Definition of "iTOW" field.
+    using numVis = field::common::U1;
+
+    /// @brief Definition of "numSV" field.
+    using numSV = field::rxm::numSV;
+
+    /// @brief Definition of "svid" field.
+    using svid = field::rxm::svid;
+
+    /// @brief Definition of "ura" member field of @ref svFlag bitfield.
+    using ura =
+        field::common::U1T<
+            comms::option::ValidNumValueRange<0, 15>,
+            comms::option::FixedBitLength<4>
+        >;
+
+    /// @brief Definition of the remaining bits in @ref svFlag bitfield as a
+    ///     single bitmask field.
+    using svFlagBits =
+        field::common::X1T<
+            comms::option::FixedBitLength<4>
+        >;
+
+    /// @brief Definition of "svFlag" field.
+    using svFlag =
+        field::common::BitfieldT<
+            std::tuple<
+                ura,
+                svFlagBits
             >
-        >
-    >;
-using RxmSvsiField_azim = field::common::I2;
-using RxmSvsiField_elev = field::common::I1;
-using RxmSvsiField_age =
-    field::common::BitfieldT<
-        std::tuple<
-            field::common::U1T<
-                comms::option::FixedBitLength<4>,
-                comms::option::ValidNumValueRange<0, 15>
-            >,
-            field::common::U1T<
-                comms::option::FixedBitLength<4>,
-                comms::option::ValidNumValueRange<0, 15>
-            >
-        >
-    >;
+        >;
 
-using RxmSvsiField_data =
-    field::common::ListT<
+    /// @brief Definition of "azim" field.
+    using azim = field::common::I2;
+
+    /// @brief Definition of "elev" field.
+    using elev = field::common::I1;
+
+    /// @brief Definition of "almAge" member fields in @ref age bitfield.
+    using almAge =
+        field::common::U1T<
+            comms::option::FixedBitLength<4>,
+            comms::option::ValidNumValueRange<0, 15>
+        >;
+
+    /// @brief Definition of "ephAge" member fields in @ref age bitfield.
+    using ephAge = almAge;
+
+    /// @brief Definition of "age" field.
+    using age =
+        field::common::BitfieldT<
+            std::tuple<
+                almAge,
+                ephAge
+            >
+        >;
+
+    /// @brief Definition of a single block of @ref data list
+    using block =
         field::common::BundleT<
             std::tuple<
-                RxmSvsiField_svid,
-                RxmSvsiField_svFlag,
-                RxmSvsiField_azim,
-                RxmSvsiField_elev,
-                RxmSvsiField_age
+                svid,
+                svFlag,
+                azim,
+                elev,
+                age
             >
-        >,
-        comms::option::SequenceSizeForcingEnabled
+        >;
+
+    /// @brief Definition of the list of blocks (@ref block)
+    using data =
+        field::common::ListT<
+            block,
+            comms::option::SequenceSizeForcingEnabled
+        >;
+
+    /// @brief All the fields bundled in std::tuple.
+    using All = std::tuple<
+        iTOW,
+        week,
+        numVis,
+        numSV,
+        data
     >;
+};
 
-
-using RxmSvsiFields = std::tuple<
-    RxmSvsiField_iTOW,
-    RxmSvsiField_week,
-    RxmSvsiField_numVis,
-    RxmSvsiField_numSV,
-    RxmSvsiField_data
->;
-
+/// @brief Definition of RXM-SVSI message
+/// @details Inherits from
+///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+///     while providing @b TMsgBase as common interface class as well as
+///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
+///     @b comms::option::DispatchImpl as options. @n
+///     See @ref RxmSvsiFields and for definition of the fields this message contains.
+/// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class RxmSvsi : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_RXM_SVSI>,
-        comms::option::FieldsImpl<RxmSvsiFields>,
+        comms::option::FieldsImpl<RxmSvsiFields::All>,
         comms::option::DispatchImpl<RxmSvsi<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_RXM_SVSI>,
-        comms::option::FieldsImpl<RxmSvsiFields>,
+        comms::option::FieldsImpl<RxmSvsiFields::All>,
         comms::option::DispatchImpl<RxmSvsi<TMsgBase> >
     > Base;
 public:
@@ -139,11 +191,11 @@ public:
     /// @brief Index to access the fields
     enum FieldIdx
     {
-        FieldIdx_iTOW,
-        FieldIdx_week,
-        FieldIdx_numVis,
-        FieldIdx_numSV,
-        FieldIdx_data,
+        FieldIdx_iTOW, ///< @b iTOW field, see @ref RxmSvsiFields::iTOW
+        FieldIdx_week, ///< @b week field, see @ref RxmSvsiFields::week
+        FieldIdx_numVis, ///< @b numVis field, see @ref RxmSvsiFields::numVis
+        FieldIdx_numSV, ///< @b numSV field, see @ref RxmSvsiFields::numSV
+        FieldIdx_data, ///< @b data field, see @ref RxmSvsiFields::data
         FieldIdx_numOfValues ///< number of available fields
     };
 

@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -50,14 +50,14 @@ QVariantMap createProps_svFlag()
     bitNames.append("ephVal");
     bitNames.append("almVal");
     bitNames.append("notAvail");
-    assert(bitNames.size() == ublox::message::RxmSvsiField_svFlag_flags_numOfValues);
+    assert(bitNames.size() == ublox::message::RxmSvsiFields::svFlagBits_numOfValues);
     auto flagsProps = cc::Property::createPropertiesMap(QString(), std::move(bitNames));
     cc::Property::setSerialisedHidden(flagsProps);
 
     QVariantList membersData;
     membersData.append(std::move(uraProps));
     membersData.append(std::move(flagsProps));
-    assert(membersData.size() == ublox::message::RxmSvsiField_svFlag_numOfValues);
+    assert(membersData.size() == ublox::message::RxmSvsiFields::svFlag_numOfValues);
     return cc::Property::createPropertiesMap("svFlag", std::move(membersData));
 }
 
@@ -74,7 +74,7 @@ QVariantMap createProps_age()
     QVariantList membersData;
     membersData.append(createAgePropsFunc("almAge"));
     membersData.append(createAgePropsFunc("ephAge"));
-    assert(membersData.size() == ublox::message::RxmSvsiField_data_age_numOfValues);
+    assert(membersData.size() == ublox::message::RxmSvsiFields::age_numOfValues);
 
     return cc::Property::createPropertiesMap("age", std::move(membersData));
 }
@@ -87,9 +87,9 @@ QVariantMap createProps_data()
     membersData.append(cc::Property::createPropertiesMap("azim"));
     membersData.append(cc::Property::createPropertiesMap("elev"));
     membersData.append(createProps_age());
-    assert(membersData.size() == ublox::message::RxmSvsiField_data_numOfValues);
+    assert(membersData.size() == ublox::message::RxmSvsiFields::block_numOfValues);
 
-    QVariantMap elementProps = cc::Property::createPropertiesMap("element", std::move(membersData));
+    QVariantMap elementProps = cc::Property::createPropertiesMap("block", std::move(membersData));
     auto props = cc::Property::createPropertiesMap("data", std::move(elementProps));
     cc::Property::setSerialisedHidden(props);
     return props;
