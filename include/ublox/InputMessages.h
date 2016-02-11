@@ -15,6 +15,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+/// @file
+/// @brief Contains definition of ublox::InputMessages bundle.
 
 #pragma once
 
@@ -117,6 +119,9 @@
 namespace ublox
 {
 
+/// @brief All input messages (the ones that can be sent out from u-blox receiver)
+///     are bundled in std::tuple.
+/// @tparam TMessage Common message interface class
 template <typename TMessage = Message>
 using InputMessages =
     std::tuple<

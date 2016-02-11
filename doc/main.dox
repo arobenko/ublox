@@ -1,4 +1,536 @@
 /// @mainpage UBlox Binary Protocol Implementation
 /// @tableofcontents
-/// TODO
+/// @section ublox_overview Overview
+/// <a href="https://www.u-blox.com/en/position-time">u-blox GPS receivers</a> 
+/// use a UBX binary protocol to transmit GPS data to a host computer using
+/// asynchronous serial ports. This library provides implementation of all 
+/// the messages as well as wrapping transport protocol used in u-blox 4/5/6/7 
+/// devices. 
 ///
+/// This library is implemented using C++(11) programming language and 
+/// uses <a href="https://github.com/arobenko/comms_champion#comms-library">COMMS library</a> from 
+/// <a href="https://github.com/arobenko/comms_champion">comms_champion</a>
+/// project to specify all the messages. Just like the @b COMMS, this library
+/// is a <b>headers only</b> one and doesn't require preliminary compilation. It
+/// allows the C++ compiler to generate best code possible required for the product
+/// being developed.
+///
+/// It is recommended to get to know the @b COMMS library and its features first,
+/// in order to understand how to use this one. The documentation of the
+/// @b COMMS library can be downloaded as 
+/// <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/doc_comms.zip">zip archive</a> 
+/// or browsed online 
+/// <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/index.html">here</a>.  
+///
+/// @section ublox_how_to_use How to Use
+/// First of all, please make sure that the headers of @b COMMS library as well
+/// as this one are reachable through the include search paths used by the
+/// compiler.
+///
+/// @subsection ublox_how_to_use_interface Interface Class
+/// The next step is to define the common interface class for all the messages
+/// by typedef-ing or inheriting from ublox::MessageT class while providing
+/// appropriate options defined in @b COMMS library and used to define the 
+/// interface (see <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1Message.html">comms::Message</a>
+/// for reference).
+/// @code
+/// #include "ublox/ublox.h"
+///
+/// namespace myproj
+/// {
+///     // Forward declare the message handling class.
+///     class MyProjHandler;
+///
+///     // Define the common interface class
+///     using MyProjMessage = 
+///         ublox::MessageT<
+///             comms::option::ReadIterator<const std::uint8_t*>, // use const std::uint8_t* as iterator used for reading
+///             comms::option::WriteIterator<std::uint8_t*>, // use std::uint8_t* as iterator used for writing
+///             comms::option::LengthInfoInterface, // define length() member function to inquire serialisation length
+///             comms::option::Handler<MyProjHandler> // define dispatch(MyProjHandler&) interface to dispatch message for processing
+///         >;
+/// } // namespace myproj
+/// @endcode
+/// Please @b note the "ublox/ublox.h" header which provides all the definitions
+/// of the core classes in @b UBLOX library.@n
+/// Also note, that the message handling class (@b MyProjHandler) needs to be 
+/// only forward declared, it will be defined later. Its name is passed as a 
+/// template parameter to @b comms::option::Handler option. @n
+/// The iterators used for reading/writing can be chosen suitable for the project
+/// being developed. For example, if the runtime environment allows dynamic
+/// memory allocation and/or exceptions, the @b std::vector<std::uint8_t> can
+/// be used to write outgoing data and @b std::back_insert_iterator<...> can
+/// be specified as iterator for writing without any worry of allocating right
+/// space to prevent buffer overflow:
+/// @code
+/// #include "ublox/ublox.h"
+///
+/// namespace myproj
+/// {
+///     // Forward declare the message handling class.
+///     class MyProjHandler;
+///
+///     // Define the common interface class
+///     using MyProjMessage = 
+///         ublox::MessageT<
+///             comms::option::ReadIterator<const std::uint8_t*>, // use const std::uint8_t* as iterator used for reading
+///             comms::option::WriteIterator<std::back_insert_iterator<std::vector<std::uint8_t> > >, // use std::back_insert_iterator<...> as iterator used for writing
+///             comms::option::LengthInfoInterface, // define length() member function to inquire serialisation length
+///             comms::option::Handler<MyProjHandler> // define dispatch(MyProjHandler&) interface to dispatch message for processing
+///         >;
+/// } // namespace myproj
+/// @endcode
+///
+/// @subsection ublox_how_to_use_messages Choose Messages
+/// The next step is to choose the messages that are expected to be received from
+/// u-blox device and processed, and bundle them in 
+/// <a href="http://en.cppreference.com/w/cpp/utility/tuple">std::tuple</a>.
+/// @code
+/// #include "ublox/message/NavPosecef.h"
+/// #include "ublox/message/NavSol.h"
+/// #include "ublox/message/NavTimegps.h"
+/// ...
+/// namespace myproj
+/// {
+///     // Redefine all the messages to use MyProjMessage as their interface class
+///     using NavPosecef = ublox::message::NavPosecef<MyProjMessage>;
+///     using NavSol = ublox::message::NavSol<MyProjMessage>;
+///     using NavTimegps = ublox::message::NavTimegps<MyProjMessage>;
+///     ...
+///
+///     // All messages bundled in std::tuple
+///     using InputMessages =
+///         std::tuple<
+///             NavPosecef,
+///             NavSol,
+///             NavTimegps,
+///             ...
+///         >; 
+/// } // namespace myproj
+/// @endcode
+/// Note, that all the messages defined in this library reside in 
+/// ublox::message namespace and require explicit include statement (in addition
+/// to @b "ublox/ublox.h" mentioned earlier).@n
+/// Also note, that every message definition in the @b UBLOX library is a
+/// template class with one template parameter, which is expected to be the
+/// common interface class. That's the reason for redefining all messages
+/// inside @b myproj namespace above.  
+///
+/// @subsection ublox_how_to_use_protocol Transport Protocol
+/// Now it is time to define the "protocol stack" which is used to process the
+/// transport information wrapping all the messages.
+/// @code
+/// #include "ublox/ublox.h"
+///
+/// namespace myproj
+/// {
+///     using ProtStack = ublox::Stack<MyProjMessage, InputMessages>;
+/// } // namespace myproj
+/// @endcode
+/// The first template parameter to ublox::Stack is the common interface class
+/// for all the messages. The second template parameter is a bundle (std::tuple)
+/// of all the messages that need to be recognised in the received input and
+/// processed. All the messages that are received, but weren't included in
+/// this bundle, will be discarded.
+///
+/// @subsection ublox_how_to_use_handler Define Handler
+/// The next step is to actually define the message processing class (@b MyProjHandler), that was
+/// forward declared earlier. It must define "void handle(MsgType& msg)" member
+/// function for every message type it is expected to handle, as well as
+/// "fall back" handling function for all the other messages.
+/// @code
+///
+/// namespace myproj
+/// {
+///     class MyProjHandler
+///     {
+///     public:
+///         void handle(NavPosecef& msg) {
+///             ... // handle received NAV-POSECEF message
+///         }
+///
+///         void handle(NavSol& msg) {
+///             ... // handle received NAV-SOL message
+///         }
+///
+///         void handle(NavTimegps& msg) {
+///             ... // handle received NAV-TIMEGPS message
+///         }
+///
+///         // fall back handling function
+///         void handle(MyProjMessage& msg) {
+///             ... // handle or ignore all other messages
+///         }
+///     };
+/// } // namespace myproj
+/// @endcode
+/// It is recommended to inherit from 
+/// <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1GenericHandler.html">comms::GenericHandler</a>
+/// and override the relevant "handle(...)" member functions the latter provides:
+/// @code
+/// #include "comms/comms.h"
+///
+/// namespace myproj
+/// {
+///     class MyProjHandler : public comms::GenericHandler<MyProjMessage, InputMessages>
+///     {
+///     public:
+///         virtual void handle(NavPosecef& msg) override {
+///             ... // handle received NAV-POSECEF message
+///         }
+///
+///         virtual void handle(NavSol& msg) override {
+///             ... // handle received NAV-SOL message
+///         }
+///         ...
+///     };
+/// } // namespace myproj
+/// @endcode
+/// The @b comms::GenericHandler class receives two template parameters. The first one
+/// is common base class for all the messages (@b MyProjMessage). 
+/// The second template parameter is the classes of all the messages, that can be received and
+/// expected to be handled, bundled in std::tuple. The earlier definition of
+/// @b InputMessages can be reused. @n
+/// The @b comms::GenericHandler class defines "virtual void handle(MessageType& msg)"
+/// function for every message type in the provided bundle. It also defines a
+/// fall back handling function for the interface class ("virtual void handle(MyProjMessage& msg)"), 
+/// which is going to be called for any other message. @n
+/// The default implementation
+/// of every "handle(...)" function is to call the "fall back" one, which in
+/// turn does nothing by default. The inheriting handling class (@b MyProjHandler)
+/// is expected to override any "handle(...)" function of interest, including the "fall back"
+/// one with any custom functionality.  
+///
+/// Inside the handling functions the internal fields can be accessed using
+/// "fields()" member function of the message object.
+/// @code
+/// #include "comms/comms.h"
+///
+/// namespace myproj
+/// {
+///     class MyProjHandler : public comms::GenericHandler<MyProjMessage, InputMessages>
+///     {
+///     public:
+///         virtual void handle(NavPosecef& msg) override {
+///             auto& fields = msg.fields(); // Access to all the internal fields
+///             auto& iTOW = std::get<NavPosecef::FieldIdx_iTOW>(fields); // Access to iTOW field;
+///             auto& ecefX = std::get<NavPosecef::FieldIdx_ecefX>(fields); // Access to ecefX field;
+///             auto& ecefY = std::get<NavPosecef::FieldIdx_ecefY>(fields); // Access to ecefY field;
+///             auto& ecefZ = std::get<NavPosecef::FieldIdx_ecefZ>(fields); // Access to ecefZ field;
+///
+///             auto iTowVal = iTOW.value(); // Get iTOW value
+///             auto ecefXVal = ecefX.value(); // Get ecefX value
+///             auto ecefYVal = ecefY.value(); // Get ecefY value
+///             auto ecefZVal = ecefZ.value(); // Get ecefZ value
+///
+///             ... // Do something with the values
+///         }
+///
+///         ...
+///     };
+/// } // namespace myproj
+/// @endcode
+///
+/// @subsection ublox_how_to_use_processing Processing Loop
+/// Now it's time to fit it all together into a processing loop. Let's assume
+/// that all the incoming and unprocessed raw bytes are stored in @b std::vector<std::uint8_t>.
+/// @code
+/// namespace myproj
+/// {
+///     std::vector<std::uint8_t> data;
+/// } // namespace myproj
+/// @endcode
+/// This library doesn't impose any restriction on how the data is received 
+/// over the I/O link and pushed into the data storage.
+///
+/// The protocol stack and handler objects are also instantiated somewhere:
+/// @code
+/// namespace myproj
+/// {
+///     ProtStack protStack;
+///     MyProjHandler handler;
+/// } // namespace myproj
+/// @endcode
+///
+/// The processing loop may look like this:
+/// @code
+/// namespace myproj
+/// {
+///     ...
+///     while (!data.empty()) {
+///         ProtStack::ReadIterator iter = &data[0];
+///         ProtStack::MsgPtr msgPtr; // Smart pointer to the message object.
+///         auto es = protStack.read(msgPtr, iter, data.size());
+///         if (es == comms::ErrorStatus::NotEnoughData) {
+///             break; // Not enough data in the buffer, stop processing
+///         } 
+///    
+///         if (es == comms::ErrorStatus::ProtocolError) {
+///             // Something is not right with the data, remove one character and try again
+///             data.erase(data.begin());
+///             continue;
+///         }
+///         
+///         if (es == comms::ErrorStatus::Success) {
+///             assert(msgPtr); // If read is successful, msgPtr is expected to hold a valid pointer
+///             msgPtr->dispatch(handler); // Dispatch message for handling, appropriate
+///                                        // handle() member function of the handler
+///                                        // object will be called.
+///         }
+///         ProtStack::ReadIterator begIter = &data[0];
+///         data.erase(begIter, iter); // Remove all processed data;
+///     }
+///     ... // proceed to reading more data from I/O link
+/// } // namespace myproj
+/// @endcode
+/// NOTE, that above is not the most efficient way to implement the processing
+/// loop, especially the erasing single character part upon error, but it 
+/// clearly demonstrates the idea of how the data should be processed and
+/// created message dispatched to the appropriate handling function.
+///
+/// @subsection ublox_how_to_use_sending Sending Messages
+/// Let's assume the outgoing data is stored in @b std::array<std::uint8_t, ...> and
+/// @b std::uint8_t* was chosen to be iterator used for writing when defining
+/// message interface (@b MyProjMessage). Then sending  
+/// any message to the u-blox receiver may look like this:
+/// @code
+/// #include "ublox/message/NavPosecefPoll.h"
+///
+/// namespace myproj
+/// {
+///     // Protocol stack defined somewhere
+///     ProtStack protStack;
+///
+///     // Serialised output data
+///     std::array<std::uint8_t*, 1024> dataOut;
+///
+///     void sendMsg(const MyProjMessage& msg)
+///     {
+///         ProtStack::WriteIterator iter = &dataOut[0];
+///         auto es = protStack.write(msg, iter, dataOut.size());
+///         if (es != comms::ErrorStatus::Success) {
+///             ... // Handle the error
+///             return;
+///         } 
+///         
+///         // Get the number of written bytes
+///         auto writtenLen = 
+///             static_cast<std::size_t>(
+///                 std::distance(ProtStack::WriteIterator(&dataOut[0], iter));
+///
+///         ... // Send writtenLen bytes from dataOut buffer over I/O link
+///     }
+/// } // namespace myproj
+/// @endcode
+///
+/// @section ublox_messages More About Messages
+/// The ublox binary protocol (UBX) specification names all the messages in
+/// the @b CLASS-MESSAGE format (@b NAV-POSECEF, @b AID-ALM, @b CFG-MSG, etc...). This
+/// library names message classes in the similar fashion, but using
+/// <a href="https://en.wikipedia.org/wiki/CamelCase">CamelCase</a> naming
+/// convention (@b NavPosecef, @b AidAlm, @b CfgMsg, etc...). Every message class is defined
+/// in a separate file (in ublox/message folder) and resides in ublox::message 
+/// namespace. 
+///
+/// The ublox binary protocol is huge and it is unlikely that any embedded product
+/// will require support for all the messages the protocol defines. 
+/// To reduce the burden of unnecessary source code parsing from the compiler, 
+/// it is required to explicitly include
+/// relevant header file for all the message classes being used:
+/// @code
+/// #include "ublox/message/NavPosecef.h"
+/// #include "ublox/message/NavSol.h"
+/// #include "ublox/message/NavTimegps.h"
+/// ...
+/// namespace myproj
+/// {
+///     // Redefine all the messages to use MyProjMessage as their interface class
+///     using NavPosecef = ublox::message::NavPosecef<MyProjMessage>;
+///     using NavSol = ublox::message::NavSol<MyProjMessage>;
+///     using NavTimegps = ublox::message::NavTimegps<MyProjMessage>;
+///     ...
+/// } // namespace myproj
+/// @endcode
+///
+/// Most of the messages have two forms: receiver output and poll request. 
+/// The poll request usually has empty body but uses the same message ID as
+/// the receiver output form of the message. This library implements these
+/// two forms of the same message as two separate classes. The class name
+/// of the @b poll message will have @b Poll suffix in its name. For example
+/// the @b NAV-POSECEF output message is implemented in ublox::message::NavPosecef class,
+/// while @b NAV-POSECEF poll request is implemented in ublox::message::NavPosecefPoll one.
+///
+/// There may also be multiple formats of the same output message. The good
+/// example would be CFG-PRT messages. The first field in such message identifies
+/// the type of the port (@b DDC, @b UART, @b SPI, @b USB) which defines the
+/// contents of the following fields. It was much simpler and more convenient
+/// to implement them as separate message classes: 
+/// @li ublox::message::CfgPrtDdc
+/// @li ublox::message::CfgPrtUart
+/// @li ublox::message::CfgPrtSpi,
+/// @li ublox::message::CfgPrtUsb
+///
+/// The @b poll form of the message may also have multiple forms. For example
+/// poll request for RXM-ALM message may have either empty body or provide
+/// SVID of the satellite as its only field. This library implements these 
+/// forms as two separate messages: ublox::message::RxmAlmPoll and 
+/// ublox::message::RxmAlmPollSv.
+///
+/// The bottom line, in order to find a class for a suitable form of the message
+/// open ublox::message namespace page and search for all the
+/// encounters of the message name used in the specification (@b NAV-POSECEF, 
+/// @b AID-ALM, @b CFG-MSG, etc...), analyse the message class name and/or 
+/// read the documentation of the latter and pick the one you require.
+///
+/// Every message definition class in ublox::message namespace is a template
+/// class that receives the common interface class as its only template parameter.
+/// It is also derived from 
+/// <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// class, while passing the provided common interface class as the first
+/// template parameter to the @b comms::MessageBase. The @b comms::MessageBase
+/// class inherits from the provided common interface class, which in turn
+/// is derived (or typedef-ed) from 
+/// <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1Message.html">comms::Message</a>
+/// If the common interface class is @b myProj::MyProjMessage from the
+/// examples above, then the real class diagram looks like this:
+/// @diafile message_class_diagram.dia
+///
+/// Based on the provided options, the @b comms::Message class may define a basic 
+/// interface of message ID retrieval, reading, writing, serialisation length 
+/// calculation, and validity check. The @b comms::MessageBase class provides
+/// a default implementation of the pure virtual functions defined in @b comms::Message.
+/// It also provides an access to all the fields the message contains:
+/// @code
+/// using NavPosecef = ublox::message::NavPosecef<myproj::MyProjMessage>
+/// NavPosecef msg;
+/// auto& fields = msg.fields(); // reference to std::tuple of all the message fields
+/// @endcode
+/// Every message also contains definition of @b FieldIdx enumeration which 
+/// can be used to access the message fields:
+/// @code
+/// auto& iTOW = std::get<NavPosecef::FieldIdx_iTOW>(fields); // reference to the iTOW field
+/// auto& ecefX = std::get<NavPosecef::FieldIdx_ecefX>(fields); // reference to the ecefX field
+/// ...
+/// @endcode
+/// Every field class has a @b value() member function which can be used to access
+/// the field's value:
+/// @code
+/// auto ecefXVal = ecefX.value();
+/// @endcode
+/// In case the message is being created to be sent out, the same @b value()
+/// member function of the field may be used to update the field's value:
+/// @code
+/// using RxmAlmPollSv = ublox::message::RxmAlmPollSv<myproj::MyProjMessage>
+/// RxmAlmPollSv msg;
+/// auto& fields = msg.fields();
+/// auto& svid = std::get<RxmAlmPollSv::FieldIdx_svid>(fields);
+/// svid.value() = 1;
+/// @endcode
+///
+/// @section ublox_fields More About Fields
+/// Every message may contain zero or more fields. All the fields relevant
+/// to a specific message are defined in a separate struct that has the
+/// same name as a relevant message class with @b Fields suffix. For example
+/// all the fields for ublox::message::NavPosecef message class
+/// are defined in ublox::message::NavPosecefFields struct. All of these fields
+/// definitions containing structs have @b All type, which is defined to be
+/// @b std::tuple of all the fields the message contains. In fact when using
+/// @b fields() member function of the message class, the reference of such
+/// tuple is returned:
+/// @code
+/// NavPosecef msg;
+/// NavPosecefFields::All& fields = msg.fields();
+/// @endcode
+///
+/// In order to properly understand what the fields are, and how to operate with
+/// them, it is recommended to thoroughly read the 
+/// <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/page_field_tutorial.html">Fields Tutorial</a> 
+/// page in the @b COMMS library documentation.
+///
+/// @subsection ublox_fields_scaling Scaling Field Value
+/// There are multiple fields that their serialised value is scaled. For example,
+/// the ublox protocol specification defines the @b lat and @b lon fields of 
+/// @b NAV-POSLLH message to be scaled with 1e-7 factor. It means that the
+/// real floating point values of latitude and longitude are multiplied by 10,000,000
+/// to get rid of the 7 decimal digits and casted to 4 bytes integral value type for
+/// the serialisation. The ublox::message::NavPosllhFields::lat and
+/// ublox::message::NavPosllhFields::lon fields defined to be of this 4 bytes
+/// integral value type, which means when using the @b value() member function
+/// of the relevant field object the serialised value of type @b std::int32_t is 
+/// received:
+/// @code
+/// NavPosllh msg;
+/// auto& fields = msg.fields();
+/// auto& lat = std::get<NavPosllh::FieldIdx_lat>(fields); // lat field
+/// auto& lon = std::get<NavPosllh::FieldIdx_lon>(fields); // lon field
+/// 
+/// std::int32_t latValue = lat.value();
+/// std::int32_t lonValue = lon.value();
+/// @endcode 
+///
+/// In order to scale it down to proper floating point value, use 
+/// <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1field_1_1IntValue.html#a6a888b2802b679ca05d657742aad6a98">scaleAs</a>
+/// member function:
+/// @code
+/// double latRealValue = lat.scaleAs<double>();
+/// double lonRealValue = lon.scaleAs<double>(); 
+/// @endcode
+///
+/// All the fields, that their serialised value can be scaled down, are defined
+/// using 
+/// <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/structcomms_1_1option_1_1ScalingRatio.html">comms::option::ScalingRatio</a> 
+/// option from the @b COMMS library.
+///
+/// The ublox binary protocol also defines multiple distance related
+/// fields. Some distance related fields are specified to be meters, others
+/// centimetres or even millimetres. For convenience, all such fields are defined 
+/// with an ability to be scaled down to @b meters. For example, @b ecefX,
+/// @b ecefY, and @b ecefZ fields in @b NAV-POSECEF message are defined to be
+/// in centimetres in the protocol specification. However, their definition uses
+/// ublox::field::common::Scaling_cm2m option, which allows scaling the value
+/// down to meters if necessary:
+/// @code
+/// NavPosecef msg;
+/// auto& fields = msg.fields();
+/// auto ecefX = std::get<NavPosecef::FieldIdx_ecefX>(fields);
+/// 
+/// std::int32_t ecefXinCentimeters = ecefX.value(); // ecefX value in centimetres 
+/// double ecefXinMeters = ecefX.scaleAs<double>(); // ecefX value in meters
+/// @endcode
+///
+/// In a similar way all the time related fields are defined with an ability to
+/// be scaled to seconds (instead of milliseconds, microseconds, and nanoseconds).
+/// For example, the same @b NAV-POSECEF message has @b iTOW field 
+/// (ublox::message::NavPosecefFields::iTOW), which is GPS time of the week in
+/// milliseconds. If there is a need to get this value in seconds, use the
+/// same @b scaleAs() member function:
+/// @code
+/// NavPosecef msg;
+/// auto& fields = msg.fields();
+/// auto iTOW = std::get<NavPosecef::FieldIdx_iTOW>(fields);
+/// 
+/// std::uint32_t iTOWinMilliseconds = iTOW.value(); // iTOW value in milliseconds 
+/// double iTOWinSeconds = ecefX.scaleAs<double>(); // iTOW value in seconds
+/// @endcode
+///
+/// Also the velocity related fields that are defined to be <b> centimetres per
+/// second</b> or <b>millimetres per second</b> can be scaled down to 
+/// <b> meters per second </b> if needed.
+///
+/// @subsection ublox_fields_message_id Message ID Field
+/// The ublox binary protocol identifies the messages using two fields: <b>class
+/// ID</b> and <b>message ID</b> in the class. This library combines these two values into
+/// a single one and defines it as ublox::MsgId enumeration with @b std::uint16_t
+/// as underlying type, where the <b>class ID</b> is most significant byte and
+/// <b>message ID</b> is least significant one. Where ublox binary protocol
+/// uses these two values (@b ACK-ACK, @b ACK-NAK messages, or wrapping transport data)
+/// this library uses single ublox::field::MsgId field (See ublox::message::AckAck
+/// and ublox::message::AckNak message classes). 
+///
+/// @b Note, that ublox binary protocol uses <b>little endian</b> to serialise all the
+/// data. However, the <b>class ID</b> from the message identification information
+/// must be serialised prior to <b>message ID</b>. In order to properly handle
+/// this case, the ublox::field::MsgId field is defined to have <b>big endian</b>
+/// serialisation, while all other fields use <b>little endian</b>
+
+

@@ -1,6 +1,9 @@
 /// @namespace ublox
 /// @brief Main namespace for all classes / functions of Ublox library.
 ///
+/// @namespace ublox::protocol
+/// @brief Contains protocol stack related classes.
+///
 /// @namespace ublox::message
 /// @brief Contains definitions of all the messages defined in Ublox binary protocol.
 ///

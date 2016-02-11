@@ -15,6 +15,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+/// @file
+/// @brief Contains definition of checksum calculator class.
 
 #pragma once
 
@@ -27,6 +29,10 @@ namespace ublox
 namespace protocol
 {
 
+/// @brief Checksum calculator.
+/// @details Provided to
+///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1protocol_1_1ChecksumLayer.html">comms::protocol::ChecksumLayer</a>
+///     when defining protocol stack (@ref ublox::Stack).
 struct ChecksumCalc
 {
     template <typename TIter>
