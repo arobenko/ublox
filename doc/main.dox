@@ -323,6 +323,80 @@
 /// } // namespace myproj
 /// @endcode
 ///
+/// @subsection ublox_how_to_use_extend Extending Provided Functionality
+/// There may be a need to extend the provided functionality. For example, every
+/// message being used is expected to report its name.
+///
+/// In the @ref ublox_how_to_use_interface stage define the extended interface:
+/// @code
+/// #include "ublox/ublox.h"
+///
+/// namespace myproj
+/// {
+///     // Forward declare the message handling class.
+///     class MyProjHandler;
+///
+///     // Define the common interface class
+///     class MyProjMessage : public 
+///         ublox::MessageT<
+///             comms::option::ReadIterator<const std::uint8_t*>, // use const std::uint8_t* as iterator used for reading
+///             comms::option::WriteIterator<std::uint8_t*>, // use std::uint8_t* as iterator used for writing
+///             comms::option::LengthInfoInterface, // define length() member function to inquire serialisation length
+///             comms::option::Handler<MyProjHandler> // define dispatch(MyProjHandler&) interface to dispatch message for processing
+///         >
+///     {
+///     public:
+///         // Extended interface functions
+///         const char* name() const
+///         {
+///             return nameImpl();
+///         }
+///     
+///     protected:
+///         virtual const char* nameImpl() const = 0;
+///     }
+/// } // namespace myproj
+/// @endcode
+///
+/// In the @ref ublox_how_to_use_messages stage implement all the required
+/// messages using inheritance from appropriate classes in the @b UBLOX library and
+/// implementing missing virtual functions:
+/// @code
+/// #include "ublox/message/NavPosecef.h"
+/// #include "ublox/message/NavSol.h"
+/// ...
+/// namespace myproj
+/// {
+///     // Implement all the required messages using inheritence:
+///
+///     class NavPosecef : public ublox::message::NavPosecef<MyProjMessage>
+///     {
+///     protected:
+///         virtual const char* nameImpl() const override {
+///             return "NAV-POSECEF";
+///         }
+///     }
+///
+///     class NavSol : public ublox::message::NavSol<MyProjMessage>
+///     {
+///     protected:
+///         virtual const char* nameImpl() const override {
+///             return "NAV-SOL";
+///         }
+///     }
+///     ...
+///
+///     // All messages bundled in std::tuple
+///     using InputMessages =
+///         std::tuple<
+///             NavPosecef,
+///             NavSol,
+///             ...
+///         >; 
+/// } // namespace myproj
+/// @endcode
+/// All other stages described earlier don't require any modifications.
+///
 /// @section ublox_messages More About Messages
 /// The ublox binary protocol (UBX) specification names all the messages in
 /// the @b CLASS-MESSAGE format (@b NAV-POSECEF, @b AID-ALM, @b CFG-MSG, etc...). This
