@@ -202,6 +202,11 @@ function (cc_plugin_ublox)
     
     add_library (${name} SHARED ${src} ${moc})
     
+    # For some reason message/AidHui fails to compile in Release mode with g++
+    if (CMAKE_COMPILER_IS_GNUCC AND ("${CMAKE_BUILD_TYPE}" STREQUAL "Release"))
+        set_source_files_properties (message/AidHui.cpp PROPERTIES COMPILE_FLAGS "-O2")
+    endif () 
+    
     install (
         TARGETS ${name}
         DESTINATION ${PLUGIN_INSTALL_DIR})
