@@ -74,6 +74,9 @@ Default value is **ON**
 CommsChampion into **UBLOX_CC_INSTALL_PATH** as well as local installation path. 
 Default value is **ON**.
 
+- **UBLOX_QT_DIR**=/path/to/qt - Path to custom build of **QT5** if it cannot be
+found in standard system directories.
+
 For example, discard all other tools, just install the **UBLOX** library:
 
 >$> cd /path/to/ublox/sources
