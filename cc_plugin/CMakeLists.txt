@@ -201,6 +201,7 @@ function (cc_plugin_ublox)
     )
     
     add_library (${name} SHARED ${src} ${moc})
+    target_link_libraries (${name} ${CC_PLUGIN_LIBRARIES})
     
     # For some reason message/AidHui fails to compile in Release mode with g++
     if (CMAKE_COMPILER_IS_GNUCC AND ("${CMAKE_BUILD_TYPE}" STREQUAL "Release"))
@@ -213,7 +214,7 @@ function (cc_plugin_ublox)
         
     install (
         TARGETS ${name}
-        DESTINATION ${CC_INSTALL_PATH}/plugin)
+        DESTINATION ${CC_PLUGIN_DIR})
     
 endfunction()
 
@@ -223,16 +224,33 @@ if (NOT UBLOX_CC_PLUGIN)
     return ()
 endif ()
 
-if ("${CC_INSTALL_PATH}" STREQUAL "")
-    message (FATAL_ERROR "Please set CC_INSTALL_PATH with \"comms_champion\" installation path.")
+if (NOT "${UBLOX_QT_DIR}" STREQUAL "")
+    list (APPEND CMAKE_PREFIX_PATH ${UBLOX_QT_DIR})
 endif ()
-
-include_directories("${CC_INSTALL_PATH}/include")
 
 find_package(Qt5Core REQUIRED)
 
 include_directories(
     ${Qt5Core_INCLUDE_DIRS})
+    
+link_directories(
+    ${Qt5Core_LIBRARY_DIRS})
 
-set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -ftemplate-backtrace-limit=0")
+if (NOT "${UBLOX_CC_INSTALL_PATH}" STREQUAL "")
+    list (APPEND CMAKE_PREFIX_PATH "${UBLOX_CC_INSTALL_PATH}/cmake")
+endif ()
+
+find_package(CommsChampion)
+
+if (NOT CC_COMMS_CHAMPION_FOUND)
+    message (FATAL_ERROR "CommsChampion wasn't found!. Please set UBLOX_CC_INSTALL_PATH to its installation path.")
+endif ()
+
+include_directories("${CC_INCLUDE_DIRS}")
+link_directories("${CC_PLUGIN_LIBRARY_DIRS}")
+
+if (CMAKE_COMPILER_IS_GNUCC)
+    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -ftemplate-backtrace-limit=0")
+endif ()
+    
 cc_plugin_ublox ()
