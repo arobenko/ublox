@@ -202,6 +202,7 @@ function (cc_plugin_ublox)
     
     add_library (${name} SHARED ${src} ${moc})
     target_link_libraries (${name} ${CC_PLUGIN_LIBRARIES})
+    qt5_use_modules(${name} Core)
     
     # For some reason message/AidHui fails to compile in Release mode with g++
     if (CMAKE_COMPILER_IS_GNUCC AND ("${CMAKE_BUILD_TYPE}" STREQUAL "Release"))
@@ -229,12 +230,6 @@ if (NOT "${UBLOX_QT_DIR}" STREQUAL "")
 endif ()
 
 find_package(Qt5Core REQUIRED)
-
-include_directories(
-    ${Qt5Core_INCLUDE_DIRS})
-    
-link_directories(
-    ${Qt5Core_LIBRARY_DIRS})
 
 if (NOT "${UBLOX_CC_INSTALL_PATH}" STREQUAL "")
     list (APPEND CMAKE_PREFIX_PATH "${UBLOX_CC_INSTALL_PATH}/cmake")
