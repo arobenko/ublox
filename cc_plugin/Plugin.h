@@ -1,5 +1,5 @@
 //
-// Copyright 2014 (C). Alex Robenko. All rights reserved.
+// Copyright 2014 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -37,11 +37,6 @@ class Plugin : public comms_champion::Plugin
 public:
     Plugin();
     ~Plugin();
-
-protected:
-
-    virtual void applyImpl() override;
-private:
 };
 
 }  // namespace cc_plugin
