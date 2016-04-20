@@ -44,7 +44,7 @@ public:
     virtual ~Protocol();
 
 protected:
-    virtual const std::string& nameImpl() const override;
+    virtual const QString& nameImpl() const override;
     virtual UpdateStatus updateMessageInfoImpl(comms_champion::MessageInfo& msgInfo) override;
 };
 
