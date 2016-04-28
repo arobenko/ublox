@@ -21,7 +21,6 @@
 #include "comms_champion/comms_champion.h"
 #include "cc_plugin/Stack.h"
 #include "cc_plugin/TransportMessage.h"
-#include "cc_plugin/RawDataMessage.h"
 
 namespace ublox
 {
@@ -32,20 +31,20 @@ namespace cc_plugin
 class Protocol : public
     comms_champion::ProtocolBase<
         cc_plugin::Stack,
-        cc_plugin::TransportMessage,
-        RawDataMessage >
+        cc_plugin::TransportMessage
+    >
 {
     typedef comms_champion::ProtocolBase<
         cc_plugin::Stack,
-        cc_plugin::TransportMessage,
-        RawDataMessage > Base;
+        cc_plugin::TransportMessage
+    > Base;
 public:
     Protocol() = default;
     virtual ~Protocol();
 
 protected:
     virtual const QString& nameImpl() const override;
-    virtual UpdateStatus updateMessageInfoImpl(comms_champion::MessageInfo& msgInfo) override;
+    virtual UpdateStatus updateMessageImpl(comms_champion::Message& msg) override;
 };
 
 }  // namespace cc_plugin
