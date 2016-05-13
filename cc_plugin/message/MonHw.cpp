@@ -39,95 +39,111 @@ namespace message
 namespace
 {
 
+using ublox::message::MonHwFields;
+
 QVariantMap createProps_aStatus()
 {
-    QVariantList enumValues;
-    cc::Property::appendEnumValue(enumValues, "INIT");
-    cc::Property::appendEnumValue(enumValues, "DONTKNOW");
-    cc::Property::appendEnumValue(enumValues, "OK");
-    cc::Property::appendEnumValue(enumValues, "SHORT");
-    cc::Property::appendEnumValue(enumValues, "OPEN");
-    assert(enumValues.size() == (int)ublox::message::MonHwFields::AStatus::NumOfValues);
-    return cc::Property::createPropertiesMap("aStatus", std::move(enumValues));
+    cc::property::field::ForField<MonHwFields::aStatus> props;
+    props.name("aStatus")
+         .add("INIT")
+         .add("DONTKNOW")
+         .add("OK")
+         .add("SHORT")
+         .add("OPEN");
+    assert(props.values().size() == (int)MonHwFields::AStatus::NumOfValues);
+    return props.asMap();
 }
 
 QVariantMap createProps_aPower()
 {
-    QVariantList enumValues;
-    cc::Property::appendEnumValue(enumValues, "OFF");
-    cc::Property::appendEnumValue(enumValues, "ON");
-    cc::Property::appendEnumValue(enumValues, "DONTKNOW");
-    assert(enumValues.size() == (int)ublox::message::MonHwFields::APower::NumOfValues);
-    return cc::Property::createPropertiesMap("aPower", std::move(enumValues));
+    cc::property::field::ForField<MonHwFields::aPower> props;
+    props.name("aPower")
+         .add("OFF")
+         .add("ON")
+         .add("DONTKNOW");
+    assert(props.values().size() == (int)MonHwFields::APower::NumOfValues);
+    return props.asMap();
 }
 
 QVariantMap createProps_flags()
 {
-    QVariantList bitNames;
-    bitNames.append("rtcCalib");
-    assert(bitNames.size() == ublox::message::MonHwFields::rtcCalib_numOfValues);
-    auto rtcCalibProps = cc::Property::createPropertiesMap("flags", std::move(bitNames));
-    cc::Property::setSerialisedHidden(rtcCalibProps);
+    cc::property::field::ForField<MonHwFields::rtcCalib> rtcCalibProps;
+    rtcCalibProps.name("flags")
+                 .add("rtcCalib")
+                 .serialisedHidden();
+    assert(rtcCalibProps.bits().size() == MonHwFields::rtcCalib_numOfValues);
 
-    QVariantList safeBootValues;
-    cc::Property::appendEnumValue(safeBootValues, "Inactive");
-    cc::Property::appendEnumValue(safeBootValues, "Active");
-    assert(safeBootValues.size() == (int)ublox::message::MonHwFields::SafeBoot::NumOfValues);
-    auto safeBootProps = cc::Property::createPropertiesMap("safeBoot", std::move(safeBootValues));
-    cc::Property::setSerialisedHidden(safeBootProps);
+    cc::property::field::ForField<MonHwFields::safeBoot> safeBootProps;
+    safeBootProps.name("safeBoot")
+                 .add("Inactive")
+                 .add("Active")
+                 .serialisedHidden();
+    assert(safeBootProps.values().size() == (int)MonHwFields::SafeBoot::NumOfValues);
 
-    QVariantList enumValues;
-    cc::Property::appendEnumValue(enumValues, "unknown");
-    cc::Property::appendEnumValue(enumValues, "ok");
-    cc::Property::appendEnumValue(enumValues, "warning");
-    cc::Property::appendEnumValue(enumValues, "critical");
-    assert(enumValues.size() == (int)ublox::message::MonHwFields::JammingState::NumOfValues);
-    auto jammingStateProps = cc::Property::createPropertiesMap("jammingState", std::move(enumValues));
-    cc::Property::setSerialisedHidden(jammingStateProps);
+    cc::property::field::ForField<MonHwFields::jammingState> jammingStateProps;
+    jammingStateProps.name("jammingState")
+                     .add("unknown")
+                     .add("ok")
+                     .add("warning")
+                     .add("critical")
+                     .serialisedHidden();
+    assert(jammingStateProps.values().size() == (int)MonHwFields::JammingState::NumOfValues);
 
-    auto reservedProps = cc::Property::createPropertiesMap(QString());
-    cc::Property::setFieldHidden(reservedProps);
+    cc::property::field::IntValue reservedProps;
+    reservedProps.hidden();
 
-    QVariantList membersData;
-    membersData.append(std::move(rtcCalibProps));
-    membersData.append(std::move(safeBootProps));
-    membersData.append(std::move(jammingStateProps));
-    membersData.append(std::move(reservedProps));
-    return cc::Property::createPropertiesMap("flags", std::move(membersData));
+    cc::property::field::ForField<MonHwFields::flags> props;
+    props.add(rtcCalibProps.asMap())
+         .add(safeBootProps.asMap())
+         .add(jammingStateProps.asMap())
+         .add(reservedProps.asMap());
+    assert(props.members().size() == MonHwFields::flags_numOfValues);
+    return props.asMap();
 }
 
 QVariantMap createProps_VP()
 {
-    QVariantList elemProps;
-    for (auto idx = 0U; idx < ublox::message::MonHwFields::VP::ParsedOptions::SequenceFixedSize; ++idx) {
-        elemProps.append(cc::Property::createPropertiesMap(QString("%1").arg(idx)));
+    cc::property::field::ForField<MonHwFields::VP> props;
+    props.name("VP").serialisedHidden();
+
+    for (auto idx = 0U; idx < MonHwFields::VP::ParsedOptions::SequenceFixedSize; ++idx) {
+        props.add(cc::property::field::IntValue().name(QString("%1").arg(idx)).asMap());
     }
 
-    auto props = cc::Property::createPropertiesMap("VP", std::move(elemProps));
-    cc::Property::setSerialisedHidden(props);
-    return props;
+    return props.asMap();
 }
 
 QVariantList createFieldsProperties()
 {
     QVariantList props;
-    props.append(cc::Property::createPropertiesMap("pinSel"));
-    props.append(cc::Property::createPropertiesMap("pinBank"));
-    props.append(cc::Property::createPropertiesMap("pinDir"));
-    props.append(cc::Property::createPropertiesMap("pinVal"));
-    props.append(cc::Property::createPropertiesMap("noisePerMS"));
-    props.append(cc::Property::createPropertiesMap("agcCnt"));
+    props.append(
+        cc::property::field::ForField<MonHwFields::pinSel>().name("pinSel").asMap());
+    props.append(
+        cc::property::field::ForField<MonHwFields::pinBank>().name("pinBank").asMap());
+    props.append(
+        cc::property::field::ForField<MonHwFields::pinDir>().name("pinDir").asMap());
+    props.append(
+        cc::property::field::ForField<MonHwFields::pinVal>().name("pinVal").asMap());
+    props.append(
+        cc::property::field::ForField<MonHwFields::noisePerMS>().name("noisePerMS").asMap());
+    props.append(
+        cc::property::field::ForField<MonHwFields::agcCnt>().name("agcCnt").asMap());
     props.append(createProps_aStatus());
     props.append(createProps_aPower());
     props.append(createProps_flags());
     props.append(cc_plugin::field::common::props_reserved(1));
-    props.append(cc::Property::createPropertiesMap("usedMask"));
+    props.append(
+        cc::property::field::ForField<MonHwFields::usedMask>().name("usedMask").asMap());
     props.append(createProps_VP());
-    props.append(cc::Property::createPropertiesMap("jamInd"));
+    props.append(
+        cc::property::field::ForField<MonHwFields::jamInd>().name("jamInd").asMap());
     props.append(cc_plugin::field::common::props_reserved(3));
-    props.append(cc::Property::createPropertiesMap("pinIrq"));
-    props.append(cc::Property::createPropertiesMap("pullH"));
-    props.append(cc::Property::createPropertiesMap("pullL"));
+    props.append(
+        cc::property::field::ForField<MonHwFields::pinIrq>().name("pinIrq").asMap());
+    props.append(
+        cc::property::field::ForField<MonHwFields::pullH>().name("pullH").asMap());
+    props.append(
+        cc::property::field::ForField<MonHwFields::pullL>().name("pullL").asMap());
     assert(props.size() == MonHw::FieldIdx_numOfValues);
     return props;
 }

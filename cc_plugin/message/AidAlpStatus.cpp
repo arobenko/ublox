@@ -40,13 +40,16 @@ namespace message
 namespace
 {
 
+using ublox::message::AidAlpStatusFields;
+
 QVariantMap createProps_status()
 {
-    QVariantList enumValues;
-    cc::Property::appendEnumValue(enumValues, "NAK");
-    cc::Property::appendEnumValue(enumValues, "ACK");
-    assert(enumValues.size() == (int)ublox::message::AidAlpStatusFields::Status::NumOfValues);
-    return cc::Property::createPropertiesMap("status", std::move(enumValues));
+    cc::property::field::ForField<AidAlpStatusFields::status> props;
+    props.name("status")
+         .add("NAK")
+         .add("ACK");
+    assert(props.values().size() == (int)AidAlpStatusFields::Status::NumOfValues);
+    return props.asMap();
 }
 
 QVariantList createFieldsProperties()

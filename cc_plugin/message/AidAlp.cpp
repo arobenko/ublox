@@ -40,16 +40,24 @@ namespace message
 namespace
 {
 
+using ublox::message::AidAlpFields;
+
 QVariantList createFieldsProperties()
 {
     QVariantList props;
-    props.append(cc::Property::createPropertiesMap("predTow"));
-    props.append(cc::Property::createPropertiesMap("predDur"));
-    props.append(cc::Property::createPropertiesMap("age"));
-    props.append(cc::Property::createPropertiesMap("predWno"));
-    props.append(cc::Property::createPropertiesMap("almWno"));
+    props.append(
+        cc::property::field::ForField<AidAlpFields::predTow>().name("predTow").asMap());
+    props.append(
+        cc::property::field::ForField<AidAlpFields::predDur>().name("predDur").asMap());
+    props.append(
+        cc::property::field::ForField<AidAlpFields::age>().name("age").asMap());
+    props.append(
+        cc::property::field::ForField<AidAlpFields::predWno>().name("predWno").asMap());
+    props.append(
+        cc::property::field::ForField<AidAlpFields::almWno>().name("almWno").asMap());
     props.append(cc_plugin::field::common::props_reserved(1));
-    props.append(cc::Property::createPropertiesMap("svs"));
+    props.append(
+        cc::property::field::ForField<AidAlpFields::svs>().name("svs").asMap());
     props.append(cc_plugin::field::common::props_reserved(2));
     props.append(cc_plugin::field::common::props_reserved(3));
     assert(props.size() == AidAlp::FieldIdx_numOfValues);

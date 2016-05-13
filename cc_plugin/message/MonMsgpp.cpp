@@ -39,26 +39,28 @@ namespace message
 namespace
 {
 
+using ublox::message::MonMsgppFields;
+
 QVariantMap createProps_msgX(int idx)
 {
-    QVariantList elemProps;
+    cc::property::field::ForField<MonMsgppFields::msg1> props;
+    props.name(QString("msg%1").arg(idx)).serialisedHidden();
     for (auto i = 0; i < 8; ++i) {
-        elemProps.append(cc::Property::createPropertiesMap(QString("%1").arg(i)));
+        props.add(
+            cc::property::field::IntValue().name(QString("%1").arg(i)).asMap());
     }
-    auto props = cc::Property::createPropertiesMap(QString("msg%1").arg(idx), std::move(elemProps));
-    cc::Property::setSerialisedHidden(props);
-    return props;
+    return props.asMap();
 }
 
 QVariantMap createProps_skipped()
 {
-    QVariantList elemProps;
+    cc::property::field::ForField<MonMsgppFields::skipped> props;
+    props.name("skipped").serialisedHidden();
     for (auto i = 0; i < 6; ++i) {
-        elemProps.append(cc::Property::createPropertiesMap(QString("%1").arg(i)));
+        props.add(
+            cc::property::field::IntValue().name(QString("%1").arg(i)).asMap());
     }
-    auto props = cc::Property::createPropertiesMap("skipped", std::move(elemProps));
-    cc::Property::setSerialisedHidden(props);
-    return props;
+    return props.asMap();
 }
 
 QVariantList createFieldsProperties()

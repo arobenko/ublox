@@ -38,18 +38,25 @@ namespace message
 namespace
 {
 
+using ublox::message::AidAopFields;
+
 QVariantMap createProps_optional()
 {
     static const QString Name("optional");
-    auto valProps = cc::Property::createPropertiesMap(Name);
-    return cc::Property::createPropertiesMap(Name, std::move(valProps));
+    return
+        cc::property::field::ForField<AidAopFields::optional>()
+            .name(Name)
+            .field(cc::property::field::ArrayList().name(Name).asMap())
+            .asMap();
 }
 
 QVariantList createFieldsProperties()
 {
     QVariantList props;
-    props.append(cc::Property::createPropertiesMap("svid"));
-    props.append(cc::Property::createPropertiesMap("data"));
+    props.append(
+        cc::property::field::ForField<AidAopFields::svid>().name("svid").asMap());
+    props.append(
+        cc::property::field::ForField<AidAopFields::data>().name("data").asMap());
     props.append(createProps_optional());
 
     assert(props.size() == AidAop::FieldIdx_numOfValues);

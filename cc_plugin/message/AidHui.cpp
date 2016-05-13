@@ -38,37 +38,58 @@ namespace message
 namespace
 {
 
+using ublox::message::AidHuiFields;
+
 QVariantMap createProps_flags()
 {
-    QVariantList bitNames;
-    bitNames.append("healthValid");
-    bitNames.append("utcValid");
-    bitNames.append("klobValid");
-    assert(bitNames.size() == ublox::message::AidHuiFields::flags_numOfValues);
-    return cc::Property::createPropertiesMap("flags", std::move(bitNames));
+    cc::property::field::ForField<AidHuiFields::flags> props;
+    props.name("flags")
+         .add("healthValid")
+         .add("utcValid")
+         .add("klobValid");
+    assert(props.bits().size() == AidHuiFields::flags_numOfValues);
+    return props.asMap();
 }
 
 QVariantList createFieldsProperties()
 {
     QVariantList props;
-    props.append(cc::Property::createPropertiesMap("health"));
-    props.append(cc::Property::createPropertiesMap("utcA0"));
-    props.append(cc::Property::createPropertiesMap("utcA1"));
-    props.append(cc::Property::createPropertiesMap("utcTOW"));
-    props.append(cc::Property::createPropertiesMap("utcWNT"));
-    props.append(cc::Property::createPropertiesMap("utcLS"));
-    props.append(cc::Property::createPropertiesMap("utcWNF"));
-    props.append(cc::Property::createPropertiesMap("utcDN"));
-    props.append(cc::Property::createPropertiesMap("utcLSF"));
-    props.append(cc::Property::createPropertiesMap("utcSpare"));
-    props.append(cc::Property::createPropertiesMap("klobA0"));
-    props.append(cc::Property::createPropertiesMap("klobA1"));
-    props.append(cc::Property::createPropertiesMap("klobA2"));
-    props.append(cc::Property::createPropertiesMap("klobA3"));
-    props.append(cc::Property::createPropertiesMap("klobB0"));
-    props.append(cc::Property::createPropertiesMap("klobB1"));
-    props.append(cc::Property::createPropertiesMap("klobB2"));
-    props.append(cc::Property::createPropertiesMap("klobB3"));
+    props.append(
+        cc::property::field::ForField<AidHuiFields::health>().name("health").asMap());
+    props.append(
+        cc::property::field::ForField<AidHuiFields::utcA0>().name("utcA0").asMap());
+    props.append(
+        cc::property::field::ForField<AidHuiFields::utcA1>().name("utcA1").asMap());
+    props.append(
+        cc::property::field::ForField<AidHuiFields::utcTOW>().name("utcTOW").asMap());
+    props.append(
+        cc::property::field::ForField<AidHuiFields::utcWNT>().name("utcWNT").asMap());
+    props.append(
+        cc::property::field::ForField<AidHuiFields::utcLS>().name("utcLS").asMap());
+    props.append(
+        cc::property::field::ForField<AidHuiFields::utcWNF>().name("utcWNF").asMap());
+    props.append(
+        cc::property::field::ForField<AidHuiFields::utcDN>().name("utcDN").asMap());
+    props.append(
+        cc::property::field::ForField<AidHuiFields::utcLSF>().name("utcLSF").asMap());
+    props.append(
+        cc::property::field::ForField<AidHuiFields::utcSpare>().name("utcSpare").asMap());
+    props.append(
+        cc::property::field::ForField<AidHuiFields::klobA0>().name("klobA0").asMap());
+    props.append(
+        cc::property::field::ForField<AidHuiFields::klobA1>().name("klobA1").asMap());
+    props.append(
+        cc::property::field::ForField<AidHuiFields::klobA2>().name("klobA2").asMap());
+    props.append(
+        cc::property::field::ForField<AidHuiFields::klobA3>().name("klobA3").asMap());
+    props.append(
+        cc::property::field::ForField<AidHuiFields::klobB0>().name("klobB0").asMap());
+    props.append(
+        cc::property::field::ForField<AidHuiFields::klobB1>().name("klobB1").asMap());
+    props.append(
+        cc::property::field::ForField<AidHuiFields::klobB2>().name("klobB2").asMap());
+    props.append(
+        cc::property::field::ForField<AidHuiFields::klobB3>().name("klobB3").asMap());
     props.append(createProps_flags());
     assert(props.size() == AidHui::FieldIdx_numOfValues);
     return props;

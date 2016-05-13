@@ -39,12 +39,15 @@ namespace message
 namespace
 {
 
+using ublox::message::MonRxrFields;
+
 QVariantMap createProps_flags()
 {
-    QVariantList bitNames;
-    bitNames.append("awake");
-    assert(bitNames.size() == ublox::message::MonRxrFields::flags_numOfValues);
-    return cc::Property::createPropertiesMap("flags", std::move(bitNames));
+    cc::property::field::ForField<MonRxrFields::flags> props;
+    props.name("flags")
+         .add("awake");
+    assert(props.bits().size() == MonRxrFields::flags_numOfValues);
+    return props.asMap();
 }
 
 QVariantList createFieldsProperties()

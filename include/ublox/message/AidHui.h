@@ -49,7 +49,7 @@ struct AidHuiFields
     using utcWNT = field::common::I2;
 
     /// @brief Definition of "utcLC" field.
-    using utcLC = field::common::I2;
+    using utcLS = field::common::I2;
 
     /// @brief Definition of "utcWNF" field.
     using utcWNF = field::common::I2;
@@ -109,7 +109,7 @@ struct AidHuiFields
         utcA1,
         utcTOW,
         utcWNT,
-        utcLC,
+        utcLS,
         utcWNF,
         utcDN,
         utcLSF,

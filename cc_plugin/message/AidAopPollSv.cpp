@@ -18,6 +18,8 @@
 
 #include "AidAopPollSv.h"
 
+#include <cassert>
+
 template class ublox::message::AidAopPollSv<ublox::cc_plugin::Message>;
 template class ublox::cc_plugin::ProtocolMessageBase<
     ublox::message::AidAopPollSv<ublox::cc_plugin::Message>,
@@ -37,10 +39,13 @@ namespace message
 namespace
 {
 
+using ublox::message::AidAopPollSvFields;
+
 QVariantList createFieldsProperties()
 {
     QVariantList props;
-    props.append(cc::Property::createPropertiesMap("svid"));
+    props.append(
+        cc::property::field::ForField<AidAopPollSvFields::svid>().name("svid").asMap());
 
     assert(props.size() == AidAopPollSv::FieldIdx_numOfValues);
     return props;

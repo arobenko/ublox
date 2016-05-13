@@ -38,32 +38,40 @@ namespace message
 namespace
 {
 
+using ublox::message::AidAlpsrvUpdateFields;
+
 QVariantMap createProps_size()
 {
-    auto props = cc::Property::createPropertiesMap("size");
-    cc::Property::setReadOnly(props);
-    return props;
+    return
+        cc::property::field::ForField<AidAlpsrvUpdateFields::size>()
+            .name("size")
+            .readOnly()
+            .asMap();
 }
 
 QVariantMap createProps_data()
 {
-    auto valProps = cc::Property::createPropertiesMap(QString());
-    auto props = cc::Property::createPropertiesMap("data", std::move(valProps));
-    cc::Property::setSerialisedHidden(props);
-    return props;
+    return
+        cc::property::field::ForField<AidAlpsrvUpdateFields::data>()
+            .name("data")
+            .add(cc::property::field::IntValue().asMap())
+            .serialisedHidden()
+            .asMap();
 }
-
 
 QVariantList createFieldsProperties()
 {
     QVariantList props;
-    props.append(cc::Property::createPropertiesMap("idSize"));
-    props.append(cc::Property::createPropertiesMap("type"));
-    props.append(cc::Property::createPropertiesMap("ofs"));
+    props.append(
+        cc::property::field::ForField<AidAlpsrvUpdateFields::idSize>().name("idSize").asMap());
+    props.append(
+        cc::property::field::ForField<AidAlpsrvUpdateFields::type>().name("type").asMap());
+    props.append(
+        cc::property::field::ForField<AidAlpsrvUpdateFields::ofs>().name("ofs").asMap());
     props.append(createProps_size());
-    props.append(cc::Property::createPropertiesMap("fileId"));
+    props.append(
+        cc::property::field::ForField<AidAlpsrvUpdateFields::fileId>().name("fileId").asMap());
     props.append(createProps_data());
-
     assert(props.size() == AidAlpsrvUpdate::FieldIdx_numOfValues);
     return props;
 }
