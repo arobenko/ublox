@@ -39,27 +39,36 @@ namespace message
 namespace
 {
 
+using ublox::message::CfgUsbFields;
+
 QVariantMap createProps_flags()
 {
-    QVariantList bitNames;
-    bitNames.append("reEnum");
-    bitNames.append("powerMode");
-    assert(bitNames.size() == ublox::message::CfgUsbFields::flags_numOfValues);
-    return cc::Property::createPropertiesMap("flags", std::move(bitNames));
+    cc::property::field::ForField<CfgUsbFields::flags> props;
+    props.name("flags")
+         .add("reEnum")
+         .add("powerMode");
+    assert(props.bits().size() == CfgUsbFields::flags_numOfValues);
+    return props.asMap();
 }
 
 QVariantList createFieldsProperties()
 {
     QVariantList props;
-    props.append(cc::Property::createPropertiesMap("vendorID"));
-    props.append(cc::Property::createPropertiesMap("productID"));
+    props.append(
+        cc::property::field::ForField<CfgUsbFields::vendorID>().name("vendorID").asMap());
+    props.append(
+        cc::property::field::ForField<CfgUsbFields::productID>().name("productID").asMap());
     props.append(cc_plugin::field::common::props_reserved(1));
     props.append(cc_plugin::field::common::props_reserved(2));
-    props.append(cc::Property::createPropertiesMap("powerConsumption"));
+    props.append(
+        cc::property::field::ForField<CfgUsbFields::powerConsumption>().name("powerConsumption").asMap());
     props.append(createProps_flags());
-    props.append(cc::Property::createPropertiesMap("vendorString"));
-    props.append(cc::Property::createPropertiesMap("productString"));
-    props.append(cc::Property::createPropertiesMap("serialNumber"));
+    props.append(
+        cc::property::field::ForField<CfgUsbFields::vendorString>().name("vendorString").asMap());
+    props.append(
+        cc::property::field::ForField<CfgUsbFields::productString>().name("productString").asMap());
+    props.append(
+            cc::property::field::ForField<CfgUsbFields::serialNumber>().name("serialNumber").asMap());
     assert(props.size() == CfgUsb::FieldIdx_numOfValues);
     return props;
 }

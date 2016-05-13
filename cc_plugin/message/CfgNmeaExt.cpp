@@ -40,46 +40,50 @@ namespace message
 namespace
 {
 
+using ublox::message::CfgNmeaExtFields;
+
 QVariantMap createProps_gnssToFilter()
 {
-    QVariantList bitNames;
-    bitNames.append("gps");
-    bitNames.append("sbas");
-    bitNames.append(QVariant());
-    bitNames.append(QVariant());
-    bitNames.append("qzss");
-    bitNames.append("qlonass");
-    assert(bitNames.size() == ublox::message::CfgNmeaExtFields::gnssToFilter_numOfValues);
-    return cc::Property::createPropertiesMap("gnssToFilter", std::move(bitNames));
+    cc::property::field::ForField<CfgNmeaExtFields::gnssToFilter> props;
+    props.name("gnssToFilter")
+         .add("gps")
+         .add("sbas")
+         .add(CfgNmeaExtFields::gnssToFilter_qzss, "qzss")
+         .add("qlonass");
+    assert(props.bits().size() == CfgNmeaExtFields::gnssToFilter_numOfValues);
+    return props.asMap();
 }
 
 QVariantMap createProps_svNumbering()
 {
-    QVariantList enumValues;
-    cc::Property::appendEnumValue(enumValues, "Strict");
-    cc::Property::appendEnumValue(enumValues, "Extended");
-    assert(enumValues.size() == (int)ublox::message::CfgNmeaExtFields::SvNumbering::NumOfValues);
-    return cc::Property::createPropertiesMap("svNumbering", std::move(enumValues));
+    cc::property::field::ForField<CfgNmeaExtFields::svNumbering> props;
+    props.name("svNumbering")
+         .add("Strict")
+         .add("Extended");
+    assert(props.values().size() == (int)CfgNmeaExtFields::SvNumbering::NumOfValues);
+    return props.asMap();
 }
 
 QVariantMap createProps_mainTalkerId()
 {
-    QVariantList enumValues;
-    cc::Property::appendEnumValue(enumValues, "Not overridden");
-    cc::Property::appendEnumValue(enumValues, "GP");
-    cc::Property::appendEnumValue(enumValues, "GL");
-    cc::Property::appendEnumValue(enumValues, "GN");
-    assert(enumValues.size() == (int)ublox::message::CfgNmeaExtFields::MainTalkerId::NumOfValues);
-    return cc::Property::createPropertiesMap("mainTalkerId", std::move(enumValues));
+    cc::property::field::ForField<CfgNmeaExtFields::mainTalkerId> props;
+    props.name("mainTalkerId")
+         .add("Not overridden")
+         .add("GP")
+         .add("GL")
+         .add("GN");
+    assert(props.values().size() == (int)CfgNmeaExtFields::MainTalkerId::NumOfValues);
+    return props.asMap();
 }
 
 QVariantMap createProps_gsvTalkerId()
 {
-    QVariantList enumValues;
-    cc::Property::appendEnumValue(enumValues, "GNSS Specific");
-    cc::Property::appendEnumValue(enumValues, "Main");
-    assert(enumValues.size() == (int)ublox::message::CfgNmeaExtFields::GsvTalkerId::NumOfValues);
-    return cc::Property::createPropertiesMap("gsvTalkerId", std::move(enumValues));
+    cc::property::field::ForField<CfgNmeaExtFields::gsvTalkerId> props;
+    props.name("gsvTalkerId")
+         .add("GNSS Specific")
+         .add("Main");
+    assert(props.values().size() == (int)CfgNmeaExtFields::GsvTalkerId::NumOfValues);
+    return props.asMap();
 }
 
 QVariantList createFieldsProperties()

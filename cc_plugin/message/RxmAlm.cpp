@@ -40,23 +40,27 @@ namespace message
 namespace
 {
 
+using ublox::message::RxmAlmFields;
+
 QVariantMap createProps_dwrd()
 {
-    QVariantList elemsProps;
+    static const QString Name("dwrd");
+
+    cc::property::field::ArrayList listProps;
+    listProps.name(Name).serialisedHidden();
     for (auto idx = 0U; idx < 8U; ++idx) {
-        elemsProps.append(cc::Property::createPropertiesMap(QString("%1").arg(idx, 1, 10, QChar('0'))));
+        listProps.add(
+            cc::property::field::IntValue()
+                .name(QString("%1").arg(idx, 1, 10, QChar('0')))
+                .asMap());
     }
 
-    static const QString Name("dwrd");
-    auto listProps =
-        cc::Property::createPropertiesMap(
-            Name,
-            std::move(elemsProps));
-    cc::Property::setSerialisedHidden(listProps);
-
-    auto props = cc::Property::createPropertiesMap(Name, std::move(listProps));
-    cc::Property::setUncheckable(props);
-    return props;
+    return
+        cc::property::field::ForField<RxmAlmFields::dwrd>()
+            .name(Name)
+            .field(listProps.asMap())
+            .uncheckable()
+            .asMap();
 }
 
 QVariantList createFieldsProperties()

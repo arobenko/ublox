@@ -41,25 +41,33 @@ namespace message
 namespace
 {
 
+using ublox::message::CfgLogfilterFields;
+
 QVariantMap createProps_flags()
 {
-    QVariantList bitNames;
-    bitNames.append("recordEnabled");
-    bitNames.append("psmOncePerWakupEnabled");
-    bitNames.append("applyAllFilterSettings");
-    assert(bitNames.size() == ublox::message::CfgLogfilterFields::flags_numOfValues);
-    return cc::Property::createPropertiesMap("flags", std::move(bitNames));
+    cc::property::field::ForField<CfgLogfilterFields::flags> props;
+    props.name("flags")
+         .add("recordEnabled")
+         .add("psmOncePerWakupEnabled")
+         .add("applyAllFilterSettings");
+    assert(props.bits().size() == CfgLogfilterFields::flags_numOfValues);
+    return props.asMap();
 }
 
 QVariantList createFieldsProperties()
 {
     QVariantList props;
-    props.append(cc::Property::createPropertiesMap("version"));
+    props.append(
+        cc::property::field::ForField<CfgLogfilterFields::version>().name("version").asMap());
     props.append(createProps_flags());
-    props.append(cc::Property::createPropertiesMap("minInterval"));
-    props.append(cc::Property::createPropertiesMap("timeThreshold"));
-    props.append(cc::Property::createPropertiesMap("speedThreshold"));
-    props.append(cc::Property::createPropertiesMap("positionThreshold"));
+    props.append(
+        cc::property::field::ForField<CfgLogfilterFields::minInterval>().name("minInterval").asMap());
+    props.append(
+        cc::property::field::ForField<CfgLogfilterFields::timeThreshold>().name("timeThreshold").asMap());
+    props.append(
+        cc::property::field::ForField<CfgLogfilterFields::speedThreshold>().name("speedThreshold").asMap());
+    props.append(
+        cc::property::field::ForField<CfgLogfilterFields::positionThreshold>().name("positionThreshold").asMap());
     assert(props.size() == CfgLogfilter::FieldIdx_numOfValues);
     return props;
 }

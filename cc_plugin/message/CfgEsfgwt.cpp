@@ -39,43 +39,50 @@ namespace message
 namespace
 {
 
+using ublox::message::CfgEsfgwtFields;
+
 QVariantMap createProps_flags()
 {
-    QVariantList bitNames;
-    while (bitNames.size() < ublox::message::CfgEsfgwtFields::flags_setVehicle) {
-        bitNames.append(QVariant());
-    }
-    bitNames.append("setVehicle");
-    bitNames.append("setTime");
-    bitNames.append("setWt");
-    assert(bitNames.size() == ublox::message::CfgEsfgwtFields::flags_numOfValues);
-    return cc::Property::createPropertiesMap("flags", std::move(bitNames));
+    cc::property::field::ForField<CfgEsfgwtFields::flags> props;
+    props.name("flags")
+         .add(CfgEsfgwtFields::flags_setVehicle, "setVehicle")
+         .add("setTime")
+         .add("setWt");
+    assert(props.bits().size() == CfgEsfgwtFields::flags_numOfValues);
+    return props.asMap();
 }
 
 QVariantMap createProps_scaledValue(const char* name, int decimals)
 {
-    auto props = cc::Property::createPropertiesMap(name);
-    cc::Property::setDisplayScaled(props);
-    cc::Property::setFloatDecimals(props, decimals);
-    return props;
+    return
+        cc::property::field::IntValue()
+            .name(name)
+            .scaledDecimals(decimals)
+            .asMap();
 }
 
 QVariantList createFieldsProperties()
 {
     QVariantList props;
     props.append(createProps_flags());
-    props.append(cc::Property::createPropertiesMap("id"));
+    props.append(
+        cc::property::field::ForField<CfgEsfgwtFields::id>().name("id").asMap());
     props.append(createProps_scaledValue("wtFactor", 6));
     props.append(field::common::props_reserved(1));
     props.append(createProps_scaledValue("wtQuantError", 6));
     props.append(createProps_scaledValue("timeTagFactor", 6));
-    props.append(cc::Property::createPropertiesMap("wtCountMax"));
-    props.append(cc::Property::createPropertiesMap("timeTagMax"));
-    props.append(cc::Property::createPropertiesMap("wtLatency"));
+    props.append(
+        cc::property::field::ForField<CfgEsfgwtFields::wtCountMax>().name("wtCountMax").asMap());
+    props.append(
+        cc::property::field::ForField<CfgEsfgwtFields::timeTagMax>().name("timeTagMax").asMap());
+    props.append(
+        cc::property::field::ForField<CfgEsfgwtFields::wtLatency>().name("wtLatency").asMap());
     props.append(field::common::props_reserved(2));
-    props.append(cc::Property::createPropertiesMap("wtFrequency"));
+    props.append(
+        cc::property::field::ForField<CfgEsfgwtFields::wtFrequency>().name("wtFrequency").asMap());
     props.append(field::common::props_reserved(3));
-    props.append(cc::Property::createPropertiesMap("speedDeadBand"));
+    props.append(
+        cc::property::field::ForField<CfgEsfgwtFields::speedDeadBand>().name("speedDeadBand").asMap());
     props.append(field::common::props_reserved(4));
     props.append(field::common::props_reserved(5));
     assert(props.size() == CfgEsfgwt::FieldIdx_numOfValues);

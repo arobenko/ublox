@@ -40,30 +40,34 @@ namespace message
 namespace
 {
 
+using ublox::message::RxmEphFields;
+
 QVariantMap createProps_sfxd(int sfIdx)
 {
-    QVariantList elemsProps;
-    for (auto idx = 0U; idx < 8; ++idx) {
-        elemsProps.append(cc::Property::createPropertiesMap(QString("%1").arg(idx, 1, 10, QChar('0'))));
+    auto nameVal = QString("sf%1d").arg(sfIdx, 1, 10, QChar('0'));
+
+    cc::property::field::ArrayList listProps;
+    listProps.name(nameVal).serialisedHidden();
+    for (auto idx = 0U; idx < 8U; ++idx) {
+        listProps.add(
+            cc::property::field::IntValue()
+                .name(QString("%1").arg(idx, 1, 10, QChar('0')))
+                .asMap());
     }
 
-    auto name = QString("sf%1d").arg(sfIdx, 1, 10, QChar('0'));
-    auto listProps =
-        cc::Property::createPropertiesMap(
-            name,
-            std::move(elemsProps));
-    cc::Property::setSerialisedHidden(listProps);
-
-    auto props = cc::Property::createPropertiesMap(name, std::move(listProps));
-    cc::Property::setUncheckable(props);
-    return props;
+    return
+        cc::property::field::ForField<RxmEphFields::sf1d>()
+            .name(nameVal)
+            .field(listProps.asMap())
+            .uncheckable()
+            .asMap();
 }
 
 QVariantList createFieldsProperties()
 {
     QVariantList props;
     props.append(cc_plugin::field::rxm::props_svid());
-    props.append(cc::Property::createPropertiesMap("how"));
+    props.append(cc::property::field::ForField<RxmEphFields::how>().name("how").asMap());
     props.append(createProps_sfxd(1));
     props.append(createProps_sfxd(2));
     props.append(createProps_sfxd(3));

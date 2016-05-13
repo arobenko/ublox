@@ -42,15 +42,26 @@ namespace message
 namespace
 {
 
+using ublox::message::NavTimegpsFields;
+
+QVariantMap createProps_leapS()
+{
+    return
+        cc::property::field::ForField<NavTimegpsFields::leapS>()
+            .name("leapS")
+            .asMap();
+}
+
+
 QVariantMap createProps_valid()
 {
-    QVariantList bitNames;
-    bitNames.append("towValid");
-    bitNames.append("weekValid");
-    bitNames.append("leapSValid");
-    assert(bitNames.size() == ublox::message::NavTimegpsFields::valid_numOfValues);
-
-    return cc::Property::createPropertiesMap("valid", std::move(bitNames));
+    cc::property::field::ForField<NavTimegpsFields::valid> props;
+    props.name("valid")
+         .add("towValid")
+         .add("weekValid")
+         .add("leapSValid");
+    assert(props.bits().size() == NavTimegpsFields::valid_numOfValues);
+    return props.asMap();
 }
 
 QVariantList createFieldsProperties()
@@ -59,7 +70,7 @@ QVariantList createFieldsProperties()
     props.append(cc_plugin::field::nav::props_iTOW());
     props.append(cc_plugin::field::nav::props_fTOW());
     props.append(cc_plugin::field::nav::props_week());
-    props.append(cc::Property::createPropertiesMap("leapS"));
+    props.append(createProps_leapS());
     props.append(createProps_valid());
     props.append(cc_plugin::field::nav::props_tAcc());
 

@@ -39,41 +39,41 @@ namespace message
 namespace
 {
 
+using ublox::message::CfgRstFields;
+
 QVariantMap createProps_navBbrMask()
 {
-    QVariantList bitNames;
-    bitNames.append("eph");
-    bitNames.append("alm");
-    bitNames.append("health");
-    bitNames.append("klob");
-    bitNames.append("pos");
-    bitNames.append("clkd");
-    bitNames.append("osc");
-    bitNames.append("utc");
-    bitNames.append("rtc");
-    bitNames.append(QVariant());
-    bitNames.append(QVariant());
-    bitNames.append("sfdr");
-    bitNames.append("vmon");
-    bitNames.append("tct");
-    bitNames.append(QVariant());
-    bitNames.append("aop");
-    assert(bitNames.size() == ublox::message::CfgRstFields::navBbrMask_numOfValues);
-
-    return cc::Property::createPropertiesMap("navBbrMask", std::move(bitNames));
+    cc::property::field::ForField<CfgRstFields::navBbrMask> props;
+    props.name("navBbrMask")
+         .add("eph")
+         .add("alm")
+         .add("health")
+         .add("klob")
+         .add("pos")
+         .add("clkd")
+         .add("osc")
+         .add("utc")
+         .add("rtc")
+         .add(CfgRstFields::navBbrMask_sfdr, "sfdr")
+         .add("vmon")
+         .add("tct")
+         .add(CfgRstFields::navBbrMask_aop, "aop");
+    assert(props.bits().size() == CfgRstFields::navBbrMask_numOfValues);
+    return props.asMap();
 }
 
 QVariantMap createProps_resetMode()
 {
-    QVariantList enumValues;
-    cc::Property::appendEnumValue(enumValues, "Hardware Reset (Watchdog)", (int)ublox::message::CfgRstFields::ResetMode::Hardware);
-    cc::Property::appendEnumValue(enumValues, "Controlled Software Reset", (int)ublox::message::CfgRstFields::ResetMode::Software);
-    cc::Property::appendEnumValue(enumValues, "Controlled Software Reset (GNSS Only)", (int)ublox::message::CfgRstFields::ResetMode::GnssOnly);
-    cc::Property::appendEnumValue(enumValues, "Hardware Reset (Watchdog) after shutdown", (int)ublox::message::CfgRstFields::ResetMode::HardwareAfterShutdown);
-    cc::Property::appendEnumValue(enumValues, "Controlled GNSS stop", (int)ublox::message::CfgRstFields::ResetMode::GnssStop);
-    cc::Property::appendEnumValue(enumValues, "Controlled GNSS start", (int)ublox::message::CfgRstFields::ResetMode::GnssStart);
-
-    return cc::Property::createPropertiesMap("resetMode", std::move(enumValues));
+    return
+        cc::property::field::ForField<CfgRstFields::resetMode>()
+            .name("resetMode")
+            .add("Hardware Reset (Watchdog)", (int)CfgRstFields::ResetMode::Hardware)
+            .add("Controlled Software Reset", (int)CfgRstFields::ResetMode::Software)
+            .add("Controlled Software Reset (GNSS Only)", (int)CfgRstFields::ResetMode::GnssOnly)
+            .add("Hardware Reset (Watchdog) after shutdown", (int)CfgRstFields::ResetMode::HardwareAfterShutdown)
+            .add("Controlled GNSS stop", (int)CfgRstFields::ResetMode::GnssStop)
+            .add("Controlled GNSS start", (int)CfgRstFields::ResetMode::GnssStart)
+            .asMap();
 }
 
 

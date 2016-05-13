@@ -18,6 +18,8 @@
 
 #include "CfgPrtPollPort.h"
 
+#include <cassert>
+
 #include "cc_plugin/field/cfg.h"
 
 template class ublox::message::CfgPrtPollPort<ublox::cc_plugin::Message>;

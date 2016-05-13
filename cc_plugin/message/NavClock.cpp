@@ -39,14 +39,40 @@ namespace message
 namespace
 {
 
+using ublox::message::NavClockFields;
+
+QVariantMap createProps_clkB()
+{
+    return
+        cc::property::field::ForField<NavClockFields::clkB>()
+            .name("clkB")
+            .asMap();
+}
+
+QVariantMap createProps_clkD()
+{
+    return
+        cc::property::field::ForField<NavClockFields::clkD>()
+            .name("clkD")
+            .asMap();
+}
+
+QVariantMap createProps_fAcc()
+{
+    return
+        cc::property::field::ForField<NavClockFields::fAcc>()
+            .name("fAcc")
+            .asMap();
+}
+
 QVariantList createFieldsProperties()
 {
     QVariantList props;
     props.append(cc_plugin::field::nav::props_iTOW());
-    props.append(cc::Property::createPropertiesMap("clkB"));
-    props.append(cc::Property::createPropertiesMap("clkD"));
+    props.append(createProps_clkB());
+    props.append(createProps_clkD());
     props.append(cc_plugin::field::nav::props_tAcc());
-    props.append(cc::Property::createPropertiesMap("fAcc"));
+    props.append(createProps_fAcc());
 
     assert(props.size() == NavClock::FieldIdx_numOfValues);
     return props;

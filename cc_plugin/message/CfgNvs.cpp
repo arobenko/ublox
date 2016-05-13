@@ -38,37 +38,28 @@ namespace message
 namespace
 {
 
+using ublox::message::CfgNvsFields;
+
 QVariantMap createProps_mask(const char* name)
 {
-    QVariantList bitNames;
-
-    auto fillBitNamesFunc =
-        [&bitNames](int until)
-        {
-            while (bitNames.size() < until) {
-                bitNames.append(QVariant());
-            }
-        };
-
-    fillBitNamesFunc(ublox::message::CfgNvsFields::mask_alm);
-    bitNames.append("alm");
-    fillBitNamesFunc(ublox::message::CfgNvsFields::mask_aop);
-    bitNames.append("aop");
-    assert(bitNames.size() == ublox::message::CfgNvsFields::mask_numOfValues);
-    return cc::Property::createPropertiesMap(name, std::move(bitNames));
+    cc::property::field::ForField<CfgNvsFields::mask> props;
+    props.name(name)
+         .add(ublox::message::CfgNvsFields::mask_alm, "alm")
+         .add(ublox::message::CfgNvsFields::mask_aop, "aop");
+    assert(props.bits().size() == CfgNvsFields::mask_numOfValues);
+    return props.asMap();
 }
 
 QVariantMap createProps_deviceMask()
 {
-    QVariantList bitNames;
-    bitNames.append("devBBR");
-    bitNames.append("devFlash");
-    bitNames.append("devEEPROM");
-    bitNames.append(QVariant());
-    bitNames.append("devSpiFlash");
-    assert(bitNames.size() == ublox::message::CfgNvsFields::deviceMask_numOfValues);
-
-    return cc::Property::createPropertiesMap("deviceMask", std::move(bitNames));
+    cc::property::field::ForField<CfgNvsFields::deviceMask> props;
+    props.name("deviceMask")
+         .add("devBBR")
+         .add("devFlash")
+         .add("devEEPROM")
+         .add(CfgNvsFields::deviceMask_devSpiFlash, "devSpiFlash");
+    assert(props.bits().size() == CfgNvsFields::deviceMask_numOfValues);
+    return props.asMap();
 }
 
 QVariantList createFieldsProperties()

@@ -39,10 +39,12 @@ namespace message
 namespace
 {
 
+using ublox::message::RxmEphPollSvFields;
+
 QVariantList createFieldsProperties()
 {
     QVariantList props;
-    props.append(cc::Property::createPropertiesMap("svid"));
+    props.append(cc::property::field::ForField<RxmEphPollSvFields::svid>().name("svid").asMap());
 
     assert(props.size() == RxmEphPollSv::FieldIdx_numOfValues);
     return props;

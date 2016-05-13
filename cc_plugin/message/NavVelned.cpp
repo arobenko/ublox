@@ -41,12 +41,23 @@ namespace message
 namespace
 {
 
+using ublox::message::NavVelnedFields;
+
+QVariantMap createProps_speed()
+{
+    return
+        cc::property::field::ForField<NavVelnedFields::speed>()
+            .name("speed")
+            .asMap();
+}
+
 QVariantMap createProps_cAcc()
 {
-    auto props = cc::Property::createPropertiesMap("cAcc");
-    cc::Property::setDisplayScaled(props);
-    cc::Property::setFloatDecimals(props, 5);
-    return props;
+    return
+        cc::property::field::ForField<NavVelnedFields::cAcc>()
+            .name("cAcc")
+            .scaledDecimals(5)
+            .asMap();
 }
 
 QVariantList createFieldsProperties()
@@ -56,7 +67,7 @@ QVariantList createFieldsProperties()
     props.append(cc_plugin::field::nav::props_velN());
     props.append(cc_plugin::field::nav::props_velE());
     props.append(cc_plugin::field::nav::props_velD());
-    props.append(cc::Property::createPropertiesMap("speed"));
+    props.append(createProps_speed());
     props.append(cc_plugin::field::nav::props_gSpeed());
     props.append(cc_plugin::field::nav::props_heading());
     props.append(cc_plugin::field::nav::props_sAcc());

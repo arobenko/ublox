@@ -40,28 +40,35 @@ namespace message
 namespace
 {
 
+using ublox::message::RxmRawFields;
+
 QVariantMap createProps_data()
 {
-    QVariantList membersData;
-    membersData.append(cc::Property::createPropertiesMap("cpMes"));
-    membersData.append(cc::Property::createPropertiesMap("prMes"));
-    membersData.append(cc::Property::createPropertiesMap("doMes"));
-    membersData.append(cc::Property::createPropertiesMap("sv"));
-    membersData.append(cc::Property::createPropertiesMap("mesQI"));
-    membersData.append(cc::Property::createPropertiesMap("cno"));
-    membersData.append(cc::Property::createPropertiesMap("lli"));
-    assert(membersData.size() == ublox::message::RxmRawFields::block_numOfValues);
+    cc::property::field::ForField<RxmRawFields::block> blockProps;
+    blockProps
+        .add(cc::property::field::ForField<RxmRawFields::cpMes>().name("cpMes").asMap())
+        .add(cc::property::field::ForField<RxmRawFields::prMes>().name("prMes").asMap())
+        .add(cc::property::field::ForField<RxmRawFields::doMes>().name("doMes").asMap())
+        .add(cc::property::field::ForField<RxmRawFields::sv>().name("sv").asMap())
+        .add(cc::property::field::ForField<RxmRawFields::mesQI>().name("mesQI").asMap())
+        .add(cc::property::field::ForField<RxmRawFields::cno>().name("cno").asMap())
+        .add(cc::property::field::ForField<RxmRawFields::lli>().name("lli").asMap());
 
-    auto elemProps = cc::Property::createPropertiesMap("element", std::move(membersData));
-    auto props = cc::Property::createPropertiesMap("data", std::move(elemProps));
-    cc::Property::setSerialisedHidden(props);
-    return props;
+    assert(blockProps.members().size() == RxmRawFields::block_numOfValues);
+
+    return
+        cc::property::field::ForField<RxmRawFields::data>()
+            .name("data")
+            .add(blockProps.asMap())
+            .serialisedHidden()
+            .asMap();
 }
 
 QVariantList createFieldsProperties()
 {
     QVariantList props;
-    props.append(cc::Property::createPropertiesMap("rcvTow"));
+    props.append(
+        cc::property::field::ForField<RxmRawFields::rcvTow>().name("rcvTow").asMap());
     props.append(cc_plugin::field::rxm::props_week());
     props.append(cc_plugin::field::rxm::props_numSV());
     props.append(cc_plugin::field::common::props_reserved(1));

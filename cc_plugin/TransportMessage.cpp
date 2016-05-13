@@ -34,29 +34,36 @@ namespace cc_plugin
 namespace
 {
 
+typedef cc_plugin::Message::Field FieldBase;
+
 QVariantMap createSync1MemberData()
 {
-    return cc::Property::createPropertiesMap("SYNC 1");
+    typedef ublox::details::SyncField1<FieldBase> SyncField1;
+    return cc::property::field::ForField<SyncField1>().name("SYNC 1").asMap();
 }
 
 QVariantMap createSync2MemberData()
 {
-    return cc::Property::createPropertiesMap("SYNC 2");
+    typedef ublox::details::SyncField2<FieldBase> SyncField2;
+    return cc::property::field::ForField<SyncField2>().name("SYNC 2").asMap();
 }
 
 QVariantMap createLengthProperties()
 {
-    return cc::Property::createPropertiesMap("LENGTH");
+    typedef ublox::details::LengthField<FieldBase> LengthField;
+    return cc::property::field::ForField<LengthField>().name("LENGTH").asMap();
 }
 
 QVariantMap createPayloadProperties()
 {
-    return cc::Property::createPropertiesMap("PAYLOAD");
+    typedef ublox::details::DataField<FieldBase> DataField;
+    return cc::property::field::ForField<DataField>().name("PAYLOAD").asMap();
 }
 
 QVariantMap createChecksumProperties()
 {
-    return cc::Property::createPropertiesMap("CK");
+    typedef ublox::details::ChecksumField<FieldBase> ChecksumField;
+    return cc::property::field::ForField<ChecksumField>().name("CK").asMap();
 }
 
 QVariantList createFieldsProperties()

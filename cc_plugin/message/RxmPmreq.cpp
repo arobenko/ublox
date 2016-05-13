@@ -39,19 +39,22 @@ namespace message
 namespace
 {
 
+using ublox::message::RxmPmreqFields;
+
 QVariantMap createProps_flags()
 {
-    QVariantList bitNames;
-    bitNames.append(QVariant());
-    bitNames.append("backup");
-    assert(bitNames.size() == ublox::message::RxmPmreqFields::flags_numOfValues);
-    return cc::Property::createPropertiesMap("flags", std::move(bitNames));
+    cc::property::field::ForField<RxmPmreqFields::flags> props;
+    props.name("flags")
+         .add(1, "backup");
+    assert(props.bits().size() == RxmPmreqFields::flags_numOfValues);
+    return props.asMap();
 }
 
 QVariantList createFieldsProperties()
 {
     QVariantList props;
-    props.append(cc::Property::createPropertiesMap("duration"));
+    props.append(
+        cc::property::field::ForField<RxmPmreqFields::duration>().name("duration").asMap());
     props.append(createProps_flags());
     assert(props.size() == RxmPmreq::FieldIdx_numOfValues);
     return props;

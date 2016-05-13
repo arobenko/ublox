@@ -44,89 +44,109 @@ namespace cfg
 namespace
 {
 
+cc::property::field::EnumValue createPropsInternal_portID()
+{
+    return cc::property::field::EnumValue()
+        .name("portID")
+        .add("DDC", (int)ublox::message::CfgPrtFields::PortId::DDC)
+        .add("UART", (int)ublox::message::CfgPrtFields::PortId::UART)
+        .add("UART2", (int)ublox::message::CfgPrtFields::PortId::UART2)
+        .add("USB", (int)ublox::message::CfgPrtFields::PortId::USB)
+        .add("SPI", (int)ublox::message::CfgPrtFields::PortId::SPI);
+}
+
 QVariantMap createProps_portID()
 {
-    QVariantList enumValues;
-    cc::Property::appendEnumValue(enumValues, "DDC", (int)ublox::message::CfgPrtFields::PortId::DDC);
-    cc::Property::appendEnumValue(enumValues, "UART", (int)ublox::message::CfgPrtFields::PortId::UART);
-    cc::Property::appendEnumValue(enumValues, "UART2", (int)ublox::message::CfgPrtFields::PortId::UART2);
-    cc::Property::appendEnumValue(enumValues, "USB", (int)ublox::message::CfgPrtFields::PortId::USB);
-    cc::Property::appendEnumValue(enumValues, "SPI", (int)ublox::message::CfgPrtFields::PortId::SPI);
-
-    return cc::Property::createPropertiesMap("portID", std::move(enumValues));
+    return createPropsInternal_portID().asMap();
 }
 
 QVariantMap createProps_readOnlyPortID()
 {
-    auto props = createProps_portID();
-    cc::Property::setReadOnly(props);
-    return props;
+    return createPropsInternal_portID().readOnly().asMap();
 }
 
 QVariantMap createProps_txReady()
 {
-    QVariantList enBitNames;
-    enBitNames.append("en");
-    auto enProps = cc::Property::createPropertiesMap("txReady", std::move(enBitNames));
-    cc::Property::setSerialisedHidden(enProps);
+    auto enProps =
+        cc::property::field::ForField<ublox::message::CfgPrtFields::en>()
+            .name("txReady")
+            .add("en")
+            .serialisedHidden();
+    assert(enProps.bits().size() == ublox::message::CfgPrtFields::en_numOfValues);
 
-    QVariantList polEnumValues;
-    cc::Property::appendEnumValue(polEnumValues, "High-active");
-    cc::Property::appendEnumValue(polEnumValues, "Low-active");
-    assert(polEnumValues.size() == (int)ublox::message::CfgPrtFields::Polarity::NumOfValues);
-    auto polProps = cc::Property::createPropertiesMap("pol", std::move(polEnumValues));
-    cc::Property::setSerialisedHidden(polProps);
+    auto polProps =
+        cc::property::field::ForField<ublox::message::CfgPrtFields::pol>()
+            .name("pol")
+            .add("High-active")
+            .add("Low-active")
+            .serialisedHidden();
+    assert(polProps.values().size() == (int)ublox::message::CfgPrtFields::Polarity::NumOfValues);
 
-    auto pinProps = cc::Property::createPropertiesMap("pin");
-    cc::Property::setSerialisedHidden(pinProps);
+    auto pinProps =
+        cc::property::field::ForField<ublox::message::CfgPrtFields::pin>()
+            .name("pin")
+            .serialisedHidden();
 
-    auto thresProps = cc::Property::createPropertiesMap("thres");
-    cc::Property::setSerialisedHidden(thresProps);
+    auto thresProps =
+        cc::property::field::ForField<ublox::message::CfgPrtFields::pin>()
+            .name("thres")
+            .serialisedHidden();
 
-    QVariantList membersData;
-    membersData.append(std::move(enProps));
-    membersData.append(std::move(polProps));
-    membersData.append(std::move(pinProps));
-    membersData.append(std::move(thresProps));
-    assert(membersData.size() == ublox::message::CfgPrtFields::txReady_numOfValues);
-    return cc::Property::createPropertiesMap("txReady", std::move(membersData));
+    auto txReadyProps =
+        cc::property::field::ForField<ublox::message::CfgPrtFields::txReady>()
+            .name("txReady")
+            .add(enProps.asMap())
+            .add(polProps.asMap())
+            .add(pinProps.asMap())
+            .add(thresProps.asMap());
+
+    assert(txReadyProps.members().size() == ublox::message::CfgPrtFields::txReady_numOfValues);
+    return txReadyProps.asMap();
 }
 
 QVariantMap createProps_inProtoMask()
 {
-    QVariantList bitNames;
-    bitNames.append("inUbx");
-    bitNames.append("inNmea");
-    bitNames.append("inRtcm");
-    assert(bitNames.size() == ublox::message::CfgPrtFields::inProtoMask_numOfValues);
-    return cc::Property::createPropertiesMap("inProtoMask", std::move(bitNames));
+    auto props =
+        cc::property::field::ForField<ublox::message::CfgPrtFields::inProtoMask>()
+            .name("inProtoMask")
+            .add("inUbx")
+            .add("inNmea")
+            .add("inRtcm");
+    assert(props.bits().size() == ublox::message::CfgPrtFields::inProtoMask_numOfValues);
+    return props.asMap();
 }
 
 QVariantMap createProps_outProtoMask()
 {
-    QVariantList bitNames;
-    bitNames.append("outUbx");
-    bitNames.append("outNmea");
-    assert(bitNames.size() == ublox::message::CfgPrtFields::outProtoMask_numOfValues);
-    return cc::Property::createPropertiesMap("outProtoMask", std::move(bitNames));
+    auto props =
+        cc::property::field::ForField<ublox::message::CfgPrtFields::outProtoMask>()
+            .name("outProtoMask")
+            .add("outUbx")
+            .add("outNmea")
+    assert(props.bits().size() == ublox::message::CfgPrtFields::outProtoMask_numOfValues);
+    return props.asMap();
 }
 
 QVariantMap createProps_prtFlags()
 {
-    QVariantList bitNames;
-    bitNames.append(QVariant());
-    bitNames.append("extendedTxTimeout");
-    assert(bitNames.size() == ublox::message::CfgPrtFields::flags_numOfValues);
-    return cc::Property::createPropertiesMap("flags", std::move(bitNames));
+    auto props =
+        cc::property::field::ForField<ublox::message::CfgPrtFields::flags>()
+            .name("flags")
+            .add(ublox::message::CfgPrtFields::flags_extendedTxTimeout, "extendedTxTimeout");
+    assert(props.bits().size() == ublox::message::CfgPrtFields::flags_numOfValues);
+    return props.asMap();
 }
 
 QVariantMap createProps_protocolID()
 {
-    QVariantList enumValues;
-    cc::Property::appendEnumValue(enumValues, "UBX");
-    cc::Property::appendEnumValue(enumValues, "NMEA");
-    assert(enumValues.size() == (int)ublox::field::cfg::ProtocolId::NumOfValues);
-    return cc::Property::createPropertiesMap("protocolID", std::move(enumValues));
+    auto props =
+        cc::property::field::ForField<ublox::message::CfgInfFields::protocolID>()
+            .name("protocolID")
+            .add("UBX")
+            .add("NMEA");
+
+    assert(props.values().size() == (int)ublox::field::cfg::ProtocolId::NumOfValues);
+    return props.asMap();
 }
 
 QVariantMap createProps_nmeaFilter()

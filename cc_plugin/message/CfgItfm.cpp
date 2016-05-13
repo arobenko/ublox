@@ -42,54 +42,57 @@ namespace message
 namespace
 {
 
+using ublox::message::CfgItfmFields;
+
 QVariantMap createProps_config()
 {
-    auto bbThresholdProps = cc::Property::createPropertiesMap("bbThreshold");
-    cc::Property::setSerialisedHidden(bbThresholdProps);
+    cc::property::field::ForField<CfgItfmFields::bbThreshold> bbThresholdProps;
+    bbThresholdProps.name("bbThreshold").serialisedHidden();
 
-    auto cwThresholdProps = cc::Property::createPropertiesMap("cwThreshold");
-    cc::Property::setSerialisedHidden(cwThresholdProps);
+    cc::property::field::ForField<CfgItfmFields::cwThreshold> cwThresholdProps;
+    cwThresholdProps.name("cwThreshold").serialisedHidden();
 
-    auto reserved1Props = cc::Property::createPropertiesMap("reserved1");
-    cc::Property::setSerialisedHidden(reserved1Props);
 
-    QVariantList bitNames;
-    bitNames.append("enable");
-    assert(bitNames.size() == ublox::message::CfgItfmFields::config_enable_numOfValues);
-    auto enableProps = cc::Property::createPropertiesMap(QString(), std::move(bitNames));
-    cc::Property::setSerialisedHidden(enableProps);
+    cc::property::field::ForField<CfgItfmFields::reserved1> reserved1Props;
+    reserved1Props.name("reserved1").serialisedHidden();
 
-    QVariantList membersData;
-    membersData.append(std::move(bbThresholdProps));
-    membersData.append(std::move(cwThresholdProps));
-    membersData.append(std::move(reserved1Props));
-    membersData.append(std::move(enableProps));
-    assert(membersData.size() == ublox::message::CfgItfmFields::config_numOfValues);
-    return cc::Property::createPropertiesMap("config", std::move(membersData));
+    cc::property::field::ForField<CfgItfmFields::enable> enableProps;
+    enableProps.add("enable").serialisedHidden();
+    assert(enableProps.bits().size() == CfgItfmFields::config_enable_numOfValues);
+
+    cc::property::field::ForField<CfgItfmFields::config> props;
+    props.name("config")
+         .add(bbThresholdProps.asMap())
+         .add(cwThresholdProps.asMap())
+         .add(reserved1Props.asMap())
+         .add(enableProps.asMap());
+    assert(props.members().size() == CfgItfmFields::config_numOfValues);
+    return props.asMap();
 }
 
 QVariantMap createProps_config2()
 {
-    auto reserved2Props = cc::Property::createPropertiesMap("reserved2");
-    cc::Property::setSerialisedHidden(reserved2Props);
+    cc::property::field::ForField<CfgItfmFields::reserved2> reserved2Props;
+    reserved2Props.name("reserved2").serialisedHidden();
 
-    QVariantList enumValues;
-    cc::Property::appendEnumValue(enumValues, "unknown");
-    cc::Property::appendEnumValue(enumValues, "passive");
-    cc::Property::appendEnumValue(enumValues, "active");
-    assert(enumValues.size() == (int)ublox::message::CfgItfmFields::AntSetting::NumOfValues);
-    auto antSettingProps = cc::Property::createPropertiesMap("antSetting", std::move(enumValues));
-    cc::Property::setSerialisedHidden(antSettingProps);
+    cc::property::field::ForField<CfgItfmFields::antSetting> antSettingProps;
+    antSettingProps.name("antSetting")
+                   .add("unknown")
+                   .add("passive")
+                   .add("active")
+                   .serialisedHidden();
+    assert(antSettingProps.values().size() == (int)CfgItfmFields::AntSetting::NumOfValues);
 
-    auto reserved3Props = cc::Property::createPropertiesMap("reserved3");
-    cc::Property::setSerialisedHidden(reserved3Props);
+    cc::property::field::ForField<CfgItfmFields::reserved3> reserved3Props;
+    reserved3Props.name("reserved3").serialisedHidden();
 
-    QVariantList membersData;
-    membersData.append(std::move(reserved2Props));
-    membersData.append(std::move(antSettingProps));
-    membersData.append(std::move(reserved3Props));
-    assert(membersData.size() == ublox::message::CfgItfmFields::config2_numOfValues);
-    return cc::Property::createPropertiesMap("config2", std::move(membersData));
+    cc::property::field::ForField<CfgItfmFields::config2> props;
+    props.name("config2")
+         .add(reserved2Props.asMap())
+         .add(antSettingProps.asMap())
+         .add(reserved3Props.asMap());
+    assert(props.members().size() == CfgItfmFields::config2_numOfValues);
+    return props.asMap();
 }
 
 

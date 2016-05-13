@@ -38,20 +38,24 @@ namespace message
 namespace
 {
 
+using ublox::message::CfgRinvFields;
+
 QVariantMap createProps_flags()
 {
-    QVariantList bitNames;
-    bitNames.append("dump");
-    bitNames.append("binary");
-    assert(bitNames.size() == ublox::message::CfgRinvFields::data_numOfValues);
-    return cc::Property::createPropertiesMap("flags", std::move(bitNames));
+    cc::property::field::ForField<CfgRinvFields::flags> props;
+    props.name("flags")
+         .add("dump")
+         .add("binary");
+    assert(props.bits().size() == CfgRinvFields::data_numOfValues);
+    return props.asMap();
 }
 
 QVariantList createFieldsProperties()
 {
     QVariantList props;
     props.append(createProps_flags());
-    props.append(cc::Property::createPropertiesMap("data"));
+    props.append(
+        cc::property::field::ForField<CfgRinvFields::data>().name("data").asMap());
 
     assert(props.size() == CfgRinv::FieldIdx_numOfValues);
     return props;

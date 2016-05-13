@@ -39,54 +39,59 @@ namespace message
 namespace
 {
 
+using ublox::message::CfgEkfFields;
+
 QVariantMap createProps_disableEkf()
 {
-    QVariantList enumValues;
-    cc::Property::appendEnumValue(enumValues, "Enabled");
-    cc::Property::appendEnumValue(enumValues, "Disabled");
-    assert(enumValues.size() == (int)ublox::message::CfgEkfFields::DisableEkf::NumOfValues);
-    return cc::Property::createPropertiesMap("disableEkf", std::move(enumValues));
+    cc::property::field::ForField<CfgEkfFields::disableEkf> props;
+    props.name("disableEkf")
+         .add("Enabled")
+         .add("Disabled");
+    assert(props.values().size() == (int)CfgEkfFields::DisableEkf::NumOfValues);
+    return props.asMap();
 }
 
 QVariantMap createProps_actionFlags()
 {
-    QVariantList bitNames;
-    bitNames.append(QVariant());
-    bitNames.append("clTab");
-    bitNames.append("clCalib");
-    bitNames.append(QVariant());
-    bitNames.append("nomTacho");
-    bitNames.append("nomGyro");
-    bitNames.append("setTemp");
-    bitNames.append("dir");
-    assert(bitNames.size() == ublox::message::CfgEkfFields::actionFlags_numOfValues);
-    return cc::Property::createPropertiesMap("actionFlags", std::move(bitNames));
+    cc::property::field::ForField<CfgEkfFields::actionFlags> props;
+    props.name("actionFlags")
+         .add(CfgEkfFields::actionFlags_clTab, "clTab")
+         .add("clCalib")
+         .add(CfgEkfFields::actionFlags_nomTacho, "nomTacho")
+         .add("nomGyro")
+         .add("setTemp")
+         .add("dir");
+    assert(props.bits().size() == CfgEkfFields::actionFlags_numOfValues);
+    return props.asMap();
 }
 
 QVariantMap createProps_configFlags()
 {
-    QVariantList bitNames;
-    bitNames.append("pulsesPerM");
-    bitNames.append("useSerWt");
-    assert(bitNames.size() == ublox::message::CfgEkfFields::configFlags_numOfValues);
-    return cc::Property::createPropertiesMap("configFlags", std::move(bitNames));
+    cc::property::field::ForField<CfgEkfFields::configFlags> props;
+    props.name("configFlags")
+         .add("pulsesPerM")
+         .add("useSerWt");
+    assert(props.bits().size() == CfgEkfFields::configFlags_numOfValues);
+    return props.asMap();
 }
 
 QVariantMap createProps_inverseFlags()
 {
-    QVariantList bitNames;
-    bitNames.append("invDir");
-    bitNames.append("invGyro");
-    assert(bitNames.size() == ublox::message::CfgEkfFields::inverseFlags_numOfValues);
-    return cc::Property::createPropertiesMap("inverseFlags", std::move(bitNames));
+    cc::property::field::ForField<CfgEkfFields::inverseFlags> props;
+    props.name("inverseFlags")
+         .add("invDir")
+         .add("invGyro");
+    assert(props.bits().size() == CfgEkfFields::inverseFlags_numOfValues);
+    return props.asMap();
 }
 
 QVariantMap createProps_rmsTemp()
 {
-    auto props = cc::Property::createPropertiesMap("rmsTemp");
-    cc::Property::setDisplayScaled(props);
-    cc::Property::setFloatDecimals(props, 1);
-    return props;
+    return
+        cc::property::field::ForField<CfgEkfFields::rmsTemp>()
+            .name("rmsTemp")
+            .scaledDecimals(1)
+            .asMap();
 }
 
 
@@ -98,11 +103,15 @@ QVariantList createFieldsProperties()
     props.append(createProps_configFlags());
     props.append(createProps_inverseFlags());
     props.append(field::common::props_reserved(2));
-    props.append(cc::Property::createPropertiesMap("nomPPDist"));
-    props.append(cc::Property::createPropertiesMap("nomZero"));
-    props.append(cc::Property::createPropertiesMap("nomSens"));
+    props.append(
+        cc::property::field::ForField<CfgEkfFields::nomPPDist>().name("nomPPDist").asMap());
+    props.append(
+        cc::property::field::ForField<CfgEkfFields::nomZero>().name("nomZero").asMap());
+    props.append(
+        cc::property::field::ForField<CfgEkfFields::nomSens>().name("nomSens").asMap());
     props.append(createProps_rmsTemp());
-    props.append(cc::Property::createPropertiesMap("tempUpdate"));
+    props.append(
+        cc::property::field::ForField<CfgEkfFields::tempUpdate>().name("tempUpdate").asMap());
     assert(props.size() == CfgEkf::FieldIdx_numOfValues);
     return props;
 }

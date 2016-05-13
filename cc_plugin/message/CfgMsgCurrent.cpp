@@ -41,11 +41,14 @@ namespace message
 namespace
 {
 
+using ublox::message::CfgMsgCurrentFields;
+
 QVariantList createFieldsProperties()
 {
     QVariantList props;
     props.append(cc_plugin::field::msgIdProperties());
-    props.append(cc::Property::createPropertiesMap("rate"));
+    props.append(
+        cc::property::field::ForField<CfgMsgCurrentFields::rate>().name("rate").asMap());
 
     assert(props.size() == CfgMsgCurrent::FieldIdx_numOfValues);
     return props;

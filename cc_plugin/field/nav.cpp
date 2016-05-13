@@ -43,7 +43,7 @@ QVariantMap createProps_ecef(const char* dir)
     return cc::Property::createPropertiesMap(QString("ecef%1").arg(dir));
 }
 
-QVariantMap createProps_gpsFix()
+QVariantMap createProps_gpsFix(const QString& propsName)
 {
     QVariantList enumValues;
     cc::Property::appendEnumValue(enumValues, "no fix");
@@ -53,7 +53,7 @@ QVariantMap createProps_gpsFix()
     cc::Property::appendEnumValue(enumValues, "GPS + dead reckoning combined");
     cc::Property::appendEnumValue(enumValues, "time only fix");
 
-    return cc::Property::createPropertiesMap("gpsFix", std::move(enumValues));
+    return cc::Property::createPropertiesMap(propsName, std::move(enumValues));
 }
 
 QVariantMap createProps_lon()
@@ -85,9 +85,9 @@ QVariantMap createProps_velX(char suffix)
     return cc::Property::createPropertiesMap(QString("vel%1").arg(suffix));
 }
 
-QVariantMap createProps_numCh()
+QVariantMap createProps_numCh(const QString& propsName)
 {
-    auto props = cc::Property::createPropertiesMap("numCh");
+    auto props = cc::Property::createPropertiesMap(propsName);
     cc::Property::setReadOnly(props);
     return props;
 }
@@ -191,7 +191,13 @@ const QVariantMap& props_vAcc()
 
 const QVariantMap& props_gpsFix()
 {
-    static const QVariantMap Props = createProps_gpsFix();
+    static const QVariantMap Props = createProps_gpsFix("gpsFix");
+    return Props;
+}
+
+const QVariantMap& props_fixType()
+{
+    static const QVariantMap Props = createProps_gpsFix("fixType");
     return Props;
 }
 
@@ -299,7 +305,13 @@ const QVariantMap& props_velD()
 
 const QVariantMap& props_numCh()
 {
-    static const QVariantMap Props = createProps_numCh();
+    static const QVariantMap Props = createProps_numCh("numCh");
+    return Props;
+}
+
+const QVariantMap& props_cnt()
+{
+    static const QVariantMap Props = createProps_numCh("cnt");
     return Props;
 }
 

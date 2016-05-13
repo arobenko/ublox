@@ -40,16 +40,19 @@ namespace message
 namespace
 {
 
+using ublox::message::NavSolFields;
+
 QVariantMap createProps_flags()
 {
-    QVariantList bitNames;
-    bitNames.append("GPSfixOK");
-    bitNames.append("DiffSoln");
-    bitNames.append("WKNSET");
-    bitNames.append("TOWSET");
+    cc::property::field::ForField<NavSolFields::flags> props;
+    props.name("flags")
+         .add("GPSfixOK")
+         .add("DiffSoln")
+         .add("WKNSET")
+         .add("TOWSET");
 
-    assert(bitNames.size() == ublox::message::NavSolFields::flags_numOfValues);
-    return cc::Property::createPropertiesMap("flags", std::move(bitNames));
+    assert(props.bits().size() == NavSolFields::flags_numOfValues);
+    return props.asMap();
 }
 
 QVariantList createFieldsProperties()

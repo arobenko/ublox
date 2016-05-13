@@ -70,6 +70,7 @@ struct NavSvinfoFields
         flags_orbitEph, ///< @b orbitEph bit index
         flags_unhealthy, ///< @b unhealthy bit index
         flags_orbitAlm, ///< @b orbitAlm bit index
+        flags_orbitAop, ///< @b orbitAop bit index
         flags_smoothed, ///< @b smoothed bit index
         flags_numOfValues ///< number of available bits
     };

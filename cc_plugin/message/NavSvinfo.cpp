@@ -42,74 +42,119 @@ namespace message
 namespace
 {
 
+using ublox::message::NavSvinfoFields;
+
+QVariantMap createProps_chn()
+{
+    return
+        cc::property::field::ForField<NavSvinfoFields::chn>()
+            .name("chn")
+            .asMap();
+}
+
 QVariantMap createProps_globalFlags()
 {
-    QVariantList chipGenValues;
-    cc::Property::appendEnumValue(chipGenValues, "Antaris");
-    cc::Property::appendEnumValue(chipGenValues, "ublox-5");
-    cc::Property::appendEnumValue(chipGenValues, "ublox-6");
-    assert(chipGenValues.size() == (int)ublox::message::NavSvinfoFields::ChipGen::NumOfValues);
-    auto chipGenProps = cc::Property::createPropertiesMap("chipGen", std::move(chipGenValues));
-    cc::Property::setSerialisedHidden(chipGenProps);
+    cc::property::field::ForField<NavSvinfoFields::chipGen> chipGenProps;
+    chipGenProps.name("chipGen")
+                .add("Antaris")
+                .add("ublox-5")
+                .add("ublox-6")
+                .serialisedHidden();
+    assert(chipGenProps.values().size() == (int)NavSvinfoFields::ChipGen::NumOfValues);
 
-    auto reservedProps = cc::Property::createPropertiesMap("reserved");
-    cc::Property::setFieldHidden(reservedProps);
+    auto reservedProps =
+        cc::property::field::IntValue().name("reserved").hidden();
 
-    QVariantList membersData;
-    membersData.append(std::move(chipGenProps));
-    membersData.append(std::move(reservedProps));
-    assert(membersData.size() == ublox::message::NavSvinfoFields::globalFlags_numOfValues);
-    return cc::Property::createPropertiesMap("globalFlags", std::move(membersData));
+    cc::property::field::ForField<NavSvinfoFields::globalFlags> props;
+    props.name("globalFlags")
+         .add(chipGenProps.asMap())
+         .add(reservedProps.asMap());
+    assert(props.members().size() == NavSvinfoFields::globalFlags_numOfValues);
+    return props.asMap();
 }
 
 QVariantMap createProps_flags()
 {
-    QVariantList bitNames;
-    bitNames.append("svUsed");
-    bitNames.append("diffCorr");
-    bitNames.append("orbitAvail");
-    bitNames.append("orbitEph");
-    bitNames.append("unhealthy");
-    bitNames.append("orbitAlm");
-    bitNames.append("orbitAop");
-    bitNames.append("smoothed");
-    return cc::Property::createPropertiesMap("flags", std::move(bitNames));
+    cc::property::field::ForField<NavSvinfoFields::flags> props;
+    props.name("flags")
+         .add("svUsed")
+         .add("diffCorr")
+         .add("orbitAvail")
+         .add("orbitEph")
+         .add("unhealthy")
+         .add("orbitAlm")
+         .add("orbitAop")
+         .add("smoothed");
+    assert(props.bits().size() == NavSvinfoFields::flags_numOfValues);
+    return props.asMap();
 }
 
 QVariantMap createProps_quality()
 {
-    QVariantList enumValues;
-    cc::Property::appendEnumValue(enumValues, "Idle");
-    cc::Property::appendEnumValue(enumValues, "Searching");
-    cc::Property::appendEnumValue(enumValues, "Signal acquired");
-    cc::Property::appendEnumValue(enumValues, "Signal unusable");
-    cc::Property::appendEnumValue(enumValues, "Code Lock");
-    cc::Property::appendEnumValue(enumValues, "Code and Carrier Locked");
-    cc::Property::appendEnumValue(enumValues, "Code and Carrier Locked");
-    cc::Property::appendEnumValue(enumValues, "Code and Carrier Locked");
-    return cc::Property::createPropertiesMap("quality", std::move(enumValues));
+    cc::property::field::ForField<NavSvinfoFields::quality> props;
+    props.name("quality")
+         .add("Idle")
+         .add("Searching")
+         .add("Signal acquired")
+         .add("Signal unusable")
+         .add("Code Lock")
+         .add("Code and Carrier Locked")
+         .add("Code and Carrier Locked")
+         .add("Code and Carrier Locked");
+    assert(props.values().size() == (int)NavSvinfoFields::QualityInd::NumOfValues);
+    return props.asMap();
 }
 
+QVariantMap createProps_cno()
+{
+    return
+        cc::property::field::ForField<NavSvinfoFields::cno>()
+            .name("cno")
+            .asMap();
+}
+
+QVariantMap createProps_elev()
+{
+    return
+        cc::property::field::ForField<NavSvinfoFields::elev>()
+            .name("elev")
+            .asMap();
+}
+
+QVariantMap createProps_azim()
+{
+    return
+        cc::property::field::ForField<NavSvinfoFields::azim>()
+            .name("azim")
+            .asMap();
+}
+
+QVariantMap createProps_prRes()
+{
+    return
+        cc::property::field::ForField<NavSvinfoFields::prRes>()
+            .name("prRes")
+            .asMap();
+}
 
 QVariantMap createProps_data()
 {
-    QVariantList membersData;
-    membersData.append(cc::Property::createPropertiesMap("chn"));
-    membersData.append(cc_plugin::field::nav::props_svid());
-    membersData.append(createProps_flags());
-    membersData.append(createProps_quality());
-    membersData.append(cc::Property::createPropertiesMap("cno"));
-    membersData.append(cc::Property::createPropertiesMap("elev"));
-    membersData.append(cc::Property::createPropertiesMap("azim"));
-    membersData.append(cc::Property::createPropertiesMap("prRes"));
-    assert(membersData.size() == ublox::message::NavSvinfoFields::block_numOfValues);
+    cc::property::field::ForField<NavSvinfoFields::block> blockProps;
+    blockProps.add(createProps_chn())
+              .add(cc_plugin::field::nav::props_svid())
+              .add(createProps_flags())
+              .add(createProps_quality())
+              .add(createProps_cno())
+              .add(createProps_elev())
+              .add(createProps_azim())
+              .add(createProps_prRes());
+    assert(blockProps.members().size() == NavSvinfoFields::block_numOfValues);
 
-    QVariantMap bundleProps;
-    cc::Property::setData(bundleProps, std::move(membersData));
-
-    auto props = cc::Property::createPropertiesMap("data", std::move(bundleProps));
-    cc::Property::setSerialisedHidden(props);
-    return props;
+    return
+        cc::property::field::ForField<NavSvinfoFields::data>()
+            .name("data")
+            .serialisedHidden()
+            .asMap();
 }
 
 QVariantList createFieldsProperties()

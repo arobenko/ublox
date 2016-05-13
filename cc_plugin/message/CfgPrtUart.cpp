@@ -42,51 +42,52 @@ namespace message
 namespace
 {
 
+using ublox::message::CfgPrtUartFields;
+
 QVariantMap createProps_mode()
 {
-    QVariantList charLenEnumValues;
-    cc::Property::appendEnumValue(charLenEnumValues, "5bit");
-    cc::Property::appendEnumValue(charLenEnumValues, "6bit");
-    cc::Property::appendEnumValue(charLenEnumValues, "7bit");
-    cc::Property::appendEnumValue(charLenEnumValues, "8bit");
-    assert(charLenEnumValues.size() == (int)ublox::message::CfgPrtUartFields::CharLen::NumOfValues);
-    auto charLenProps = cc::Property::createPropertiesMap("charLen", std::move(charLenEnumValues));
-    cc::Property::setSerialisedHidden(charLenProps);
+    cc::property::field::ForField<CfgPrtUartFields::charLen> charLenProps;
+    charLenProps.name("charLen")
+                .add("5bit")
+                .add("6bit")
+                .add("7bit")
+                .add("8bit")
+                .serialisedHidden();
+    assert(charLenProps.values().size() == (int)CfgPrtUartFields::CharLen::NumOfValues);
 
-    QVariantList parityEnumValues;
-    cc::Property::appendEnumValue(parityEnumValues, "Even", (int)ublox::message::CfgPrtUartFields::Parity::Even);
-    cc::Property::appendEnumValue(parityEnumValues, "Odd", (int)ublox::message::CfgPrtUartFields::Parity::Odd);
-    cc::Property::appendEnumValue(parityEnumValues, "No Parity", (int)ublox::message::CfgPrtUartFields::Parity::NoParity);
-    cc::Property::appendEnumValue(parityEnumValues, "No Parity(2)", (int)ublox::message::CfgPrtUartFields::Parity::NoParity2);
-    auto parityProps = cc::Property::createPropertiesMap("parity", std::move(parityEnumValues));
-    cc::Property::setSerialisedHidden(parityProps);
+    cc::property::field::ForField<CfgPrtUartFields::parity> parityProps;
+    parityProps.name("parity")
+               .add("Even", (int)CfgPrtUartFields::Parity::Even)
+               .add("Odd", (int)CfgPrtUartFields::Parity::Odd)
+               .add("No Parity", (int)CfgPrtUartFields::Parity::NoParity)
+               .add("No Parity(2)", (int)CfgPrtUartFields::Parity::NoParity2)
+               .serialisedHidden();
 
-    QVariantList nStopBitsEnumValues;
-    cc::Property::appendEnumValue(nStopBitsEnumValues, "1");
-    cc::Property::appendEnumValue(nStopBitsEnumValues, "1.5");
-    cc::Property::appendEnumValue(nStopBitsEnumValues, "2");
-    cc::Property::appendEnumValue(nStopBitsEnumValues, "0.5");
-    assert(nStopBitsEnumValues.size() == (int)ublox::message::CfgPrtUartFields::StopBits::NumOfValues);
-    auto nStopBitsProps = cc::Property::createPropertiesMap("nStopBits", std::move(nStopBitsEnumValues));
-    cc::Property::setSerialisedHidden(nStopBitsProps);
+    cc::property::field::ForField<CfgPrtUartFields::nStopBits> nStopBitsProps;
+    nStopBitsProps.name("nStopBits")
+                  .add("1")
+                  .add("1.5")
+                  .add("2")
+                  .add("0.5")
+                  .serialisedHidden();
+    assert(nStopBitsProps.values().size() == (int)CfgPrtUartFields::StopBits::NumOfValues);
 
     auto createReservedFunc =
         []() -> QVariantMap
         {
-            QVariantMap props;
-            cc::Property::setFieldHidden(props);
-            return props;
+            return cc::property::field::IntValue().hidden().asMap();
         };
 
-    QVariantList membersData;
-    membersData.append(createReservedFunc());
-    membersData.append(std::move(charLenProps));
-    membersData.append(createReservedFunc());
-    membersData.append(std::move(parityProps));
-    membersData.append(std::move(nStopBitsProps));
-    membersData.append(createReservedFunc());
-    assert(membersData.size() == ublox::message::CfgPrtUartFields::mode_numOfValues);
-    return cc::Property::createPropertiesMap("mode", std::move(membersData));
+    cc::property::field::ForField<CfgPrtUartFields::mode> props;
+    props.name("mode")
+         .add(createReservedFunc())
+         .add(charLenProps.asMap())
+         .add(createReservedFunc())
+         .add(parityProps.asMap())
+         .add(nStopBitsProps.asMap())
+         .add(createReservedFunc());
+    assert(props.members().size() == CfgPrtUartFields::mode_numOfValues);
+    return props.asMap();
 }
 
 QVariantList createFieldsProperties()
@@ -96,7 +97,8 @@ QVariantList createFieldsProperties()
     props.append(cc_plugin::field::common::props_reserved(0));
     props.append(cc_plugin::field::cfg::props_txReady());
     props.append(createProps_mode());
-    props.append(cc::Property::createPropertiesMap("baudRate"));
+    props.append(
+        cc::property::field::ForField<CfgPrtUartFields::baudRate>().name("baudRate").asMap());
     props.append(cc_plugin::field::cfg::props_inProtoMask());
     props.append(cc_plugin::field::cfg::props_outProtoMask());
     props.append(cc_plugin::field::cfg::props_prtFlags());
