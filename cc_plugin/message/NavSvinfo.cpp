@@ -153,6 +153,7 @@ QVariantMap createProps_data()
     return
         cc::property::field::ForField<NavSvinfoFields::data>()
             .name("data")
+            .add(blockProps.asMap())
             .serialisedHidden()
             .asMap();
 }

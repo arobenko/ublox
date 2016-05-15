@@ -39,28 +39,41 @@ namespace message
 namespace
 {
 
+using ublox::message::LogRetrievestringFields;
+
 QVariantMap createProps_byteCount()
 {
-    auto props = cc::Property::createPropertiesMap("byteCount");
-    cc::Property::setReadOnly(props);
-    return props;
+    return
+        cc::property::field::ForField<LogRetrievestringFields::byteCount>()
+            .name("byteCount")
+            .readOnly()
+            .asMap();
 }
 
 QVariantList createFieldsProperties()
 {
     QVariantList props;
-    props.append(cc::Property::createPropertiesMap("entryIdx"));
-    props.append(cc::Property::createPropertiesMap("version"));
+    props.append(
+        cc::property::field::ForField<LogRetrievestringFields::entryIndex>().name("entryIndex").asMap());
+    props.append(
+        cc::property::field::ForField<LogRetrievestringFields::version>().name("version").asMap());
     props.append(cc_plugin::field::common::props_reserved(1));
-    props.append(cc::Property::createPropertiesMap("year"));
-    props.append(cc::Property::createPropertiesMap("month"));
-    props.append(cc::Property::createPropertiesMap("day"));
-    props.append(cc::Property::createPropertiesMap("hour"));
-    props.append(cc::Property::createPropertiesMap("minute"));
-    props.append(cc::Property::createPropertiesMap("second"));
+    props.append(
+        cc::property::field::ForField<LogRetrievestringFields::year>().name("year").asMap());
+    props.append(
+        cc::property::field::ForField<LogRetrievestringFields::month>().name("month").asMap());
+    props.append(
+        cc::property::field::ForField<LogRetrievestringFields::day>().name("day").asMap());
+    props.append(
+        cc::property::field::ForField<LogRetrievestringFields::hour>().name("hour").asMap());
+    props.append(
+        cc::property::field::ForField<LogRetrievestringFields::minute>().name("minute").asMap());
+    props.append(
+        cc::property::field::ForField<LogRetrievestringFields::second>().name("second").asMap());
     props.append(cc_plugin::field::common::props_reserved(2));
     props.append(createProps_byteCount());
-    props.append(cc::Property::createPropertiesMap("bytes"));
+    props.append(
+        cc::property::field::ForField<LogRetrievestringFields::bytes>().name("bytes").asMap());
     assert(props.size() == LogRetrievestring::FieldIdx_numOfValues);
     return props;
 }

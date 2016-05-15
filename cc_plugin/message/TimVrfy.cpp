@@ -39,23 +39,32 @@ namespace message
 namespace
 {
 
+using ublox::message::TimVrfyFields;
+
 QVariantMap createProps_flags()
 {
-    QVariantList enumValues;
-    cc::Property::appendEnumValue(enumValues, "None", (int)ublox::message::TimVrfyFields::Src::None);
-    cc::Property::appendEnumValue(enumValues, "RTC", (int)ublox::message::TimVrfyFields::Src::Rtc);
-    cc::Property::appendEnumValue(enumValues, "AID-INI", (int)ublox::message::TimVrfyFields::Src::AidIni);
-    return cc::Property::createPropertiesMap("src", std::move(enumValues));
+    return
+        cc::property::field::ForField<TimVrfyFields::src>()
+            .name("src")
+            .add("None", (int)TimVrfyFields::Src::None)
+            .add("RTC", (int)TimVrfyFields::Src::Rtc)
+            .add("AID-INI", (int)TimVrfyFields::Src::AidIni)
+            .asMap();
 }
 
 QVariantList createFieldsProperties()
 {
     QVariantList props;
-    props.append(cc::Property::createPropertiesMap("itow"));
-    props.append(cc::Property::createPropertiesMap("frac"));
-    props.append(cc::Property::createPropertiesMap("deltaMS"));
-    props.append(cc::Property::createPropertiesMap("deltaNS"));
-    props.append(cc::Property::createPropertiesMap("wno"));
+    props.append(
+        cc::property::field::ForField<TimVrfyFields::itow>().name("itow").asMap());
+    props.append(
+        cc::property::field::ForField<TimVrfyFields::frac>().name("frac").asMap());
+    props.append(
+        cc::property::field::ForField<TimVrfyFields::deltaMS>().name("deltaMS").asMap());
+    props.append(
+        cc::property::field::ForField<TimVrfyFields::deltaNS>().name("deltaNS").asMap());
+    props.append(
+        cc::property::field::ForField<TimVrfyFields::wno>().name("wno").asMap());
     props.append(createProps_flags());
     props.append(cc_plugin::field::common::props_reserved(1));
 

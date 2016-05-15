@@ -39,43 +39,60 @@ namespace message
 namespace
 {
 
+using ublox::message::LogInfoFields;
+
 QVariantMap createProps_status()
 {
-    QVariantList bitNames;
-    bitNames.append(QVariant());
-    bitNames.append(QVariant());
-    bitNames.append(QVariant());
-    bitNames.append("recording");
-    bitNames.append("inactive");
-    bitNames.append("circular");
-    assert(bitNames.size() == ublox::message::LogInfoFields::status_numOfValues);
-    return cc::Property::createPropertiesMap("status", std::move(bitNames));
+    cc::property::field::ForField<LogInfoFields::status> props;
+    props.name("status")
+         .add(LogInfoFields::status_recording, "recording")
+         .add("inactive")
+         .add("circular");
+    assert(props.bits().size() == LogInfoFields::status_numOfValues);
+    return props.asMap();
 }
 
 QVariantList createFieldsProperties()
 {
     QVariantList props;
-    props.append(cc::Property::createPropertiesMap("version"));
+    props.append(
+        cc::property::field::ForField<LogInfoFields::version>().name("version").asMap());
     props.append(cc_plugin::field::common::props_reserved(1));
-    props.append(cc::Property::createPropertiesMap("filestoreCapacity"));
+    props.append(
+        cc::property::field::ForField<LogInfoFields::filestoreCapacity>().name("filestoreCapacity").asMap());
     props.append(cc_plugin::field::common::props_reserved(2));
     props.append(cc_plugin::field::common::props_reserved(3));
-    props.append(cc::Property::createPropertiesMap("currentMaxLogSize"));
-    props.append(cc::Property::createPropertiesMap("currentLogSize"));
-    props.append(cc::Property::createPropertiesMap("entryCount"));
-    props.append(cc::Property::createPropertiesMap("oldestYear"));
-    props.append(cc::Property::createPropertiesMap("oldestMonth"));
-    props.append(cc::Property::createPropertiesMap("oldestDay"));
-    props.append(cc::Property::createPropertiesMap("oldestHour"));
-    props.append(cc::Property::createPropertiesMap("oldestMinute"));
-    props.append(cc::Property::createPropertiesMap("oldestSecond"));
+    props.append(
+        cc::property::field::ForField<LogInfoFields::currentMaxLogSize>().name("currentMaxLogSize").asMap());
+    props.append(
+        cc::property::field::ForField<LogInfoFields::currentLogSize>().name("currentLogSize").asMap());
+    props.append(
+        cc::property::field::ForField<LogInfoFields::entryCount>().name("entryCount").asMap());
+    props.append(
+        cc::property::field::ForField<LogInfoFields::oldestYear>().name("oldestYear").asMap());
+    props.append(
+        cc::property::field::ForField<LogInfoFields::oldestMonth>().name("oldestMonth").asMap());
+    props.append(
+        cc::property::field::ForField<LogInfoFields::oldestDay>().name("oldestDay").asMap());
+    props.append(
+        cc::property::field::ForField<LogInfoFields::oldestHour>().name("oldestHour").asMap());
+    props.append(
+        cc::property::field::ForField<LogInfoFields::oldestMinute>().name("oldestMinute").asMap());
+    props.append(
+        cc::property::field::ForField<LogInfoFields::oldestSecond>().name("oldestSecond").asMap());
     props.append(cc_plugin::field::common::props_reserved(4));
-    props.append(cc::Property::createPropertiesMap("newestYear"));
-    props.append(cc::Property::createPropertiesMap("newestMonth"));
-    props.append(cc::Property::createPropertiesMap("newestDay"));
-    props.append(cc::Property::createPropertiesMap("newestHour"));
-    props.append(cc::Property::createPropertiesMap("newestMinute"));
-    props.append(cc::Property::createPropertiesMap("newestSecond"));
+    props.append(
+        cc::property::field::ForField<LogInfoFields::newestYear>().name("newestYear").asMap());
+    props.append(
+        cc::property::field::ForField<LogInfoFields::newestMonth>().name("newestMonth").asMap());
+    props.append(
+        cc::property::field::ForField<LogInfoFields::newestDay>().name("newestDay").asMap());
+    props.append(
+        cc::property::field::ForField<LogInfoFields::newestHour>().name("newestHour").asMap());
+    props.append(
+        cc::property::field::ForField<LogInfoFields::newestMinute>().name("newestMinute").asMap());
+    props.append(
+        cc::property::field::ForField<LogInfoFields::newestSecond>().name("newestSecond").asMap());
     props.append(cc_plugin::field::common::props_reserved(5));
     props.append(createProps_status());
     props.append(cc_plugin::field::common::props_reserved(6));

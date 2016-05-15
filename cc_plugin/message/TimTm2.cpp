@@ -38,61 +38,64 @@ namespace message
 namespace
 {
 
-QVariantMap createProps_towSubMS()
-{
-    auto props = cc::Property::createPropertiesMap("towSubMS");
-    cc::Property::setDisplayScaled(props);
-    cc::Property::setFloatDecimals(props, 2);
-    return props;
-}
+using ublox::message::TimTm2Fields;
 
 QVariantMap createProps_flags()
 {
-    QVariantList lowBitNames;
-    lowBitNames.append("mode");
-    lowBitNames.append("run");
-    lowBitNames.append("newFallingEdge");
-    assert(lowBitNames.size() == ublox::message::TimTm2Fields::flagsLowBits_numOfValues);
-    auto lowFlagsProps = cc::Property::createPropertiesMap("flags", std::move(lowBitNames));
-    cc::Property::setSerialisedHidden(lowFlagsProps);
+    cc::property::field::ForField<TimTm2Fields::flagsLowBits> lowFlagsProps;
+    lowFlagsProps.name("flags")
+                 .add("mode")
+                 .add("run")
+                 .add("newFallingEdge")
+                 .serialisedHidden();
+    assert(lowFlagsProps.bits().size() == TimTm2Fields::flagsLowBits_numOfValues);
 
-    QVariantList timeBaseEnumValues;
-    cc::Property::appendEnumValue(timeBaseEnumValues, "Receiver Time");
-    cc::Property::appendEnumValue(timeBaseEnumValues, "GPS");
-    cc::Property::appendEnumValue(timeBaseEnumValues, "UTC");
-    assert(timeBaseEnumValues.size() == (int)ublox::message::TimTm2Fields::TimeBase::NumOfValues);
-    auto timeBaseProps = cc::Property::createPropertiesMap("timeBase", std::move(timeBaseEnumValues));
-    cc::Property::setSerialisedHidden(timeBaseProps);
+    cc::property::field::ForField<TimTm2Fields::timeBase> timeBaseProps;
+    timeBaseProps.name("timeBase")
+                 .add("Receiver Time")
+                 .add("GPS")
+                 .add("UTC")
+                 .serialisedHidden();
+    assert(timeBaseProps.values().size() == (int)TimTm2Fields::TimeBase::NumOfValues);
 
-    QVariantList highBitNames;
-    highBitNames.append("utc");
-    highBitNames.append("time");
-    highBitNames.append("newRisingEdge");
-    assert(highBitNames.size() == ublox::message::TimTm2Fields::flagsHighBits_numOfValues);
-    auto highFlagsProps = cc::Property::createPropertiesMap(QString(), std::move(highBitNames));
-    cc::Property::setSerialisedHidden(highFlagsProps);
+    cc::property::field::ForField<TimTm2Fields::flagsHighBits> highFlagsProps;
+    highFlagsProps.add("utc")
+                  .add("time")
+                  .add("newRisingEdge")
+                  .serialisedHidden();
+    assert(highFlagsProps.bits().size() == TimTm2Fields::flagsHighBits_numOfValues);
 
-    QVariantList membersData;
-    membersData.append(std::move(lowFlagsProps));
-    membersData.append(std::move(timeBaseProps));
-    membersData.append(std::move(highFlagsProps));
-    assert(membersData.size() == ublox::message::TimTm2Fields::flags_numOfValues);
-    return cc::Property::createPropertiesMap("flags", std::move(membersData));
+    cc::property::field::ForField<TimTm2Fields::flags> props;
+    props.name("flags")
+         .add(lowFlagsProps.asMap())
+         .add(timeBaseProps.asMap())
+         .add(highFlagsProps.asMap());
+    assert(props.members().size() == TimTm2Fields::flags_numOfValues);
+    return props.asMap();
 }
 
 QVariantList createFieldsProperties()
 {
     QVariantList props;
-    props.append(cc::Property::createPropertiesMap("ch"));
+    props.append(
+        cc::property::field::ForField<TimTm2Fields::ch>().name("ch").asMap());
     props.append(createProps_flags());
-    props.append(cc::Property::createPropertiesMap("count"));
-    props.append(cc::Property::createPropertiesMap("wnR"));
-    props.append(cc::Property::createPropertiesMap("wnF"));
-    props.append(cc::Property::createPropertiesMap("towMsR"));
-    props.append(cc::Property::createPropertiesMap("towSubMsR"));
-    props.append(cc::Property::createPropertiesMap("towMsF"));
-    props.append(cc::Property::createPropertiesMap("towSubMsF"));
-    props.append(cc::Property::createPropertiesMap("accEst"));
+    props.append(
+        cc::property::field::ForField<TimTm2Fields::count>().name("count").asMap());
+    props.append(
+        cc::property::field::ForField<TimTm2Fields::wnR>().name("wnR").asMap());
+    props.append(
+        cc::property::field::ForField<TimTm2Fields::wnF>().name("wnF").asMap());
+    props.append(
+        cc::property::field::ForField<TimTm2Fields::towMsR>().name("towMsR").asMap());
+    props.append(
+        cc::property::field::ForField<TimTm2Fields::towSubMsR>().name("towSubMsR").asMap());
+    props.append(
+        cc::property::field::ForField<TimTm2Fields::towMsF>().name("towMsF").asMap());
+    props.append(
+        cc::property::field::ForField<TimTm2Fields::towSubMsF>().name("towSubMsF").asMap());
+    props.append(
+        cc::property::field::ForField<TimTm2Fields::accEst>().name("accEst").asMap());
     assert(props.size() == TimTm2::FieldIdx_numOfValues);
     return props;
 }

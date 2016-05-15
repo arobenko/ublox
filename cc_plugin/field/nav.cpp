@@ -40,56 +40,68 @@ namespace
 
 QVariantMap createProps_ecef(const char* dir)
 {
-    return cc::Property::createPropertiesMap(QString("ecef%1").arg(dir));
+    return
+        cc::property::field::ForField<ublox::field::nav::ecef>()
+            .name(QString("ecef%1").arg(dir))
+            .asMap();
 }
 
 QVariantMap createProps_gpsFix(const QString& propsName)
 {
-    QVariantList enumValues;
-    cc::Property::appendEnumValue(enumValues, "no fix");
-    cc::Property::appendEnumValue(enumValues, "dead reckoning only");
-    cc::Property::appendEnumValue(enumValues, "2D-fix");
-    cc::Property::appendEnumValue(enumValues, "3D-fix");
-    cc::Property::appendEnumValue(enumValues, "GPS + dead reckoning combined");
-    cc::Property::appendEnumValue(enumValues, "time only fix");
-
-    return cc::Property::createPropertiesMap(propsName, std::move(enumValues));
+    cc::property::field::ForField<ublox::field::nav::gpsFix> props;
+    props.name(propsName)
+         .add("no fix")
+         .add("dead reckoning only")
+         .add("2D-fix")
+         .add("3D-fix")
+         .add("GPS + dead reckoning combined")
+         .add("time only fix");
+    assert(props.values().size() == (int)ublox::field::nav::GpsFix::NumOfValues);
+    return props.asMap();
 }
 
 QVariantMap createProps_lon()
 {
-    auto props = cc::Property::createPropertiesMap("lon");
-    cc::Property::setDisplayScaled(props);
-    cc::Property::setFloatDecimals(props, 7);
-    return props;
+    return
+        cc::property::field::ForField<ublox::field::nav::lon>()
+            .name("lon")
+            .scaledDecimals(7)
+            .asMap();
 }
 
 QVariantMap createProps_lat()
 {
-    auto props = cc::Property::createPropertiesMap("lat");
-    cc::Property::setDisplayScaled(props);
-    cc::Property::setFloatDecimals(props, 7);
-    return props;
+    return
+        cc::property::field::ForField<ublox::field::nav::lat>()
+            .name("lat")
+            .scaledDecimals(7)
+            .asMap();
 }
 
 QVariantMap createProps_heading()
 {
-    auto props = cc::Property::createPropertiesMap("heading");
-    cc::Property::setDisplayScaled(props);
-    cc::Property::setFloatDecimals(props, 5);
-    return props;
+    return
+        cc::property::field::ForField<ublox::field::nav::heading>()
+            .name("heading")
+            .scaledDecimals(5)
+            .asMap();
 }
 
 QVariantMap createProps_velX(char suffix)
 {
-    return cc::Property::createPropertiesMap(QString("vel%1").arg(suffix));
+    return
+        cc::property::field::IntValue()
+            .name(QString("vel%1").arg(suffix))
+            .asMap();
 }
 
 QVariantMap createProps_numCh(const QString& propsName)
 {
-    auto props = cc::Property::createPropertiesMap(propsName);
-    cc::Property::setReadOnly(props);
-    return props;
+    return
+        cc::property::field::IntValue()
+            .name(propsName)
+            .readOnly()
+            .asMap();
 }
 
 }  // namespace
@@ -101,7 +113,10 @@ const QVariantMap& props_iTOW()
 
 const QVariantMap& props_fTOW()
 {
-    static const QVariantMap Props = cc::Property::createPropertiesMap("fTOW");
+    static const QVariantMap Props =
+        cc::property::field::ForField<ublox::field::nav::fTOW>()
+            .name("fTOW")
+            .asMap();
     return Props;
 }
 
@@ -143,13 +158,19 @@ const QVariantMap& props_ecefVZ()
 
 const QVariantMap& props_pAcc()
 {
-    static const QVariantMap Props = cc::Property::createPropertiesMap("pAcc");
+    static const QVariantMap Props =
+        cc::property::field::ForField<ublox::field::nav::pAcc>()
+            .name("pAcc")
+            .asMap();
     return Props;
 }
 
 const QVariantMap& props_sAcc()
 {
-    static const QVariantMap Props = cc::Property::createPropertiesMap("sAcc");
+    static const QVariantMap Props =
+        cc::property::field::ForField<ublox::field::nav::sAcc>()
+            .name("sAcc")
+            .asMap();
     return Props;
 }
 
@@ -167,25 +188,37 @@ const QVariantMap& props_lat()
 
 const QVariantMap& props_height()
 {
-    static const QVariantMap Props = cc::Property::createPropertiesMap("height");
+    static const QVariantMap Props =
+        cc::property::field::ForField<ublox::field::nav::height>()
+            .name("height")
+            .asMap();
     return Props;
 }
 
 const QVariantMap& props_hMSL()
 {
-    static const QVariantMap Props = cc::Property::createPropertiesMap("hMSL");
+    static const QVariantMap Props =
+        cc::property::field::ForField<ublox::field::nav::hMSL>()
+            .name("hMSL")
+            .asMap();
     return Props;
 }
 
 const QVariantMap& props_hAcc()
 {
-    static const QVariantMap Props = cc::Property::createPropertiesMap("hAcc");
+    static const QVariantMap Props =
+        cc::property::field::ForField<ublox::field::nav::hAcc>()
+            .name("hAcc")
+            .asMap();
     return Props;
 }
 
 const QVariantMap& props_vAcc()
 {
-    static const QVariantMap Props = cc::Property::createPropertiesMap("vAcc");
+    static const QVariantMap Props =
+        cc::property::field::ForField<ublox::field::nav::vAcc>()
+            .name("vAcc")
+            .asMap();
     return Props;
 }
 
@@ -203,10 +236,11 @@ const QVariantMap& props_fixType()
 
 QVariantMap createProps_xDOP(char prefix)
 {
-    auto props = cc::Property::createPropertiesMap(QString("%1DOP").arg(prefix));
-    cc::Property::setDisplayScaled(props);
-    cc::Property::setFloatDecimals(props, 2);
-    return props;
+    return
+        cc::property::field::IntValue()
+            .name(QString("%1DOP").arg(prefix))
+            .scaledDecimals(2)
+            .asMap();
 }
 
 const QVariantMap& props_pDOP()
@@ -227,55 +261,82 @@ const QVariantMap& props_numSV()
 
 const QVariantMap& props_year()
 {
-    static const QVariantMap Props = cc::Property::createPropertiesMap("year");
+    static const QVariantMap Props =
+        cc::property::field::ForField<ublox::field::nav::year>()
+            .name("year")
+            .asMap();
     return Props;
 }
 
 const QVariantMap& props_month()
 {
-    static const QVariantMap Props = cc::Property::createPropertiesMap("month");
+    static const QVariantMap Props =
+        cc::property::field::ForField<ublox::field::nav::month>()
+            .name("month")
+            .asMap();
     return Props;
 }
 
 const QVariantMap& props_day()
 {
-    static const QVariantMap Props = cc::Property::createPropertiesMap("day");
+    static const QVariantMap Props =
+        cc::property::field::ForField<ublox::field::nav::day>()
+            .name("day")
+            .asMap();
     return Props;
 }
 
 const QVariantMap& props_hour()
 {
-    static const QVariantMap Props = cc::Property::createPropertiesMap("hour");
+    static const QVariantMap Props =
+        cc::property::field::ForField<ublox::field::nav::hour>()
+            .name("hour")
+            .asMap();
     return Props;
 }
 
 const QVariantMap& props_min()
 {
-    static const QVariantMap Props = cc::Property::createPropertiesMap("min");
+    static const QVariantMap Props =
+        cc::property::field::ForField<ublox::field::nav::min>()
+            .name("min")
+            .asMap();
     return Props;
 }
 
 const QVariantMap& props_sec()
 {
-    static const QVariantMap Props = cc::Property::createPropertiesMap("sec");
+    static const QVariantMap Props =
+        cc::property::field::ForField<ublox::field::nav::sec>()
+            .name("sec")
+            .asMap();
     return Props;
 }
 
 const QVariantMap& props_tAcc()
 {
-    static const QVariantMap Props = cc::Property::createPropertiesMap("tAcc");
+    static const QVariantMap Props =
+        cc::property::field::ForField<ublox::field::nav::tAcc>()
+            .name("tAcc")
+            .asMap();
     return Props;
 }
 
 const QVariantMap& props_nano()
 {
-    static const QVariantMap Props = cc::Property::createPropertiesMap("nano");
+    static const QVariantMap Props =
+        cc::property::field::ForField<ublox::field::nav::nano>()
+            .name("nano")
+            .asMap();
     return Props;
 }
 
 const QVariantMap& props_gSpeed()
 {
-    static const QVariantMap Props = cc::Property::createPropertiesMap("gSpeed");
+    static const QVariantMap Props =
+        cc::property::field::IntValue()
+            .name("gSpeed")
+            .asMap();
     return Props;
 }
 

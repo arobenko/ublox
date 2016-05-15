@@ -40,9 +40,12 @@ namespace
 
 QVariantMap createProps_numSV()
 {
-    auto props = common::props_numSV();
-    cc::Property::setReadOnly(props);
-    return props;
+    static const auto Props =
+        cc::property::field::ForField<ublox::field::rxm::numSV>()
+            .name("numSV")
+            .readOnly()
+            .asMap();
+    return Props;
 }
 
 }  // namespace

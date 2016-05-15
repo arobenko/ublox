@@ -110,6 +110,7 @@ QVariantMap createProps_data()
     return
         cc::property::field::ForField<NavDgpsFields::data>()
             .name("data")
+            .add(blockProps.asMap())
             .serialisedHidden()
             .asMap();
 }

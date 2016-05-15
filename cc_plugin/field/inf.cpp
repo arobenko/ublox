@@ -35,7 +35,10 @@ namespace inf
 
 const QVariantMap& props_str()
 {
-    static const QVariantMap Props = cc::Property::createPropertiesMap("str");
+    static const auto Props =
+        cc::property::field::String()
+            .name("str")
+            .asMap();
     return Props;
 }
 
