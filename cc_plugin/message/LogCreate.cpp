@@ -39,33 +39,38 @@ namespace message
 namespace
 {
 
+using ublox::message::LogCreateFields;
+
 QVariantMap createProps_logCfg()
 {
-    QVariantList bitNames;
-    bitNames.append("circular");
-    assert(bitNames.size() == ublox::message::LogCreateFields::logCfg_numOfValues);
-    return cc::Property::createPropertiesMap("logCfg", std::move(bitNames));
+    cc::property::field::ForField<LogCreateFields::logCfg> props;
+    props.name("logCfg")
+         .add("circular");
+    assert(props.bits().size() == LogCreateFields::logCfg_numOfValues);
+    return props.asMap();
 }
 
 QVariantMap createProps_logSize()
 {
-    QVariantList enumValues;
-    cc::Property::appendEnumValue(enumValues, "maximum safe");
-    cc::Property::appendEnumValue(enumValues, "minimum");
-    cc::Property::appendEnumValue(enumValues, "user defined");
-    assert(enumValues.size() == (int)ublox::message::LogCreateFields::LogSize::NumOfValues);
-    return cc::Property::createPropertiesMap("logSize", std::move(enumValues));
+    cc::property::field::ForField<LogCreateFields::logSize> props;
+    props.name("logSize")
+         .add("maximum safe")
+         .add("minimum")
+         .add("user defined");
+    assert(props.values().size() == (int)LogCreateFields::LogSize::NumOfValues);
+    return props.asMap();
 }
 
 QVariantList createFieldsProperties()
 {
     QVariantList props;
-    props.append(cc::Property::createPropertiesMap("version"));
+    props.append(
+        cc::property::field::ForField<LogCreateFields::version>().name("version").asMap());
     props.append(createProps_logCfg());
     props.append(cc_plugin::field::common::props_reserved(1));
     props.append(createProps_logSize());
-    props.append(cc::Property::createPropertiesMap("userDefinedSize"));
-
+    props.append(
+        cc::property::field::ForField<LogCreateFields::userDefinedSize>().name("userDefinedSize").asMap());
     assert(props.size() == LogCreate::FieldIdx_numOfValues);
     return props;
 }

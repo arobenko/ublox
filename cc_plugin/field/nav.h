@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -53,6 +53,7 @@ const QVariantMap& props_hMSL();
 const QVariantMap& props_hAcc();
 const QVariantMap& props_vAcc();
 const QVariantMap& props_gpsFix();
+const QVariantMap& props_fixType();
 QVariantMap createProps_xDOP(char prefix);
 const QVariantMap& props_pDOP();
 const QVariantMap& props_week();
@@ -71,6 +72,7 @@ const QVariantMap& props_velN();
 const QVariantMap& props_velE();
 const QVariantMap& props_velD();
 const QVariantMap& props_numCh();
+const QVariantMap& props_cnt();
 const QVariantMap& props_svid();
 
 }  // namespace nav

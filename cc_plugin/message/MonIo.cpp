@@ -39,24 +39,29 @@ namespace message
 namespace
 {
 
+using ublox::message::MonIoFields;
+
 QVariantMap createProps_data()
 {
-    QVariantList membersData;
-    membersData.append(cc::Property::createPropertiesMap("rxBytes"));
-    membersData.append(cc::Property::createPropertiesMap("txBytes"));
-    membersData.append(cc::Property::createPropertiesMap("parityErrs"));
-    membersData.append(cc::Property::createPropertiesMap("framingErrs"));
-    membersData.append(cc::Property::createPropertiesMap("overrunErrs"));
-    membersData.append(cc::Property::createPropertiesMap("breakCond"));
-    membersData.append(cc::Property::createPropertiesMap("rxBusy"));
-    membersData.append(cc::Property::createPropertiesMap("txBusy"));
-    membersData.append(cc_plugin::field::common::props_reserved(1));
-    assert(membersData.size() == ublox::message::MonIoFields::block_numOfValues);
+    cc::property::field::ForField<MonIoFields::block> blockProps;
+    blockProps
+        .add(cc::property::field::ForField<MonIoFields::rxBytes>().name("rxBytes").asMap())
+        .add(cc::property::field::ForField<MonIoFields::txBytes>().name("txBytes").asMap())
+        .add(cc::property::field::ForField<MonIoFields::parityErrs>().name("parityErrs").asMap())
+        .add(cc::property::field::ForField<MonIoFields::framingErrs>().name("framingErrs").asMap())
+        .add(cc::property::field::ForField<MonIoFields::overrunErrs>().name("overrunErrs").asMap())
+        .add(cc::property::field::ForField<MonIoFields::breakCond>().name("breakCond").asMap())
+        .add(cc::property::field::ForField<MonIoFields::rxBusy>().name("rxBusy").asMap())
+        .add(cc::property::field::ForField<MonIoFields::txBusy>().name("txBusy").asMap())
+        .add(cc_plugin::field::common::props_reserved(1));
+    assert(blockProps.members().size() == MonIoFields::block_numOfValues);
 
-    auto bundleProps = cc::Property::createPropertiesMap("block", std::move(membersData));
-    auto props = cc::Property::createPropertiesMap("data", std::move(bundleProps));
-    cc::Property::setSerialisedHidden(props);
-    return props;
+    return
+        cc::property::field::ForField<MonIoFields::data>()
+            .name("data")
+            .add(blockProps.asMap())
+            .serialisedHidden()
+            .asMap();
 }
 
 QVariantList createFieldsProperties()

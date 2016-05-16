@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -39,30 +39,38 @@ namespace message
 namespace
 {
 
+using ublox::message::CfgFxnFields;
+
 QVariantMap createProps_flags()
 {
-    QVariantList bitNames;
-    bitNames.append(QVariant());
-    bitNames.append("sleep");
-    bitNames.append(QVariant());
-    bitNames.append("absAlign");
-    bitNames.append("onOff");
-    assert(bitNames.size() == ublox::message::CfgFxnFields::flags_numOfValues);
-    return cc::Property::createPropertiesMap("flags", std::move(bitNames));
+    cc::property::field::ForField<CfgFxnFields::flags> props;
+    props.name("flags")
+         .add(CfgFxnFields::flags_sleep, "sleep")
+         .add(CfgFxnFields::flags_absAlign, "absAlign")
+         .add("onOff");
+    assert(props.bits().size() == CfgFxnFields::flags_numOfValues);
+    return props.asMap();
 }
 
 QVariantList createFieldsProperties()
 {
     QVariantList props;
     props.append(createProps_flags());
-    props.append(cc::Property::createPropertiesMap("tReacq"));
-    props.append(cc::Property::createPropertiesMap("tAcq"));
-    props.append(cc::Property::createPropertiesMap("tReacqOff"));
-    props.append(cc::Property::createPropertiesMap("tAcqOff"));
-    props.append(cc::Property::createPropertiesMap("tOn"));
-    props.append(cc::Property::createPropertiesMap("tOff"));
+    props.append(
+        cc::property::field::ForField<CfgFxnFields::tReacq>().name("tReacq").asMap());
+    props.append(
+        cc::property::field::ForField<CfgFxnFields::tAcq>().name("tAcq").asMap());
+    props.append(
+        cc::property::field::ForField<CfgFxnFields::tReacqOff>().name("tReacqOff").asMap());
+    props.append(
+        cc::property::field::ForField<CfgFxnFields::tAcqOff>().name("tAcqOff").asMap());
+    props.append(
+        cc::property::field::ForField<CfgFxnFields::tOn>().name("tOn").asMap());
+    props.append(
+        cc::property::field::ForField<CfgFxnFields::tOff>().name("tOff").asMap());
     props.append(cc_plugin::field::common::props_reserved(0));
-    props.append(cc::Property::createPropertiesMap("baseTow"));
+    props.append(
+        cc::property::field::ForField<CfgFxnFields::baseTow>().name("baseTow").asMap());
 
     assert(props.size() == CfgFxn::FieldIdx_numOfValues);
     return props;

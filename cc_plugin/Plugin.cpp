@@ -1,5 +1,5 @@
 //
-// Copyright 2014 (C). Alex Robenko. All rights reserved.
+// Copyright 2014 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -29,23 +29,15 @@ namespace cc_plugin
 
 Plugin::Plugin()
 {
+    pluginProperties()
+        .setProtocolCreateFunc(
+            [this]() -> cc::ProtocolPtr
+            {
+                return cc::ProtocolPtr(new Protocol());
+            });
 }
 
-Plugin::~Plugin()
-{
-    if (isApplied()) {
-        auto& interface = ctrlInterface();
-        interface.clearProtocol();
-    }
-}
-
-
-void Plugin::applyImpl()
-{
-    auto& interface = ctrlInterface();
-    interface.setProtocol(cc::ProtocolPtr(new Protocol()));
-}
-
+Plugin::~Plugin() = default;
 
 }  // namespace cc_plugin
 

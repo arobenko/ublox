@@ -39,34 +39,36 @@ namespace message
 namespace
 {
 
+using ublox::message::MonTxbufFields;
+
 QVariantMap createProps_list(const char* name)
 {
-    QVariantList elemProps;
+    cc::property::field::ArrayList props;
+    props.name(name).serialisedHidden();
     for (auto i = 0; i < 6; ++i) {
-        elemProps.append(cc::Property::createPropertiesMap(QString("%1").arg(i)));
+        props.add(
+            cc::property::field::IntValue().name(QString("%1").arg(i)).asMap());
     }
-    auto props = cc::Property::createPropertiesMap(name, std::move(elemProps));
-    cc::Property::setSerialisedHidden(props);
-    return props;
+    return props.asMap();
 }
 
 QVariantMap createProps_errors()
 {
-    auto limitProps = cc::Property::createPropertiesMap("limit");
-    cc::Property::setSerialisedHidden(limitProps);
+    cc::property::field::ForField<MonTxbufFields::limit> limitProps;
+    limitProps.name("limit").serialisedHidden();
 
-    QVariantList bitNames;
-    bitNames.append("mem");
-    bitNames.append("alloc");
-    assert(bitNames.size() == ublox::message::MonTxbufFields::errorsBits_numOfValues);
-    auto bitsProps = cc::Property::createPropertiesMap(QString(), std::move(bitNames));
-    cc::Property::setSerialisedHidden(bitsProps);
+    cc::property::field::ForField<MonTxbufFields::errorsBits> bitsProps;
+    bitsProps.add("mem")
+             .add("alloc")
+             .serialisedHidden();
+    assert(bitsProps.bits().size() == MonTxbufFields::errorsBits_numOfValues);
 
-    QVariantList membersData;
-    membersData.append(std::move(limitProps));
-    membersData.append(std::move(bitsProps));
-    assert(membersData.size() == ublox::message::MonTxbufFields::errors_numOfValues);
-    return cc::Property::createPropertiesMap("errors", std::move(membersData));
+    cc::property::field::ForField<MonTxbufFields::errors> props;
+    props.name("errors")
+         .add(limitProps.asMap())
+         .add(bitsProps.asMap());
+    assert(props.members().size() == MonTxbufFields::errors_numOfValues);
+    return props.asMap();
 }
 
 QVariantList createFieldsProperties()
@@ -75,8 +77,10 @@ QVariantList createFieldsProperties()
     props.append(createProps_list("pending"));
     props.append(createProps_list("usage"));
     props.append(createProps_list("peakUsage"));
-    props.append(cc::Property::createPropertiesMap("tUsage"));
-    props.append(cc::Property::createPropertiesMap("tPeakUsage"));
+    props.append(
+        cc::property::field::ForField<MonTxbufFields::tUsage>().name("tUsage").asMap());
+    props.append(
+        cc::property::field::ForField<MonTxbufFields::tPeakUsage>().name("tPeakUsage").asMap());
     props.append(createProps_errors());
     props.append(cc_plugin::field::common::props_reserved(1));
     assert(props.size() == MonTxbuf::FieldIdx_numOfValues);

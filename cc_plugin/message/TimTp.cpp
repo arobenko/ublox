@@ -39,30 +39,37 @@ namespace message
 namespace
 {
 
+using ublox::message::TimTpFields;
+
 QVariantMap createProps_towSubMS()
 {
-    auto props = cc::Property::createPropertiesMap("towSubMS");
-    cc::Property::setDisplayScaled(props);
-    cc::Property::setFloatDecimals(props, 2);
-    return props;
+    return
+        cc::property::field::ForField<TimTpFields::towSubMS>()
+            .name("towSubMS")
+            .scaledDecimals(2)
+            .asMap();
 }
 
 QVariantMap createProps_flags()
 {
-    QVariantList bitNames;
-    bitNames.append("timeBase");
-    bitNames.append("utc");
-    assert(bitNames.size() == ublox::message::TimTpFields::flags_numOfValues);
-    return cc::Property::createPropertiesMap("flags", std::move(bitNames));
+    cc::property::field::ForField<TimTpFields::flags> props;
+    props.name("flags")
+         .add("timeBase")
+         .add("utc");
+    assert(props.bits().size() == TimTpFields::flags_numOfValues);
+    return props.asMap();
 }
 
 QVariantList createFieldsProperties()
 {
     QVariantList props;
-    props.append(cc::Property::createPropertiesMap("towMS"));
+    props.append(
+        cc::property::field::ForField<TimTpFields::towMS>().name("towMS").asMap());
     props.append(createProps_towSubMS());
-    props.append(cc::Property::createPropertiesMap("qErr"));
-    props.append(cc::Property::createPropertiesMap("week"));
+    props.append(
+        cc::property::field::ForField<TimTpFields::qErr>().name("qErr").asMap());
+    props.append(
+        cc::property::field::ForField<TimTpFields::week>().name("week").asMap());
     props.append(createProps_flags());
     props.append(cc_plugin::field::common::props_reserved(1));
 

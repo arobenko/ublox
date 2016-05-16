@@ -40,21 +40,25 @@ namespace message
 namespace
 {
 
+using ublox::message::NavAopstatusFields;
+
 QVariantMap createProps_aopCfg()
 {
-    QVariantList bitNames;
-    bitNames.append("useAOP");
-    assert(bitNames.size() == ublox::message::NavAopstatusFields::aopCfg_numOfValues);
-    return cc::Property::createPropertiesMap("aopCfg", std::move(bitNames));
+    cc::property::field::ForField<NavAopstatusFields::aopCfg> props;
+    props.name("aopCfg")
+         .add("useAOP");
+    assert(props.bits().size() == NavAopstatusFields::aopCfg_numOfValues);
+    return props.asMap();
 }
 
 QVariantMap createProps_availGPS()
 {
-    QVariantList bitNames;
+    cc::property::field::ForField<NavAopstatusFields::availGPS> props;
+    props.name("availGPS");
     for (auto gps = 1; gps <= 32; ++gps) {
-        bitNames.append(QString("PRN %1").arg(gps, 1, 10, QChar('0')));
+        props.add(QString("PRN %1").arg(gps, 1, 10, QChar('0')));
     }
-    return cc::Property::createPropertiesMap("availGPS", std::move(bitNames));
+    return props.asMap();
 }
 
 
@@ -63,7 +67,7 @@ QVariantList createFieldsProperties()
     QVariantList props;
     props.append(cc_plugin::field::nav::props_iTOW());
     props.append(createProps_aopCfg());
-    props.append(cc::Property::createPropertiesMap("status"));
+    props.append(cc::property::field::ForField<NavAopstatusFields::status>().name("status").asMap());
     props.append(cc_plugin::field::common::props_reserved(0));
     props.append(cc_plugin::field::common::props_reserved(1));
     props.append(createProps_availGPS());

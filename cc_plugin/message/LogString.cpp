@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -39,10 +39,13 @@ namespace message
 namespace
 {
 
+using ublox::message::LogStringFields;
+
 QVariantList createFieldsProperties()
 {
     QVariantList props;
-    props.append(cc::Property::createPropertiesMap("bytes"));
+    props.append(
+        cc::property::field::ForField<LogStringFields::bytes>().name("bytes").asMap());
 
     assert(props.size() == LogString::FieldIdx_numOfValues);
     return props;

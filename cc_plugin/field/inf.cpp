@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -35,7 +35,10 @@ namespace inf
 
 const QVariantMap& props_str()
 {
-    static const QVariantMap Props = cc::Property::createPropertiesMap("str");
+    static const auto Props =
+        cc::property::field::String()
+            .name("str")
+            .asMap();
     return Props;
 }
 

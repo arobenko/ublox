@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -22,6 +22,8 @@
 
 #include "comms_champion/comms_champion.h"
 
+#include "ublox/field/common.h"
+
 namespace cc = comms_champion;
 
 namespace ublox
@@ -41,8 +43,10 @@ namespace
 
 QVariantMap createProps_reserved(unsigned idx)
 {
-    auto str = QString("reserved%1").arg(idx, 1, 10, QChar('0'));
-    return cc::Property::createPropertiesMap(str);
+    return
+        cc::property::field::IntValue()
+            .name(QString("reserved%1").arg(idx, 1, 10, QChar('0')))
+            .asMap();
 }
 
 }  // namespace
@@ -55,25 +59,38 @@ const QVariantList& emptyProperties()
 
 const QVariantMap& props_iTOW()
 {
-    static const QVariantMap Props = cc::Property::createPropertiesMap("iTOW");
+    static const auto Props =
+        cc::property::field::ForField<ublox::field::common::iTOW>()
+            .name("iTOW")
+            .asMap();
     return Props;
 }
 
 const QVariantMap& props_week()
 {
-    static const QVariantMap Props = cc::Property::createPropertiesMap("week");
+    static const auto Props =
+        cc::property::field::ForField<ublox::field::common::week>()
+            .name("week")
+            .asMap();
+
     return Props;
 }
 
 const QVariantMap& props_numSV()
 {
-    static const QVariantMap Props = cc::Property::createPropertiesMap("numSV");
+    static const auto Props =
+        cc::property::field::ForField<ublox::field::common::numSV>()
+            .name("numSV")
+            .asMap();
     return Props;
 }
 
 const QVariantMap& props_svid()
 {
-    static const QVariantMap Props = cc::Property::createPropertiesMap("svid");
+    static const auto Props =
+        cc::property::field::ForField<ublox::field::common::svid>()
+            .name("svid")
+            .asMap();
     return Props;
 }
 

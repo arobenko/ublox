@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -38,16 +38,19 @@ namespace message
 namespace
 {
 
+using ublox::message::CfgAntFields;
+
 QVariantMap createProps_flags()
 {
-    QVariantList bitNames;
-    bitNames.append("svcs");
-    bitNames.append("scd");
-    bitNames.append("ocd");
-    bitNames.append("pdwnOnSCD");
-    bitNames.append("recovery");
-    assert(bitNames.size() == ublox::message::CfgAntFields::flags_numOfValues);
-    return cc::Property::createPropertiesMap("flags", std::move(bitNames));
+    cc::property::field::ForField<CfgAntFields::flags> props;
+    props.name("flags")
+         .add("svcs")
+         .add("scd")
+         .add("ocd")
+         .add("pdwnOnSCD")
+         .add("recovery");
+    assert(props.bits().size() == CfgAntFields::flags_numOfValues);
+    return props.asMap();
 }
 
 QVariantMap createProps_pins()
@@ -55,24 +58,26 @@ QVariantMap createProps_pins()
     auto createPinPropsFunc =
         [](const char* name) -> QVariantMap
         {
-            QVariantMap props = cc::Property::createPropertiesMap(name);
-            cc::Property::setSerialisedHidden(props);
-            return props;
+            return
+                cc::property::field::ForField<CfgAntFields::pinX>()
+                    .name(name)
+                    .serialisedHidden()
+                    .asMap();
         };
 
-    QVariantList bitNames;
-    bitNames.append("reconfig");
-    assert(bitNames.size() == ublox::message::CfgAntFields::pins_reconfig_numOfValues);
-    auto reconfigProps = cc::Property::createPropertiesMap(QString(), std::move(bitNames));
-    cc::Property::setSerialisedHidden(reconfigProps);
+    cc::property::field::BitmaskValue bitsProps;
+    bitsProps.add("reconfig")
+             .serialisedHidden();
+    assert(bitsProps.bits().size() == CfgAntFields::pins_reconfig_numOfValues);
 
-    QVariantList membersData;
-    membersData.append(createPinPropsFunc("pinSwitch"));
-    membersData.append(createPinPropsFunc("pinSCD"));
-    membersData.append(createPinPropsFunc("pinOCD"));
-    membersData.append(std::move(reconfigProps));
-    assert(membersData.size() == ublox::message::CfgAntFields::pins_numOfValues);
-    return cc::Property::createPropertiesMap("pins", std::move(membersData));
+    cc::property::field::ForField<CfgAntFields::pins> props;
+    props.name("pins")
+         .add(createPinPropsFunc("pinSwitch"))
+         .add(createPinPropsFunc("pinSCD"))
+         .add(createPinPropsFunc("pinOCD"))
+         .add(bitsProps.asMap());
+    assert(props.members().size() == CfgAntFields::pins_numOfValues);
+    return props.asMap();
 }
 
 QVariantList createFieldsProperties()

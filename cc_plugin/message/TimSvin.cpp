@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -39,18 +39,27 @@ namespace message
 namespace
 {
 
+using ublox::message::TimSvinFields;
 
 QVariantList createFieldsProperties()
 {
     QVariantList props;
-    props.append(cc::Property::createPropertiesMap("dur"));
-    props.append(cc::Property::createPropertiesMap("meanX"));
-    props.append(cc::Property::createPropertiesMap("meanY"));
-    props.append(cc::Property::createPropertiesMap("meanZ"));
-    props.append(cc::Property::createPropertiesMap("meanV"));
-    props.append(cc::Property::createPropertiesMap("obs"));
-    props.append(cc::Property::createPropertiesMap("valid"));
-    props.append(cc::Property::createPropertiesMap("active"));
+    props.append(
+        cc::property::field::ForField<TimSvinFields::dur>().name("dur").asMap());
+    props.append(
+        cc::property::field::ForField<TimSvinFields::meanX>().name("meanX").asMap());
+    props.append(
+        cc::property::field::ForField<TimSvinFields::meanY>().name("meanY").asMap());
+    props.append(
+        cc::property::field::ForField<TimSvinFields::meanZ>().name("meanZ").asMap());
+    props.append(
+        cc::property::field::ForField<TimSvinFields::meanV>().name("meanV").asMap());
+    props.append(
+        cc::property::field::ForField<TimSvinFields::obs>().name("obs").asMap());
+    props.append(
+        cc::property::field::ForField<TimSvinFields::valid>().name("valid").asMap());
+    props.append(
+        cc::property::field::ForField<TimSvinFields::active>().name("active").asMap());
     props.append(cc_plugin::field::common::props_reserved(1));
 
     assert(props.size() == TimSvin::FieldIdx_numOfValues);

@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -40,45 +40,56 @@ namespace message
 namespace
 {
 
+using ublox::message::CfgTpFields;
+
 QVariantMap createProps_status()
 {
-    QVariantList enumValues;
-    cc::Property::appendEnumValue(enumValues, "negative", (int)ublox::message::CfgTpFields::Status::Negative);
-    cc::Property::appendEnumValue(enumValues, "off", (int)ublox::message::CfgTpFields::Status::Off);
-    cc::Property::appendEnumValue(enumValues, "positive", (int)ublox::message::CfgTpFields::Status::Positive);
-    return cc::Property::createPropertiesMap("status", std::move(enumValues));
+    return
+        cc::property::field::ForField<CfgTpFields::status>()
+            .name("status")
+            .add("negative", (int)CfgTpFields::Status::Negative)
+            .add("off", (int)CfgTpFields::Status::Off)
+            .add("positive", (int)CfgTpFields::Status::Positive)
+            .asMap();
 }
 
 QVariantMap createProps_timeRef()
 {
-    QVariantList enumValues;
-    cc::Property::appendEnumValue(enumValues, "UTC time");
-    cc::Property::appendEnumValue(enumValues, "GPS time");
-    cc::Property::appendEnumValue(enumValues, "Local time");
-    assert(enumValues.size() == (int)ublox::message::CfgTpFields::TimeRef::NumOfValues);
-    return cc::Property::createPropertiesMap("timeRef", std::move(enumValues));
+    cc::property::field::ForField<CfgTpFields::timeRef> props;
+    props.name("timeRef")
+         .add("UTC time")
+         .add("GPS time")
+         .add("Local time");
+    assert(props.values().size() == (int)CfgTpFields::TimeRef::NumOfValues);
+    return props.asMap();
 }
 
 QVariantMap createProps_flags()
 {
-    QVariantList bitNames;
-    bitNames.append("syncMode");
-    assert(bitNames.size() == ublox::message::CfgTpFields::flags_numOfValues);
-    return cc::Property::createPropertiesMap("flags", std::move(bitNames));
+    cc::property::field::ForField<CfgTpFields::flags> props;
+    props.name("flags")
+         .add("syncMode");
+    assert(props.bits().size() == CfgTpFields::flags_numOfValues);
+    return props.asMap();
 }
 
 QVariantList createFieldsProperties()
 {
     QVariantList props;
-    props.append(cc::Property::createPropertiesMap("interval"));
-    props.append(cc::Property::createPropertiesMap("length"));
+    props.append(
+        cc::property::field::ForField<CfgTpFields::interval>().name("interval").asMap());
+    props.append(
+        cc::property::field::ForField<CfgTpFields::length>().name("length").asMap());
     props.append(createProps_status());
     props.append(createProps_timeRef());
     props.append(createProps_flags());
     props.append(cc_plugin::field::common::props_reserved(0));
-    props.append(cc::Property::createPropertiesMap("antennaCableDelay"));
-    props.append(cc::Property::createPropertiesMap("rfGroupDelay"));
-    props.append(cc::Property::createPropertiesMap("userDelay"));
+    props.append(
+        cc::property::field::ForField<CfgTpFields::antennaCableDelay>().name("antennaCableDelay").asMap());
+    props.append(
+        cc::property::field::ForField<CfgTpFields::rfGroupDelay>().name("rfGroupDelay").asMap());
+    props.append(
+        cc::property::field::ForField<CfgTpFields::userDelay>().name("userDelay").asMap());
 
     assert(props.size() == CfgTp::FieldIdx_numOfValues);
     return props;

@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -40,13 +40,13 @@ namespace
 
 QVariantMap createProps_list(const char* name)
 {
-    QVariantList elemProps;
+    cc::property::field::ArrayList props;
+    props.name(name).serialisedHidden();
     for (auto i = 0; i < 6; ++i) {
-        elemProps.append(cc::Property::createPropertiesMap(QString("%1").arg(i)));
+        props.add(
+            cc::property::field::IntValue().name(QString("%1").arg(i)).asMap());
     }
-    auto props = cc::Property::createPropertiesMap(name, std::move(elemProps));
-    cc::Property::setSerialisedHidden(props);
-    return props;
+    return props.asMap();
 }
 
 QVariantList createFieldsProperties()

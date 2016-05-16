@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -37,10 +37,13 @@ namespace message
 namespace
 {
 
+using ublox::message::AidEphPollSvFields;
+
 QVariantList createFieldsProperties()
 {
     QVariantList props;
-    props.append(cc::Property::createPropertiesMap("svid"));
+    props.append(
+        cc::property::field::ForField<AidEphPollSvFields::svid>().name("svid").asMap());
 
     assert(props.size() == AidEphPollSv::FieldIdx_numOfValues);
     return props;

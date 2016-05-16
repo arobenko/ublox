@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -38,37 +38,40 @@ namespace message
 namespace
 {
 
+using ublox::message::CfgCfgFields;
+
 QVariantMap createProps_mask(const char* name)
 {
-    QVariantList bitNames;
-    bitNames.append("ioPort");
-    bitNames.append("msgConf");
-    bitNames.append("infMsg");
-    bitNames.append("navConf");
-    bitNames.append("rxmConf");
-    bitNames.append(QVariant());
-    bitNames.append(QVariant());
-    bitNames.append(QVariant());
-    bitNames.append(QVariant());
-    bitNames.append("rinvConf");
-    bitNames.append("antConf");
-    assert(bitNames.size() == ublox::message::CfgCfgFields::mask_numOfValues);
-    return cc::Property::createPropertiesMap(name, std::move(bitNames));
+    cc::property::field::ForField<CfgCfgFields::mask> props;
+    props.name(name)
+         .add("ioPort")
+         .add("msgConf")
+         .add("infMsg")
+         .add("navConf")
+         .add("rxmConf")
+         .add(CfgCfgFields::mask_rinvConf, "rinvConf")
+         .add("antConf");
+    assert(props.bits().size() == CfgCfgFields::mask_numOfValues);
+    return props.asMap();
 }
 
 QVariantMap createProps_deviceMask()
 {
-    QVariantList bitNames;
-    bitNames.append("devBBR");
-    bitNames.append("devFlash");
-    bitNames.append("devEEPROM");
-    bitNames.append(QVariant());
-    bitNames.append("devSpiFlash");
-    assert(bitNames.size() == ublox::message::CfgCfgFields::deviceMask_numOfValues);
+    const QString Name("deviceMask");
 
-    static const QString Name("deviceMask");
-    auto maskProps = cc::Property::createPropertiesMap(Name, std::move(bitNames));
-    return cc::Property::createPropertiesMap(Name, std::move(maskProps));
+    cc::property::field::ForField<CfgCfgFields::deviceMask::Field> props;
+    props.name(Name)
+         .add("devBBR")
+         .add("devFlash")
+         .add("devEEPROM")
+         .add(CfgCfgFields::deviceMask_devSpiFlash, "devSpiFlash");
+    assert(props.bits().size() == CfgCfgFields::deviceMask_numOfValues);
+
+    return
+        cc::property::field::ForField<CfgCfgFields::deviceMask>()
+            .name(Name)
+            .field(props.asMap())
+            .asMap();
 }
 
 QVariantList createFieldsProperties()

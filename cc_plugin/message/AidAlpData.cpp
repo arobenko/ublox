@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -40,12 +40,16 @@ namespace message
 namespace
 {
 
+using ublox::message::AidAlpDataFields;
+
 QVariantMap createProps_alpData()
 {
-    auto elemProps = cc::Property::createPropertiesMap(QString());
-    auto props = cc::Property::createPropertiesMap("alpData", std::move(elemProps));
-    cc::Property::setSerialisedHidden(props);
-    return props;
+    return
+        cc::property::field::ForField<AidAlpDataFields::alpData>()
+            .name("alpData")
+            .add(cc::property::field::IntValue().asMap())
+            .serialisedHidden()
+            .asMap();
 }
 
 QVariantList createFieldsProperties()

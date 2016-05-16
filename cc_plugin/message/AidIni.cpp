@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -38,102 +38,105 @@ namespace message
 namespace
 {
 
+using ublox::message::AidIniFields;
+
 QVariantMap createProps_optNumeric(const char* name, int decimals = 0)
 {
-    auto valProps = cc::Property::createPropertiesMap(name);
+    cc::property::field::IntValue valProps;
+    valProps.name(name);
     if (0 < decimals) {
-        cc::Property::setDisplayScaled(valProps);
-        cc::Property::setFloatDecimals(valProps, 7);
+        valProps.scaledDecimals(decimals);
     }
-    auto props = cc::Property::createPropertiesMap(name, std::move(valProps));
-    cc::Property::setUncheckable(props);
-    return props;
+
+    return
+        cc::property::field::Optional()
+            .name(name)
+            .field(valProps.asMap())
+            .uncheckable()
+            .asMap();
 }
 
 QVariantMap createProps_tmCfg()
 {
-    QVariantList bitNames;
-
-    auto fillUntilFunc =
-        [&bitNames](int idx)
-        {
-            while (bitNames.size() < idx) {
-                bitNames.append(QVariant());
-            }
-        };
-
-    fillUntilFunc(ublox::message::AidIniFields::tmCfg_fEdge);
-    bitNames.append("fEdge");
-    fillUntilFunc(ublox::message::AidIniFields::tmCfg_tm1);
-    bitNames.append("tm1");
-    fillUntilFunc(ublox::message::AidIniFields::tmCfg_f1);
-    bitNames.append("f1");
-    assert(bitNames.size() == ublox::message::AidIniFields::tmCfg_numOfValues);
-    return cc::Property::createPropertiesMap("tmCfg", std::move(bitNames));
+    cc::property::field::ForField<AidIniFields::tmCfg> props;
+    props.name("tmCfg")
+         .add(AidIniFields::tmCfg_fEdge, "fEdge")
+         .add(AidIniFields::tmCfg_tm1, "tm1")
+         .add(AidIniFields::tmCfg_f1, "f1");
+    assert(props.bits().size() == AidIniFields::tmCfg_numOfValues);
+    return props.asMap();
 }
 
 QVariantMap createProps_date()
 {
-    auto monthProps = cc::Property::createPropertiesMap("month");
-    cc::Property::setSerialisedHidden(monthProps);
+    cc::property::field::IntValue monthProps;
+    monthProps.name("month").serialisedHidden();
 
-    auto yearProps = cc::Property::createPropertiesMap("year");
-    cc::Property::setSerialisedHidden(yearProps);
+    cc::property::field::IntValue yearProps;
+    yearProps.name("year").serialisedHidden();
 
-    QVariantList membersData;
-    membersData.append(std::move(monthProps));
-    membersData.append(std::move(yearProps));
-    assert(membersData.size() == ublox::message::AidIniFields::date_numOfValues);
     static const QString Name("date");
-    auto valProps = cc::Property::createPropertiesMap(Name, std::move(membersData));
-    auto props = cc::Property::createPropertiesMap(Name, std::move(valProps));
-    cc::Property::setUncheckable(props);
-    return props;
+    cc::property::field::Bitfield bitfieldProps;
+    bitfieldProps.add(monthProps.asMap())
+                 .add(yearProps.asMap())
+                 .name(Name);
+    assert(bitfieldProps.members().size() == AidIniFields::date_numOfValues);
+
+    return
+        cc::property::field::ForField<AidIniFields::date>()
+            .name(Name)
+            .field(bitfieldProps.asMap())
+            .uncheckable()
+            .asMap();
 }
 
 QVariantMap createProps_time()
 {
-    auto secProps = cc::Property::createPropertiesMap("second");
-    cc::Property::setSerialisedHidden(secProps);
+    cc::property::field::IntValue secProps;
+    secProps.name("second").serialisedHidden();
 
-    auto minProps = cc::Property::createPropertiesMap("minute");
-    cc::Property::setSerialisedHidden(minProps);
+    cc::property::field::IntValue minProps;
+    minProps.name("minute").serialisedHidden();
 
-    auto hourProps = cc::Property::createPropertiesMap("hour");
-    cc::Property::setSerialisedHidden(hourProps);
+    cc::property::field::IntValue hourProps;
+    hourProps.name("hour").serialisedHidden();
 
-    auto dayProps = cc::Property::createPropertiesMap("day");
-    cc::Property::setSerialisedHidden(dayProps);
+    cc::property::field::IntValue dayProps;
+    dayProps.name("day").serialisedHidden();
 
-    QVariantList membersData;
-    membersData.append(std::move(secProps));
-    membersData.append(std::move(minProps));
-    membersData.append(std::move(hourProps));
-    membersData.append(std::move(dayProps));
-    assert(membersData.size() == ublox::message::AidIniFields::time_numOfValues);
     static const QString Name("time");
-    auto valProps = cc::Property::createPropertiesMap(Name, std::move(membersData));
-    auto props = cc::Property::createPropertiesMap(Name, std::move(valProps));
-    cc::Property::setUncheckable(props);
-    return props;
+    cc::property::field::Bitfield bitfieldProps;
+    bitfieldProps.name(Name)
+                 .add(secProps.asMap())
+                 .add(minProps.asMap())
+                 .add(hourProps.asMap())
+                 .add(dayProps.asMap());
+    assert(bitfieldProps.members().size() == AidIniFields::time_numOfValues);
+
+    return
+        cc::property::field::ForField<AidIniFields::time>()
+            .name(Name)
+            .field(bitfieldProps.asMap())
+            .uncheckable()
+            .asMap();
 }
 
 QVariantMap createProps_flags()
 {
-    QVariantList bitNames;
-    bitNames.append("pos");
-    bitNames.append("time");
-    bitNames.append("clockD");
-    bitNames.append("tp");
-    bitNames.append("clockF");
-    bitNames.append("lla");
-    bitNames.append("altInv");
-    bitNames.append("prevTm");
-    bitNames.append(QVariant());
-    bitNames.append(QVariant());
-    bitNames.append("utc");
-    assert(bitNames.size() == ublox::message::AidIniFields::flags_numOfValues);
-    return cc::Property::createPropertiesMap("flags", std::move(bitNames));
+    cc::property::field::ForField<AidIniFields::flags> props;
+    props.name("flags")
+         .add("pos")
+         .add("time")
+         .add("clockD")
+         .add("tp")
+         .add("clockF")
+         .add("lla")
+         .add("altInv")
+         .add("prevTm")
+         .add(AidIniFields::flags_utc, "utc");
+    assert(props.bits().size() == AidIniFields::flags_numOfValues);
+    return props.asMap();
+
 }
 
 QVariantList createFieldsProperties()
@@ -145,15 +148,19 @@ QVariantList createFieldsProperties()
     props.append(createProps_optNumeric("lon", 7));
     props.append(createProps_optNumeric("ecefZ"));
     props.append(createProps_optNumeric("alt"));
-    props.append(cc::Property::createPropertiesMap("posAcc"));
+    props.append(
+        cc::property::field::ForField<AidIniFields::posAcc>().name("posAcc").asMap());
     props.append(createProps_tmCfg());
     props.append(createProps_optNumeric("wno"));
     props.append(createProps_date());
     props.append(createProps_optNumeric("tow"));
     props.append(createProps_time());
-    props.append(cc::Property::createPropertiesMap("towNs"));
-    props.append(cc::Property::createPropertiesMap("tAccMs"));
-    props.append(cc::Property::createPropertiesMap("tAccNs"));
+    props.append(
+        cc::property::field::ForField<AidIniFields::towNs>().name("towNs").asMap());
+    props.append(
+        cc::property::field::ForField<AidIniFields::tAccMs>().name("tAccMs").asMap());
+    props.append(
+        cc::property::field::ForField<AidIniFields::tAccNs>().name("tAccNs").asMap());
     props.append(createProps_optNumeric("clkD"));
     props.append(createProps_optNumeric("freq", 2));
     props.append(createProps_optNumeric("clkDAcc"));

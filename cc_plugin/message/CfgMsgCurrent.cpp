@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -41,11 +41,14 @@ namespace message
 namespace
 {
 
+using ublox::message::CfgMsgCurrentFields;
+
 QVariantList createFieldsProperties()
 {
     QVariantList props;
     props.append(cc_plugin::field::msgIdProperties());
-    props.append(cc::Property::createPropertiesMap("rate"));
+    props.append(
+        cc::property::field::ForField<CfgMsgCurrentFields::rate>().name("rate").asMap());
 
     assert(props.size() == CfgMsgCurrent::FieldIdx_numOfValues);
     return props;

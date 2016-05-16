@@ -25,10 +25,18 @@ if (DOXYGEN_FOUND)
     file (READ ${config_file} config_text)
     string (REGEX REPLACE "${match_str}" "${replacement_str}" modified_config_text "${config_text}")
     file (WRITE "${output_file}" "${modified_config_text}")
-
-    add_custom_target ("doc_ublox"
+    
+    if ("${UBLOX_CC_INSTALL_PATH}" STREQUAL "")
+        add_custom_target ("doc_ublox"
             COMMAND ${DOXYGEN_EXECUTABLE} ${output_file}
             WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+    else ()
+        add_custom_target ("doc_ublox"
+            COMMAND ${DOXYGEN_EXECUTABLE} ${output_file}
+            COMMAND ${CMAKE_COMMAND} -DDOC_OUTPUT_DIR="${doc_output_dir}" -P
+                "${UBLOX_CC_INSTALL_PATH}/cmake/DocCleanupScript.cmake"
+            WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+    endif ()
 endif ()
 
 install (

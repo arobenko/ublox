@@ -38,26 +38,35 @@ namespace message
 namespace
 {
 
+using ublox::message::CfgTmodeFields;
+
 QVariantMap createProps_timeMode()
 {
-    QVariantList enumValues;
-    cc::Property::appendEnumValue(enumValues, "Disabled");
-    cc::Property::appendEnumValue(enumValues, "Survey In");
-    cc::Property::appendEnumValue(enumValues, "Fixed Mode");
-    assert(enumValues.size() == (int)ublox::message::CfgTmodeFields::TimeMode::NumOfValues);
-    return cc::Property::createPropertiesMap("timeMode", std::move(enumValues));
+    cc::property::field::ForField<CfgTmodeFields::timeMode> props;
+    props.name("timeMode")
+         .add("Disabled")
+         .add("Survey In")
+         .add("Fixed Mode");
+    assert(props.values().size() == (int)CfgTmodeFields::TimeMode::NumOfValues);
+    return props.asMap();
 }
 
 QVariantList createFieldsProperties()
 {
     QVariantList props;
     props.append(createProps_timeMode());
-    props.append(cc::Property::createPropertiesMap("fixedPosX"));
-    props.append(cc::Property::createPropertiesMap("fixedPosY"));
-    props.append(cc::Property::createPropertiesMap("fixedPosZ"));
-    props.append(cc::Property::createPropertiesMap("fixedPosVar"));
-    props.append(cc::Property::createPropertiesMap("svinMinDur"));
-    props.append(cc::Property::createPropertiesMap("svinVarLimit"));
+    props.append(
+        cc::property::field::ForField<CfgTmodeFields::fixedPosX>().name("fixedPosX").asMap());
+    props.append(
+        cc::property::field::ForField<CfgTmodeFields::fixedPosY>().name("fixedPosY").asMap());
+    props.append(
+        cc::property::field::ForField<CfgTmodeFields::fixedPosZ>().name("fixedPosZ").asMap());
+    props.append(
+        cc::property::field::ForField<CfgTmodeFields::fixedPosVar>().name("fixedPosVar").asMap());
+    props.append(
+        cc::property::field::ForField<CfgTmodeFields::svinMinDur>().name("svinMinDur").asMap());
+    props.append(
+        cc::property::field::ForField<CfgTmodeFields::svinVarLimit>().name("svinVarLimit").asMap());
 
     assert(props.size() == CfgTmode::FieldIdx_numOfValues);
     return props;

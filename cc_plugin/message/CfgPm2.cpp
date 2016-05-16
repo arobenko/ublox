@@ -40,83 +40,86 @@ namespace message
 namespace
 {
 
+using ublox::message::CfgPm2Fields;
+
 QVariantMap createProps_flags()
 {
     auto createReservedProps =
         []() -> QVariantMap
         {
-            auto props = cc::Property::createPropertiesMap("reserved");
-            cc::Property::setFieldHidden(props);
-            return props;
+            return cc::property::field::IntValue().hidden().asMap();
         };
 
     auto createSingleBitMask =
         [](const QString& name) -> QVariantMap
         {
-            QVariantList bits;
-            bits.append(name);
-            auto props = cc::Property::createPropertiesMap(QString(), std::move(bits));
-            cc::Property::setSerialisedHidden(props);
-            return props;
+            return cc::property::field::BitmaskValue().add(name).serialisedHidden().asMap();
         };
 
-    QVariantList extintSelectValues;
-    cc::Property::appendEnumValue(extintSelectValues, "EXTINT0");
-    cc::Property::appendEnumValue(extintSelectValues, "EXTINT1");
-    assert(extintSelectValues.size() == (int)ublox::message::CfgPm2Fields::ExtintSelect::NumOfValues);
-    auto extintSelectProps = cc::Property::createPropertiesMap("extintSelect", std::move(extintSelectValues));
-    cc::Property::setSerialisedHidden(extintSelectProps);
+    cc::property::field::ForField<CfgPm2Fields::extintSelect> extintSelectProps;
+    extintSelectProps.name("extintSelect")
+                     .add("EXTINT0")
+                     .add("EXTINT1")
+                     .serialisedHidden();
+    assert(extintSelectProps.values().size() == (int)CfgPm2Fields::ExtintSelect::NumOfValues);
 
     auto createEnableDisableProps =
         [](const char* name) -> QVariantMap
         {
-            QVariantList enumValues;
-            cc::Property::appendEnumValue(enumValues, "disabled");
-            cc::Property::appendEnumValue(enumValues, "enabled");
-            assert(enumValues.size() == (int)ublox::message::CfgPm2Fields::DisabledEnabled::NumOfValues);
-            auto props = cc::Property::createPropertiesMap(name, std::move(enumValues));
-            cc::Property::setSerialisedHidden(props);
-            return props;
+            cc::property::field::EnumValue props;
+            props.name(name)
+                 .add("disabled")
+                 .add("enabled")
+                 .serialisedHidden();
+            assert(props.values().size() == (int)CfgPm2Fields::DisabledEnabled::NumOfValues);
+            return props.asMap();
         };
 
-    QVariantList modeEnumValues;
-    cc::Property::appendEnumValue(modeEnumValues, "ON/OFF");
-    cc::Property::appendEnumValue(modeEnumValues, "Cyclic tracking");
-    assert(modeEnumValues.size() == (int)ublox::message::CfgPm2Fields::Mode::NumOfValues);
-    auto modeProps = cc::Property::createPropertiesMap("mode", std::move(modeEnumValues));
-    cc::Property::setSerialisedHidden(modeProps);
+    cc::property::field::ForField<CfgPm2Fields::mode> modeProps;
+    modeProps.name("mode")
+             .add("ON/OFF")
+             .add("Cyclic tracking")
+             .serialisedHidden();
+    assert(modeProps.values().size() == (int)CfgPm2Fields::Mode::NumOfValues);
 
-    QVariantList membersData;
-    membersData.append(createReservedProps());
-    membersData.append(std::move(extintSelectProps));
-    membersData.append(createEnableDisableProps("extintWake"));
-    membersData.append(createEnableDisableProps("extintBackup"));
-    membersData.append(createReservedProps());
-    membersData.append(createEnableDisableProps("limitPeakCurr"));
-    membersData.append(createSingleBitMask("waitTimeFix"));
-    membersData.append(createSingleBitMask("updateRTC"));
-    membersData.append(createSingleBitMask("updateEPH"));
-    membersData.append(createReservedProps());
-    membersData.append(createSingleBitMask("doNotEnterOff"));
-    membersData.append(std::move(modeProps));
-    membersData.append(createReservedProps());
-    assert(membersData.size() == ublox::message::CfgPm2Fields::flags_numOfValues);
-    return cc::Property::createPropertiesMap("flags", std::move(membersData));
+    cc::property::field::ForField<CfgPm2Fields::flags> props;
+    props.name("flags")
+         .add(createReservedProps())
+         .add(extintSelectProps.asMap())
+         .add(createEnableDisableProps("extintWake"))
+         .add(createEnableDisableProps("extintBackup"))
+         .add(createReservedProps())
+         .add(createEnableDisableProps("limitPeakCurr"))
+         .add(createSingleBitMask("waitTimeFix"))
+         .add(createSingleBitMask("updateRTC"))
+         .add(createSingleBitMask("updateEPH"))
+         .add(createReservedProps())
+         .add(createSingleBitMask("doNotEnterOff"))
+         .add(modeProps.asMap())
+         .add(createReservedProps());
+    assert(props.members().size() == CfgPm2Fields::flags_numOfValues);
+    return props.asMap();
 }
 
 QVariantList createFieldsProperties()
 {
     QVariantList props;
-    props.append(cc::Property::createPropertiesMap("version"));
+    props.append(
+        cc::property::field::ForField<CfgPm2Fields::version>().name("version").asMap());
     props.append(cc_plugin::field::common::props_reserved(1));
     props.append(cc_plugin::field::common::props_reserved(2));
     props.append(cc_plugin::field::common::props_reserved(3));
     props.append(createProps_flags());
-    props.append(cc::Property::createPropertiesMap("updatePeriod"));
-    props.append(cc::Property::createPropertiesMap("searchPeriod"));
-    props.append(cc::Property::createPropertiesMap("gridOffset"));
-    props.append(cc::Property::createPropertiesMap("onTime"));
-    props.append(cc::Property::createPropertiesMap("minAcqTime"));
+    props.append(
+        cc::property::field::ForField<CfgPm2Fields::updatePeriod>().name("updatePeriod").asMap());
+    props.append(
+        cc::property::field::ForField<CfgPm2Fields::searchPeriod>().name("searchPeriod").asMap());
+    props.append(
+        cc::property::field::ForField<CfgPm2Fields::gridOffset>().name("gridOffset").asMap());
+    props.append(
+        cc::property::field::ForField<CfgPm2Fields::onTime>().name("onTime").asMap());
+    props.append(
+        cc::property::field::ForField<CfgPm2Fields::minAcqTime>().name("minAcqTime").asMap());
     props.append(cc_plugin::field::common::props_reserved(4));
     props.append(cc_plugin::field::common::props_reserved(5));
     props.append(cc_plugin::field::common::props_reserved(6));

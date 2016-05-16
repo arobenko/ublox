@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -38,27 +38,39 @@ namespace message
 namespace
 {
 
+using ublox::message::AidAlpsrvFields;
+
 QVariantMap createProps_dataSize()
 {
-    auto props = cc::Property::createPropertiesMap("dataSize");
-    cc::Property::setReadOnly(props);
-    return props;
+    return
+        cc::property::field::ForField<AidAlpsrvFields::dataSize>()
+            .name("dataSize")
+            .readOnly()
+            .asMap();
 }
 
 QVariantList createFieldsProperties()
 {
     QVariantList props;
-    props.append(cc::Property::createPropertiesMap("idSize"));
-    props.append(cc::Property::createPropertiesMap("type"));
-    props.append(cc::Property::createPropertiesMap("ofs"));
-    props.append(cc::Property::createPropertiesMap("size"));
-    props.append(cc::Property::createPropertiesMap("fileId"));
+    props.append(
+        cc::property::field::ForField<AidAlpsrvFields::idSize>().name("idSize").asMap());
+    props.append(
+        cc::property::field::ForField<AidAlpsrvFields::type>().name("type").asMap());
+    props.append(
+        cc::property::field::ForField<AidAlpsrvFields::ofs>().name("ofs").asMap());
+    props.append(
+        cc::property::field::ForField<AidAlpsrvFields::size>().name("size").asMap());
+    props.append(
+        cc::property::field::ForField<AidAlpsrvFields::fileId>().name("fileId").asMap());
     props.append(createProps_dataSize());
-    props.append(cc::Property::createPropertiesMap("id1"));
-    props.append(cc::Property::createPropertiesMap("id2"));
-    props.append(cc::Property::createPropertiesMap("id3"));
-    props.append(cc::Property::createPropertiesMap("data"));
-
+    props.append(
+        cc::property::field::ForField<AidAlpsrvFields::id1>().name("id1").asMap());
+    props.append(
+        cc::property::field::ForField<AidAlpsrvFields::id2>().name("id2").asMap());
+    props.append(
+        cc::property::field::ForField<AidAlpsrvFields::id3>().name("id3").asMap());
+    props.append(
+        cc::property::field::ForField<AidAlpsrvFields::data>().name("data").asMap());
     assert(props.size() == AidAlpsrv::FieldIdx_numOfValues);
     return props;
 }

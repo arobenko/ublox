@@ -40,58 +40,55 @@ namespace message
 namespace
 {
 
+using ublox::message::NavPvtFields;
+
 QVariantMap createProps_valid()
 {
-    QVariantList bitNames;
-    bitNames.append("validDate");
-    bitNames.append("validTime");
-    bitNames.append("fullyResolved");
-    assert(bitNames.size() == ublox::message::NavPvtFields::valid_numOfValues);
+    cc::property::field::ForField<NavPvtFields::valid> props;
+    props.name("valid")
+         .add("validDate")
+         .add("validTime")
+         .add("fullyResolved");
 
-    return cc::Property::createPropertiesMap("valid", std::move(bitNames));
-}
-
-QVariantMap createProps_fixType()
-{
-    auto props = cc_plugin::field::nav::props_gpsFix();
-    cc::Property::setName(props, "fixType");
-    return props;
+    assert(props.bits().size() == NavPvtFields::valid_numOfValues);
+    return props.asMap();
 }
 
 QVariantMap createProps_flags()
 {
-    QVariantList bitNames;
-    bitNames.append("gnssFixOK");
-    bitNames.append("diffSoln");
-    assert(bitNames.size() == ublox::message::NavPvtFields::flagsBits_numOfValues);
-    auto flagsProps = cc::Property::createPropertiesMap("flags", std::move(bitNames));
-    cc::Property::setSerialisedHidden(flagsProps);
+    cc::property::field::ForField<NavPvtFields::flagsBits> bitsProps;
+    bitsProps.name("flags")
+             .add("gnssFixOK")
+             .add("diffSoln")
+             .serialisedHidden();
 
-    QVariantList enumValues;
-    cc::Property::appendEnumValue(enumValues, "n/a");
-    cc::Property::appendEnumValue(enumValues, "ENABLED");
-    cc::Property::appendEnumValue(enumValues, "ACQUISITION");
-    cc::Property::appendEnumValue(enumValues, "TRACKING");
-    cc::Property::appendEnumValue(enumValues, "POWER OPTIMIZED TRACKING");
-    cc::Property::appendEnumValue(enumValues, "INACTIVE");
-    assert(enumValues.size() == (int)ublox::message::NavPvtFields::PsmState::NumOfValues);
-    auto psmStateProps = cc::Property::createPropertiesMap("psmState", std::move(enumValues));
-    cc::Property::setSerialisedHidden(psmStateProps);
+    assert(bitsProps.bits().size() == NavPvtFields::flagsBits_numOfValues);
 
-    QVariantList membersProps;
-    membersProps.append(std::move(flagsProps));
-    membersProps.append(std::move(psmStateProps));
-    assert(membersProps.size() == (int)ublox::message::NavPvtFields::flags_numOfValues);
+    cc::property::field::ForField<NavPvtFields::psmState> psmStateProps;
+    psmStateProps.name("psmState")
+                 .add("n/a")
+                 .add("ENABLED")
+                 .add("ACQUISITION")
+                 .add("TRACKING")
+                 .add("POWER OPTIMIZED TRACKING")
+                 .add("INACTIVE")
+                 .serialisedHidden();
+    assert(psmStateProps.values().size() == (int)NavPvtFields::PsmState::NumOfValues);
 
-    return cc::Property::createPropertiesMap("flags", std::move(membersProps));
+    cc::property::field::ForField<NavPvtFields::flags> props;
+    props.add(bitsProps.asMap())
+         .add(psmStateProps.asMap());
+    assert(props.members().size() == (int)NavPvtFields::flags_numOfValues);
+    return props.asMap();
 }
 
 QVariantMap createProps_headingAcc()
 {
-    auto props = cc::Property::createPropertiesMap("headingAcc");
-    cc::Property::setDisplayScaled(props);
-    cc::Property::setFloatDecimals(props, 5);
-    return props;
+    return
+        cc::property::field::ForField<NavPvtFields::headingAcc>()
+        .name("headingAcc")
+        .scaledDecimals(5)
+        .asMap();
 }
 
 QVariantList createFieldsProperties()
@@ -107,7 +104,7 @@ QVariantList createFieldsProperties()
     props.append(createProps_valid());
     props.append(cc_plugin::field::nav::props_tAcc());
     props.append(cc_plugin::field::nav::props_nano());
-    props.append(createProps_fixType());
+    props.append(cc_plugin::field::nav::props_fixType());
     props.append(createProps_flags());
     props.append(cc_plugin::field::common::props_reserved(1));
     props.append(cc_plugin::field::nav::props_numSV());

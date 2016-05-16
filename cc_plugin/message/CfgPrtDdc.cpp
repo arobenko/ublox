@@ -42,26 +42,26 @@ namespace message
 namespace
 {
 
+using ublox::message::CfgPrtDdcFields;
+
 QVariantMap createProps_mode()
 {
-
-    auto slaveAddrProps = cc::Property::createPropertiesMap("slaveAddr");
-    cc::Property::setSerialisedHidden(slaveAddrProps);
+    cc::property::field::ForField<CfgPrtDdcFields::slaveAddr> slaveAddrProps;
+    slaveAddrProps.name("slaveAddr").serialisedHidden();
 
     auto createReservedFunc =
         []() -> QVariantMap
         {
-            QVariantMap props;
-            cc::Property::setFieldHidden(props);
-            return props;
+            return cc::property::field::IntValue().hidden().asMap();
         };
 
-    QVariantList membersData;
-    membersData.append(createReservedFunc());
-    membersData.append(std::move(slaveAddrProps));
-    membersData.append(createReservedFunc());
-    assert(membersData.size() == ublox::message::CfgPrtDdcFields::mode_numOfValues);
-    return cc::Property::createPropertiesMap("mode", std::move(membersData));
+    cc::property::field::ForField<CfgPrtDdcFields::mode> props;
+    props.name("mode")
+         .add(createReservedFunc())
+         .add(slaveAddrProps.asMap())
+         .add(createReservedFunc());
+    assert(props.members().size() == CfgPrtDdcFields::mode_numOfValues);
+    return props.asMap();
 }
 
 QVariantList createFieldsProperties()

@@ -41,56 +41,87 @@ namespace message
 namespace
 {
 
+using ublox::message::NavDgpsFields;
+
 QVariantMap createProps_status()
 {
-    QVariantList enumValues;
-    cc::Property::appendEnumValue(enumValues, "none");
-    cc::Property::appendEnumValue(enumValues, "PR+PRR correction");
-    assert(enumValues.size() == (int)ublox::message::NavDgpsFields::Status::NumOfValues);
-    return cc::Property::createPropertiesMap("status", std::move(enumValues));
+    cc::property::field::ForField<NavDgpsFields::status> props;
+    props.name("status")
+         .add("none")
+         .add("PR+PRR correction");
+    assert(props.values().size() == (int)NavDgpsFields::Status::NumOfValues);
+    return props.asMap();
 }
 
 QVariantMap createProps_flags()
 {
-    auto channelProps = cc::Property::createPropertiesMap("channel");
-    cc::Property::setSerialisedHidden(channelProps);
+    cc::property::field::ForField<NavDgpsFields::channel> channelProps;
+    channelProps.name("channel")
+                .serialisedHidden();
 
-    QVariantList bitNames;
-    bitNames.append("dgpsUsed");
-    assert(bitNames.size() == ublox::message::NavDgpsFields::flagsBits_numOfValues);
-    auto flagsProps = cc::Property::createPropertiesMap("flags", std::move(bitNames));
-    cc::Property::setSerialisedHidden(flagsProps);
+    cc::property::field::ForField<NavDgpsFields::flagsBits> flagsBitsProps;
+    flagsBitsProps.name("flags")
+                  .add("dgpsUsed")
+                  .serialisedHidden();
+    assert(flagsBitsProps.bits().size() == NavDgpsFields::flagsBits_numOfValues);
 
-    QVariantList membersData;
-    membersData.append(std::move(channelProps));
-    membersData.append(std::move(flagsProps));
-    assert(membersData.size() == ublox::message::NavDgpsFields::flags_numOfValues);
-    return cc::Property::createPropertiesMap("flags", std::move(membersData));
+    cc::property::field::ForField<NavDgpsFields::flags> props;
+    props.name("flags")
+         .add(channelProps.asMap())
+         .add(flagsBitsProps.asMap());
+    assert(props.members().size() == NavDgpsFields::flags_numOfValues);
+    return props.asMap();
+}
+
+QVariantMap createProps_ageC()
+{
+    return
+        cc::property::field::ForField<NavDgpsFields::ageC>()
+            .name("ageC")
+            .asMap();
+}
+
+QVariantMap createProps_prc()
+{
+    return
+        cc::property::field::ForField<NavDgpsFields::prc>()
+            .name("prc")
+            .asMap();
+}
+
+QVariantMap createProps_prrc()
+{
+    return
+        cc::property::field::ForField<NavDgpsFields::prrc>()
+            .name("prrc")
+            .asMap();
 }
 
 QVariantMap createProps_data()
 {
-    QVariantList membersData;
-    membersData.append(cc_plugin::field::nav::props_svid());
-    membersData.append(createProps_flags());
-    membersData.append(cc::Property::createPropertiesMap("ageC"));
-    membersData.append(cc::Property::createPropertiesMap("prc"));
-    membersData.append(cc::Property::createPropertiesMap("prrc"));
-    assert(membersData.size() == ublox::message::NavDgpsFields::block_numOfValues);
-    auto elementProps = cc::Property::createPropertiesMap("element", std::move(membersData));
+    cc::property::field::ForField<NavDgpsFields::block> blockProps;
+    blockProps.add(cc_plugin::field::nav::props_svid())
+              .add(createProps_flags())
+              .add(createProps_ageC())
+              .add(createProps_prc())
+              .add(createProps_prrc());
+    assert(blockProps.members().size() == NavDgpsFields::block_numOfValues);
 
-    auto props = cc::Property::createPropertiesMap("data", std::move(elementProps));
-    cc::Property::setSerialisedHidden(props);
-    return props;
+    return
+        cc::property::field::ForField<NavDgpsFields::data>()
+            .name("data")
+            .add(blockProps.asMap())
+            .serialisedHidden()
+            .asMap();
 }
 
 QVariantList createFieldsProperties()
 {
     QVariantList props;
     props.append(cc_plugin::field::nav::props_iTOW());
-    props.append(cc::Property::createPropertiesMap("age"));
-    props.append(cc::Property::createPropertiesMap("baseId"));
-    props.append(cc::Property::createPropertiesMap("baseHealth"));
+    props.append(cc::property::field::ForField<NavDgpsFields::age>().name("age").asMap());
+    props.append(cc::property::field::ForField<NavDgpsFields::baseId>().name("baseId").asMap());
+    props.append(cc::property::field::ForField<NavDgpsFields::baseHealth>().name("baseHealth").asMap());
     props.append(cc_plugin::field::nav::props_numCh());
     props.append(createProps_status());
     props.append(cc_plugin::field::common::props_reserved(1));

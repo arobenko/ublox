@@ -43,19 +43,22 @@ namespace message
 namespace
 {
 
+using ublox::message::CfgTp5Fields;
+
 QVariantMap createProps_flags()
 {
-    QVariantList bitNames;
-    bitNames.append("active");
-    bitNames.append("lockGpsFreq");
-    bitNames.append("lockedOtherSet");
-    bitNames.append("isFreq");
-    bitNames.append("isLength");
-    bitNames.append("alignToTow");
-    bitNames.append("polarity");
-    bitNames.append("gridUtcGps");
-    assert(bitNames.size() == ublox::message::CfgTp5Fields::flags_numOfValues);
-    return cc::Property::createPropertiesMap("mask", std::move(bitNames));
+    cc::property::field::ForField<CfgTp5Fields::flags> props;
+    props.name("flags")
+         .add("active")
+         .add("lockGpsFreq")
+         .add("lockedOtherSet")
+         .add("isFreq")
+         .add("isLength")
+         .add("alignToTow")
+         .add("polarity")
+         .add("gridUtcGps");
+    assert(props.bits().size() == CfgTp5Fields::flags_numOfValues);
+    return props.asMap();
 }
 
 QVariantList createFieldsProperties()
@@ -64,13 +67,20 @@ QVariantList createFieldsProperties()
     props.append(cc_plugin::field::cfg::props_tpIdx());
     props.append(cc_plugin::field::common::props_reserved(0));
     props.append(cc_plugin::field::common::props_reserved(1));
-    props.append(cc::Property::createPropertiesMap("antCableDelay"));
-    props.append(cc::Property::createPropertiesMap("rfGroupDelay"));
-    props.append(cc::Property::createPropertiesMap("frepPeriod"));
-    props.append(cc::Property::createPropertiesMap("frepPeriodLock"));
-    props.append(cc::Property::createPropertiesMap("pulseLenRatio"));
-    props.append(cc::Property::createPropertiesMap("pulseLenRatioLock"));
-    props.append(cc::Property::createPropertiesMap("userConfigDelay"));
+    props.append(
+        cc::property::field::ForField<CfgTp5Fields::antCableDelay>().name("antCableDelay").asMap());
+    props.append(
+        cc::property::field::ForField<CfgTp5Fields::rfGroupDelay>().name("rfGroupDelay").asMap());
+    props.append(
+        cc::property::field::ForField<CfgTp5Fields::freqPeriod>().name("freqPeriod").asMap());
+    props.append(
+        cc::property::field::ForField<CfgTp5Fields::freqPeriodLock>().name("freqPeriodLock").asMap());
+    props.append(
+        cc::property::field::ForField<CfgTp5Fields::pulseLenRatio>().name("pulseLenRatio").asMap());
+    props.append(
+        cc::property::field::ForField<CfgTp5Fields::pulseLenRatioLock>().name("pulseLenRatioLock").asMap());
+    props.append(
+        cc::property::field::ForField<CfgTp5Fields::userConfigDelay>().name("userConfigDelay").asMap());
     props.append(createProps_flags());
     assert(props.size() == CfgTp5::FieldIdx_numOfValues);
     return props;

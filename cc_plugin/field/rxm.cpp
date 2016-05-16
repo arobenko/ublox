@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -40,9 +40,12 @@ namespace
 
 QVariantMap createProps_numSV()
 {
-    auto props = common::props_numSV();
-    cc::Property::setReadOnly(props);
-    return props;
+    static const auto Props =
+        cc::property::field::ForField<ublox::field::rxm::numSV>()
+            .name("numSV")
+            .readOnly()
+            .asMap();
+    return Props;
 }
 
 }  // namespace

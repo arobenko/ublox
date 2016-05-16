@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -39,12 +39,17 @@ namespace message
 namespace
 {
 
+using ublox::message::LogRetrieveFields;
+
 QVariantList createFieldsProperties()
 {
     QVariantList props;
-    props.append(cc::Property::createPropertiesMap("startNumber"));
-    props.append(cc::Property::createPropertiesMap("entryCount"));
-    props.append(cc::Property::createPropertiesMap("version"));
+    props.append(
+        cc::property::field::ForField<LogRetrieveFields::startNumber>().name("startNumber").asMap());
+    props.append(
+        cc::property::field::ForField<LogRetrieveFields::entryCount>().name("entryCount").asMap());
+    props.append(
+        cc::property::field::ForField<LogRetrieveFields::version>().name("version").asMap());
     props.append(cc_plugin::field::common::props_reserved(1));
     assert(props.size() == LogRetrieve::FieldIdx_numOfValues);
     return props;

@@ -40,47 +40,58 @@ namespace message
 namespace
 {
 
+using ublox::message::CfgTmode2Fields;
+
 QVariantMap createProps_timeMode()
 {
-    QVariantList enumValues;
-    cc::Property::appendEnumValue(enumValues, "Disabled");
-    cc::Property::appendEnumValue(enumValues, "Survey In");
-    cc::Property::appendEnumValue(enumValues, "Fixed Mode");
-    assert(enumValues.size() == (int)ublox::message::CfgTmode2Fields::TimeMode::NumOfValues);
-    return cc::Property::createPropertiesMap("timeMode", std::move(enumValues));
+    cc::property::field::ForField<CfgTmode2Fields::timeMode> props;
+    props.name("timeMode")
+         .add("Disabled")
+         .add("Survey In")
+         .add("Fixed Mode");
+    assert(props.values().size() == (int)CfgTmode2Fields::TimeMode::NumOfValues);
+    return props.asMap();
 }
 
 QVariantMap createProps_flags()
 {
-    QVariantList bitNames;
-    bitNames.append("lla");
-    bitNames.append("altInv");
-    assert(bitNames.size() == ublox::message::CfgTmode2Fields::flags_numOfValues);
-    return cc::Property::createPropertiesMap("flags", std::move(bitNames));
+    cc::property::field::ForField<CfgTmode2Fields::flags> props;
+    props.name("flags")
+         .add("lla")
+         .add("altInv");
+    assert(props.bits().size() == CfgTmode2Fields::flags_numOfValues);
+    return props.asMap();
 }
 
 QVariantMap createProps_cartesian(char coord)
 {
     auto name = QString("ecef%1").arg(coord);
-    auto valProps = cc::Property::createPropertiesMap(name);
-    auto props = cc::Property::createPropertiesMap(name, std::move(valProps));
-    cc::Property::setUncheckable(props);
-    return props;
+    cc::property::field::IntValue coordProps;
+    coordProps.name(name);
+
+    return
+        cc::property::field::Optional()
+            .name(name)
+            .field(coordProps.asMap())
+            .uncheckable()
+            .asMap();
 }
 
 QVariantMap createProps_geodetic(const char* name, int scaledDigits = 0)
 {
-    auto valProps = cc::Property::createPropertiesMap(name);
+    cc::property::field::IntValue coordProps;
+    coordProps.name(name);
     if (0 < scaledDigits) {
-        cc::Property::setDisplayScaled(valProps);
-        cc::Property::setFloatDecimals(valProps, scaledDigits);
+        coordProps.scaledDecimals(scaledDigits);
     }
 
-    auto props = cc::Property::createPropertiesMap(name, std::move(valProps));
-    cc::Property::setUncheckable(props);
-    return props;
+    return
+        cc::property::field::Optional()
+            .name(name)
+            .field(coordProps.asMap())
+            .uncheckable()
+            .asMap();
 }
-
 
 QVariantList createFieldsProperties()
 {
@@ -94,9 +105,12 @@ QVariantList createFieldsProperties()
     props.append(createProps_geodetic("lon", 7));
     props.append(createProps_cartesian('Z'));
     props.append(createProps_geodetic("alt"));
-    props.append(cc::Property::createPropertiesMap("fixedPosAcc"));
-    props.append(cc::Property::createPropertiesMap("svinMinDur"));
-    props.append(cc::Property::createPropertiesMap("svinAccLimit"));
+    props.append(
+        cc::property::field::ForField<CfgTmode2Fields::fixedPosAcc>().name("fixedPosAcc").asMap());
+    props.append(
+        cc::property::field::ForField<CfgTmode2Fields::svinMinDur>().name("svinMinDur").asMap());
+    props.append(
+        cc::property::field::ForField<CfgTmode2Fields::svinAccLimit>().name("svinAccLimit").asMap());
 
     assert(props.size() == CfgTmode2::FieldIdx_numOfValues);
     return props;

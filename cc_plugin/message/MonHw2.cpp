@@ -39,35 +39,47 @@ namespace message
 namespace
 {
 
+using ublox::message::MonHw2Fields;
+
 QVariantMap createProps_cfgSource()
 {
-    QVariantList enumValues;
-    cc::Property::appendEnumValue(enumValues, "flash image", (int)ublox::message::MonHw2Fields::CfgSource::FlashImage);
-    cc::Property::appendEnumValue(enumValues, "OTP", (int)ublox::message::MonHw2Fields::CfgSource::OTP);
-    cc::Property::appendEnumValue(enumValues, "config pins", (int)ublox::message::MonHw2Fields::CfgSource::ConfigPins);
-    cc::Property::appendEnumValue(enumValues, "ROM", (int)ublox::message::MonHw2Fields::CfgSource::ROM);
-    return cc::Property::createPropertiesMap("cfgSource", std::move(enumValues));
+    return
+        cc::property::field::ForField<MonHw2Fields::cfgSource>()
+            .name("cfgSource")
+            .add("flash image", (int)MonHw2Fields::CfgSource::FlashImage)
+            .add("OTP", (int)MonHw2Fields::CfgSource::OTP)
+            .add("config pins", (int)MonHw2Fields::CfgSource::ConfigPins)
+            .add("ROM", (int)MonHw2Fields::CfgSource::ROM)
+            .asMap();
 }
 
 QVariantMap createProps_reserved1()
 {
-    auto elemProps = cc::Property::createPropertiesMap(QString());
-    cc::Property::setSerialisedHidden(elemProps);
-    return cc::Property::createPropertiesMap("reserved1", std::move(elemProps));
+    return
+        cc::property::field::ForField<MonHw2Fields::reserved1>()
+            .name("reserved1")
+            .add(cc::property::field::IntValue().serialisedHidden().asMap())
+            .asMap();
 }
 
 QVariantList createFieldsProperties()
 {
     QVariantList props;
-    props.append(cc::Property::createPropertiesMap("ofsI"));
-    props.append(cc::Property::createPropertiesMap("magI"));
-    props.append(cc::Property::createPropertiesMap("ofsQ"));
-    props.append(cc::Property::createPropertiesMap("magQ"));
+    props.append(
+        cc::property::field::ForField<MonHw2Fields::ofsI>().name("ofsI").asMap());
+    props.append(
+        cc::property::field::ForField<MonHw2Fields::magI>().name("magI").asMap());
+    props.append(
+        cc::property::field::ForField<MonHw2Fields::ofsQ>().name("ofsQ").asMap());
+    props.append(
+        cc::property::field::ForField<MonHw2Fields::magQ>().name("magQ").asMap());
     props.append(createProps_cfgSource());
     props.append(cc_plugin::field::common::props_reserved(0));
-    props.append(cc::Property::createPropertiesMap("lowLevelCfg"));
+    props.append(
+        cc::property::field::ForField<MonHw2Fields::lowLevelCfg>().name("lowLevelCfg").asMap());
     props.append(createProps_reserved1());
-    props.append(cc::Property::createPropertiesMap("postStatus"));
+    props.append(
+        cc::property::field::ForField<MonHw2Fields::postStatus>().name("postStatus").asMap());
     props.append(cc_plugin::field::common::props_reserved(2));
     assert(props.size() == MonHw2::FieldIdx_numOfValues);
     return props;

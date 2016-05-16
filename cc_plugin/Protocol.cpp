@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -29,28 +29,24 @@ namespace cc_plugin
 
 Protocol::~Protocol() = default;
 
-const std::string& Protocol::nameImpl() const
+const QString& Protocol::nameImpl() const
 {
-    static const std::string Str("UBlox");
+    static const QString Str("UBlox");
     return Str;
 }
 
-Protocol::UpdateStatus Protocol::updateMessageInfoImpl(cc::MessageInfo& msgInfo)
+Protocol::UpdateStatus Protocol::updateMessageImpl(cc::Message& msg)
 {
-    auto msgPtr = msgInfo.getAppMessage();
-    if (!msgPtr) {
-        return UpdateStatus::NoChangeToAppMsg;
-    }
-
-    auto* castedMsgPtr = dynamic_cast<Message*>(msgPtr.get());
+    auto* castedMsgPtr = dynamic_cast<Message*>(&msg);
     if (castedMsgPtr == nullptr) {
-        return UpdateStatus::NoChangeToAppMsg;
+        assert(!"Should not happen");
+        return UpdateStatus::NoChange;
     }
 
     bool updated = castedMsgPtr->refresh();
-    auto parentStatus = Base::updateMessageInfoImpl(msgInfo);
+    auto parentStatus = Base::updateMessageImpl(msg);
     if (updated) {
-        return UpdateStatus::AppMsgWasChanged;
+        return UpdateStatus::Changed;
     }
     return parentStatus;
 }

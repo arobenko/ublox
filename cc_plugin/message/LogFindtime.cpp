@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -39,20 +39,26 @@ namespace message
 namespace
 {
 
+using ublox::message::LogFindtimeFields;
+
 QVariantMap createProps_type()
 {
-    auto props = cc::Property::createPropertiesMap("type");
-    cc::Property::setReadOnly(props);
-    return props;
+    return
+        cc::property::field::ForField<LogFindtimeFields::type>()
+            .name("type")
+            .readOnly()
+            .asMap();
 }
 
 QVariantList createFieldsProperties()
 {
     QVariantList props;
-    props.append(cc::Property::createPropertiesMap("version"));
+    props.append(
+        cc::property::field::ForField<LogFindtimeFields::version>().name("version").asMap());
     props.append(createProps_type());
     props.append(cc_plugin::field::common::props_reserved(1));
-    props.append(cc::Property::createPropertiesMap("entryNumber"));
+    props.append(
+        cc::property::field::ForField<LogFindtimeFields::entryNumber>().name("entryNumber").asMap());
 
     assert(props.size() == LogFindtime::FieldIdx_numOfValues);
     return props;

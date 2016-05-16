@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -39,25 +39,36 @@ namespace message
 namespace
 {
 
+using ublox::message::LogFindtimeCmdFields;
+
 QVariantMap createProps_type()
 {
-    auto props = cc::Property::createPropertiesMap("type");
-    cc::Property::setReadOnly(props);
-    return props;
+    return
+        cc::property::field::ForField<LogFindtimeCmdFields::type>()
+            .name("type")
+            .readOnly()
+            .asMap();
 }
 
 QVariantList createFieldsProperties()
 {
     QVariantList props;
-    props.append(cc::Property::createPropertiesMap("version"));
+    props.append(
+        cc::property::field::ForField<LogFindtimeCmdFields::version>().name("version").asMap());
     props.append(createProps_type());
     props.append(cc_plugin::field::common::props_reserved(1));
-    props.append(cc::Property::createPropertiesMap("year"));
-    props.append(cc::Property::createPropertiesMap("month"));
-    props.append(cc::Property::createPropertiesMap("day"));
-    props.append(cc::Property::createPropertiesMap("hour"));
-    props.append(cc::Property::createPropertiesMap("minute"));
-    props.append(cc::Property::createPropertiesMap("second"));
+    props.append(
+        cc::property::field::ForField<LogFindtimeCmdFields::year>().name("year").asMap());
+    props.append(
+        cc::property::field::ForField<LogFindtimeCmdFields::month>().name("month").asMap());
+    props.append(
+        cc::property::field::ForField<LogFindtimeCmdFields::day>().name("day").asMap());
+    props.append(
+        cc::property::field::ForField<LogFindtimeCmdFields::hour>().name("hour").asMap());
+    props.append(
+        cc::property::field::ForField<LogFindtimeCmdFields::minute>().name("minute").asMap());
+    props.append(
+        cc::property::field::ForField<LogFindtimeCmdFields::second>().name("second").asMap());
     props.append(cc_plugin::field::common::props_reserved(2));
 
     assert(props.size() == LogFindtimeCmd::FieldIdx_numOfValues);

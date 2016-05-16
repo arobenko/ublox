@@ -39,14 +39,17 @@ namespace message
 namespace
 {
 
+using ublox::message::CfgRxmFields;
+
 QVariantMap createProps_lpMode()
 {
-    QVariantList enumValues;
-    cc::Property::appendEnumValue(enumValues, "Max Performance", (int)ublox::message::CfgRxmFields::LowPowerMode::MaxPerformance);
-    cc::Property::appendEnumValue(enumValues, "Power Save", (int)ublox::message::CfgRxmFields::LowPowerMode::PowerSave);
-    cc::Property::appendEnumValue(enumValues, "Eco", (int)ublox::message::CfgRxmFields::LowPowerMode::Eco);
-
-    return cc::Property::createPropertiesMap("lpMode", std::move(enumValues));
+    return
+        cc::property::field::ForField<CfgRxmFields::lpMode>()
+            .name("lpMode")
+            .add("Max Performance", (int)CfgRxmFields::LowPowerMode::MaxPerformance)
+            .add("Power Save", (int)CfgRxmFields::LowPowerMode::PowerSave)
+            .add("Eco", (int)CfgRxmFields::LowPowerMode::Eco)
+            .asMap();
 }
 
 QVariantList createFieldsProperties()

@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -25,6 +25,7 @@ CC_ENABLE_WARNINGS()
 #include "comms_champion/comms_champion.h"
 #include "ublox/field/cfg.h"
 #include "ublox/message/CfgPrt.h"
+#include "ublox/message/CfgInf.h"
 #include "ublox/message/CfgNmea.h"
 
 namespace cc = comms_champion;
@@ -44,128 +45,148 @@ namespace cfg
 namespace
 {
 
+cc::property::field::EnumValue createPropsInternal_portID()
+{
+    return cc::property::field::EnumValue()
+        .name("portID")
+        .add("DDC", (int)ublox::message::CfgPrtFields::PortId::DDC)
+        .add("UART", (int)ublox::message::CfgPrtFields::PortId::UART)
+        .add("UART2", (int)ublox::message::CfgPrtFields::PortId::UART2)
+        .add("USB", (int)ublox::message::CfgPrtFields::PortId::USB)
+        .add("SPI", (int)ublox::message::CfgPrtFields::PortId::SPI);
+}
+
 QVariantMap createProps_portID()
 {
-    QVariantList enumValues;
-    cc::Property::appendEnumValue(enumValues, "DDC", (int)ublox::message::CfgPrtFields::PortId::DDC);
-    cc::Property::appendEnumValue(enumValues, "UART", (int)ublox::message::CfgPrtFields::PortId::UART);
-    cc::Property::appendEnumValue(enumValues, "UART2", (int)ublox::message::CfgPrtFields::PortId::UART2);
-    cc::Property::appendEnumValue(enumValues, "USB", (int)ublox::message::CfgPrtFields::PortId::USB);
-    cc::Property::appendEnumValue(enumValues, "SPI", (int)ublox::message::CfgPrtFields::PortId::SPI);
-
-    return cc::Property::createPropertiesMap("portID", std::move(enumValues));
+    return createPropsInternal_portID().asMap();
 }
 
 QVariantMap createProps_readOnlyPortID()
 {
-    auto props = createProps_portID();
-    cc::Property::setReadOnly(props);
-    return props;
+    return createPropsInternal_portID().readOnly().asMap();
 }
 
 QVariantMap createProps_txReady()
 {
-    QVariantList enBitNames;
-    enBitNames.append("en");
-    auto enProps = cc::Property::createPropertiesMap("txReady", std::move(enBitNames));
-    cc::Property::setSerialisedHidden(enProps);
+    auto enProps =
+        cc::property::field::ForField<ublox::message::CfgPrtFields::en>()
+            .name("txReady")
+            .add("en")
+            .serialisedHidden();
+    assert(enProps.bits().size() == ublox::message::CfgPrtFields::en_numOfValues);
 
-    QVariantList polEnumValues;
-    cc::Property::appendEnumValue(polEnumValues, "High-active");
-    cc::Property::appendEnumValue(polEnumValues, "Low-active");
-    assert(polEnumValues.size() == (int)ublox::message::CfgPrtFields::Polarity::NumOfValues);
-    auto polProps = cc::Property::createPropertiesMap("pol", std::move(polEnumValues));
-    cc::Property::setSerialisedHidden(polProps);
+    auto polProps =
+        cc::property::field::ForField<ublox::message::CfgPrtFields::pol>()
+            .name("pol")
+            .add("High-active")
+            .add("Low-active")
+            .serialisedHidden();
+    assert(polProps.values().size() == (int)ublox::message::CfgPrtFields::Polarity::NumOfValues);
 
-    auto pinProps = cc::Property::createPropertiesMap("pin");
-    cc::Property::setSerialisedHidden(pinProps);
+    auto pinProps =
+        cc::property::field::ForField<ublox::message::CfgPrtFields::pin>()
+            .name("pin")
+            .serialisedHidden();
 
-    auto thresProps = cc::Property::createPropertiesMap("thres");
-    cc::Property::setSerialisedHidden(thresProps);
+    auto thresProps =
+        cc::property::field::ForField<ublox::message::CfgPrtFields::pin>()
+            .name("thres")
+            .serialisedHidden();
 
-    QVariantList membersData;
-    membersData.append(std::move(enProps));
-    membersData.append(std::move(polProps));
-    membersData.append(std::move(pinProps));
-    membersData.append(std::move(thresProps));
-    assert(membersData.size() == ublox::message::CfgPrtFields::txReady_numOfValues);
-    return cc::Property::createPropertiesMap("txReady", std::move(membersData));
+    auto txReadyProps =
+        cc::property::field::ForField<ublox::message::CfgPrtFields::txReady>()
+            .name("txReady")
+            .add(enProps.asMap())
+            .add(polProps.asMap())
+            .add(pinProps.asMap())
+            .add(thresProps.asMap());
+
+    assert(txReadyProps.members().size() == ublox::message::CfgPrtFields::txReady_numOfValues);
+    return txReadyProps.asMap();
 }
 
 QVariantMap createProps_inProtoMask()
 {
-    QVariantList bitNames;
-    bitNames.append("inUbx");
-    bitNames.append("inNmea");
-    bitNames.append("inRtcm");
-    assert(bitNames.size() == ublox::message::CfgPrtFields::inProtoMask_numOfValues);
-    return cc::Property::createPropertiesMap("inProtoMask", std::move(bitNames));
+    cc::property::field::ForField<ublox::message::CfgPrtFields::inProtoMask> props;
+    props.name("inProtoMask")
+         .add("inUbx")
+         .add("inNmea")
+         .add("inRtcm");
+    assert(props.bits().size() == ublox::message::CfgPrtFields::inProtoMask_numOfValues);
+    return props.asMap();
 }
 
 QVariantMap createProps_outProtoMask()
 {
-    QVariantList bitNames;
-    bitNames.append("outUbx");
-    bitNames.append("outNmea");
-    assert(bitNames.size() == ublox::message::CfgPrtFields::outProtoMask_numOfValues);
-    return cc::Property::createPropertiesMap("outProtoMask", std::move(bitNames));
+    cc::property::field::ForField<ublox::message::CfgPrtFields::outProtoMask> props;
+    props.name("outProtoMask")
+        .add("outUbx")
+        .add("outNmea");
+    assert(props.bits().size() == ublox::message::CfgPrtFields::outProtoMask_numOfValues);
+    return props.asMap();
 }
 
 QVariantMap createProps_prtFlags()
 {
-    QVariantList bitNames;
-    bitNames.append(QVariant());
-    bitNames.append("extendedTxTimeout");
-    assert(bitNames.size() == ublox::message::CfgPrtFields::flags_numOfValues);
-    return cc::Property::createPropertiesMap("flags", std::move(bitNames));
+    cc::property::field::ForField<ublox::message::CfgPrtFields::flags> props;
+    props.name("flags")
+         .add(ublox::message::CfgPrtFields::flags_extendedTxTimeout, "extendedTxTimeout");
+    assert(props.bits().size() == ublox::message::CfgPrtFields::flags_numOfValues);
+    return props.asMap();
 }
 
 QVariantMap createProps_protocolID()
 {
-    QVariantList enumValues;
-    cc::Property::appendEnumValue(enumValues, "UBX");
-    cc::Property::appendEnumValue(enumValues, "NMEA");
-    assert(enumValues.size() == (int)ublox::field::cfg::ProtocolId::NumOfValues);
-    return cc::Property::createPropertiesMap("protocolID", std::move(enumValues));
+    cc::property::field::ForField<ublox::message::CfgInfFields::protocolID> props;
+    props.name("protocolID")
+         .add("UBX")
+         .add("NMEA");
+    assert(props.values().size() == (int)ublox::field::cfg::ProtocolId::NumOfValues);
+    return props.asMap();
 }
 
 QVariantMap createProps_nmeaFilter()
 {
-    QVariantList bitNames;
-    bitNames.append("posFilt");
-    bitNames.append("mskPosFilt");
-    bitNames.append("timeFilt");
-    bitNames.append("dateFilt");
-    bitNames.append("gpsOnlyFilter");
-    bitNames.append("trackFilt");
-    assert(bitNames.size() == ublox::message::CfgNmeaFields::filter_numOfValues);
-    return cc::Property::createPropertiesMap("filter", std::move(bitNames));
+    cc::property::field::ForField<ublox::message::CfgNmeaFields::filter> props;
+    props.name("filter")
+         .add("posFilt")
+         .add("mskPosFilt")
+         .add("timeFilt")
+         .add("dateFilt")
+         .add("gpsOnlyFilter")
+         .add("trackFilt");
+    assert(props.bits().size() == ublox::message::CfgNmeaFields::filter_numOfValues);
+    return props.asMap();
 }
 
 QVariantMap createProps_nmeaVersion()
 {
-    QVariantList enumValues;
-    cc::Property::appendEnumValue(enumValues, "NMEA version 2.1", (int)ublox::message::CfgNmeaFields::NmeaVersion::v21);
-    cc::Property::appendEnumValue(enumValues, "NMEA version 2.3", (int)ublox::message::CfgNmeaFields::NmeaVersion::v23);
-    return cc::Property::createPropertiesMap("nmeaVersion", std::move(enumValues));
+    return
+        cc::property::field::ForField<ublox::message::CfgNmeaFields::nmeaVersion>()
+            .name("nmeaVersion")
+            .add("NMEA version 2.1", (int)ublox::message::CfgNmeaFields::NmeaVersion::v21)
+            .add("NMEA version 2.3", (int)ublox::message::CfgNmeaFields::NmeaVersion::v23)
+            .asMap();
 }
 
 QVariantMap createProps_nmeaFlags()
 {
-    QVariantList bitNames;
-    bitNames.append("compat");
-    bitNames.append("consider");
-    assert(bitNames.size() == ublox::message::CfgNmeaFields::flags_numOfValues);
-    return cc::Property::createPropertiesMap("filter", std::move(bitNames));
+    cc::property::field::ForField<ublox::message::CfgNmeaFields::flags> props;
+    props.name("flags")
+         .add("compat")
+         .add("consider");
+    assert(props.bits().size() == ublox::message::CfgNmeaFields::flags_numOfValues);
+    return props.asMap();
 }
 
 QVariantMap createProps_tpIdx()
 {
-    QVariantList enumValues;
-    cc::Property::appendEnumValue(enumValues, "TIMEPULSE");
-    cc::Property::appendEnumValue(enumValues, "TIMEPULSE2");
-    assert(enumValues.size() == (int)ublox::field::cfg::TpIdx::NumOfValues);
-    return cc::Property::createPropertiesMap("tpIdx", std::move(enumValues));
+    cc::property::field::ForField<ublox::field::cfg::tpIdx> props;
+    props.name("tpIdx")
+         .add("TIMEPULSE")
+         .add("TIMEPULSE2");
+    assert(props.values().size() == (int)ublox::field::cfg::TpIdx::NumOfValues);
+    return props.asMap();
 }
 
 
@@ -215,67 +236,100 @@ const QVariantMap& props_protocolID()
 
 const QVariantMap& props_datumNum()
 {
-    static const QVariantMap Props = cc::Property::createPropertiesMap("datumNum");
+    static const QVariantMap Props =
+        cc::property::field::ForField<ublox::field::cfg::datumNum>()
+            .name("datumNum")
+            .asMap();
     return Props;
 }
 
 const QVariantMap& props_datumName()
 {
-    static const QVariantMap Props = cc::Property::createPropertiesMap("datumName");
+    static const QVariantMap Props =
+        cc::property::field::ForField<ublox::field::cfg::datumName>()
+            .name("datumName")
+            .asMap();
     return Props;
 }
 
 const QVariantMap& props_datMajA()
 {
-    static const QVariantMap Props = cc::Property::createPropertiesMap("majA");
+    static const QVariantMap Props =
+        cc::property::field::ForField<ublox::field::cfg::datMajA>()
+            .name("majA")
+            .asMap();
     return Props;
 }
 
 const QVariantMap& props_datFlat()
 {
-    static const QVariantMap Props = cc::Property::createPropertiesMap("flat");
+    static const QVariantMap Props =
+        cc::property::field::ForField<ublox::field::cfg::datFlat>()
+            .name("flat")
+            .asMap();
     return Props;
 }
 
 const QVariantMap& props_datDX()
 {
-    static const QVariantMap Props = cc::Property::createPropertiesMap("dX");
+    static const QVariantMap Props =
+        cc::property::field::ForField<ublox::field::cfg::datDX>()
+            .name("dX")
+            .asMap();
     return Props;
 }
 
 const QVariantMap& props_datDY()
 {
-    static const QVariantMap Props = cc::Property::createPropertiesMap("dY");
+    static const QVariantMap Props =
+        cc::property::field::ForField<ublox::field::cfg::datDY>()
+            .name("dY")
+            .asMap();
     return Props;
 }
 
 const QVariantMap& props_datDZ()
 {
-    static const QVariantMap Props = cc::Property::createPropertiesMap("dZ");
+    static const QVariantMap Props =
+        cc::property::field::ForField<ublox::field::cfg::datDZ>()
+            .name("dZ")
+            .asMap();
     return Props;
 }
 
 const QVariantMap& props_datRotX()
 {
-    static const QVariantMap Props = cc::Property::createPropertiesMap("rotX");
+    static const QVariantMap Props =
+        cc::property::field::ForField<ublox::field::cfg::datRotX>()
+            .name("rotX")
+            .asMap();
     return Props;
 }
 
 const QVariantMap& props_datRotY()
 {
-    static const QVariantMap Props = cc::Property::createPropertiesMap("rotY");
+    static const QVariantMap Props =
+        cc::property::field::ForField<ublox::field::cfg::datRotY>()
+            .name("rotY")
+            .asMap();
     return Props;
 }
 
 const QVariantMap& props_datRotZ()
 {
-    static const QVariantMap Props = cc::Property::createPropertiesMap("rotZ");
+    static const QVariantMap Props =
+        cc::property::field::ForField<ublox::field::cfg::datRotZ>()
+            .name("rotZ")
+            .asMap();
     return Props;
 }
 
 const QVariantMap& props_datScale()
 {
-    static const QVariantMap Props = cc::Property::createPropertiesMap("scale");
+    static const QVariantMap Props =
+        cc::property::field::ForField<ublox::field::cfg::datScale>()
+            .name("scale")
+            .asMap();
     return Props;
 }
 
@@ -293,7 +347,10 @@ const QVariantMap& props_nmeaVersion()
 
 const QVariantMap& props_nmeaNumSV()
 {
-    static const QVariantMap Props = cc::Property::createPropertiesMap("numSV");
+    static const QVariantMap Props =
+        cc::property::field::ForField<ublox::message::CfgNmeaFields::numSV>()
+            .name("numSV")
+            .asMap();
     return Props;
 }
 

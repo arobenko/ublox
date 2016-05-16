@@ -39,42 +39,60 @@ namespace message
 namespace
 {
 
+using ublox::message::LogRetrieveposFields;
+
 QVariantMap createProps_latLong(const char* name)
 {
-    auto props = cc::Property::createPropertiesMap(name);
-    cc::Property::setDisplayScaled(props);
-    cc::Property::setFloatDecimals(props, 7);
-    return props;
+    return
+        cc::property::field::ForField<LogRetrieveposFields::lat>()
+            .name(name)
+            .scaledDecimals(7)
+            .asMap();
 }
 
 QVariantMap createProps_fixType()
 {
-    QVariantList enumValues;
-    cc::Property::appendEnumValue(enumValues, "2D-Fix", (int)ublox::message::LogRetrieveposFields::FixType::Fix_2D);
-    cc::Property::appendEnumValue(enumValues, "3D-Fix", (int)ublox::message::LogRetrieveposFields::FixType::Fix_3D);
-    return cc::Property::createPropertiesMap("fixType", std::move(enumValues));
+    return
+        cc::property::field::ForField<LogRetrieveposFields::fixType>()
+            .name("fixType")
+            .add("2D-Fix", (int)LogRetrieveposFields::FixType::Fix_2D)
+            .add("3D-Fix", (int)LogRetrieveposFields::FixType::Fix_3D)
+            .asMap();
 }
 
 QVariantList createFieldsProperties()
 {
     QVariantList props;
-    props.append(cc::Property::createPropertiesMap("entryIdx"));
+    props.append(
+        cc::property::field::ForField<LogRetrieveposFields::entryIndex>().name("entryIndex").asMap());
     props.append(createProps_latLong("lon"));
     props.append(createProps_latLong("lat"));
-    props.append(cc::Property::createPropertiesMap("hMSL"));
-    props.append(cc::Property::createPropertiesMap("hAcc"));
-    props.append(cc::Property::createPropertiesMap("gSpeed"));
-    props.append(cc::Property::createPropertiesMap("heading"));
-    props.append(cc::Property::createPropertiesMap("version"));
+    props.append(
+        cc::property::field::ForField<LogRetrieveposFields::hMSL>().name("hMSL").asMap());
+    props.append(
+        cc::property::field::ForField<LogRetrieveposFields::hAcc>().name("hAcc").asMap());
+    props.append(
+        cc::property::field::ForField<LogRetrieveposFields::gSpeed>().name("gSpeed").asMap());
+    props.append(
+        cc::property::field::ForField<LogRetrieveposFields::heading>().name("heading").asMap());
+    props.append(
+        cc::property::field::ForField<LogRetrieveposFields::version>().name("version").asMap());
     props.append(createProps_fixType());
-    props.append(cc::Property::createPropertiesMap("year"));
-    props.append(cc::Property::createPropertiesMap("month"));
-    props.append(cc::Property::createPropertiesMap("day"));
-    props.append(cc::Property::createPropertiesMap("hour"));
-    props.append(cc::Property::createPropertiesMap("minute"));
-    props.append(cc::Property::createPropertiesMap("second"));
+    props.append(
+        cc::property::field::ForField<LogRetrieveposFields::year>().name("year").asMap());
+    props.append(
+        cc::property::field::ForField<LogRetrieveposFields::month>().name("month").asMap());
+    props.append(
+        cc::property::field::ForField<LogRetrieveposFields::day>().name("day").asMap());
+    props.append(
+        cc::property::field::ForField<LogRetrieveposFields::hour>().name("hour").asMap());
+    props.append(
+        cc::property::field::ForField<LogRetrieveposFields::minute>().name("minute").asMap());
+    props.append(
+        cc::property::field::ForField<LogRetrieveposFields::second>().name("second").asMap());
     props.append(cc_plugin::field::common::props_reserved(1));
-    props.append(cc::Property::createPropertiesMap("numSV"));
+    props.append(
+        cc::property::field::ForField<LogRetrieveposFields::numSV>().name("numSV").asMap());
     props.append(cc_plugin::field::common::props_reserved(2));
     assert(props.size() == LogRetrievepos::FieldIdx_numOfValues);
     return props;

@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -39,53 +39,66 @@ namespace message
 namespace
 {
 
+using ublox::message::CfgGnssFields;
+
 QVariantMap createProps_numConfigBlocks()
 {
-    auto props = cc::Property::createPropertiesMap("numConfigBlocks");
-    cc::Property::setReadOnly(props);
-    return props;
+    return
+        cc::property::field::ForField<CfgGnssFields::numConfigBlocks>()
+            .name("numConfigBlocks")
+            .readOnly()
+            .asMap();
 }
 
 QVariantMap createProps_gnssId()
 {
-    QVariantList enumValues;
-    cc::Property::appendEnumValue(enumValues, "GPS", (int)ublox::message::CfgGnssFields::GnssId::GPS);
-    cc::Property::appendEnumValue(enumValues, "SBAS", (int)ublox::message::CfgGnssFields::GnssId::SBAS);
-    cc::Property::appendEnumValue(enumValues, "QZSS", (int)ublox::message::CfgGnssFields::GnssId::QZSS);
-    cc::Property::appendEnumValue(enumValues, "GLONASS", (int)ublox::message::CfgGnssFields::GnssId::GLONASS);
-    return cc::Property::createPropertiesMap("gnssId", std::move(enumValues));
+    return
+        cc::property::field::ForField<CfgGnssFields::gnssId>()
+            .name("gnssId")
+            .add("GPS", (int)CfgGnssFields::GnssId::GPS)
+            .add("SBAS", (int)CfgGnssFields::GnssId::SBAS)
+            .add("QZSS", (int)CfgGnssFields::GnssId::QZSS)
+            .add("GLONASS", (int)CfgGnssFields::GnssId::GLONASS)
+            .asMap();
 }
 
 QVariantMap createProps_flags()
 {
-    QVariantList bitNames;
-    bitNames.append("enable");
-    assert(bitNames.size() == ublox::message::CfgGnssFields::flags_numOfValues);
-    return cc::Property::createPropertiesMap("flags", std::move(bitNames));
+    cc::property::field::ForField<CfgGnssFields::flags> props;
+    props.name("flags")
+         .add("enable");
+    assert(props.bits().size() == CfgGnssFields::flags_numOfValues);
+    return props.asMap();
 }
 
 QVariantMap createProps_data()
 {
-    QVariantList membersData;
-    membersData.append(createProps_gnssId());
-    membersData.append(cc::Property::createPropertiesMap("resTrkCh"));
-    membersData.append(cc::Property::createPropertiesMap("maxTrkCh"));
-    membersData.append(cc_plugin::field::common::props_reserved(1));
-    membersData.append(createProps_flags());
-    assert(membersData.size() == ublox::message::CfgGnssFields::block_numOfValues);
+    cc::property::field::ForField<CfgGnssFields::block> blockProps;
+    blockProps
+        .add(createProps_gnssId())
+        .add(cc::property::field::ForField<CfgGnssFields::resTrkCh>().name("resTrkCh").asMap())
+        .add(cc::property::field::ForField<CfgGnssFields::maxTrkCh>().name("maxTrkCh").asMap())
+        .add(cc_plugin::field::common::props_reserved(1))
+        .add(createProps_flags());
+    assert(blockProps.members().size() == CfgGnssFields::block_numOfValues);
 
-    auto elemProps = cc::Property::createPropertiesMap("element", std::move(membersData));
-    auto props = cc::Property::createPropertiesMap("data", std::move(elemProps));
-    cc::Property::setSerialisedHidden(props);
-    return props;
+    return
+        cc::property::field::ForField<CfgGnssFields::blocksList>()
+            .name("data")
+            .add(blockProps.asMap())
+            .serialisedHidden()
+            .asMap();
 }
 
 QVariantList createFieldsProperties()
 {
     QVariantList props;
-    props.append(cc::Property::createPropertiesMap("msgVer"));
-    props.append(cc::Property::createPropertiesMap("numTrkChHw"));
-    props.append(cc::Property::createPropertiesMap("numTrkChUse"));
+    props.append(
+        cc::property::field::ForField<CfgGnssFields::msgVer>().name("msgVer").asMap());
+    props.append(
+        cc::property::field::ForField<CfgGnssFields::numTrkChHw>().name("numTrkChHw").asMap());
+    props.append(
+        cc::property::field::ForField<CfgGnssFields::numTrkChUse>().name("numTrkChUse").asMap());
     props.append(createProps_numConfigBlocks());
     props.append(createProps_data());
     assert(props.size() == CfgGnss::FieldIdx_numOfValues);

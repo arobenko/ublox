@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -17,6 +17,8 @@
 
 
 #include "AidAopPollSv.h"
+
+#include <cassert>
 
 template class ublox::message::AidAopPollSv<ublox::cc_plugin::Message>;
 template class ublox::cc_plugin::ProtocolMessageBase<
@@ -37,10 +39,13 @@ namespace message
 namespace
 {
 
+using ublox::message::AidAopPollSvFields;
+
 QVariantList createFieldsProperties()
 {
     QVariantList props;
-    props.append(cc::Property::createPropertiesMap("svid"));
+    props.append(
+        cc::property::field::ForField<AidAopPollSvFields::svid>().name("svid").asMap());
 
     assert(props.size() == AidAopPollSv::FieldIdx_numOfValues);
     return props;

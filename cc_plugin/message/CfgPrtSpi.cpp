@@ -42,45 +42,46 @@ namespace message
 namespace
 {
 
+using ublox::message::CfgPrtSpiFields;
+
 QVariantMap createProps_mode()
 {
-    QVariantList spiModeEnumValues;
-    cc::Property::appendEnumValue(spiModeEnumValues, "Mode 0: CPOL=0, CPHA=0");
-    cc::Property::appendEnumValue(spiModeEnumValues, "Mode 1: CPOL=0, CPHA=1");
-    cc::Property::appendEnumValue(spiModeEnumValues, "Mode 2: CPOL=1, CPHA=0");
-    cc::Property::appendEnumValue(spiModeEnumValues, "Mode 3: CPOL=1, CPHA=1");
-    assert(spiModeEnumValues.size() == (int)ublox::message::CfgPrtSpiFields::SpiMode::NumOfValues);
-    auto spiModeProps = cc::Property::createPropertiesMap("spiMode", std::move(spiModeEnumValues));
-    cc::Property::setSerialisedHidden(spiModeProps);
+    cc::property::field::ForField<CfgPrtSpiFields::spiMode> spiModeProps;
+    spiModeProps.name("spiMode")
+                .add("Mode 0: CPOL=0, CPHA=0")
+                .add("Mode 1: CPOL=0, CPHA=1")
+                .add("Mode 2: CPOL=1, CPHA=0")
+                .add("Mode 3: CPOL=1, CPHA=1")
+                .serialisedHidden();
+    assert(spiModeProps.values().size() == (int)CfgPrtSpiFields::SpiMode::NumOfValues);
 
-    QVariantList flowControlEnumValues;
-    cc::Property::appendEnumValue(flowControlEnumValues, "Disabled");
-    cc::Property::appendEnumValue(flowControlEnumValues, "Enabled");
-    assert(flowControlEnumValues.size() == (int)ublox::message::CfgPrtSpiFields::FlowControl::NumOfValues);
-    auto flowControlProps = cc::Property::createPropertiesMap("flowControl", std::move(flowControlEnumValues));
-    cc::Property::setSerialisedHidden(flowControlProps);
+    cc::property::field::ForField<CfgPrtSpiFields::flowControl> flowControlProps;
+    flowControlProps.name("flowControl")
+                    .add("Disabled")
+                    .add("Enabled")
+                    .serialisedHidden();
+    assert(flowControlProps.values().size() == (int)CfgPrtSpiFields::FlowControl::NumOfValues);
 
-    auto ffCntProps = cc::Property::createPropertiesMap("ffCnt");
-    cc::Property::setSerialisedHidden(ffCntProps);
+    cc::property::field::ForField<CfgPrtSpiFields::ffCnt> ffCntProps;
+    ffCntProps.name("ffCnt").serialisedHidden();
 
     auto createReservedFunc =
         []() -> QVariantMap
         {
-            QVariantMap props;
-            cc::Property::setFieldHidden(props);
-            return props;
+            return cc::property::field::IntValue().hidden().asMap();
         };
 
-    QVariantList membersData;
-    membersData.append(createReservedFunc());
-    membersData.append(std::move(spiModeProps));
-    membersData.append(createReservedFunc());
-    membersData.append(std::move(flowControlProps));
-    membersData.append(createReservedFunc());
-    membersData.append(std::move(ffCntProps));
-    membersData.append(createReservedFunc());
-    assert(membersData.size() == ublox::message::CfgPrtSpiFields::mode_numOfValues);
-    return cc::Property::createPropertiesMap("mode", std::move(membersData));
+    cc::property::field::ForField<CfgPrtSpiFields::mode> props;
+    props.name("mode")
+         .add(createReservedFunc())
+         .add(spiModeProps.asMap())
+         .add(createReservedFunc())
+         .add(flowControlProps.asMap())
+         .add(createReservedFunc())
+         .add(ffCntProps.asMap())
+         .add(createReservedFunc());
+    assert(props.members().size() == CfgPrtSpiFields::mode_numOfValues);
+    return props.asMap();
 }
 
 QVariantList createFieldsProperties()

@@ -41,68 +41,71 @@ namespace message
 namespace
 {
 
-QVariantMap createProps_scaledValue(const QString& name, int decimals)
+using ublox::message::NavEkfstatusFields;
+
+QVariantMap createProps_scaledValue(const QString& nameVal, int decimals)
 {
-    auto props = cc::Property::createPropertiesMap(name);
-    cc::Property::setDisplayScaled(props);
-    cc::Property::setFloatDecimals(props, decimals);
-    return props;
+    return
+        cc::property::field::IntValue()
+            .name(nameVal)
+            .scaledDecimals(decimals)
+            .asMap();
 }
 
-QVariantMap createProps_calibStatus_calib(const QString& name)
+QVariantMap createProps_calibStatus_calib(const QString& nameVal)
 {
-    QVariantList enumValues;
-    cc::Property::appendEnumValue(enumValues, "no calibration");
-    cc::Property::appendEnumValue(enumValues, "calibrating");
-    cc::Property::appendEnumValue(enumValues, "coarse calibration");
-    cc::Property::appendEnumValue(enumValues, "fine calibration");
-    assert(enumValues.size() == (int)ublox::message::NavEkfstatusFields::CalibStatus::NumOfValues);
-    auto props = cc::Property::createPropertiesMap(name, std::move(enumValues));
-    cc::Property::setSerialisedHidden(props);
-    return props;
+    cc::property::field::EnumValue props;
+    props.name(nameVal)
+         .add("no calibration")
+         .add("calibrating")
+         .add("coarse calibration")
+         .add("fine calibration")
+         .serialisedHidden();
+    assert(props.values().size() == (int)NavEkfstatusFields::CalibStatus::NumOfValues);
+    return props.asMap();
 }
 
 QVariantMap createProps_calibStatus_reserved()
 {
-    auto props = cc::Property::createPropertiesMap("reserved");
-    cc::Property::setFieldHidden(props);
-    return props;
+    return cc::property::field::IntValue().name("reserved").hidden().asMap();
 }
 
 QVariantMap createProps_calibStatus()
 {
-    QVariantList membersData;
-    membersData.append(createProps_calibStatus_calib("calibTacho"));
-    membersData.append(createProps_calibStatus_calib("calibGyro"));
-    membersData.append(createProps_calibStatus_calib("calibGyroB"));
-    membersData.append(createProps_calibStatus_reserved());
-    assert(membersData.size() == ublox::message::NavEkfstatusFields::calibStatus_numOfValues);
-    return cc::Property::createPropertiesMap("calibStatus", std::move(membersData));
+    cc::property::field::ForField<NavEkfstatusFields::calibStatus> props;
+    props.name("calibStatus")
+         .add(createProps_calibStatus_calib("calibTacho"))
+         .add(createProps_calibStatus_calib("calibGyro"))
+         .add(createProps_calibStatus_calib("calibGyroB"))
+         .add(createProps_calibStatus_reserved());
+    assert(props.members().size() == NavEkfstatusFields::calibStatus_numOfValues);
+    return props.asMap();
 }
 
 QVariantMap createProps_measUsed()
 {
-    QVariantList bitNames;
-    bitNames.append("pulse");
-    bitNames.append("direction");
-    bitNames.append("gyro");
-    bitNames.append("temp");
-    bitNames.append("pos");
-    bitNames.append("vel");
-    bitNames.append("errGyro");
-    bitNames.append("errPulse");
-    assert(bitNames.size() == ublox::message::NavEkfstatusFields::measUsed_numOfValues);
-    return cc::Property::createPropertiesMap("measUsed", std::move(bitNames));
+    cc::property::field::ForField<NavEkfstatusFields::measUsed> props;
+    props.name("measUsed")
+         .add("pulse")
+         .add("direction")
+         .add("gyro")
+         .add("temp")
+         .add("pos")
+         .add("vel")
+         .add("errGyro")
+         .add("errPulse");
+    assert(props.bits().size() == NavEkfstatusFields::measUsed_numOfValues);
+    return props.asMap();
 }
 
 QVariantList createFieldsProperties()
 {
     QVariantList props;
-    props.append(cc::Property::createPropertiesMap("pulses"));
-    props.append(cc::Property::createPropertiesMap("period"));
+    props.append(cc::property::field::ForField<NavEkfstatusFields::pulses>().name("pulses").asMap());
+    props.append(cc::property::field::ForField<NavEkfstatusFields::period>().name("period").asMap());
     props.append(createProps_scaledValue("gyroMean", 2));
     props.append(createProps_scaledValue("temperature", 2));
-    props.append(cc::Property::createPropertiesMap("direction"));
+    props.append(cc::property::field::ForField<NavEkfstatusFields::direction>().name("direction").asMap());
     props.append(createProps_calibStatus());
     props.append(createProps_scaledValue("pulseScale", 5));
     props.append(createProps_scaledValue("gyroBias", 5));

@@ -39,32 +39,38 @@ namespace message
 namespace
 {
 
+using ublox::message::CfgSbasFields;
+
 QVariantMap createProps_mode()
 {
-    QVariantList bitNames;
-    bitNames.append("enabled");
-    bitNames.append("test");
-    assert(bitNames.size() == ublox::message::CfgSbasFields::mode_numOfValues);
-    return cc::Property::createPropertiesMap("mode", std::move(bitNames));
+    cc::property::field::ForField<CfgSbasFields::mode> props;
+    props.name("mode")
+         .add("enabled")
+         .add("test");
+    assert(props.bits().size() == CfgSbasFields::mode_numOfValues);
+    return props.asMap();
 }
 
 QVariantMap createProps_usage()
 {
-    QVariantList bitNames;
-    bitNames.append("range");
-    bitNames.append("diffCorr");
-    bitNames.append("integrity");
-    assert(bitNames.size() == ublox::message::CfgSbasFields::usage_numOfValues);
-    return cc::Property::createPropertiesMap("usage", std::move(bitNames));
+    cc::property::field::ForField<CfgSbasFields::usage> props;
+    props.name("usage")
+         .add("range")
+         .add("diffCorr")
+         .add("integrity");
+    assert(props.bits().size() == CfgSbasFields::usage_numOfValues);
+    return props.asMap();
 }
 
 QVariantMap createProps_scanmode(int idx, int base, int count)
 {
+    cc::property::field::BitmaskValue props;
+    props.name(QString("scanmode%1").arg(idx));
     QVariantList bitNames;
     for (auto prnIdx = 0; prnIdx < count; ++prnIdx) {
-        bitNames.append(QString("PRN%1").arg(base + prnIdx));
+        props.add(QString("PRN%1").arg(base + prnIdx));
     }
-    return cc::Property::createPropertiesMap(QString("scanmode%1").arg(idx), std::move(bitNames));
+    return props.asMap();
 }
 
 
@@ -73,9 +79,10 @@ QVariantList createFieldsProperties()
     QVariantList props;
     props.append(createProps_mode());
     props.append(createProps_usage());
-    props.append(cc::Property::createPropertiesMap("maxSBAS"));
-    props.append(createProps_scanmode(2, 152, ublox::message::CfgSbasFields::scanmode2_numOfValues));
-    props.append(createProps_scanmode(1, 120, ublox::message::CfgSbasFields::scanmode1_numOfValues));
+    props.append(
+        cc::property::field::ForField<CfgSbasFields::maxSBAS>().name("maxSBAS").asMap());
+    props.append(createProps_scanmode(2, 152, CfgSbasFields::scanmode2_numOfValues));
+    props.append(createProps_scanmode(1, 120, CfgSbasFields::scanmode1_numOfValues));
     assert(props.size() == CfgSbas::FieldIdx_numOfValues);
     return props;
 }

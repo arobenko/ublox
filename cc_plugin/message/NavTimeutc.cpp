@@ -42,14 +42,18 @@ namespace message
 namespace
 {
 
+using ublox::message::NavTimeutcFields;
+
 QVariantMap createProps_valid()
 {
-    QVariantList bitNames;
-    bitNames.append("validTOW");
-    bitNames.append("validWKN");
-    bitNames.append("validUTC");
-    assert(bitNames.size() == ublox::message::NavTimeutcFields::valid_numOfValues);
-    return cc::Property::createPropertiesMap("valid", std::move(bitNames));
+    cc::property::field::ForField<NavTimeutcFields::valid> props;
+    props.name("valid")
+         .add("validTOW")
+         .add("validWKN")
+         .add("validUTC");
+
+    assert(props.bits().size() == NavTimeutcFields::valid_numOfValues);
+    return props.asMap();
 }
 
 QVariantList createFieldsProperties()

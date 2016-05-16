@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -40,66 +40,64 @@ namespace message
 namespace
 {
 
+using ublox::message::CfgNavx5Fields;
+
 QVariantMap createProps_mask1()
 {
-    QVariantList bitNames;
+    cc::property::field::ForField<CfgNavx5Fields::mask1> props;
+    props.name("mask1")
+         .add(CfgNavx5Fields::mask1_minMax, "manMax")
+         .add(CfgNavx5Fields::mask1_minCno, "minCno")
+         .add(CfgNavx5Fields::mask1_initial3dfix, "initial3dfix")
+         .add(CfgNavx5Fields::mask1_wknRoll, "wknRoll")
+         .add(CfgNavx5Fields::mask1_ppp, "ppp")
+         .add(CfgNavx5Fields::mask1_aop, "aop");
 
-    auto fillBitNamesUntilFunc =
-        [&bitNames](int limit)
-        {
-            while (bitNames.size() < limit) {
-                bitNames.append(QVariant());
-            }
-        };
-
-    fillBitNamesUntilFunc(ublox::message::CfgNavx5Fields::mask1_minMax);
-    bitNames.append("minMax");
-    bitNames.append("minCno");
-    fillBitNamesUntilFunc(ublox::message::CfgNavx5Fields::mask1_initial3dfix);
-    bitNames.append("initial3dfix");
-    fillBitNamesUntilFunc(ublox::message::CfgNavx5Fields::mask1_wknRoll);
-    bitNames.append("wknRoll");
-    fillBitNamesUntilFunc(ublox::message::CfgNavx5Fields::mask1_ppp);
-    bitNames.append("ppp");
-    bitNames.append("aop");
-    assert(bitNames.size() == ublox::message::CfgNavx5Fields::mask1_numOfValues);
-    return cc::Property::createPropertiesMap("mask1", std::move(bitNames));
+    assert(props.bits().size() == CfgNavx5Fields::mask1_numOfValues);
+    return props.asMap();
 }
 
 QVariantMap createProps_boolVal(const char* name)
 {
-    QVariantList enumValues;
-    cc::Property::appendEnumValue(enumValues, "false");
-    cc::Property::appendEnumValue(enumValues, "true");
-    assert(enumValues.size() == (int)ublox::message::CfgNavx5Fields::BoolVal::NumOfValues);
-    return cc::Property::createPropertiesMap(name, std::move(enumValues));
+    cc::property::field::EnumValue props;
+    props.name(name)
+         .add("false")
+         .add("true");
+    assert(props.values().size() == (int)CfgNavx5Fields::BoolVal::NumOfValues);
+    return props.asMap();
 }
 
 QVariantMap createProps_aopCfg()
 {
-    QVariantList bitNames;
-    bitNames.append("useAOP");
-    assert(bitNames.size() == ublox::message::CfgNavx5Fields::aopCfg_numOfValues);
-    return cc::Property::createPropertiesMap("aopCfg", std::move(bitNames));
+    cc::property::field::ForField<CfgNavx5Fields::aopCfg> props;
+    props.name("aopCfg")
+         .add("useAOP");
+    assert(props.bits().size() == CfgNavx5Fields::aopCfg_numOfValues);
+    return props.asMap();
 }
 
 QVariantList createFieldsProperties()
 {
     QVariantList props;
-    props.append(cc::Property::createPropertiesMap("version"));
+    props.append(
+        cc::property::field::ForField<CfgNavx5Fields::version>().name("version").asMap());
     props.append(createProps_mask1());
     props.append(cc_plugin::field::common::props_reserved(0));
     props.append(cc_plugin::field::common::props_reserved(1));
     props.append(cc_plugin::field::common::props_reserved(2));
-    props.append(cc::Property::createPropertiesMap("minSVs"));
-    props.append(cc::Property::createPropertiesMap("maxSVs"));
-    props.append(cc::Property::createPropertiesMap("minCNO"));
+    props.append(
+        cc::property::field::ForField<CfgNavx5Fields::minSVs>().name("minSVs").asMap());
+    props.append(
+        cc::property::field::ForField<CfgNavx5Fields::maxSVs>().name("maxSVs").asMap());
+    props.append(
+        cc::property::field::ForField<CfgNavx5Fields::minCNO>().name("minCNO").asMap());
     props.append(cc_plugin::field::common::props_reserved(5));
     props.append(createProps_boolVal("iniFix3D"));
     props.append(cc_plugin::field::common::props_reserved(6));
     props.append(cc_plugin::field::common::props_reserved(7));
     props.append(cc_plugin::field::common::props_reserved(8));
-    props.append(cc::Property::createPropertiesMap("wknRollover"));
+    props.append(
+        cc::property::field::ForField<CfgNavx5Fields::wknRollover>().name("wknRollover").asMap());
     props.append(cc_plugin::field::common::props_reserved(9));
     props.append(cc_plugin::field::common::props_reserved(10));
     props.append(cc_plugin::field::common::props_reserved(11));
@@ -107,7 +105,8 @@ QVariantList createFieldsProperties()
     props.append(createProps_aopCfg());
     props.append(cc_plugin::field::common::props_reserved(12));
     props.append(cc_plugin::field::common::props_reserved(13));
-    props.append(cc::Property::createPropertiesMap("aopOrbMaxErr"));
+    props.append(
+        cc::property::field::ForField<CfgNavx5Fields::aopOrbMaxErr>().name("aopOrbMaxErr").asMap());
     props.append(cc_plugin::field::common::props_reserved(14));
     props.append(cc_plugin::field::common::props_reserved(15));
     props.append(cc_plugin::field::common::props_reserved(3));

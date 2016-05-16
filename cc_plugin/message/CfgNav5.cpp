@@ -42,66 +42,76 @@ namespace message
 namespace
 {
 
+using ublox::message::CfgNav5Fields;
+
 QVariantMap createProps_mask()
 {
-    QVariantList bitNames;
-    bitNames.append("dyn");
-    bitNames.append("minEl");
-    bitNames.append("posFixMode");
-    bitNames.append("drLim");
-    bitNames.append("posMask");
-    bitNames.append("timeMask");
-    bitNames.append("staticHoldMask");
-    bitNames.append("dgpsMask");
-    assert(bitNames.size() == ublox::message::CfgNav5Fields::mask_numOfValues);
-    return cc::Property::createPropertiesMap("mask", std::move(bitNames));
+    cc::property::field::ForField<CfgNav5Fields::mask> props;
+    props.name("mask")
+         .add("dyn")
+         .add("minEl")
+         .add("posFixMode")
+         .add("drLim")
+         .add("posMask")
+         .add("timeMask")
+         .add("staticHoldMask")
+         .add("dgpsMask");
+    assert(props.bits().size() == CfgNav5Fields::mask_numOfValues);
+    return props.asMap();
 }
 
 QVariantMap createProps_dynModel()
 {
-    QVariantList enumValues;
-    cc::Property::appendEnumValue(enumValues, "Portable", (int)ublox::message::CfgNav5Fields::DynModel::Portable);
-    cc::Property::appendEnumValue(enumValues, "Stationary", (int)ublox::message::CfgNav5Fields::DynModel::Stationary);
-    cc::Property::appendEnumValue(enumValues, "Pedestrian", (int)ublox::message::CfgNav5Fields::DynModel::Pedestrian);
-    cc::Property::appendEnumValue(enumValues, "Automotive", (int)ublox::message::CfgNav5Fields::DynModel::Automotive);
-    cc::Property::appendEnumValue(enumValues, "Sea", (int)ublox::message::CfgNav5Fields::DynModel::Sea);
-    cc::Property::appendEnumValue(enumValues, "Airborne <1g Acceleration", (int)ublox::message::CfgNav5Fields::DynModel::Airborne_1g);
-    cc::Property::appendEnumValue(enumValues, "Airborne <2g Acceleration", (int)ublox::message::CfgNav5Fields::DynModel::Airborne_2g);
-    cc::Property::appendEnumValue(enumValues, "Airborne <4g Acceleration", (int)ublox::message::CfgNav5Fields::DynModel::Airborne_4g);
-    return cc::Property::createPropertiesMap("dynModel", std::move(enumValues));
+    return
+        cc::property::field::ForField<CfgNav5Fields::dynModel>()
+            .name("dynModel")
+            .add("Portable", (int)CfgNav5Fields::DynModel::Portable)
+            .add("Stationary", (int)CfgNav5Fields::DynModel::Stationary)
+            .add("Pedestrian", (int)CfgNav5Fields::DynModel::Pedestrian)
+            .add("Automotive", (int)CfgNav5Fields::DynModel::Automotive)
+            .add("Sea", (int)CfgNav5Fields::DynModel::Sea)
+            .add("Airborne <1g Acceleration", (int)CfgNav5Fields::DynModel::Airborne_1g)
+            .add("Airborne <2g Acceleration", (int)CfgNav5Fields::DynModel::Airborne_2g)
+            .add("Airborne <4g Acceleration", (int)CfgNav5Fields::DynModel::Airborne_4g)
+            .asMap();
 }
 
 QVariantMap createProps_fixMode()
 {
-    QVariantList enumValues;
-    cc::Property::appendEnumValue(enumValues, "2D Only", (int)ublox::message::CfgNav5Fields::FixMode::Only_2D);
-    cc::Property::appendEnumValue(enumValues, "3D Only", (int)ublox::message::CfgNav5Fields::FixMode::Only_3D);
-    cc::Property::appendEnumValue(enumValues, "Auto 2D/3D", (int)ublox::message::CfgNav5Fields::FixMode::Auto);
-    return cc::Property::createPropertiesMap("fixMode", std::move(enumValues));
+    return
+        cc::property::field::ForField<CfgNav5Fields::fixMode>()
+            .name("fixMode")
+            .add("2D Only", (int)CfgNav5Fields::FixMode::Only_2D)
+            .add("3D Only", (int)CfgNav5Fields::FixMode::Only_3D)
+            .add("Auto 2D/3D", (int)CfgNav5Fields::FixMode::Auto)
+            .asMap();
 }
 
 QVariantMap createProps_fixedAlt()
 {
-    auto props = cc::Property::createPropertiesMap("fixedAlt");
-    cc::Property::setDisplayScaled(props);
-    cc::Property::setFloatDecimals(props, 2);
-    return props;
+    return
+        cc::property::field::ForField<CfgNav5Fields::fixedAlt>()
+            .name("fixedAlt")
+            .scaledDecimals(2)
+            .asMap();
 }
 
 QVariantMap createProps_fixedAltVar()
 {
-    auto props = cc::Property::createPropertiesMap("fixedAltVar");
-    cc::Property::setDisplayScaled(props);
-    cc::Property::setFloatDecimals(props, 4);
-    return props;
+    return
+        cc::property::field::ForField<CfgNav5Fields::fixedAltVar>()
+            .name("fixedAltVar")
+            .scaledDecimals(4)
+            .asMap();
 }
 
 QVariantMap createProps_xDOP(char prefix)
 {
-    auto props = cc::Property::createPropertiesMap(QString("%1DOP").arg(prefix));
-    cc::Property::setDisplayScaled(props);
-    cc::Property::setFloatDecimals(props, 1);
-    return props;
+    return
+        cc::property::field::ForField<CfgNav5Fields::pDOP>()
+            .name(QString("%1DOP").arg(prefix))
+            .scaledDecimals(1)
+            .asMap();
 }
 
 QVariantList createFieldsProperties()
@@ -112,16 +122,24 @@ QVariantList createFieldsProperties()
     props.append(createProps_fixMode());
     props.append(createProps_fixedAlt());
     props.append(createProps_fixedAltVar());
-    props.append(cc::Property::createPropertiesMap("minElev"));
-    props.append(cc::Property::createPropertiesMap("drLimit"));
+    props.append(
+        cc::property::field::ForField<CfgNav5Fields::minElev>().name("minElev").asMap());
+    props.append(
+        cc::property::field::ForField<CfgNav5Fields::drLimit>().name("drLimit").asMap());
     props.append(createProps_xDOP('p'));
     props.append(createProps_xDOP('t'));
-    props.append(cc::Property::createPropertiesMap("pAcc"));
-    props.append(cc::Property::createPropertiesMap("tAcc"));
-    props.append(cc::Property::createPropertiesMap("staticHoldThresh"));
-    props.append(cc::Property::createPropertiesMap("dgpsTimeout"));
-    props.append(cc::Property::createPropertiesMap("cnoThreshNumSVs"));
-    props.append(cc::Property::createPropertiesMap("cnoThresh"));
+    props.append(
+        cc::property::field::ForField<CfgNav5Fields::pAcc>().name("pAcc").asMap());
+    props.append(
+        cc::property::field::ForField<CfgNav5Fields::tAcc>().name("tAcc").asMap());
+    props.append(
+        cc::property::field::ForField<CfgNav5Fields::staticHoldThreash>().name("staticHoldThresh").asMap());
+    props.append(
+        cc::property::field::ForField<CfgNav5Fields::dgpsTimeOut>().name("dgpsTimeOut").asMap());
+    props.append(
+        cc::property::field::ForField<CfgNav5Fields::cnoThreshNumSVs>().name("cnoThreshNumSVs").asMap());
+    props.append(
+        cc::property::field::ForField<CfgNav5Fields::cnoThresh>().name("cnoThresh").asMap());
     props.append(cc_plugin::field::common::props_reserved(2));
     props.append(cc_plugin::field::common::props_reserved(3));
     props.append(cc_plugin::field::common::props_reserved(4));

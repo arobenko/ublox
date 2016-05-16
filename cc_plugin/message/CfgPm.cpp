@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -40,72 +40,78 @@ namespace message
 namespace
 {
 
+using ublox::message::CfgPmFields;
+
 QVariantMap createProps_flags()
 {
     auto createReservedProps =
         []() -> QVariantMap
         {
-            auto props = cc::Property::createPropertiesMap("reserved");
-            cc::Property::setFieldHidden(props);
-            return props;
+            return cc::property::field::IntValue().hidden().asMap();
         };
 
-    auto internalProps = cc::Property::createPropertiesMap("internal");
-    cc::Property::setSerialisedHidden(internalProps);
+    cc::property::field::ForField<CfgPmFields::internal> internalProps;
+    internalProps.name("internal").serialisedHidden();
 
-    QVariantList extintSelectValues;
-    cc::Property::appendEnumValue(extintSelectValues, "EXTINT0");
-    cc::Property::appendEnumValue(extintSelectValues, "EXTINT1");
-    assert(extintSelectValues.size() == (int)ublox::message::CfgPmFields::ExtintSelect::NumOfValues);
-    auto extintSelectProps = cc::Property::createPropertiesMap("extintSelect", std::move(extintSelectValues));
-    cc::Property::setSerialisedHidden(extintSelectProps);
+    cc::property::field::ForField<CfgPmFields::extintSelect> extintSelectProps;
+    extintSelectProps.name("extintSelect")
+                     .add("EXTINT0")
+                     .add("EXTINT1")
+                     .serialisedHidden();
+    assert(extintSelectProps.values().size() == (int)CfgPmFields::ExtintSelect::NumOfValues);
 
     auto createEnableDisableProps =
         [](const char* name) -> QVariantMap
         {
-            QVariantList enumValues;
-            cc::Property::appendEnumValue(enumValues, "disabled");
-            cc::Property::appendEnumValue(enumValues, "enabled");
-            assert(enumValues.size() == (int)ublox::message::CfgPmFields::DisabledEnabled::NumOfValues);
-            auto props = cc::Property::createPropertiesMap(name, std::move(enumValues));
-            cc::Property::setSerialisedHidden(props);
-            return props;
+            cc::property::field::EnumValue props;
+            props.name(name)
+                 .add("disabled")
+                 .add("enabled")
+                 .serialisedHidden();
+            assert(props.values().size() == (int)CfgPmFields::DisabledEnabled::NumOfValues);
+            return props.asMap();
         };
 
-    QVariantList flagsBitNames;
-    flagsBitNames.append("waitTimeFix");
-    flagsBitNames.append("updateRtc");
-    flagsBitNames.append("updateEPH");
-    assert(flagsBitNames.size() == ublox::message::CfgPmFields::remainingFlags_numOfValues);
-    auto flagsProps = cc::Property::createPropertiesMap(QString(), std::move(flagsBitNames));
-    cc::Property::setSerialisedHidden(flagsProps);
+    cc::property::field::ForField<CfgPmFields::remainingFlags> flagsProps;
+    flagsProps.add("waitTimeFix")
+              .add("updateRtc")
+              .add("updateEPH")
+              .serialisedHidden();
+    assert(flagsProps.bits().size() == CfgPmFields::remainingFlags_numOfValues);
 
-    QVariantList membersData;
-    membersData.append(createReservedProps());
-    membersData.append(std::move(internalProps));
-    membersData.append(std::move(extintSelectProps));
-    membersData.append(createEnableDisableProps("extintWake"));
-    membersData.append(createEnableDisableProps("extintBackup"));
-    membersData.append(createReservedProps());
-    membersData.append(createEnableDisableProps("limitPeakCurr"));
-    membersData.append(std::move(flagsProps));
-    assert(membersData.size() == ublox::message::CfgPmFields::flags_numOfValues);
-    return cc::Property::createPropertiesMap("flags", std::move(membersData));
+    cc::property::field::ForField<CfgPmFields::flags> props;
+    props.name("flags")
+         .add(createReservedProps())
+         .add(internalProps.asMap())
+         .add(extintSelectProps.asMap())
+         .add(createEnableDisableProps("extintWake"))
+         .add(createEnableDisableProps("extintBackup"))
+         .add(createReservedProps())
+         .add(createEnableDisableProps("limitPeakCurr"))
+         .add(flagsProps.asMap());
+    assert(props.members().size() == CfgPmFields::flags_numOfValues);
+    return props.asMap();
 }
 
 QVariantList createFieldsProperties()
 {
     QVariantList props;
-    props.append(cc::Property::createPropertiesMap("version"));
+    props.append(
+        cc::property::field::ForField<CfgPmFields::version>().name("version").asMap());
     props.append(cc_plugin::field::common::props_reserved(1));
     props.append(cc_plugin::field::common::props_reserved(2));
     props.append(cc_plugin::field::common::props_reserved(3));
     props.append(createProps_flags());
-    props.append(cc::Property::createPropertiesMap("updatePeriod"));
-    props.append(cc::Property::createPropertiesMap("searchPeriod"));
-    props.append(cc::Property::createPropertiesMap("gridOffset"));
-    props.append(cc::Property::createPropertiesMap("onTime"));
-    props.append(cc::Property::createPropertiesMap("minAcqTime"));
+    props.append(
+        cc::property::field::ForField<CfgPmFields::updatePeriod>().name("updatePeriod").asMap());
+    props.append(
+        cc::property::field::ForField<CfgPmFields::searchPeriod>().name("searchPeriod").asMap());
+    props.append(
+        cc::property::field::ForField<CfgPmFields::gridOffset>().name("gridOffset").asMap());
+    props.append(
+        cc::property::field::ForField<CfgPmFields::onTime>().name("onTime").asMap());
+    props.append(
+        cc::property::field::ForField<CfgPmFields::minAcqTime>().name("minAcqTime").asMap());
     assert(props.size() == CfgPm::FieldIdx_numOfValues);
     return props;
 }

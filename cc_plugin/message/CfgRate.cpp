@@ -38,20 +38,25 @@ namespace message
 namespace
 {
 
+using ublox::message::CfgRateFields;
+
 QVariantMap createProps_timeRef()
 {
-    QVariantList enumValues;
-    cc::Property::appendEnumValue(enumValues, "UTC time");
-    cc::Property::appendEnumValue(enumValues, "GPS time");
-    assert(enumValues.size() == (int)ublox::message::CfgRateFields::TimeRef::NumOfValues);
-    return cc::Property::createPropertiesMap("timeRef", std::move(enumValues));
+    cc::property::field::ForField<CfgRateFields::timeRef> props;
+    props.name("timeRef")
+         .add("UTC time")
+         .add("GPS time");
+    assert(props.values().size() == (int)CfgRateFields::TimeRef::NumOfValues);
+    return props.asMap();
 }
 
 QVariantList createFieldsProperties()
 {
     QVariantList props;
-    props.append(cc::Property::createPropertiesMap("measRate"));
-    props.append(cc::Property::createPropertiesMap("navRate"));
+    props.append(
+        cc::property::field::ForField<CfgRateFields::measRate>().name("measRate").asMap());
+    props.append(
+        cc::property::field::ForField<CfgRateFields::navRate>().name("navRate").asMap());
     props.append(createProps_timeRef());
 
     assert(props.size() == CfgRate::FieldIdx_numOfValues);
