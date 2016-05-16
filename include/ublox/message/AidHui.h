@@ -48,7 +48,7 @@ struct AidHuiFields
     /// @brief Definition of "utcWNT" field.
     using utcWNT = field::common::I2;
 
-    /// @brief Definition of "utcLC" field.
+    /// @brief Definition of "utcLS" field.
     using utcLS = field::common::I2;
 
     /// @brief Definition of "utcWNF" field.
@@ -159,7 +159,7 @@ public:
         FieldIdx_utcA1, ///< utcA1 field, see @ref AidHuiFields::utcA1
         FieldIdx_utcTOW, ///< utcTOW field, see @ref AidHuiFields::utcTOW
         FieldIdx_utcWNT, ///< utcWNT field, see @ref AidHuiFields::utcWNT
-        FieldIdx_utcLC, ///< utcLC field, see @ref AidHuiFields::utcLC
+        FieldIdx_utcLS, ///< utcLC field, see @ref AidHuiFields::utcLS
         FieldIdx_utcWNF, ///< utcWNF field, see @ref AidHuiFields::utcWNF
         FieldIdx_utcDN, ///< utcDN field, see @ref AidHuiFields::utcDN
         FieldIdx_utcLSF, ///< utcLSF field, see @ref AidHuiFields::utcLSF
