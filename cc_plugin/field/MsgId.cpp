@@ -1,5 +1,5 @@
 //
-// Copyright 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -45,7 +45,7 @@ QVariantMap createMsgIdProperties()
             .add("NAV-STATUS", MsgId_NAV_STATUS)
             .add("NAV-DOP", MsgId_NAV_DOP)
             .add("NAV-SOL", MsgId_NAV_SOL)
-            .add("NAV-SOL", MsgId_NAV_PVT)
+            .add("NAV-PVT", MsgId_NAV_PVT)
             .add("NAV-VELECEF", MsgId_NAV_VELECEF)
             .add("NAV-VELNED", MsgId_NAV_VELNED)
             .add("NAV-TIMEGPS", MsgId_NAV_TIMEGPS)
