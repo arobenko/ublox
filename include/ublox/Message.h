@@ -43,7 +43,8 @@ class MessageT : public
     comms::Message<
         TOptions...,
         comms::option::LittleEndian,
-        comms::option::MsgIdType<MsgId> >
+        comms::option::MsgIdType<MsgId> >,
+        comms::option::RefreshInterface
 {
 public:
 
@@ -65,6 +66,7 @@ public:
     /// @brief Move assignment operator
     MessageT& operator=(MessageT&&) = default;
 
+#ifdef FOR_DOXYGEN_DOC_ONLY
     /// @brief Refresh the contents of the message.
     /// @details In Ublox binary protocol in some messages contents of specific
     ///     fields may limit the value of other field(s). A call to this function
@@ -79,19 +81,21 @@ public:
     {
         return refreshImpl();
     }
+#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
 protected:
 
+#ifdef FOR_DOXYGEN_DOC_ONLY
     /// @brief Polymorphic refresh functionality.
     /// @details Invoked by non-virtual refresh() interface function. By default
     ///     does nothing and returns false. It may be overridden by the
     ///     derived class.
-    /// @return Always false.
+    /// @return Default implementation always returns @b false.
     virtual bool refreshImpl()
     {
         return false;
     }
-
+#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 };
 
 /// @brief Default Ublox interface class.
