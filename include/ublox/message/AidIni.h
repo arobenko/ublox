@@ -489,7 +489,7 @@ private:
         to.setMode(comms::field::OptionalMode::Exists);
         typedef typename std::decay<decltype(from)>::type FromOptField;
         static const auto BufSize = sizeof(typename FromOptField::Field::ValueType);
-        std::uint8_t buf[BufSize];
+        std::uint8_t buf[BufSize] = {0};
         auto* writeIter = &buf[0];
         auto es = from.write(writeIter, BufSize);
         static_cast<void>(es);
