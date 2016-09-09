@@ -22,7 +22,7 @@ or browsed online [here](https://dl.dropboxusercontent.com/u/46999418/ublox/html
 
 # CommsChampion Plugin
 In addition to the library described above, this project provides a protocol
-plugin for the [CommsChampion Tool](https://github.com/arobenko/comms_champion#commschampion-tool)
+plugin for the [CommsChampion Tools](https://github.com/arobenko/comms_champion#commschampion-tools)
 from the same [comms_champion](https://github.com/arobenko/comms_champion) project,
 which will allow visual analysis of the u-blox binary protocol traffic.
 
