@@ -50,7 +50,7 @@ if (CC_UBLOX_FULL_SOLUTION)
             GIT_REPOSITORY https://github.com/arobenko/comms_champion.git
             GIT_TAG ${cc_branch}
             CMAKE_GENERATOR "NMake Makefiles"
-            CMAKE_ARGS -DCC_INSTALL_DIR=${INSTALL_DIR}
+            CMAKE_ARGS -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DCC_INSTALL_DIR=${INSTALL_DIR}
             BINARY_DIR ${CMAKE_BINARY_DIR}/comms_champion_build
             BUILD_COMMAND nmake
         )
@@ -64,7 +64,7 @@ if (CC_UBLOX_FULL_SOLUTION)
             "${CC_EXTERNAL_TGT}"
             GIT_REPOSITORY https://github.com/arobenko/comms_champion.git
             GIT_TAG ${cc_branch}
-            CMAKE_ARGS -DCC_INSTALL_DIR=${INSTALL_DIR}
+            CMAKE_ARGS -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DCC_INSTALL_DIR=${INSTALL_DIR}
             BINARY_DIR ${CMAKE_BINARY_DIR}/comms_champion_build
             BUILD_COMMAND make ${COMPILE_THREADS}
         )
