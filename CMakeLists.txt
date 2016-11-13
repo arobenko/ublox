@@ -43,7 +43,7 @@ set (CC_EXTERNAL_TGT "comms_champion_external")
 if (CC_UBLOX_FULL_SOLUTION)
     include(ExternalProject)
     
-    set (cc_branch "develop")
+    set (cc_branch "master")
     if (WIN32)
         ExternalProject_Add(
             "${CC_EXTERNAL_TGT}"
