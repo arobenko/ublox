@@ -393,6 +393,7 @@ using ZString =
 template <typename TMemFields, typename...TOptions>
 using BundleT =
     comms::field::Bundle<
+        FieldBase,
         TMemFields,
         TOptions...
     >;

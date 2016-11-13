@@ -17,12 +17,11 @@ allows cherry-picking limited number of the selected messages the product requir
 which provides a great flexibility in terms of the final code size.
 
 Full [doxygen](www.doxygen.org) generated documentation with the full tutorial inside can be
-downloaded as [zip archive](https://dl.dropboxusercontent.com/u/46999418/ublox/doc_ublox.zip)
-or browsed online [here](https://dl.dropboxusercontent.com/u/46999418/ublox/html/index.html).
+downloaded as zip archive from [here](https://dl.dropboxusercontent.com/u/46999418/ublox/doc_ublox.zip).
 
 # CommsChampion Plugin
 In addition to the library described above, this project provides a protocol
-plugin for the [CommsChampion Tool](https://github.com/arobenko/comms_champion#commschampion-tool)
+plugin for the [CommsChampion Tools](https://github.com/arobenko/comms_champion#commschampion-tools)
 from the same [comms_champion](https://github.com/arobenko/comms_champion) project,
 which will allow visual analysis of the u-blox binary protocol traffic.
 
@@ -49,33 +48,52 @@ generate required build files native to the platform.
 
 - Generate Makefiles (or any other build environment) choosing the same build type
 as when building the [comms_champion](https://github.com/arobenko/comms_champion)
-sources, and providing path to the install directory of the latter using **UBLOX_CC_INSTALL_PATH**
-variable.
+sources. The build depends on the installed contents of the 
+[comms_champion](https://github.com/arobenko/comms_champion) project
+and requires knowledge about the location of the latter. It is recommended to
+install the produced headers/binaries of this project into the same directory
+as with [comms_champion](https://github.com/arobenko/comms_champion), it will cause
+all the required dependencies to be found automatically. The installation
+directory can be specified using **CC_UBLOX_INSTALL_DIR** variable.
 
->$> cmake -DCMAKE_BUILD_TYPE=Release -DCC_INSTALL_PATH= /path/to/comms_champion/build/install /path/to/ublox/sources
+>$> cmake -DCMAKE_BUILD_TYPE=Release -DCC_UBLOX_INSTALL_DIR= /path/to/comms_champion/build/install /path/to/ublox/sources
+
+If the produced headers/finaries are not desired to be mixed, the location
+of the [comms_champion](https://github.com/arobenko/comms_champion)
+installation path can be provided using **CC_MAIN_INSTALL_DIR** variable.
+
+>$> cmake -DCMAKE_BUILD_TYPE=Release -DCC_MAIN_INSTALL_DIR=/path/to/comms_champion/build/install /path/to/ublox/sources
 
 - Build and install.
 
 >$> make install
 
 After the build is complete, all the binaries, headers, libraries will reside
-in **install** subdirectory of the directory chosen for build (/some/build/dir) .
+in the chosen install directory (See description of **CC_UBLOX_INTALL_DIR** variable below) .
 
 In addition to built-in options/variables of CMake, such as **CMAKE_BUILD_TYPE** or
 **CMAKE_TOOLCHAIN_FILE**, the following ones can be used:
 
-- **UBLOX_LIB_ONLY**=ON/OFF - Exclude compilation of all the sources, install only
-**UBLOX** Library. Default value is **OFF**, i.e. the plugin to CommsChampion gets built.
+- **CC_UBLOX_LIB_ONLY**=ON/OFF - Exclude compilation of all the sources, install only
+**UBLOX** protocol library. Default value is **OFF**, i.e. the plugin to CommsChampion gets built.
 
-- **UBLOX_CC_PLUGIN**=ON/OFF - Include/Exclude plugin for CommsChampion tool.
-Default value is **ON**
+- **CC_UBLOX_INSTALL_DIR**=dir - Custom installation directory. If not provided defaults to
+**install** subdirectory of the directory chosen for build (**${CMAKE_BINARY_DIR}/install**). 
 
-- **UBLOX_CC_PLUGIN_COPY_TO_CC_INSTALL_PATH**=ON/OFF - Install plugin for 
-CommsChampion into **UBLOX_CC_INSTALL_PATH** as well as local installation path. 
-Default value is **ON**.
+- **CC_MAIN_INSTALL_DIR**=dir - Directory where headers and libraries of 
+[comms_champion](https://github.com/arobenko/comms_champion) project. It must
+be used if value of **CC_UBLOX_INSTALL_DIR** doesn't specify the same location.
 
-- **UBLOX_QT_DIR**=/path/to/qt - Path to custom build of **QT5** if it cannot be
+- **CC_UBLOX_QT_DIR**=/path/to/qt - Path to custom build of **QT5** if it cannot be
 found in standard system directories.
+
+- **CC_UBLOX_FULL_SOLUTION**=ON/OFF - This option allows to build both
+[comms_champion](https://github.com/arobenko/comms_champion) and this projects
+in one go. When enabled, it will checkout and build the 
+[comms_champion](https://github.com/arobenko/comms_champion) prior to building
+anything from this repository. All the headers, binaries, and libraries will
+be installed in the directory specified with **CC_UBLOX_INSTALL_DIR** variable. 
+Default value of this option is **OFF**.
 
 For example, discard all other tools, just install the **UBLOX** library:
 
@@ -88,7 +106,7 @@ For example, discard all other tools, just install the **UBLOX** library:
 >$> make install 
 
 The example above will skip build of any tool available, it will just install 
-the **UBLOX** library headers in **install/include** subdirectory
+the **UBLOX** library headers in **install/include** directory
 
 ## Building Documentation
 The documentation is not created during normal build process. The documentation of
@@ -97,7 +115,8 @@ target:
  
 >$> make doc_ublox
 
-The HTML documentation will reside in **install/doc/ublox/html** subdirectory.
+The HTML documentation will reside in **${CC_UBLOX_INSTALL_DIR}/doc/ublox/html** 
+directory.
 
 **NOTE**, that you must have 
 [Doxygen](www.doxygen.org) 

@@ -1,5 +1,9 @@
+set (THIS_PLUGIN_NAME "ublox")
+
+######################################################################
+
 function (cc_plugin_ublox)
-    set (name "ublox")
+    set (name "${THIS_PLUGIN_NAME}")
     
     set (meta_file "${CMAKE_CURRENT_SOURCE_DIR}/ublox.json")
     set (stamp_file "${CMAKE_CURRENT_BINARY_DIR}/ublox_refresh_stamp.txt")
@@ -212,40 +216,49 @@ function (cc_plugin_ublox)
     install (
         TARGETS ${name}
         DESTINATION ${PLUGIN_INSTALL_DIR})
-        
-    install (
-        TARGETS ${name}
-        DESTINATION ${CC_PLUGIN_DIR})
     
 endfunction()
 
 ######################################################################
 
-if (NOT UBLOX_CC_PLUGIN)
+if (NOT "${CC_UBLOX_QT_DIR}" STREQUAL "")
+    list (APPEND CMAKE_PREFIX_PATH ${CC_UBLOX_QT_DIR})
+endif ()
+
+find_package(Qt5Core)
+
+if (NOT Qt5Core_FOUND)
+    message (WARNING "Can NOT compile ublox protocol plugin due to missing QT5 Core library")
     return ()
 endif ()
 
-if (NOT "${UBLOX_QT_DIR}" STREQUAL "")
-    list (APPEND CMAKE_PREFIX_PATH ${UBLOX_QT_DIR})
-endif ()
-
-find_package(Qt5Core REQUIRED)
-
-if (NOT "${UBLOX_CC_INSTALL_PATH}" STREQUAL "")
-    list (APPEND CMAKE_PREFIX_PATH "${UBLOX_CC_INSTALL_PATH}/cmake")
-endif ()
-
-find_package(CommsChampion)
-
-if (NOT CC_COMMS_CHAMPION_FOUND)
-    message (FATAL_ERROR "CommsChampion wasn't found!. Please set UBLOX_CC_INSTALL_PATH to its installation path.")
-endif ()
-
-include_directories("${CC_INCLUDE_DIRS}")
-link_directories("${CC_PLUGIN_LIBRARY_DIRS}")
+if (NOT CC_UBLOX_FULL_SOLUTION)
+    if (EXISTS "${INSTALL_DIR}/cmake/CommsChampionConfig.cmake")
+        list (APPEND CMAKE_PREFIX_PATH "${INSTALL_DIR}/cmake")
+    endif ()
+    
+    if (NOT "${CC_MAIN_INSTALL_DIR}" STREQUAL "")
+        list (APPEND CMAKE_PREFIX_PATH "${CC_MAIN_INSTALL_DIR}/cmake")
+    endif ()
+    
+    
+    find_package(CommsChampion)
+    
+    if (NOT CC_COMMS_CHAMPION_FOUND)
+        message (WARNING "Can NOT compile mqtt protocol plugin due to missing CommsChampion library")
+        return ()
+    endif ()
+    
+    include_directories(${CC_INCLUDE_DIRS})
+    link_directories(${CC_PLUGIN_LIBRARY_DIRS})
+endif ()   
 
 if (CMAKE_COMPILER_IS_GNUCC)
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -ftemplate-backtrace-limit=0")
 endif ()
     
 cc_plugin_ublox ()
+
+if (CC_UBLOX_FULL_SOLUTION)
+    add_dependencies(${THIS_PLUGIN_NAME} ${CC_EXTERNAL_TGT})
+endif ()
