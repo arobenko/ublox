@@ -44,31 +44,24 @@ if (CC_UBLOX_FULL_SOLUTION)
     include(ExternalProject)
     
     set (cc_branch "master")
-    if (WIN32)
-        ExternalProject_Add(
-            "${CC_EXTERNAL_TGT}"
-            GIT_REPOSITORY https://github.com/arobenko/comms_champion.git
-            GIT_TAG ${cc_branch}
-            CMAKE_GENERATOR "NMake Makefiles"
-            CMAKE_ARGS -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DCC_INSTALL_DIR=${INSTALL_DIR}
-            BINARY_DIR ${CMAKE_BINARY_DIR}/comms_champion_build
-            BUILD_COMMAND nmake
-        )
-    elseif (UNIX)
-        include(ProcessorCount)
-        ProcessorCount(cpu_count)
-        if(NOT cpu_count EQUAL 0)
-            set (COMPILE_THREADS "-j${cpu_count}")
-        endif ()
-        ExternalProject_Add(
-            "${CC_EXTERNAL_TGT}"
-            GIT_REPOSITORY https://github.com/arobenko/comms_champion.git
-            GIT_TAG ${cc_branch}
-            CMAKE_ARGS -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DCC_INSTALL_DIR=${INSTALL_DIR}
-            BINARY_DIR ${CMAKE_BINARY_DIR}/comms_champion_build
-            BUILD_COMMAND make ${COMPILE_THREADS}
-        )
+    set (cc_main_dir "${CMAKE_BINARY_DIR}/comms_champion")
+    set (cc_src_dir "${cc_main_dir}/src")
+    set (cc_bin_dir "${cc_main_dir}/build")
+    
+    if (NOT "${CC_UBLOX_QT_DIR}" STREQUAL "")
+        set (extra_cc_args "-DCC_QT_DIR=${CC_UBLOX_QT_DIR}")
     endif ()
+
+    ExternalProject_Add(
+        "${CC_EXTERNAL_TGT}"
+        PREFIX "${cc_bin_dir}"
+        STAMP_DIR "${cc_bin_dir}"    
+        GIT_REPOSITORY "https://github.com/arobenko/comms_champion.git"
+        GIT_TAG "${cc_branch}"
+        SOURCE_DIR "${cc_src_dir}"
+        CMAKE_ARGS -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DCC_INSTALL_DIR=${INSTALL_DIR} ${extra_cc_args}
+        BINARY_DIR "${cc_bin_dir}"
+    )
     
     include_directories("${INSTALL_DIR}/include")
     link_directories("${INSTALL_DIR}/lib")
