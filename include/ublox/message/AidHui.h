@@ -127,11 +127,9 @@ struct AidHuiFields
 };
 
 /// @brief Definition of AID-HUI message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
+///     various implementation options. @n
 ///     See @ref AidHuiFields and for definition of the fields this message contains.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
@@ -140,17 +138,20 @@ class AidHui : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_HUI>,
         comms::option::FieldsImpl<AidHuiFields::All>,
-        comms::option::DispatchImpl<AidHui<TMsgBase> >
+        comms::option::MsgType<AidHui<TMsgBase> >,
+        comms::option::DispatchImpl
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_HUI>,
         comms::option::FieldsImpl<AidHuiFields::All>,
-        comms::option::DispatchImpl<AidHui<TMsgBase> >
+        comms::option::MsgType<AidHui<TMsgBase> >,
+        comms::option::DispatchImpl
     > Base;
 public:
 
+#ifdef FOR_DOXYGEN_DOC_ONLY
     /// @brief Index to access the fields
     enum FieldIdx
     {
@@ -176,8 +177,82 @@ public:
         FieldIdx_numOfValues ///< number of available fields
     };
 
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
+    /// @brief Access to fields bundled as a struct
+    struct FieldsAsStruct
+    {
+        AidHuiFields::health& health; ///< health field, see @ref AidHuiFields::health
+        AidHuiFields::utcA0& utcA0; ///< utcA0 field, see @ref AidHuiFields::utcA0
+        AidHuiFields::utcA1& utcA1; ///< utcA1 field, see @ref AidHuiFields::utcA1
+        AidHuiFields::utcTOW& utcTOW; ///< utcTOW field, see @ref AidHuiFields::utcTOW
+        AidHuiFields::utcWNT& utcWNT; ///< utcWNT field, see @ref AidHuiFields::utcWNT
+        AidHuiFields::utcLC& utcLC; ///< utcLC field, see @ref AidHuiFields::utcLS
+        AidHuiFields::utcWNF& utcWNF; ///< utcWNF field, see @ref AidHuiFields::utcWNF
+        AidHuiFields::utcDN& utcDN; ///< utcDN field, see @ref AidHuiFields::utcDN
+        AidHuiFields::utcLSF& utcLSF; ///< utcLSF field, see @ref AidHuiFields::utcLSF
+        AidHuiFields::utcSpare& utcSpare; ///< utcSpare field, see @ref AidHuiFields::utcSpare
+        AidHuiFields::klobA0& klobA0; ///< klobA0 field, see @ref AidHuiFields::klobA0
+        AidHuiFields::klobA1& klobA1; ///< klobA1 field, see @ref AidHuiFields::klobA1
+        AidHuiFields::klobA2& klobA2; ///< klobA2 field, see @ref AidHuiFields::klobA2
+        AidHuiFields::klobA3& klobA3; ///< klobA3 field, see @ref AidHuiFields::klobA3
+        AidHuiFields::klobB0& klobB0; ///< klobB0 field, see @ref AidHuiFields::klobB0
+        AidHuiFields::klobB1& klobB1; ///< klobB1 field, see @ref AidHuiFields::klobB1
+        AidHuiFields::klobB2& klobB2; ///< klobB2 field, see @ref AidHuiFields::klobB2
+        AidHuiFields::klobB3& klobB3; ///< klobB3 field, see @ref AidHuiFields::klobB3
+        AidHuiFields::flags& flags; ///< flags field, see @ref AidHuiFields::flags
+    };
+
+    /// @brief Access to @b const fields bundled as a struct
+    struct ConstFieldsAsStruct
+    {
+        const AidHuiFields::health& health; ///< health field, see @ref AidHuiFields::health
+        const AidHuiFields::utcA0& utcA0; ///< utcA0 field, see @ref AidHuiFields::utcA0
+        const AidHuiFields::utcA1& utcA1; ///< utcA1 field, see @ref AidHuiFields::utcA1
+        const AidHuiFields::utcTOW& utcTOW; ///< utcTOW field, see @ref AidHuiFields::utcTOW
+        const AidHuiFields::utcWNT& utcWNT; ///< utcWNT field, see @ref AidHuiFields::utcWNT
+        const AidHuiFields::utcLC& utcLC; ///< utcLC field, see @ref AidHuiFields::utcLS
+        const AidHuiFields::utcWNF& utcWNF; ///< utcWNF field, see @ref AidHuiFields::utcWNF
+        const AidHuiFields::utcDN& utcDN; ///< utcDN field, see @ref AidHuiFields::utcDN
+        const AidHuiFields::utcLSF& utcLSF; ///< utcLSF field, see @ref AidHuiFields::utcLSF
+        const AidHuiFields::utcSpare& utcSpare; ///< utcSpare field, see @ref AidHuiFields::utcSpare
+        const AidHuiFields::klobA0& klobA0; ///< klobA0 field, see @ref AidHuiFields::klobA0
+        const AidHuiFields::klobA1& klobA1; ///< klobA1 field, see @ref AidHuiFields::klobA1
+        const AidHuiFields::klobA2& klobA2; ///< klobA2 field, see @ref AidHuiFields::klobA2
+        const AidHuiFields::klobA3& klobA3; ///< klobA3 field, see @ref AidHuiFields::klobA3
+        const AidHuiFields::klobB0& klobB0; ///< klobB0 field, see @ref AidHuiFields::klobB0
+        const AidHuiFields::klobB1& klobB1; ///< klobB1 field, see @ref AidHuiFields::klobB1
+        const AidHuiFields::klobB2& klobB2; ///< klobB2 field, see @ref AidHuiFields::klobB2
+        const AidHuiFields::klobB3& klobB3; ///< klobB3 field, see @ref AidHuiFields::klobB3
+        const AidHuiFields::flags& flags; ///< flags field, see @ref AidHuiFields::flags
+    };
+
+    /// @brief Get access to fields bundled into a struct
+    FieldsAsStruct fieldsAsStruct();
+
+    /// @brief Get access to @b const fields bundled into a struct
+    ConstFieldsAsStruct fieldsAsStruct() const;
+
+#else
+    COMMS_MSG_FIELDS_ACCESS(Base,
+        health,
+        utcA0,
+        utcA1,
+        utcTOW,
+        utcWNT,
+        utcLS,
+        utcWNF,
+        utcDN,
+        utcLSF,
+        utcSpare,
+        klobA0,
+        klobA1,
+        klobA2,
+        klobA3,
+        klobB0,
+        klobB1,
+        klobB2,
+        klobB3,
+        flags);
+#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     AidHui() = default;

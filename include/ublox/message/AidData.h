@@ -37,11 +37,9 @@ struct AidDataFields
 };
 
 /// @brief Definition of AID-DATA message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
+///     various implementation options. @n
 ///     See @ref AidDataFields and for definition of the fields this message contains.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
@@ -50,14 +48,16 @@ class AidData : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_DATA>,
         comms::option::FieldsImpl<AidDataFields::All>,
-        comms::option::DispatchImpl<AidData<TMsgBase> >
+        comms::option::MsgType<AidData<TMsgBase> >,
+        comms::option::DispatchImpl
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_DATA>,
         comms::option::FieldsImpl<AidDataFields::All>,
-        comms::option::DispatchImpl<AidData<TMsgBase> >
+        comms::option::MsgType<AidData<TMsgBase> >,
+        comms::option::DispatchImpl
     > Base;
 public:
 

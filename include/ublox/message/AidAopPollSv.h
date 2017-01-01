@@ -44,11 +44,9 @@ struct AidAopPollSvFields
 };
 
 /// @brief Definition of AID-AOP (<b>poll SV</b>) message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
+///     various implementation options. @n
 ///     See @ref AidAopPollSvFields and for definition of the fields this message contains.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
@@ -57,17 +55,20 @@ class AidAopPollSv : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_AOP>,
         comms::option::FieldsImpl<AidAopPollSvFields::All>,
-        comms::option::DispatchImpl<AidAopPollSv<TMsgBase> >
+        comms::option::MsgType<AidAopPollSv<TMsgBase> >,
+        comms::option::DispatchImpl
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_AOP>,
         comms::option::FieldsImpl<AidAopPollSvFields::All>,
-        comms::option::DispatchImpl<AidAopPollSv<TMsgBase> >
+        comms::option::MsgType<AidAopPollSv<TMsgBase> >,
+        comms::option::DispatchImpl
     > Base;
 public:
 
+#ifdef FOR_DOXYGEN_DOC_ONLY
     /// @brief Index to access the fields
     enum FieldIdx
     {
@@ -75,8 +76,27 @@ public:
         FieldIdx_numOfValues ///< number of available fields
     };
 
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
+    /// @brief Access to fields bundled as a struct
+    struct FieldsAsStruct
+    {
+        AidAopPollSvFields::svid& svid; ///< svid field, see @ref AidAopPollSvFields::svid
+    };
+
+    /// @brief Access to @b const fields bundled as a struct
+    struct ConstFieldsAsStruct
+    {
+        const AidAopPollSvFields::svid& svid; ///< svid field, see @ref AidAopPollSvFields::svid
+    };
+
+    /// @brief Get access to fields bundled into a struct
+    FieldsAsStruct fieldsAsStruct();
+
+    /// @brief Get access to @b const fields bundled into a struct
+    ConstFieldsAsStruct fieldsAsStruct() const;
+
+#else
+    COMMS_MSG_FIELDS_ACCESS(Base, svid);
+#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     AidAopPollSv() = default;
@@ -96,7 +116,6 @@ public:
     /// @brief Move assignment
     AidAopPollSv& operator=(AidAopPollSv&&) = default;
 };
-
 
 }  // namespace message
 

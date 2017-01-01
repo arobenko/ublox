@@ -65,12 +65,10 @@ struct AidAlpStatusFields
 ///     This message is sent by the receiver as a response to @ref AidAlpData
 ///     message with either @b ack or @b nak status values. @n
 ///     @b NOTE, that it can also be sent to the receiver to indicate end of the
-///     data transfer. @b
-///     Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+///     data transfer. @n
+///     Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
+///     various implementation options. @n
 ///     See @ref AidAlpStatusFields and for definition of the fields this message contains.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
@@ -79,17 +77,22 @@ class AidAlpStatus : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_ALP>,
         comms::option::FieldsImpl<AidAlpStatusFields::All>,
-        comms::option::DispatchImpl<AidAlpStatus<TMsgBase> >
+        comms::option::MsgType<AidAlpStatus<TMsgBase> >,
+        comms::option::DispatchImpl,
+        comms::option::MsgDoRead
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_ALP>,
         comms::option::FieldsImpl<AidAlpStatusFields::All>,
-        comms::option::DispatchImpl<AidAlpStatus<TMsgBase> >
+        comms::option::MsgType<AidAlpStatus<TMsgBase> >,
+        comms::option::DispatchImpl,
+        comms::option::MsgDoRead
     > Base;
 public:
 
+#ifdef FOR_DOXYGEN_DOC_ONLY
     /// @brief Index to access the fields
     enum FieldIdx
     {
@@ -97,8 +100,27 @@ public:
         FieldIdx_numOfValues ///< number of available fields
     };
 
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
+    /// @brief Access to fields bundled as a struct
+    struct FieldsAsStruct
+    {
+        AidAlpStatusFields::status& status; ///< status field, see @ref AidAlpStatusFields::status
+    };
+
+    /// @brief Access to @b const fields bundled as a struct
+    struct ConstFieldsAsStruct
+    {
+        const AidAlpStatusFields::status& status; ///< status field, see @ref AidAlpStatusFields::status
+    };
+
+    /// @brief Get access to fields bundled into a struct
+    FieldsAsStruct fieldsAsStruct();
+
+    /// @brief Get access to @b const fields bundled into a struct
+    ConstFieldsAsStruct fieldsAsStruct() const;
+
+#else
+    COMMS_MSG_FIELDS_ACCESS(Base, status);
+#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     AidAlpStatus() = default;
@@ -118,10 +140,9 @@ public:
     /// @brief Move assignment
     AidAlpStatus& operator=(AidAlpStatus&&) = default;
 
-protected:
-    virtual comms::ErrorStatus readImpl(
-        typename Base::ReadIterator& iter,
-        std::size_t len) override
+    /// @brief Provide custom read functionality.
+    template <typename TIter>
+    comms::ErrorStatus doRead(TIter& iter, std::size_t len)
     {
         auto& allFields = Base::fields();
         auto& statusField = std::get<FieldIdx_status>(allFields);
@@ -129,7 +150,7 @@ protected:
             return comms::ErrorStatus::InvalidMsgData;
         }
 
-        return Base::readImpl(iter, len);
+        return Base::doRead(iter, len);
     }
 
 };

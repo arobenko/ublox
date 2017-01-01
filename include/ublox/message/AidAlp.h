@@ -80,11 +80,9 @@ struct AidAlpFields
 };
 
 /// @brief Definition of AID-ALP message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
+///     various implementation options. @n
 ///     See @ref AidAlpFields and for definition of the fields this message contains.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
@@ -93,17 +91,20 @@ class AidAlp : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_ALP>,
         comms::option::FieldsImpl<AidAlpFields::All>,
-        comms::option::DispatchImpl<AidAlp<TMsgBase> >
+        comms::option::MsgType<AidAlp<TMsgBase> >,
+        comms::option::DispatchImpl
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_ALP>,
         comms::option::FieldsImpl<AidAlpFields::All>,
-        comms::option::DispatchImpl<AidAlp<TMsgBase> >
+        comms::option::MsgType<AidAlp<TMsgBase> >,
+        comms::option::DispatchImpl
     > Base;
 public:
 
+#ifdef FOR_DOXYGEN_DOC_ONLY
     /// @brief Index to access the fields
     enum FieldIdx
     {
@@ -119,8 +120,44 @@ public:
         FieldIdx_numOfValues ///< number of available fields
     };
 
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
+
+    /// @brief Access to fields bundled as a struct
+    struct FieldsAsStruct
+    {
+        AidAlpFields::predTow& predTow; ///< predTow field, see @ref AidAlpFields::predTow
+        AidAlpFields::predDur& predDur; ///< predDur field, see @ref AidAlpFields::predDur
+        AidAlpFields::age& age; ///< age field, see @ref AidAlpFields::age
+        AidAlpFields::predWno& predWno; ///< predWno field, see @ref AidAlpFields::predWno
+        AidAlpFields::almWno& almWno; ///< almWno field, see @ref AidAlpFields::almWno
+        AidAlpFields::reserved1& reserved1; ///< reserved1 field, see @ref AidAlpFields::reserved1
+        AidAlpFields::svs& svs; ///< svs field, see @ref AidAlpFields::svs
+        AidAlpFields::reserved2& reserved2; ///< reserved2 field, see @ref AidAlpFields::reserved2
+        AidAlpFields::reserved3& reserved3; ///< reserved3 field, see @ref AidAlpFields::reserved3
+    };
+
+    /// @brief Access to @b const fields bundled as a struct
+    struct ConstFieldsAsStruct
+    {
+        const AidAlpFields::predTow& predTow; ///< predTow field, see @ref AidAlpFields::predTow
+        const AidAlpFields::predDur& predDur; ///< predDur field, see @ref AidAlpFields::predDur
+        const AidAlpFields::age& age; ///< age field, see @ref AidAlpFields::age
+        const AidAlpFields::predWno& predWno; ///< predWno field, see @ref AidAlpFields::predWno
+        const AidAlpFields::almWno& almWno; ///< almWno field, see @ref AidAlpFields::almWno
+        const AidAlpFields::reserved1& reserved1; ///< reserved1 field, see @ref AidAlpFields::reserved1
+        const AidAlpFields::svs& svs; ///< svs field, see @ref AidAlpFields::svs
+        const AidAlpFields::reserved2& reserved2; ///< reserved2 field, see @ref AidAlpFields::reserved2
+        const AidAlpFields::reserved3& reserved3; ///< reserved3 field, see @ref AidAlpFields::reserved3
+    };
+
+    /// @brief Get access to fields bundled into a struct
+    FieldsAsStruct fieldsAsStruct();
+
+    /// @brief Get access to @b const fields bundled into a struct
+    ConstFieldsAsStruct fieldsAsStruct() const;
+
+#else
+    COMMS_MSG_FIELDS_ACCESS(Base, predTow, predDur, age, predWno, almWno, reserved1, svs, reserved2, reserved3);
+#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     AidAlp() = default;

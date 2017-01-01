@@ -74,11 +74,9 @@ struct AidAlpsrvUpdateFields
 };
 
 /// @brief Definition of AID-ALPSRV (@b update) message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
+///     various implementation options. @n
 ///     See @ref AidAlpsrvUpdateFields and for definition of the fields this message contains.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
@@ -87,17 +85,25 @@ class AidAlpsrvUpdate : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_ALPSRV>,
         comms::option::FieldsImpl<AidAlpsrvUpdateFields::All>,
-        comms::option::DispatchImpl<AidAlpsrvUpdate<TMsgBase> >
+        comms::option::MsgType<AidAlpsrvUpdate<TMsgBase> >,
+        comms::option::DispatchImpl,
+        comms::option::MsgDoRead,
+        comms::option::MsgDoRefresh
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_ALPSRV>,
         comms::option::FieldsImpl<AidAlpsrvUpdateFields::All>,
-        comms::option::DispatchImpl<AidAlpsrvUpdate<TMsgBase> >
+        comms::option::MsgType<AidAlpsrvUpdate<TMsgBase> >,
+        comms::option::DispatchImpl,
+        comms::option::MsgDoRead,
+        comms::option::MsgDoRefresh
     > Base;
 public:
 
+
+#ifdef FOR_DOXYGEN_DOC_ONLY
     /// @brief Index to access the fields
     enum FieldIdx
     {
@@ -110,8 +116,37 @@ public:
         FieldIdx_numOfValues ///< number of available fields
     };
 
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
+    /// @brief Access to fields bundled as a struct
+    struct FieldsAsStruct
+    {
+        AidAlpsrvUpdateFields::idSize& idSize; ///< idSize field, see @ref AidAlpsrvUpdateFields::idSize
+        AidAlpsrvUpdateFields::type& type; ///< type field, see @ref AidAlpsrvUpdateFields::type
+        AidAlpsrvUpdateFields::ofs& ofs; ///< ofs field, see @ref AidAlpsrvUpdateFields::ofs
+        AidAlpsrvUpdateFields::size& size; ///< size field, see @ref AidAlpsrvUpdateFields::size
+        AidAlpsrvUpdateFields::fileId& fileId; ///< fileId field, see @ref AidAlpsrvUpdateFields::fileId
+        AidAlpsrvUpdateFields::data& data; ///< data field, see @ref AidAlpsrvUpdateFields::data
+    };
+
+    /// @brief Access to @b const fields bundled as a struct
+    struct ConstFieldsAsStruct
+    {
+        const AidAlpsrvUpdateFields::idSize& idSize; ///< idSize field, see @ref AidAlpsrvUpdateFields::idSize
+        const AidAlpsrvUpdateFields::type& type; ///< type field, see @ref AidAlpsrvUpdateFields::type
+        const AidAlpsrvUpdateFields::ofs& ofs; ///< ofs field, see @ref AidAlpsrvUpdateFields::ofs
+        const AidAlpsrvUpdateFields::size& size; ///< size field, see @ref AidAlpsrvUpdateFields::size
+        const AidAlpsrvUpdateFields::fileId& fileId; ///< fileId field, see @ref AidAlpsrvUpdateFields::fileId
+        const AidAlpsrvUpdateFields::data& data; ///< data field, see @ref AidAlpsrvUpdateFields::data
+    };
+
+    /// @brief Get access to fields bundled into a struct
+    FieldsAsStruct fieldsAsStruct();
+
+    /// @brief Get access to @b const fields bundled into a struct
+    ConstFieldsAsStruct fieldsAsStruct() const;
+
+#else
+    COMMS_MSG_FIELDS_ACCESS(Base, idSize, type, ofs, size, fileId, data);
+#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     AidAlpsrvUpdate() = default;
@@ -131,18 +166,15 @@ public:
     /// @brief Move assignment
     AidAlpsrvUpdate& operator=(AidAlpsrvUpdate&&) = default;
 
-protected:
-
-    /// @brief Overrides read functionality provided by the base class.
+    /// @brief Provides custom read functionality.
     /// @details The function reads all the fields up and including "type"
     ///     (see @ref AidAlpsrvUpdateFields::type). If its value is invalid (@b NOT equal to
     ///     0xff), the read operation fails with comms::ErrorStatus::InvalidMsgData
     ///     error status, otherwise continues. The size of the "data" list
     ///     (see @ref AidAlpsrvUpdateFields::data) is determined by the value of
     ///     "size" field (see @ref AidAlpsrvUpdateFields::size).
-    virtual comms::ErrorStatus readImpl(
-        typename Base::ReadIterator& iter,
-        std::size_t len) override
+    template <typename TIter>
+    comms::ErrorStatus doRead(TIter& iter, std::size_t len)
     {
         auto es = Base::template readFieldsUntil<FieldIdx_ofs>(iter, len);
         if (es != comms::ErrorStatus::Success) {
@@ -168,11 +200,11 @@ protected:
         return Base::template readFieldsFrom<FieldIdx_data>(iter, len);
     }
 
-    /// @brief Overrides default refreshing functionality provided by the interface class.
+    /// @brief Provides custom refreshing functionality.
     /// @details The value of "size" field (see @ref AidAlpsrvUpdateFields::size) is
     ///     determined by the size of the "data" list (see @ref AidAlpsrvUpdateFields::data).
     /// @return @b true in case the mode of "size" field was modified, @b false otherwise
-    virtual bool refreshImpl() override
+    bool doRefresh()
     {
         auto& allFields = Base::fields();
         auto& sizeField = std::get<FieldIdx_size>(allFields);
@@ -184,7 +216,6 @@ protected:
         sizeField.value() = dataField.value().size();
         return true;
     }
-
 };
 
 

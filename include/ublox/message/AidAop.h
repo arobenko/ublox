@@ -63,11 +63,9 @@ struct AidAopFields
 };
 
 /// @brief Definition of AID-AOP message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
+///     various implementation options. @n
 ///     See @ref AidAopFields and for definition of the fields this message contains.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
@@ -76,17 +74,20 @@ class AidAop : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_AOP>,
         comms::option::FieldsImpl<AidAopFields::All>,
-        comms::option::DispatchImpl<AidAop<TMsgBase> >
+        comms::option::MsgType<AidAop<TMsgBase> >,
+        comms::option::DispatchImpl
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_AOP>,
         comms::option::FieldsImpl<AidAopFields::All>,
-        comms::option::DispatchImpl<AidAop<TMsgBase> >
+        comms::option::MsgType<AidAop<TMsgBase> >,
+        comms::option::DispatchImpl
     > Base;
 public:
 
+#ifdef FOR_DOXYGEN_DOC_ONLY
     /// @brief Index to access the fields
     enum FieldIdx
     {
@@ -96,8 +97,31 @@ public:
         FieldIdx_numOfValues ///< number of available fields
     };
 
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
+    /// @brief Access to fields bundled as a struct
+    struct FieldsAsStruct
+    {
+        AidAopFields::svid& svid; ///< svid field, see @ref AidAopFields::svid
+        AidAopFields::data& data; ///< data field, see @ref AidAopFields::data
+        AidAopFields::optional& optional; ///< optional field, see @ref AidAopFields::optional
+    };
+
+    /// @brief Access to @b const fields bundled as a struct
+    struct ConstFieldsAsStruct
+    {
+        const AidAopFields::svid& svid; ///< svid field, see @ref AidAopFields::svid
+        const AidAopFields::data& data; ///< data field, see @ref AidAopFields::data
+        const AidAopFields::optional& optional; ///< optional field, see @ref AidAopFields::optional
+    };
+
+    /// @brief Get access to fields bundled into a struct
+    FieldsAsStruct fieldsAsStruct();
+
+    /// @brief Get access to @b const fields bundled into a struct
+    ConstFieldsAsStruct fieldsAsStruct() const;
+
+#else
+    COMMS_MSG_FIELDS_ACCESS(Base, svid, data, optional);
+#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     AidAop() = default;

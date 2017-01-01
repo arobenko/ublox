@@ -89,11 +89,9 @@ struct AidAlpsrvFields
 };
 
 /// @brief Definition of AID-ALPSRV message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
+///     various implementation options. @n
 ///     See @ref AidAlpsrvFields and for definition of the fields this message contains.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
@@ -102,17 +100,24 @@ class AidAlpsrv : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_ALPSRV>,
         comms::option::FieldsImpl<AidAlpsrvFields::All>,
-        comms::option::DispatchImpl<AidAlpsrv<TMsgBase> >
+        comms::option::MsgType<AidAlpsrv<TMsgBase> >,
+        comms::option::DispatchImpl,
+        comms::option::MsgDoRead,
+        comms::option::MsgDoRefresh
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_ALPSRV>,
         comms::option::FieldsImpl<AidAlpsrvFields::All>,
-        comms::option::DispatchImpl<AidAlpsrv<TMsgBase> >
+        comms::option::MsgType<AidAlpsrv<TMsgBase> >,
+        comms::option::DispatchImpl,
+        comms::option::MsgDoRead,
+        comms::option::MsgDoRefresh
     > Base;
 public:
 
+#ifdef FOR_DOXYGEN_DOC_ONLY
     /// @brief Index to access the fields
     enum FieldIdx
     {
@@ -129,8 +134,45 @@ public:
         FieldIdx_numOfValues ///< number of available fields
     };
 
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
+    /// @brief Access to fields bundled as a struct
+    struct FieldsAsStruct
+    {
+        AidAlpsrvFields::idSize& idSize; ///< idSize field, see @ref AidAlpsrvFields::idSize
+        AidAlpsrvFields::type& type; ///< type field, see @ref AidAlpsrvFields::type
+        AidAlpsrvFields::ofs& ofs; ///< ofs field, see @ref AidAlpsrvFields::ofs
+        AidAlpsrvFields::size& size; ///< size field, see @ref AidAlpsrvFields::size
+        AidAlpsrvFields::type& type; ///< type fileId, see @ref AidAlpsrvFields::fileId
+        AidAlpsrvFields::dataSize& dataSize; ///< dataSize field, see @ref AidAlpsrvFields::dataSize
+        AidAlpsrvFields::id1& id1; ///< id1 field, see @ref AidAlpsrvFields::id1
+        AidAlpsrvFields::id2& id2; ///< id2 field, see @ref AidAlpsrvFields::id2
+        AidAlpsrvFields::id3& id3; ///< id3 field, see @ref AidAlpsrvFields::id3
+        AidAlpsrvFields::data& data; ///< data field, see @ref AidAlpsrvFields::data
+    };
+
+    /// @brief Access to @b const fields bundled as a struct
+    struct ConstFieldsAsStruct
+    {
+        const AidAlpsrvFields::idSize& idSize; ///< idSize field, see @ref AidAlpsrvFields::idSize
+        const AidAlpsrvFields::type& type; ///< type field, see @ref AidAlpsrvFields::type
+        const AidAlpsrvFields::ofs& ofs; ///< ofs field, see @ref AidAlpsrvFields::ofs
+        const AidAlpsrvFields::size& size; ///< size field, see @ref AidAlpsrvFields::size
+        const AidAlpsrvFields::type& type; ///< type fileId, see @ref AidAlpsrvFields::fileId
+        const AidAlpsrvFields::dataSize& dataSize; ///< dataSize field, see @ref AidAlpsrvFields::dataSize
+        const AidAlpsrvFields::id1& id1; ///< id1 field, see @ref AidAlpsrvFields::id1
+        const AidAlpsrvFields::id2& id2; ///< id2 field, see @ref AidAlpsrvFields::id2
+        const AidAlpsrvFields::id3& id3; ///< id3 field, see @ref AidAlpsrvFields::id3
+        const AidAlpsrvFields::data& data; ///< data field, see @ref AidAlpsrvFields::data
+    };
+
+    /// @brief Get access to fields bundled into a struct
+    FieldsAsStruct fieldsAsStruct();
+
+    /// @brief Get access to @b const fields bundled into a struct
+    ConstFieldsAsStruct fieldsAsStruct() const;
+
+#else
+    COMMS_MSG_FIELDS_ACCESS(Base, idSize, type, ofs, size, fileId, dataSize, id1, id2, id3, data);
+#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     AidAlpsrv() = default;
@@ -150,18 +192,15 @@ public:
     /// @brief Move assignment
     AidAlpsrv& operator=(AidAlpsrv&&) = default;
 
-protected:
-
-    /// @brief Overrides read functionality provided by the base class.
+    /// @brief Provides custom read functionality.
     /// @details The function reads all the fields up and including "type"
     ///     (see @ref AidAlpsrvFields::type). If its value is invalid (equal to
     ///     0xff), the read operation fails with comms::ErrorStatus::InvalidMsgData
     ///     error status, otherwise continues. The size of the "data" list
     ///     (see @ref AidAlpsrvFields::data) is determined by the value of
     ///     "dataSize" field (see @ref AidAlpsrvFields::dataSize).
-    virtual comms::ErrorStatus readImpl(
-        typename Base::ReadIterator& iter,
-        std::size_t len) override
+    template <typename TIter>
+    comms::ErrorStatus doRead(TIter& iter, std::size_t len)
     {
         auto es = Base::template readFieldsUntil<FieldIdx_ofs>(iter, len);
         if (es != comms::ErrorStatus::Success) {
@@ -187,11 +226,11 @@ protected:
         return Base::template readFieldsFrom<FieldIdx_data>(iter, len);
     }
 
-    /// @brief Overrides default refreshing functionality provided by the interface class.
+    /// @brief Provides custom refreshing functionality.
     /// @details The value of "dataSize" field (see @ref AidAlpsrvFields::dataSize) is
     ///     determined by the size of the "data" list (see @ref AidAlpsrvFields::data).
     /// @return @b true in case the mode of "dataSize" field was modified, @b false otherwise
-    virtual bool refreshImpl() override
+    bool doRefresh()
     {
         auto& allFields = Base::fields();
         auto& dataSizeField = std::get<FieldIdx_dataSize>(allFields);
@@ -203,7 +242,6 @@ protected:
         dataSizeField.value() = dataField.value().size();
         return true;
     }
-
 };
 
 

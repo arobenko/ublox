@@ -230,11 +230,9 @@ struct AidIniFields
 };
 
 /// @brief Definition of AID-INI message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
+///     various implementation options. @n
 ///     See @ref AidIniFields and for definition of the fields this message contains.
 ///
 ///     @b NOTE, that Ublox binary protocol specification reinterprets value of
@@ -253,17 +251,24 @@ class AidIni : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_INI>,
         comms::option::FieldsImpl<AidIniFields::All>,
-        comms::option::DispatchImpl<AidIni<TMsgBase> >
+        comms::option::MsgType<AidIni<TMsgBase> >,
+        comms::option::DispatchImpl,
+        comms::option::MsgDoRead,
+        comms::option::MsgDoRefresh
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_INI>,
         comms::option::FieldsImpl<AidIniFields::All>,
-        comms::option::DispatchImpl<AidIni<TMsgBase> >
+        comms::option::MsgType<AidIni<TMsgBase> >,
+        comms::option::DispatchImpl,
+        comms::option::MsgDoRead,
+        comms::option::MsgDoRefresh
     > Base;
 public:
 
+#ifdef FOR_DOXYGEN_DOC_ONLY
     /// @brief Index to access the fields
     enum FieldIdx
     {
@@ -290,8 +295,85 @@ public:
         FieldIdx_numOfValues ///< number of available fields
     };
 
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
+    /// @brief Access to fields bundled as a struct
+    struct FieldsAsStruct
+    {
+        AidIniFields::ecefX& ecefX; ///< @b ecefX field, see @ref AidIniFields::ecefX
+        AidIniFields::lat& lat; ///< @b lat field, see @ref AidIniFields::lat
+        AidIniFields::ecefY& ecefY; ///< @b ecefY field, see @ref AidIniFields::ecefY
+        AidIniFields::lon& lon; ///< @b lon field, see @ref AidIniFields::lon
+        AidIniFields::ecefZ& ecefZ; ///< @b ecefZ field, see @ref AidIniFields::ecefZ
+        AidIniFields::alt& alt; ///< @b alt field, see @ref AidIniFields::alt
+        AidIniFields::posAcc& posAcc; ///< @b posAcc field, see @ref AidIniFields::posAcc
+        AidIniFields::tmCfg& tmCfg; ///< @b tmCfg field, see @ref AidIniFields::tmCfg
+        AidIniFields::wno& wno; ///< @b wno field, see @ref AidIniFields::wno
+        AidIniFields::date& date; ///< @b date field, see @ref AidIniFields::date
+        AidIniFields::tow& tow; ///< @b tow field, see @ref AidIniFields::tow
+        AidIniFields::time& time; ///< @b time field, see @ref AidIniFields::time
+        AidIniFields::towNs& towNs; ///< @b towNs field, see @ref AidIniFields::towNs
+        AidIniFields::tAccMs& tAccMs; ///< @b tAccMs field, see @ref AidIniFields::tAccMs
+        AidIniFields::tAccNs& tAccNs; ///< @b tAccNs field, see @ref AidIniFields::tAccNs
+        AidIniFields::clkD& clkD; ///< @b clkD field, see @ref AidIniFields::clkD
+        AidIniFields::posAcc& posAcc; ///< @b posAcc freq, see @ref AidIniFields::freq
+        AidIniFields::clkDAcc& clkDAcc; ///< @b clkDAcc field, see @ref AidIniFields::clkDAcc
+        AidIniFields::freqAcc& freqAcc; ///< @b freqAcc field, see @ref AidIniFields::freqAcc
+        AidIniFields::flags& flags; ///< @b flags field, see @ref AidIniFields::flags
+    };
+
+    /// @brief Access to @b const fields bundled as a struct
+    struct ConstFieldsAsStruct
+    {
+        const AidIniFields::ecefX& ecefX; ///< @b ecefX field, see @ref AidIniFields::ecefX
+        const AidIniFields::lat& lat; ///< @b lat field, see @ref AidIniFields::lat
+        const AidIniFields::ecefY& ecefY; ///< @b ecefY field, see @ref AidIniFields::ecefY
+        const AidIniFields::lon& lon; ///< @b lon field, see @ref AidIniFields::lon
+        const AidIniFields::ecefZ& ecefZ; ///< @b ecefZ field, see @ref AidIniFields::ecefZ
+        const AidIniFields::alt& alt; ///< @b alt field, see @ref AidIniFields::alt
+        const AidIniFields::posAcc& posAcc; ///< @b posAcc field, see @ref AidIniFields::posAcc
+        const AidIniFields::tmCfg& tmCfg; ///< @b tmCfg field, see @ref AidIniFields::tmCfg
+        const AidIniFields::wno& wno; ///< @b wno field, see @ref AidIniFields::wno
+        const AidIniFields::date& date; ///< @b date field, see @ref AidIniFields::date
+        const AidIniFields::tow& tow; ///< @b tow field, see @ref AidIniFields::tow
+        const AidIniFields::time& time; ///< @b time field, see @ref AidIniFields::time
+        const AidIniFields::towNs& towNs; ///< @b towNs field, see @ref AidIniFields::towNs
+        const AidIniFields::tAccMs& tAccMs; ///< @b tAccMs field, see @ref AidIniFields::tAccMs
+        const AidIniFields::tAccNs& tAccNs; ///< @b tAccNs field, see @ref AidIniFields::tAccNs
+        const AidIniFields::clkD& clkD; ///< @b clkD field, see @ref AidIniFields::clkD
+        const AidIniFields::posAcc& posAcc; ///< @b posAcc freq, see @ref AidIniFields::freq
+        const AidIniFields::clkDAcc& clkDAcc; ///< @b clkDAcc field, see @ref AidIniFields::clkDAcc
+        const AidIniFields::freqAcc& freqAcc; ///< @b freqAcc field, see @ref AidIniFields::freqAcc
+        const AidIniFields::flags& flags; ///< @b flags field, see @ref AidIniFields::flags
+    };
+
+    /// @brief Get access to fields bundled into a struct
+    FieldsAsStruct fieldsAsStruct();
+
+    /// @brief Get access to @b const fields bundled into a struct
+    ConstFieldsAsStruct fieldsAsStruct() const;
+
+#else
+    COMMS_MSG_FIELDS_ACCESS(Base,
+        ecefX,
+        lat,
+        ecefY,
+        lon,
+        ecefZ,
+        alt,
+        posAcc,
+        tmCfg,
+        wno,
+        date,
+        tow,
+        time,
+        towNs,
+        tAccMs,
+        tAccNs,
+        clkD,
+        freq,
+        clkDAcc,
+        freqAcc,
+        flags);
+#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     /// @details The existing/missing mode of the optional fields is determined
@@ -299,25 +381,22 @@ public:
     ///     field.
     AidIni()
     {
-
         auto& allFields = Base::fields();
-        auto exists = comms::field::OptionalMode::Exists;
-        auto missing = comms::field::OptionalMode::Missing;
 
-        std::get<FieldIdx_ecefX>(allFields).setMode(exists);
-        std::get<FieldIdx_lat>(allFields).setMode(missing);
-        std::get<FieldIdx_ecefY>(allFields).setMode(exists);
-        std::get<FieldIdx_lon>(allFields).setMode(missing);
-        std::get<FieldIdx_ecefZ>(allFields).setMode(exists);
-        std::get<FieldIdx_alt>(allFields).setMode(missing);
-        std::get<FieldIdx_wno>(allFields).setMode(exists);
-        std::get<FieldIdx_date>(allFields).setMode(missing);
-        std::get<FieldIdx_tow>(allFields).setMode(exists);
-        std::get<FieldIdx_time>(allFields).setMode(missing);
-        std::get<FieldIdx_clkD>(allFields).setMode(exists);
-        std::get<FieldIdx_freq>(allFields).setMode(missing);
-        std::get<FieldIdx_clkDAcc>(allFields).setMode(exists);
-        std::get<FieldIdx_freqAcc>(allFields).setMode(missing);
+        std::get<FieldIdx_ecefX>(allFields).setExists();
+        std::get<FieldIdx_lat>(allFields).setMissing();
+        std::get<FieldIdx_ecefY>(allFields).setExists();
+        std::get<FieldIdx_lon>(allFields).setMissing();
+        std::get<FieldIdx_ecefZ>(allFields).setExists();
+        std::get<FieldIdx_alt>(allFields).setMissing();
+        std::get<FieldIdx_wno>(allFields).setExists();
+        std::get<FieldIdx_date>(allFields).setMissing();
+        std::get<FieldIdx_tow>(allFields).setExists();
+        std::get<FieldIdx_time>(allFields).setMissing();
+        std::get<FieldIdx_clkD>(allFields).setExists();
+        std::get<FieldIdx_freq>(allFields).setMissing();
+        std::get<FieldIdx_clkDAcc>(allFields).setExists();
+        std::get<FieldIdx_freqAcc>(allFields).setMissing();
     }
 
     /// @brief Copy constructor
@@ -335,23 +414,20 @@ public:
     /// @brief Move assignment
     AidIni& operator=(AidIni&&) = default;
 
-protected:
-
-    /// @brief Overrides read functionality provided by the base class.
+    /// @brief Provides custom read functionality.
     /// @details This function performs full read as if the value of the
     ///     @b flags (see @ref AidIniFields::flags) field contains value 0.
     ///     When such read is complete the function checks the actual value
     ///     of the @b flags field and reassigns values to appropriate optional
     ///     fields if needed.
-    virtual comms::ErrorStatus readImpl(
-        typename Base::ReadIterator& iter,
-        std::size_t len) override
+    template <typename TIter>
+    comms::ErrorStatus doRead(TIter& iter, std::size_t len)
     {
         auto& allFields = Base::fields();
         auto& flagsField = std::get<FieldIdx_flags>(allFields);
         flagsField.value() = 0;
 
-        auto es = Base::readImpl(iter, len);
+        auto es = Base::doRead(iter, len);
         if (es != comms::ErrorStatus::Success) {
             return es;
         }
@@ -392,12 +468,12 @@ protected:
         return es;
     }
 
-    /// @brief Overrides default refreshing functionality provided by the interface class.
+    /// @brief Provides custom refresh functionality
     /// @details The function checks the value of  @b flags
     ///     (see @ref AidIniFields::flags) field and modifies mode of other
     ///     @b optional fields accordingly.
     /// @return @b true in case the mode of any optional field was modified, @b false otherwise
-    virtual bool refreshImpl() override
+    bool doRefresh()
     {
         bool refreshed = false;
 
