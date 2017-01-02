@@ -206,11 +206,9 @@ struct MonHwFields
 };
 
 /// @brief Definition of MON-HW message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
+///     various implementation options. @n
 ///     See @ref MonHwFields and for definition of the fields this message contains.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
@@ -219,17 +217,20 @@ class MonHw : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_MON_HW>,
         comms::option::FieldsImpl<MonHwFields::All>,
-        comms::option::DispatchImpl<MonHw<TMsgBase> >
+        comms::option::MsgType<MonHw<TMsgBase> >,
+        comms::option::DispatchImpl
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_MON_HW>,
         comms::option::FieldsImpl<MonHwFields::All>,
-        comms::option::DispatchImpl<MonHw<TMsgBase> >
+        comms::option::MsgType<MonHw<TMsgBase> >,
+        comms::option::DispatchImpl
     > Base;
 public:
 
+#ifdef FOR_DOXYGEN_DOC_ONLY
     /// @brief Index to access the fields
     enum FieldIdx
     {
@@ -253,8 +254,77 @@ public:
         FieldIdx_numOfValues ///< number of available fields
     };
 
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
+    /// @brief Access to fields bundled as a struct
+    struct FieldsAsStruct
+    {
+        MonHwFields::pinSel& pinSel; ///< @b pinSel field, see @ref MonHwFields::pinSel
+        MonHwFields::pinBank& pinBank; ///< @b pinBank field, see @ref MonHwFields::pinBank
+        MonHwFields::pinDir& pinDir; ///< @b pinDir field, see @ref MonHwFields::pinDir
+        MonHwFields::pinVal& pinVal; ///< @b pinVal field, see @ref MonHwFields::pinVal
+        MonHwFields::noisePerMS& noisePerMS; ///< @b noisePerMS field, see @ref MonHwFields::noisePerMS
+        MonHwFields::agcCnt& agcCnt; ///< @b agcCnt field, see @ref MonHwFields::agcCnt
+        MonHwFields::aStatus& aStatus; ///< @b aStatus field, see @ref MonHwFields::aStatus
+        MonHwFields::aPower& aPower; ///< @b aPower field, see @ref MonHwFields::aPower
+        MonHwFields::flags& flags; ///< @b flags field, see @ref MonHwFields::flags
+        MonHwFields::reserved1& reserved1; ///< @b reserved1 field, see @ref MonHwFields::reserved1
+        MonHwFields::usedMask& usedMask; ///< @b usedMask field, see @ref MonHwFields::usedMask
+        MonHwFields::VP& VP; ///< @b VP field, see @ref MonHwFields::VP
+        MonHwFields::jamInd& jamInd; ///< @b jamInd field, see @ref MonHwFields::jamInd
+        MonHwFields::reserved3& reserved3; ///< @b reserved3 field, see @ref MonHwFields::reserved3
+        MonHwFields::pinIrq& pinIrq; ///< @b pinIrq field, see @ref MonHwFields::pinIrq
+        MonHwFields::pullH& pullH; ///< @b pullH field, see @ref MonHwFields::pullH
+        MonHwFields::pullL& pullL; ///< @b pullL field, see @ref MonHwFields::pullL
+    };
+
+    /// @brief Access to @b const fields bundled as a struct
+    struct ConstFieldsAsStruct
+    {
+        const MonHwFields::pinSel& pinSel; ///< @b pinSel field, see @ref MonHwFields::pinSel
+        const MonHwFields::pinBank& pinBank; ///< @b pinBank field, see @ref MonHwFields::pinBank
+        const MonHwFields::pinDir& pinDir; ///< @b pinDir field, see @ref MonHwFields::pinDir
+        const MonHwFields::pinVal& pinVal; ///< @b pinVal field, see @ref MonHwFields::pinVal
+        const MonHwFields::noisePerMS& noisePerMS; ///< @b noisePerMS field, see @ref MonHwFields::noisePerMS
+        const MonHwFields::agcCnt& agcCnt; ///< @b agcCnt field, see @ref MonHwFields::agcCnt
+        const MonHwFields::aStatus& aStatus; ///< @b aStatus field, see @ref MonHwFields::aStatus
+        const MonHwFields::aPower& aPower; ///< @b aPower field, see @ref MonHwFields::aPower
+        const MonHwFields::flags& flags; ///< @b flags field, see @ref MonHwFields::flags
+        const MonHwFields::reserved1& reserved1; ///< @b reserved1 field, see @ref MonHwFields::reserved1
+        const MonHwFields::usedMask& usedMask; ///< @b usedMask field, see @ref MonHwFields::usedMask
+        const MonHwFields::VP& VP; ///< @b VP field, see @ref MonHwFields::VP
+        const MonHwFields::jamInd& jamInd; ///< @b jamInd field, see @ref MonHwFields::jamInd
+        const MonHwFields::reserved3& reserved3; ///< @b reserved3 field, see @ref MonHwFields::reserved3
+        const MonHwFields::pinIrq& pinIrq; ///< @b pinIrq field, see @ref MonHwFields::pinIrq
+        const MonHwFields::pullH& pullH; ///< @b pullH field, see @ref MonHwFields::pullH
+        const MonHwFields::pullL& pullL; ///< @b pullL field, see @ref MonHwFields::pullL    };
+    };
+
+    /// @brief Get access to fields bundled into a struct
+    FieldsAsStruct fieldsAsStruct();
+
+    /// @brief Get access to @b const fields bundled into a struct
+    ConstFieldsAsStruct fieldsAsStruct() const;
+
+#else
+    COMMS_MSG_FIELDS_ACCESS(Base,
+        pinSel,
+        pinBank,
+        pinDir,
+        pinVal,
+        noisePerMS,
+        agcCnt,
+        aStatus,
+        aPower,
+        flags,
+        reserved1,
+        usedMask,
+        VP,
+        jamInd,
+        reserved3,
+        pinIrq,
+        pullH,
+        pullL,
+    );
+#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     MonHw() = default;

@@ -75,11 +75,9 @@ struct MonMsgppFields
 };
 
 /// @brief Definition of MON-MSGPP message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
+///     various implementation options. @n
 ///     See @ref MonMsgppFields and for definition of the fields this message contains.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
@@ -88,17 +86,20 @@ class MonMsgpp : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_MON_MSGPP>,
         comms::option::FieldsImpl<MonMsgppFields::All>,
-        comms::option::DispatchImpl<MonMsgpp<TMsgBase> >
+        comms::option::MsgType<MonMsgpp<TMsgBase> >,
+        comms::option::DispatchImpl
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_MON_MSGPP>,
         comms::option::FieldsImpl<MonMsgppFields::All>,
-        comms::option::DispatchImpl<MonMsgpp<TMsgBase> >
+        comms::option::MsgType<MonMsgpp<TMsgBase> >,
+        comms::option::DispatchImpl
     > Base;
 public:
 
+#ifdef FOR_DOXYGEN_DOC_ONLY
     /// @brief Index to access the fields
     enum FieldIdx
     {
@@ -112,8 +113,39 @@ public:
         FieldIdx_numOfValues ///< number of available fields
     };
 
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
+    /// @brief Access to fields bundled as a struct
+    struct FieldsAsStruct
+    {
+        MonMsgppFields::msg1& msg1; ///< @b msg1 field, see @ref MonMsgppFields::msg1
+        MonMsgppFields::msg2& msg2; ///< @b msg2 field, see @ref MonMsgppFields::msg2
+        MonMsgppFields::msg3& msg3; ///< @b msg3 field, see @ref MonMsgppFields::msg3
+        MonMsgppFields::msg4& msg4; ///< @b msg4 field, see @ref MonMsgppFields::msg4
+        MonMsgppFields::msg5& msg5; ///< @b msg5 field, see @ref MonMsgppFields::msg5
+        MonMsgppFields::msg6& msg6; ///< @b msg6 field, see @ref MonMsgppFields::msg6
+        MonMsgppFields::skipped& skipped; ///< @b skipped field, see @ref MonMsgppFields::skipped
+    };
+
+    /// @brief Access to @b const fields bundled as a struct
+    struct ConstFieldsAsStruct
+    {
+        const MonMsgppFields::msg1& msg1; ///< @b msg1 field, see @ref MonMsgppFields::msg1
+        const MonMsgppFields::msg2& msg2; ///< @b msg2 field, see @ref MonMsgppFields::msg2
+        const MonMsgppFields::msg3& msg3; ///< @b msg3 field, see @ref MonMsgppFields::msg3
+        const MonMsgppFields::msg4& msg4; ///< @b msg4 field, see @ref MonMsgppFields::msg4
+        const MonMsgppFields::msg5& msg5; ///< @b msg5 field, see @ref MonMsgppFields::msg5
+        const MonMsgppFields::msg6& msg6; ///< @b msg6 field, see @ref MonMsgppFields::msg6
+        const MonMsgppFields::skipped& skipped; ///< @b skipped field, see @ref MonMsgppFields::skipped
+    };
+
+    /// @brief Get access to fields bundled into a struct
+    FieldsAsStruct fieldsAsStruct();
+
+    /// @brief Get access to @b const fields bundled into a struct
+    ConstFieldsAsStruct fieldsAsStruct() const;
+
+#else
+    COMMS_MSG_FIELDS_ACCESS(Base, msg1, msg2, msg3, msg4, msg5, msg6, skipped);
+#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     MonMsgpp() = default;
