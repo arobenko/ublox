@@ -61,11 +61,9 @@ struct LogRetrieveFields
 };
 
 /// @brief Definition of LOG-RETRIEVE message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
+///     various implementation options. @n
 ///     See @ref LogRetrieveFields and for definition of the fields this message contains.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
@@ -74,17 +72,20 @@ class LogRetrieve : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_LOG_RETRIEVE>,
         comms::option::FieldsImpl<LogRetrieveFields::All>,
-        comms::option::DispatchImpl<LogRetrieve<TMsgBase> >
+        comms::option::MsgType<LogRetrieve<TMsgBase> >,
+        comms::option::DispatchImpl
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_LOG_RETRIEVE>,
         comms::option::FieldsImpl<LogRetrieveFields::All>,
-        comms::option::DispatchImpl<LogRetrieve<TMsgBase> >
+        comms::option::MsgType<LogRetrieve<TMsgBase> >,
+        comms::option::DispatchImpl
     > Base;
 public:
 
+#ifdef FOR_DOXYGEN_DOC_ONLY
     /// @brief Index to access the fields
     enum FieldIdx
     {
@@ -95,8 +96,33 @@ public:
         FieldIdx_numOfValues ///< number of available fields
     };
 
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
+    /// @brief Access to fields bundled as a struct
+    struct FieldsAsStruct
+    {
+        LogRetrieveFields::startNumber& startNumber; ///< @b startNumber field, see @ref LogRetrieveFields::startNumber
+        LogRetrieveFields::entryCount& entryCount; ///< @b entryCount field, see @ref LogRetrieveFields::entryCount
+        LogRetrieveFields::version& version; ///< @b version field, see @ref LogRetrieveFields::version
+        LogRetrieveFields::reserved& reserved; ///< @b reserved field, see @ref LogRetrieveFields::reserved
+    };
+
+    /// @brief Access to @b const fields bundled as a struct
+    struct ConstFieldsAsStruct
+    {
+        const LogRetrieveFields::startNumber& startNumber; ///< @b startNumber field, see @ref LogRetrieveFields::startNumber
+        const LogRetrieveFields::entryCount& entryCount; ///< @b entryCount field, see @ref LogRetrieveFields::entryCount
+        const LogRetrieveFields::version& version; ///< @b version field, see @ref LogRetrieveFields::version
+        const LogRetrieveFields::reserved& reserved; ///< @b reserved field, see @ref LogRetrieveFields::reserved
+    };
+
+    /// @brief Get access to fields bundled into a struct
+    FieldsAsStruct fieldsAsStruct();
+
+    /// @brief Get access to @b const fields bundled into a struct
+    ConstFieldsAsStruct fieldsAsStruct() const;
+
+#else
+    COMMS_MSG_FIELDS_ACCESS(Base, startNumber, entryCount, version, reserved);
+#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     LogRetrieve() = default;

@@ -93,11 +93,9 @@ struct LogRetrievestringFields
 };
 
 /// @brief Definition of LOG-RETRIEVESTRING message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
+///     various implementation options. @n
 ///     See @ref LogRetrievestringFields and for definition of the fields this message contains.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
@@ -106,17 +104,24 @@ class LogRetrievestring : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_LOG_RETRIEVESTRING>,
         comms::option::FieldsImpl<LogRetrievestringFields::All>,
-        comms::option::DispatchImpl<LogRetrievestring<TMsgBase> >
+        comms::option::MsgType<LogRetrievestring<TMsgBase> >,
+        comms::option::DispatchImpl,
+        comms::option::MsgDoRead,
+        comms::option::MsgDoRefresh
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_LOG_RETRIEVESTRING>,
         comms::option::FieldsImpl<LogRetrievestringFields::All>,
-        comms::option::DispatchImpl<LogRetrievestring<TMsgBase> >
+        comms::option::MsgType<LogRetrievestring<TMsgBase> >,
+        comms::option::DispatchImpl,
+        comms::option::MsgDoRead,
+        comms::option::MsgDoRefresh
     > Base;
 public:
 
+#ifdef FOR_DOXYGEN_DOC_ONLY
     /// @brief Index to access the fields
     enum FieldIdx
     {
@@ -135,8 +140,63 @@ public:
         FieldIdx_numOfValues ///< number of available fields
     };
 
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
+
+    /// @brief Access to fields bundled as a struct
+    struct FieldsAsStruct
+    {
+        LogRetrievestringFields::entryIndex& entryIndex; ///< @b entryIndex field, see @ref LogRetrievestringFields::entryIndex
+        LogRetrievestringFields::version& version; ///< @b version field, see @ref LogRetrievestringFields::version
+        LogRetrievestringFields::reserved1& reserved1; ///< @b reserved1 field, see @ref LogRetrievestringFields::reserved1
+        LogRetrievestringFields::year& year; ///< @b year field, see @ref LogRetrievestringFields::year
+        LogRetrievestringFields::month& month; ///< @b month field, see @ref LogRetrievestringFields::month
+        LogRetrievestringFields::day& day; ///< @b day field, see @ref LogRetrievestringFields::day
+        LogRetrievestringFields::hour& hour; ///< @b hour field, see @ref LogRetrievestringFields::hour
+        LogRetrievestringFields::minute& minute; ///< @b minute field, see @ref LogRetrievestringFields::minute
+        LogRetrievestringFields::second& second; ///< @b second field, see @ref LogRetrievestringFields::second
+        LogRetrievestringFields::reserved2& reserved2; ///< @b reserved2 field, see @ref LogRetrievestringFields::reserved2
+        LogRetrievestringFields::byteCount& byteCount; ///< @b byteCount field, see @ref LogRetrievestringFields::byteCount
+        LogRetrievestringFields::bytes& bytes; ///< @b bytes field, see @ref LogRetrievestringFields::bytes
+    };
+
+    /// @brief Access to @b const fields bundled as a struct
+    struct ConstFieldsAsStruct
+    {
+        const LogRetrievestringFields::entryIndex& entryIndex; ///< @b entryIndex field, see @ref LogRetrievestringFields::entryIndex
+        const LogRetrievestringFields::version& version; ///< @b version field, see @ref LogRetrievestringFields::version
+        const LogRetrievestringFields::reserved1& reserved1; ///< @b reserved1 field, see @ref LogRetrievestringFields::reserved1
+        const LogRetrievestringFields::year& year; ///< @b year field, see @ref LogRetrievestringFields::year
+        const LogRetrievestringFields::month& month; ///< @b month field, see @ref LogRetrievestringFields::month
+        const LogRetrievestringFields::day& day; ///< @b day field, see @ref LogRetrievestringFields::day
+        const LogRetrievestringFields::hour& hour; ///< @b hour field, see @ref LogRetrievestringFields::hour
+        const LogRetrievestringFields::minute& minute; ///< @b minute field, see @ref LogRetrievestringFields::minute
+        const LogRetrievestringFields::second& second; ///< @b second field, see @ref LogRetrievestringFields::second
+        const LogRetrievestringFields::reserved2& reserved2; ///< @b reserved2 field, see @ref LogRetrievestringFields::reserved2
+        const LogRetrievestringFields::byteCount& byteCount; ///< @b byteCount field, see @ref LogRetrievestringFields::byteCount
+        const LogRetrievestringFields::bytes& bytes; ///< @b bytes field, see @ref LogRetrievestringFields::bytes
+    };
+
+    /// @brief Get access to fields bundled into a struct
+    FieldsAsStruct fieldsAsStruct();
+
+    /// @brief Get access to @b const fields bundled into a struct
+    ConstFieldsAsStruct fieldsAsStruct() const;
+
+#else
+    COMMS_MSG_FIELDS_ACCESS(Base,
+        entryIndex,
+        version,
+        reserved1,
+        year,
+        month,
+        day,
+        hour,
+        minute,
+        second,
+        reserved2,
+        byteCount,
+        bytes
+    );
+#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     LogRetrievestring() = default;
@@ -156,15 +216,12 @@ public:
     /// @brief Move assignment
     LogRetrievestring& operator=(LogRetrievestring&&) = default;
 
-protected:
-
-    /// @brief Overrides read functionality provided by the base class.
+    /// @brief Provides custom read functionality.
     /// @details The number of characters in @b bytes (@ref LogRetrievestringFields::bytes)
     ///     string is determined by the value of @b byteCount
     ///     (@ref LogRetrievestringFields::byteCount) field.
-    virtual comms::ErrorStatus readImpl(
-        typename Base::ReadIterator& iter,
-        std::size_t len) override
+    template <typename TIter>
+    comms::ErrorStatus doRead(TIter& iter, std::size_t len)
     {
         auto es = Base::template readFieldsUntil<FieldIdx_bytes>(iter, len);
         if (es != comms::ErrorStatus::Success) {
@@ -179,12 +236,12 @@ protected:
         return Base::template readFieldsFrom<FieldIdx_bytes>(iter, len);
     }
 
-    /// @brief Overrides default refreshing functionality provided by the interface class.
+    /// @brief Provides custom refresh functionality
     /// @details The value of @b byteCount (@ref LogRetrievestringFields::byteCount)
     ///     field is determined by the size of the internal string of
     ///     @b bytes (@ref LogRetrievestringFields::bytes) field.
     /// @return @b true in case the value of "byteCount" field was modified, @b false otherwise
-    virtual bool refreshImpl() override
+    bool doRefresh()
     {
         auto& allFields = Base::fields();
         auto& countField = std::get<FieldIdx_byteCount>(allFields);

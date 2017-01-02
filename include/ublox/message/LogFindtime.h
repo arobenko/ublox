@@ -63,11 +63,9 @@ struct LogFindtimeFields
 };
 
 /// @brief Definition of LOG-FINDTIME message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
+///     various implementation options. @n
 ///     See @ref LogFindtimeFields and for definition of the fields this message contains.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
@@ -76,17 +74,22 @@ class LogFindtime : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_LOG_FINDTIME>,
         comms::option::FieldsImpl<LogFindtimeFields::All>,
-        comms::option::DispatchImpl<LogFindtime<TMsgBase> >
+        comms::option::MsgType<LogFindtime<TMsgBase> >,
+        comms::option::DispatchImpl,
+        comms::option::MsgDoRead
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_LOG_FINDTIME>,
         comms::option::FieldsImpl<LogFindtimeFields::All>,
-        comms::option::DispatchImpl<LogFindtime<TMsgBase> >
+        comms::option::MsgType<LogFindtime<TMsgBase> >,
+        comms::option::DispatchImpl,
+        comms::option::MsgDoRead
     > Base;
 public:
 
+#ifdef FOR_DOXYGEN_DOC_ONLY
     /// @brief Index to access the fields
     enum FieldIdx
     {
@@ -97,8 +100,33 @@ public:
         FieldIdx_numOfValues ///< number of available fields
     };
 
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
+    /// @brief Access to fields bundled as a struct
+    struct FieldsAsStruct
+    {
+        LogFindtimeFields::version& version; ///< @b version field, see @ref LogFindtimeFields::version
+        LogFindtimeFields::type& type; ///< @b type field, see @ref LogFindtimeFields::type
+        LogFindtimeFields::reserved1& reserved1; ///< @b reserved1 field, see @ref LogFindtimeFields::reserved1
+        LogFindtimeFields::entryNumber& entryNumber; ///< @b entryNumber field, see @ref LogFindtimeFields::entryNumber
+    };
+
+    /// @brief Access to @b const fields bundled as a struct
+    struct ConstFieldsAsStruct
+    {
+        const LogFindtimeFields::version& version; ///< @b version field, see @ref LogFindtimeFields::version
+        const LogFindtimeFields::type& type; ///< @b type field, see @ref LogFindtimeFields::type
+        const LogFindtimeFields::reserved1& reserved1; ///< @b reserved1 field, see @ref LogFindtimeFields::reserved1
+        const LogFindtimeFields::entryNumber& entryNumber; ///< @b entryNumber field, see @ref LogFindtimeFields::entryNumber
+    };
+
+    /// @brief Get access to fields bundled into a struct
+    FieldsAsStruct fieldsAsStruct();
+
+    /// @brief Get access to @b const fields bundled into a struct
+    ConstFieldsAsStruct fieldsAsStruct() const;
+
+#else
+    COMMS_MSG_FIELDS_ACCESS(Base, version, type, reserved1, entryNumber);
+#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     LogFindtime() = default;
@@ -118,16 +146,13 @@ public:
     /// @brief Move assignment
     LogFindtime& operator=(LogFindtime&&) = default;
 
-protected:
-
-    /// @brief Overrides read functionality provided by the base class.
+    /// @brief Provides custom read functionality.
     /// @details The function performs read up to the @b type field (@ref
     /// LogFindtimeFields::type) and checks its value. If it's valid (has value 1),
     /// the read continues for the rest of the fields. Otherwise
     /// comms::ErrorStatus::InvalidMsgData is returned.
-    virtual comms::ErrorStatus readImpl(
-        typename Base::ReadIterator& iter,
-        std::size_t len) override
+    template <typename TIter>
+    comms::ErrorStatus doRead(TIter& iter, std::size_t len)
     {
         auto es = Base::template readFieldsUntil<FieldIdx_reserved1>(iter, len);
         if (es != comms::ErrorStatus::Success) {
