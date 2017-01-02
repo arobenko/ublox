@@ -92,11 +92,9 @@ struct CfgCfgFields
 };
 
 /// @brief Definition of CFG-CFG message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
+///     various implementation options. @n
 ///     See @ref CfgCfgFields and for definition of the fields this message contains.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
@@ -105,17 +103,20 @@ class CfgCfg : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_CFG>,
         comms::option::FieldsImpl<CfgCfgFields::All>,
-        comms::option::DispatchImpl<CfgCfg<TMsgBase> >
+        comms::option::MsgType<CfgCfg<TMsgBase> >,
+        comms::option::DispatchImpl
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_CFG>,
         comms::option::FieldsImpl<CfgCfgFields::All>,
-        comms::option::DispatchImpl<CfgCfg<TMsgBase> >
+        comms::option::MsgType<CfgCfg<TMsgBase> >,
+        comms::option::DispatchImpl
     > Base;
 public:
 
+#ifdef FOR_DOXYGEN_DOC_ONLY
     /// @brief Index to access the fields
     enum FieldIdx
     {
@@ -126,8 +127,33 @@ public:
         FieldIdx_numOfValues ///< number of available fields
     };
 
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
+    /// @brief Access to fields bundled as a struct
+    struct FieldsAsStruct
+    {
+        CfgCfgFields::clearMask& clearMask; ///< @b clearMask field, see @ref CfgCfgFields::clearMask
+        CfgCfgFields::saveMask& saveMask; ///< @b saveMask field, see @ref CfgCfgFields::saveMask
+        CfgCfgFields::loadMask& loadMask; ///< @b loadMask field, see @ref CfgCfgFields::loadMask
+        CfgCfgFields::deviceMask& deviceMask; ///< @b deviceMask field, see @ref CfgCfgFields::deviceMask
+    };
+
+    /// @brief Access to @b const fields bundled as a struct
+    struct ConstFieldsAsStruct
+    {
+        const CfgCfgFields::clearMask& clearMask; ///< @b clearMask field, see @ref CfgCfgFields::clearMask
+        const CfgCfgFields::saveMask& saveMask; ///< @b saveMask field, see @ref CfgCfgFields::saveMask
+        const CfgCfgFields::loadMask& loadMask; ///< @b loadMask field, see @ref CfgCfgFields::loadMask
+        const CfgCfgFields::deviceMask& deviceMask; ///< @b deviceMask field, see @ref CfgCfgFields::deviceMask
+    };
+
+    /// @brief Get access to fields bundled into a struct
+    FieldsAsStruct fieldsAsStruct();
+
+    /// @brief Get access to @b const fields bundled into a struct
+    ConstFieldsAsStruct fieldsAsStruct() const;
+
+#else
+    COMMS_MSG_FIELDS_ACCESS(Base, clearMask, saveMask, loadMask, deviceMask);
+#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     CfgCfg() = default;

@@ -193,11 +193,9 @@ struct CfgPmFields
 };
 
 /// @brief Definition of CFG-PM message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
+///     various implementation options. @n
 ///     See @ref CfgPmFields and for definition of the fields this message contains.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
@@ -206,17 +204,20 @@ class CfgPm : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_PM>,
         comms::option::FieldsImpl<CfgPmFields::All>,
-        comms::option::DispatchImpl<CfgPm<TMsgBase> >
+        comms::option::MsgType<CfgPm<TMsgBase> >,
+        comms::option::DispatchImpl
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_PM>,
         comms::option::FieldsImpl<CfgPmFields::All>,
-        comms::option::DispatchImpl<CfgPm<TMsgBase> >
+        comms::option::MsgType<CfgPm<TMsgBase> >,
+        comms::option::DispatchImpl
     > Base;
 public:
 
+#ifdef FOR_DOXYGEN_DOC_ONLY
     /// @brief Index to access the fields
     enum FieldIdx
     {
@@ -233,8 +234,56 @@ public:
         FieldIdx_numOfValues ///< number of available fields
     };
 
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
+    /// @brief Access to fields bundled as a struct
+    struct FieldsAsStruct
+    {
+        CfgPmFields::version& version; ///< @b version field, see @ref CfgPmFields::version
+        CfgPmFields::reserved1& reserved1; ///< @b reserved1 field, see @ref CfgPmFields::reserved1
+        CfgPmFields::reserved2& reserved2; ///< @b reserved2 field, see @ref CfgPmFields::reserved2
+        CfgPmFields::reserved3& reserved3; ///< @b reserved3 field, see @ref CfgPmFields::reserved3
+        CfgPmFields::flags& flags; ///< @b flags field, see @ref CfgPmFields::flags
+        CfgPmFields::updatePeriod& updatePeriod; ///< @b updatePeriod field, see @ref CfgPmFields::updatePeriod
+        CfgPmFields::searchPeriod& searchPeriod; ///< @b searchPeriod field, see @ref CfgPmFields::searchPeriod
+        CfgPmFields::gridOffset& gridOffset; ///< @b gridOffset field, see @ref CfgPmFields::gridOffset
+        CfgPmFields::onTime& onTime; ///< @b onTime field, see @ref CfgPmFields::onTime
+        CfgPmFields::minAcqTime& minAcqTime; ///< @b minAcqTime field, see @ref CfgPmFields::minAcqTime
+    };
+
+    /// @brief Access to @b const fields bundled as a struct
+    struct ConstFieldsAsStruct
+    {
+        const CfgPmFields::version& version; ///< @b version field, see @ref CfgPmFields::version
+        const CfgPmFields::reserved1& reserved1; ///< @b reserved1 field, see @ref CfgPmFields::reserved1
+        const CfgPmFields::reserved2& reserved2; ///< @b reserved2 field, see @ref CfgPmFields::reserved2
+        const CfgPmFields::reserved3& reserved3; ///< @b reserved3 field, see @ref CfgPmFields::reserved3
+        const CfgPmFields::flags& flags; ///< @b flags field, see @ref CfgPmFields::flags
+        const CfgPmFields::updatePeriod& updatePeriod; ///< @b updatePeriod field, see @ref CfgPmFields::updatePeriod
+        const CfgPmFields::searchPeriod& searchPeriod; ///< @b searchPeriod field, see @ref CfgPmFields::searchPeriod
+        const CfgPmFields::gridOffset& gridOffset; ///< @b gridOffset field, see @ref CfgPmFields::gridOffset
+        const CfgPmFields::onTime& onTime; ///< @b onTime field, see @ref CfgPmFields::onTime
+        const CfgPmFields::minAcqTime& minAcqTime; ///< @b minAcqTime field, see @ref CfgPmFields::minAcqTime
+    };
+
+    /// @brief Get access to fields bundled into a struct
+    FieldsAsStruct fieldsAsStruct();
+
+    /// @brief Get access to @b const fields bundled into a struct
+    ConstFieldsAsStruct fieldsAsStruct() const;
+
+#else
+    COMMS_MSG_FIELDS_ACCESS(Base,
+        version,
+        reserved1,
+        reserved2,
+        reserved3,
+        flags,
+        updatePeriod,
+        searchPeriod,
+        gridOffset,
+        onTime,
+        minAcqTime,
+    );
+#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     CfgPm() = default;

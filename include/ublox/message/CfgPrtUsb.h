@@ -62,11 +62,9 @@ struct CfgPrtUsbFields : public CfgPrtFields
 };
 
 /// @brief Definition of CFG-PRT (@b USB) message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
+///     various implementation options. @n
 ///     See @ref CfgPrtUsbFields and for definition of the fields this message contains.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
@@ -75,17 +73,23 @@ class CfgPrtUsb : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_PRT>,
         comms::option::FieldsImpl<CfgPrtUsbFields::All>,
-        comms::option::DispatchImpl<CfgPrtUsb<TMsgBase> >
+        comms::option::MsgType<CfgPrtUsb<TMsgBase> >,
+        comms::option::DispatchImpl,
+        comms::option::MsgDoRead,
+        comms::option::MsgDoRefresh
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_PRT>,
         comms::option::FieldsImpl<CfgPrtUsbFields::All>,
-        comms::option::DispatchImpl<CfgPrtUsb<TMsgBase> >
+        comms::option::DispatchImpl,
+        comms::option::MsgDoRead,
+        comms::option::MsgDoRefresh
     > Base;
 public:
 
+#ifdef FOR_DOXYGEN_DOC_ONLY
     /// @brief Index to access the fields
     enum FieldIdx
     {
@@ -100,6 +104,54 @@ public:
         FieldIdx_reserved5, ///< @b reserved5 field, see @ref CfgPrtUsbFields::reserved5
         FieldIdx_numOfValues ///< number of available fields
     };
+
+    /// @brief Access to fields bundled as a struct
+    struct FieldsAsStruct
+    {
+        CfgPrtUsbFields::portID& portID; ///< @b portID field, see @ref CfgPrtUsbFields::portID
+        CfgPrtUsbFields::reserved0& reserved0; ///< @b reserved0 field, see @ref CfgPrtUsbFields::reserved0
+        CfgPrtUsbFields::txReady& txReady; ///< @b txReady field, see @ref CfgPrtUsbFields::txReady
+        CfgPrtUsbFields::reserved2& reserved2; ///< @b reserved2 field, see @ref CfgPrtUsbFields::reserved2
+        CfgPrtUsbFields::reserved3& reserved3; ///< @b reserved3 field, see @ref CfgPrtUsbFields::reserved3
+        CfgPrtUsbFields::inProtoMask& inProtoMask; ///< @b inProtoMask field, see @ref CfgPrtUsbFields::inProtoMask
+        CfgPrtUsbFields::outProtoMask& outProtoMask; ///< @b outProtoMask field, see @ref CfgPrtUsbFields::outProtoMask
+        CfgPrtUsbFields::reserved4& reserved4; ///< @b reserved4 field, see @ref CfgPrtUsbFields::reserved4
+        CfgPrtUsbFields::reserved5& reserved5; ///< @b reserved5 field, see @ref CfgPrtUsbFields::reserved5
+    };
+
+    /// @brief Access to @b const fields bundled as a struct
+    struct ConstFieldsAsStruct
+    {
+        const CfgPrtUsbFields::portID& portID; ///< @b portID field, see @ref CfgPrtUsbFields::portID
+        const CfgPrtUsbFields::reserved0& reserved0; ///< @b reserved0 field, see @ref CfgPrtUsbFields::reserved0
+        const CfgPrtUsbFields::txReady& txReady; ///< @b txReady field, see @ref CfgPrtUsbFields::txReady
+        const CfgPrtUsbFields::reserved2& reserved2; ///< @b reserved2 field, see @ref CfgPrtUsbFields::reserved2
+        const CfgPrtUsbFields::reserved3& reserved3; ///< @b reserved3 field, see @ref CfgPrtUsbFields::reserved3
+        const CfgPrtUsbFields::inProtoMask& inProtoMask; ///< @b inProtoMask field, see @ref CfgPrtUsbFields::inProtoMask
+        const CfgPrtUsbFields::outProtoMask& outProtoMask; ///< @b outProtoMask field, see @ref CfgPrtUsbFields::outProtoMask
+        const CfgPrtUsbFields::reserved4& reserved4; ///< @b reserved4 field, see @ref CfgPrtUsbFields::reserved4
+        const CfgPrtUsbFields::reserved5& reserved5; ///< @b reserved5 field, see @ref CfgPrtUsbFields::reserved5
+    };
+
+    /// @brief Get access to fields bundled into a struct
+    FieldsAsStruct fieldsAsStruct();
+
+    /// @brief Get access to @b const fields bundled into a struct
+    ConstFieldsAsStruct fieldsAsStruct() const;
+
+#else
+    COMMS_MSG_FIELDS_ACCESS(Base,
+        portID,
+        reserved0,
+        txReady,
+        reserved2,
+        reserved3,
+        inProtoMask,
+        outProtoMask,
+        reserved4,
+        reserved5
+    );
+#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
@@ -122,15 +174,13 @@ public:
     /// @brief Move assignment
     CfgPrtUsb& operator=(CfgPrtUsb&&) = default;
 
-protected:
-    /// @brief Overrides read functionality provided by the base class.
+    /// @brief Provides custom read functionality.
     /// @details Reads only first "portID" field (@ref CfgPrtUsbFields::portID) and
     ///     checks its value. If the value is @b NOT CfgPrtUsbFields::PortId::USB,
     ///     the read operation fails with comms::ErrorStatus::InvalidMsgData error
     ///     status. Otherwise the read operation continues as expected.
-    virtual comms::ErrorStatus readImpl(
-        typename Base::ReadIterator& iter,
-        std::size_t len) override
+    template <typename TIter>
+    comms::ErrorStatus doRead(TIter& iter, std::size_t len)
     {
         auto es = Base::template readFieldsUntil<FieldIdx_reserved0>(iter, len);
         if (es != comms::ErrorStatus::Success) {
@@ -146,11 +196,11 @@ protected:
         return Base::template readFieldsFrom<FieldIdx_reserved0>(iter, len);
     }
 
-    /// @brief Overrides default refreshing functionality provided by the interface class.
+    /// @brief Provides custom refresh functionality
     /// @details This function makes sure that the value of the
     ///     "portID" field (@ref CfgPrtUsbFields::portID) remains CfgPrtUsbFields::PortId::USB.
     /// @return @b true in case the "portID" field was modified, @b false otherwise
-    virtual bool refreshImpl() override
+    bool doRefresh()
     {
         auto& allFields = Base::fields();
         auto& portIdField = std::get<FieldIdx_portID>(allFields);
@@ -163,7 +213,6 @@ protected:
     }
 
 };
-
 
 }  // namespace message
 

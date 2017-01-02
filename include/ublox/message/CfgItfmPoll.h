@@ -37,11 +37,9 @@ struct CfgItfmPollFields
 };
 
 /// @brief Definition of CFG-ITFM (@b poll) message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
+///     various implementation options. @n
 ///     See @ref CfgItfmPollFields and for definition of the fields this message contains.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
@@ -50,14 +48,16 @@ class CfgItfmPoll : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_ITFM>,
         comms::option::FieldsImpl<CfgItfmPollFields::All>,
-        comms::option::DispatchImpl<CfgItfmPoll<TMsgBase> >
+        comms::option::MsgType<CfgItfmPoll<TMsgBase> >,
+        comms::option::DispatchImpl
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_ITFM>,
         comms::option::FieldsImpl<CfgItfmPollFields::All>,
-        comms::option::DispatchImpl<CfgItfmPoll<TMsgBase> >
+        comms::option::MsgType<CfgItfmPoll<TMsgBase> >,
+        comms::option::DispatchImpl
     > Base;
 public:
 

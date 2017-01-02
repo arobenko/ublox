@@ -145,11 +145,9 @@ struct CfgGnssFields
 };
 
 /// @brief Definition of CFG-GNSS message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
+///     various implementation options. @n
 ///     See @ref CfgGnssFields and for definition of the fields this message contains.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
@@ -158,17 +156,24 @@ class CfgGnss : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_GNSS>,
         comms::option::FieldsImpl<CfgGnssFields::All>,
-        comms::option::DispatchImpl<CfgGnss<TMsgBase> >
+        comms::option::MsgType<CfgGnss<TMsgBase> >,
+        comms::option::DispatchImpl,
+        comms::option::MsgDoRead,
+        comms::option::MsgDoRefresh
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_GNSS>,
         comms::option::FieldsImpl<CfgGnssFields::All>,
-        comms::option::DispatchImpl<CfgGnss<TMsgBase> >
+        comms::option::MsgType<CfgGnss<TMsgBase> >,
+        comms::option::DispatchImpl,
+        comms::option::MsgDoRead,
+        comms::option::MsgDoRefresh
     > Base;
 public:
 
+#ifdef FOR_DOXYGEN_DOC_ONLY
     /// @brief Index to access the fields
     enum FieldIdx
     {
@@ -180,8 +185,35 @@ public:
         FieldIdx_numOfValues ///< number of available fields
     };
 
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
+    /// @brief Access to fields bundled as a struct
+    struct FieldsAsStruct
+    {
+        CfgGnssFields::msgVer& msgVer; ///< @b msgVer field, see @ref CfgGnssFields::msgVer
+        CfgGnssFields::numTrkChHw& numTrkChHw; ///< @b numTrkChHw field, see @ref CfgGnssFields::numTrkChHw
+        CfgGnssFields::numTrkChUse& numTrkChUse; ///< @b numTrkChUse field, see @ref CfgGnssFields::numTrkChUse
+        CfgGnssFields::numConfigBlocks& numConfigBlocks; ///< @b numConfigBlocks field, see @ref CfgGnssFields::numConfigBlocks
+        CfgGnssFields::blocksList& blocksList; ///< @b blocksList field, see @ref CfgGnssFields::blocksList
+    };
+
+    /// @brief Access to @b const fields bundled as a struct
+    struct ConstFieldsAsStruct
+    {
+        const CfgGnssFields::msgVer& msgVer; ///< @b msgVer field, see @ref CfgGnssFields::msgVer
+        const CfgGnssFields::numTrkChHw& numTrkChHw; ///< @b numTrkChHw field, see @ref CfgGnssFields::numTrkChHw
+        const CfgGnssFields::numTrkChUse& numTrkChUse; ///< @b numTrkChUse field, see @ref CfgGnssFields::numTrkChUse
+        const CfgGnssFields::numConfigBlocks& numConfigBlocks; ///< @b numConfigBlocks field, see @ref CfgGnssFields::numConfigBlocks
+        const CfgGnssFields::blocksList& blocksList; ///< @b blocksList field, see @ref CfgGnssFields::blocksList
+    };
+
+    /// @brief Get access to fields bundled into a struct
+    FieldsAsStruct fieldsAsStruct();
+
+    /// @brief Get access to @b const fields bundled into a struct
+    ConstFieldsAsStruct fieldsAsStruct() const;
+
+#else
+    COMMS_MSG_FIELDS_ACCESS(Base, msgVer, numTrkChHw, numTrkChUse, numConfigBlocks, blocksList);
+#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     CfgGnss() = default;
@@ -201,15 +233,12 @@ public:
     /// @brief Move assignment
     CfgGnss& operator=(CfgGnss&&) = default;
 
-protected:
-
-    /// @brief Overrides read functionality provided by the base class.
+    /// @brief Provides custom read functionality.
     /// @details The size of "blocksList" (see @ref CfgGnssFields::blocksList) list is
     ///     determined (forced) by the value of "numConfigBlocks" (see @ref CfgGnssFields::numConfigBlocks)
     ///     field.
-    virtual comms::ErrorStatus readImpl(
-        typename Base::ReadIterator& iter,
-        std::size_t len) override
+    template <typename TIter>
+    comms::ErrorStatus doRead(TIter& iter, std::size_t len)
     {
         auto es = Base::template readFieldsUntil<FieldIdx_blocksList>(iter, len);
         if (es != comms::ErrorStatus::Success) {
@@ -224,12 +253,12 @@ protected:
         return Base::template readFieldsFrom<FieldIdx_blocksList>(iter, len);
     }
 
-    /// @brief Overrides default refreshing functionality provided by the interface class.
+    /// @brief Provides custom refresh functionality
     /// @details The value of "numConfigBlocks" (see @ref CfgGnssFields::numConfigBlocks) is
     ///     determined by the size of the"blocksList" (see @ref CfgGnssFields::blocksList) list
     ///     field.
     /// @return @b true in case the value of @b "numConfigBlocks" field was modified, @b false otherwise
-    virtual bool refreshImpl() override
+    bool doRefresh()
     {
         auto& allFields = Base::fields();
         auto& numBlocksField = std::get<FieldIdx_numConfigBlocks>(allFields);

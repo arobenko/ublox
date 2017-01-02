@@ -84,11 +84,9 @@ struct CfgNvsFields
 };
 
 /// @brief Definition of CFG-NVS message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
+///     various implementation options. @n
 ///     See @ref CfgNvsFields and for definition of the fields this message contains.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
@@ -97,17 +95,20 @@ class CfgNvs : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_NVS>,
         comms::option::FieldsImpl<CfgNvsFields::All>,
-        comms::option::DispatchImpl<CfgNvs<TMsgBase> >
+        comms::option::MsgType<CfgNvs<TMsgBase> >,
+        comms::option::DispatchImpl
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_NVS>,
         comms::option::FieldsImpl<CfgNvsFields::All>,
-        comms::option::DispatchImpl<CfgNvs<TMsgBase> >
+        comms::option::MsgType<CfgNvs<TMsgBase> >,
+        comms::option::DispatchImpl
     > Base;
 public:
 
+#ifdef FOR_DOXYGEN_DOC_ONLY
     /// @brief Index to access the fields
     enum FieldIdx
     {
@@ -118,8 +119,33 @@ public:
         FieldIdx_numOfValues ///< number of available fields
     };
 
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
+    /// @brief Access to fields bundled as a struct
+    struct FieldsAsStruct
+    {
+        CfgNvsFields::clearMask& clearMask; ///< @b clearMask field, see @ref CfgNvsFields::clearMask
+        CfgNvsFields::saveMask& saveMask; ///< @b saveMask field, see @ref CfgNvsFields::saveMask
+        CfgNvsFields::loadMask& loadMask; ///< @b loadMask field, see @ref CfgNvsFields::loadMask
+        CfgNvsFields::deviceMask& deviceMask; ///< @b deviceMask field, see @ref CfgNvsFields::deviceMask
+    };
+
+    /// @brief Access to @b const fields bundled as a struct
+    struct ConstFieldsAsStruct
+    {
+        const CfgNvsFields::clearMask& clearMask; ///< @b clearMask field, see @ref CfgNvsFields::clearMask
+        const CfgNvsFields::saveMask& saveMask; ///< @b saveMask field, see @ref CfgNvsFields::saveMask
+        const CfgNvsFields::loadMask& loadMask; ///< @b loadMask field, see @ref CfgNvsFields::loadMask
+        const CfgNvsFields::deviceMask& deviceMask; ///< @b deviceMask field, see @ref CfgNvsFields::deviceMask
+    };
+
+    /// @brief Get access to fields bundled into a struct
+    FieldsAsStruct fieldsAsStruct();
+
+    /// @brief Get access to @b const fields bundled into a struct
+    ConstFieldsAsStruct fieldsAsStruct() const;
+
+#else
+    COMMS_MSG_FIELDS_ACCESS(Base, clearMask, saveMask, loadMask, deviceMask);
+#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     CfgNvs() = default;

@@ -116,11 +116,9 @@ struct CfgNmeaExtFields : public CfgNmeaFields
 };
 
 /// @brief Definition of CFG-NMEA (@b extended) message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
+///     various implementation options. @n
 ///     See @ref CfgNmeaExtFields and for definition of the fields this message contains.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
@@ -129,17 +127,20 @@ class CfgNmeaExt : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_NMEA>,
         comms::option::FieldsImpl<CfgNmeaExtFields::All>,
-        comms::option::DispatchImpl<CfgNmeaExt<TMsgBase> >
+        comms::option::MsgType<CfgNmeaExt<TMsgBase> >,
+        comms::option::DispatchImpl
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_NMEA>,
         comms::option::FieldsImpl<CfgNmeaExtFields::All>,
-        comms::option::DispatchImpl<CfgNmeaExt<TMsgBase> >
+        comms::option::MsgType<CfgNmeaExt<TMsgBase> >,
+        comms::option::DispatchImpl
     > Base;
 public:
 
+#ifdef FOR_DOXYGEN_DOC_ONLY
     /// @brief Index to access the fields
     enum FieldIdx
     {
@@ -155,8 +156,53 @@ public:
         FieldIdx_numOfValues ///< number of available fields
     };
 
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
+    /// @brief Access to fields bundled as a struct
+    struct FieldsAsStruct
+    {
+        CfgNmeaExtFields::filter& filter; ///< @b filter field, see @ref CfgNmeaExtFields::filter
+        CfgNmeaExtFields::nmeaVersion& nmeaVersion; ///< @b nmeaVersion field, see @ref CfgNmeaExtFields::nmeaVersion
+        CfgNmeaExtFields::numSV& numSV; ///< @b numSV field, see @ref CfgNmeaExtFields::numSV
+        CfgNmeaExtFields::flags& flags; ///< @b flags field, see @ref CfgNmeaExtFields::flags
+        CfgNmeaExtFields::gnssToFilter& gnssToFilter; ///< @b gnssToFilter field, see @ref CfgNmeaExtFields::gnssToFilter
+        CfgNmeaExtFields::svNumbering& svNumbering; ///< @b svNumbering field, see @ref CfgNmeaExtFields::svNumbering
+        CfgNmeaExtFields::mainTalkerId& mainTalkerId; ///< @b mainTalkerId field, see @ref CfgNmeaExtFields::mainTalkerId
+        CfgNmeaExtFields::gsvTalkerId& gsvTalkerId; ///< @b gsvTalkerId field, see @ref CfgNmeaExtFields::gsvTalkerId
+        CfgNmeaExtFields::reserved& reserved; ///< @b reserved field, see @ref CfgNmeaExtFields::reserved
+    };
+
+    /// @brief Access to @b const fields bundled as a struct
+    struct ConstFieldsAsStruct
+    {
+        const CfgNmeaExtFields::filter& filter; ///< @b filter field, see @ref CfgNmeaExtFields::filter
+        const CfgNmeaExtFields::nmeaVersion& nmeaVersion; ///< @b nmeaVersion field, see @ref CfgNmeaExtFields::nmeaVersion
+        const CfgNmeaExtFields::numSV& numSV; ///< @b numSV field, see @ref CfgNmeaExtFields::numSV
+        const CfgNmeaExtFields::flags& flags; ///< @b flags field, see @ref CfgNmeaExtFields::flags
+        const CfgNmeaExtFields::gnssToFilter& gnssToFilter; ///< @b gnssToFilter field, see @ref CfgNmeaExtFields::gnssToFilter
+        const CfgNmeaExtFields::svNumbering& svNumbering; ///< @b svNumbering field, see @ref CfgNmeaExtFields::svNumbering
+        const CfgNmeaExtFields::mainTalkerId& mainTalkerId; ///< @b mainTalkerId field, see @ref CfgNmeaExtFields::mainTalkerId
+        const CfgNmeaExtFields::gsvTalkerId& gsvTalkerId; ///< @b gsvTalkerId field, see @ref CfgNmeaExtFields::gsvTalkerId
+        const CfgNmeaExtFields::reserved& reserved; ///< @b reserved field, see @ref CfgNmeaExtFields::reserved
+    };
+
+    /// @brief Get access to fields bundled into a struct
+    FieldsAsStruct fieldsAsStruct();
+
+    /// @brief Get access to @b const fields bundled into a struct
+    ConstFieldsAsStruct fieldsAsStruct() const;
+
+#else
+    COMMS_MSG_FIELDS_ACCESS(Base,
+        filter,
+        nmeaVersion,
+        numSV,
+        flags,
+        gnssToFilter,
+        svNumbering,
+        mainTalkerId,
+        gsvTalkerId,
+        reserved
+    );
+#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     CfgNmeaExt() = default;

@@ -278,11 +278,9 @@ struct CfgPm2Fields
 };
 
 /// @brief Definition of CFG-PM2 message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
+///     various implementation options. @n
 ///     See @ref CfgPm2Fields and for definition of the fields this message contains.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
@@ -291,17 +289,20 @@ class CfgPm2 : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_PM2>,
         comms::option::FieldsImpl<CfgPm2Fields::All>,
-        comms::option::DispatchImpl<CfgPm2<TMsgBase> >
+        comms::option::MsgType<CfgPm2<TMsgBase> >,
+        comms::option::DispatchImpl
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_PM2>,
         comms::option::FieldsImpl<CfgPm2Fields::All>,
-        comms::option::DispatchImpl<CfgPm2<TMsgBase> >
+        comms::option::MsgType<CfgPm2<TMsgBase> >,
+        comms::option::DispatchImpl
     > Base;
 public:
 
+#ifdef FOR_DOXYGEN_DOC_ONLY
     /// @brief Index to access the fields
     enum FieldIdx
     {
@@ -326,8 +327,80 @@ public:
         FieldIdx_numOfValues ///< number of available fields
     };
 
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
+    /// @brief Access to fields bundled as a struct
+    struct FieldsAsStruct
+    {
+        CfgPm2Fields::version& version; ///< @b version field, see @ref CfgPm2Fields::version
+        CfgPm2Fields::reserved1& reserved1; ///< @b reserved1 field, see @ref CfgPm2Fields::reserved1
+        CfgPm2Fields::reserved2& reserved2; ///< @b reserved2 field, see @ref CfgPm2Fields::reserved2
+        CfgPm2Fields::reserved3& reserved3; ///< @b reserved3 field, see @ref CfgPm2Fields::reserved3
+        CfgPm2Fields::flags& flags; ///< @b flags field, see @ref CfgPm2Fields::flags
+        CfgPm2Fields::updatePeriod& updatePeriod; ///< @b updatePeriod field, see @ref CfgPm2Fields::updatePeriod
+        CfgPm2Fields::searchPeriod& searchPeriod; ///< @b searchPeriod field, see @ref CfgPm2Fields::searchPeriod
+        CfgPm2Fields::gridOffset& gridOffset; ///< @b gridOffset field, see @ref CfgPm2Fields::gridOffset
+        CfgPm2Fields::onTime& onTime; ///< @b onTime field, see @ref CfgPm2Fields::onTime
+        CfgPm2Fields::minAcqTime& minAcqTime; ///< @b minAcqTime field, see @ref CfgPm2Fields::minAcqTime
+        CfgPm2Fields::reserved4& reserved4; ///< @b reserved4 field, see @ref CfgPm2Fields::reserved4
+        CfgPm2Fields::reserved5& reserved5; ///< @b reserved5 field, see @ref CfgPm2Fields::reserved5
+        CfgPm2Fields::reserved6& reserved6; ///< @b reserved6 field, see @ref CfgPm2Fields::reserved6
+        CfgPm2Fields::reserved7& reserved7; ///< @b reserved7 field, see @ref CfgPm2Fields::reserved7
+        CfgPm2Fields::reserved8& reserved8; ///< @b reserved8 field, see @ref CfgPm2Fields::reserved8
+        CfgPm2Fields::reserved9& reserved9; ///< @b reserved9 field, see @ref CfgPm2Fields::reserved9
+        CfgPm2Fields::reserved10& reserved10; ///< @b reserved10 field, see @ref CfgPm2Fields::reserved10
+        CfgPm2Fields::reserved11& reserved11; ///< @b reserved11 field, see @ref CfgPm2Fields::reserved11
+    };
+
+    /// @brief Access to @b const fields bundled as a struct
+    struct ConstFieldsAsStruct
+    {
+        const CfgPm2Fields::version& version; ///< @b version field, see @ref CfgPm2Fields::version
+        const CfgPm2Fields::reserved1& reserved1; ///< @b reserved1 field, see @ref CfgPm2Fields::reserved1
+        const CfgPm2Fields::reserved2& reserved2; ///< @b reserved2 field, see @ref CfgPm2Fields::reserved2
+        const CfgPm2Fields::reserved3& reserved3; ///< @b reserved3 field, see @ref CfgPm2Fields::reserved3
+        const CfgPm2Fields::flags& flags; ///< @b flags field, see @ref CfgPm2Fields::flags
+        const CfgPm2Fields::updatePeriod& updatePeriod; ///< @b updatePeriod field, see @ref CfgPm2Fields::updatePeriod
+        const CfgPm2Fields::searchPeriod& searchPeriod; ///< @b searchPeriod field, see @ref CfgPm2Fields::searchPeriod
+        const CfgPm2Fields::gridOffset& gridOffset; ///< @b gridOffset field, see @ref CfgPm2Fields::gridOffset
+        const CfgPm2Fields::onTime& onTime; ///< @b onTime field, see @ref CfgPm2Fields::onTime
+        const CfgPm2Fields::minAcqTime& minAcqTime; ///< @b minAcqTime field, see @ref CfgPm2Fields::minAcqTime
+        const CfgPm2Fields::reserved4& reserved4; ///< @b reserved4 field, see @ref CfgPm2Fields::reserved4
+        const CfgPm2Fields::reserved5& reserved5; ///< @b reserved5 field, see @ref CfgPm2Fields::reserved5
+        const CfgPm2Fields::reserved6& reserved6; ///< @b reserved6 field, see @ref CfgPm2Fields::reserved6
+        const CfgPm2Fields::reserved7& reserved7; ///< @b reserved7 field, see @ref CfgPm2Fields::reserved7
+        const CfgPm2Fields::reserved8& reserved8; ///< @b reserved8 field, see @ref CfgPm2Fields::reserved8
+        const CfgPm2Fields::reserved9& reserved9; ///< @b reserved9 field, see @ref CfgPm2Fields::reserved9
+        const CfgPm2Fields::reserved10& reserved10; ///< @b reserved10 field, see @ref CfgPm2Fields::reserved10
+        const CfgPm2Fields::reserved11& reserved11; ///< @b reserved11 field, see @ref CfgPm2Fields::reserved11
+    };
+
+    /// @brief Get access to fields bundled into a struct
+    FieldsAsStruct fieldsAsStruct();
+
+    /// @brief Get access to @b const fields bundled into a struct
+    ConstFieldsAsStruct fieldsAsStruct() const;
+
+#else
+    COMMS_MSG_FIELDS_ACCESS(Base,
+        version,
+        reserved1,
+        reserved2,
+        reserved3,
+        flags,
+        updatePeriod,
+        searchPeriod,
+        gridOffset,
+        onTime,
+        minAcqTime,
+        reserved4,
+        reserved5,
+        reserved6,
+        reserved7,
+        reserved8,
+        reserved9,
+        reserved10,
+        reserved11
+    );
+#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     CfgPm2() = default;

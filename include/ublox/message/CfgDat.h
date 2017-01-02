@@ -83,11 +83,9 @@ struct CfgDatFields
 };
 
 /// @brief Definition of CFG-DAT message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
+///     various implementation options. @n
 ///     See @ref CfgDatFields and for definition of the fields this message contains.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
@@ -96,17 +94,20 @@ class CfgDat : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_DAT>,
         comms::option::FieldsImpl<CfgDatFields::All>,
-        comms::option::DispatchImpl<CfgDat<TMsgBase> >
+        comms::option::MsgType<CfgDat<TMsgBase> >,
+        comms::option::DispatchImpl
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_DAT>,
         comms::option::FieldsImpl<CfgDatFields::All>,
-        comms::option::DispatchImpl<CfgDat<TMsgBase> >
+        comms::option::MsgType<CfgDat<TMsgBase> >,
+        comms::option::DispatchImpl
     > Base;
 public:
 
+#ifdef FOR_DOXYGEN_DOC_ONLY
     /// @brief Index to access the fields
     enum FieldIdx
     {
@@ -120,12 +121,63 @@ public:
         FieldIdx_rotX,  ///< @b rotX field, see @ref CfgDatFields::rotX
         FieldIdx_rotY,  ///< @b rotY field, see @ref CfgDatFields::rotY
         FieldIdx_rotZ,  ///< @b rotZ field, see @ref CfgDatFields::rotZ
-        FieldIdx_scale,  ///< @b scal field, see @ref CfgDatFields::scale
+        FieldIdx_scale,  ///< @b scale field, see @ref CfgDatFields::scale
         FieldIdx_numOfValues ///< number of available fields
     };
 
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
+    /// @brief Access to fields bundled as a struct
+    struct FieldsAsStruct
+    {
+        CfgDatFields::datumNum& datumNum;  ///< @b datumNum field, see @ref CfgDatFields::datumNum
+        CfgDatFields::datumName& datumName;  ///< @b datumName field, see @ref CfgDatFields::datumName
+        CfgDatFields::majA& majA;  ///< @b majA field, see @ref CfgDatFields::majA
+        CfgDatFields::flat& flat;  ///< @b flat field, see @ref CfgDatFields::flat
+        CfgDatFields::dX& dX;  ///< @b dX field, see @ref CfgDatFields::dX
+        CfgDatFields::dY& dY;  ///< @b dY field, see @ref CfgDatFields::dY
+        CfgDatFields::dZ& dZ;  ///< @b dZ field, see @ref CfgDatFields::dZ
+        CfgDatFields::rotX& rotX;  ///< @b rotX field, see @ref CfgDatFields::rotX
+        CfgDatFields::rotY& rotY;  ///< @b rotY field, see @ref CfgDatFields::rotY
+        CfgDatFields::rotZ& rotZ;  ///< @b rotZ field, see @ref CfgDatFields::rotZ
+        CfgDatFields::scale& scale;  ///< @b scale field, see @ref CfgDatFields::scale
+    };
+
+    /// @brief Access to @b const fields bundled as a struct
+    struct ConstFieldsAsStruct
+    {
+        const CfgDatFields::datumNum& datumNum;  ///< @b datumNum field, see @ref CfgDatFields::datumNum
+        const CfgDatFields::datumName& datumName;  ///< @b datumName field, see @ref CfgDatFields::datumName
+        const CfgDatFields::majA& majA;  ///< @b majA field, see @ref CfgDatFields::majA
+        const CfgDatFields::flat& flat;  ///< @b flat field, see @ref CfgDatFields::flat
+        const CfgDatFields::dX& dX;  ///< @b dX field, see @ref CfgDatFields::dX
+        const CfgDatFields::dY& dY;  ///< @b dY field, see @ref CfgDatFields::dY
+        const CfgDatFields::dZ& dZ;  ///< @b dZ field, see @ref CfgDatFields::dZ
+        const CfgDatFields::rotX& rotX;  ///< @b rotX field, see @ref CfgDatFields::rotX
+        const CfgDatFields::rotY& rotY;  ///< @b rotY field, see @ref CfgDatFields::rotY
+        const CfgDatFields::rotZ& rotZ;  ///< @b rotZ field, see @ref CfgDatFields::rotZ
+        const CfgDatFields::scale& scale;  ///< @b scale field, see @ref CfgDatFields::scale
+    };
+
+    /// @brief Get access to fields bundled into a struct
+    FieldsAsStruct fieldsAsStruct();
+
+    /// @brief Get access to @b const fields bundled into a struct
+    ConstFieldsAsStruct fieldsAsStruct() const;
+
+#else
+    COMMS_MSG_FIELDS_ACCESS(Base,
+        datumNum,
+        datumName,
+        majA,
+        flat,
+        dX,
+        dY,
+        dZ,
+        rotX,
+        rotY,
+        rotZ,
+        scale
+    );
+#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     CfgDat() = default;

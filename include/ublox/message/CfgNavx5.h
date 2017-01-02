@@ -211,11 +211,9 @@ struct CfgNavx5Fields
 };
 
 /// @brief Definition of CFG-NAVX5 message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
+///     various implementation options. @n
 ///     See @ref CfgNavx5Fields and for definition of the fields this message contains.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
@@ -224,17 +222,20 @@ class CfgNavx5 : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_NAVX5>,
         comms::option::FieldsImpl<CfgNavx5Fields::All>,
-        comms::option::DispatchImpl<CfgNavx5<TMsgBase> >
+        comms::option::MsgType<CfgNavx5<TMsgBase> >,
+        comms::option::DispatchImpl
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_NAVX5>,
         comms::option::FieldsImpl<CfgNavx5Fields::All>,
-        comms::option::DispatchImpl<CfgNavx5<TMsgBase> >
+        comms::option::MsgType<CfgNavx5<TMsgBase> >,
+        comms::option::DispatchImpl
     > Base;
 public:
 
+#ifdef FOR_DOXYGEN_DOC_ONLY
     /// @brief Index to access the fields
     enum FieldIdx
     {
@@ -267,8 +268,104 @@ public:
         FieldIdx_numOfValues ///< number of available fields
     };
 
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
+    /// @brief Access to fields bundled as a struct
+    struct FieldsAsStruct
+    {
+        CfgNavx5Fields::version& version; ///< @b version field, see @ref CfgNavx5Fields::version
+        CfgNavx5Fields::mask1& mask1; ///< @b mask1 field, see @ref CfgNavx5Fields::mask1
+        CfgNavx5Fields::reserved0& reserved0; ///< @b reserved0 field, see @ref CfgNavx5Fields::reserved0
+        CfgNavx5Fields::reserved1& reserved1; ///< @b reserved1 field, see @ref CfgNavx5Fields::reserved1
+        CfgNavx5Fields::reserved2& reserved2; ///< @b reserved2 field, see @ref CfgNavx5Fields::reserved2
+        CfgNavx5Fields::minSVs& minSVs; ///< @b minSVs field, see @ref CfgNavx5Fields::minSVs
+        CfgNavx5Fields::maxSVs& maxSVs; ///< @b maxSVs field, see @ref CfgNavx5Fields::maxSVs
+        CfgNavx5Fields::minCNO& minCNO; ///< @b minCNO field, see @ref CfgNavx5Fields::minCNO
+        CfgNavx5Fields::reserved5& reserved5; ///< @b reserved5 field, see @ref CfgNavx5Fields::reserved5
+        CfgNavx5Fields::iniFix3D& iniFix3D; ///< @b iniFix3D field, see @ref CfgNavx5Fields::iniFix3D
+        CfgNavx5Fields::reserved6& reserved6; ///< @b reserved6 field, see @ref CfgNavx5Fields::reserved6
+        CfgNavx5Fields::reserved7& reserved7; ///< @b reserved7 field, see @ref CfgNavx5Fields::reserved7
+        CfgNavx5Fields::reserved8& reserved8; ///< @b reserved8 field, see @ref CfgNavx5Fields::reserved8
+        CfgNavx5Fields::wknRollover& wknRollover; ///< @b wknRollover field, see @ref CfgNavx5Fields::wknRollover
+        CfgNavx5Fields::reserved9& reserved9; ///< @b reserved9 field, see @ref CfgNavx5Fields::reserved9
+        CfgNavx5Fields::reserved10& reserved10; ///< @b reserved10 field, see @ref CfgNavx5Fields::reserved10
+        CfgNavx5Fields::reserved11& reserved11; ///< @b reserved11 field, see @ref CfgNavx5Fields::reserved11
+        CfgNavx5Fields::usePPP& usePPP; ///< @b usePPP field, see @ref CfgNavx5Fields::usePPP
+        CfgNavx5Fields::aopCfg& aopCfg; ///< @b aopCfg field, see @ref CfgNavx5Fields::aopCfg
+        CfgNavx5Fields::reserved12& reserved12; ///< @b reserved12 field, see @ref CfgNavx5Fields::reserved12
+        CfgNavx5Fields::reserved13& reserved13; ///< @b reserved13 field, see @ref CfgNavx5Fields::reserved13
+        CfgNavx5Fields::aopOrbMaxErr& aopOrbMaxErr; ///< @b aopOrbMaxErr field, see @ref CfgNavx5Fields::aopOrbMaxErr
+        CfgNavx5Fields::reserved14& reserved14; ///< @b reserved14 field, see @ref CfgNavx5Fields::reserved14
+        CfgNavx5Fields::reserved15& reserved15; ///< @b reserved15 field, see @ref CfgNavx5Fields::reserved15
+        CfgNavx5Fields::reserved3& reserved3; ///< @b reserved3 field, see @ref CfgNavx5Fields::reserved3
+        CfgNavx5Fields::reserved4& reserved4; ///< @b reserved4 field, see @ref CfgNavx5Fields::reserved4
+    };
+
+    /// @brief Access to @b const fields bundled as a struct
+    struct ConstFieldsAsStruct
+    {
+        const CfgNavx5Fields::version& version; ///< @b version field, see @ref CfgNavx5Fields::version
+        const CfgNavx5Fields::mask1& mask1; ///< @b mask1 field, see @ref CfgNavx5Fields::mask1
+        const CfgNavx5Fields::reserved0& reserved0; ///< @b reserved0 field, see @ref CfgNavx5Fields::reserved0
+        const CfgNavx5Fields::reserved1& reserved1; ///< @b reserved1 field, see @ref CfgNavx5Fields::reserved1
+        const CfgNavx5Fields::reserved2& reserved2; ///< @b reserved2 field, see @ref CfgNavx5Fields::reserved2
+        const CfgNavx5Fields::minSVs& minSVs; ///< @b minSVs field, see @ref CfgNavx5Fields::minSVs
+        const CfgNavx5Fields::maxSVs& maxSVs; ///< @b maxSVs field, see @ref CfgNavx5Fields::maxSVs
+        const CfgNavx5Fields::minCNO& minCNO; ///< @b minCNO field, see @ref CfgNavx5Fields::minCNO
+        const CfgNavx5Fields::reserved5& reserved5; ///< @b reserved5 field, see @ref CfgNavx5Fields::reserved5
+        const CfgNavx5Fields::iniFix3D& iniFix3D; ///< @b iniFix3D field, see @ref CfgNavx5Fields::iniFix3D
+        const CfgNavx5Fields::reserved6& reserved6; ///< @b reserved6 field, see @ref CfgNavx5Fields::reserved6
+        const CfgNavx5Fields::reserved7& reserved7; ///< @b reserved7 field, see @ref CfgNavx5Fields::reserved7
+        const CfgNavx5Fields::reserved8& reserved8; ///< @b reserved8 field, see @ref CfgNavx5Fields::reserved8
+        const CfgNavx5Fields::wknRollover& wknRollover; ///< @b wknRollover field, see @ref CfgNavx5Fields::wknRollover
+        const CfgNavx5Fields::reserved9& reserved9; ///< @b reserved9 field, see @ref CfgNavx5Fields::reserved9
+        const CfgNavx5Fields::reserved10& reserved10; ///< @b reserved10 field, see @ref CfgNavx5Fields::reserved10
+        const CfgNavx5Fields::reserved11& reserved11; ///< @b reserved11 field, see @ref CfgNavx5Fields::reserved11
+        const CfgNavx5Fields::usePPP& usePPP; ///< @b usePPP field, see @ref CfgNavx5Fields::usePPP
+        const CfgNavx5Fields::aopCfg& aopCfg; ///< @b aopCfg field, see @ref CfgNavx5Fields::aopCfg
+        const CfgNavx5Fields::reserved12& reserved12; ///< @b reserved12 field, see @ref CfgNavx5Fields::reserved12
+        const CfgNavx5Fields::reserved13& reserved13; ///< @b reserved13 field, see @ref CfgNavx5Fields::reserved13
+        const CfgNavx5Fields::aopOrbMaxErr& aopOrbMaxErr; ///< @b aopOrbMaxErr field, see @ref CfgNavx5Fields::aopOrbMaxErr
+        const CfgNavx5Fields::reserved14& reserved14; ///< @b reserved14 field, see @ref CfgNavx5Fields::reserved14
+        const CfgNavx5Fields::reserved15& reserved15; ///< @b reserved15 field, see @ref CfgNavx5Fields::reserved15
+        const CfgNavx5Fields::reserved3& reserved3; ///< @b reserved3 field, see @ref CfgNavx5Fields::reserved3
+        const CfgNavx5Fields::reserved4& reserved4; ///< @b reserved4 field, see @ref CfgNavx5Fields::reserved4
+    };
+
+    /// @brief Get access to fields bundled into a struct
+    FieldsAsStruct fieldsAsStruct();
+
+    /// @brief Get access to @b const fields bundled into a struct
+    ConstFieldsAsStruct fieldsAsStruct() const;
+
+#else
+    COMMS_MSG_FIELDS_ACCESS(Base,
+        version,
+        mask1,
+        reserved0,
+        reserved1,
+        reserved2,
+        minSVs,
+        maxSVs,
+        minCNO,
+        reserved5,
+        iniFix3D,
+        reserved6,
+        reserved7,
+        reserved8,
+        wknRollover,
+        reserved9,
+        reserved10,
+        reserved11,
+        usePPP,
+        aopCfg,
+        reserved12,
+        reserved13,
+        aopOrbMaxErr,
+        reserved14,
+        reserved15,
+        reserved3,
+        reserved4
+    );
+#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     CfgNavx5() = default;

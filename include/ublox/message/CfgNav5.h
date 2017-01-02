@@ -182,11 +182,9 @@ struct CfgNav5Fields
 };
 
 /// @brief Definition of CFG-NAV5 message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
+///     various implementation options. @n
 ///     See @ref CfgNav5Fields and for definition of the fields this message contains.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
@@ -195,17 +193,20 @@ class CfgNav5 : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_NAV5>,
         comms::option::FieldsImpl<CfgNav5Fields::All>,
-        comms::option::DispatchImpl<CfgNav5<TMsgBase> >
+        comms::option::MsgType<CfgNav5<TMsgBase> >,
+        comms::option::DispatchImpl
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_NAV5>,
         comms::option::FieldsImpl<CfgNav5Fields::All>,
-        comms::option::DispatchImpl<CfgNav5<TMsgBase> >
+        comms::option::MsgType<CfgNav5<TMsgBase> >,
+        comms::option::DispatchImpl
     > Base;
 public:
 
+#ifdef FOR_DOXYGEN_DOC_ONLY
     /// @brief Index to access the fields
     enum FieldIdx
     {
@@ -230,8 +231,80 @@ public:
         FieldIdx_numOfValues ///< number of available fields
     };
 
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
+    /// @brief Access to fields bundled as a struct
+    struct FieldsAsStruct
+    {
+        CfgNav5Fields::mask& mask; ///< @b mask field, see @ref CfgNav5Fields::mask
+        CfgNav5Fields::dynModel& dynModel; ///< @b dynModel field, see @ref CfgNav5Fields::dynModel
+        CfgNav5Fields::fixMode& fixMode; ///< @b fixMode field, see @ref CfgNav5Fields::fixMode
+        CfgNav5Fields::fixedAlt& fixedAlt; ///< @b fixedAlt field, see @ref CfgNav5Fields::fixedAlt
+        CfgNav5Fields::fixedAltVar& fixedAltVar; ///< @b fixedAltVar field, see @ref CfgNav5Fields::fixedAltVar
+        CfgNav5Fields::minElev& minElev; ///< @b minElev field, see @ref CfgNav5Fields::minElev
+        CfgNav5Fields::drLimit& drLimit; ///< @b drLimit field, see @ref CfgNav5Fields::drLimit
+        CfgNav5Fields::pDOP& pDOP; ///< @b pDOP field, see @ref CfgNav5Fields::pDOP
+        CfgNav5Fields::tDOP& tDOP; ///< @b tDOP field, see @ref CfgNav5Fields::tDOP
+        CfgNav5Fields::pAcc& pAcc; ///< @b pAcc field, see @ref CfgNav5Fields::pAcc
+        CfgNav5Fields::tAcc& tAcc; ///< @b tAcc field, see @ref CfgNav5Fields::tAcc
+        CfgNav5Fields::staticHoldThreash& staticHoldThreash; ///< @b staticHoldThreash field, see @ref CfgNav5Fields::staticHoldThreash
+        CfgNav5Fields::dgpsTimeOut& dgpsTimeOut; ///< @b dgpsTimeOut field, see @ref CfgNav5Fields::dgpsTimeOut
+        CfgNav5Fields::cnoThreshNumSVs& cnoThreshNumSVs; ///< @b cnoThreshNumSVs field, see @ref CfgNav5Fields::cnoThreshNumSVs
+        CfgNav5Fields::cnoThresh& cnoThresh; ///< @b cnoThresh field, see @ref CfgNav5Fields::cnoThresh
+        CfgNav5Fields::reserved2& reserved2; ///< @b reserved2 field, see @ref CfgNav5Fields::reserved2
+        CfgNav5Fields::reserved3& reserved3; ///< @b reserved3 field, see @ref CfgNav5Fields::reserved3
+        CfgNav5Fields::reserved4& reserved4; ///< @b reserved4 field, see @ref CfgNav5Fields::reserved4
+    };
+
+    /// @brief Access to @b const fields bundled as a struct
+    struct ConstFieldsAsStruct
+    {
+        const CfgNav5Fields::mask& mask; ///< @b mask field, see @ref CfgNav5Fields::mask
+        const CfgNav5Fields::dynModel& dynModel; ///< @b dynModel field, see @ref CfgNav5Fields::dynModel
+        const CfgNav5Fields::fixMode& fixMode; ///< @b fixMode field, see @ref CfgNav5Fields::fixMode
+        const CfgNav5Fields::fixedAlt& fixedAlt; ///< @b fixedAlt field, see @ref CfgNav5Fields::fixedAlt
+        const CfgNav5Fields::fixedAltVar& fixedAltVar; ///< @b fixedAltVar field, see @ref CfgNav5Fields::fixedAltVar
+        const CfgNav5Fields::minElev& minElev; ///< @b minElev field, see @ref CfgNav5Fields::minElev
+        const CfgNav5Fields::drLimit& drLimit; ///< @b drLimit field, see @ref CfgNav5Fields::drLimit
+        const CfgNav5Fields::pDOP& pDOP; ///< @b pDOP field, see @ref CfgNav5Fields::pDOP
+        const CfgNav5Fields::tDOP& tDOP; ///< @b tDOP field, see @ref CfgNav5Fields::tDOP
+        const CfgNav5Fields::pAcc& pAcc; ///< @b pAcc field, see @ref CfgNav5Fields::pAcc
+        const CfgNav5Fields::tAcc& tAcc; ///< @b tAcc field, see @ref CfgNav5Fields::tAcc
+        const CfgNav5Fields::staticHoldThreash& staticHoldThreash; ///< @b staticHoldThreash field, see @ref CfgNav5Fields::staticHoldThreash
+        const CfgNav5Fields::dgpsTimeOut& dgpsTimeOut; ///< @b dgpsTimeOut field, see @ref CfgNav5Fields::dgpsTimeOut
+        const CfgNav5Fields::cnoThreshNumSVs& cnoThreshNumSVs; ///< @b cnoThreshNumSVs field, see @ref CfgNav5Fields::cnoThreshNumSVs
+        const CfgNav5Fields::cnoThresh& cnoThresh; ///< @b cnoThresh field, see @ref CfgNav5Fields::cnoThresh
+        const CfgNav5Fields::reserved2& reserved2; ///< @b reserved2 field, see @ref CfgNav5Fields::reserved2
+        const CfgNav5Fields::reserved3& reserved3; ///< @b reserved3 field, see @ref CfgNav5Fields::reserved3
+        const CfgNav5Fields::reserved4& reserved4; ///< @b reserved4 field, see @ref CfgNav5Fields::reserved4
+    };
+
+    /// @brief Get access to fields bundled into a struct
+    FieldsAsStruct fieldsAsStruct();
+
+    /// @brief Get access to @b const fields bundled into a struct
+    ConstFieldsAsStruct fieldsAsStruct() const;
+
+#else
+    COMMS_MSG_FIELDS_ACCESS(Base,
+        mask,
+        dynModel,
+        fixMode,
+        fixedAlt,
+        fixedAltVar,
+        minElev,
+        drLimit,
+        pDOP,
+        tDOP,
+        pAcc,
+        tAcc,
+        staticHoldThreash,
+        dgpsTimeOut,
+        cnoThreshNumSVs,
+        cnoThresh,
+        reserved2,
+        reserved3,
+        reserved4
+    );
+#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     CfgNav5() = default;

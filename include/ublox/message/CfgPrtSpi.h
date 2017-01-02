@@ -120,11 +120,9 @@ struct CfgPrtSpiFields : public CfgPrtFields
 };
 
 /// @brief Definition of CFG-PRT (@b SPI) message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
+///     various implementation options. @n
 ///     See @ref CfgPrtSpiFields and for definition of the fields this message contains.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
@@ -133,17 +131,22 @@ class CfgPrtSpi : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_PRT>,
         comms::option::FieldsImpl<CfgPrtSpiFields::All>,
-        comms::option::DispatchImpl<CfgPrtSpi<TMsgBase> >
+        comms::option::MsgType<CfgPrtSpi<TMsgBase> >,
+        comms::option::DispatchImpl,
+        comms::option::MsgDoRead,
+        comms::option::MsgDoRefresh
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_PRT>,
         comms::option::FieldsImpl<CfgPrtSpiFields::All>,
-        comms::option::DispatchImpl<CfgPrtSpi<TMsgBase> >
+        comms::option::MsgDoRead,
+        comms::option::MsgDoRefresh
     > Base;
 public:
 
+#ifdef FOR_DOXYGEN_DOC_ONLY
     /// @brief Index to access the fields
     enum FieldIdx
     {
@@ -159,8 +162,53 @@ public:
         FieldIdx_numOfValues ///< number of available fields
     };
 
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
+    /// @brief Access to fields bundled as a struct
+    struct FieldsAsStruct
+    {
+        CfgPrtSpiFields::portID& portID; ///< @b portID field, see @ref CfgPrtSpiFields::portID
+        CfgPrtSpiFields::reserved0& reserved0; ///< @b reserved0 field, see @ref CfgPrtSpiFields::reserved0
+        CfgPrtSpiFields::txReady& txReady; ///< @b txReady field, see @ref CfgPrtSpiFields::txReady
+        CfgPrtSpiFields::mode& mode; ///< @b mode field, see @ref CfgPrtSpiFields::mode
+        CfgPrtSpiFields::reserved3& reserved3; ///< @b reserved3 field, see @ref CfgPrtSpiFields::reserved3
+        CfgPrtSpiFields::inProtoMask& inProtoMask; ///< @b inProtoMask field, see @ref CfgPrtSpiFields::inProtoMask
+        CfgPrtSpiFields::outProtoMask& outProtoMask; ///< @b outProtoMask field, see @ref CfgPrtSpiFields::outProtoMask
+        CfgPrtSpiFields::flags& flags; ///< @b flags field, see @ref CfgPrtSpiFields::flags
+        CfgPrtSpiFields::reserved5& reserved5; ///< @b reserved5 field, see @ref CfgPrtSpiFields::reserved5
+    };
+
+    /// @brief Access to @b const fields bundled as a struct
+    struct ConstFieldsAsStruct
+    {
+        const CfgPrtSpiFields::portID& portID; ///< @b portID field, see @ref CfgPrtSpiFields::portID
+        const CfgPrtSpiFields::reserved0& reserved0; ///< @b reserved0 field, see @ref CfgPrtSpiFields::reserved0
+        const CfgPrtSpiFields::txReady& txReady; ///< @b txReady field, see @ref CfgPrtSpiFields::txReady
+        const CfgPrtSpiFields::mode& mode; ///< @b mode field, see @ref CfgPrtSpiFields::mode
+        const CfgPrtSpiFields::reserved3& reserved3; ///< @b reserved3 field, see @ref CfgPrtSpiFields::reserved3
+        const CfgPrtSpiFields::inProtoMask& inProtoMask; ///< @b inProtoMask field, see @ref CfgPrtSpiFields::inProtoMask
+        const CfgPrtSpiFields::outProtoMask& outProtoMask; ///< @b outProtoMask field, see @ref CfgPrtSpiFields::outProtoMask
+        const CfgPrtSpiFields::flags& flags; ///< @b flags field, see @ref CfgPrtSpiFields::flags
+        const CfgPrtSpiFields::reserved5& reserved5; ///< @b reserved5 field, see @ref CfgPrtSpiFields::reserved5
+    };
+
+    /// @brief Get access to fields bundled into a struct
+    FieldsAsStruct fieldsAsStruct();
+
+    /// @brief Get access to @b const fields bundled into a struct
+    ConstFieldsAsStruct fieldsAsStruct() const;
+
+#else
+    COMMS_MSG_FIELDS_ACCESS(Base,
+        portID,
+        reserved0,
+        txReady,
+        mode,
+        reserved3,
+        inProtoMask,
+        outProtoMask,
+        flags,
+        reserved5
+    );
+#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     CfgPrtSpi() = default;
@@ -180,15 +228,13 @@ public:
     /// @brief Move assignment
     CfgPrtSpi& operator=(CfgPrtSpi&&) = default;
 
-protected:
-    /// @brief Overrides read functionality provided by the base class.
+    /// @brief Provides custom read functionality.
     /// @details Reads only first "portID" field (@ref CfgPrtSpiFields::portID) and
     ///     checks its value. If the value is @b NOT CfgPrtSpiFields::PortId::SPI,
     ///     the read operation fails with comms::ErrorStatus::InvalidMsgData error
     ///     status. Otherwise the read operation continues as expected.
-    virtual comms::ErrorStatus readImpl(
-        typename Base::ReadIterator& iter,
-        std::size_t len) override
+    template <typename TIter>
+    comms::ErrorStatus doRead(TIter& iter, std::size_t len)
     {
         auto es = Base::template readFieldsUntil<FieldIdx_reserved0>(iter, len);
         if (es != comms::ErrorStatus::Success) {
@@ -204,11 +250,11 @@ protected:
         return Base::template readFieldsFrom<FieldIdx_reserved0>(iter, len);
     }
 
-    /// @brief Overrides default refreshing functionality provided by the interface class.
+    /// @brief Provides custom refresh functionality
     /// @details This function makes sure that the value of the
     ///     "portID" field (@ref CfgPrtSpiFields::portID) remains CfgPrtSpiFields::PortId::SPI.
     /// @return @b true in case the "portID" field was modified, @b false otherwise
-    virtual bool refreshImpl() override
+    bool doRefresh()
     {
         auto& allFields = Base::fields();
         auto& portIdField = std::get<FieldIdx_portID>(allFields);
@@ -219,7 +265,6 @@ protected:
         portIdField.value() = CfgPrtSpiFields::PortId::SPI;
         return true;
     }
-
 };
 
 

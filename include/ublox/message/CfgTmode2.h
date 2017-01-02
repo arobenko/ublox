@@ -135,11 +135,9 @@ struct CfgTmode2Fields
 };
 
 /// @brief Definition of AID-TMODE2 message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
+///     various implementation options. @n
 ///     See @ref CfgTmode2Fields and for definition of the fields this message contains.
 ///
 ///     @b NOTE, that Ublox binary protocol specification reinterprets value of
@@ -158,17 +156,24 @@ class CfgTmode2 : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_TMODE2>,
         comms::option::FieldsImpl<CfgTmode2Fields::All>,
-        comms::option::DispatchImpl<CfgTmode2<TMsgBase> >
+        comms::option::MsgType<CfgTmode2<TMsgBase> >,
+        comms::option::DispatchImpl,
+        comms::option::MsgDoRead,
+        comms::option::MsgDoRefresh
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_TMODE2>,
         comms::option::FieldsImpl<CfgTmode2Fields::All>,
-        comms::option::DispatchImpl<CfgTmode2<TMsgBase> >
+        comms::option::MsgType<CfgTmode2<TMsgBase> >,
+        comms::option::DispatchImpl,
+        comms::option::MsgDoRead,
+        comms::option::MsgDoRefresh
     > Base;
 public:
 
+#ifdef FOR_DOXYGEN_DOC_ONLY
     /// @brief Index to access the fields
     enum FieldIdx
     {
@@ -187,8 +192,64 @@ public:
         FieldIdx_numOfValues ///< number of available fields
     };
 
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
+    /// @brief Access to fields bundled as a struct
+    struct FieldsAsStruct
+    {
+        CfgTmode2Fields::timeMode& timeMode; ///< @b timeMode field, see @ref CfgTmode2Fields::timeMode
+        CfgTmode2Fields::reserved1& reserved1; ///< @b reserved1 field, see @ref CfgTmode2Fields::reserved1
+        CfgTmode2Fields::flags& flags; ///< @b flags field, see @ref CfgTmode2Fields::flags
+        CfgTmode2Fields::ecefX& ecefX; ///< @b ecefX field, see @ref CfgTmode2Fields::ecefX
+        CfgTmode2Fields::lat& lat; ///< @b lat field, see @ref CfgTmode2Fields::lat
+        CfgTmode2Fields::ecefY& ecefY; ///< @b ecefY field, see @ref CfgTmode2Fields::ecefY
+        CfgTmode2Fields::lon& lon; ///< @b lon field, see @ref CfgTmode2Fields::lon
+        CfgTmode2Fields::ecefZ& ecefZ; ///< @b ecefZ field, see @ref CfgTmode2Fields::ecefZ
+        CfgTmode2Fields::alt& alt; ///< @b alt field, see @ref CfgTmode2Fields::alt
+        CfgTmode2Fields::fixedPosAcc& fixedPosAcc; ///< @b fixedPosAcc field, see @ref CfgTmode2Fields::fixedPosAcc
+        CfgTmode2Fields::svinMinDur& svinMinDur; ///< @b svinMinDur field, see @ref CfgTmode2Fields::svinMinDur
+        CfgTmode2Fields::svinAccLimit& svinAccLimit; ///< @b svinAccLimit field, see @ref CfgTmode2Fields::svinAccLimit
+    };
+
+    /// @brief Access to @b const fields bundled as a struct
+    struct ConstFieldsAsStruct
+    {
+        CfgTmode2Fields::timeMode& timeMode; ///< @b timeMode field, see @ref CfgTmode2Fields::timeMode
+        CfgTmode2Fields::reserved1& reserved1; ///< @b reserved1 field, see @ref CfgTmode2Fields::reserved1
+        CfgTmode2Fields::flags& flags; ///< @b flags field, see @ref CfgTmode2Fields::flags
+        CfgTmode2Fields::ecefX& ecefX; ///< @b ecefX field, see @ref CfgTmode2Fields::ecefX
+        CfgTmode2Fields::lat& lat; ///< @b lat field, see @ref CfgTmode2Fields::lat
+        CfgTmode2Fields::ecefY& ecefY; ///< @b ecefY field, see @ref CfgTmode2Fields::ecefY
+        CfgTmode2Fields::lon& lon; ///< @b lon field, see @ref CfgTmode2Fields::lon
+        CfgTmode2Fields::ecefZ& ecefZ; ///< @b ecefZ field, see @ref CfgTmode2Fields::ecefZ
+        CfgTmode2Fields::alt& alt; ///< @b alt field, see @ref CfgTmode2Fields::alt
+        CfgTmode2Fields::fixedPosAcc& fixedPosAcc; ///< @b fixedPosAcc field, see @ref CfgTmode2Fields::fixedPosAcc
+        CfgTmode2Fields::svinMinDur& svinMinDur; ///< @b svinMinDur field, see @ref CfgTmode2Fields::svinMinDur
+        CfgTmode2Fields::svinAccLimit& svinAccLimit; ///< @b svinAccLimit field, see @ref CfgTmode2Fields::svinAccLimit
+    };
+
+    /// @brief Get access to fields bundled into a struct
+    FieldsAsStruct fieldsAsStruct();
+
+    /// @brief Get access to @b const fields bundled into a struct
+    ConstFieldsAsStruct fieldsAsStruct() const;
+
+#else
+    COMMS_MSG_FIELDS_ACCESS(Base,
+        timeMode,
+        reserved1,
+        flags,
+        ecefX,
+        lat,
+        ecefY,
+        lon,
+        ecefZ,
+        alt,
+        fixedPosAcc,
+        svinMinDur,
+        svinAccLimit,
+
+    );
+#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
+
 
     /// @brief Default constructor
     /// @details The existing/missing mode of the optional fields is determined
@@ -205,19 +266,17 @@ public:
         auto& ecefYField = std::get<FieldIdx_ecefY>(allFields);
         auto& ecefZField = std::get<FieldIdx_ecefZ>(allFields);
 
-        static const auto DefaultCartesianMode = comms::field::OptionalMode::Exists;
-        ecefXField.setMode(DefaultCartesianMode);
-        ecefYField.setMode(DefaultCartesianMode);
-        ecefZField.setMode(DefaultCartesianMode);
+        ecefXField.setExists();
+        ecefYField.setExists();
+        ecefZField.setExists();
 
         auto& latField = std::get<FieldIdx_lat>(allFields);
         auto& lonField = std::get<FieldIdx_lon>(allFields);
         auto& altField = std::get<FieldIdx_alt>(allFields);
 
-        static const auto DefaultGeodeticMode = comms::field::OptionalMode::Missing;
-        latField.setMode(DefaultGeodeticMode);
-        lonField.setMode(DefaultGeodeticMode);
-        altField.setMode(DefaultGeodeticMode);
+        latField.setMissing();
+        lonField.setMissing();
+        altField.setMissing();
     }
 
     /// @brief Copy constructor
@@ -235,16 +294,13 @@ public:
     /// @brief Move assignment
     CfgTmode2& operator=(CfgTmode2&&) = default;
 
-protected:
-
-    /// @brief Overrides read functionality provided by the base class.
+    /// @brief Provides custom read functionality.
     /// @details This function performs read of the first fields up to the
     ///     @b flags (see @ref CfgTmode2Fields::flags). Based on the value of
     ///     @b lla bit, the relevant optional fields are marked as either
     ///     @b existing or @b missing and the read continues until the end.
-    virtual comms::ErrorStatus readImpl(
-        typename Base::ReadIterator& iter,
-        std::size_t len) override
+    template <typename TIter>
+    comms::ErrorStatus doRead(TIter& iter, std::size_t len)
     {
         auto es = Base::template readFieldsUntil<FieldIdx_ecefX>(iter, len);
         if (es != comms::ErrorStatus::Success) {
@@ -277,12 +333,12 @@ protected:
         return Base::template readFieldsFrom<FieldIdx_ecefX>(iter, len);
     }
 
-    /// @brief Overrides default refreshing functionality provided by the interface class.
+    /// @brief Provides custom refresh functionality
     /// @details The function checks the value of @b lla bit in the @b flags
     ///     (see @ref CfgTmode2Fields::flags) field and modifies mode of relevant
     ///     @b optional fields accordingly.
     /// @return @b true in case the mode of any optional field was modified, @b false otherwise
-    virtual bool refreshImpl() override
+    bool doRefresh()
     {
         auto& allFields = Base::fields();
         auto& flagsField = std::get<FieldIdx_flags>(allFields);
@@ -317,9 +373,7 @@ protected:
         altField.setMode(geodeticMode);
         return true;
     }
-
 };
-
 
 }  // namespace message
 

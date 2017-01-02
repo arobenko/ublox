@@ -103,11 +103,9 @@ struct CfgTp5Fields
 };
 
 /// @brief Definition of CFG-TP5 message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
+///     various implementation options. @n
 ///     See @ref CfgTp5Fields and for definition of the fields this message contains.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
@@ -116,17 +114,20 @@ class CfgTp5 : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_TP5>,
         comms::option::FieldsImpl<CfgTp5Fields::All>,
-        comms::option::DispatchImpl<CfgTp5<TMsgBase> >
+        comms::option::MsgType<CfgTp5<TMsgBase> >,
+        comms::option::DispatchImpl
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_TP5>,
         comms::option::FieldsImpl<CfgTp5Fields::All>,
-        comms::option::DispatchImpl<CfgTp5<TMsgBase> >
+        comms::option::MsgType<CfgTp5<TMsgBase> >,
+        comms::option::DispatchImpl
     > Base;
 public:
 
+#ifdef FOR_DOXYGEN_DOC_ONLY
     /// @brief Index to access the fields
     enum FieldIdx
     {
@@ -144,8 +145,59 @@ public:
         FieldIdx_numOfValues ///< number of available fields
     };
 
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
+    /// @brief Access to fields bundled as a struct
+    struct FieldsAsStruct
+    {
+        CfgTp5Fields::tpIdx& tpIdx; ///< @b tpIdx field, see @ref CfgTp5Fields::tpIdx
+        CfgTp5Fields::reserved0& reserved0; ///< @b reserved0 field, see @ref CfgTp5Fields::reserved0
+        CfgTp5Fields::reserved1& reserved1; ///< @b reserved1 field, see @ref CfgTp5Fields::reserved1
+        CfgTp5Fields::antCableDelay& antCableDelay; ///< @b antCableDelay field, see @ref CfgTp5Fields::antCableDelay
+        CfgTp5Fields::rfGroupDelay& rfGroupDelay; ///< @b rfGroupDelay field, see @ref CfgTp5Fields::rfGroupDelay
+        CfgTp5Fields::freqPeriod& freqPeriod; ///< @b freqPeriod field, see @ref CfgTp5Fields::freqPeriod
+        CfgTp5Fields::freqPeriodLock& freqPeriodLock; ///< @b freqPeriodLock field, see @ref CfgTp5Fields::freqPeriodLock
+        CfgTp5Fields::pulseLenRatio& pulseLenRatio; ///< @b pulseLenRatio field, see @ref CfgTp5Fields::pulseLenRatio
+        CfgTp5Fields::pulseLenRatioLock& pulseLenRatioLock; ///< @b pulseLenRatioLock field, see @ref CfgTp5Fields::pulseLenRatioLock
+        CfgTp5Fields::userConfigDelay& userConfigDelay; ///< @b userConfigDelay field, see @ref CfgTp5Fields::userConfigDelay
+        CfgTp5Fields::flags& flags; ///< @b flags field, see @ref CfgTp5Fields::flags
+    };
+
+    /// @brief Access to @b const fields bundled as a struct
+    struct ConstFieldsAsStruct
+    {
+        const CfgTp5Fields::tpIdx& tpIdx; ///< @b tpIdx field, see @ref CfgTp5Fields::tpIdx
+        const CfgTp5Fields::reserved0& reserved0; ///< @b reserved0 field, see @ref CfgTp5Fields::reserved0
+        const CfgTp5Fields::reserved1& reserved1; ///< @b reserved1 field, see @ref CfgTp5Fields::reserved1
+        const CfgTp5Fields::antCableDelay& antCableDelay; ///< @b antCableDelay field, see @ref CfgTp5Fields::antCableDelay
+        const CfgTp5Fields::rfGroupDelay& rfGroupDelay; ///< @b rfGroupDelay field, see @ref CfgTp5Fields::rfGroupDelay
+        const CfgTp5Fields::freqPeriod& freqPeriod; ///< @b freqPeriod field, see @ref CfgTp5Fields::freqPeriod
+        const CfgTp5Fields::freqPeriodLock& freqPeriodLock; ///< @b freqPeriodLock field, see @ref CfgTp5Fields::freqPeriodLock
+        const CfgTp5Fields::pulseLenRatio& pulseLenRatio; ///< @b pulseLenRatio field, see @ref CfgTp5Fields::pulseLenRatio
+        const CfgTp5Fields::pulseLenRatioLock& pulseLenRatioLock; ///< @b pulseLenRatioLock field, see @ref CfgTp5Fields::pulseLenRatioLock
+        const CfgTp5Fields::userConfigDelay& userConfigDelay; ///< @b userConfigDelay field, see @ref CfgTp5Fields::userConfigDelay
+        const CfgTp5Fields::flags& flags; ///< @b flags field, see @ref CfgTp5Fields::flags
+    };
+
+    /// @brief Get access to fields bundled into a struct
+    FieldsAsStruct fieldsAsStruct();
+
+    /// @brief Get access to @b const fields bundled into a struct
+    ConstFieldsAsStruct fieldsAsStruct() const;
+
+#else
+    COMMS_MSG_FIELDS_ACCESS(Base,
+        tpIdx,
+        reserved0,
+        reserved1,
+        antCableDelay,
+        rfGroupDelay,
+        freqPeriod,
+        freqPeriodLock,
+        pulseLenRatio,
+        pulseLenRatioLock,
+        userConfigDelay,
+        flags
+    );
+#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     CfgTp5() = default;

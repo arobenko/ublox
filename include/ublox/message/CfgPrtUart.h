@@ -156,11 +156,9 @@ struct CfgPrtUartFields : public CfgPrtFields
 };
 
 /// @brief Definition of CFG-PRT (@b UART) message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
+///     various implementation options. @n
 ///     See @ref CfgPrtUartFields and for definition of the fields this message contains.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
@@ -169,16 +167,24 @@ class CfgPrtUart : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_PRT>,
         comms::option::FieldsImpl<CfgPrtUartFields::All>,
-        comms::option::DispatchImpl<CfgPrtUart<TMsgBase> >
+        comms::option::MsgType<CfgPrtUart<TMsgBase> >,
+        comms::option::DispatchImpl,
+        comms::option::MsgDoRead,
+        comms::option::MsgDoRefresh
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_PRT>,
         comms::option::FieldsImpl<CfgPrtUartFields::All>,
-        comms::option::DispatchImpl<CfgPrtUart<TMsgBase> >
+        comms::option::MsgType<CfgPrtUart<TMsgBase> >,
+        comms::option::DispatchImpl,
+        comms::option::MsgDoRead,
+        comms::option::MsgDoRefresh
     > Base;
 public:
+
+#ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Index to access the fields
     enum FieldIdx
@@ -195,8 +201,53 @@ public:
         FieldIdx_numOfValues ///< number of available fields
     };
 
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
+    /// @brief Access to fields bundled as a struct
+    struct FieldsAsStruct
+    {
+        CfgPrtUartFields::portID& portID; ///< @b portID field, see @ref CfgPrtUartFields::portID
+        CfgPrtUartFields::reserved0& reserved0; ///< @b reserved0 field, see @ref CfgPrtUartFields::reserved0
+        CfgPrtUartFields::txReady& txReady; ///< @b txReady field, see @ref CfgPrtUartFields::txReady
+        CfgPrtUartFields::mode& mode; ///< @b mode field, see @ref CfgPrtUartFields::mode
+        CfgPrtUartFields::baudRate& baudRate; ///< @b baudRate field, see @ref CfgPrtUartFields::baudRate
+        CfgPrtUartFields::inProtoMask& inProtoMask; ///< @b inProtoMask field, see @ref CfgPrtUartFields::inProtoMask
+        CfgPrtUartFields::outProtoMask& outProtoMask; ///< @b outProtoMask field, see @ref CfgPrtUartFields::outProtoMask
+        CfgPrtUartFields::flags& flags; ///< @b flags field, see @ref CfgPrtUartFields::flags
+        CfgPrtUartFields::reserved5& reserved5; ///< @b reserved5 field, see @ref CfgPrtUartFields::reserved5
+    };
+
+    /// @brief Access to @b const fields bundled as a struct
+    struct ConstFieldsAsStruct
+    {
+        CfgPrtUartFields::portID& portID; ///< @b portID field, see @ref CfgPrtUartFields::portID
+        CfgPrtUartFields::reserved0& reserved0; ///< @b reserved0 field, see @ref CfgPrtUartFields::reserved0
+        CfgPrtUartFields::txReady& txReady; ///< @b txReady field, see @ref CfgPrtUartFields::txReady
+        CfgPrtUartFields::mode& mode; ///< @b mode field, see @ref CfgPrtUartFields::mode
+        CfgPrtUartFields::baudRate& baudRate; ///< @b baudRate field, see @ref CfgPrtUartFields::baudRate
+        CfgPrtUartFields::inProtoMask& inProtoMask; ///< @b inProtoMask field, see @ref CfgPrtUartFields::inProtoMask
+        CfgPrtUartFields::outProtoMask& outProtoMask; ///< @b outProtoMask field, see @ref CfgPrtUartFields::outProtoMask
+        CfgPrtUartFields::flags& flags; ///< @b flags field, see @ref CfgPrtUartFields::flags
+        CfgPrtUartFields::reserved5& reserved5; ///< @b reserved5 field, see @ref CfgPrtUartFields::reserved5
+    };
+
+    /// @brief Get access to fields bundled into a struct
+    FieldsAsStruct fieldsAsStruct();
+
+    /// @brief Get access to @b const fields bundled into a struct
+    ConstFieldsAsStruct fieldsAsStruct() const;
+
+#else
+    COMMS_MSG_FIELDS_ACCESS(Base,
+        portID,
+        reserved0,
+        txReady,
+        mode,
+        baudRate,
+        inProtoMask,
+        outProtoMask,
+        flags,
+        reserved5
+    );
+#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     CfgPrtUart() = default;
@@ -216,16 +267,13 @@ public:
     /// @brief Move assignment
     CfgPrtUart& operator=(CfgPrtUart&&) = default;
 
-protected:
-
-    /// @brief Overrides read functionality provided by the base class.
+    /// @brief Provides custom read functionality.
     /// @details Reads only first "portID" field (@ref CfgPrtUartFields::portID) and
     ///     checks its value. If the value is @b NOT CfgPrtUartFields::PortId::UART,
     ///     the read operation fails with comms::ErrorStatus::InvalidMsgData error
     ///     status. Otherwise the read operation continues as expected.
-    virtual comms::ErrorStatus readImpl(
-        typename Base::ReadIterator& iter,
-        std::size_t len) override
+    template <typename TIter>
+    comms::ErrorStatus doRead(TIter& iter, std::size_t len)
     {
         auto es = Base::template readFieldsUntil<FieldIdx_reserved0>(iter, len);
         if (es != comms::ErrorStatus::Success) {
@@ -242,11 +290,11 @@ protected:
         return Base::template readFieldsFrom<FieldIdx_reserved0>(iter, len);
     }
 
-    /// @brief Overrides default refreshing functionality provided by the interface class.
+    /// @brief Provides custom refresh functionality
     /// @details This function makes sure that the value of the
     ///     "portID" field (@ref CfgPrtUartFields::portID) remains CfgPrtUartFields::PortId::UART.
     /// @return @b true in case the "portID" field was modified, @b false otherwise
-    virtual bool refreshImpl() override
+    bool doRefresh()
     {
         auto& allFields = Base::fields();
         auto& portIdField = std::get<FieldIdx_portID>(allFields);
@@ -258,9 +306,7 @@ protected:
         portIdField.value() = CfgPrtUartFields::PortId::UART;
         return true;
     }
-
 };
-
 
 }  // namespace message
 

@@ -87,11 +87,9 @@ struct CfgFxnFields
 };
 
 /// @brief Definition of CFG-FXN message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
+///     various implementation options. @n
 ///     See @ref CfgFxnFields and for definition of the fields this message contains.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
@@ -100,17 +98,20 @@ class CfgFxn : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_FXN>,
         comms::option::FieldsImpl<CfgFxnFields::All>,
-        comms::option::DispatchImpl<CfgFxn<TMsgBase> >
+        comms::option::MsgType<CfgFxn<TMsgBase> >,
+        comms::option::DispatchImpl
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_FXN>,
         comms::option::FieldsImpl<CfgFxnFields::All>,
-        comms::option::DispatchImpl<CfgFxn<TMsgBase> >
+        comms::option::MsgType<CfgFxn<TMsgBase> >,
+        comms::option::DispatchImpl
     > Base;
 public:
 
+#ifdef FOR_DOXYGEN_DOC_ONLY
     /// @brief Index to access the fields
     enum FieldIdx
     {
@@ -126,8 +127,53 @@ public:
         FieldIdx_numOfValues ///< number of available fields
     };
 
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
+    /// @brief Access to fields bundled as a struct
+    struct FieldsAsStruct
+    {
+        CfgFxnFields::flags& flags; ///< @b flags field, see @ref CfgFxnFields::flags
+        CfgFxnFields::tReacq& tReacq; ///< @b tReacq field, see @ref CfgFxnFields::tReacq
+        CfgFxnFields::tAcq& tAcq; ///< @b tAcq field, see @ref CfgFxnFields::tAcq
+        CfgFxnFields::tReacqOff& tReacqOff; ///< @b tReacqOff field, see @ref CfgFxnFields::tReacqOff
+        CfgFxnFields::tAcqOff& tAcqOff; ///< @b tAcqOff field, see @ref CfgFxnFields::tAcqOff
+        CfgFxnFields::tOn& tOn; ///< @b tOn field, see @ref CfgFxnFields::tOn
+        CfgFxnFields::tOff& tOff; ///< @b tOff field, see @ref CfgFxnFields::tOff
+        CfgFxnFields::res& res; ///< @b res field, see @ref CfgFxnFields::res
+        CfgFxnFields::baseTow& baseTow; ///< @b baseTow field, see @ref CfgFxnFields::baseTow
+    };
+
+    /// @brief Access to @b const fields bundled as a struct
+    struct ConstFieldsAsStruct
+    {
+        const CfgFxnFields::flags& flags; ///< @b flags field, see @ref CfgFxnFields::flags
+        const CfgFxnFields::tReacq& tReacq; ///< @b tReacq field, see @ref CfgFxnFields::tReacq
+        const CfgFxnFields::tAcq& tAcq; ///< @b tAcq field, see @ref CfgFxnFields::tAcq
+        const CfgFxnFields::tReacqOff& tReacqOff; ///< @b tReacqOff field, see @ref CfgFxnFields::tReacqOff
+        const CfgFxnFields::tAcqOff& tAcqOff; ///< @b tAcqOff field, see @ref CfgFxnFields::tAcqOff
+        const CfgFxnFields::tOn& tOn; ///< @b tOn field, see @ref CfgFxnFields::tOn
+        const CfgFxnFields::tOff& tOff; ///< @b tOff field, see @ref CfgFxnFields::tOff
+        const CfgFxnFields::res& res; ///< @b res field, see @ref CfgFxnFields::res
+        const CfgFxnFields::baseTow& baseTow; ///< @b baseTow field, see @ref CfgFxnFields::baseTow
+    };
+
+    /// @brief Get access to fields bundled into a struct
+    FieldsAsStruct fieldsAsStruct();
+
+    /// @brief Get access to @b const fields bundled into a struct
+    ConstFieldsAsStruct fieldsAsStruct() const;
+
+#else
+    COMMS_MSG_FIELDS_ACCESS(Base,
+        flags,
+        tReacq,
+        tAcq,
+        tReacqOff,
+        tAcqOff,
+        tOn,
+        tOff,
+        res,
+        baseTow
+    );
+#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     CfgFxn() = default;

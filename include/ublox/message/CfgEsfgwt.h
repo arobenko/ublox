@@ -126,11 +126,9 @@ struct CfgEsfgwtFields
 };
 
 /// @brief Definition of CFG-ESFGWT message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
+///     various implementation options. @n
 ///     See @ref CfgEsfgwtFields and for definition of the fields this message contains.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
@@ -139,17 +137,20 @@ class CfgEsfgwt : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_ESFGWT>,
         comms::option::FieldsImpl<CfgEsfgwtFields::All>,
-        comms::option::DispatchImpl<CfgEsfgwt<TMsgBase> >
+        comms::option::MsgType<CfgEsfgwt<TMsgBase> >,
+        comms::option::DispatchImpl
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_ESFGWT>,
         comms::option::FieldsImpl<CfgEsfgwtFields::All>,
-        comms::option::DispatchImpl<CfgEsfgwt<TMsgBase> >
+        comms::option::MsgType<CfgEsfgwt<TMsgBase> >,
+        comms::option::DispatchImpl
     > Base;
 public:
 
+#ifdef FOR_DOXYGEN_DOC_ONLY
     /// @brief Index to access the fields
     enum FieldIdx
     {
@@ -171,8 +172,72 @@ public:
         FieldIdx_numOfValues ///< number of available fields
     };
 
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
+
+    /// @brief Access to fields bundled as a struct
+    struct FieldsAsStruct
+    {
+        CfgEsfgwtFields::flags& flags; ///< @b flags field, see @ref CfgEsfgwtFields::flags
+        CfgEsfgwtFields::id& id; ///< @b id field, see @ref CfgEsfgwtFields::id
+        CfgEsfgwtFields::wtFactor& wtFactor; ///< @b wtFactor field, see @ref CfgEsfgwtFields::wtFactor
+        CfgEsfgwtFields::reserved1& reserved1; ///< @b reserved1 field, see @ref CfgEsfgwtFields::reserved1
+        CfgEsfgwtFields::wtQuantError& wtQuantError; ///< @b wtQuantError field, see @ref CfgEsfgwtFields::wtQuantError
+        CfgEsfgwtFields::timeTagFactor& timeTagFactor; ///< @b timeTagFactor field, see @ref CfgEsfgwtFields::timeTagFactor
+        CfgEsfgwtFields::wtCountMax& wtCountMax; ///< @b wtCountMax field, see @ref CfgEsfgwtFields::wtCountMax
+        CfgEsfgwtFields::timeTagMax& timeTagMax; ///< @b timeTagMax field, see @ref CfgEsfgwtFields::timeTagMax
+        CfgEsfgwtFields::wtLatency& wtLatency; ///< @b wtLatency field, see @ref CfgEsfgwtFields::wtLatency
+        CfgEsfgwtFields::reserved2& reserved2; ///< @b reserved2 field, see @ref CfgEsfgwtFields::reserved2
+        CfgEsfgwtFields::wtFrequency& wtFrequency; ///< @b wtFrequency field, see @ref CfgEsfgwtFields::wtFrequency
+        CfgEsfgwtFields::reserved3& reserved3; ///< @b reserved3 field, see @ref CfgEsfgwtFields::reserved3
+        CfgEsfgwtFields::speedDeadBand& speedDeadBand; ///< @b speedDeadBand field, see @ref CfgEsfgwtFields::speedDeadBand
+        CfgEsfgwtFields::reserved4& reserved4; ///< @b reserved4 field, see @ref CfgEsfgwtFields::reserved4
+        CfgEsfgwtFields::reserved5& reserved5; ///< @b reserved5 field, see @ref CfgEsfgwtFields::reserved5
+    };
+
+    /// @brief Access to @b const fields bundled as a struct
+    struct ConstFieldsAsStruct
+    {
+        const CfgEsfgwtFields::flags& flags; ///< @b flags field, see @ref CfgEsfgwtFields::flags
+        const CfgEsfgwtFields::id& id; ///< @b id field, see @ref CfgEsfgwtFields::id
+        const CfgEsfgwtFields::wtFactor& wtFactor; ///< @b wtFactor field, see @ref CfgEsfgwtFields::wtFactor
+        const CfgEsfgwtFields::reserved1& reserved1; ///< @b reserved1 field, see @ref CfgEsfgwtFields::reserved1
+        const CfgEsfgwtFields::wtQuantError& wtQuantError; ///< @b wtQuantError field, see @ref CfgEsfgwtFields::wtQuantError
+        const CfgEsfgwtFields::timeTagFactor& timeTagFactor; ///< @b timeTagFactor field, see @ref CfgEsfgwtFields::timeTagFactor
+        const CfgEsfgwtFields::wtCountMax& wtCountMax; ///< @b wtCountMax field, see @ref CfgEsfgwtFields::wtCountMax
+        const CfgEsfgwtFields::timeTagMax& timeTagMax; ///< @b timeTagMax field, see @ref CfgEsfgwtFields::timeTagMax
+        const CfgEsfgwtFields::wtLatency& wtLatency; ///< @b wtLatency field, see @ref CfgEsfgwtFields::wtLatency
+        const CfgEsfgwtFields::reserved2& reserved2; ///< @b reserved2 field, see @ref CfgEsfgwtFields::reserved2
+        const CfgEsfgwtFields::wtFrequency& wtFrequency; ///< @b wtFrequency field, see @ref CfgEsfgwtFields::wtFrequency
+        const CfgEsfgwtFields::reserved3& reserved3; ///< @b reserved3 field, see @ref CfgEsfgwtFields::reserved3
+        const CfgEsfgwtFields::speedDeadBand& speedDeadBand; ///< @b speedDeadBand field, see @ref CfgEsfgwtFields::speedDeadBand
+        const CfgEsfgwtFields::reserved4& reserved4; ///< @b reserved4 field, see @ref CfgEsfgwtFields::reserved4
+        const CfgEsfgwtFields::reserved5& reserved5; ///< @b reserved5 field, see @ref CfgEsfgwtFields::reserved5
+    };
+
+    /// @brief Get access to fields bundled into a struct
+    FieldsAsStruct fieldsAsStruct();
+
+    /// @brief Get access to @b const fields bundled into a struct
+    ConstFieldsAsStruct fieldsAsStruct() const;
+
+#else
+    COMMS_MSG_FIELDS_ACCESS(Base,
+        flags,
+        id,
+        wtFactor,
+        reserved1,
+        wtQuantError,
+        timeTagFactor,
+        wtCountMax,
+        timeTagMax,
+        wtLatency,
+        reserved2,
+        wtFrequency,
+        reserved3,
+        speedDeadBand,
+        reserved4,
+        reserved5
+    );
+#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     CfgEsfgwt() = default;
