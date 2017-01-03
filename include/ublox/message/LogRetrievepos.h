@@ -247,7 +247,7 @@ public:
         second,
         reserved1,
         numSV,
-        reserved2,
+        reserved2
     );
 #endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 

@@ -83,6 +83,7 @@ class CfgPrtUsb : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_PRT>,
         comms::option::FieldsImpl<CfgPrtUsbFields::All>,
+        comms::option::MsgType<CfgPrtUsb<TMsgBase> >,
         comms::option::DispatchImpl,
         comms::option::MsgDoRead,
         comms::option::MsgDoRefresh

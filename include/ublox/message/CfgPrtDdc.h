@@ -115,6 +115,7 @@ class CfgPrtDdc : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_PRT>,
         comms::option::FieldsImpl<CfgPrtDdcFields::All>,
+        comms::option::MsgType<CfgPrtDdc<TMsgBase> >,
         comms::option::DispatchImpl,
         comms::option::MsgDoRead,
         comms::option::MsgDoRefresh

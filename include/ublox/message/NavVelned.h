@@ -151,7 +151,7 @@ public:
     ConstFieldsAsStruct fieldsAsStruct() const;
 
 #else
-    COMMS_MSG_FIELDS_ACCESS(Base, iTOW, velN, velE, velD, speed, gSpeed, heading sAcc, cAcc);
+    COMMS_MSG_FIELDS_ACCESS(Base, iTOW, velN, velE, velD, speed, gSpeed, heading, sAcc, cAcc);
 #endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor

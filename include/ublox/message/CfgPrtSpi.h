@@ -141,6 +141,8 @@ class CfgPrtSpi : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_PRT>,
         comms::option::FieldsImpl<CfgPrtSpiFields::All>,
+        comms::option::MsgType<CfgPrtSpi<TMsgBase> >,
+        comms::option::DispatchImpl,
         comms::option::MsgDoRead,
         comms::option::MsgDoRefresh
     > Base;

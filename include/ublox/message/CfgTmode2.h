@@ -245,8 +245,7 @@ public:
         alt,
         fixedPosAcc,
         svinMinDur,
-        svinAccLimit,
-
+        svinAccLimit
     );
 #endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 

@@ -281,7 +281,7 @@ public:
         searchPeriod,
         gridOffset,
         onTime,
-        minAcqTime,
+        minAcqTime
     );
 #endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 

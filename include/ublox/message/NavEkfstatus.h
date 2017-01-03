@@ -256,7 +256,7 @@ public:
         accGyroBias,
         accGyroScale,
         measUsed,
-        reserved2,
+        reserved2
     );
 #endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 

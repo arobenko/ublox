@@ -322,7 +322,7 @@ public:
         reserved3,
         pinIrq,
         pullH,
-        pullL,
+        pullL
     );
 #endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 

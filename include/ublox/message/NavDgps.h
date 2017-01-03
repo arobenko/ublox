@@ -246,7 +246,7 @@ public:
         numCh,
         status,
         reserved1,
-        data,
+        data
     );
 #endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 

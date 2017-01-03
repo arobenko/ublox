@@ -205,7 +205,7 @@ public:
         lowLevelCfg,
         reserved1,
         postStatus,
-        reserved2,
+        reserved2
     );
 #endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
