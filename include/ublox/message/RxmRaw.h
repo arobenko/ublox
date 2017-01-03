@@ -111,11 +111,9 @@ struct RxmRawFields
 };
 
 /// @brief Definition of RXM-RAW message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
+///     various implementation options. @n
 ///     See @ref RxmRawFields and for definition of the fields this message contains.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
@@ -124,17 +122,24 @@ class RxmRaw : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_RXM_RAW>,
         comms::option::FieldsImpl<RxmRawFields::All>,
-        comms::option::DispatchImpl<RxmRaw<TMsgBase> >
+        comms::option::MsgType<RxmRaw<TMsgBase> >,
+        comms::option::DispatchImpl,
+        comms::option::MsgDoRead,
+        comms::option::MsgDoRefresh
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_RXM_RAW>,
         comms::option::FieldsImpl<RxmRawFields::All>,
-        comms::option::DispatchImpl<RxmRaw<TMsgBase> >
+        comms::option::MsgType<RxmRaw<TMsgBase> >,
+        comms::option::DispatchImpl,
+        comms::option::MsgDoRead,
+        comms::option::MsgDoRefresh
     > Base;
 public:
 
+#ifdef FOR_DOXYGEN_DOC_ONLY
     /// @brief Index to access the fields
     enum FieldIdx
     {
@@ -146,8 +151,36 @@ public:
         FieldIdx_numOfValues ///< number of available fields
     };
 
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
+    /// @brief Access to fields bundled as a struct
+    struct FieldsAsStruct
+    {
+        RxmRawFields::rcvTow& rcvTow; ///< @b rcvTow field, see @ref RxmRawFields::rcvTow
+        RxmRawFields::week& week; ///< @b week field, see @ref RxmRawFields::week
+        RxmRawFields::numSV& numSV; ///< @b numSV field, see @ref RxmRawFields::numSV
+        RxmRawFields::reserved1& reserved1; ///< @b reserved1 field, see @ref RxmRawFields::reserved1
+        RxmRawFields::data& data; ///< @b data field, see @ref RxmRawFields::data
+    };
+
+    /// @brief Access to @b const fields bundled as a struct
+    struct ConstFieldsAsStruct
+    {
+        const RxmRawFields::rcvTow& rcvTow; ///< @b rcvTow field, see @ref RxmRawFields::rcvTow
+        const RxmRawFields::week& week; ///< @b week field, see @ref RxmRawFields::week
+        const RxmRawFields::numSV& numSV; ///< @b numSV field, see @ref RxmRawFields::numSV
+        const RxmRawFields::reserved1& reserved1; ///< @b reserved1 field, see @ref RxmRawFields::reserved1
+        const RxmRawFields::data& data; ///< @b data field, see @ref RxmRawFields::data
+    };
+
+    /// @brief Get access to fields bundled into a struct
+    FieldsAsStruct fieldsAsStruct();
+
+    /// @brief Get access to @b const fields bundled into a struct
+    ConstFieldsAsStruct fieldsAsStruct() const;
+
+#else
+    COMMS_MSG_FIELDS_ACCESS(Base, rcvTow, week, numSV, reserved1, data);
+#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
+
 
     /// @brief Default constructor
     RxmRaw() = default;
@@ -167,14 +200,11 @@ public:
     /// @brief Move assignment
     RxmRaw& operator=(RxmRaw&&) = default;
 
-protected:
-
-    /// @brief Overrides read functionality provided by the base class.
+    /// @brief Provides custom read functionality.
     /// @details The number of blocks in @b data (@ref RxmRawFields::data) list
     ///     is determined by the value of @b numSV (@ref RxmRawFields::numSV) field.
-    virtual comms::ErrorStatus readImpl(
-        typename Base::ReadIterator& iter,
-        std::size_t len) override
+    template <typename TIter>
+    comms::ErrorStatus doRead(TIter& iter, std::size_t len)
     {
         auto es = Base::template readFieldsUntil<FieldIdx_data>(iter, len);
         if (es != comms::ErrorStatus::Success) {
@@ -189,11 +219,11 @@ protected:
         return Base::template readFieldsFrom<FieldIdx_data>(iter, len);
     }
 
-    /// @brief Overrides default refreshing functionality provided by the interface class.
+    /// @brief Provides custom refresh functionality
     /// @details The value of @b numSV (@ref RxmRawFields::numSV) field is determined
     ///     by the amount of blocks stored in @b data (@ref RxmRawFields::data) list.
     /// @return @b true in case the value of "numSV" field was modified, @b false otherwise
-    virtual bool refreshImpl() override
+    bool doRefresh()
     {
         auto& allFields = Base::fields();
         auto& numSvField = std::get<FieldIdx_numSV>(allFields);

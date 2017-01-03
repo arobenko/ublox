@@ -43,11 +43,9 @@ struct RxmEphPollSvFields
 };
 
 /// @brief Definition of RXM-EPH (<b>poll SV</b>) message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
+///     various implementation options. @n
 ///     See @ref RxmEphPollSvFields and for definition of the fields this message contains.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
@@ -56,17 +54,20 @@ class RxmEphPollSv : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_RXM_EPH>,
         comms::option::FieldsImpl<RxmEphPollSvFields::All>,
-        comms::option::DispatchImpl<RxmEphPollSv<TMsgBase> >
+        comms::option::MsgType<RxmEphPollSv<TMsgBase> >,
+        comms::option::DispatchImpl
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_RXM_EPH>,
         comms::option::FieldsImpl<RxmEphPollSvFields::All>,
-        comms::option::DispatchImpl<RxmEphPollSv<TMsgBase> >
+        comms::option::MsgType<RxmEphPollSv<TMsgBase> >,
+        comms::option::DispatchImpl
     > Base;
 public:
 
+#ifdef FOR_DOXYGEN_DOC_ONLY
     /// @brief Index to access the fields
     enum FieldIdx
     {
@@ -74,8 +75,27 @@ public:
         FieldIdx_numOfValues ///< number of available fields
     };
 
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
+    /// @brief Access to fields bundled as a struct
+    struct FieldsAsStruct
+    {
+        RxmEphPollSvFields::svid& svid; ///< svid field, see @ref RxmEphPollSvFields::svid
+    };
+
+    /// @brief Access to @b const fields bundled as a struct
+    struct ConstFieldsAsStruct
+    {
+        const RxmEphPollSvFields::svid& svid; ///< svid field, see @ref RxmEphPollSvFields::svid
+    };
+
+    /// @brief Get access to fields bundled into a struct
+    FieldsAsStruct fieldsAsStruct();
+
+    /// @brief Get access to @b const fields bundled into a struct
+    ConstFieldsAsStruct fieldsAsStruct() const;
+
+#else
+    COMMS_MSG_FIELDS_ACCESS(Base, svid);
+#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     RxmEphPollSv() = default;

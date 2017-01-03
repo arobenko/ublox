@@ -65,11 +65,9 @@ struct RxmEphFields
 };
 
 /// @brief Definition of RXM-EPH message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
+///     various implementation options. @n
 ///     See @ref RxmEphFields and for definition of the fields this message contains.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
@@ -78,17 +76,24 @@ class RxmEph : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_RXM_EPH>,
         comms::option::FieldsImpl<RxmEphFields::All>,
-        comms::option::DispatchImpl<RxmEph<TMsgBase> >
+        comms::option::MsgType<RxmEph<TMsgBase> >,
+        comms::option::DispatchImpl,
+        comms::option::MsgDoRead,
+        comms::option::MsgDoRefresh
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_RXM_EPH>,
         comms::option::FieldsImpl<RxmEphFields::All>,
-        comms::option::DispatchImpl<RxmEph<TMsgBase> >
+        comms::option::MsgType<RxmEph<TMsgBase> >,
+        comms::option::DispatchImpl,
+        comms::option::MsgDoRead,
+        comms::option::MsgDoRefresh
     > Base;
 public:
 
+#ifdef FOR_DOXYGEN_DOC_ONLY
     /// @brief Index to access the fields
     enum FieldIdx
     {
@@ -100,8 +105,35 @@ public:
         FieldIdx_numOfValues ///< number of available fields
     };
 
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
+    /// @brief Access to fields bundled as a struct
+    struct FieldsAsStruct
+    {
+        RxmEphFields::svid& svid; ///< svid field, see @ref RxmEphFields::svid
+        RxmEphFields::how& how; ///< how field, see @ref RxmEphFields::how
+        RxmEphFields::sf1d& sf1d; ///< sf1d field, see @ref RxmEphFields::sf1d
+        RxmEphFields::sf2d& sf2d; ///< sf2d field, see @ref RxmEphFields::sf2d
+        RxmEphFields::sf3d& sf3d; ///< sf3d field, see @ref RxmEphFields::sf3d
+    };
+
+    /// @brief Access to @b const fields bundled as a struct
+    struct ConstFieldsAsStruct
+    {
+        const RxmEphFields::svid& svid; ///< svid field, see @ref RxmEphFields::svid
+        const RxmEphFields::how& how; ///< how field, see @ref RxmEphFields::how
+        const RxmEphFields::sf1d& sf1d; ///< sf1d field, see @ref RxmEphFields::sf1d
+        const RxmEphFields::sf2d& sf2d; ///< sf2d field, see @ref RxmEphFields::sf2d
+        const RxmEphFields::sf3d& sf3d; ///< sf3d field, see @ref RxmEphFields::sf3d
+    };
+
+    /// @brief Get access to fields bundled into a struct
+    FieldsAsStruct fieldsAsStruct();
+
+    /// @brief Get access to @b const fields bundled into a struct
+    ConstFieldsAsStruct fieldsAsStruct() const;
+
+#else
+    COMMS_MSG_FIELDS_ACCESS(Base, svid, how, sf1d, sf2d, sf3d);
+#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     /// @details Marks "sf1d" (see @ref RxmEphFields::sf1d),
@@ -133,17 +165,14 @@ public:
     /// @brief Move assignment
     RxmEph& operator=(RxmEph&&) = default;
 
-protected:
-
-    /// @brief Overrides read functionality provided by the base class.
+    /// @brief Provides custom read functionality.
     /// @details The existence of "sf1d" (see @ref RxmEphFields::sf1d),
     ///     "sf2d" (see @ref RxmEphFields::sf2d), and "sf3d" (see @ref RxmEphFields::sf3d)
     ///     is determined by the contents of "how" (see @ref RxmEphFields::how)
     ///     field. If the value of the latter is 0, the "sfXd" fields are marked to
     ///     be missing, otherwise they exist.
-    virtual comms::ErrorStatus readImpl(
-        typename Base::ReadIterator& iter,
-        std::size_t len) override
+    template <typename TIter>
+    comms::ErrorStatus doRead(TIter& iter, std::size_t len)
     {
         auto es = Base::template readFieldsUntil<FieldIdx_sf1d>(iter, len);
         if (es != comms::ErrorStatus::Success) {
@@ -166,14 +195,14 @@ protected:
         return Base::template readFieldsFrom<FieldIdx_sf1d>(iter, len);
     }
 
-    /// @brief Overrides default refreshing functionality provided by the interface class.
+    /// @brief Provides custom refresh functionality
     /// @details The existence of "sf1d" (see @ref RxmEphFields::sf1d),
     ///     "sf2d" (see @ref RxmEphFields::sf2d), and "sf3d" (see @ref RxmEphFields::sf3d)
     ///     is determined by the contents of "how" (see @ref RxmEphFields::how)
     ///     field. If the value of the latter is 0, the "sfXd" fields are marked to
     ///     be missing, otherwise they exist.
     /// @return @b true in case the modes of "sfXd" fields were modified, @b false otherwise
-    virtual bool refreshImpl() override
+    bool doRefresh()
     {
         auto& allFields = Base::fields();
         auto& howField = std::get<FieldIdx_how>(allFields);
