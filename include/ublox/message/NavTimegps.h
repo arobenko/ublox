@@ -72,11 +72,9 @@ struct NavTimegpsFields
 };
 
 /// @brief Definition of NAV-TIMEGPS message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
+///     various implementation options. @n
 ///     See @ref NavTimegpsFields and for definition of the fields this message contains.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
@@ -85,17 +83,20 @@ class NavTimegps : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_TIMEGPS>,
         comms::option::FieldsImpl<NavTimegpsFields::All>,
-        comms::option::DispatchImpl<NavTimegps<TMsgBase> >
+        comms::option::MsgType<NavTimegps<TMsgBase> >,
+        comms::option::DispatchImpl
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_TIMEGPS>,
         comms::option::FieldsImpl<NavTimegpsFields::All>,
-        comms::option::DispatchImpl<NavTimegps<TMsgBase> >
+        comms::option::MsgType<NavTimegps<TMsgBase> >,
+        comms::option::DispatchImpl
     > Base;
 public:
 
+#ifdef FOR_DOXYGEN_DOC_ONLY
     /// @brief Index to access the fields
     enum FieldIdx
     {
@@ -108,8 +109,38 @@ public:
         FieldIdx_numOfValues ///< number of available fields
     };
 
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
+
+    /// @brief Access to fields bundled as a struct
+    struct FieldsAsStruct
+    {
+        NavTimegpsFields::iTOW& iTOW; ///< @b iTOW field, see @ref NavTimegpsFields::iTOW
+        NavTimegpsFields::fTOW& fTOW; ///< @b fTOW field, see @ref NavTimegpsFields::fTOW
+        NavTimegpsFields::week& week; ///< @b week field, see @ref NavTimegpsFields::week
+        NavTimegpsFields::leapS& leapS; ///< @b leapS field, see @ref NavTimegpsFields::leapS
+        NavTimegpsFields::valid& valid; ///< @b valid field, see @ref NavTimegpsFields::valid
+        NavTimegpsFields::tAcc& tAcc; ///< @b tAcc field, see @ref NavTimegpsFields::tAcc
+    };
+
+    /// @brief Access to @b const fields bundled as a struct
+    struct ConstFieldsAsStruct
+    {
+        const NavTimegpsFields::iTOW& iTOW; ///< @b iTOW field, see @ref NavTimegpsFields::iTOW
+        const NavTimegpsFields::fTOW& fTOW; ///< @b fTOW field, see @ref NavTimegpsFields::fTOW
+        const NavTimegpsFields::week& week; ///< @b week field, see @ref NavTimegpsFields::week
+        const NavTimegpsFields::leapS& leapS; ///< @b leapS field, see @ref NavTimegpsFields::leapS
+        const NavTimegpsFields::valid& valid; ///< @b valid field, see @ref NavTimegpsFields::valid
+        const NavTimegpsFields::tAcc& tAcc; ///< @b tAcc field, see @ref NavTimegpsFields::tAcc
+    };
+
+    /// @brief Get access to fields bundled into a struct
+    FieldsAsStruct fieldsAsStruct();
+
+    /// @brief Get access to @b const fields bundled into a struct
+    ConstFieldsAsStruct fieldsAsStruct() const;
+
+#else
+    COMMS_MSG_FIELDS_ACCESS(Base, iTOW, fTOW, week, leapS, valid, tAcc);
+#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     NavTimegps() = default;

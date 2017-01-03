@@ -71,11 +71,9 @@ struct NavDopFields
 };
 
 /// @brief Definition of NAV-DOP message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
+///     various implementation options. @n
 ///     See @ref NavDopFields and for definition of the fields this message contains.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
@@ -84,17 +82,20 @@ class NavDop : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_DOP>,
         comms::option::FieldsImpl<NavDopFields::All>,
-        comms::option::DispatchImpl<NavDop<TMsgBase> >
+        comms::option::MsgType<NavDop<TMsgBase> >,
+        comms::option::DispatchImpl
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_DOP>,
         comms::option::FieldsImpl<NavDopFields::All>,
-        comms::option::DispatchImpl<NavDop<TMsgBase> >
+        comms::option::MsgType<NavDop<TMsgBase> >,
+        comms::option::DispatchImpl
     > Base;
 public:
 
+#ifdef FOR_DOXYGEN_DOC_ONLY
     /// @brief Index to access the fields
     enum FieldIdx
     {
@@ -109,8 +110,41 @@ public:
         FieldIdx_numOfValues ///< number of available fields
     };
 
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
+    /// @brief Access to fields bundled as a struct
+    struct FieldsAsStruct
+    {
+        NavDopFields::iTOW& iTOW; ///< @b iTOW field, see @ref NavDopFields::iTOW
+        NavDopFields::gDOP& gDOP; ///< @b gDOP field, see @ref NavDopFields::gDOP
+        NavDopFields::pDOP& pDOP; ///< @b pDOP field, see @ref NavDopFields::pDOP
+        NavDopFields::tDOP& tDOP; ///< @b tDOP field, see @ref NavDopFields::tDOP
+        NavDopFields::vDOP& vDOP; ///< @b vDOP field, see @ref NavDopFields::vDOP
+        NavDopFields::hDOP& hDOP; ///< @b hDOP field, see @ref NavDopFields::hDOP
+        NavDopFields::nDOP& nDOP; ///< @b nDOP field, see @ref NavDopFields::nDOP
+        NavDopFields::eDOP& eDOP; ///< @b eDOP field, see @ref NavDopFields::eDOP
+    };
+
+    /// @brief Access to @b const fields bundled as a struct
+    struct ConstFieldsAsStruct
+    {
+        NavDopFields::iTOW& iTOW; ///< @b iTOW field, see @ref NavDopFields::iTOW
+        NavDopFields::gDOP& gDOP; ///< @b gDOP field, see @ref NavDopFields::gDOP
+        NavDopFields::pDOP& pDOP; ///< @b pDOP field, see @ref NavDopFields::pDOP
+        NavDopFields::tDOP& tDOP; ///< @b tDOP field, see @ref NavDopFields::tDOP
+        NavDopFields::vDOP& vDOP; ///< @b vDOP field, see @ref NavDopFields::vDOP
+        NavDopFields::hDOP& hDOP; ///< @b hDOP field, see @ref NavDopFields::hDOP
+        NavDopFields::nDOP& nDOP; ///< @b nDOP field, see @ref NavDopFields::nDOP
+        NavDopFields::eDOP& eDOP; ///< @b eDOP field, see @ref NavDopFields::eDOP
+    };
+
+    /// @brief Get access to fields bundled into a struct
+    FieldsAsStruct fieldsAsStruct();
+
+    /// @brief Get access to @b const fields bundled into a struct
+    ConstFieldsAsStruct fieldsAsStruct() const;
+
+#else
+    COMMS_MSG_FIELDS_ACCESS(Base, iTOW, gDOP, pDOP, tDOP, vDOP, hDOP, nDOP, eDOP);
+#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     NavDop() = default;

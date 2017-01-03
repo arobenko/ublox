@@ -67,11 +67,9 @@ struct NavPosllhFields
 };
 
 /// @brief Definition of NAV-POSLLH message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
+///     various implementation options. @n
 ///     See @ref NavPosllhFields and for definition of the fields this message contains.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
@@ -80,17 +78,20 @@ class NavPosllh : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_POSLLH>,
         comms::option::FieldsImpl<NavPosllhFields::All>,
-        comms::option::DispatchImpl<NavPosllh<TMsgBase> >
+        comms::option::MsgType<NavPosllh<TMsgBase> >,
+        comms::option::DispatchImpl
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_POSLLH>,
         comms::option::FieldsImpl<NavPosllhFields::All>,
-        comms::option::DispatchImpl<NavPosllh<TMsgBase> >
+        comms::option::MsgType<NavPosllh<TMsgBase> >,
+        comms::option::DispatchImpl
     > Base;
 public:
 
+#ifdef FOR_DOXYGEN_DOC_ONLY
     /// @brief Index to access the fields
     enum FieldIdx
     {
@@ -104,8 +105,39 @@ public:
         FieldIdx_numOfValues ///< number of available fields
     };
 
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
+    /// @brief Access to fields bundled as a struct
+    struct FieldsAsStruct
+    {
+        NavPosllhFields::iTOW& iTOW; ///< @b iTOW field, see @ref NavPosllhFields::iTOW
+        NavPosllhFields::lon& lon; ///< @b lon field, see @ref NavPosllhFields::lon
+        NavPosllhFields::lat& lat; ///< @b lat field, see @ref NavPosllhFields::lat
+        NavPosllhFields::height& height; ///< @b height field, see @ref NavPosllhFields::height
+        NavPosllhFields::hMSL& hMSL; ///< @b hMSL field, see @ref NavPosllhFields::hMSL
+        NavPosllhFields::hAcc& hAcc; ///< @b hAcc field, see @ref NavPosllhFields::hAcc
+        NavPosllhFields::vAcc& vAcc; ///< @b vAcc field, see @ref NavPosllhFields::vAcc
+    };
+
+    /// @brief Access to @b const fields bundled as a struct
+    struct ConstFieldsAsStruct
+    {
+        const NavPosllhFields::iTOW& iTOW; ///< @b iTOW field, see @ref NavPosllhFields::iTOW
+        const NavPosllhFields::lon& lon; ///< @b lon field, see @ref NavPosllhFields::lon
+        const NavPosllhFields::lat& lat; ///< @b lat field, see @ref NavPosllhFields::lat
+        const NavPosllhFields::height& height; ///< @b height field, see @ref NavPosllhFields::height
+        const NavPosllhFields::hMSL& hMSL; ///< @b hMSL field, see @ref NavPosllhFields::hMSL
+        const NavPosllhFields::hAcc& hAcc; ///< @b hAcc field, see @ref NavPosllhFields::hAcc
+        const NavPosllhFields::vAcc& vAcc; ///< @b vAcc field, see @ref NavPosllhFields::vAcc
+    };
+
+    /// @brief Get access to fields bundled into a struct
+    FieldsAsStruct fieldsAsStruct();
+
+    /// @brief Get access to @b const fields bundled into a struct
+    ConstFieldsAsStruct fieldsAsStruct() const;
+
+#else
+    COMMS_MSG_FIELDS_ACCESS(Base, iTOW, lon, lat, height, hMSL, hAcc, vAcc);
+#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     NavPosllh() = default;

@@ -151,11 +151,9 @@ struct NavEkfstatusFields
 };
 
 /// @brief Definition of NAV-EKFSTATUS message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
+///     various implementation options. @n
 ///     See @ref NavEkfstatusFields and for definition of the fields this message contains.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
@@ -164,17 +162,20 @@ class NavEkfstatus : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_EKFSTATUS>,
         comms::option::FieldsImpl<NavEkfstatusFields::All>,
-        comms::option::DispatchImpl<NavEkfstatus<TMsgBase> >
+        comms::option::MsgType<NavEkfstatus<TMsgBase> >,
+        comms::option::DispatchImpl
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_EKFSTATUS>,
         comms::option::FieldsImpl<NavEkfstatusFields::All>,
-        comms::option::DispatchImpl<NavEkfstatus<TMsgBase> >
+        comms::option::MsgType<NavEkfstatus<TMsgBase> >,
+        comms::option::DispatchImpl
     > Base;
 public:
 
+#ifdef FOR_DOXYGEN_DOC_ONLY
     /// @brief Index to access the fields
     enum FieldIdx
     {
@@ -185,18 +186,79 @@ public:
         FieldIdx_direction, ///< @b direction field, see @ref NavEkfstatusFields::direction
         FieldIdx_calibStatus, ///< @b calibStatus field, see @ref NavEkfstatusFields::calibStatus
         FieldIdx_pulseScale, ///< @b pulseScale field, see @ref NavEkfstatusFields::pulseScale
-        FieldIdx_gyroBias, ///< @b pulses field, see @ref NavEkfstatusFields::pulses
-        FieldIdx_gyroScale, ///< @b gyroBias field, see @ref NavEkfstatusFields::gyroBias
+        FieldIdx_gyroBias, ///< @b gyroBias field, see @ref NavEkfstatusFields::gyroBias
+        FieldIdx_gyroScale, ///< @b gyroScale field, see @ref NavEkfstatusFields::gyroScale
         FieldIdx_accPulseScale, ///< @b accPulseScale field, see @ref NavEkfstatusFields::accPulseScale
-        FieldIdx_accGyroBias, ///< @b pulses field, see @ref NavEkfstatusFields::pulses
-        FieldIdx_accGyroScale, ///< @b accGyroBias field, see @ref NavEkfstatusFields::accGyroBias
+        FieldIdx_accGyroBias, ///< @b accGyroBias field, see @ref NavEkfstatusFields::accGyroBias
+        FieldIdx_accGyroScale, ///< @b accGyroScale field, see @ref NavEkfstatusFields::accGyroScale
         FieldIdx_measUsed, ///< @b measUsed field, see @ref NavEkfstatusFields::measUsed
         FieldIdx_reserved2, ///< @b reserved2 field, see @ref NavEkfstatusFields::reserved2
         FieldIdx_numOfValues ///< number of available fields
     };
 
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
+
+    /// @brief Access to fields bundled as a struct
+    struct FieldsAsStruct
+    {
+        NavEkfstatusFields::pulses& pulses; ///< @b pulses field, see @ref NavEkfstatusFields::pulses
+        NavEkfstatusFields::period& period; ///< @b period field, see @ref NavEkfstatusFields::period
+        NavEkfstatusFields::gyroMean& gyroMean; ///< @b gyroMean field, see @ref NavEkfstatusFields::gyroMean
+        NavEkfstatusFields::temperature& temperature; ///< @b temperature field, see @ref NavEkfstatusFields::temperature
+        NavEkfstatusFields::direction& direction; ///< @b direction field, see @ref NavEkfstatusFields::direction
+        NavEkfstatusFields::calibStatus& calibStatus; ///< @b calibStatus field, see @ref NavEkfstatusFields::calibStatus
+        NavEkfstatusFields::pulseScale& pulseScale; ///< @b pulseScale field, see @ref NavEkfstatusFields::pulseScale
+        NavEkfstatusFields::gyroBias& gyroBias; ///< @b gyroBias field, see @ref NavEkfstatusFields::gyroBias
+        NavEkfstatusFields::gyroScale& gyroScale; ///< @b gyroScale field, see @ref NavEkfstatusFields::gyroScale
+        NavEkfstatusFields::accPulseScale& accPulseScale; ///< @b accPulseScale field, see @ref NavEkfstatusFields::accPulseScale
+        NavEkfstatusFields::accGyroBias& accGyroBias; ///< @b accGyroBias field, see @ref NavEkfstatusFields::accGyroBias
+        NavEkfstatusFields::accGyroScale& accGyroScale; ///< @b accGyroScale field, see @ref NavEkfstatusFields::accGyroScale
+        NavEkfstatusFields::measUsed& measUsed; ///< @b measUsed field, see @ref NavEkfstatusFields::measUsed
+        NavEkfstatusFields::reserved2& reserved2; ///< @b reserved2 field, see @ref NavEkfstatusFields::reserved2
+    };
+
+    /// @brief Access to @b const fields bundled as a struct
+    struct ConstFieldsAsStruct
+    {
+        const NavEkfstatusFields::pulses& pulses; ///< @b pulses field, see @ref NavEkfstatusFields::pulses
+        const NavEkfstatusFields::period& period; ///< @b period field, see @ref NavEkfstatusFields::period
+        const NavEkfstatusFields::gyroMean& gyroMean; ///< @b gyroMean field, see @ref NavEkfstatusFields::gyroMean
+        const NavEkfstatusFields::temperature& temperature; ///< @b temperature field, see @ref NavEkfstatusFields::temperature
+        const NavEkfstatusFields::direction& direction; ///< @b direction field, see @ref NavEkfstatusFields::direction
+        const NavEkfstatusFields::calibStatus& calibStatus; ///< @b calibStatus field, see @ref NavEkfstatusFields::calibStatus
+        const NavEkfstatusFields::pulseScale& pulseScale; ///< @b pulseScale field, see @ref NavEkfstatusFields::pulseScale
+        const NavEkfstatusFields::gyroBias& gyroBias; ///< @b gyroBias field, see @ref NavEkfstatusFields::gyroBias
+        const NavEkfstatusFields::gyroScale& gyroScale; ///< @b gyroScale field, see @ref NavEkfstatusFields::gyroScale
+        const NavEkfstatusFields::accPulseScale& accPulseScale; ///< @b accPulseScale field, see @ref NavEkfstatusFields::accPulseScale
+        const NavEkfstatusFields::accGyroBias& accGyroBias; ///< @b accGyroBias field, see @ref NavEkfstatusFields::accGyroBias
+        const NavEkfstatusFields::accGyroScale& accGyroScale; ///< @b accGyroScale field, see @ref NavEkfstatusFields::accGyroScale
+        const NavEkfstatusFields::measUsed& measUsed; ///< @b measUsed field, see @ref NavEkfstatusFields::measUsed
+        const NavEkfstatusFields::reserved2& reserved2; ///< @b reserved2 field, see @ref NavEkfstatusFields::reserved2
+    };
+
+    /// @brief Get access to fields bundled into a struct
+    FieldsAsStruct fieldsAsStruct();
+
+    /// @brief Get access to @b const fields bundled into a struct
+    ConstFieldsAsStruct fieldsAsStruct() const;
+
+#else
+    COMMS_MSG_FIELDS_ACCESS(Base,
+        pulses,
+        period,
+        gyroMean,
+        temperature,
+        direction,
+        calibStatus,
+        pulseScale,
+        gyroBias,
+        gyroScale,
+        accPulseScale,
+        accGyroBias,
+        accGyroScale,
+        measUsed,
+        reserved2,
+    );
+#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     NavEkfstatus() = default;

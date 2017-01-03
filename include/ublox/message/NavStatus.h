@@ -165,11 +165,9 @@ struct NavStatusFields
 };
 
 /// @brief Definition of NAV-STATUS message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
+///     various implementation options. @n
 ///     See @ref NavStatusFields and for definition of the fields this message contains.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
@@ -178,17 +176,20 @@ class NavStatus : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_STATUS>,
         comms::option::FieldsImpl<NavStatusFields::All>,
-        comms::option::DispatchImpl<NavStatus<TMsgBase> >
+        comms::option::MsgType<NavStatus<TMsgBase> >,
+        comms::option::DispatchImpl
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_STATUS>,
         comms::option::FieldsImpl<NavStatusFields::All>,
-        comms::option::DispatchImpl<NavStatus<TMsgBase> >
+        comms::option::MsgType<NavStatus<TMsgBase> >,
+        comms::option::DispatchImpl
     > Base;
 public:
 
+#ifdef FOR_DOXYGEN_DOC_ONLY
     /// @brief Index to access the fields
     enum FieldIdx
     {
@@ -201,9 +202,39 @@ public:
         FieldIdx_msss, ///< @b msss field, see @ref NavStatusFields::msss
         FieldIdx_numOfValues ///< number of available fields
     };
+    /// @brief Access to fields bundled as a struct
+    struct FieldsAsStruct
+    {
+        NavStatusFields::iTOW& iTOW; ///< @b iTOW field, see @ref NavStatusFields::iTOW
+        NavStatusFields::gpsFix& gpsFix; ///< @b gpsFix field, see @ref NavStatusFields::gpsFix
+        NavStatusFields::flags& flags; ///< @b flags field, see @ref NavStatusFields::flags
+        NavStatusFields::fixStat& fixStat; ///< @b fixStat field, see @ref NavStatusFields::fixStat
+        NavStatusFields::flags2& flags2; ///< @b flags2 field, see @ref NavStatusFields::flags2
+        NavStatusFields::ttff& ttff; ///< @b ttff field, see @ref NavStatusFields::ttff
+        NavStatusFields::msss& msss; ///< @b msss field, see @ref NavStatusFields::msss
+    };
 
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
+    /// @brief Access to @b const fields bundled as a struct
+    struct ConstFieldsAsStruct
+    {
+        const NavStatusFields::iTOW& iTOW; ///< @b iTOW field, see @ref NavStatusFields::iTOW
+        const NavStatusFields::gpsFix& gpsFix; ///< @b gpsFix field, see @ref NavStatusFields::gpsFix
+        const NavStatusFields::flags& flags; ///< @b flags field, see @ref NavStatusFields::flags
+        const NavStatusFields::fixStat& fixStat; ///< @b fixStat field, see @ref NavStatusFields::fixStat
+        const NavStatusFields::flags2& flags2; ///< @b flags2 field, see @ref NavStatusFields::flags2
+        const NavStatusFields::ttff& ttff; ///< @b ttff field, see @ref NavStatusFields::ttff
+        const NavStatusFields::msss& msss; ///< @b msss field, see @ref NavStatusFields::msss
+    };
+
+    /// @brief Get access to fields bundled into a struct
+    FieldsAsStruct fieldsAsStruct();
+
+    /// @brief Get access to @b const fields bundled into a struct
+    ConstFieldsAsStruct fieldsAsStruct() const;
+
+#else
+    COMMS_MSG_FIELDS_ACCESS(Base, iTOW, gpsFix, flags, fixStat, flags2, ttff, msss);
+#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     NavStatus() = default;

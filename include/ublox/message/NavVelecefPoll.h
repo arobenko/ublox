@@ -37,11 +37,9 @@ struct NavVelecefPollFields
 };
 
 /// @brief Definition of NAV-VELECEF (@b poll) message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
+///     various implementation options. @n
 ///     See @ref NavVelecefPollFields and for definition of the fields this message contains.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
@@ -50,14 +48,16 @@ class NavVelecefPoll : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_VELECEF>,
         comms::option::FieldsImpl<NavVelecefPollFields::All>,
-        comms::option::DispatchImpl<NavVelecefPoll<TMsgBase> >
+        comms::option::MsgType<NavVelecefPoll<TMsgBase> >,
+        comms::option::DispatchImpl
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_VELECEF>,
         comms::option::FieldsImpl<NavVelecefPollFields::All>,
-        comms::option::DispatchImpl<NavVelecefPoll<TMsgBase> >
+        comms::option::MsgType<NavVelecefPoll<TMsgBase> >,
+        comms::option::DispatchImpl
     > Base;
 public:
 

@@ -120,11 +120,9 @@ struct NavSolFields
 };
 
 /// @brief Definition of NAV-SOL message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
+///     various implementation options. @n
 ///     See @ref NavSolFields and for definition of the fields this message contains.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
@@ -133,16 +131,20 @@ class NavSol : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_SOL>,
         comms::option::FieldsImpl<NavSolFields::All>,
-        comms::option::DispatchImpl<NavSol<TMsgBase> >
+        comms::option::MsgType<NavSol<TMsgBase> >,
+        comms::option::DispatchImpl
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_SOL>,
         comms::option::FieldsImpl<NavSolFields::All>,
-        comms::option::DispatchImpl<NavSol<TMsgBase> >
+        comms::option::MsgType<NavSol<TMsgBase> >,
+        comms::option::DispatchImpl
     > Base;
 public:
+
+#ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Index to access the fields
     enum FieldIdx
@@ -167,8 +169,78 @@ public:
         FieldIdx_numOfValues ///< number of available fields
     };
 
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
+
+    /// @brief Access to fields bundled as a struct
+    struct FieldsAsStruct
+    {
+        NavSolFields::iTOW& iTOW; ///< @b iTOW field, see @ref NavSolFields::iTOW
+        NavSolFields::fTOW& fTOW; ///< @b fTOW field, see @ref NavSolFields::fTOW
+        NavSolFields::week& week; ///< @b week field, see @ref NavSolFields::week
+        NavSolFields::gpsFix& gpsFix; ///< @b gpsFix field, see @ref NavSolFields::gpsFix
+        NavSolFields::flags& flags; ///< @b flags field, see @ref NavSolFields::flags
+        NavSolFields::ecefX& ecefX; ///< @b ecefX field, see @ref NavSolFields::ecefX
+        NavSolFields::ecefY& ecefY; ///< @b ecefY field, see @ref NavSolFields::ecefY
+        NavSolFields::ecefZ& ecefZ; ///< @b ecefZ field, see @ref NavSolFields::ecefZ
+        NavSolFields::pAcc& pAcc; ///< @b pAcc field, see @ref NavSolFields::pAcc
+        NavSolFields::ecefVX& ecefVX; ///< @b ecefVX field, see @ref NavSolFields::ecefVX
+        NavSolFields::ecefVY& ecefVY; ///< @b ecefVY field, see @ref NavSolFields::ecefVY
+        NavSolFields::ecefVZ& ecefVZ; ///< @b ecefVZ field, see @ref NavSolFields::ecefVZ
+        NavSolFields::sAcc& sAcc; ///< @b sAcc field, see @ref NavSolFields::sAcc
+        NavSolFields::pDop& pDop; ///< @b pDop field, see @ref NavSolFields::pDOP
+        NavSolFields::reserved1& reserved1; ///< @b reserved1 field, see @ref NavSolFields::reserved1
+        NavSolFields::numSV& numSV; ///< @b numSV field, see @ref NavSolFields::numSV
+        NavSolFields::reserved2& reserved2; ///< @b reserved2 field, see @ref NavSolFields::reserved2
+    };
+
+    /// @brief Access to @b const fields bundled as a struct
+    struct ConstFieldsAsStruct
+    {
+        NavSolFields::iTOW& iTOW; ///< @b iTOW field, see @ref NavSolFields::iTOW
+        NavSolFields::fTOW& fTOW; ///< @b fTOW field, see @ref NavSolFields::fTOW
+        NavSolFields::week& week; ///< @b week field, see @ref NavSolFields::week
+        NavSolFields::gpsFix& gpsFix; ///< @b gpsFix field, see @ref NavSolFields::gpsFix
+        NavSolFields::flags& flags; ///< @b flags field, see @ref NavSolFields::flags
+        NavSolFields::ecefX& ecefX; ///< @b ecefX field, see @ref NavSolFields::ecefX
+        NavSolFields::ecefY& ecefY; ///< @b ecefY field, see @ref NavSolFields::ecefY
+        NavSolFields::ecefZ& ecefZ; ///< @b ecefZ field, see @ref NavSolFields::ecefZ
+        NavSolFields::pAcc& pAcc; ///< @b pAcc field, see @ref NavSolFields::pAcc
+        NavSolFields::ecefVX& ecefVX; ///< @b ecefVX field, see @ref NavSolFields::ecefVX
+        NavSolFields::ecefVY& ecefVY; ///< @b ecefVY field, see @ref NavSolFields::ecefVY
+        NavSolFields::ecefVZ& ecefVZ; ///< @b ecefVZ field, see @ref NavSolFields::ecefVZ
+        NavSolFields::sAcc& sAcc; ///< @b sAcc field, see @ref NavSolFields::sAcc
+        NavSolFields::pDop& pDop; ///< @b pDop field, see @ref NavSolFields::pDOP
+        NavSolFields::reserved1& reserved1; ///< @b reserved1 field, see @ref NavSolFields::reserved1
+        NavSolFields::numSV& numSV; ///< @b numSV field, see @ref NavSolFields::numSV
+        NavSolFields::reserved2& reserved2; ///< @b reserved2 field, see @ref NavSolFields::reserved2
+    };
+
+    /// @brief Get access to fields bundled into a struct
+    FieldsAsStruct fieldsAsStruct();
+
+    /// @brief Get access to @b const fields bundled into a struct
+    ConstFieldsAsStruct fieldsAsStruct() const;
+
+#else
+    COMMS_MSG_FIELDS_ACCESS(Base,
+        iTOW,
+        fTOW,
+        week,
+        gpsFix,
+        flags,
+        ecefX,
+        ecefY,
+        ecefZ,
+        pAcc,
+        ecefVX,
+        ecefVY,
+        ecefVZ,
+        sAcc,
+        pDOP,
+        reserved1,
+        numSV,
+        reserved2
+    );
+#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     NavSol() = default;

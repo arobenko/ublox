@@ -218,11 +218,9 @@ struct NavPvtFields
 };
 
 /// @brief Definition of NAV-PVT message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
+///     various implementation options. @n
 ///     See @ref NavPvtFields and for definition of the fields this message contains.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
@@ -231,17 +229,20 @@ class NavPvt : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_PVT>,
         comms::option::FieldsImpl<NavPvtFields::All>,
-        comms::option::DispatchImpl<NavPvt<TMsgBase> >
+        comms::option::MsgType<NavPvt<TMsgBase> >,
+        comms::option::DispatchImpl
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_PVT>,
         comms::option::FieldsImpl<NavPvtFields::All>,
-        comms::option::DispatchImpl<NavPvt<TMsgBase> >
+        comms::option::MsgType<NavPvt<TMsgBase> >,
+        comms::option::DispatchImpl
     > Base;
 public:
 
+#ifdef FOR_DOXYGEN_DOC_ONLY
     /// @brief Index to access the fields
     enum FieldIdx
     {
@@ -278,8 +279,116 @@ public:
         FieldIdx_numOfValues ///< number of available fields
     };
 
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
+    /// @brief Access to fields bundled as a struct
+    struct FieldsAsStruct
+    {
+        NavPvtFields::iTOW& iTOW; ///< @b iTOW field, see @ref NavPvtFields::iTOW
+        NavPvtFields::year& year; ///< @b year field, see @ref NavPvtFields::year
+        NavPvtFields::month& month; ///< @b month field, see @ref NavPvtFields::month
+        NavPvtFields::day& day; ///< @b day field, see @ref NavPvtFields::day
+        NavPvtFields::hour& hour; ///< @b hour field, see @ref NavPvtFields::hour
+        NavPvtFields::min& min; ///< @b min field, see @ref NavPvtFields::min
+        NavPvtFields::sec& sec; ///< @b sec field, see @ref NavPvtFields::sec
+        NavPvtFields::valid& valid; ///< @b valid field, see @ref NavPvtFields::valid
+        NavPvtFields::tAcc& tAcc; ///< @b tAcc field, see @ref NavPvtFields::tAcc
+        NavPvtFields::nano& nano; ///< @b nano field, see @ref NavPvtFields::nano
+        NavPvtFields::fixType& fixType; ///< @b fixType field, see @ref NavPvtFields::fixType
+        NavPvtFields::flags& flags; ///< @b flags field, see @ref NavPvtFields::flags
+        NavPvtFields::reserved1& reserved1; ///< @b reserved1 field, see @ref NavPvtFields::reserved1
+        NavPvtFields::numSV& numSV; ///< @b numSV field, see @ref NavPvtFields::numSV
+        NavPvtFields::lon& lon; ///< @b lon field, see @ref NavPvtFields::lon
+        NavPvtFields::lat& lat; ///< @b lat field, see @ref NavPvtFields::lat
+        NavPvtFields::height& height; ///< @b height field, see @ref NavPvtFields::height
+        NavPvtFields::hMSL& hMSL; ///< @b hMSL field, see @ref NavPvtFields::hMSL
+        NavPvtFields::hAcc& hAcc; ///< @b hAcc field, see @ref NavPvtFields::hAcc
+        NavPvtFields::vAcc& vAcc; ///< @b vAcc field, see @ref NavPvtFields::vAcc
+        NavPvtFields::velN& velN; ///< @b velN field, see @ref NavPvtFields::velN
+        NavPvtFields::velE& velE; ///< @b velE field, see @ref NavPvtFields::velE
+        NavPvtFields::velD& velD; ///< @b velD field, see @ref NavPvtFields::velD
+        NavPvtFields::gSpeed& gSpeed; ///< @b gSpeed field, see @ref NavPvtFields::gSpeed
+        NavPvtFields::heading& heading; ///< @b heading field, see @ref NavPvtFields::heading
+        NavPvtFields::sAcc& sAcc; ///< @b sAcc field, see @ref NavPvtFields::sAcc
+        NavPvtFields::headingAcc& headingAcc; ///< @b headingAcc field, see @ref NavPvtFields::headingAcc
+        NavPvtFields::pDOP& pDOP; ///< @b pDOP field, see @ref NavPvtFields::pDOP
+        NavPvtFields::reserved2& reserved2; ///< @b reserved2 field, see @ref NavPvtFields::reserved2
+        NavPvtFields::reserved3& reserved3; ///< @b reserved3 field, see @ref NavPvtFields::reserved3
+    };
+
+    /// @brief Access to @b const fields bundled as a struct
+    struct ConstFieldsAsStruct
+    {
+        const NavPvtFields::iTOW& iTOW; ///< @b iTOW field, see @ref NavPvtFields::iTOW
+        const NavPvtFields::year& year; ///< @b year field, see @ref NavPvtFields::year
+        const NavPvtFields::month& month; ///< @b month field, see @ref NavPvtFields::month
+        const NavPvtFields::day& day; ///< @b day field, see @ref NavPvtFields::day
+        const NavPvtFields::hour& hour; ///< @b hour field, see @ref NavPvtFields::hour
+        const NavPvtFields::min& min; ///< @b min field, see @ref NavPvtFields::min
+        const NavPvtFields::sec& sec; ///< @b sec field, see @ref NavPvtFields::sec
+        const NavPvtFields::valid& valid; ///< @b valid field, see @ref NavPvtFields::valid
+        const NavPvtFields::tAcc& tAcc; ///< @b tAcc field, see @ref NavPvtFields::tAcc
+        const NavPvtFields::nano& nano; ///< @b nano field, see @ref NavPvtFields::nano
+        const NavPvtFields::fixType& fixType; ///< @b fixType field, see @ref NavPvtFields::fixType
+        const NavPvtFields::flags& flags; ///< @b flags field, see @ref NavPvtFields::flags
+        const NavPvtFields::reserved1& reserved1; ///< @b reserved1 field, see @ref NavPvtFields::reserved1
+        const NavPvtFields::numSV& numSV; ///< @b numSV field, see @ref NavPvtFields::numSV
+        const NavPvtFields::lon& lon; ///< @b lon field, see @ref NavPvtFields::lon
+        const NavPvtFields::lat& lat; ///< @b lat field, see @ref NavPvtFields::lat
+        const NavPvtFields::height& height; ///< @b height field, see @ref NavPvtFields::height
+        const NavPvtFields::hMSL& hMSL; ///< @b hMSL field, see @ref NavPvtFields::hMSL
+        const NavPvtFields::hAcc& hAcc; ///< @b hAcc field, see @ref NavPvtFields::hAcc
+        const NavPvtFields::vAcc& vAcc; ///< @b vAcc field, see @ref NavPvtFields::vAcc
+        const NavPvtFields::velN& velN; ///< @b velN field, see @ref NavPvtFields::velN
+        const NavPvtFields::velE& velE; ///< @b velE field, see @ref NavPvtFields::velE
+        const NavPvtFields::velD& velD; ///< @b velD field, see @ref NavPvtFields::velD
+        const NavPvtFields::gSpeed& gSpeed; ///< @b gSpeed field, see @ref NavPvtFields::gSpeed
+        const NavPvtFields::heading& heading; ///< @b heading field, see @ref NavPvtFields::heading
+        const NavPvtFields::sAcc& sAcc; ///< @b sAcc field, see @ref NavPvtFields::sAcc
+        const NavPvtFields::headingAcc& headingAcc; ///< @b headingAcc field, see @ref NavPvtFields::headingAcc
+        const NavPvtFields::pDOP& pDOP; ///< @b pDOP field, see @ref NavPvtFields::pDOP
+        const NavPvtFields::reserved2& reserved2; ///< @b reserved2 field, see @ref NavPvtFields::reserved2
+        const NavPvtFields::reserved3& reserved3; ///< @b reserved3 field, see @ref NavPvtFields::reserved3
+    };
+
+    /// @brief Get access to fields bundled into a struct
+    FieldsAsStruct fieldsAsStruct();
+
+    /// @brief Get access to @b const fields bundled into a struct
+    ConstFieldsAsStruct fieldsAsStruct() const;
+
+#else
+    COMMS_MSG_FIELDS_ACCESS(Base,
+        iTOW,
+        year,
+        month,
+        day,
+        hour,
+        min,
+        sec,
+        valid,
+        tAcc,
+        nano,
+        fixType,
+        flags,
+        reserved1,
+        numSV,
+        lon,
+        lat,
+        height,
+        hMSL,
+        hAcc,
+        vAcc,
+        velN,
+        velE,
+        velD,
+        gSpeed,
+        heading,
+        sAcc,
+        headingAcc,
+        pDOP,
+        reserved2,
+        reserved3
+    );
+#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     NavPvt() = default;

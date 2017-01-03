@@ -88,11 +88,9 @@ struct NavTimeutcFields
 };
 
 /// @brief Definition of NAV-TIMEUTC message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
+///     various implementation options. @n
 ///     See @ref NavTimeutcFields and for definition of the fields this message contains.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
@@ -101,17 +99,20 @@ class NavTimeutc : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_TIMEUTC>,
         comms::option::FieldsImpl<NavTimeutcFields::All>,
-        comms::option::DispatchImpl<NavTimeutc<TMsgBase> >
+        comms::option::MsgType<NavTimeutc<TMsgBase> >,
+        comms::option::DispatchImpl
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_TIMEUTC>,
         comms::option::FieldsImpl<NavTimeutcFields::All>,
-        comms::option::DispatchImpl<NavTimeutc<TMsgBase> >
+        comms::option::MsgType<NavTimeutc<TMsgBase> >,
+        comms::option::DispatchImpl
     > Base;
 public:
 
+#ifdef FOR_DOXYGEN_DOC_ONLY
     /// @brief Index to access the fields
     enum FieldIdx
     {
@@ -128,8 +129,45 @@ public:
         FieldIdx_numOfValues ///< number of available fields
     };
 
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
+    /// @brief Access to fields bundled as a struct
+    struct FieldsAsStruct
+    {
+        NavTimeutcFields::iTOW& iTOW; ///< @b iTOW field, see @ref NavTimeutcFields::iTOW
+        NavTimeutcFields::tAcc& tAcc; ///< @b tAcc field, see @ref NavTimeutcFields::tAcc
+        NavTimeutcFields::nano& nano; ///< @b nano field, see @ref NavTimeutcFields::nano
+        NavTimeutcFields::year& year; ///< @b year field, see @ref NavTimeutcFields::year
+        NavTimeutcFields::month& month; ///< @b month field, see @ref NavTimeutcFields::month
+        NavTimeutcFields::day& day; ///< @b day field, see @ref NavTimeutcFields::day
+        NavTimeutcFields::hour& hour; ///< @b hour field, see @ref NavTimeutcFields::hour
+        NavTimeutcFields::min& min; ///< @b min field, see @ref NavTimeutcFields::min
+        NavTimeutcFields::sec& sec; ///< @b sec field, see @ref NavTimeutcFields::sec
+        NavTimeutcFields::valid& valid; ///< @b valid field, see @ref NavTimeutcFields::valid
+    };
+
+    /// @brief Access to @b const fields bundled as a struct
+    struct ConstFieldsAsStruct
+    {
+        const NavTimeutcFields::iTOW& iTOW; ///< @b iTOW field, see @ref NavTimeutcFields::iTOW
+        const NavTimeutcFields::tAcc& tAcc; ///< @b tAcc field, see @ref NavTimeutcFields::tAcc
+        const NavTimeutcFields::nano& nano; ///< @b nano field, see @ref NavTimeutcFields::nano
+        const NavTimeutcFields::year& year; ///< @b year field, see @ref NavTimeutcFields::year
+        const NavTimeutcFields::month& month; ///< @b month field, see @ref NavTimeutcFields::month
+        const NavTimeutcFields::day& day; ///< @b day field, see @ref NavTimeutcFields::day
+        const NavTimeutcFields::hour& hour; ///< @b hour field, see @ref NavTimeutcFields::hour
+        const NavTimeutcFields::min& min; ///< @b min field, see @ref NavTimeutcFields::min
+        const NavTimeutcFields::sec& sec; ///< @b sec field, see @ref NavTimeutcFields::sec
+        const NavTimeutcFields::valid& valid; ///< @b valid field, see @ref NavTimeutcFields::valid
+    };
+
+    /// @brief Get access to fields bundled into a struct
+    FieldsAsStruct fieldsAsStruct();
+
+    /// @brief Get access to @b const fields bundled into a struct
+    ConstFieldsAsStruct fieldsAsStruct() const;
+
+#else
+    COMMS_MSG_FIELDS_ACCESS(Base, iTOW, tAcc, nano, year, month, day, hour, min, sec, valid);
+#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     NavTimeutc() = default;
