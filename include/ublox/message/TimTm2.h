@@ -152,11 +152,9 @@ struct TimTm2Fields
 };
 
 /// @brief Definition of TIM-TM2 message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
+///     various implementation options. @n
 ///     See @ref TimTm2Fields and for definition of the fields this message contains.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
@@ -165,17 +163,20 @@ class TimTm2 : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_TIM_TM2>,
         comms::option::FieldsImpl<TimTm2Fields::All>,
-        comms::option::DispatchImpl<TimTm2<TMsgBase> >
+        comms::option::MsgType<TimTm2<TMsgBase> >,
+        comms::option::DispatchImpl
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_TIM_TM2>,
         comms::option::FieldsImpl<TimTm2Fields::All>,
-        comms::option::DispatchImpl<TimTm2<TMsgBase> >
+        comms::option::MsgType<TimTm2<TMsgBase> >,
+        comms::option::DispatchImpl
     > Base;
 public:
 
+#ifdef FOR_DOXYGEN_DOC_ONLY
     /// @brief Index to access the fields
     enum FieldIdx
     {
@@ -192,8 +193,56 @@ public:
         FieldIdx_numOfValues ///< number of available fields
     };
 
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
+    /// @brief Access to fields bundled as a struct
+    struct FieldsAsStruct
+    {
+        TimTm2Fields::ch& ch; ///< @b ch field, see @ref TimTm2Fields::ch
+        TimTm2Fields::flags& flags; ///< @b flags field, see @ref TimTm2Fields::flags
+        TimTm2Fields::count& count; ///< @b count field, see @ref TimTm2Fields::count
+        TimTm2Fields::wnR& wnR; ///< @b wnR field, see @ref TimTm2Fields::wnR
+        TimTm2Fields::wnF& wnF; ///< @b wnF field, see @ref TimTm2Fields::wnF
+        TimTm2Fields::towMsR& towMsR; ///< @b towMsR field, see @ref TimTm2Fields::towMsR
+        TimTm2Fields::towSubMsR& towSubMsR; ///< @b towSubMsR field, see @ref TimTm2Fields::towSubMsR
+        TimTm2Fields::towMsF& towMsF; ///< @b towMsF field, see @ref TimTm2Fields::towMsF
+        TimTm2Fields::towSubMsF& towSubMsF; ///< @b towSubMsF field, see @ref TimTm2Fields::towSubMsF
+        TimTm2Fields::accEst& accEst; ///< @b accEst field, see @ref TimTm2Fields::accEst
+    };
+
+    /// @brief Access to @b const fields bundled as a struct
+    struct ConstFieldsAsStruct
+    {
+        const TimTm2Fields::ch& ch; ///< @b ch field, see @ref TimTm2Fields::ch
+        const TimTm2Fields::flags& flags; ///< @b flags field, see @ref TimTm2Fields::flags
+        const TimTm2Fields::count& count; ///< @b count field, see @ref TimTm2Fields::count
+        const TimTm2Fields::wnR& wnR; ///< @b wnR field, see @ref TimTm2Fields::wnR
+        const TimTm2Fields::wnF& wnF; ///< @b wnF field, see @ref TimTm2Fields::wnF
+        const TimTm2Fields::towMsR& towMsR; ///< @b towMsR field, see @ref TimTm2Fields::towMsR
+        const TimTm2Fields::towSubMsR& towSubMsR; ///< @b towSubMsR field, see @ref TimTm2Fields::towSubMsR
+        const TimTm2Fields::towMsF& towMsF; ///< @b towMsF field, see @ref TimTm2Fields::towMsF
+        const TimTm2Fields::towSubMsF& towSubMsF; ///< @b towSubMsF field, see @ref TimTm2Fields::towSubMsF
+        const TimTm2Fields::accEst& accEst; ///< @b accEst field, see @ref TimTm2Fields::accEst
+    };
+
+    /// @brief Get access to fields bundled into a struct
+    FieldsAsStruct fieldsAsStruct();
+
+    /// @brief Get access to @b const fields bundled into a struct
+    ConstFieldsAsStruct fieldsAsStruct() const;
+
+#else
+    COMMS_MSG_FIELDS_ACCESS(Base,
+        ch,
+        flags,
+        count,
+        wnR,
+        wnF,
+        towMsR,
+        towSubMsR,
+        towMsF,
+        towSubMsF,
+        accEst
+    );
+#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     TimTm2() = default;

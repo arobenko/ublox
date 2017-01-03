@@ -74,11 +74,9 @@ struct TimTpFields
 };
 
 /// @brief Definition of TIM-TP message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
+///     various implementation options. @n
 ///     See @ref TimTpFields and for definition of the fields this message contains.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
@@ -87,17 +85,20 @@ class TimTp : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_TIM_TP>,
         comms::option::FieldsImpl<TimTpFields::All>,
-        comms::option::DispatchImpl<TimTp<TMsgBase> >
+        comms::option::MsgType<TimTp<TMsgBase> >,
+        comms::option::DispatchImpl
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_TIM_TP>,
         comms::option::FieldsImpl<TimTpFields::All>,
-        comms::option::DispatchImpl<TimTp<TMsgBase> >
+        comms::option::MsgType<TimTp<TMsgBase> >,
+        comms::option::DispatchImpl
     > Base;
 public:
 
+#ifdef FOR_DOXYGEN_DOC_ONLY
     /// @brief Index to access the fields
     enum FieldIdx
     {
@@ -110,8 +111,37 @@ public:
         FieldIdx_numOfValues ///< number of available fields
     };
 
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
+    /// @brief Access to fields bundled as a struct
+    struct FieldsAsStruct
+    {
+        TimTpFields::towMS& towMS; ///< @b towMS field, see @ref TimTpFields::towMS
+        TimTpFields::towSubMS& towSubMS; ///< @b towSubMS field, see @ref TimTpFields::towSubMS
+        TimTpFields::qErr& qErr; ///< @b qErr field, see @ref TimTpFields::qErr
+        TimTpFields::week& week; ///< @b week field, see @ref TimTpFields::week
+        TimTpFields::flags& flags; ///< @b flags field, see @ref TimTpFields::flags
+        TimTpFields::reserved& reserved; ///< @b reserved field, see @ref TimTpFields::reserved
+    };
+
+    /// @brief Access to @b const fields bundled as a struct
+    struct ConstFieldsAsStruct
+    {
+        const TimTpFields::towMS& towMS; ///< @b towMS field, see @ref TimTpFields::towMS
+        const TimTpFields::towSubMS& towSubMS; ///< @b towSubMS field, see @ref TimTpFields::towSubMS
+        const TimTpFields::qErr& qErr; ///< @b qErr field, see @ref TimTpFields::qErr
+        const TimTpFields::week& week; ///< @b week field, see @ref TimTpFields::week
+        const TimTpFields::flags& flags; ///< @b flags field, see @ref TimTpFields::flags
+        const TimTpFields::reserved& reserved; ///< @b reserved field, see @ref TimTpFields::reserved
+    };
+
+    /// @brief Get access to fields bundled into a struct
+    FieldsAsStruct fieldsAsStruct();
+
+    /// @brief Get access to @b const fields bundled into a struct
+    ConstFieldsAsStruct fieldsAsStruct() const;
+
+#else
+    COMMS_MSG_FIELDS_ACCESS(Base, towMS, towSubMS, qErr, week, flags, reserved);
+#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     TimTp() = default;
