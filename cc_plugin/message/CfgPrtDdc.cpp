@@ -60,7 +60,7 @@ QVariantMap createProps_mode()
          .add(createReservedFunc())
          .add(slaveAddrProps.asMap())
          .add(createReservedFunc());
-    assert(props.members().size() == CfgPrtDdcFields::mode_numOfValues);
+    assert(props.members().size() == CfgPrtDdcFields::mode::FieldIdx_numOfValues);
     return props.asMap();
 }
 

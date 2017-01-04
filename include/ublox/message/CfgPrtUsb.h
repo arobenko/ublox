@@ -92,11 +92,11 @@ public:
     {
         FieldIdx_portID, ///< @b portID field, see @ref CfgPrtUsbFields::portID
         FieldIdx_reserved0, ///< @b reserved0 field, see @ref CfgPrtUsbFields::reserved0
-        FieldIdx_txReady, ///< @b txReady field, see @ref CfgPrtUsbFields::txReady
+        FieldIdx_txReady, ///< @b txReady field, see @ref CfgPrtFields::txReady
         FieldIdx_reserved2, ///< @b reserved2 field, see @ref CfgPrtUsbFields::reserved2
         FieldIdx_reserved3, ///< @b reserved3 field, see @ref CfgPrtUsbFields::reserved3
-        FieldIdx_inProtoMask, ///< @b inProtoMask field, see @ref CfgPrtUsbFields::inProtoMask
-        FieldIdx_outProtoMask, ///< @b outProtoMask field, see @ref CfgPrtUsbFields::outProtoMask
+        FieldIdx_inProtoMask, ///< @b inProtoMask field, see @ref CfgPrtFields::inProtoMask
+        FieldIdx_outProtoMask, ///< @b outProtoMask field, see @ref CfgPrtFields::outProtoMask
         FieldIdx_reserved4, ///< @b reserved4 field, see @ref CfgPrtUsbFields::reserved4
         FieldIdx_reserved5, ///< @b reserved5 field, see @ref CfgPrtUsbFields::reserved5
         FieldIdx_numOfValues ///< number of available fields
@@ -107,11 +107,11 @@ public:
     {
         CfgPrtUsbFields::portID& portID; ///< @b portID field, see @ref CfgPrtUsbFields::portID
         CfgPrtUsbFields::reserved0& reserved0; ///< @b reserved0 field, see @ref CfgPrtUsbFields::reserved0
-        CfgPrtUsbFields::txReady& txReady; ///< @b txReady field, see @ref CfgPrtUsbFields::txReady
+        CfgPrtFields::txReady& txReady; ///< @b txReady field, see @ref CfgPrtFields::txReady
         CfgPrtUsbFields::reserved2& reserved2; ///< @b reserved2 field, see @ref CfgPrtUsbFields::reserved2
         CfgPrtUsbFields::reserved3& reserved3; ///< @b reserved3 field, see @ref CfgPrtUsbFields::reserved3
-        CfgPrtUsbFields::inProtoMask& inProtoMask; ///< @b inProtoMask field, see @ref CfgPrtUsbFields::inProtoMask
-        CfgPrtUsbFields::outProtoMask& outProtoMask; ///< @b outProtoMask field, see @ref CfgPrtUsbFields::outProtoMask
+        CfgPrtFields::inProtoMask& inProtoMask; ///< @b inProtoMask field, see @ref CfgPrtFields::inProtoMask
+        CfgPrtFields::outProtoMask& outProtoMask; ///< @b outProtoMask field, see @ref CfgPrtFields::outProtoMask
         CfgPrtUsbFields::reserved4& reserved4; ///< @b reserved4 field, see @ref CfgPrtUsbFields::reserved4
         CfgPrtUsbFields::reserved5& reserved5; ///< @b reserved5 field, see @ref CfgPrtUsbFields::reserved5
     };
@@ -121,11 +121,11 @@ public:
     {
         const CfgPrtUsbFields::portID& portID; ///< @b portID field, see @ref CfgPrtUsbFields::portID
         const CfgPrtUsbFields::reserved0& reserved0; ///< @b reserved0 field, see @ref CfgPrtUsbFields::reserved0
-        const CfgPrtUsbFields::txReady& txReady; ///< @b txReady field, see @ref CfgPrtUsbFields::txReady
+        const CfgPrtFields::txReady& txReady; ///< @b txReady field, see @ref CfgPrtFields::txReady
         const CfgPrtUsbFields::reserved2& reserved2; ///< @b reserved2 field, see @ref CfgPrtUsbFields::reserved2
         const CfgPrtUsbFields::reserved3& reserved3; ///< @b reserved3 field, see @ref CfgPrtUsbFields::reserved3
-        const CfgPrtUsbFields::inProtoMask& inProtoMask; ///< @b inProtoMask field, see @ref CfgPrtUsbFields::inProtoMask
-        const CfgPrtUsbFields::outProtoMask& outProtoMask; ///< @b outProtoMask field, see @ref CfgPrtUsbFields::outProtoMask
+        const CfgPrtFields::inProtoMask& inProtoMask; ///< @b inProtoMask field, see @ref CfgPrtFields::inProtoMask
+        const CfgPrtFields::outProtoMask& outProtoMask; ///< @b outProtoMask field, see @ref CfgPrtFields::outProtoMask
         const CfgPrtUsbFields::reserved4& reserved4; ///< @b reserved4 field, see @ref CfgPrtUsbFields::reserved4
         const CfgPrtUsbFields::reserved5& reserved5; ///< @b reserved5 field, see @ref CfgPrtUsbFields::reserved5
     };

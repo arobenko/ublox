@@ -92,7 +92,7 @@ struct CfgPrtSpiFields : public CfgPrtFields
         >;
 
     /// @brief Definition of "mode" field.
-    using mode =
+    class mode : public
         field::common::BitfieldT<
             std::tuple<
                 field::common::res1T<comms::option::FixedBitLength<1> >,
@@ -103,7 +103,34 @@ struct CfgPrtSpiFields : public CfgPrtFields
                 ffCnt,
                 field::common::res4T< comms::option::FixedBitLength<16> >
             >
-        >;
+        >
+    {
+        typedef
+            field::common::BitfieldT<
+                std::tuple<
+                    field::common::res1T<comms::option::FixedBitLength<1> >,
+                    spiMode,
+                    field::common::res1T<comms::option::FixedBitLength<3> >,
+                    flowControl,
+                    field::common::res1T<comms::option::FixedBitLength<1> >,
+                    ffCnt,
+                    field::common::res4T< comms::option::FixedBitLength<16> >
+                >
+            > Base;
+    public:
+        /// @brief Allow access to internal fields.
+        /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
+        ///     related to @b comms::field::Bitfield class from COMMS library
+        ///     for details.
+        COMMS_FIELD_MEMBERS_ACCESS(Base,
+            unused0,
+            spiMode,
+            unused1,
+            flowControl,
+            unused2,
+            ffCnt,
+            unused3);
+    };
 
     /// @brief All the fields bundled in std::tuple.
     using All = std::tuple<
@@ -150,12 +177,12 @@ public:
     {
         FieldIdx_portID, ///< @b portID field, see @ref CfgPrtSpiFields::portID
         FieldIdx_reserved0, ///< @b reserved0 field, see @ref CfgPrtSpiFields::reserved0
-        FieldIdx_txReady, ///< @b txReady field, see @ref CfgPrtSpiFields::txReady
+        FieldIdx_txReady, ///< @b txReady field, see @ref CfgPrtFields::txReady
         FieldIdx_mode, ///< @b mode field, see @ref CfgPrtSpiFields::mode
         FieldIdx_reserved3, ///< @b reserved3 field, see @ref CfgPrtSpiFields::reserved3
-        FieldIdx_inProtoMask, ///< @b inProtoMask field, see @ref CfgPrtSpiFields::inProtoMask
-        FieldIdx_outProtoMask, ///< @b outProtoMask field, see @ref CfgPrtSpiFields::outProtoMask
-        FieldIdx_flags, ///< @b flags field, see @ref CfgPrtSpiFields::flags
+        FieldIdx_inProtoMask, ///< @b inProtoMask field, see @ref CfgPrtFields::inProtoMask
+        FieldIdx_outProtoMask, ///< @b outProtoMask field, see @ref CfgPrtFields::outProtoMask
+        FieldIdx_flags, ///< @b flags field, see @ref CfgPrtFields::flags
         FieldIdx_reserved5, ///< @b reserved5 field, see @ref CfgPrtSpiFields::reserved5
         FieldIdx_numOfValues ///< number of available fields
     };
@@ -165,12 +192,12 @@ public:
     {
         CfgPrtSpiFields::portID& portID; ///< @b portID field, see @ref CfgPrtSpiFields::portID
         CfgPrtSpiFields::reserved0& reserved0; ///< @b reserved0 field, see @ref CfgPrtSpiFields::reserved0
-        CfgPrtSpiFields::txReady& txReady; ///< @b txReady field, see @ref CfgPrtSpiFields::txReady
+        CfgPrtFields::txReady& txReady; ///< @b txReady field, see @ref CfgPrtFields::txReady
         CfgPrtSpiFields::mode& mode; ///< @b mode field, see @ref CfgPrtSpiFields::mode
         CfgPrtSpiFields::reserved3& reserved3; ///< @b reserved3 field, see @ref CfgPrtSpiFields::reserved3
-        CfgPrtSpiFields::inProtoMask& inProtoMask; ///< @b inProtoMask field, see @ref CfgPrtSpiFields::inProtoMask
-        CfgPrtSpiFields::outProtoMask& outProtoMask; ///< @b outProtoMask field, see @ref CfgPrtSpiFields::outProtoMask
-        CfgPrtSpiFields::flags& flags; ///< @b flags field, see @ref CfgPrtSpiFields::flags
+        CfgPrtFields::inProtoMask& inProtoMask; ///< @b inProtoMask field, see @ref CfgPrtFields::inProtoMask
+        CfgPrtFields::outProtoMask& outProtoMask; ///< @b outProtoMask field, see @ref CfgPrtFields::outProtoMask
+        CfgPrtFields::flags& flags; ///< @b flags field, see @ref CfgPrtFields::flags
         CfgPrtSpiFields::reserved5& reserved5; ///< @b reserved5 field, see @ref CfgPrtSpiFields::reserved5
     };
 
@@ -179,12 +206,12 @@ public:
     {
         const CfgPrtSpiFields::portID& portID; ///< @b portID field, see @ref CfgPrtSpiFields::portID
         const CfgPrtSpiFields::reserved0& reserved0; ///< @b reserved0 field, see @ref CfgPrtSpiFields::reserved0
-        const CfgPrtSpiFields::txReady& txReady; ///< @b txReady field, see @ref CfgPrtSpiFields::txReady
+        const CfgPrtFields::txReady& txReady; ///< @b txReady field, see @ref CfgPrtFields::txReady
         const CfgPrtSpiFields::mode& mode; ///< @b mode field, see @ref CfgPrtSpiFields::mode
         const CfgPrtSpiFields::reserved3& reserved3; ///< @b reserved3 field, see @ref CfgPrtSpiFields::reserved3
-        const CfgPrtSpiFields::inProtoMask& inProtoMask; ///< @b inProtoMask field, see @ref CfgPrtSpiFields::inProtoMask
-        const CfgPrtSpiFields::outProtoMask& outProtoMask; ///< @b outProtoMask field, see @ref CfgPrtSpiFields::outProtoMask
-        const CfgPrtSpiFields::flags& flags; ///< @b flags field, see @ref CfgPrtSpiFields::flags
+        const CfgPrtFields::inProtoMask& inProtoMask; ///< @b inProtoMask field, see @ref CfgPrtFields::inProtoMask
+        const CfgPrtFields::outProtoMask& outProtoMask; ///< @b outProtoMask field, see @ref CfgPrtFields::outProtoMask
+        const CfgPrtFields::flags& flags; ///< @b flags field, see @ref CfgPrtFields::flags
         const CfgPrtSpiFields::reserved5& reserved5; ///< @b reserved5 field, see @ref CfgPrtSpiFields::reserved5
     };
 

@@ -80,7 +80,7 @@ QVariantMap createProps_mode()
          .add(createReservedFunc())
          .add(ffCntProps.asMap())
          .add(createReservedFunc());
-    assert(props.members().size() == CfgPrtSpiFields::mode_numOfValues);
+    assert(props.members().size() == CfgPrtSpiFields::mode::FieldIdx_numOfValues);
     return props.asMap();
 }
 

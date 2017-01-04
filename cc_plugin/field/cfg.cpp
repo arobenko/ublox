@@ -73,7 +73,7 @@ QVariantMap createProps_txReady()
             .name("txReady")
             .add("en")
             .serialisedHidden();
-    assert(enProps.bits().size() == ublox::message::CfgPrtFields::en_numOfValues);
+    assert(enProps.bits().size() == ublox::message::CfgPrtFields::en::BitIdx_numOfValues);
 
     auto polProps =
         cc::property::field::ForField<ublox::message::CfgPrtFields::pol>()
@@ -89,7 +89,7 @@ QVariantMap createProps_txReady()
             .serialisedHidden();
 
     auto thresProps =
-        cc::property::field::ForField<ublox::message::CfgPrtFields::pin>()
+        cc::property::field::ForField<ublox::message::CfgPrtFields::thres>()
             .name("thres")
             .serialisedHidden();
 
@@ -101,7 +101,7 @@ QVariantMap createProps_txReady()
             .add(pinProps.asMap())
             .add(thresProps.asMap());
 
-    assert(txReadyProps.members().size() == ublox::message::CfgPrtFields::txReady_numOfValues);
+    assert(txReadyProps.members().size() == ublox::message::CfgPrtFields::txReady::FieldIdx_numOfValues);
     return txReadyProps.asMap();
 }
 
@@ -112,7 +112,7 @@ QVariantMap createProps_inProtoMask()
          .add("inUbx")
          .add("inNmea")
          .add("inRtcm");
-    assert(props.bits().size() == ublox::message::CfgPrtFields::inProtoMask_numOfValues);
+    assert(props.bits().size() == ublox::message::CfgPrtFields::inProtoMask::BitIdx_numOfValues);
     return props.asMap();
 }
 
@@ -122,7 +122,7 @@ QVariantMap createProps_outProtoMask()
     props.name("outProtoMask")
         .add("outUbx")
         .add("outNmea");
-    assert(props.bits().size() == ublox::message::CfgPrtFields::outProtoMask_numOfValues);
+    assert(props.bits().size() == ublox::message::CfgPrtFields::outProtoMask::BitIdx_numOfValues);
     return props.asMap();
 }
 
@@ -130,8 +130,8 @@ QVariantMap createProps_prtFlags()
 {
     cc::property::field::ForField<ublox::message::CfgPrtFields::flags> props;
     props.name("flags")
-         .add(ublox::message::CfgPrtFields::flags_extendedTxTimeout, "extendedTxTimeout");
-    assert(props.bits().size() == ublox::message::CfgPrtFields::flags_numOfValues);
+         .add(ublox::message::CfgPrtFields::flags::BitIdx_extendedTxTimeout, "extendedTxTimeout");
+    assert(props.bits().size() == ublox::message::CfgPrtFields::flags::BitIdx_numOfValues);
     return props.asMap();
 }
 

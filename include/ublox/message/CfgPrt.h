@@ -55,53 +55,18 @@ struct CfgPrtFields
         NumOfValues ///< number of available values
     };
 
-    /// @brief Use this enumeration to access member fields of @ref txReady bitfield.
-    enum
-    {
-        txReady_en, ///< index of @ref en member field
-        txReady_pol, ///< index of @ref pol member field
-        txReady_pin, ///< index of @ref pin member field
-        txReady_thres, ///< index of @ref thres member field
-        txReady_numOfValues ///< number of available member fields
-    };
-
-    /// @brief Bits access enumeration for single bit @ref en bitmask member
-    ///     field of @ref txReady bitfield.
-    enum
-    {
-        en_bit, ///< index of available bit
-        en_numOfValues ///< number of available bits
-    };
-
-    /// @brief Bits access enumeration for @ref inProtoMask bitmask field.
-    enum
-    {
-        inProtoMask_inUbx, ///< @b inUbx bit index
-        inProtoMask_inNmea, ///< @b inNmea bit index
-        inProtoMask_inRtcm, ///< @b inRtcm bit index
-        inProtoMask_numOfValues ///< number of available bits
-    };
-
-    /// @brief Bits access enumeration for @ref outProtoMask bitmask field.
-    enum
-    {
-        outProtoMask_outUbx, ///< @b outUbx bit index
-        outProtoMask_outNmea, ///< @b outNmea bit index
-        outProtoMask_numOfValues ///< number of available bits
-    };
-
-    /// @brief Bits access enumeration for @ref flags bitmask field.
-    enum
-    {
-        flags_extendedTxTimeout = 1, ///< @b extendedTxTimeout bit index
-        flags_numOfValues ///< upper limit for available bits
-    };
-
     /// @brief Definition of "reserved0" field.
     using reserved0 = field::common::res1;
 
     /// @brief Definition of "en" single bit bitmask member field in @ref txReady bitfield.
-    using en = field::common::X1T<comms::option::FixedBitLength<1> >;
+    struct en : public field::common::X1T<comms::option::FixedBitLength<1> >
+    {
+        /// @brief Provide names for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS(bit);
+    };
 
     /// @brief Definition of "pol" member field in @ref txReady bitfield
     using pol =
@@ -126,8 +91,8 @@ struct CfgPrtFields
         >;
 
 
-    /// @brief Definition of "txReady" field.
-    using txReady =
+    /// @brief Definition of "txReady" field
+    class txReady : public
         field::common::BitfieldT<
             std::tuple<
                 en,
@@ -135,22 +100,60 @@ struct CfgPrtFields
                 pin,
                 thres
             >
-        >;
+        >
+    {
+        typedef
+            field::common::BitfieldT<
+                std::tuple<
+                    en,
+                    pol,
+                    pin,
+                    thres
+                >
+            > Base;
+    public:
+        /// @brief Allow access to internal fields.
+        /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
+        ///     related to @b comms::field::Bitfield class from COMMS library
+        ///     for details.
+        COMMS_FIELD_MEMBERS_ACCESS(Base, en, pol, pin, thres);
+    };
 
     /// @brief Definition of "reserved3" field
     using reserved3 = field::common::res4;
 
     /// @brief Definition of "inProtoMask" field.
-    using inProtoMask =
-        field::common::X2T<comms::option::BitmaskReservedBits<0xfff8, 0> >;
+    struct inProtoMask : public
+            field::common::X2T<comms::option::BitmaskReservedBits<0xfff8, 0> >
+    {
+        /// @brief Provide names for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS(inUbx, inNmea, inRtcm);
+    };
 
     /// @brief Definition of "outProtoMask" field.
-    using outProtoMask =
-        field::common::X2T<comms::option::BitmaskReservedBits<0xfffc, 0> >;
+    struct outProtoMask : public
+        field::common::X2T<comms::option::BitmaskReservedBits<0xfffc, 0> >
+    {
+        /// @brief Provide names for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS(outUbx, outNmea);
+    };
 
     /// @brief Definition of "flags" field.
-    using flags =
-        field::common::X2T<comms::option::BitmaskReservedBits<0xfffd, 0> >;
+    struct flags : public
+        field::common::X2T<comms::option::BitmaskReservedBits<0xfffd, 0> >
+    {
+        /// @brief Provide names for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS(extendedTxTimeout=1);
+    };
 
     /// @brief Definition of "reserved5" field
     using reserved5 = field::common::res2;

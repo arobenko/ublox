@@ -187,12 +187,12 @@ public:
     {
         FieldIdx_portID, ///< @b portID field, see @ref CfgPrtUartFields::portID
         FieldIdx_reserved0, ///< @b reserved0 field, see @ref CfgPrtUartFields::reserved0
-        FieldIdx_txReady, ///< @b txReady field, see @ref CfgPrtUartFields::txReady
+        FieldIdx_txReady, ///< @b txReady field, see @ref CfgPrtFields::txReady
         FieldIdx_mode, ///< @b mode field, see @ref CfgPrtUartFields::mode
         FieldIdx_baudRate, ///< @b baudRate field, see @ref CfgPrtUartFields::baudRate
-        FieldIdx_inProtoMask, ///< @b inProtoMask field, see @ref CfgPrtUartFields::inProtoMask
-        FieldIdx_outProtoMask, ///< @b outProtoMask field, see @ref CfgPrtUartFields::outProtoMask
-        FieldIdx_flags, ///< @b flags field, see @ref CfgPrtUartFields::flags
+        FieldIdx_inProtoMask, ///< @b inProtoMask field, see @ref CfgPrtFields::inProtoMask
+        FieldIdx_outProtoMask, ///< @b outProtoMask field, see @ref CfgPrtFields::outProtoMask
+        FieldIdx_flags, ///< @b flags field, see @ref CfgPrtFields::flags
         FieldIdx_reserved5, ///< @b reserved5 field, see @ref CfgPrtUartFields::reserved5
         FieldIdx_numOfValues ///< number of available fields
     };
@@ -202,12 +202,12 @@ public:
     {
         CfgPrtUartFields::portID& portID; ///< @b portID field, see @ref CfgPrtUartFields::portID
         CfgPrtUartFields::reserved0& reserved0; ///< @b reserved0 field, see @ref CfgPrtUartFields::reserved0
-        CfgPrtUartFields::txReady& txReady; ///< @b txReady field, see @ref CfgPrtUartFields::txReady
+        CfgPrtFields::txReady& txReady; ///< @b txReady field, see @ref CfgPrtFields::txReady
         CfgPrtUartFields::mode& mode; ///< @b mode field, see @ref CfgPrtUartFields::mode
         CfgPrtUartFields::baudRate& baudRate; ///< @b baudRate field, see @ref CfgPrtUartFields::baudRate
-        CfgPrtUartFields::inProtoMask& inProtoMask; ///< @b inProtoMask field, see @ref CfgPrtUartFields::inProtoMask
-        CfgPrtUartFields::outProtoMask& outProtoMask; ///< @b outProtoMask field, see @ref CfgPrtUartFields::outProtoMask
-        CfgPrtUartFields::flags& flags; ///< @b flags field, see @ref CfgPrtUartFields::flags
+        CfgPrtFields::inProtoMask& inProtoMask; ///< @b inProtoMask field, see @ref CfgPrtFields::inProtoMask
+        CfgPrtFields::outProtoMask& outProtoMask; ///< @b outProtoMask field, see @ref CfgPrtFields::outProtoMask
+        CfgPrtFields::flags& flags; ///< @b flags field, see @ref CfgPrtFields::flags
         CfgPrtUartFields::reserved5& reserved5; ///< @b reserved5 field, see @ref CfgPrtUartFields::reserved5
     };
 
@@ -216,12 +216,12 @@ public:
     {
         CfgPrtUartFields::portID& portID; ///< @b portID field, see @ref CfgPrtUartFields::portID
         CfgPrtUartFields::reserved0& reserved0; ///< @b reserved0 field, see @ref CfgPrtUartFields::reserved0
-        CfgPrtUartFields::txReady& txReady; ///< @b txReady field, see @ref CfgPrtUartFields::txReady
+        CfgPrtFields::txReady& txReady; ///< @b txReady field, see @ref CfgPrtFields::txReady
         CfgPrtUartFields::mode& mode; ///< @b mode field, see @ref CfgPrtUartFields::mode
         CfgPrtUartFields::baudRate& baudRate; ///< @b baudRate field, see @ref CfgPrtUartFields::baudRate
-        CfgPrtUartFields::inProtoMask& inProtoMask; ///< @b inProtoMask field, see @ref CfgPrtUartFields::inProtoMask
-        CfgPrtUartFields::outProtoMask& outProtoMask; ///< @b outProtoMask field, see @ref CfgPrtUartFields::outProtoMask
-        CfgPrtUartFields::flags& flags; ///< @b flags field, see @ref CfgPrtUartFields::flags
+        CfgPrtFields::inProtoMask& inProtoMask; ///< @b inProtoMask field, see @ref CfgPrtFields::inProtoMask
+        CfgPrtFields::outProtoMask& outProtoMask; ///< @b outProtoMask field, see @ref CfgPrtFields::outProtoMask
+        CfgPrtFields::flags& flags; ///< @b flags field, see @ref CfgPrtFields::flags
         CfgPrtUartFields::reserved5& reserved5; ///< @b reserved5 field, see @ref CfgPrtUartFields::reserved5
     };
 
