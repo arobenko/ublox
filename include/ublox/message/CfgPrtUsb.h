@@ -74,9 +74,7 @@ class CfgPrtUsb : public
         comms::option::StaticNumIdImpl<MsgId_CFG_PRT>,
         comms::option::FieldsImpl<CfgPrtUsbFields::All>,
         comms::option::MsgType<CfgPrtUsb<TMsgBase> >,
-        comms::option::DispatchImpl,
-        comms::option::MsgDoRead,
-        comms::option::MsgDoRefresh
+        comms::option::HasDoRefresh
     >
 {
     typedef comms::MessageBase<
@@ -84,9 +82,7 @@ class CfgPrtUsb : public
         comms::option::StaticNumIdImpl<MsgId_CFG_PRT>,
         comms::option::FieldsImpl<CfgPrtUsbFields::All>,
         comms::option::MsgType<CfgPrtUsb<TMsgBase> >,
-        comms::option::DispatchImpl,
-        comms::option::MsgDoRead,
-        comms::option::MsgDoRefresh
+        comms::option::HasDoRefresh
     > Base;
 public:
 

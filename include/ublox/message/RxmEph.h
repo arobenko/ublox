@@ -77,9 +77,7 @@ class RxmEph : public
         comms::option::StaticNumIdImpl<MsgId_RXM_EPH>,
         comms::option::FieldsImpl<RxmEphFields::All>,
         comms::option::MsgType<RxmEph<TMsgBase> >,
-        comms::option::DispatchImpl,
-        comms::option::MsgDoRead,
-        comms::option::MsgDoRefresh
+        comms::option::HasDoRefresh
     >
 {
     typedef comms::MessageBase<
@@ -87,9 +85,7 @@ class RxmEph : public
         comms::option::StaticNumIdImpl<MsgId_RXM_EPH>,
         comms::option::FieldsImpl<RxmEphFields::All>,
         comms::option::MsgType<RxmEph<TMsgBase> >,
-        comms::option::DispatchImpl,
-        comms::option::MsgDoRead,
-        comms::option::MsgDoRefresh
+        comms::option::HasDoRefresh
     > Base;
 public:
 

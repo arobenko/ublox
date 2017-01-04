@@ -48,16 +48,14 @@ class CfgNavx5Poll : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_NAVX5>,
         comms::option::FieldsImpl<CfgNavx5PollFields::All>,
-        comms::option::MsgType<CfgNavx5Poll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<CfgNavx5Poll<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_NAVX5>,
         comms::option::FieldsImpl<CfgNavx5PollFields::All>,
-        comms::option::MsgType<CfgNavx5Poll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<CfgNavx5Poll<TMsgBase> >
     > Base;
 public:
 

@@ -69,9 +69,7 @@ class AidAlm : public
         comms::option::StaticNumIdImpl<MsgId_AID_ALM>,
         comms::option::FieldsImpl<AidAlmFields::All>,
         comms::option::MsgType<AidAlm<TMsgBase> >,
-        comms::option::DispatchImpl,
-        comms::option::MsgDoRead,
-        comms::option::MsgDoRefresh
+        comms::option::HasDoRefresh
     >
 {
     typedef comms::MessageBase<
@@ -79,9 +77,7 @@ class AidAlm : public
         comms::option::StaticNumIdImpl<MsgId_AID_ALM>,
         comms::option::FieldsImpl<AidAlmFields::All>,
         comms::option::MsgType<AidAlm<TMsgBase> >,
-        comms::option::DispatchImpl,
-        comms::option::MsgDoRead,
-        comms::option::MsgDoRefresh
+        comms::option::HasDoRefresh
     > Base;
 public:
 

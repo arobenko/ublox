@@ -47,16 +47,14 @@ class CfgAntPoll : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_ANT>,
         comms::option::FieldsImpl<CfgAntPollFields::All>,
-        comms::option::MsgType<CfgAntPoll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<CfgAntPoll<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_ANT>,
         comms::option::FieldsImpl<CfgAntPollFields::All>,
-        comms::option::MsgType<CfgAntPoll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<CfgAntPoll<TMsgBase> >
     > Base;
 public:
 

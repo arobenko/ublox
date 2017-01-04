@@ -55,16 +55,14 @@ class InfStringMsgBase : public
         TMsgBase,
         comms::option::StaticNumIdImpl<TId>,
         comms::option::FieldsImpl<InfStringMsgBaseFields::All>,
-        comms::option::MsgType<InfStringMsgBase<TId, TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<InfStringMsgBase<TId, TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<TId>,
         comms::option::FieldsImpl<InfStringMsgBaseFields::All>,
-        comms::option::MsgType<InfStringMsgBase<TId, TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<InfStringMsgBase<TId, TMsgBase> >
     > Base;
 public:
 

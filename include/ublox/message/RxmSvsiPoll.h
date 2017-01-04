@@ -48,16 +48,14 @@ class RxmSvsiPoll : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_RXM_SVSI>,
         comms::option::FieldsImpl<RxmSvsiPollFields::All>,
-        comms::option::MsgType<RxmSvsiPoll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<RxmSvsiPoll<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_RXM_SVSI>,
         comms::option::FieldsImpl<RxmSvsiPollFields::All>,
-        comms::option::MsgType<RxmSvsiPoll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<RxmSvsiPoll<TMsgBase> >
     > Base;
 public:
 

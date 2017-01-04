@@ -61,16 +61,14 @@ class AidAlpData : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_ALP>,
         comms::option::FieldsImpl<AidAlpDataFields::All>,
-        comms::option::MsgType<AidAlpData<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<AidAlpData<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_ALP>,
         comms::option::FieldsImpl<AidAlpDataFields::All>,
-        comms::option::MsgType<AidAlpData<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<AidAlpData<TMsgBase> >
     > Base;
 public:
 #ifdef FOR_DOXYGEN_DOC_ONLY

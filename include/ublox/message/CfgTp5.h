@@ -114,16 +114,14 @@ class CfgTp5 : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_TP5>,
         comms::option::FieldsImpl<CfgTp5Fields::All>,
-        comms::option::MsgType<CfgTp5<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<CfgTp5<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_TP5>,
         comms::option::FieldsImpl<CfgTp5Fields::All>,
-        comms::option::MsgType<CfgTp5<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<CfgTp5<TMsgBase> >
     > Base;
 public:
 

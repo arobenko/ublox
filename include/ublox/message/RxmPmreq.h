@@ -68,16 +68,14 @@ class RxmPmreq : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_RXM_PMREQ>,
         comms::option::FieldsImpl<RxmPmreqFields::All>,
-        comms::option::MsgType<RxmPmreq<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<RxmPmreq<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_RXM_PMREQ>,
         comms::option::FieldsImpl<RxmPmreqFields::All>,
-        comms::option::MsgType<RxmPmreq<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<RxmPmreq<TMsgBase> >
     > Base;
 public:
 

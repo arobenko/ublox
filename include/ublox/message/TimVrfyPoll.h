@@ -48,16 +48,14 @@ class TimVrfyPoll : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_TIM_VRFY>,
         comms::option::FieldsImpl<TimVrfyPollFields::All>,
-        comms::option::MsgType<TimVrfyPoll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<TimVrfyPoll<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_TIM_VRFY>,
         comms::option::FieldsImpl<TimVrfyPollFields::All>,
-        comms::option::MsgType<TimVrfyPoll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<TimVrfyPoll<TMsgBase> >
     > Base;
 public:
 

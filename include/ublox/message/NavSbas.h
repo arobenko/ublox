@@ -205,9 +205,7 @@ class NavSbas : public
         comms::option::StaticNumIdImpl<MsgId_NAV_SBAS>,
         comms::option::FieldsImpl<NavSbasFields::All>,
         comms::option::MsgType<NavSbas<TMsgBase> >,
-        comms::option::DispatchImpl,
-        comms::option::MsgDoRead,
-        comms::option::MsgDoRefresh
+        comms::option::HasDoRefresh
     >
 {
     typedef comms::MessageBase<
@@ -215,9 +213,7 @@ class NavSbas : public
         comms::option::StaticNumIdImpl<MsgId_NAV_SBAS>,
         comms::option::FieldsImpl<NavSbasFields::All>,
         comms::option::MsgType<NavSbas<TMsgBase> >,
-        comms::option::DispatchImpl,
-        comms::option::MsgDoRead,
-        comms::option::MsgDoRefresh
+        comms::option::HasDoRefresh
     > Base;
 public:
 

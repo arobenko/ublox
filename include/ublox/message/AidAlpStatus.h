@@ -77,18 +77,14 @@ class AidAlpStatus : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_ALP>,
         comms::option::FieldsImpl<AidAlpStatusFields::All>,
-        comms::option::MsgType<AidAlpStatus<TMsgBase> >,
-        comms::option::DispatchImpl,
-        comms::option::MsgDoRead
+        comms::option::MsgType<AidAlpStatus<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_ALP>,
         comms::option::FieldsImpl<AidAlpStatusFields::All>,
-        comms::option::MsgType<AidAlpStatus<TMsgBase> >,
-        comms::option::DispatchImpl,
-        comms::option::MsgDoRead
+        comms::option::MsgType<AidAlpStatus<TMsgBase> >
     > Base;
 public:
 

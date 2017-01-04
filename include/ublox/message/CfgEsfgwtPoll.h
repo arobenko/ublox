@@ -49,16 +49,14 @@ class CfgEsfgwtPoll : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_ESFGWT>,
         comms::option::FieldsImpl<CfgEsfgwtPollFields::All>,
-        comms::option::MsgType<CfgEsfgwtPoll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<CfgEsfgwtPoll<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_ESFGWT>,
         comms::option::FieldsImpl<CfgEsfgwtPollFields::All>,
-        comms::option::MsgType<CfgEsfgwtPoll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<CfgEsfgwtPoll<TMsgBase> >
     > Base;
 public:
 

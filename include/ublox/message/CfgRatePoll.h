@@ -48,16 +48,14 @@ class CfgRatePoll : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_RATE>,
         comms::option::FieldsImpl<CfgRatePollFields::All>,
-        comms::option::MsgType<CfgRatePoll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<CfgRatePoll<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_RATE>,
         comms::option::FieldsImpl<CfgRatePollFields::All>,
-        comms::option::MsgType<CfgRatePoll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<CfgRatePoll<TMsgBase> >
     > Base;
 public:
 

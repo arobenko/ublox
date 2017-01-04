@@ -49,16 +49,14 @@ class AidIniPoll : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_INI>,
         comms::option::FieldsImpl<AidIniPollFields::All>,
-        comms::option::MsgType<AidIniPoll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<AidIniPoll<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_INI>,
         comms::option::FieldsImpl<AidIniPollFields::All>,
-        comms::option::MsgType<AidIniPoll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<AidIniPoll<TMsgBase> >
     > Base;
 public:
 

@@ -48,16 +48,14 @@ class MonIoPoll : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_MON_IO>,
         comms::option::FieldsImpl<MonIoPollFields::All>,
-        comms::option::MsgType<MonIoPoll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<MonIoPoll<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_MON_IO>,
         comms::option::FieldsImpl<MonIoPollFields::All>,
-        comms::option::MsgType<MonIoPoll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<MonIoPoll<TMsgBase> >
     > Base;
 public:
 

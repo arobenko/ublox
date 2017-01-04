@@ -48,16 +48,14 @@ class NavEkfstatusPoll : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_EKFSTATUS>,
         comms::option::FieldsImpl<NavEkfstatusPollFields::All>,
-        comms::option::MsgType<NavEkfstatusPoll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<NavEkfstatusPoll<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_EKFSTATUS>,
         comms::option::FieldsImpl<NavEkfstatusPollFields::All>,
-        comms::option::MsgType<NavEkfstatusPoll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<NavEkfstatusPoll<TMsgBase> >
     > Base;
 public:
 

@@ -48,16 +48,14 @@ class NavVelnedPoll : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_VELNED>,
         comms::option::FieldsImpl<NavVelnedPollFields::All>,
-        comms::option::MsgType<NavVelnedPoll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<NavVelnedPoll<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_VELNED>,
         comms::option::FieldsImpl<NavVelnedPollFields::All>,
-        comms::option::MsgType<NavVelnedPoll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<NavVelnedPoll<TMsgBase> >
     > Base;
 public:
 

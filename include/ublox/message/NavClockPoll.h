@@ -48,16 +48,14 @@ class NavClockPoll : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_CLOCK>,
         comms::option::FieldsImpl<NavClockPollFields::All>,
-        comms::option::MsgType<NavClockPoll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<NavClockPoll<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_CLOCK>,
         comms::option::FieldsImpl<NavClockPollFields::All>,
-        comms::option::MsgType<NavClockPoll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<NavClockPoll<TMsgBase> >
     > Base;
 public:
 

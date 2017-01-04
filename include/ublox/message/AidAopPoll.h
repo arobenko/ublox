@@ -48,16 +48,14 @@ class AidAopPoll : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_AOP>,
         comms::option::FieldsImpl<AidAopPollFields::All>,
-        comms::option::MsgType<AidAopPoll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<AidAopPoll<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_AOP>,
         comms::option::FieldsImpl<AidAopPollFields::All>,
-        comms::option::MsgType<AidAopPoll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<AidAopPoll<TMsgBase> >
     > Base;
 public:
 

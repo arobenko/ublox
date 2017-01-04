@@ -85,16 +85,14 @@ class TimTp : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_TIM_TP>,
         comms::option::FieldsImpl<TimTpFields::All>,
-        comms::option::MsgType<TimTp<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<TimTp<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_TIM_TP>,
         comms::option::FieldsImpl<TimTpFields::All>,
-        comms::option::MsgType<TimTp<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<TimTp<TMsgBase> >
     > Base;
 public:
 

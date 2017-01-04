@@ -48,16 +48,14 @@ class NavVelecefPoll : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_VELECEF>,
         comms::option::FieldsImpl<NavVelecefPollFields::All>,
-        comms::option::MsgType<NavVelecefPoll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<NavVelecefPoll<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_VELECEF>,
         comms::option::FieldsImpl<NavVelecefPollFields::All>,
-        comms::option::MsgType<NavVelecefPoll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<NavVelecefPoll<TMsgBase> >
     > Base;
 public:
 

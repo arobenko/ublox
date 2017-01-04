@@ -70,16 +70,14 @@ class NavClock : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_CLOCK>,
         comms::option::FieldsImpl<NavClockFields::All>,
-        comms::option::MsgType<NavClock<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<NavClock<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_CLOCK>,
         comms::option::FieldsImpl<NavClockFields::All>,
-        comms::option::MsgType<NavClock<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<NavClock<TMsgBase> >
     > Base;
 public:
 

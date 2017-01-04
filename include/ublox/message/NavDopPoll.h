@@ -48,16 +48,14 @@ class NavDopPoll : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_DOP>,
         comms::option::FieldsImpl<NavDopPollFields::All>,
-        comms::option::MsgType<NavDopPoll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<NavDopPoll<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_DOP>,
         comms::option::FieldsImpl<NavDopPollFields::All>,
-        comms::option::MsgType<NavDopPoll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<NavDopPoll<TMsgBase> >
     > Base;
 public:
 

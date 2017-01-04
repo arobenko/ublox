@@ -252,9 +252,7 @@ class AidIni : public
         comms::option::StaticNumIdImpl<MsgId_AID_INI>,
         comms::option::FieldsImpl<AidIniFields::All>,
         comms::option::MsgType<AidIni<TMsgBase> >,
-        comms::option::DispatchImpl,
-        comms::option::MsgDoRead,
-        comms::option::MsgDoRefresh
+        comms::option::HasDoRefresh
     >
 {
     typedef comms::MessageBase<
@@ -262,9 +260,7 @@ class AidIni : public
         comms::option::StaticNumIdImpl<MsgId_AID_INI>,
         comms::option::FieldsImpl<AidIniFields::All>,
         comms::option::MsgType<AidIni<TMsgBase> >,
-        comms::option::DispatchImpl,
-        comms::option::MsgDoRead,
-        comms::option::MsgDoRefresh
+        comms::option::HasDoRefresh
     > Base;
 public:
 

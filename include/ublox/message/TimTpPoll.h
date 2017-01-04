@@ -48,16 +48,14 @@ class TimTpPoll : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_TIM_TP>,
         comms::option::FieldsImpl<TimTpPollFields::All>,
-        comms::option::MsgType<TimTpPoll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<TimTpPoll<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_TIM_TP>,
         comms::option::FieldsImpl<TimTpPollFields::All>,
-        comms::option::MsgType<TimTpPoll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<TimTpPoll<TMsgBase> >
     > Base;
 public:
 

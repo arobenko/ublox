@@ -90,16 +90,14 @@ class CfgLogfilter : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_LOGFILTER>,
         comms::option::FieldsImpl<CfgLogfilterFields::All>,
-        comms::option::MsgType<CfgLogfilter<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<CfgLogfilter<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_LOGFILTER>,
         comms::option::FieldsImpl<CfgLogfilterFields::All>,
-        comms::option::MsgType<CfgLogfilter<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<CfgLogfilter<TMsgBase> >
     > Base;
 public:
 

@@ -48,16 +48,14 @@ class MonMsgppPoll : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_MON_MSGPP>,
         comms::option::FieldsImpl<MonMsgppPollFields::All>,
-        comms::option::MsgType<MonMsgppPoll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<MonMsgppPoll<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_MON_MSGPP>,
         comms::option::FieldsImpl<MonMsgppPollFields::All>,
-        comms::option::MsgType<MonMsgppPoll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<MonMsgppPoll<TMsgBase> >
     > Base;
 public:
 

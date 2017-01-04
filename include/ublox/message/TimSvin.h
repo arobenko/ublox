@@ -86,16 +86,14 @@ class TimSvin : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_TIM_SVIN>,
         comms::option::FieldsImpl<TimSvinFields::All>,
-        comms::option::MsgType<TimSvin<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<TimSvin<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_TIM_SVIN>,
         comms::option::FieldsImpl<TimSvinFields::All>,
-        comms::option::MsgType<TimSvin<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<TimSvin<TMsgBase> >
     > Base;
 public:
 

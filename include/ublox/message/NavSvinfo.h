@@ -188,9 +188,7 @@ class NavSvinfo : public
         comms::option::StaticNumIdImpl<MsgId_NAV_SVINFO>,
         comms::option::FieldsImpl<NavSvinfoFields::All>,
         comms::option::MsgType<NavSvinfo<TMsgBase> >,
-        comms::option::DispatchImpl,
-        comms::option::MsgDoRead,
-        comms::option::MsgDoRefresh
+        comms::option::HasDoRefresh
     >
 {
     typedef comms::MessageBase<
@@ -198,9 +196,7 @@ class NavSvinfo : public
         comms::option::StaticNumIdImpl<MsgId_NAV_SVINFO>,
         comms::option::FieldsImpl<NavSvinfoFields::All>,
         comms::option::MsgType<NavSvinfo<TMsgBase> >,
-        comms::option::DispatchImpl,
-        comms::option::MsgDoRead,
-        comms::option::MsgDoRefresh
+        comms::option::HasDoRefresh
     > Base;
 public:
 

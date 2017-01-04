@@ -48,16 +48,14 @@ class MonHwPoll : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_MON_HW>,
         comms::option::FieldsImpl<MonHwPollFields::All>,
-        comms::option::MsgType<MonHwPoll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<MonHwPoll<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_MON_HW>,
         comms::option::FieldsImpl<MonHwPollFields::All>,
-        comms::option::MsgType<MonHwPoll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<MonHwPoll<TMsgBase> >
     > Base;
 public:
 

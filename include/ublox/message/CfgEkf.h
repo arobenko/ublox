@@ -152,16 +152,14 @@ class CfgEkf : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_EKF>,
         comms::option::FieldsImpl<CfgEkfFields::All>,
-        comms::option::MsgType<CfgEkf<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<CfgEkf<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_EKF>,
         comms::option::FieldsImpl<CfgEkfFields::All>,
-        comms::option::MsgType<CfgEkf<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<CfgEkf<TMsgBase> >
     > Base;
 public:
 

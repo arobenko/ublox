@@ -136,16 +136,14 @@ class LogRetrievepos : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_LOG_RETRIEVEPOS>,
         comms::option::FieldsImpl<LogRetrieveposFields::All>,
-        comms::option::MsgType<LogRetrievepos<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<LogRetrievepos<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_LOG_RETRIEVEPOS>,
         comms::option::FieldsImpl<LogRetrieveposFields::All>,
-        comms::option::MsgType<LogRetrievepos<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<LogRetrievepos<TMsgBase> >
     > Base;
 public:
 

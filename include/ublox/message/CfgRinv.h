@@ -70,16 +70,14 @@ class CfgRinv : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_RINV>,
         comms::option::FieldsImpl<CfgRinvFields::All>,
-        comms::option::MsgType<CfgRinv<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<CfgRinv<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_RINV>,
         comms::option::FieldsImpl<CfgRinvFields::All>,
-        comms::option::MsgType<CfgRinv<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<CfgRinv<TMsgBase> >
     > Base;
 public:
 

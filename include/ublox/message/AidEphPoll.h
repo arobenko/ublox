@@ -49,16 +49,14 @@ class AidEphPoll : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_EPH>,
         comms::option::FieldsImpl<AidEphPollFields::All>,
-        comms::option::MsgType<AidEphPoll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<AidEphPoll<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_EPH>,
         comms::option::FieldsImpl<AidEphPollFields::All>,
-        comms::option::MsgType<AidEphPoll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<AidEphPoll<TMsgBase> >
     > Base;
 public:
 

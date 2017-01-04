@@ -54,16 +54,14 @@ class CfgDatStandard : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_DAT>,
         comms::option::FieldsImpl<CfgDatStandardFields::All>,
-        comms::option::MsgType<CfgDatStandard<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<CfgDatStandard<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_DAT>,
         comms::option::FieldsImpl<CfgDatStandardFields::All>,
-        comms::option::MsgType<CfgDatStandard<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<CfgDatStandard<TMsgBase> >
     > Base;
 public:
 

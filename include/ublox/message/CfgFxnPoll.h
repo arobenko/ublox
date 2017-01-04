@@ -48,16 +48,14 @@ class CfgFxnPoll : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_FXN>,
         comms::option::FieldsImpl<CfgFxnPollFields::All>,
-        comms::option::MsgType<CfgFxnPoll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<CfgFxnPoll<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_FXN>,
         comms::option::FieldsImpl<CfgFxnPollFields::All>,
-        comms::option::MsgType<CfgFxnPoll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<CfgFxnPoll<TMsgBase> >
     > Base;
 public:
 

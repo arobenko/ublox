@@ -217,16 +217,14 @@ class MonHw : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_MON_HW>,
         comms::option::FieldsImpl<MonHwFields::All>,
-        comms::option::MsgType<MonHw<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<MonHw<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_MON_HW>,
         comms::option::FieldsImpl<MonHwFields::All>,
-        comms::option::MsgType<MonHw<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<MonHw<TMsgBase> >
     > Base;
 public:
 

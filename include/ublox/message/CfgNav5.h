@@ -193,16 +193,14 @@ class CfgNav5 : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_NAV5>,
         comms::option::FieldsImpl<CfgNav5Fields::All>,
-        comms::option::MsgType<CfgNav5<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<CfgNav5<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_NAV5>,
         comms::option::FieldsImpl<CfgNav5Fields::All>,
-        comms::option::MsgType<CfgNav5<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<CfgNav5<TMsgBase> >
     > Base;
 public:
 

@@ -160,16 +160,14 @@ class CfgItfm : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_ITFM>,
         comms::option::FieldsImpl<CfgItfmFields::All>,
-        comms::option::MsgType<CfgItfm<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<CfgItfm<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_ITFM>,
         comms::option::FieldsImpl<CfgItfmFields::All>,
-        comms::option::MsgType<CfgItfm<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<CfgItfm<TMsgBase> >
     > Base;
 public:
 

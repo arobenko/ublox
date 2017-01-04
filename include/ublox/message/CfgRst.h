@@ -120,16 +120,14 @@ class CfgRst : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_RST>,
         comms::option::FieldsImpl<CfgRstFields::All>,
-        comms::option::MsgType<CfgRst<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<CfgRst<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_RST>,
         comms::option::FieldsImpl<CfgRstFields::All>,
-        comms::option::MsgType<CfgRst<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<CfgRst<TMsgBase> >
     > Base;
 public:
 

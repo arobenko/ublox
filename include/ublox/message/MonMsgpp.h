@@ -86,16 +86,14 @@ class MonMsgpp : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_MON_MSGPP>,
         comms::option::FieldsImpl<MonMsgppFields::All>,
-        comms::option::MsgType<MonMsgpp<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<MonMsgpp<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_MON_MSGPP>,
         comms::option::FieldsImpl<MonMsgppFields::All>,
-        comms::option::MsgType<MonMsgpp<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<MonMsgpp<TMsgBase> >
     > Base;
 public:
 

@@ -48,16 +48,14 @@ class LogInfoPoll : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_LOG_INFO>,
         comms::option::FieldsImpl<LogInfoPollFields::All>,
-        comms::option::MsgType<LogInfoPoll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<LogInfoPoll<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_LOG_INFO>,
         comms::option::FieldsImpl<LogInfoPollFields::All>,
-        comms::option::MsgType<LogInfoPoll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<LogInfoPoll<TMsgBase> >
     > Base;
 public:
 

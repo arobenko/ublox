@@ -48,16 +48,14 @@ class RxmAlmPoll : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_RXM_ALM>,
         comms::option::FieldsImpl<RxmAlmPollFields::All>,
-        comms::option::MsgType<RxmAlmPoll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<RxmAlmPoll<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_RXM_ALM>,
         comms::option::FieldsImpl<RxmAlmPollFields::All>,
-        comms::option::MsgType<RxmAlmPoll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<RxmAlmPoll<TMsgBase> >
     > Base;
 public:
 

@@ -99,16 +99,14 @@ class NavTimeutc : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_TIMEUTC>,
         comms::option::FieldsImpl<NavTimeutcFields::All>,
-        comms::option::MsgType<NavTimeutc<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<NavTimeutc<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_TIMEUTC>,
         comms::option::FieldsImpl<NavTimeutcFields::All>,
-        comms::option::MsgType<NavTimeutc<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<NavTimeutc<TMsgBase> >
     > Base;
 public:
 

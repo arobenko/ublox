@@ -101,9 +101,7 @@ class AidAlpsrv : public
         comms::option::StaticNumIdImpl<MsgId_AID_ALPSRV>,
         comms::option::FieldsImpl<AidAlpsrvFields::All>,
         comms::option::MsgType<AidAlpsrv<TMsgBase> >,
-        comms::option::DispatchImpl,
-        comms::option::MsgDoRead,
-        comms::option::MsgDoRefresh
+        comms::option::HasDoRefresh
     >
 {
     typedef comms::MessageBase<
@@ -111,9 +109,7 @@ class AidAlpsrv : public
         comms::option::StaticNumIdImpl<MsgId_AID_ALPSRV>,
         comms::option::FieldsImpl<AidAlpsrvFields::All>,
         comms::option::MsgType<AidAlpsrv<TMsgBase> >,
-        comms::option::DispatchImpl,
-        comms::option::MsgDoRead,
-        comms::option::MsgDoRefresh
+        comms::option::HasDoRefresh
     > Base;
 public:
 

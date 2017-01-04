@@ -115,16 +115,14 @@ class TimVrfy : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_TIM_VRFY>,
         comms::option::FieldsImpl<TimVrfyFields::All>,
-        comms::option::MsgType<TimVrfy<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<TimVrfy<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_TIM_VRFY>,
         comms::option::FieldsImpl<TimVrfyFields::All>,
-        comms::option::MsgType<TimVrfy<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<TimVrfy<TMsgBase> >
     > Base;
 public:
 

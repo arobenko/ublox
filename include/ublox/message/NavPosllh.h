@@ -78,16 +78,14 @@ class NavPosllh : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_POSLLH>,
         comms::option::FieldsImpl<NavPosllhFields::All>,
-        comms::option::MsgType<NavPosllh<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<NavPosllh<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_POSLLH>,
         comms::option::FieldsImpl<NavPosllhFields::All>,
-        comms::option::MsgType<NavPosllh<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<NavPosllh<TMsgBase> >
     > Base;
 public:
 

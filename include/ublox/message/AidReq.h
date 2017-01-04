@@ -48,16 +48,14 @@ class AidReq : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_REQ>,
         comms::option::FieldsImpl<AidReqFields::All>,
-        comms::option::MsgType<AidReq<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<AidReq<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_REQ>,
         comms::option::FieldsImpl<AidReqFields::All>,
-        comms::option::MsgType<AidReq<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<AidReq<TMsgBase> >
     > Base;
 public:
 

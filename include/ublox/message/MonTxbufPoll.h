@@ -48,16 +48,14 @@ class MonTxbufPoll : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_MON_TXBUF>,
         comms::option::FieldsImpl<MonTxbufPollFields::All>,
-        comms::option::MsgType<MonTxbufPoll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<MonTxbufPoll<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_MON_TXBUF>,
         comms::option::FieldsImpl<MonTxbufPollFields::All>,
-        comms::option::MsgType<MonTxbufPoll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<MonTxbufPoll<TMsgBase> >
     > Base;
 public:
 

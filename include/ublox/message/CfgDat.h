@@ -94,16 +94,14 @@ class CfgDat : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_DAT>,
         comms::option::FieldsImpl<CfgDatFields::All>,
-        comms::option::MsgType<CfgDat<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<CfgDat<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_DAT>,
         comms::option::FieldsImpl<CfgDatFields::All>,
-        comms::option::MsgType<CfgDat<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<CfgDat<TMsgBase> >
     > Base;
 public:
 

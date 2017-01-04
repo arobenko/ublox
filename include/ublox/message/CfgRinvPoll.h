@@ -48,16 +48,14 @@ class CfgRinvPoll : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_RINV>,
         comms::option::FieldsImpl<CfgRinvPollFields::All>,
-        comms::option::MsgType<CfgRinvPoll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<CfgRinvPoll<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_RINV>,
         comms::option::FieldsImpl<CfgRinvPollFields::All>,
-        comms::option::MsgType<CfgRinvPoll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<CfgRinvPoll<TMsgBase> >
     > Base;
 public:
 

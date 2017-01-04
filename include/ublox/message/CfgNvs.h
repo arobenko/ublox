@@ -95,16 +95,14 @@ class CfgNvs : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_NVS>,
         comms::option::FieldsImpl<CfgNvsFields::All>,
-        comms::option::MsgType<CfgNvs<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<CfgNvs<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_NVS>,
         comms::option::FieldsImpl<CfgNvsFields::All>,
-        comms::option::MsgType<CfgNvs<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<CfgNvs<TMsgBase> >
     > Base;
 public:
 

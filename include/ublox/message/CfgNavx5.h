@@ -222,16 +222,14 @@ class CfgNavx5 : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_NAVX5>,
         comms::option::FieldsImpl<CfgNavx5Fields::All>,
-        comms::option::MsgType<CfgNavx5<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<CfgNavx5<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_NAVX5>,
         comms::option::FieldsImpl<CfgNavx5Fields::All>,
-        comms::option::MsgType<CfgNavx5<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<CfgNavx5<TMsgBase> >
     > Base;
 public:
 

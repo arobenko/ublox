@@ -48,16 +48,14 @@ class MonVerPoll : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_MON_VER>,
         comms::option::FieldsImpl<MonVerPollFields::All>,
-        comms::option::MsgType<MonVerPoll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<MonVerPoll<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_MON_VER>,
         comms::option::FieldsImpl<MonVerPollFields::All>,
-        comms::option::MsgType<MonVerPoll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<MonVerPoll<TMsgBase> >
     > Base;
 public:
 

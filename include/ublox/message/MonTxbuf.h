@@ -123,16 +123,14 @@ class MonTxbuf : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_MON_TXBUF>,
         comms::option::FieldsImpl<MonTxbufFields::All>,
-        comms::option::MsgType<MonTxbuf<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<MonTxbuf<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_MON_TXBUF>,
         comms::option::FieldsImpl<MonTxbufFields::All>,
-        comms::option::MsgType<MonTxbuf<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<MonTxbuf<TMsgBase> >
     > Base;
 public:
 

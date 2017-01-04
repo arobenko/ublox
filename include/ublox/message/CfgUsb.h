@@ -101,16 +101,14 @@ class CfgUsb : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_USB>,
         comms::option::FieldsImpl<CfgUsbFields::All>,
-        comms::option::MsgType<CfgUsb<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<CfgUsb<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_USB>,
         comms::option::FieldsImpl<CfgUsbFields::All>,
-        comms::option::MsgType<CfgUsb<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<CfgUsb<TMsgBase> >
     > Base;
 public:
 

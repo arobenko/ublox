@@ -48,16 +48,14 @@ class CfgGnssPoll : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_GNSS>,
         comms::option::FieldsImpl<CfgGnssPollFields::All>,
-        comms::option::MsgType<CfgGnssPoll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<CfgGnssPoll<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_GNSS>,
         comms::option::FieldsImpl<CfgGnssPollFields::All>,
-        comms::option::MsgType<CfgGnssPoll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<CfgGnssPoll<TMsgBase> >
     > Base;
 public:
 

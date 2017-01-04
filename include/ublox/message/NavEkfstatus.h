@@ -162,16 +162,14 @@ class NavEkfstatus : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_EKFSTATUS>,
         comms::option::FieldsImpl<NavEkfstatusFields::All>,
-        comms::option::MsgType<NavEkfstatus<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<NavEkfstatus<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_EKFSTATUS>,
         comms::option::FieldsImpl<NavEkfstatusFields::All>,
-        comms::option::MsgType<NavEkfstatus<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<NavEkfstatus<TMsgBase> >
     > Base;
 public:
 

@@ -48,16 +48,14 @@ class CfgLogfilterPoll : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_LOGFILTER>,
         comms::option::FieldsImpl<CfgLogfilterPollFields::All>,
-        comms::option::MsgType<CfgLogfilterPoll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<CfgLogfilterPoll<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_LOGFILTER>,
         comms::option::FieldsImpl<CfgLogfilterPollFields::All>,
-        comms::option::MsgType<CfgLogfilterPoll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<CfgLogfilterPoll<TMsgBase> >
     > Base;
 public:
 

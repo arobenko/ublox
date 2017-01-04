@@ -64,16 +64,14 @@ class MonRxr : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_MON_RXR>,
         comms::option::FieldsImpl<MonRxrFields::All>,
-        comms::option::MsgType<MonRxr<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<MonRxr<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_MON_RXR>,
         comms::option::FieldsImpl<MonRxrFields::All>,
-        comms::option::MsgType<MonRxr<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<MonRxr<TMsgBase> >
     > Base;
 public:
 

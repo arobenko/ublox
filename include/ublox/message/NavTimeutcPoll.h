@@ -48,16 +48,14 @@ class NavTimeutcPoll : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_TIMEUTC>,
         comms::option::FieldsImpl<NavTimeutcPollFields::All>,
-        comms::option::MsgType<NavTimeutcPoll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<NavTimeutcPoll<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_TIMEUTC>,
         comms::option::FieldsImpl<NavTimeutcPollFields::All>,
-        comms::option::MsgType<NavTimeutcPoll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<NavTimeutcPoll<TMsgBase> >
     > Base;
 public:
 

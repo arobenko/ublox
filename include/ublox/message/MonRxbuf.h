@@ -70,16 +70,14 @@ class MonRxbuf : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_MON_RXBUF>,
         comms::option::FieldsImpl<MonRxbufFields::All>,
-        comms::option::MsgType<MonRxbuf<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<MonRxbuf<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_MON_RXBUF>,
         comms::option::FieldsImpl<MonRxbufFields::All>,
-        comms::option::MsgType<MonRxbuf<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<MonRxbuf<TMsgBase> >
     > Base;
 public:
 

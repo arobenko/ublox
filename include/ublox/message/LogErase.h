@@ -48,16 +48,14 @@ class LogErase : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_LOG_ERASE>,
         comms::option::FieldsImpl<LogEraseFields::All>,
-        comms::option::MsgType<LogErase<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<LogErase<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_LOG_ERASE>,
         comms::option::FieldsImpl<LogEraseFields::All>,
-        comms::option::MsgType<LogErase<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<LogErase<TMsgBase> >
     > Base;
 public:
 

@@ -53,16 +53,14 @@ class AckNak : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_ACK_NAK>,
         comms::option::FieldsImpl<AckNakFields::All>,
-        comms::option::MsgType<AckNak<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<AckNak<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_ACK_NAK>,
         comms::option::FieldsImpl<AckNakFields::All>,
-        comms::option::MsgType<AckNak<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<AckNak<TMsgBase> >
     > Base;
 public:
 

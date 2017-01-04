@@ -74,18 +74,14 @@ class LogFindtime : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_LOG_FINDTIME>,
         comms::option::FieldsImpl<LogFindtimeFields::All>,
-        comms::option::MsgType<LogFindtime<TMsgBase> >,
-        comms::option::DispatchImpl,
-        comms::option::MsgDoRead
+        comms::option::MsgType<LogFindtime<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_LOG_FINDTIME>,
         comms::option::FieldsImpl<LogFindtimeFields::All>,
-        comms::option::MsgType<LogFindtime<TMsgBase> >,
-        comms::option::DispatchImpl,
-        comms::option::MsgDoRead
+        comms::option::MsgType<LogFindtime<TMsgBase> >
     > Base;
 public:
 

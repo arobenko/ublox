@@ -176,16 +176,14 @@ class NavStatus : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_STATUS>,
         comms::option::FieldsImpl<NavStatusFields::All>,
-        comms::option::MsgType<NavStatus<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<NavStatus<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_STATUS>,
         comms::option::FieldsImpl<NavStatusFields::All>,
-        comms::option::MsgType<NavStatus<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<NavStatus<TMsgBase> >
     > Base;
 public:
 

@@ -48,16 +48,14 @@ class NavSbasPoll : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_SBAS>,
         comms::option::FieldsImpl<NavSbasPollFields::All>,
-        comms::option::MsgType<NavSbasPoll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<NavSbasPoll<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_SBAS>,
         comms::option::FieldsImpl<NavSbasPollFields::All>,
-        comms::option::MsgType<NavSbasPoll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<NavSbasPoll<TMsgBase> >
     > Base;
 public:
 

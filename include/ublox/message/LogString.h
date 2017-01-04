@@ -53,16 +53,14 @@ class LogString : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_LOG_STRING>,
         comms::option::FieldsImpl<LogStringFields::All>,
-        comms::option::MsgType<LogString<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<LogString<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_LOG_STRING>,
         comms::option::FieldsImpl<LogStringFields::All>,
-        comms::option::MsgType<LogString<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<LogString<TMsgBase> >
     > Base;
 public:
 

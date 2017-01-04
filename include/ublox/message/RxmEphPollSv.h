@@ -54,16 +54,14 @@ class RxmEphPollSv : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_RXM_EPH>,
         comms::option::FieldsImpl<RxmEphPollSvFields::All>,
-        comms::option::MsgType<RxmEphPollSv<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<RxmEphPollSv<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_RXM_EPH>,
         comms::option::FieldsImpl<RxmEphPollSvFields::All>,
-        comms::option::MsgType<RxmEphPollSv<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<RxmEphPollSv<TMsgBase> >
     > Base;
 public:
 

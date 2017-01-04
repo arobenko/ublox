@@ -87,16 +87,14 @@ class NavVelned : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_VELNED>,
         comms::option::FieldsImpl<NavVelnedFields::All>,
-        comms::option::MsgType<NavVelned<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<NavVelned<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_VELNED>,
         comms::option::FieldsImpl<NavVelnedFields::All>,
-        comms::option::MsgType<NavVelned<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<NavVelned<TMsgBase> >
     > Base;
 public:
 

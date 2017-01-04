@@ -48,16 +48,14 @@ class AidData : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_DATA>,
         comms::option::FieldsImpl<AidDataFields::All>,
-        comms::option::MsgType<AidData<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<AidData<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_DATA>,
         comms::option::FieldsImpl<AidDataFields::All>,
-        comms::option::MsgType<AidData<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<AidData<TMsgBase> >
     > Base;
 public:
 

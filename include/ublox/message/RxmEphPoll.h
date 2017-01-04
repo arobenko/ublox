@@ -49,16 +49,14 @@ class RxmEphPoll : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_RXM_EPH>,
         comms::option::FieldsImpl<RxmEphPollFields::All>,
-        comms::option::MsgType<RxmEphPoll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<RxmEphPoll<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_RXM_EPH>,
         comms::option::FieldsImpl<RxmEphPollFields::All>,
-        comms::option::MsgType<RxmEphPoll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<RxmEphPoll<TMsgBase> >
     > Base;
 public:
 

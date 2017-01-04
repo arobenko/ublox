@@ -138,16 +138,14 @@ class AidHui : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_HUI>,
         comms::option::FieldsImpl<AidHuiFields::All>,
-        comms::option::MsgType<AidHui<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<AidHui<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_HUI>,
         comms::option::FieldsImpl<AidHuiFields::All>,
-        comms::option::MsgType<AidHui<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<AidHui<TMsgBase> >
     > Base;
 public:
 

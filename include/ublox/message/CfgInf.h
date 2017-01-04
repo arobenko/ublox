@@ -122,16 +122,14 @@ class CfgInf : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_INF>,
         comms::option::FieldsImpl<CfgInfFields::All>,
-        comms::option::MsgType<CfgInf<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<CfgInf<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_INF>,
         comms::option::FieldsImpl<CfgInfFields::All>,
-        comms::option::MsgType<CfgInf<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<CfgInf<TMsgBase> >
     > Base;
 public:
 

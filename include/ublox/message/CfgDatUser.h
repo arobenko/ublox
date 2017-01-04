@@ -86,16 +86,14 @@ class CfgDatUser : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_DAT>,
         comms::option::FieldsImpl<CfgDatUserFields::All>,
-        comms::option::MsgType<CfgDatUser<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<CfgDatUser<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_DAT>,
         comms::option::FieldsImpl<CfgDatUserFields::All>,
-        comms::option::MsgType<CfgDatUser<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<CfgDatUser<TMsgBase> >
     > Base;
 public:
 

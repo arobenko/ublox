@@ -49,16 +49,14 @@ class NavDgpsPoll : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_DGPS>,
         comms::option::FieldsImpl<NavDgpsPollFields::All>,
-        comms::option::MsgType<NavDgpsPoll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<NavDgpsPoll<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_DGPS>,
         comms::option::FieldsImpl<NavDgpsPollFields::All>,
-        comms::option::MsgType<NavDgpsPoll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<NavDgpsPoll<TMsgBase> >
     > Base;
 public:
 

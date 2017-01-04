@@ -174,9 +174,7 @@ class NavDgps : public
         comms::option::StaticNumIdImpl<MsgId_NAV_DGPS>,
         comms::option::FieldsImpl<NavDgpsFields::All>,
         comms::option::MsgType<NavDgps<TMsgBase> >,
-        comms::option::DispatchImpl,
-        comms::option::MsgDoRead,
-        comms::option::MsgDoRefresh
+        comms::option::HasDoRefresh
     >
 {
     typedef comms::MessageBase<
@@ -184,9 +182,7 @@ class NavDgps : public
         comms::option::StaticNumIdImpl<MsgId_NAV_DGPS>,
         comms::option::FieldsImpl<NavDgpsFields::All>,
         comms::option::MsgType<NavDgps<TMsgBase> >,
-        comms::option::DispatchImpl,
-        comms::option::MsgDoRead,
-        comms::option::MsgDoRefresh
+        comms::option::HasDoRefresh
     > Base;
 public:
 

@@ -229,16 +229,14 @@ class NavPvt : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_PVT>,
         comms::option::FieldsImpl<NavPvtFields::All>,
-        comms::option::MsgType<NavPvt<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<NavPvt<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_PVT>,
         comms::option::FieldsImpl<NavPvtFields::All>,
-        comms::option::MsgType<NavPvt<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<NavPvt<TMsgBase> >
     > Base;
 public:
 

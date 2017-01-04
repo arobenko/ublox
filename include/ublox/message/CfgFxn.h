@@ -98,16 +98,14 @@ class CfgFxn : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_FXN>,
         comms::option::FieldsImpl<CfgFxnFields::All>,
-        comms::option::MsgType<CfgFxn<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<CfgFxn<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_FXN>,
         comms::option::FieldsImpl<CfgFxnFields::All>,
-        comms::option::MsgType<CfgFxn<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<CfgFxn<TMsgBase> >
     > Base;
 public:
 

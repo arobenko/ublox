@@ -77,9 +77,7 @@ class AidEph : public
         comms::option::StaticNumIdImpl<MsgId_AID_EPH>,
         comms::option::FieldsImpl<AidEphFields::All>,
         comms::option::MsgType<AidEph<TMsgBase> >,
-        comms::option::DispatchImpl,
-        comms::option::MsgDoRead,
-        comms::option::MsgDoRefresh
+        comms::option::HasDoRefresh
     >
 {
     typedef comms::MessageBase<
@@ -87,9 +85,7 @@ class AidEph : public
         comms::option::StaticNumIdImpl<MsgId_AID_EPH>,
         comms::option::FieldsImpl<AidEphFields::All>,
         comms::option::MsgType<AidEph<TMsgBase> >,
-        comms::option::DispatchImpl,
-        comms::option::MsgDoRead,
-        comms::option::MsgDoRefresh
+        comms::option::HasDoRefresh
     > Base;
 public:
 

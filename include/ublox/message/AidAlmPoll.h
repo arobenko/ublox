@@ -51,16 +51,14 @@ class AidAlmPoll : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_ALM>,
         comms::option::FieldsImpl<AidAlmPollFields::All>,
-        comms::option::MsgType<AidAlmPoll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<AidAlmPoll<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_ALM>,
         comms::option::FieldsImpl<AidAlmPollFields::All>,
-        comms::option::MsgType<AidAlmPoll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<AidAlmPoll<TMsgBase> >
     > Base;
 public:
 

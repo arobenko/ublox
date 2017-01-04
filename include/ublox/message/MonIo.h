@@ -113,16 +113,14 @@ class MonIo : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_MON_IO>,
         comms::option::FieldsImpl<MonIoFields::All>,
-        comms::option::MsgType<MonIo<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<MonIo<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_MON_IO>,
         comms::option::FieldsImpl<MonIoFields::All>,
-        comms::option::MsgType<MonIo<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<MonIo<TMsgBase> >
     > Base;
 public:
 

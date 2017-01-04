@@ -48,16 +48,14 @@ class NavStatusPoll : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_STATUS>,
         comms::option::FieldsImpl<NavStatusPollFields::All>,
-        comms::option::MsgType<NavStatusPoll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<NavStatusPoll<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_STATUS>,
         comms::option::FieldsImpl<NavStatusPollFields::All>,
-        comms::option::MsgType<NavStatusPoll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<NavStatusPoll<TMsgBase> >
     > Base;
 public:
 

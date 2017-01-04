@@ -157,9 +157,7 @@ class CfgGnss : public
         comms::option::StaticNumIdImpl<MsgId_CFG_GNSS>,
         comms::option::FieldsImpl<CfgGnssFields::All>,
         comms::option::MsgType<CfgGnss<TMsgBase> >,
-        comms::option::DispatchImpl,
-        comms::option::MsgDoRead,
-        comms::option::MsgDoRefresh
+        comms::option::HasDoRefresh
     >
 {
     typedef comms::MessageBase<
@@ -167,9 +165,7 @@ class CfgGnss : public
         comms::option::StaticNumIdImpl<MsgId_CFG_GNSS>,
         comms::option::FieldsImpl<CfgGnssFields::All>,
         comms::option::MsgType<CfgGnss<TMsgBase> >,
-        comms::option::DispatchImpl,
-        comms::option::MsgDoRead,
-        comms::option::MsgDoRefresh
+        comms::option::HasDoRefresh
     > Base;
 public:
 

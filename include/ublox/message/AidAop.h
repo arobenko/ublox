@@ -74,16 +74,14 @@ class AidAop : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_AOP>,
         comms::option::FieldsImpl<AidAopFields::All>,
-        comms::option::MsgType<AidAop<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<AidAop<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_AOP>,
         comms::option::FieldsImpl<AidAopFields::All>,
-        comms::option::MsgType<AidAop<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<AidAop<TMsgBase> >
     > Base;
 public:
 

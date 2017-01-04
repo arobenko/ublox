@@ -64,16 +64,14 @@ class MonVer : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_MON_VER>,
         comms::option::FieldsImpl<MonVerFields::All>,
-        comms::option::MsgType<MonVer<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<MonVer<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_MON_VER>,
         comms::option::FieldsImpl<MonVerFields::All>,
-        comms::option::MsgType<MonVer<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<MonVer<TMsgBase> >
     > Base;
 public:
 

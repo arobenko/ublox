@@ -97,16 +97,14 @@ class CfgTmode : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_TMODE>,
         comms::option::FieldsImpl<CfgTmodeFields::All>,
-        comms::option::MsgType<CfgTmode<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<CfgTmode<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_TMODE>,
         comms::option::FieldsImpl<CfgTmodeFields::All>,
-        comms::option::MsgType<CfgTmode<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<CfgTmode<TMsgBase> >
     > Base;
 public:
 

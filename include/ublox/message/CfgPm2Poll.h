@@ -48,16 +48,14 @@ class CfgPm2Poll : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_PM2>,
         comms::option::FieldsImpl<CfgPm2PollFields::All>,
-        comms::option::MsgType<CfgPm2Poll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<CfgPm2Poll<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_PM2>,
         comms::option::FieldsImpl<CfgPm2PollFields::All>,
-        comms::option::MsgType<CfgPm2Poll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<CfgPm2Poll<TMsgBase> >
     > Base;
 public:
 

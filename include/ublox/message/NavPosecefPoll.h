@@ -48,16 +48,14 @@ class NavPosecefPoll : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_POSECEF>,
         comms::option::FieldsImpl<NavPosecefPollFields::All>,
-        comms::option::MsgType<NavPosecefPoll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<NavPosecefPoll<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_POSECEF>,
         comms::option::FieldsImpl<NavPosecefPollFields::All>,
-        comms::option::MsgType<NavPosecefPoll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<NavPosecefPoll<TMsgBase> >
     > Base;
 public:
 

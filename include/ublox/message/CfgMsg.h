@@ -63,16 +63,14 @@ class CfgMsg : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_MSG>,
         comms::option::FieldsImpl<CfgMsgFields::All>,
-        comms::option::MsgType<CfgMsg<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<CfgMsg<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_MSG>,
         comms::option::FieldsImpl<CfgMsgFields::All>,
-        comms::option::MsgType<CfgMsg<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<CfgMsg<TMsgBase> >
     > Base;
 public:
 

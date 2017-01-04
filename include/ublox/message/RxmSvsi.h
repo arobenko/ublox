@@ -176,9 +176,7 @@ class RxmSvsi : public
         comms::option::StaticNumIdImpl<MsgId_RXM_SVSI>,
         comms::option::FieldsImpl<RxmSvsiFields::All>,
         comms::option::MsgType<RxmSvsi<TMsgBase> >,
-        comms::option::DispatchImpl,
-        comms::option::MsgDoRead,
-        comms::option::MsgDoRefresh
+        comms::option::HasDoRefresh
     >
 {
     typedef comms::MessageBase<
@@ -186,9 +184,7 @@ class RxmSvsi : public
         comms::option::StaticNumIdImpl<MsgId_RXM_SVSI>,
         comms::option::FieldsImpl<RxmSvsiFields::All>,
         comms::option::MsgType<RxmSvsi<TMsgBase> >,
-        comms::option::DispatchImpl,
-        comms::option::MsgDoRead,
-        comms::option::MsgDoRefresh
+        comms::option::HasDoRefresh
     > Base;
 public:
 

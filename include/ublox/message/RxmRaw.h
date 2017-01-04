@@ -123,9 +123,7 @@ class RxmRaw : public
         comms::option::StaticNumIdImpl<MsgId_RXM_RAW>,
         comms::option::FieldsImpl<RxmRawFields::All>,
         comms::option::MsgType<RxmRaw<TMsgBase> >,
-        comms::option::DispatchImpl,
-        comms::option::MsgDoRead,
-        comms::option::MsgDoRefresh
+        comms::option::HasDoRefresh
     >
 {
     typedef comms::MessageBase<
@@ -133,9 +131,7 @@ class RxmRaw : public
         comms::option::StaticNumIdImpl<MsgId_RXM_RAW>,
         comms::option::FieldsImpl<RxmRawFields::All>,
         comms::option::MsgType<RxmRaw<TMsgBase> >,
-        comms::option::DispatchImpl,
-        comms::option::MsgDoRead,
-        comms::option::MsgDoRefresh
+        comms::option::HasDoRefresh
     > Base;
 public:
 

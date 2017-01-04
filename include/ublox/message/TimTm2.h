@@ -163,16 +163,14 @@ class TimTm2 : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_TIM_TM2>,
         comms::option::FieldsImpl<TimTm2Fields::All>,
-        comms::option::MsgType<TimTm2<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<TimTm2<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_TIM_TM2>,
         comms::option::FieldsImpl<TimTm2Fields::All>,
-        comms::option::MsgType<TimTm2<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<TimTm2<TMsgBase> >
     > Base;
 public:
 

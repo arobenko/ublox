@@ -48,16 +48,14 @@ class CfgEkfPoll : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_EKF>,
         comms::option::FieldsImpl<CfgEkfPollFields::All>,
-        comms::option::MsgType<CfgEkfPoll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<CfgEkfPoll<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_EKF>,
         comms::option::FieldsImpl<CfgEkfPollFields::All>,
-        comms::option::MsgType<CfgEkfPoll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<CfgEkfPoll<TMsgBase> >
     > Base;
 public:
 

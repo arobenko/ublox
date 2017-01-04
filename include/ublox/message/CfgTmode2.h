@@ -157,9 +157,7 @@ class CfgTmode2 : public
         comms::option::StaticNumIdImpl<MsgId_CFG_TMODE2>,
         comms::option::FieldsImpl<CfgTmode2Fields::All>,
         comms::option::MsgType<CfgTmode2<TMsgBase> >,
-        comms::option::DispatchImpl,
-        comms::option::MsgDoRead,
-        comms::option::MsgDoRefresh
+        comms::option::HasDoRefresh
     >
 {
     typedef comms::MessageBase<
@@ -167,9 +165,7 @@ class CfgTmode2 : public
         comms::option::StaticNumIdImpl<MsgId_CFG_TMODE2>,
         comms::option::FieldsImpl<CfgTmode2Fields::All>,
         comms::option::MsgType<CfgTmode2<TMsgBase> >,
-        comms::option::DispatchImpl,
-        comms::option::MsgDoRead,
-        comms::option::MsgDoRefresh
+        comms::option::HasDoRefresh
     > Base;
 public:
 

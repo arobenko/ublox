@@ -48,16 +48,14 @@ class CfgPrtPoll : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_PRT>,
         comms::option::FieldsImpl<CfgPrtPollFields::All>,
-        comms::option::MsgType<CfgPrtPoll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<CfgPrtPoll<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_PRT>,
         comms::option::FieldsImpl<CfgPrtPollFields::All>,
-        comms::option::MsgType<CfgPrtPoll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<CfgPrtPoll<TMsgBase> >
     > Base;
 public:
 

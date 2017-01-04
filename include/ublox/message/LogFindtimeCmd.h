@@ -96,18 +96,14 @@ class LogFindtimeCmd : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_LOG_FINDTIME>,
         comms::option::FieldsImpl<LogFindtimeCmdFields::All>,
-        comms::option::MsgType<LogFindtimeCmd<TMsgBase> >,
-        comms::option::DispatchImpl,
-        comms::option::MsgDoRead
+        comms::option::MsgType<LogFindtimeCmd<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_LOG_FINDTIME>,
         comms::option::FieldsImpl<LogFindtimeCmdFields::All>,
-        comms::option::MsgType<LogFindtimeCmd<TMsgBase> >,
-        comms::option::DispatchImpl,
-        comms::option::MsgDoRead
+        comms::option::MsgType<LogFindtimeCmd<TMsgBase> >
     > Base;
 public:
 

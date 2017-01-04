@@ -66,16 +66,14 @@ class RxmSfrb : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_RXM_SFRB>,
         comms::option::FieldsImpl<RxmSfrbFields::All>,
-        comms::option::MsgType<RxmSfrb<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<RxmSfrb<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_RXM_SFRB>,
         comms::option::FieldsImpl<RxmSfrbFields::All>,
-        comms::option::MsgType<RxmSfrb<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<RxmSfrb<TMsgBase> >
     > Base;
 public:
 

@@ -137,16 +137,14 @@ class CfgEsfgwt : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_ESFGWT>,
         comms::option::FieldsImpl<CfgEsfgwtFields::All>,
-        comms::option::MsgType<CfgEsfgwt<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<CfgEsfgwt<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_ESFGWT>,
         comms::option::FieldsImpl<CfgEsfgwtFields::All>,
-        comms::option::MsgType<CfgEsfgwt<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<CfgEsfgwt<TMsgBase> >
     > Base;
 public:
 

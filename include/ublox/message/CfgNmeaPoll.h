@@ -48,16 +48,14 @@ class CfgNmeaPoll : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_NMEA>,
         comms::option::FieldsImpl<CfgNmeaPollFields::All>,
-        comms::option::MsgType<CfgNmeaPoll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<CfgNmeaPoll<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_NMEA>,
         comms::option::FieldsImpl<CfgNmeaPollFields::All>,
-        comms::option::MsgType<CfgNmeaPoll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<CfgNmeaPoll<TMsgBase> >
     > Base;
 public:
 

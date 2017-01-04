@@ -109,16 +109,14 @@ class CfgAnt : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_ANT>,
         comms::option::FieldsImpl<CfgAntFields::All>,
-        comms::option::MsgType<CfgAnt<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<CfgAnt<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_ANT>,
         comms::option::FieldsImpl<CfgAntFields::All>,
-        comms::option::MsgType<CfgAnt<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<CfgAnt<TMsgBase> >
     > Base;
 public:
 

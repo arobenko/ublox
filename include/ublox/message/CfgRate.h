@@ -78,16 +78,14 @@ class CfgRate : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_RATE>,
         comms::option::FieldsImpl<CfgRateFields::All>,
-        comms::option::MsgType<CfgRate<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<CfgRate<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_RATE>,
         comms::option::FieldsImpl<CfgRateFields::All>,
-        comms::option::MsgType<CfgRate<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<CfgRate<TMsgBase> >
     > Base;
 public:
 

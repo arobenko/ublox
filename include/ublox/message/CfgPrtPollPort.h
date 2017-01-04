@@ -58,16 +58,14 @@ class CfgPrtPollPort : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_PRT>,
         comms::option::FieldsImpl<CfgPrtPollPortFields::All>,
-        comms::option::MsgType<CfgPrtPollPort<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<CfgPrtPollPort<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_PRT>,
         comms::option::FieldsImpl<CfgPrtPollPortFields::All>,
-        comms::option::MsgType<CfgPrtPollPort<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<CfgPrtPollPort<TMsgBase> >
     > Base;
 public:
 

@@ -48,16 +48,14 @@ class CfgItfmPoll : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_ITFM>,
         comms::option::FieldsImpl<CfgItfmPollFields::All>,
-        comms::option::MsgType<CfgItfmPoll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<CfgItfmPoll<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_ITFM>,
         comms::option::FieldsImpl<CfgItfmPollFields::All>,
-        comms::option::MsgType<CfgItfmPoll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<CfgItfmPoll<TMsgBase> >
     > Base;
 public:
 

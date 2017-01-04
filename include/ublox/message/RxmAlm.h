@@ -69,9 +69,7 @@ class RxmAlm : public
         comms::option::StaticNumIdImpl<MsgId_RXM_ALM>,
         comms::option::FieldsImpl<RxmAlmFields::All>,
         comms::option::MsgType<RxmAlm<TMsgBase> >,
-        comms::option::DispatchImpl,
-        comms::option::MsgDoRead,
-        comms::option::MsgDoRefresh
+        comms::option::HasDoRefresh
     >
 {
     typedef comms::MessageBase<
@@ -79,9 +77,7 @@ class RxmAlm : public
         comms::option::StaticNumIdImpl<MsgId_RXM_ALM>,
         comms::option::FieldsImpl<RxmAlmFields::All>,
         comms::option::MsgType<RxmAlm<TMsgBase> >,
-        comms::option::DispatchImpl,
-        comms::option::MsgDoRead,
-        comms::option::MsgDoRefresh
+        comms::option::HasDoRefresh
     > Base;
 public:
 

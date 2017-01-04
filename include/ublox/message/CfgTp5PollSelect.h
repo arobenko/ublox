@@ -56,16 +56,14 @@ class CfgTp5PollSelect : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_TP5>,
         comms::option::FieldsImpl<CfgTp5PollSelectFields::All>,
-        comms::option::MsgType<CfgTp5PollSelect<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<CfgTp5PollSelect<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_TP5>,
         comms::option::FieldsImpl<CfgTp5PollSelectFields::All>,
-        comms::option::MsgType<CfgTp5PollSelect<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<CfgTp5PollSelect<TMsgBase> >
     > Base;
 public:
 

@@ -48,16 +48,14 @@ class AidHuiPoll : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_HUI>,
         comms::option::FieldsImpl<AidHuiPollFields::All>,
-        comms::option::MsgType<AidHuiPoll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<AidHuiPoll<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_HUI>,
         comms::option::FieldsImpl<AidHuiPollFields::All>,
-        comms::option::MsgType<AidHuiPoll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<AidHuiPoll<TMsgBase> >
     > Base;
 public:
 

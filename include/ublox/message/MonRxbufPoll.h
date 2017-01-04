@@ -48,16 +48,14 @@ class MonRxbufPoll : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_MON_RXBUF>,
         comms::option::FieldsImpl<MonRxbufPollFields::All>,
-        comms::option::MsgType<MonRxbufPoll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<MonRxbufPoll<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_MON_RXBUF>,
         comms::option::FieldsImpl<MonRxbufPollFields::All>,
-        comms::option::MsgType<MonRxbufPoll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<MonRxbufPoll<TMsgBase> >
     > Base;
 public:
 

@@ -48,16 +48,14 @@ class CfgUsbPoll : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_USB>,
         comms::option::FieldsImpl<CfgUsbPollFields::All>,
-        comms::option::MsgType<CfgUsbPoll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<CfgUsbPoll<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_USB>,
         comms::option::FieldsImpl<CfgUsbPollFields::All>,
-        comms::option::MsgType<CfgUsbPoll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<CfgUsbPoll<TMsgBase> >
     > Base;
 public:
 

@@ -105,9 +105,7 @@ class LogRetrievestring : public
         comms::option::StaticNumIdImpl<MsgId_LOG_RETRIEVESTRING>,
         comms::option::FieldsImpl<LogRetrievestringFields::All>,
         comms::option::MsgType<LogRetrievestring<TMsgBase> >,
-        comms::option::DispatchImpl,
-        comms::option::MsgDoRead,
-        comms::option::MsgDoRefresh
+        comms::option::HasDoRefresh
     >
 {
     typedef comms::MessageBase<
@@ -115,9 +113,7 @@ class LogRetrievestring : public
         comms::option::StaticNumIdImpl<MsgId_LOG_RETRIEVESTRING>,
         comms::option::FieldsImpl<LogRetrievestringFields::All>,
         comms::option::MsgType<LogRetrievestring<TMsgBase> >,
-        comms::option::DispatchImpl,
-        comms::option::MsgDoRead,
-        comms::option::MsgDoRefresh
+        comms::option::HasDoRefresh
     > Base;
 public:
 

@@ -53,16 +53,14 @@ class AidEphPollSv : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_EPH>,
         comms::option::FieldsImpl<AidEphPollSvFields::All>,
-        comms::option::MsgType<AidEphPollSv<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<AidEphPollSv<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_EPH>,
         comms::option::FieldsImpl<AidEphPollSvFields::All>,
-        comms::option::MsgType<AidEphPollSv<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<AidEphPollSv<TMsgBase> >
     > Base;
 public:
 

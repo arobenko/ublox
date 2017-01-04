@@ -69,16 +69,14 @@ class NavPosecef : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_POSECEF>,
         comms::option::FieldsImpl<NavPosecefFields::All>,
-        comms::option::MsgType<NavPosecef<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<NavPosecef<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_POSECEF>,
         comms::option::FieldsImpl<NavPosecefFields::All>,
-        comms::option::MsgType<NavPosecef<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<NavPosecef<TMsgBase> >
     > Base;
 public:
 

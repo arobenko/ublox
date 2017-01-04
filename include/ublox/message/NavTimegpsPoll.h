@@ -48,16 +48,14 @@ class NavTimegpsPoll : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_TIMEGPS>,
         comms::option::FieldsImpl<NavTimegpsPollFields::All>,
-        comms::option::MsgType<NavTimegpsPoll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<NavTimegpsPoll<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_TIMEGPS>,
         comms::option::FieldsImpl<NavTimegpsPollFields::All>,
-        comms::option::MsgType<NavTimegpsPoll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<NavTimegpsPoll<TMsgBase> >
     > Base;
 public:
 

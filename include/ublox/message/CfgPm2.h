@@ -289,16 +289,14 @@ class CfgPm2 : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_PM2>,
         comms::option::FieldsImpl<CfgPm2Fields::All>,
-        comms::option::MsgType<CfgPm2<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<CfgPm2<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_PM2>,
         comms::option::FieldsImpl<CfgPm2Fields::All>,
-        comms::option::MsgType<CfgPm2<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<CfgPm2<TMsgBase> >
     > Base;
 public:
 

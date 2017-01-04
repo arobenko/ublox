@@ -96,16 +96,14 @@ class LogCreate : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_LOG_CREATE>,
         comms::option::FieldsImpl<LogCreateFields::All>,
-        comms::option::MsgType<LogCreate<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<LogCreate<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_LOG_CREATE>,
         comms::option::FieldsImpl<LogCreateFields::All>,
-        comms::option::MsgType<LogCreate<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<LogCreate<TMsgBase> >
     > Base;
 public:
 

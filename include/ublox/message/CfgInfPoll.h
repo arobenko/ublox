@@ -57,16 +57,14 @@ class CfgInfPoll : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_INF>,
         comms::option::FieldsImpl<CfgInfPollFields::All>,
-        comms::option::MsgType<CfgInfPoll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<CfgInfPoll<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_INF>,
         comms::option::FieldsImpl<CfgInfPollFields::All>,
-        comms::option::MsgType<CfgInfPoll<TMsgBase> >,
-        comms::option::DispatchImpl
+        comms::option::MsgType<CfgInfPoll<TMsgBase> >
     > Base;
 public:
 
