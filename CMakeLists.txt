@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 2.8.11)
+cmake_minimum_required (VERSION 3.0)
 project ("ublox")
 
 option (CC_UBLOX_LIB_ONLY "Install only UBLOX protocol library, no other applications/plugings are built." OFF)
