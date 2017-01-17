@@ -302,7 +302,7 @@
 ///     ProtStack protStack;
 ///
 ///     // Serialised output data
-///     std::array<std::uint8_t*, 1024> dataOut;
+///     std::array<std::uint8_t, 1024> dataOut;
 ///
 ///     void sendMsg(const MyProjMessage& msg)
 ///     {
@@ -316,7 +316,7 @@
 ///         // Get the number of written bytes
 ///         auto writtenLen = 
 ///             static_cast<std::size_t>(
-///                 std::distance(ProtStack::WriteIterator(&dataOut[0], iter));
+///                 std::distance(ProtStack::WriteIterator(&dataOut[0]), iter));
 ///
 ///         ... // Send writtenLen bytes from dataOut buffer over I/O link
 ///     }
