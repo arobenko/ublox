@@ -78,7 +78,8 @@ struct MonMsgppFields
 /// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
 ///     various implementation options. @n
-///     See @ref MonMsgppFields and for definition of the fields this message contains.
+///     See @ref MonMsgppFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class MonMsgpp : public
@@ -97,53 +98,20 @@ class MonMsgpp : public
     > Base;
 public:
 
-#ifdef FOR_DOXYGEN_DOC_ONLY
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_msg1, ///< @b msg1 field, see @ref MonMsgppFields::msg1
-        FieldIdx_msg2, ///< @b msg2 field, see @ref MonMsgppFields::msg2
-        FieldIdx_msg3, ///< @b msg3 field, see @ref MonMsgppFields::msg3
-        FieldIdx_msg4, ///< @b msg4 field, see @ref MonMsgppFields::msg4
-        FieldIdx_msg5, ///< @b msg5 field, see @ref MonMsgppFields::msg5
-        FieldIdx_msg6, ///< @b msg6 field, see @ref MonMsgppFields::msg6
-        FieldIdx_skipped, ///< @b skipped field, see @ref MonMsgppFields::skipped
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    /// @brief Access to fields bundled as a struct
-    struct FieldsAsStruct
-    {
-        MonMsgppFields::msg1& msg1; ///< @b msg1 field, see @ref MonMsgppFields::msg1
-        MonMsgppFields::msg2& msg2; ///< @b msg2 field, see @ref MonMsgppFields::msg2
-        MonMsgppFields::msg3& msg3; ///< @b msg3 field, see @ref MonMsgppFields::msg3
-        MonMsgppFields::msg4& msg4; ///< @b msg4 field, see @ref MonMsgppFields::msg4
-        MonMsgppFields::msg5& msg5; ///< @b msg5 field, see @ref MonMsgppFields::msg5
-        MonMsgppFields::msg6& msg6; ///< @b msg6 field, see @ref MonMsgppFields::msg6
-        MonMsgppFields::skipped& skipped; ///< @b skipped field, see @ref MonMsgppFields::skipped
-    };
-
-    /// @brief Access to @b const fields bundled as a struct
-    struct ConstFieldsAsStruct
-    {
-        const MonMsgppFields::msg1& msg1; ///< @b msg1 field, see @ref MonMsgppFields::msg1
-        const MonMsgppFields::msg2& msg2; ///< @b msg2 field, see @ref MonMsgppFields::msg2
-        const MonMsgppFields::msg3& msg3; ///< @b msg3 field, see @ref MonMsgppFields::msg3
-        const MonMsgppFields::msg4& msg4; ///< @b msg4 field, see @ref MonMsgppFields::msg4
-        const MonMsgppFields::msg5& msg5; ///< @b msg5 field, see @ref MonMsgppFields::msg5
-        const MonMsgppFields::msg6& msg6; ///< @b msg6 field, see @ref MonMsgppFields::msg6
-        const MonMsgppFields::skipped& skipped; ///< @b skipped field, see @ref MonMsgppFields::skipped
-    };
-
-    /// @brief Get access to fields bundled into a struct
-    FieldsAsStruct fieldsAsStruct();
-
-    /// @brief Get access to @b const fields bundled into a struct
-    ConstFieldsAsStruct fieldsAsStruct() const;
-
-#else
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b msg1 for @ref MonMsgppFields::msg1 field
+    ///     @li @b msg2 for @ref MonMsgppFields::msg2 field
+    ///     @li @b msg3 for @ref MonMsgppFields::msg3 field
+    ///     @li @b msg4 for @ref MonMsgppFields::msg4 field
+    ///     @li @b msg5 for @ref MonMsgppFields::msg5 field
+    ///     @li @b msg6 for @ref MonMsgppFields::msg6 field
+    ///     @li @b skipped for @ref MonMsgppFields::skipped field
     COMMS_MSG_FIELDS_ACCESS(Base, msg1, msg2, msg3, msg4, msg5, msg6, skipped);
-#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     MonMsgpp() = default;

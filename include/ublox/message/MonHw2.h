@@ -1,5 +1,5 @@
 //
-// Copyright 2015 - 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2017 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -120,7 +120,8 @@ struct MonHw2Fields
 /// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
 ///     various implementation options. @n
-///     See @ref MonHw2Fields and for definition of the fields this message contains.
+///     See @ref MonHw2Fields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class MonHw2 : public
@@ -139,60 +140,22 @@ class MonHw2 : public
     > Base;
 public:
 
-#ifdef FOR_DOXYGEN_DOC_ONLY
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_ofsI, ///< @b ofsI field, see @ref MonHw2Fields::ofsI
-        FieldIdx_magI, ///< @b magI field, see @ref MonHw2Fields::magI
-        FieldIdx_ofsQ, ///< @b ofsQ field, see @ref MonHw2Fields::ofsQ
-        FieldIdx_magQ, ///< @b magQ field, see @ref MonHw2Fields::magQ
-        FieldIdx_cfgSource, ///< @b cfgSource field, see @ref MonHw2Fields::cfgSource
-        FieldIdx_reserved0, ///< @b reserved0 field, see @ref MonHw2Fields::reserved0
-        FieldIdx_lowLevelCfg, ///< @b lowLevelCfg field, see @ref MonHw2Fields::lowLevelCfg
-        FieldIdx_reserved1, ///< @b reserved1 field, see @ref MonHw2Fields::reserved1
-        FieldIdx_postStatus, ///< @b postStatus field, see @ref MonHw2Fields::postStatus
-        FieldIdx_reserved2, ///< @b reserved2 field, see @ref MonHw2Fields::reserved2
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    /// @brief Access to fields bundled as a struct
-    struct FieldsAsStruct
-    {
-        MonHw2Fields::ofsI& ofsI; ///< @b ofsI field, see @ref MonHw2Fields::ofsI
-        MonHw2Fields::magI& magI; ///< @b magI field, see @ref MonHw2Fields::magI
-        MonHw2Fields::ofsQ& ofsQ; ///< @b ofsQ field, see @ref MonHw2Fields::ofsQ
-        MonHw2Fields::magQ& magQ; ///< @b magQ field, see @ref MonHw2Fields::magQ
-        MonHw2Fields::cfgSource& cfgSource; ///< @b cfgSource field, see @ref MonHw2Fields::cfgSource
-        MonHw2Fields::reserved0& reserved0; ///< @b reserved0 field, see @ref MonHw2Fields::reserved0
-        MonHw2Fields::lowLevelCfg& lowLevelCfg; ///< @b lowLevelCfg field, see @ref MonHw2Fields::lowLevelCfg
-        MonHw2Fields::reserved1& reserved1; ///< @b reserved1 field, see @ref MonHw2Fields::reserved1
-        MonHw2Fields::postStatus& postStatus; ///< @b postStatus field, see @ref MonHw2Fields::postStatus
-        MonHw2Fields::reserved2& reserved2; ///< @b reserved2 field, see @ref MonHw2Fields::reserved2
-    };
-
-    /// @brief Access to @b const fields bundled as a struct
-    struct ConstFieldsAsStruct
-    {
-        const MonHw2Fields::ofsI& ofsI; ///< @b ofsI field, see @ref MonHw2Fields::ofsI
-        const MonHw2Fields::magI& magI; ///< @b magI field, see @ref MonHw2Fields::magI
-        const MonHw2Fields::ofsQ& ofsQ; ///< @b ofsQ field, see @ref MonHw2Fields::ofsQ
-        const MonHw2Fields::magQ& magQ; ///< @b magQ field, see @ref MonHw2Fields::magQ
-        const MonHw2Fields::cfgSource& cfgSource; ///< @b cfgSource field, see @ref MonHw2Fields::cfgSource
-        const MonHw2Fields::reserved0& reserved0; ///< @b reserved0 field, see @ref MonHw2Fields::reserved0
-        const MonHw2Fields::lowLevelCfg& lowLevelCfg; ///< @b lowLevelCfg field, see @ref MonHw2Fields::lowLevelCfg
-        const MonHw2Fields::reserved1& reserved1; ///< @b reserved1 field, see @ref MonHw2Fields::reserved1
-        const MonHw2Fields::postStatus& postStatus; ///< @b postStatus field, see @ref MonHw2Fields::postStatus
-        const MonHw2Fields::reserved2& reserved2; ///< @b reserved2 field, see @ref MonHw2Fields::reserved2
-    };
-
-    /// @brief Get access to fields bundled into a struct
-    FieldsAsStruct fieldsAsStruct();
-
-    /// @brief Get access to @b const fields bundled into a struct
-    ConstFieldsAsStruct fieldsAsStruct() const;
-
-#else
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b ofsI for @ref MonHw2Fields::ofsI field
+    ///     @li @b magI for @ref MonHw2Fields::magI field
+    ///     @li @b ofsQ for @ref MonHw2Fields::ofsQ field
+    ///     @li @b magQ for @ref MonHw2Fields::magQ field
+    ///     @li @b cfgSource for @ref MonHw2Fields::cfgSource field
+    ///     @li @b reserved0 for @ref MonHw2Fields::reserved0 field
+    ///     @li @b lowLevelCfg for @ref MonHw2Fields::lowLevelCfg field
+    ///     @li @b reserved1 for @ref MonHw2Fields::reserved1 field
+    ///     @li @b postStatus for @ref MonHw2Fields::postStatus field
+    ///     @li @b reserved2 for @ref MonHw2Fields::reserved2 field
     COMMS_MSG_FIELDS_ACCESS(Base,
         ofsI,
         magI,
@@ -205,7 +168,6 @@ public:
         postStatus,
         reserved2
     );
-#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     MonHw2() = default;

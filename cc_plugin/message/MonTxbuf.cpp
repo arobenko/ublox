@@ -61,13 +61,13 @@ QVariantMap createProps_errors()
     bitsProps.add("mem")
              .add("alloc")
              .serialisedHidden();
-    assert(bitsProps.bits().size() == MonTxbufFields::errorsBits_numOfValues);
+    assert(bitsProps.bits().size() == MonTxbufFields::errorsBits::BitIdx_numOfValues);
 
     cc::property::field::ForField<MonTxbufFields::errors> props;
     props.name("errors")
          .add(limitProps.asMap())
          .add(bitsProps.asMap());
-    assert(props.members().size() == MonTxbufFields::errors_numOfValues);
+    assert(props.members().size() == MonTxbufFields::errors::FieldIdx_numOfValues);
     return props.asMap();
 }
 

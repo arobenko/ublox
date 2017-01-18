@@ -33,22 +33,6 @@ namespace message
 /// @see MonTxbuf
 struct MonTxbufFields
 {
-    /// @brief Use this enumeration to access member fields of @ref errors bitfield.
-    enum
-    {
-        errors_limit, ///< index of @ref limit member field
-        errors_bits, ///< index of @ref errorsBits member field.
-        errors_numOfValues ///< number of available member fields
-    };
-
-    /// @brief Bits access enumeration for bits in @b errorsBits member of
-    ///     @ref errors bitfield field.
-    enum
-    {
-        errorsBits_mem, ///< @b mem bit index
-        errorsBits_alloc, ///< @b alloc bit index
-        errorsBits_numOfValues ///< number of available bits
-    };
 
     /// @brief Definition of "pending" field.
     using pending =
@@ -82,19 +66,36 @@ struct MonTxbufFields
 
     /// @brief Definition of remaining bits in @ref errors bitfield as
     ///     a single bitmask.
-    using errorsBits =
+    struct errorsBits : public
         field::common::X1T<
             comms::option::FixedBitLength<2>
-        >;
+        >
+    {
+        /// @brief Provide names for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS(mem, alloc);
+    };
 
-    /// @brief Definition of "errors" field.
-    using errors =
+    /// @brief Base class of @ref errors field.
+    using errorsBase =
         field::common::BitfieldT<
             std::tuple<
                 limit,
                 errorsBits
             >
         >;
+
+    /// @brief Definition of "errors" field.
+    struct errors : public errorsBase
+    {
+        /// @brief Allow access to internal fields.
+        /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
+        ///     related to @b comms::field::Bitfield class from COMMS library
+        ///     for details.
+        COMMS_FIELD_MEMBERS_ACCESS(errorsBase, limit, errorsBits);
+    };
 
     /// @brief Definition of "reserved1" field.
     using reserved1 = field::common::res1;
@@ -115,7 +116,8 @@ struct MonTxbufFields
 /// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
 ///     various implementation options. @n
-///     See @ref MonTxbufFields and for definition of the fields this message contains.
+///     See @ref MonTxbufFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class MonTxbuf : public
@@ -134,51 +136,19 @@ class MonTxbuf : public
     > Base;
 public:
 
-#ifdef FOR_DOXYGEN_DOC_ONLY
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_pending, ///< @b pending field, see @ref MonTxbufFields::pending
-        FieldIdx_usage, ///< @b usage field, see @ref MonTxbufFields::usage
-        FieldIdx_peakUsage, ///< @b peakUsage field, see @ref MonTxbufFields::peakUsage
-        FieldIdx_tUsage, ///< @b tUsage field, see @ref MonTxbufFields::tUsage
-        FieldIdx_tPeakUsage, ///< @b tPeakUsage field, see @ref MonTxbufFields::tPeakUsage
-        FieldIdx_errors, ///< @b errors field, see @ref MonTxbufFields::errors
-        FieldIdx_reserved1, ///< @b reserved1 field, see @ref MonTxbufFields::reserved1
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    /// @brief Access to fields bundled as a struct
-    struct FieldsAsStruct
-    {
-        MonTxbufFields::pending& pending; ///< @b pending field, see @ref MonTxbufFields::pending
-        MonTxbufFields::usage& usage; ///< @b usage field, see @ref MonTxbufFields::usage
-        MonTxbufFields::peakUsage& peakUsage; ///< @b peakUsage field, see @ref MonTxbufFields::peakUsage
-        MonTxbufFields::tUsage& tUsage; ///< @b tUsage field, see @ref MonTxbufFields::tUsage
-        MonTxbufFields::tPeakUsage& tPeakUsage; ///< @b tPeakUsage field, see @ref MonTxbufFields::tPeakUsage
-        MonTxbufFields::errors& errors; ///< @b errors field, see @ref MonTxbufFields::errors
-        MonTxbufFields::reserved1& reserved1; ///< @b reserved1 field, see @ref MonTxbufFields::reserved1
-    };
-
-    /// @brief Access to @b const fields bundled as a struct
-    struct ConstFieldsAsStruct
-    {
-        MonTxbufFields::pending& pending; ///< @b pending field, see @ref MonTxbufFields::pending
-        MonTxbufFields::usage& usage; ///< @b usage field, see @ref MonTxbufFields::usage
-        MonTxbufFields::peakUsage& peakUsage; ///< @b peakUsage field, see @ref MonTxbufFields::peakUsage
-        MonTxbufFields::tUsage& tUsage; ///< @b tUsage field, see @ref MonTxbufFields::tUsage
-        MonTxbufFields::tPeakUsage& tPeakUsage; ///< @b tPeakUsage field, see @ref MonTxbufFields::tPeakUsage
-        MonTxbufFields::errors& errors; ///< @b errors field, see @ref MonTxbufFields::errors
-        MonTxbufFields::reserved1& reserved1; ///< @b reserved1 field, see @ref MonTxbufFields::reserved1
-    };
-
-    /// @brief Get access to fields bundled into a struct
-    FieldsAsStruct fieldsAsStruct();
-
-    /// @brief Get access to @b const fields bundled into a struct
-    ConstFieldsAsStruct fieldsAsStruct() const;
-
-#else
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b pending for @ref MonTxbufFields::pending field
+    ///     @li @b usage for @ref MonTxbufFields::usage field
+    ///     @li @b peakUsage for @ref MonTxbufFields::peakUsage field
+    ///     @li @b tUsage for @ref MonTxbufFields::tUsage field
+    ///     @li @b tPeakUsage for @ref MonTxbufFields::tPeakUsage field
+    ///     @li @b errors for @ref MonTxbufFields::errors field
+    ///     @li @b reserved1 for @ref MonTxbufFields::reserved1 field
     COMMS_MSG_FIELDS_ACCESS(Base,
         pending,
         usage,
@@ -188,7 +158,6 @@ public:
         errors,
         reserved1
     );
-#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     MonTxbuf() = default;

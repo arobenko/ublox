@@ -46,7 +46,7 @@ QVariantMap createProps_flags()
     cc::property::field::ForField<MonRxrFields::flags> props;
     props.name("flags")
          .add("awake");
-    assert(props.bits().size() == MonRxrFields::flags_numOfValues);
+    assert(props.bits().size() == MonRxrFields::flags::BitIdx_numOfValues);
     return props.asMap();
 }
 

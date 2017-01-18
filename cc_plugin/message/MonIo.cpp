@@ -54,7 +54,7 @@ QVariantMap createProps_data()
         .add(cc::property::field::ForField<MonIoFields::rxBusy>().name("rxBusy").asMap())
         .add(cc::property::field::ForField<MonIoFields::txBusy>().name("txBusy").asMap())
         .add(cc_plugin::field::common::props_reserved(1));
-    assert(blockProps.members().size() == MonIoFields::block_numOfValues);
+    assert(blockProps.members().size() == MonIoFields::block::FieldIdx_numOfValues);
 
     return
         cc::property::field::ForField<MonIoFields::data>()

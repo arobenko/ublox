@@ -33,21 +33,6 @@ namespace message
 /// @see MonIo
 struct MonIoFields
 {
-    /// @brief Use this enumeration to access member fields of @ref block bundle.
-    enum
-    {
-        block_rxBytes, ///< index of @ref rxBytes member field
-        block_txBytes, ///< index of @ref txBytes member field
-        block_parityErrs, ///< index of @ref parityErrs member field
-        block_framingErrs, ///< index of @ref framingErrs member field
-        block_overrunErrs, ///< index of @ref overrunErrs member field
-        block_breakCond, ///< index of @ref breakCond member field
-        block_rxBusy, ///< index of @ref rxBusy member field
-        block_txBusy, ///< index of @ref txBusy member field
-        block_reserved1, ///< index of @ref reserved1 member field
-        block_numOfValues ///< number of available member fields
-    };
-
     /// @brief Definition of "rxBytes" field.
     using rxBytes = field::common::U4;
 
@@ -75,8 +60,8 @@ struct MonIoFields
     /// @brief Definition of "reserved1" field.
     using reserved1 = field::common::U2;
 
-    /// @brief Definition of the single block of data.
-    using block =
+    /// @brief Base class for @ref block bundle
+    using blockBase =
         field::common::BundleT<
             std::tuple<
                 rxBytes,
@@ -90,6 +75,25 @@ struct MonIoFields
                 reserved1
             >
         >;
+
+    /// @brief Definition of the single block of data.
+    struct block : public blockBase
+    {
+        /// @brief Allow access to internal fields.
+        /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
+        ///     related to @b comms::field::Bitfield class from COMMS library
+        ///     for details.
+        COMMS_FIELD_MEMBERS_ACCESS(blockBase,
+            rxBytes,
+            txBytes,
+            parityErrs,
+            framingErrs,
+            overrunErrs,
+            breakCond,
+            rxBusy,
+            txBusy,
+            reserved1);
+    };
 
     /// @brief Definition of the list of blocks.
     using data =
@@ -105,7 +109,8 @@ struct MonIoFields
 /// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
 ///     various implementation options. @n
-///     See @ref MonIoFields and for definition of the fields this message contains.
+///     See @ref MonIoFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class MonIo : public
@@ -124,35 +129,14 @@ class MonIo : public
     > Base;
 public:
 
-#ifdef FOR_DOXYGEN_DOC_ONLY
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_data, ///< @b data field, see @ref MonIoFields::data
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    /// @brief Access to fields bundled as a struct
-    struct FieldsAsStruct
-    {
-        MonIoFields::data& data; ///< @b data field, see @ref MonIoFields::data
-    };
-
-    /// @brief Access to @b const fields bundled as a struct
-    struct ConstFieldsAsStruct
-    {
-        const MonIoFields::data& data;
-    };
-
-    /// @brief Get access to fields bundled into a struct
-    FieldsAsStruct fieldsAsStruct();
-
-    /// @brief Get access to @b const fields bundled into a struct
-    ConstFieldsAsStruct fieldsAsStruct() const;
-
-#else
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b data for @ref MonIoFields::data field
     COMMS_MSG_FIELDS_ACCESS(Base, data);
-#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     MonIo() = default;

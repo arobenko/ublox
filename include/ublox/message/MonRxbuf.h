@@ -62,7 +62,8 @@ struct MonRxbufFields
 /// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
 ///     various implementation options. @n
-///     See @ref MonRxbufFields and for definition of the fields this message contains.
+///     See @ref MonRxbufFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class MonRxbuf : public
@@ -81,41 +82,16 @@ class MonRxbuf : public
     > Base;
 public:
 
-#ifdef FOR_DOXYGEN_DOC_ONLY
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_pending, ///< @b pending field, see @ref MonRxbufFields::pending
-        FieldIdx_usage, ///< @b usage field, see @ref MonRxbufFields::usage
-        FieldIdx_peakUsage, ///< @b peakUsage field, see @ref MonRxbufFields::peakUsage
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    /// @brief Access to fields bundled as a struct
-    struct FieldsAsStruct
-    {
-        MonRxbufFields::pending& pending; ///< @b pending field, see @ref MonRxbufFields::pending
-        MonRxbufFields::usage& usage; ///< @b usage field, see @ref MonRxbufFields::usage
-        MonRxbufFields::peakUsage& peakUsage; ///< @b peakUsage field, see @ref MonRxbufFields::peakUsage
-    };
-
-    /// @brief Access to @b const fields bundled as a struct
-    struct ConstFieldsAsStruct
-    {
-        const MonRxbufFields::pending& pending; ///< @b pending field, see @ref MonRxbufFields::pending
-        const MonRxbufFields::usage& usage; ///< @b usage field, see @ref MonRxbufFields::usage
-        const MonRxbufFields::peakUsage& peakUsage; ///< @b peakUsage field, see @ref MonRxbufFields::peakUsage
-    };
-
-    /// @brief Get access to fields bundled into a struct
-    FieldsAsStruct fieldsAsStruct();
-
-    /// @brief Get access to @b const fields bundled into a struct
-    ConstFieldsAsStruct fieldsAsStruct() const;
-
-#else
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b pending for @ref MonRxbufFields::pending field
+    ///     @li @b usage for @ref MonRxbufFields::usage field
+    ///     @li @b peakUsage for @ref MonRxbufFields::peakUsage field
     COMMS_MSG_FIELDS_ACCESS(Base, pending, usage, peakUsage);
-#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     MonRxbuf() = default;
