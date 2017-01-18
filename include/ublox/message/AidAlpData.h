@@ -37,7 +37,7 @@ namespace message
 /// @see AidAlpData
 struct AidAlpDataFields
 {
-    /// @brief Definition of "status" field.
+    /// @brief Definition of "alpData" field.
     using alpData = field::common::ListT<field::common::U2>;
 
 
@@ -53,7 +53,8 @@ struct AidAlpDataFields
 ///     Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
 ///     various implementation options. @n
-///     See @ref AidAlpDataFields and for definition of the fields this message contains.
+///     See @ref AidAlpDataFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class AidAlpData : public
@@ -71,35 +72,14 @@ class AidAlpData : public
         comms::option::MsgType<AidAlpData<TMsgBase> >
     > Base;
 public:
-#ifdef FOR_DOXYGEN_DOC_ONLY
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_alpData, ///< alpData field, see @ref AidAlpDataFields::alpData
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    /// @brief Access to fields bundled as a struct
-    struct FieldsAsStruct
-    {
-        AidAlpDataFields::alpData& alpData; ///< alpData field, see @ref AidAlpDataFields::alpData
-    };
-
-    /// @brief Access to @b const fields bundled as a struct
-    struct ConstFieldsAsStruct
-    {
-        const AidAlpDataFields::alpData& alpData; ///< alpData field, see @ref AidAlpDataFields::alpData
-    };
-
-    /// @brief Get access to fields bundled into a struct
-    FieldsAsStruct fieldsAsStruct();
-
-    /// @brief Get access to @b const fields bundled into a struct
-    ConstFieldsAsStruct fieldsAsStruct() const;
-
-#else
-    COMMS_MSG_FIELDS_ACCESS(Base, id);
-#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b alpData for @ref AidAlpDataFields::alpData field
+    COMMS_MSG_FIELDS_ACCESS(Base, alpData);
 
     /// @brief Default constructor
     AidAlpData() = default;

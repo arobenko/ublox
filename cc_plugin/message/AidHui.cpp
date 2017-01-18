@@ -47,7 +47,7 @@ QVariantMap createProps_flags()
          .add("healthValid")
          .add("utcValid")
          .add("klobValid");
-    assert(props.bits().size() == AidHuiFields::flags_numOfValues);
+    assert(props.bits().size() == AidHuiFields::flags::BitIdx_numOfValues);
     return props.asMap();
 }
 

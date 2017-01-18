@@ -68,7 +68,8 @@ struct AidEphFields
 /// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
 ///     various implementation options. @n
-///     See @ref AidEphFields and for definition of the fields this message contains.
+///     See @ref AidEphFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class AidEph : public
@@ -88,49 +89,18 @@ class AidEph : public
         comms::option::HasDoRefresh
     > Base;
 public:
-
-#ifdef FOR_DOXYGEN_DOC_ONLY
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_svid, ///< svid field, see @ref AidEphFields::svid
-        FieldIdx_how, ///< how field, see @ref AidEphFields::how
-        FieldIdx_sf1d, ///< sf1d field, see @ref AidEphFields::sf1d
-        FieldIdx_sf2d, ///< sf2d field, see @ref AidEphFields::sf2d
-        FieldIdx_sf3d, ///< sf3d field, see @ref AidEphFields::sf3d
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-
-    /// @brief Access to fields bundled as a struct
-    struct FieldsAsStruct
-    {
-        AidEphFields::svid& svid; ///< svid field, see @ref AidEphFields::svid
-        AidEphFields::how& how; ///< how field, see @ref AidEphFields::how
-        AidEphFields::sf1d& sf1d; ///< sf1d field, see @ref AidEphFields::sf1d
-        AidEphFields::sf2d& sf2d; ///< sf2d field, see @ref AidEphFields::sf2d
-        AidEphFields::sf3d& sf3d; ///< sf3d field, see @ref AidEphFields::sf3d
-    };
-
-    /// @brief Access to @b const fields bundled as a struct
-    struct ConstFieldsAsStruct
-    {
-        const AidEphFields::svid& svid; ///< svid field, see @ref AidEphFields::svid
-        const AidEphFields::how& how; ///< how field, see @ref AidEphFields::how
-        const AidEphFields::sf1d& sf1d; ///< sf1d field, see @ref AidEphFields::sf1d
-        const AidEphFields::sf2d& sf2d; ///< sf2d field, see @ref AidEphFields::sf2d
-        const AidEphFields::sf3d& sf3d; ///< sf3d field, see @ref AidEphFields::sf3d
-    };
-
-    /// @brief Get access to fields bundled into a struct
-    FieldsAsStruct fieldsAsStruct();
-
-    /// @brief Get access to @b const fields bundled into a struct
-    ConstFieldsAsStruct fieldsAsStruct() const;
-
-#else
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b svid for @ref AidEphFields::svid field
+    ///     @li @b how for @ref AidEphFields::how field
+    ///     @li @b sf1d for @ref AidEphFields::sf1d field
+    ///     @li @b sf2d for @ref AidEphFields::sf2d field
+    ///     @li @b sf3d for @ref AidEphFields::sf3d field
     COMMS_MSG_FIELDS_ACCESS(Base, svid, how, sf1d, sf2d, sf3d);
-#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     /// @details Marks "sf1d" (see @ref AidEphFields::sf1d),
@@ -138,13 +108,9 @@ public:
     ///     fields to be missing.
     AidEph()
     {
-        auto& allFields = Base::fields();
-        auto& sf1dField = std::get<FieldIdx_sf1d>(allFields);
-        auto& sf2dField = std::get<FieldIdx_sf2d>(allFields);
-        auto& sf3dField = std::get<FieldIdx_sf3d>(allFields);
-        sf1dField.setMissing();
-        sf2dField.setMissing();
-        sf3dField.setMissing();
+        field_sf1d().setMissing();
+        field_sf2d().setMissing();
+        field_sf3d().setMissing();
     }
 
     /// @brief Copy constructor

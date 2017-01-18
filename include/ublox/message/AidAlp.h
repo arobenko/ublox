@@ -83,7 +83,8 @@ struct AidAlpFields
 /// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
 ///     various implementation options. @n
-///     See @ref AidAlpFields and for definition of the fields this message contains.
+///     See @ref AidAlpFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class AidAlp : public
@@ -102,60 +103,22 @@ class AidAlp : public
     > Base;
 public:
 
-#ifdef FOR_DOXYGEN_DOC_ONLY
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_predTow, ///< predTow field, see @ref AidAlpFields::predTow
-        FieldIdx_predDur, ///< predDur field, see @ref AidAlpFields::predDur
-        FieldIdx_age, ///< age field, see @ref AidAlpFields::age
-        FieldIdx_predWno, ///< predWno field, see @ref AidAlpFields::predWno
-        FieldIdx_almWno, ///< almWno field, see @ref AidAlpFields::almWno
-        FieldIdx_reserved1, ///< reserved1 field, see @ref AidAlpFields::reserved1
-        FieldIdx_svs, ///< svs field, see @ref AidAlpFields::svs
-        FieldIdx_reserved2, ///< reserved2 field, see @ref AidAlpFields::reserved2
-        FieldIdx_reserved3, ///< reserved3 field, see @ref AidAlpFields::reserved3
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-
-    /// @brief Access to fields bundled as a struct
-    struct FieldsAsStruct
-    {
-        AidAlpFields::predTow& predTow; ///< predTow field, see @ref AidAlpFields::predTow
-        AidAlpFields::predDur& predDur; ///< predDur field, see @ref AidAlpFields::predDur
-        AidAlpFields::age& age; ///< age field, see @ref AidAlpFields::age
-        AidAlpFields::predWno& predWno; ///< predWno field, see @ref AidAlpFields::predWno
-        AidAlpFields::almWno& almWno; ///< almWno field, see @ref AidAlpFields::almWno
-        AidAlpFields::reserved1& reserved1; ///< reserved1 field, see @ref AidAlpFields::reserved1
-        AidAlpFields::svs& svs; ///< svs field, see @ref AidAlpFields::svs
-        AidAlpFields::reserved2& reserved2; ///< reserved2 field, see @ref AidAlpFields::reserved2
-        AidAlpFields::reserved3& reserved3; ///< reserved3 field, see @ref AidAlpFields::reserved3
-    };
-
-    /// @brief Access to @b const fields bundled as a struct
-    struct ConstFieldsAsStruct
-    {
-        const AidAlpFields::predTow& predTow; ///< predTow field, see @ref AidAlpFields::predTow
-        const AidAlpFields::predDur& predDur; ///< predDur field, see @ref AidAlpFields::predDur
-        const AidAlpFields::age& age; ///< age field, see @ref AidAlpFields::age
-        const AidAlpFields::predWno& predWno; ///< predWno field, see @ref AidAlpFields::predWno
-        const AidAlpFields::almWno& almWno; ///< almWno field, see @ref AidAlpFields::almWno
-        const AidAlpFields::reserved1& reserved1; ///< reserved1 field, see @ref AidAlpFields::reserved1
-        const AidAlpFields::svs& svs; ///< svs field, see @ref AidAlpFields::svs
-        const AidAlpFields::reserved2& reserved2; ///< reserved2 field, see @ref AidAlpFields::reserved2
-        const AidAlpFields::reserved3& reserved3; ///< reserved3 field, see @ref AidAlpFields::reserved3
-    };
-
-    /// @brief Get access to fields bundled into a struct
-    FieldsAsStruct fieldsAsStruct();
-
-    /// @brief Get access to @b const fields bundled into a struct
-    ConstFieldsAsStruct fieldsAsStruct() const;
-
-#else
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b predTow for @ref AidAlpFields::predTow field
+    ///     @li @b predDur for @ref AidAlpFields::predDur field
+    ///     @li @b age for @ref AidAlpFields::age field
+    ///     @li @b predWno for @ref AidAlpFields::predWno field
+    ///     @li @b almWno for @ref AidAlpFields::almWno field
+    ///     @li @b reserved1 for @ref AidAlpFields::reserved1 field
+    ///     @li @b svs for @ref AidAlpFields::svs field
+    ///     @li @b reserved2 for @ref AidAlpFields::reserved2 field
+    ///     @li @b reserved3 for @ref AidAlpFields::reserved3 field
     COMMS_MSG_FIELDS_ACCESS(Base, predTow, predDur, age, predWno, almWno, reserved1, svs, reserved2, reserved3);
-#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     AidAlp() = default;

@@ -60,10 +60,10 @@ QVariantMap createProps_tmCfg()
 {
     cc::property::field::ForField<AidIniFields::tmCfg> props;
     props.name("tmCfg")
-         .add(AidIniFields::tmCfg_fEdge, "fEdge")
-         .add(AidIniFields::tmCfg_tm1, "tm1")
-         .add(AidIniFields::tmCfg_f1, "f1");
-    assert(props.bits().size() == AidIniFields::tmCfg_numOfValues);
+         .add(AidIniFields::tmCfg::BitIdx_fEdge, "fEdge")
+         .add(AidIniFields::tmCfg::BitIdx_tm1, "tm1")
+         .add(AidIniFields::tmCfg::BitIdx_f1, "f1");
+    assert(props.bits().size() == AidIniFields::tmCfg::BitIdx_numOfValues);
     return props.asMap();
 }
 
@@ -80,7 +80,7 @@ QVariantMap createProps_date()
     bitfieldProps.add(monthProps.asMap())
                  .add(yearProps.asMap())
                  .name(Name);
-    assert(bitfieldProps.members().size() == AidIniFields::date_numOfValues);
+    assert(bitfieldProps.members().size() == AidIniFields::dateBitfield::FieldIdx_numOfValues);
 
     return
         cc::property::field::ForField<AidIniFields::date>()
@@ -111,7 +111,7 @@ QVariantMap createProps_time()
                  .add(minProps.asMap())
                  .add(hourProps.asMap())
                  .add(dayProps.asMap());
-    assert(bitfieldProps.members().size() == AidIniFields::time_numOfValues);
+    assert(bitfieldProps.members().size() == AidIniFields::timeBitfield::FieldIdx_numOfValues);
 
     return
         cc::property::field::ForField<AidIniFields::time>()
@@ -133,8 +133,8 @@ QVariantMap createProps_flags()
          .add("lla")
          .add("altInv")
          .add("prevTm")
-         .add(AidIniFields::flags_utc, "utc");
-    assert(props.bits().size() == AidIniFields::flags_numOfValues);
+         .add(AidIniFields::flags::BitIdx_utc, "utc");
+    assert(props.bits().size() == AidIniFields::flags::BitIdx_numOfValues);
     return props.asMap();
 
 }

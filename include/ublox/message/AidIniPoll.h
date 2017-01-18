@@ -40,7 +40,6 @@ struct AidIniPollFields
 /// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
 ///     various implementation options. @n
-///     See @ref AidIniFields and for definition of the fields this message contains.
 ///     See @ref AidIniPollFields and for definition of the fields this message contains.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>

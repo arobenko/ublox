@@ -92,7 +92,8 @@ struct AidAlpsrvFields
 /// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
 ///     various implementation options. @n
-///     See @ref AidAlpsrvFields and for definition of the fields this message contains.
+///     See @ref AidAlpsrvFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class AidAlpsrv : public
@@ -112,63 +113,23 @@ class AidAlpsrv : public
         comms::option::HasDoRefresh
     > Base;
 public:
-
-#ifdef FOR_DOXYGEN_DOC_ONLY
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_idSize, ///< idSize field, see @ref AidAlpsrvFields::idSize
-        FieldIdx_type, ///< type field, see @ref AidAlpsrvFields::type
-        FieldIdx_ofs, ///< ofs field, see @ref AidAlpsrvFields::ofs
-        FieldIdx_size, ///< size field, see @ref AidAlpsrvFields::size
-        FieldIdx_fileId, ///< type fileId, see @ref AidAlpsrvFields::fileId
-        FieldIdx_dataSize, ///< dataSize field, see @ref AidAlpsrvFields::dataSize
-        FieldIdx_id1, ///< id1 field, see @ref AidAlpsrvFields::id1
-        FieldIdx_id2, ///< id2 field, see @ref AidAlpsrvFields::id2
-        FieldIdx_id3, ///< id3 field, see @ref AidAlpsrvFields::id3
-        FieldIdx_data, ///< data field, see @ref AidAlpsrvFields::data
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    /// @brief Access to fields bundled as a struct
-    struct FieldsAsStruct
-    {
-        AidAlpsrvFields::idSize& idSize; ///< idSize field, see @ref AidAlpsrvFields::idSize
-        AidAlpsrvFields::type& type; ///< type field, see @ref AidAlpsrvFields::type
-        AidAlpsrvFields::ofs& ofs; ///< ofs field, see @ref AidAlpsrvFields::ofs
-        AidAlpsrvFields::size& size; ///< size field, see @ref AidAlpsrvFields::size
-        AidAlpsrvFields::type& type; ///< type fileId, see @ref AidAlpsrvFields::fileId
-        AidAlpsrvFields::dataSize& dataSize; ///< dataSize field, see @ref AidAlpsrvFields::dataSize
-        AidAlpsrvFields::id1& id1; ///< id1 field, see @ref AidAlpsrvFields::id1
-        AidAlpsrvFields::id2& id2; ///< id2 field, see @ref AidAlpsrvFields::id2
-        AidAlpsrvFields::id3& id3; ///< id3 field, see @ref AidAlpsrvFields::id3
-        AidAlpsrvFields::data& data; ///< data field, see @ref AidAlpsrvFields::data
-    };
-
-    /// @brief Access to @b const fields bundled as a struct
-    struct ConstFieldsAsStruct
-    {
-        const AidAlpsrvFields::idSize& idSize; ///< idSize field, see @ref AidAlpsrvFields::idSize
-        const AidAlpsrvFields::type& type; ///< type field, see @ref AidAlpsrvFields::type
-        const AidAlpsrvFields::ofs& ofs; ///< ofs field, see @ref AidAlpsrvFields::ofs
-        const AidAlpsrvFields::size& size; ///< size field, see @ref AidAlpsrvFields::size
-        const AidAlpsrvFields::type& type; ///< type fileId, see @ref AidAlpsrvFields::fileId
-        const AidAlpsrvFields::dataSize& dataSize; ///< dataSize field, see @ref AidAlpsrvFields::dataSize
-        const AidAlpsrvFields::id1& id1; ///< id1 field, see @ref AidAlpsrvFields::id1
-        const AidAlpsrvFields::id2& id2; ///< id2 field, see @ref AidAlpsrvFields::id2
-        const AidAlpsrvFields::id3& id3; ///< id3 field, see @ref AidAlpsrvFields::id3
-        const AidAlpsrvFields::data& data; ///< data field, see @ref AidAlpsrvFields::data
-    };
-
-    /// @brief Get access to fields bundled into a struct
-    FieldsAsStruct fieldsAsStruct();
-
-    /// @brief Get access to @b const fields bundled into a struct
-    ConstFieldsAsStruct fieldsAsStruct() const;
-
-#else
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b idSize for @ref AidAlpsrvFields::idSize field
+    ///     @li @b type for @ref AidAlpsrvFields::type field
+    ///     @li @b ofs for @ref AidAlpsrvFields::ofs field
+    ///     @li @b size for @ref AidAlpsrvFields::size field
+    ///     @li @b fileId for @ref AidAlpsrvFields::fileId field
+    ///     @li @b dataSize for @ref AidAlpsrvFields::dataSize field
+    ///     @li @b id1 for @ref AidAlpsrvFields::id1 field
+    ///     @li @b id2 for @ref AidAlpsrvFields::id2 field
+    ///     @li @b id3 for @ref AidAlpsrvFields::id3 field
+    ///     @li @b data for @ref AidAlpsrvFields::data field
     COMMS_MSG_FIELDS_ACCESS(Base, idSize, type, ofs, size, fileId, dataSize, id1, id2, id3, data);
-#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     AidAlpsrv() = default;

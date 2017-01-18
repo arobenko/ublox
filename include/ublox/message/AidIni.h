@@ -33,47 +33,6 @@ namespace message
 /// @see AidIni
 struct AidIniFields
 {
-    /// @brief Bits access enumerator for @ref tmCfg bitmask field.
-    enum
-    {
-        tmCfg_fEdge = 1, ///< @b fEdge bit index
-        tmCfg_tm1 = 4, ///< @b tm1 bit index
-        tmCfg_f1 = 6, ///< @b f1 bit index
-        tmCfg_numOfValues ///< Upper limit for access bits
-    };
-
-    /// @brief Use this enumerator to access member fields of @ref date bitfield.
-    enum
-    {
-        date_month, ///< Index of @b month member field
-        date_year, ///< Index of @b year member field
-        date_numOfValues ///< Number of member fields
-    };
-
-    /// @brief Use this enumerator to access member fields of @ref time bitfield.
-    enum
-    {
-        time_sec, ///< Index of @b seconds member field
-        time_min, ///< Index of @b minutes member field
-        time_hour, ///< Index of @b hours member field
-        time_day, ///< Index of @b day member field
-        time_numOfValues ///< Number of member fields
-    };
-
-    /// @brief Bits access enumerator for @ref flags bitmask field.
-    enum
-    {
-        flags_pos, ///< @b pos bit index
-        flags_time, ///< @b time bit index
-        flags_clockD, ///< @b clockD bit index
-        flags_tp, ///< @b tp bit index
-        flags_clockF, ///< @b clockF bit index
-        flags_lla, ///< @b lla bit index
-        flags_altInv, ///< @b altInv bit index
-        flags_prevTm, ///< @b prevTm bit index
-        flags_utc = 10, ///< @b utc bit index
-        flags_numOfValues ///< Upper limit for access bits
-    };
 
     /// @brief Definition of "ecefX" field.
     using ecefX =
@@ -103,10 +62,17 @@ struct AidIniFields
     using posAcc = field::common::U4T<field::common::Scaling_cm2m>;
 
     /// @brief Definition of "tmCfg" field.
-    using tmCfg =
+    struct tmCfg : public
         field::common::X2T<
             comms::option::BitmaskReservedBits<0xfffad, 0>
-        >;
+        >
+    {
+        /// @brief Provide names for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS(fEdge=1, tm1=4, f1=6);
+    };
 
     /// @brief Definition of "wno" field.
     using wno =
@@ -114,24 +80,35 @@ struct AidIniFields
             field::common::U2
         >;
 
-    /// @brief Definition of "date" field.
-    using date =
-        field::common::OptionalT<
-            field::common::BitfieldT<
-                std::tuple<
-                    field::common::U1T<
-                        comms::option::ValidNumValueRange<1, 12>,
-                        comms::option::FixedBitLength<8>
-                    >,
-                    field::common::U2T<
-                        comms::option::DefaultNumValue<2000>,
-                        comms::option::NumValueSerOffset<-2000>,
-                        comms::option::ValidNumValueRange<2000, 2000 + 0xff>,
-                        comms::option::FixedBitLength<8>
-                    >
+    /// @brief Definition of the base class for @ref dateBitfield
+    using dateBitfieldBase =
+        field::common::BitfieldT<
+            std::tuple<
+                field::common::U1T<
+                    comms::option::ValidNumValueRange<1, 12>,
+                    comms::option::FixedBitLength<8>
+                >,
+                field::common::U2T<
+                    comms::option::DefaultNumValue<2000>,
+                    comms::option::NumValueSerOffset<-2000>,
+                    comms::option::ValidNumValueRange<2000, 2000 + 0xff>,
+                    comms::option::FixedBitLength<8>
                 >
             >
         >;
+
+    /// @brief Definition of the @ref date bitfield
+    struct dateBitfield : public dateBitfieldBase
+    {
+        /// @brief Allow access to internal fields.
+        /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
+        ///     related to @b comms::field::Bitfield class from COMMS library
+        ///     for details.
+        COMMS_FIELD_MEMBERS_ACCESS(dateBitfieldBase, month, year);
+    };
+
+    /// @brief Definition of "date" field.
+    using date = field::common::OptionalT<dateBitfield>;
 
     /// @brief Definition of "tow" field.
     using tow =
@@ -139,30 +116,41 @@ struct AidIniFields
             field::common::U4T<field::common::Scaling_ms2s>
         >;
 
-    /// @brief Definition of "time" field.
-    using time =
-        field::common::OptionalT<
-            field::common::BitfieldT<
-                std::tuple<
-                    field::common::U1T<
-                        comms::option::ValidNumValueRange<0, 60>,
-                        comms::option::FixedBitLength<8>
-                    >,
-                    field::common::U1T<
-                        comms::option::ValidNumValueRange<0, 59>,
-                        comms::option::FixedBitLength<8>
-                    >,
-                    field::common::U1T<
-                        comms::option::ValidNumValueRange<0, 59>,
-                        comms::option::FixedBitLength<8>
-                    >,
-                    field::common::U1T<
-                        comms::option::ValidNumValueRange<1, 31>,
-                        comms::option::FixedBitLength<8>
-                    >
+    /// @brief Definition of the base class for @ref timeBitfield
+    using timeBitfieldBase =
+        field::common::BitfieldT<
+            std::tuple<
+                field::common::U1T<
+                    comms::option::ValidNumValueRange<0, 60>,
+                    comms::option::FixedBitLength<8>
+                >,
+                field::common::U1T<
+                    comms::option::ValidNumValueRange<0, 59>,
+                    comms::option::FixedBitLength<8>
+                >,
+                field::common::U1T<
+                    comms::option::ValidNumValueRange<0, 59>,
+                    comms::option::FixedBitLength<8>
+                >,
+                field::common::U1T<
+                    comms::option::ValidNumValueRange<1, 31>,
+                    comms::option::FixedBitLength<8>
                 >
             >
         >;
+
+    /// @brief Definition of the @ref time bitfield
+    struct timeBitfield : public timeBitfieldBase
+    {
+        /// @brief Allow access to internal fields.
+        /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
+        ///     related to @b comms::field::Bitfield class from COMMS library
+        ///     for details.
+        COMMS_FIELD_MEMBERS_ACCESS(timeBitfieldBase, sec, min, hour, day);
+    };
+
+    /// @brief Definition of "time" field.
+    using time = field::common::OptionalT<timeBitfield>;
 
     /// @brief Definition of "towNs" field.
     using towNs = field::common::I4T<field::common::Scaling_ns2s>;
@@ -198,11 +186,17 @@ struct AidIniFields
         >;
 
     /// @brief Definition of "flags" field.
-    using flags =
+    struct flags : public
         field::common::X4T<
             comms::option::BitmaskReservedBits<0xfffffb00, 0>
-        >;
-
+        >
+    {
+        /// @brief Provide names for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS(pos, time, clockD, tp, clockF, lla, altInv, prevTm, utc=10);
+    };;
 
     /// @brief All the fields bundled in std::tuple.
     using All = std::tuple<
@@ -233,7 +227,8 @@ struct AidIniFields
 /// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
 ///     various implementation options. @n
-///     See @ref AidIniFields and for definition of the fields this message contains.
+///     See @ref AidIniFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 ///
 ///     @b NOTE, that Ublox binary protocol specification reinterprets value of
 ///     some fields based on the value of some bits in @b flags (see @ref AidIniFields::flags)
@@ -264,90 +259,32 @@ class AidIni : public
     > Base;
 public:
 
-#ifdef FOR_DOXYGEN_DOC_ONLY
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_ecefX, ///< @b ecefX field, see @ref AidIniFields::ecefX
-        FieldIdx_lat, ///< @b lat field, see @ref AidIniFields::lat
-        FieldIdx_ecefY, ///< @b ecefY field, see @ref AidIniFields::ecefY
-        FieldIdx_lon, ///< @b lon field, see @ref AidIniFields::lon
-        FieldIdx_ecefZ, ///< @b ecefZ field, see @ref AidIniFields::ecefZ
-        FieldIdx_alt, ///< @b alt field, see @ref AidIniFields::alt
-        FieldIdx_posAcc, ///< @b posAcc field, see @ref AidIniFields::posAcc
-        FieldIdx_tmCfg, ///< @b tmCfg field, see @ref AidIniFields::tmCfg
-        FieldIdx_wno, ///< @b wno field, see @ref AidIniFields::wno
-        FieldIdx_date, ///< @b date field, see @ref AidIniFields::date
-        FieldIdx_tow, ///< @b tow field, see @ref AidIniFields::tow
-        FieldIdx_time, ///< @b time field, see @ref AidIniFields::time
-        FieldIdx_towNs, ///< @b towNs field, see @ref AidIniFields::towNs
-        FieldIdx_tAccMs, ///< @b tAccMs field, see @ref AidIniFields::tAccMs
-        FieldIdx_tAccNs, ///< @b tAccNs field, see @ref AidIniFields::tAccNs
-        FieldIdx_clkD, ///< @b clkD field, see @ref AidIniFields::clkD
-        FieldIdx_freq, ///< @b posAcc freq, see @ref AidIniFields::freq
-        FieldIdx_clkDAcc, ///< @b clkDAcc field, see @ref AidIniFields::clkDAcc
-        FieldIdx_freqAcc, ///< @b freqAcc field, see @ref AidIniFields::freqAcc
-        FieldIdx_flags, ///< @b flags field, see @ref AidIniFields::flags
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    /// @brief Access to fields bundled as a struct
-    struct FieldsAsStruct
-    {
-        AidIniFields::ecefX& ecefX; ///< @b ecefX field, see @ref AidIniFields::ecefX
-        AidIniFields::lat& lat; ///< @b lat field, see @ref AidIniFields::lat
-        AidIniFields::ecefY& ecefY; ///< @b ecefY field, see @ref AidIniFields::ecefY
-        AidIniFields::lon& lon; ///< @b lon field, see @ref AidIniFields::lon
-        AidIniFields::ecefZ& ecefZ; ///< @b ecefZ field, see @ref AidIniFields::ecefZ
-        AidIniFields::alt& alt; ///< @b alt field, see @ref AidIniFields::alt
-        AidIniFields::posAcc& posAcc; ///< @b posAcc field, see @ref AidIniFields::posAcc
-        AidIniFields::tmCfg& tmCfg; ///< @b tmCfg field, see @ref AidIniFields::tmCfg
-        AidIniFields::wno& wno; ///< @b wno field, see @ref AidIniFields::wno
-        AidIniFields::date& date; ///< @b date field, see @ref AidIniFields::date
-        AidIniFields::tow& tow; ///< @b tow field, see @ref AidIniFields::tow
-        AidIniFields::time& time; ///< @b time field, see @ref AidIniFields::time
-        AidIniFields::towNs& towNs; ///< @b towNs field, see @ref AidIniFields::towNs
-        AidIniFields::tAccMs& tAccMs; ///< @b tAccMs field, see @ref AidIniFields::tAccMs
-        AidIniFields::tAccNs& tAccNs; ///< @b tAccNs field, see @ref AidIniFields::tAccNs
-        AidIniFields::clkD& clkD; ///< @b clkD field, see @ref AidIniFields::clkD
-        AidIniFields::posAcc& posAcc; ///< @b posAcc freq, see @ref AidIniFields::freq
-        AidIniFields::clkDAcc& clkDAcc; ///< @b clkDAcc field, see @ref AidIniFields::clkDAcc
-        AidIniFields::freqAcc& freqAcc; ///< @b freqAcc field, see @ref AidIniFields::freqAcc
-        AidIniFields::flags& flags; ///< @b flags field, see @ref AidIniFields::flags
-    };
-
-    /// @brief Access to @b const fields bundled as a struct
-    struct ConstFieldsAsStruct
-    {
-        const AidIniFields::ecefX& ecefX; ///< @b ecefX field, see @ref AidIniFields::ecefX
-        const AidIniFields::lat& lat; ///< @b lat field, see @ref AidIniFields::lat
-        const AidIniFields::ecefY& ecefY; ///< @b ecefY field, see @ref AidIniFields::ecefY
-        const AidIniFields::lon& lon; ///< @b lon field, see @ref AidIniFields::lon
-        const AidIniFields::ecefZ& ecefZ; ///< @b ecefZ field, see @ref AidIniFields::ecefZ
-        const AidIniFields::alt& alt; ///< @b alt field, see @ref AidIniFields::alt
-        const AidIniFields::posAcc& posAcc; ///< @b posAcc field, see @ref AidIniFields::posAcc
-        const AidIniFields::tmCfg& tmCfg; ///< @b tmCfg field, see @ref AidIniFields::tmCfg
-        const AidIniFields::wno& wno; ///< @b wno field, see @ref AidIniFields::wno
-        const AidIniFields::date& date; ///< @b date field, see @ref AidIniFields::date
-        const AidIniFields::tow& tow; ///< @b tow field, see @ref AidIniFields::tow
-        const AidIniFields::time& time; ///< @b time field, see @ref AidIniFields::time
-        const AidIniFields::towNs& towNs; ///< @b towNs field, see @ref AidIniFields::towNs
-        const AidIniFields::tAccMs& tAccMs; ///< @b tAccMs field, see @ref AidIniFields::tAccMs
-        const AidIniFields::tAccNs& tAccNs; ///< @b tAccNs field, see @ref AidIniFields::tAccNs
-        const AidIniFields::clkD& clkD; ///< @b clkD field, see @ref AidIniFields::clkD
-        const AidIniFields::posAcc& posAcc; ///< @b posAcc freq, see @ref AidIniFields::freq
-        const AidIniFields::clkDAcc& clkDAcc; ///< @b clkDAcc field, see @ref AidIniFields::clkDAcc
-        const AidIniFields::freqAcc& freqAcc; ///< @b freqAcc field, see @ref AidIniFields::freqAcc
-        const AidIniFields::flags& flags; ///< @b flags field, see @ref AidIniFields::flags
-    };
-
-    /// @brief Get access to fields bundled into a struct
-    FieldsAsStruct fieldsAsStruct();
-
-    /// @brief Get access to @b const fields bundled into a struct
-    ConstFieldsAsStruct fieldsAsStruct() const;
-
-#else
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b ecefX for @ref AidIniFields::ecefX field
+    ///     @li @b lat for @ref AidIniFields::lat field
+    ///     @li @b ecefY for @ref AidIniFields::ecefY field
+    ///     @li @b lon for @ref AidIniFields::lon field
+    ///     @li @b ecefZ for @ref AidIniFields::ecefZ field
+    ///     @li @b alt for @ref AidIniFields::alt field
+    ///     @li @b posAcc for @ref AidIniFields::posAcc field
+    ///     @li @b tmCfg for @ref AidIniFields::tmCfg field
+    ///     @li @b wno for @ref AidIniFields::wno field
+    ///     @li @b date for @ref AidIniFields::date field
+    ///     @li @b tow for @ref AidIniFields::tow field
+    ///     @li @b time for @ref AidIniFields::time field
+    ///     @li @b towNs for @ref AidIniFields::towNs field
+    ///     @li @b tAccMs for @ref AidIniFields::tAccMs field
+    ///     @li @b tAccNs for @ref AidIniFields::tAccNs field
+    ///     @li @b clkD for @ref AidIniFields::clkD field
+    ///     @li @b freq for @ref AidIniFields::freq field
+    ///     @li @b clkDAcc for @ref AidIniFields::clkDAcc field
+    ///     @li @b freqAcc for @ref AidIniFields::freqAcc field
+    ///     @li @b flags for @ref AidIniFields::flags field
     COMMS_MSG_FIELDS_ACCESS(Base,
         ecefX,
         lat,
@@ -369,7 +306,6 @@ public:
         clkDAcc,
         freqAcc,
         flags);
-#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     /// @details The existing/missing mode of the optional fields is determined
@@ -428,7 +364,7 @@ public:
             return es;
         }
 
-        if (flagsField.getBitValue(AidIniFields::flags_lla)) {
+        if (flagsField.getBitValue(AidIniFields::flags::BitIdx_lla)) {
             auto& ecefXField = std::get<FieldIdx_ecefX>(allFields);
             auto& latField = std::get<FieldIdx_lat>(allFields);
             auto& ecefYField = std::get<FieldIdx_ecefY>(allFields);
@@ -441,7 +377,7 @@ public:
             reassignToField(ecefZField, altField);
         }
 
-        if (flagsField.getBitValue(AidIniFields::flags_utc)) {
+        if (flagsField.getBitValue(AidIniFields::flags::BitIdx_utc)) {
             auto& wnoField = std::get<FieldIdx_wno>(allFields);
             auto& dateField = std::get<FieldIdx_date>(allFields);
             auto& towField = std::get<FieldIdx_tow>(allFields);
@@ -451,7 +387,7 @@ public:
             reassignToBitfield(towField, timeField);
         }
 
-        if (flagsField.getBitValue(AidIniFields::flags_clockF)) {
+        if (flagsField.getBitValue(AidIniFields::flags::BitIdx_clockF)) {
             auto& clkDField = std::get<FieldIdx_clkD>(allFields);
             auto& freqField = std::get<FieldIdx_freq>(allFields);
             auto& clkDAccField = std::get<FieldIdx_clkDAcc>(allFields);
@@ -478,7 +414,7 @@ public:
 
         auto expectedCartesian = comms::field::OptionalMode::Exists;
         auto expectedGeodetic = comms::field::OptionalMode::Missing;
-        if (flagsField.getBitValue(AidIniFields::flags_lla)) {
+        if (flagsField.getBitValue(AidIniFields::flags::BitIdx_lla)) {
             std::swap(expectedCartesian, expectedGeodetic);
         }
 
@@ -508,7 +444,7 @@ public:
 
         auto expectedWnoTowMode = comms::field::OptionalMode::Exists;
         auto expectedDateTimeMode = comms::field::OptionalMode::Missing;
-        if (flagsField.getBitValue(AidIniFields::flags_utc)) {
+        if (flagsField.getBitValue(AidIniFields::flags::BitIdx_utc)) {
             std::swap(expectedWnoTowMode, expectedDateTimeMode);
         }
 
@@ -530,7 +466,7 @@ public:
 
         auto expectedClkDMode = comms::field::OptionalMode::Exists;
         auto expectedFreqMode = comms::field::OptionalMode::Missing;
-        if (flagsField.getBitValue(AidIniFields::flags_clockF)) {
+        if (flagsField.getBitValue(AidIniFields::flags::BitIdx_clockF)) {
             std::swap(expectedClkDMode, expectedFreqMode);
         }
 

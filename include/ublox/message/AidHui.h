@@ -88,18 +88,16 @@ struct AidHuiFields
     using klobB3 = field::common::R4;
 
     /// @brief Definition of "flags" field.
-    using flags =
+    struct flags : public
         field::common::X4T<
             comms::option::BitmaskReservedBits<0xfffffff8, 0>
-        >;
-
-    /// @brief Enumerator to access bits in @ref flags bitmask field
-    enum
+        >
     {
-        flags_healthValid, ///< "healthValid" bit
-        flags_utcValid, ///< "utcValid" bit
-        flags_klobValid, ///< "klobValid" bit
-        flags_numOfValues ///< number of available bits
+        /// @brief Provide names for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS(healthValid, utcValid, klobValid);
     };
 
     /// @brief All the fields bundled in std::tuple.
@@ -130,7 +128,8 @@ struct AidHuiFields
 /// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
 ///     various implementation options. @n
-///     See @ref AidHuiFields and for definition of the fields this message contains.
+///     See @ref AidHuiFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class AidHui : public
@@ -149,87 +148,31 @@ class AidHui : public
     > Base;
 public:
 
-#ifdef FOR_DOXYGEN_DOC_ONLY
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_health, ///< health field, see @ref AidHuiFields::health
-        FieldIdx_utcA0, ///< utcA0 field, see @ref AidHuiFields::utcA0
-        FieldIdx_utcA1, ///< utcA1 field, see @ref AidHuiFields::utcA1
-        FieldIdx_utcTOW, ///< utcTOW field, see @ref AidHuiFields::utcTOW
-        FieldIdx_utcWNT, ///< utcWNT field, see @ref AidHuiFields::utcWNT
-        FieldIdx_utcLS, ///< utcLC field, see @ref AidHuiFields::utcLS
-        FieldIdx_utcWNF, ///< utcWNF field, see @ref AidHuiFields::utcWNF
-        FieldIdx_utcDN, ///< utcDN field, see @ref AidHuiFields::utcDN
-        FieldIdx_utcLSF, ///< utcLSF field, see @ref AidHuiFields::utcLSF
-        FieldIdx_utcSpare, ///< utcSpare field, see @ref AidHuiFields::utcSpare
-        FieldIdx_klobA0, ///< klobA0 field, see @ref AidHuiFields::klobA0
-        FieldIdx_klobA1, ///< klobA1 field, see @ref AidHuiFields::klobA1
-        FieldIdx_klobA2, ///< klobA2 field, see @ref AidHuiFields::klobA2
-        FieldIdx_klobA3, ///< klobA3 field, see @ref AidHuiFields::klobA3
-        FieldIdx_klobB0, ///< klobB0 field, see @ref AidHuiFields::klobB0
-        FieldIdx_klobB1, ///< klobB1 field, see @ref AidHuiFields::klobB1
-        FieldIdx_klobB2, ///< klobB2 field, see @ref AidHuiFields::klobB2
-        FieldIdx_klobB3, ///< klobB3 field, see @ref AidHuiFields::klobB3
-        FieldIdx_flags, ///< flags field, see @ref AidHuiFields::flags
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    /// @brief Access to fields bundled as a struct
-    struct FieldsAsStruct
-    {
-        AidHuiFields::health& health; ///< health field, see @ref AidHuiFields::health
-        AidHuiFields::utcA0& utcA0; ///< utcA0 field, see @ref AidHuiFields::utcA0
-        AidHuiFields::utcA1& utcA1; ///< utcA1 field, see @ref AidHuiFields::utcA1
-        AidHuiFields::utcTOW& utcTOW; ///< utcTOW field, see @ref AidHuiFields::utcTOW
-        AidHuiFields::utcWNT& utcWNT; ///< utcWNT field, see @ref AidHuiFields::utcWNT
-        AidHuiFields::utcLC& utcLC; ///< utcLC field, see @ref AidHuiFields::utcLS
-        AidHuiFields::utcWNF& utcWNF; ///< utcWNF field, see @ref AidHuiFields::utcWNF
-        AidHuiFields::utcDN& utcDN; ///< utcDN field, see @ref AidHuiFields::utcDN
-        AidHuiFields::utcLSF& utcLSF; ///< utcLSF field, see @ref AidHuiFields::utcLSF
-        AidHuiFields::utcSpare& utcSpare; ///< utcSpare field, see @ref AidHuiFields::utcSpare
-        AidHuiFields::klobA0& klobA0; ///< klobA0 field, see @ref AidHuiFields::klobA0
-        AidHuiFields::klobA1& klobA1; ///< klobA1 field, see @ref AidHuiFields::klobA1
-        AidHuiFields::klobA2& klobA2; ///< klobA2 field, see @ref AidHuiFields::klobA2
-        AidHuiFields::klobA3& klobA3; ///< klobA3 field, see @ref AidHuiFields::klobA3
-        AidHuiFields::klobB0& klobB0; ///< klobB0 field, see @ref AidHuiFields::klobB0
-        AidHuiFields::klobB1& klobB1; ///< klobB1 field, see @ref AidHuiFields::klobB1
-        AidHuiFields::klobB2& klobB2; ///< klobB2 field, see @ref AidHuiFields::klobB2
-        AidHuiFields::klobB3& klobB3; ///< klobB3 field, see @ref AidHuiFields::klobB3
-        AidHuiFields::flags& flags; ///< flags field, see @ref AidHuiFields::flags
-    };
-
-    /// @brief Access to @b const fields bundled as a struct
-    struct ConstFieldsAsStruct
-    {
-        const AidHuiFields::health& health; ///< health field, see @ref AidHuiFields::health
-        const AidHuiFields::utcA0& utcA0; ///< utcA0 field, see @ref AidHuiFields::utcA0
-        const AidHuiFields::utcA1& utcA1; ///< utcA1 field, see @ref AidHuiFields::utcA1
-        const AidHuiFields::utcTOW& utcTOW; ///< utcTOW field, see @ref AidHuiFields::utcTOW
-        const AidHuiFields::utcWNT& utcWNT; ///< utcWNT field, see @ref AidHuiFields::utcWNT
-        const AidHuiFields::utcLC& utcLC; ///< utcLC field, see @ref AidHuiFields::utcLS
-        const AidHuiFields::utcWNF& utcWNF; ///< utcWNF field, see @ref AidHuiFields::utcWNF
-        const AidHuiFields::utcDN& utcDN; ///< utcDN field, see @ref AidHuiFields::utcDN
-        const AidHuiFields::utcLSF& utcLSF; ///< utcLSF field, see @ref AidHuiFields::utcLSF
-        const AidHuiFields::utcSpare& utcSpare; ///< utcSpare field, see @ref AidHuiFields::utcSpare
-        const AidHuiFields::klobA0& klobA0; ///< klobA0 field, see @ref AidHuiFields::klobA0
-        const AidHuiFields::klobA1& klobA1; ///< klobA1 field, see @ref AidHuiFields::klobA1
-        const AidHuiFields::klobA2& klobA2; ///< klobA2 field, see @ref AidHuiFields::klobA2
-        const AidHuiFields::klobA3& klobA3; ///< klobA3 field, see @ref AidHuiFields::klobA3
-        const AidHuiFields::klobB0& klobB0; ///< klobB0 field, see @ref AidHuiFields::klobB0
-        const AidHuiFields::klobB1& klobB1; ///< klobB1 field, see @ref AidHuiFields::klobB1
-        const AidHuiFields::klobB2& klobB2; ///< klobB2 field, see @ref AidHuiFields::klobB2
-        const AidHuiFields::klobB3& klobB3; ///< klobB3 field, see @ref AidHuiFields::klobB3
-        const AidHuiFields::flags& flags; ///< flags field, see @ref AidHuiFields::flags
-    };
-
-    /// @brief Get access to fields bundled into a struct
-    FieldsAsStruct fieldsAsStruct();
-
-    /// @brief Get access to @b const fields bundled into a struct
-    ConstFieldsAsStruct fieldsAsStruct() const;
-
-#else
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b health for @ref AidHuiFields::health field
+    ///     @li @b utcA0 for @ref AidHuiFields::utcA0 field
+    ///     @li @b utcA1 for @ref AidHuiFields::utcA1 field
+    ///     @li @b utcTOW for @ref AidHuiFields::utcTOW field
+    ///     @li @b utcWNT for @ref AidHuiFields::utcWNT field
+    ///     @li @b utcLS for @ref AidHuiFields::utcLS field
+    ///     @li @b utcWNF for @ref AidHuiFields::utcWNF field
+    ///     @li @b utcDN for @ref AidHuiFields::utcDN field
+    ///     @li @b utcLSF for @ref AidHuiFields::utcLSF field
+    ///     @li @b utcSpare for @ref AidHuiFields::utcSpare field
+    ///     @li @b klobA0 for @ref AidHuiFields::klobA0 field
+    ///     @li @b klobA1 for @ref AidHuiFields::klobA1 field
+    ///     @li @b klobA2 for @ref AidHuiFields::klobA2 field
+    ///     @li @b klobA3 for @ref AidHuiFields::klobA3 field
+    ///     @li @b klobB0 for @ref AidHuiFields::klobB0 field
+    ///     @li @b klobB1 for @ref AidHuiFields::klobB1 field
+    ///     @li @b klobB2 for @ref AidHuiFields::klobB2 field
+    ///     @li @b klobB3 for @ref AidHuiFields::klobB3 field
+    ///     @li @b flags for @ref AidHuiFields::flags field
     COMMS_MSG_FIELDS_ACCESS(Base,
         health,
         utcA0,
@@ -250,7 +193,6 @@ public:
         klobB2,
         klobB3,
         flags);
-#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     AidHui() = default;

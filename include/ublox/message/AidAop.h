@@ -66,7 +66,8 @@ struct AidAopFields
 /// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
 ///     various implementation options. @n
-///     See @ref AidAopFields and for definition of the fields this message contains.
+///     See @ref AidAopFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class AidAop : public
@@ -85,41 +86,16 @@ class AidAop : public
     > Base;
 public:
 
-#ifdef FOR_DOXYGEN_DOC_ONLY
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_svid, ///< svid field, see @ref AidAopFields::svid
-        FieldIdx_data, ///< data field, see @ref AidAopFields::data
-        FieldIdx_optional, ///< optional field, see @ref AidAopFields::optional
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    /// @brief Access to fields bundled as a struct
-    struct FieldsAsStruct
-    {
-        AidAopFields::svid& svid; ///< svid field, see @ref AidAopFields::svid
-        AidAopFields::data& data; ///< data field, see @ref AidAopFields::data
-        AidAopFields::optional& optional; ///< optional field, see @ref AidAopFields::optional
-    };
-
-    /// @brief Access to @b const fields bundled as a struct
-    struct ConstFieldsAsStruct
-    {
-        const AidAopFields::svid& svid; ///< svid field, see @ref AidAopFields::svid
-        const AidAopFields::data& data; ///< data field, see @ref AidAopFields::data
-        const AidAopFields::optional& optional; ///< optional field, see @ref AidAopFields::optional
-    };
-
-    /// @brief Get access to fields bundled into a struct
-    FieldsAsStruct fieldsAsStruct();
-
-    /// @brief Get access to @b const fields bundled into a struct
-    ConstFieldsAsStruct fieldsAsStruct() const;
-
-#else
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b svid for @ref AidAopFields::svid field
+    ///     @li @b data for @ref AidAopFields::data field
+    ///     @li @b optional for @ref AidAopFields::optional field
     COMMS_MSG_FIELDS_ACCESS(Base, svid, data, optional);
-#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     AidAop() = default;

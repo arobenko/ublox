@@ -77,7 +77,8 @@ struct AidAlpsrvUpdateFields
 /// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
 ///     various implementation options. @n
-///     See @ref AidAlpsrvUpdateFields and for definition of the fields this message contains.
+///     See @ref AidAlpsrvUpdateFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class AidAlpsrvUpdate : public
@@ -98,51 +99,19 @@ class AidAlpsrvUpdate : public
     > Base;
 public:
 
-
-#ifdef FOR_DOXYGEN_DOC_ONLY
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_idSize, ///< idSize field, see @ref AidAlpsrvUpdateFields::idSize
-        FieldIdx_type, ///< type field, see @ref AidAlpsrvUpdateFields::type
-        FieldIdx_ofs, ///< ofs field, see @ref AidAlpsrvUpdateFields::ofs
-        FieldIdx_size, ///< size field, see @ref AidAlpsrvUpdateFields::size
-        FieldIdx_fileId, ///< fileId field, see @ref AidAlpsrvUpdateFields::fileId
-        FieldIdx_data, ///< data field, see @ref AidAlpsrvUpdateFields::data
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    /// @brief Access to fields bundled as a struct
-    struct FieldsAsStruct
-    {
-        AidAlpsrvUpdateFields::idSize& idSize; ///< idSize field, see @ref AidAlpsrvUpdateFields::idSize
-        AidAlpsrvUpdateFields::type& type; ///< type field, see @ref AidAlpsrvUpdateFields::type
-        AidAlpsrvUpdateFields::ofs& ofs; ///< ofs field, see @ref AidAlpsrvUpdateFields::ofs
-        AidAlpsrvUpdateFields::size& size; ///< size field, see @ref AidAlpsrvUpdateFields::size
-        AidAlpsrvUpdateFields::fileId& fileId; ///< fileId field, see @ref AidAlpsrvUpdateFields::fileId
-        AidAlpsrvUpdateFields::data& data; ///< data field, see @ref AidAlpsrvUpdateFields::data
-    };
-
-    /// @brief Access to @b const fields bundled as a struct
-    struct ConstFieldsAsStruct
-    {
-        const AidAlpsrvUpdateFields::idSize& idSize; ///< idSize field, see @ref AidAlpsrvUpdateFields::idSize
-        const AidAlpsrvUpdateFields::type& type; ///< type field, see @ref AidAlpsrvUpdateFields::type
-        const AidAlpsrvUpdateFields::ofs& ofs; ///< ofs field, see @ref AidAlpsrvUpdateFields::ofs
-        const AidAlpsrvUpdateFields::size& size; ///< size field, see @ref AidAlpsrvUpdateFields::size
-        const AidAlpsrvUpdateFields::fileId& fileId; ///< fileId field, see @ref AidAlpsrvUpdateFields::fileId
-        const AidAlpsrvUpdateFields::data& data; ///< data field, see @ref AidAlpsrvUpdateFields::data
-    };
-
-    /// @brief Get access to fields bundled into a struct
-    FieldsAsStruct fieldsAsStruct();
-
-    /// @brief Get access to @b const fields bundled into a struct
-    ConstFieldsAsStruct fieldsAsStruct() const;
-
-#else
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b idSize for @ref AidAlpsrvUpdateFields::idSize field
+    ///     @li @b type for @ref AidAlpsrvUpdateFields::type field
+    ///     @li @b ofs for @ref AidAlpsrvUpdateFields::ofs field
+    ///     @li @b size for @ref AidAlpsrvUpdateFields::size field
+    ///     @li @b fileId for @ref AidAlpsrvUpdateFields::fileId field
+    ///     @li @b data for @ref AidAlpsrvUpdateFields::data field
     COMMS_MSG_FIELDS_ACCESS(Base, idSize, type, ofs, size, fileId, data);
-#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     AidAlpsrvUpdate() = default;
