@@ -96,7 +96,8 @@ struct LogRetrievestringFields
 /// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
 ///     various implementation options. @n
-///     See @ref LogRetrievestringFields and for definition of the fields this message contains.
+///     See @ref LogRetrievestringFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class LogRetrievestring : public
@@ -117,67 +118,24 @@ class LogRetrievestring : public
     > Base;
 public:
 
-#ifdef FOR_DOXYGEN_DOC_ONLY
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_entryIndex, ///< @b entryIndex field, see @ref LogRetrievestringFields::entryIndex
-        FieldIdx_version, ///< @b version field, see @ref LogRetrievestringFields::version
-        FieldIdx_reserved1, ///< @b reserved1 field, see @ref LogRetrievestringFields::reserved1
-        FieldIdx_year, ///< @b year field, see @ref LogRetrievestringFields::year
-        FieldIdx_month, ///< @b month field, see @ref LogRetrievestringFields::month
-        FieldIdx_day, ///< @b day field, see @ref LogRetrievestringFields::day
-        FieldIdx_hour, ///< @b hour field, see @ref LogRetrievestringFields::hour
-        FieldIdx_minute, ///< @b minute field, see @ref LogRetrievestringFields::minute
-        FieldIdx_second, ///< @b second field, see @ref LogRetrievestringFields::second
-        FieldIdx_reserved2, ///< @b reserved2 field, see @ref LogRetrievestringFields::reserved2
-        FieldIdx_byteCount, ///< @b byteCount field, see @ref LogRetrievestringFields::byteCount
-        FieldIdx_bytes, ///< @b bytes field, see @ref LogRetrievestringFields::bytes
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-
-    /// @brief Access to fields bundled as a struct
-    struct FieldsAsStruct
-    {
-        LogRetrievestringFields::entryIndex& entryIndex; ///< @b entryIndex field, see @ref LogRetrievestringFields::entryIndex
-        LogRetrievestringFields::version& version; ///< @b version field, see @ref LogRetrievestringFields::version
-        LogRetrievestringFields::reserved1& reserved1; ///< @b reserved1 field, see @ref LogRetrievestringFields::reserved1
-        LogRetrievestringFields::year& year; ///< @b year field, see @ref LogRetrievestringFields::year
-        LogRetrievestringFields::month& month; ///< @b month field, see @ref LogRetrievestringFields::month
-        LogRetrievestringFields::day& day; ///< @b day field, see @ref LogRetrievestringFields::day
-        LogRetrievestringFields::hour& hour; ///< @b hour field, see @ref LogRetrievestringFields::hour
-        LogRetrievestringFields::minute& minute; ///< @b minute field, see @ref LogRetrievestringFields::minute
-        LogRetrievestringFields::second& second; ///< @b second field, see @ref LogRetrievestringFields::second
-        LogRetrievestringFields::reserved2& reserved2; ///< @b reserved2 field, see @ref LogRetrievestringFields::reserved2
-        LogRetrievestringFields::byteCount& byteCount; ///< @b byteCount field, see @ref LogRetrievestringFields::byteCount
-        LogRetrievestringFields::bytes& bytes; ///< @b bytes field, see @ref LogRetrievestringFields::bytes
-    };
-
-    /// @brief Access to @b const fields bundled as a struct
-    struct ConstFieldsAsStruct
-    {
-        const LogRetrievestringFields::entryIndex& entryIndex; ///< @b entryIndex field, see @ref LogRetrievestringFields::entryIndex
-        const LogRetrievestringFields::version& version; ///< @b version field, see @ref LogRetrievestringFields::version
-        const LogRetrievestringFields::reserved1& reserved1; ///< @b reserved1 field, see @ref LogRetrievestringFields::reserved1
-        const LogRetrievestringFields::year& year; ///< @b year field, see @ref LogRetrievestringFields::year
-        const LogRetrievestringFields::month& month; ///< @b month field, see @ref LogRetrievestringFields::month
-        const LogRetrievestringFields::day& day; ///< @b day field, see @ref LogRetrievestringFields::day
-        const LogRetrievestringFields::hour& hour; ///< @b hour field, see @ref LogRetrievestringFields::hour
-        const LogRetrievestringFields::minute& minute; ///< @b minute field, see @ref LogRetrievestringFields::minute
-        const LogRetrievestringFields::second& second; ///< @b second field, see @ref LogRetrievestringFields::second
-        const LogRetrievestringFields::reserved2& reserved2; ///< @b reserved2 field, see @ref LogRetrievestringFields::reserved2
-        const LogRetrievestringFields::byteCount& byteCount; ///< @b byteCount field, see @ref LogRetrievestringFields::byteCount
-        const LogRetrievestringFields::bytes& bytes; ///< @b bytes field, see @ref LogRetrievestringFields::bytes
-    };
-
-    /// @brief Get access to fields bundled into a struct
-    FieldsAsStruct fieldsAsStruct();
-
-    /// @brief Get access to @b const fields bundled into a struct
-    ConstFieldsAsStruct fieldsAsStruct() const;
-
-#else
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b entryIndex for @ref LogRetrievestringFields::entryIndex field
+    ///     @li @b version for @ref LogRetrievestringFields::version field
+    ///     @li @b reserved1 for @ref LogRetrievestringFields::reserved1 field
+    ///     @li @b year for @ref LogRetrievestringFields::year field
+    ///     @li @b month for @ref LogRetrievestringFields::month field
+    ///     @li @b day for @ref LogRetrievestringFields::day field
+    ///     @li @b hour for @ref LogRetrievestringFields::hour field
+    ///     @li @b minute for @ref LogRetrievestringFields::minute field
+    ///     @li @b second for @ref LogRetrievestringFields::second field
+    ///     @li @b reserved2 for @ref LogRetrievestringFields::reserved2 field
+    ///     @li @b byteCount for @ref LogRetrievestringFields::byteCount field
+    ///     @li @b bytes for @ref LogRetrievestringFields::bytes field
     COMMS_MSG_FIELDS_ACCESS(Base,
         entryIndex,
         version,
@@ -192,7 +150,6 @@ public:
         byteCount,
         bytes
     );
-#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     LogRetrievestring() = default;

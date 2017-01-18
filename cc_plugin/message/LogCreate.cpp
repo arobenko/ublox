@@ -46,7 +46,7 @@ QVariantMap createProps_logCfg()
     cc::property::field::ForField<LogCreateFields::logCfg> props;
     props.name("logCfg")
          .add("circular");
-    assert(props.bits().size() == LogCreateFields::logCfg_numOfValues);
+    assert(props.bits().size() == LogCreateFields::logCfg::BitIdx_numOfValues);
     return props.asMap();
 }
 

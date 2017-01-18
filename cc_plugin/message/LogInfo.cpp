@@ -45,10 +45,10 @@ QVariantMap createProps_status()
 {
     cc::property::field::ForField<LogInfoFields::status> props;
     props.name("status")
-         .add(LogInfoFields::status_recording, "recording")
+         .add(LogInfoFields::status::BitIdx_recording, "recording")
          .add("inactive")
          .add("circular");
-    assert(props.bits().size() == LogInfoFields::status_numOfValues);
+    assert(props.bits().size() == LogInfoFields::status::BitIdx_numOfValues);
     return props.asMap();
 }
 

@@ -42,13 +42,6 @@ struct LogCreateFields
         NumOfValues ///< number of values
     };
 
-    /// @brief Bits access enumeration for @ref logCfg bitmask field.
-    enum
-    {
-        logCfg_circular, ///< @b circular bit index
-        logCfg_numOfValues ///< number of available bits
-    };
-
     /// @brief Definition of "version" field.
     using version =
         field::common::U1T<
@@ -56,10 +49,17 @@ struct LogCreateFields
         >;
 
     /// @brief Definition of "logCfg" field.
-    using logCfg =
+    struct logCfg : public
         field::common::X1T<
             comms::option::BitmaskReservedBits<0xfe, 0>
-        >;
+        >
+    {
+        /// @brief Provide names for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS(circular);
+    };
 
     /// @brief Definition of "reserved" field.
     using reserved = field::common::res1;
@@ -88,7 +88,8 @@ struct LogCreateFields
 /// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
 ///     various implementation options. @n
-///     See @ref LogCreateFields and for definition of the fields this message contains.
+///     See @ref LogCreateFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class LogCreate : public
@@ -107,47 +108,18 @@ class LogCreate : public
     > Base;
 public:
 
-#ifdef FOR_DOXYGEN_DOC_ONLY
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_version, ///< @b version field, see @ref LogCreateFields::version
-        FieldIdx_logCfg, ///< @b logCfg field, see @ref LogCreateFields::logCfg
-        FieldIdx_reserved, ///< @b reserved field, see @ref LogCreateFields::reserved
-        FieldIdx_logSize, ///< @b logSize field, see @ref LogCreateFields::logSize
-        FieldIdx_userDefinedSize, ///< @b userDefinedSize field, see @ref LogCreateFields::userDefinedSize
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    /// @brief Access to fields bundled as a struct
-    struct FieldsAsStruct
-    {
-        LogCreateFields::version& version; ///< @b version field, see @ref LogCreateFields::version
-        LogCreateFields::logCfg& logCfg; ///< @b logCfg field, see @ref LogCreateFields::logCfg
-        LogCreateFields::reserved& reserved; ///< @b reserved field, see @ref LogCreateFields::reserved
-        LogCreateFields::logSize& logSize; ///< @b logSize field, see @ref LogCreateFields::logSize
-        LogCreateFields::userDefinedSize& userDefinedSize; ///< @b userDefinedSize field, see @ref LogCreateFields::userDefinedSize
-    };
-
-    /// @brief Access to @b const fields bundled as a struct
-    struct ConstFieldsAsStruct
-    {
-        const LogCreateFields::version& version; ///< @b version field, see @ref LogCreateFields::version
-        const LogCreateFields::logCfg& logCfg; ///< @b logCfg field, see @ref LogCreateFields::logCfg
-        const LogCreateFields::reserved& reserved; ///< @b reserved field, see @ref LogCreateFields::reserved
-        const LogCreateFields::logSize& logSize; ///< @b logSize field, see @ref LogCreateFields::logSize
-        const LogCreateFields::userDefinedSize& userDefinedSize; ///< @b userDefinedSize field, see @ref LogCreateFields::userDefinedSize
-    };
-
-    /// @brief Get access to fields bundled into a struct
-    FieldsAsStruct fieldsAsStruct();
-
-    /// @brief Get access to @b const fields bundled into a struct
-    ConstFieldsAsStruct fieldsAsStruct() const;
-
-#else
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b version for @ref LogCreateFields::version field
+    ///     @li @b logCfg for @ref LogCreateFields::logCfg field
+    ///     @li @b reserved for @ref LogCreateFields::reserved field
+    ///     @li @b logSize for @ref LogCreateFields::logSize field
+    ///     @li @b userDefinedSize for @ref LogCreateFields::userDefinedSize field
     COMMS_MSG_FIELDS_ACCESS(Base, version, logCfg, reserved, logSize, userDefinedSize);
-#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     LogCreate() = default;

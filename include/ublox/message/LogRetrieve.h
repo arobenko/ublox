@@ -64,7 +64,8 @@ struct LogRetrieveFields
 /// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
 ///     various implementation options. @n
-///     See @ref LogRetrieveFields and for definition of the fields this message contains.
+///     See @ref LogRetrieveFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class LogRetrieve : public
@@ -83,44 +84,17 @@ class LogRetrieve : public
     > Base;
 public:
 
-#ifdef FOR_DOXYGEN_DOC_ONLY
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_startNumber, ///< @b startNumber field, see @ref LogRetrieveFields::startNumber
-        FieldIdx_entryCount, ///< @b entryCount field, see @ref LogRetrieveFields::entryCount
-        FieldIdx_version, ///< @b version field, see @ref LogRetrieveFields::version
-        FieldIdx_reserved, ///< @b reserved field, see @ref LogRetrieveFields::reserved
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    /// @brief Access to fields bundled as a struct
-    struct FieldsAsStruct
-    {
-        LogRetrieveFields::startNumber& startNumber; ///< @b startNumber field, see @ref LogRetrieveFields::startNumber
-        LogRetrieveFields::entryCount& entryCount; ///< @b entryCount field, see @ref LogRetrieveFields::entryCount
-        LogRetrieveFields::version& version; ///< @b version field, see @ref LogRetrieveFields::version
-        LogRetrieveFields::reserved& reserved; ///< @b reserved field, see @ref LogRetrieveFields::reserved
-    };
-
-    /// @brief Access to @b const fields bundled as a struct
-    struct ConstFieldsAsStruct
-    {
-        const LogRetrieveFields::startNumber& startNumber; ///< @b startNumber field, see @ref LogRetrieveFields::startNumber
-        const LogRetrieveFields::entryCount& entryCount; ///< @b entryCount field, see @ref LogRetrieveFields::entryCount
-        const LogRetrieveFields::version& version; ///< @b version field, see @ref LogRetrieveFields::version
-        const LogRetrieveFields::reserved& reserved; ///< @b reserved field, see @ref LogRetrieveFields::reserved
-    };
-
-    /// @brief Get access to fields bundled into a struct
-    FieldsAsStruct fieldsAsStruct();
-
-    /// @brief Get access to @b const fields bundled into a struct
-    ConstFieldsAsStruct fieldsAsStruct() const;
-
-#else
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b startNumber for @ref LogRetrieveFields::startNumber field
+    ///     @li @b entryCount for @ref LogRetrieveFields::entryCount field
+    ///     @li @b version for @ref LogRetrieveFields::version field
+    ///     @li @b reserved for @ref LogRetrieveFields::reserved field
     COMMS_MSG_FIELDS_ACCESS(Base, startNumber, entryCount, version, reserved);
-#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     LogRetrieve() = default;

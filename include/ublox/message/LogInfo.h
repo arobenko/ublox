@@ -33,15 +33,6 @@ namespace message
 /// @see LogInfo
 struct LogInfoFields
 {
-    /// @brief Bits access enumeration for @ref status bitmask field.
-    enum
-    {
-        status_recording = 3, ///< @b recording bit index
-        status_inactive, ///< @b inactive bit index
-        status_circular, ///< @b circular bit index
-        status_numOfValues ///< upper limit for available bits
-    };
-
     /// @brief Definition of "version" field.
     using version =
         field::common::U1T<
@@ -113,10 +104,17 @@ struct LogInfoFields
     using reserved5  = field::common::res1;
 
     /// @brief Definition of "status" field.
-    using status =
+    struct status : public
         field::common::X1T<
             comms::option::BitmaskReservedBits<0xc7, 0>
-        >;
+        >
+    {
+        /// @brief Provide names for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS(recording=3, inactive, circular);
+    };
 
     /// @brief Definition of "reserved6" field.
     using reserved6  = field::common::res3;
@@ -154,7 +152,8 @@ struct LogInfoFields
 /// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
 ///     various implementation options. @n
-///     See @ref LogInfoFields and for definition of the fields this message contains.
+///     See @ref LogInfoFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class LogInfo : public
@@ -173,101 +172,36 @@ class LogInfo : public
     > Base;
 public:
 
-#ifdef FOR_DOXYGEN_DOC_ONLY
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_version, ///< @b version field, see @ref LogInfoFields::version
-        FieldIdx_reserved1, ///< @b reserved1 field, see @ref LogInfoFields::reserved1
-        FieldIdx_filestoreCapacity, ///< @b filestoreCapacity field, see @ref LogInfoFields::filestoreCapacity
-        FieldIdx_reserved2, ///< @b reserved2 field, see @ref LogInfoFields::reserved2
-        FieldIdx_reserved3, ///< @b reserved3 field, see @ref LogInfoFields::reserved3
-        FieldIdx_currentMaxLogSize, ///< @b currentMaxLogSize field, see @ref LogInfoFields::currentMaxLogSize
-        FieldIdx_currentLogSize, ///< @b currentLogSize field, see @ref LogInfoFields::currentLogSize
-        FieldIdx_entryCount, ///< @b entryCount field, see @ref LogInfoFields::entryCount
-        FieldIdx_oldestYear, ///< @b oldestYear field, see @ref LogInfoFields::oldestYear
-        FieldIdx_oldestMonth, ///< @b oldestMonth field, see @ref LogInfoFields::oldestMonth
-        FieldIdx_oldestDay, ///< @b oldestDay field, see @ref LogInfoFields::oldestDay
-        FieldIdx_oldestHour, ///< @b oldestHour field, see @ref LogInfoFields::oldestHour
-        FieldIdx_oldestMinute, ///< @b oldestMinute field, see @ref LogInfoFields::oldestMinute
-        FieldIdx_oldestSecond, ///< @b oldestSecond field, see @ref LogInfoFields::oldestSecond
-        FieldIdx_reserved4, ///< @b reserved4 field, see @ref LogInfoFields::reserved4
-        FieldIdx_newestYear, ///< @b newestYear field, see @ref LogInfoFields::newestYear
-        FieldIdx_newestMonth, ///< @b newestMonth field, see @ref LogInfoFields::newestMonth
-        FieldIdx_newestDay, ///< @b newestDay field, see @ref LogInfoFields::newestDay
-        FieldIdx_newestHour, ///< @b newestHour field, see @ref LogInfoFields::newestHour
-        FieldIdx_newestMinute, ///< @b newestMinute field, see @ref LogInfoFields::newestMinute
-        FieldIdx_newestSecond, ///< @b newestSecond field, see @ref LogInfoFields::newestSecond
-        FieldIdx_reserved5, ///< @b reserved5 field, see @ref LogInfoFields::reserved5
-        FieldIdx_status, ///< @b status field, see @ref LogInfoFields::status
-        FieldIdx_reserved6, ///< @b reserved6 field, see @ref LogInfoFields::reserved6
-        FieldIdx_numOfValues ///< number of available fields
-    };
-    /// @brief Access to fields bundled as a struct
-    struct FieldsAsStruct
-    {
-        LogInfoFields::version& version; ///< @b version field, see @ref LogInfoFields::version
-        LogInfoFields::reserved1& reserved1; ///< @b reserved1 field, see @ref LogInfoFields::reserved1
-        LogInfoFields::filestoreCapacity& filestoreCapacity; ///< @b filestoreCapacity field, see @ref LogInfoFields::filestoreCapacity
-        LogInfoFields::reserved2& reserved2; ///< @b reserved2 field, see @ref LogInfoFields::reserved2
-        LogInfoFields::reserved3& reserved3; ///< @b reserved3 field, see @ref LogInfoFields::reserved3
-        LogInfoFields::currentMaxLogSize& currentMaxLogSize; ///< @b currentMaxLogSize field, see @ref LogInfoFields::currentMaxLogSize
-        LogInfoFields::currentLogSize& currentLogSize; ///< @b currentLogSize field, see @ref LogInfoFields::currentLogSize
-        LogInfoFields::entryCount& entryCount; ///< @b entryCount field, see @ref LogInfoFields::entryCount
-        LogInfoFields::oldestYear& oldestYear; ///< @b oldestYear field, see @ref LogInfoFields::oldestYear
-        LogInfoFields::oldestMonth& oldestMonth; ///< @b oldestMonth field, see @ref LogInfoFields::oldestMonth
-        LogInfoFields::oldestDay& oldestDay; ///< @b oldestDay field, see @ref LogInfoFields::oldestDay
-        LogInfoFields::oldestHour& oldestHour; ///< @b oldestHour field, see @ref LogInfoFields::oldestHour
-        LogInfoFields::oldestMinute& oldestMinute; ///< @b oldestMinute field, see @ref LogInfoFields::oldestMinute
-        LogInfoFields::oldestSecond& oldestSecond; ///< @b oldestSecond field, see @ref LogInfoFields::oldestSecond
-        LogInfoFields::reserved4& reserved4; ///< @b reserved4 field, see @ref LogInfoFields::reserved4
-        LogInfoFields::newestYear& newestYear; ///< @b newestYear field, see @ref LogInfoFields::newestYear
-        LogInfoFields::newestMonth& newestMonth; ///< @b newestMonth field, see @ref LogInfoFields::newestMonth
-        LogInfoFields::newestDay& newestDay; ///< @b newestDay field, see @ref LogInfoFields::newestDay
-        LogInfoFields::newestHour& newestHour; ///< @b newestHour field, see @ref LogInfoFields::newestHour
-        LogInfoFields::newestMinute& newestMinute; ///< @b newestMinute field, see @ref LogInfoFields::newestMinute
-        LogInfoFields::newestSecond& newestSecond; ///< @b newestSecond field, see @ref LogInfoFields::newestSecond
-        LogInfoFields::reserved5& reserved5; ///< @b reserved5 field, see @ref LogInfoFields::reserved5
-        LogInfoFields::status& status; ///< @b status field, see @ref LogInfoFields::status
-        LogInfoFields::reserved6& reserved6; ///< @b reserved6 field, see @ref LogInfoFields::reserved6
-    };
-
-    /// @brief Access to @b const fields bundled as a struct
-    struct ConstFieldsAsStruct
-    {
-        const LogInfoFields::version& version; ///< @b version field, see @ref LogInfoFields::version
-        const LogInfoFields::reserved1& reserved1; ///< @b reserved1 field, see @ref LogInfoFields::reserved1
-        const LogInfoFields::filestoreCapacity& filestoreCapacity; ///< @b filestoreCapacity field, see @ref LogInfoFields::filestoreCapacity
-        const LogInfoFields::reserved2& reserved2; ///< @b reserved2 field, see @ref LogInfoFields::reserved2
-        const LogInfoFields::reserved3& reserved3; ///< @b reserved3 field, see @ref LogInfoFields::reserved3
-        const LogInfoFields::currentMaxLogSize& currentMaxLogSize; ///< @b currentMaxLogSize field, see @ref LogInfoFields::currentMaxLogSize
-        const LogInfoFields::currentLogSize& currentLogSize; ///< @b currentLogSize field, see @ref LogInfoFields::currentLogSize
-        const LogInfoFields::entryCount& entryCount; ///< @b entryCount field, see @ref LogInfoFields::entryCount
-        const LogInfoFields::oldestYear& oldestYear; ///< @b oldestYear field, see @ref LogInfoFields::oldestYear
-        const LogInfoFields::oldestMonth& oldestMonth; ///< @b oldestMonth field, see @ref LogInfoFields::oldestMonth
-        const LogInfoFields::oldestDay& oldestDay; ///< @b oldestDay field, see @ref LogInfoFields::oldestDay
-        const LogInfoFields::oldestHour& oldestHour; ///< @b oldestHour field, see @ref LogInfoFields::oldestHour
-        const LogInfoFields::oldestMinute& oldestMinute; ///< @b oldestMinute field, see @ref LogInfoFields::oldestMinute
-        const LogInfoFields::oldestSecond& oldestSecond; ///< @b oldestSecond field, see @ref LogInfoFields::oldestSecond
-        const LogInfoFields::reserved4& reserved4; ///< @b reserved4 field, see @ref LogInfoFields::reserved4
-        const LogInfoFields::newestYear& newestYear; ///< @b newestYear field, see @ref LogInfoFields::newestYear
-        const LogInfoFields::newestMonth& newestMonth; ///< @b newestMonth field, see @ref LogInfoFields::newestMonth
-        const LogInfoFields::newestDay& newestDay; ///< @b newestDay field, see @ref LogInfoFields::newestDay
-        const LogInfoFields::newestHour& newestHour; ///< @b newestHour field, see @ref LogInfoFields::newestHour
-        const LogInfoFields::newestMinute& newestMinute; ///< @b newestMinute field, see @ref LogInfoFields::newestMinute
-        const LogInfoFields::newestSecond& newestSecond; ///< @b newestSecond field, see @ref LogInfoFields::newestSecond
-        const LogInfoFields::reserved5& reserved5; ///< @b reserved5 field, see @ref LogInfoFields::reserved5
-        const LogInfoFields::status& status; ///< @b status field, see @ref LogInfoFields::status
-        const LogInfoFields::reserved6& reserved6; ///< @b reserved6 field, see @ref LogInfoFields::reserved6
-    };
-
-    /// @brief Get access to fields bundled into a struct
-    FieldsAsStruct fieldsAsStruct();
-
-    /// @brief Get access to @b const fields bundled into a struct
-    ConstFieldsAsStruct fieldsAsStruct() const;
-
-#else
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b version for @ref LogInfoFields::version field
+    ///     @li @b reserved1 for @ref LogInfoFields::reserved1 field
+    ///     @li @b filestoreCapacity for @ref LogInfoFields::filestoreCapacity field
+    ///     @li @b reserved2 for @ref LogInfoFields::reserved2 field
+    ///     @li @b reserved3 for @ref LogInfoFields::reserved3 field
+    ///     @li @b currentMaxLogSize for @ref LogInfoFields::currentMaxLogSize field
+    ///     @li @b currentLogSize for @ref LogInfoFields::currentLogSize field
+    ///     @li @b entryCount for @ref LogInfoFields::entryCount field
+    ///     @li @b oldestYear for @ref LogInfoFields::oldestYear field
+    ///     @li @b oldestMonth for @ref LogInfoFields::oldestMonth field
+    ///     @li @b oldestDay for @ref LogInfoFields::oldestDay field
+    ///     @li @b oldestHour for @ref LogInfoFields::oldestHour field
+    ///     @li @b oldestMinute for @ref LogInfoFields::oldestMinute field
+    ///     @li @b oldestSecond for @ref LogInfoFields::oldestSecond field
+    ///     @li @b reserved4 for @ref LogInfoFields::reserved4 field
+    ///     @li @b newestYear for @ref LogInfoFields::newestYear field
+    ///     @li @b newestMonth for @ref LogInfoFields::newestMonth field
+    ///     @li @b newestDay for @ref LogInfoFields::newestDay field
+    ///     @li @b newestHour for @ref LogInfoFields::newestHour field
+    ///     @li @b newestMinute for @ref LogInfoFields::newestMinute field
+    ///     @li @b newestSecond for @ref LogInfoFields::newestSecond field
+    ///     @li @b reserved5 for @ref LogInfoFields::reserved5 field
+    ///     @li @b status for @ref LogInfoFields::status field
+    ///     @li @b reserved6 for @ref LogInfoFields::reserved6 field
     COMMS_MSG_FIELDS_ACCESS(Base,
         version,
         reserved1,
@@ -294,7 +228,6 @@ public:
         status,
         reserved6
     );
-#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     LogInfo() = default;

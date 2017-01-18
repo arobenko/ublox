@@ -88,7 +88,8 @@ struct LogFindtimeCmdFields
 /// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
 ///     various implementation options. @n
-///     See @ref LogFindtimeCmdFields and for definition of the fields this message contains.
+///     See @ref LogFindtimeCmdFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class LogFindtimeCmd : public
@@ -107,60 +108,22 @@ class LogFindtimeCmd : public
     > Base;
 public:
 
-#ifdef FOR_DOXYGEN_DOC_ONLY
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_version, ///< @b version field, see @ref LogFindtimeCmdFields::version
-        FieldIdx_type, ///< @b type field, see @ref LogFindtimeCmdFields::type
-        FieldIdx_reserved1, ///< @b reserved1 field, see @ref LogFindtimeCmdFields::reserved1
-        FieldIdx_year, ///< @b year field, see @ref LogFindtimeCmdFields::year
-        FieldIdx_month, ///< @b month field, see @ref LogFindtimeCmdFields::month
-        FieldIdx_day, ///< @b day field, see @ref LogFindtimeCmdFields::day
-        FieldIdx_hour, ///< @b hour field, see @ref LogFindtimeCmdFields::hour
-        FieldIdx_minute, ///< @b minute field, see @ref LogFindtimeCmdFields::minute
-        FieldIdx_second, ///< @b second field, see @ref LogFindtimeCmdFields::second
-        FieldIdx_reserved2, ///< @b reserved2 field, see @ref LogFindtimeCmdFields::reserved2
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    /// @brief Access to fields bundled as a struct
-    struct FieldsAsStruct
-    {
-        LogFindtimeCmdFields::version& version; ///< @b version field, see @ref LogFindtimeCmdFields::version
-        LogFindtimeCmdFields::type& type; ///< @b type field, see @ref LogFindtimeCmdFields::type
-        LogFindtimeCmdFields::reserved1& reserved1; ///< @b reserved1 field, see @ref LogFindtimeCmdFields::reserved1
-        LogFindtimeCmdFields::year& year; ///< @b year field, see @ref LogFindtimeCmdFields::year
-        LogFindtimeCmdFields::month& month; ///< @b month field, see @ref LogFindtimeCmdFields::month
-        LogFindtimeCmdFields::day& day; ///< @b day field, see @ref LogFindtimeCmdFields::day
-        LogFindtimeCmdFields::hour& hour; ///< @b hour field, see @ref LogFindtimeCmdFields::hour
-        LogFindtimeCmdFields::minute& minute; ///< @b minute field, see @ref LogFindtimeCmdFields::minute
-        LogFindtimeCmdFields::second& second; ///< @b second field, see @ref LogFindtimeCmdFields::second
-        LogFindtimeCmdFields::reserved2& reserved2; ///< @b reserved2 field, see @ref LogFindtimeCmdFields::reserved2
-    };
-
-    /// @brief Access to @b const fields bundled as a struct
-    struct ConstFieldsAsStruct
-    {
-        const LogFindtimeCmdFields::version& version; ///< @b version field, see @ref LogFindtimeCmdFields::version
-        const LogFindtimeCmdFields::type& type; ///< @b type field, see @ref LogFindtimeCmdFields::type
-        const LogFindtimeCmdFields::reserved1& reserved1; ///< @b reserved1 field, see @ref LogFindtimeCmdFields::reserved1
-        const LogFindtimeCmdFields::year& year; ///< @b year field, see @ref LogFindtimeCmdFields::year
-        const LogFindtimeCmdFields::month& month; ///< @b month field, see @ref LogFindtimeCmdFields::month
-        const LogFindtimeCmdFields::day& day; ///< @b day field, see @ref LogFindtimeCmdFields::day
-        const LogFindtimeCmdFields::hour& hour; ///< @b hour field, see @ref LogFindtimeCmdFields::hour
-        const LogFindtimeCmdFields::minute& minute; ///< @b minute field, see @ref LogFindtimeCmdFields::minute
-        const LogFindtimeCmdFields::second& second; ///< @b second field, see @ref LogFindtimeCmdFields::second
-        const LogFindtimeCmdFields::reserved2& reserved2; ///< @b reserved2 field, see @ref LogFindtimeCmdFields::reserved2
-    };
-
-    /// @brief Get access to fields bundled into a struct
-    FieldsAsStruct fieldsAsStruct();
-
-    /// @brief Get access to @b const fields bundled into a struct
-    ConstFieldsAsStruct fieldsAsStruct() const;
-
-#else
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b version for @ref LogFindtimeCmdFields::version field
+    ///     @li @b type for @ref LogFindtimeCmdFields::type field
+    ///     @li @b reserved1 for @ref LogFindtimeCmdFields::reserved1 field
+    ///     @li @b year for @ref LogFindtimeCmdFields::year field
+    ///     @li @b month for @ref LogFindtimeCmdFields::month field
+    ///     @li @b day for @ref LogFindtimeCmdFields::day field
+    ///     @li @b hour for @ref LogFindtimeCmdFields::hour field
+    ///     @li @b minute for @ref LogFindtimeCmdFields::minute field
+    ///     @li @b second for @ref LogFindtimeCmdFields::second field
+    ///     @li @b reserved2 for @ref LogFindtimeCmdFields::reserved2 field
     COMMS_MSG_FIELDS_ACCESS(Base,
         version,
         type,
@@ -173,7 +136,6 @@ public:
         second,
         reserved2
     );
-#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     LogFindtimeCmd() = default;
