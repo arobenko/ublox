@@ -33,18 +33,6 @@ namespace message
 /// @see CfgNmea
 struct CfgNmeaFields
 {
-    /// @brief Bits access enumeration for @ref filter bitmask field.
-    enum
-    {
-        filter_posFilt, ///< @b posFilt bit index
-        filter_mskPosFilt, ///< @b mskPosFilt bit index
-        filter_timeFilt, ///< @b timeFilt bit index
-        filter_dateFilt, ///< @b dateFilt bit index
-        filter_gpsOnlyFilter, ///< @b gpsOnlyFilter bit index
-        filter_trackFilt, ///< @b trackFilt bit index
-        filter_numOfValues ///< number of available bits
-    };
-
     /// @brief Value enumeration for @ref nmeaVersion field.
     enum class NmeaVersion : std::uint8_t
     {
@@ -64,19 +52,18 @@ struct CfgNmeaFields
         }
     };
 
-    /// @brief Bits access enumeration for @ref flags bitmask field.
-    enum
-    {
-        flags_compat, ///< @b compat bit index
-        flags_consider, ///< @b consider bit index
-        flags_numOfValues ///< number of available bits
-    };
-
     /// @brief Definition of "filter" field.
-    using filter =
+    struct filter : public
         field::common::X1T<
             comms::option::BitmaskReservedBits<0xc0, 0>
-        >;
+        >
+    {
+        /// @brief Provide names for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS(posFilt, mskPosFilt, timeFilt, dateFilt, gpsOnlyFilter, trackFilt);
+    };
 
     /// @brief Definition of "nmeaVersion" field.
     using nmeaVersion =
@@ -90,10 +77,17 @@ struct CfgNmeaFields
     using numSV = field::common::U1;
 
     /// @brief Definition of "flags" field.
-    using flags =
+    struct flags : public
         field::common::X1T<
             comms::option::BitmaskReservedBits<0xfc, 0>
-        >;
+        >
+    {
+        /// @brief Provide names for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS(compat, consider);
+    };
 
     /// @brief All the fields bundled in std::tuple.
     using All = std::tuple<
@@ -108,7 +102,8 @@ struct CfgNmeaFields
 /// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
 ///     various implementation options. @n
-///     See @ref CfgNmeaFields and for definition of the fields this message contains.
+///     See @ref CfgNmeaFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class CfgNmea : public
@@ -127,44 +122,17 @@ class CfgNmea : public
     > Base;
 public:
 
-#ifdef FOR_DOXYGEN_DOC_ONLY
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_filter, ///< @b filter field, see @ref CfgNmeaFields::filter
-        FieldIdx_nmeaVersion, ///< @b nmeaVersion field, see @ref CfgNmeaFields::nmeaVersion
-        FieldIdx_numSV, ///< @b numSV field, see @ref CfgNmeaFields::numSV
-        FieldIdx_flags, ///< @b flags field, see @ref CfgNmeaFields::flags
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    /// @brief Access to fields bundled as a struct
-    struct FieldsAsStruct
-    {
-        CfgNmeaFields::filter& filter; ///< @b filter field, see @ref CfgNmeaFields::filter
-        CfgNmeaFields::nmeaVersion& nmeaVersion; ///< @b nmeaVersion field, see @ref CfgNmeaFields::nmeaVersion
-        CfgNmeaFields::numSV& numSV; ///< @b numSV field, see @ref CfgNmeaFields::numSV
-        CfgNmeaFields::flags& flags; ///< @b flags field, see @ref CfgNmeaFields::flags
-    };
-
-    /// @brief Access to @b const fields bundled as a struct
-    struct ConstFieldsAsStruct
-    {
-        const CfgNmeaFields::filter& filter; ///< @b filter field, see @ref CfgNmeaFields::filter
-        const CfgNmeaFields::nmeaVersion& nmeaVersion; ///< @b nmeaVersion field, see @ref CfgNmeaFields::nmeaVersion
-        const CfgNmeaFields::numSV& numSV; ///< @b numSV field, see @ref CfgNmeaFields::numSV
-        const CfgNmeaFields::flags& flags; ///< @b flags field, see @ref CfgNmeaFields::flags
-    };
-
-    /// @brief Get access to fields bundled into a struct
-    FieldsAsStruct fieldsAsStruct();
-
-    /// @brief Get access to @b const fields bundled into a struct
-    ConstFieldsAsStruct fieldsAsStruct() const;
-
-#else
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b filter for @ref CfgNmeaFields::filter field
+    ///     @li @b nmeaVersion for @ref CfgNmeaFields::nmeaVersion field
+    ///     @li @b numSV for @ref CfgNmeaFields::numSV field
+    ///     @li @b flags for @ref CfgNmeaFields::flags field
     COMMS_MSG_FIELDS_ACCESS(Base, filter, nmeaVersion, numSV, flags);
-#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     CfgNmea() = default;

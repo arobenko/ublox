@@ -50,13 +50,6 @@ struct CfgTpFields
         NumOfValues ///< number  of available values
     };
 
-    /// @brief Bits access enumeration for @ref flags bitmask field.
-    enum
-    {
-        flags_syncMode, ///< @b syncMode bit index
-        flags_numOfValues ///< number of available bits
-    };
-
     /// @brief Definition of "interval" field.
     using interval = field::common::U4T<field::common::Scaling_us2s>;
 
@@ -78,7 +71,14 @@ struct CfgTpFields
         >;
 
     /// @brief Definition of "flags" field.
-    using flags = field::common::X1T<comms::option::BitmaskReservedBits<0xfe, 0> >;
+    struct flags : public field::common::X1T<comms::option::BitmaskReservedBits<0xfe, 0> >
+    {
+        /// @brief Provide names for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS(syncMode);
+    };
 
     /// @brief Definition of "res" field.
     using res = field::common::res1;
@@ -110,7 +110,8 @@ struct CfgTpFields
 /// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
 ///     various implementation options. @n
-///     See @ref CfgTpFields and for definition of the fields this message contains.
+///     See @ref CfgTpFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class CfgTp : public
@@ -129,57 +130,21 @@ class CfgTp : public
     > Base;
 public:
 
-#ifdef FOR_DOXYGEN_DOC_ONLY
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_interval, ///< @b interval field, see @ref CfgTpFields::interval
-        FieldIdx_length, ///< @b length field, see @ref CfgTpFields::length
-        FieldIdx_status, ///< @b status field, see @ref CfgTpFields::status
-        FieldIdx_timeRef, ///< @b timeRef field, see @ref CfgTpFields::timeRef
-        FieldIdx_flags, ///< @b flags field, see @ref CfgTpFields::flags
-        FieldIdx_res, ///< @b res field, see @ref CfgTpFields::res
-        FieldIdx_antennaCableDelay, ///< @b antennaCableDelay field, see @ref CfgTpFields::antennaCableDelay
-        FieldIdx_rfGroupDelay, ///< @b rfGroupDelay field, see @ref CfgTpFields::rfGroupDelay
-        FieldIdx_userDelay, ///< @b userDelay field, see @ref CfgTpFields::userDelay
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    /// @brief Access to fields bundled as a struct
-    struct FieldsAsStruct
-    {
-        CfgTpFields::interval& interval; ///< @b interval field, see @ref CfgTpFields::interval
-        CfgTpFields::length& length; ///< @b length field, see @ref CfgTpFields::length
-        CfgTpFields::status& status; ///< @b status field, see @ref CfgTpFields::status
-        CfgTpFields::timeRef& timeRef; ///< @b timeRef field, see @ref CfgTpFields::timeRef
-        CfgTpFields::flags& flags; ///< @b flags field, see @ref CfgTpFields::flags
-        CfgTpFields::res& res; ///< @b res field, see @ref CfgTpFields::res
-        CfgTpFields::antennaCableDelay& antennaCableDelay; ///< @b antennaCableDelay field, see @ref CfgTpFields::antennaCableDelay
-        CfgTpFields::rfGroupDelay& rfGroupDelay; ///< @b rfGroupDelay field, see @ref CfgTpFields::rfGroupDelay
-        CfgTpFields::userDelay& userDelay; ///< @b userDelay field, see @ref CfgTpFields::userDelay
-    };
-
-    /// @brief Access to @b const fields bundled as a struct
-    struct ConstFieldsAsStruct
-    {
-        const CfgTpFields::interval& interval; ///< @b interval field, see @ref CfgTpFields::interval
-        const CfgTpFields::length& length; ///< @b length field, see @ref CfgTpFields::length
-        const CfgTpFields::status& status; ///< @b status field, see @ref CfgTpFields::status
-        const CfgTpFields::timeRef& timeRef; ///< @b timeRef field, see @ref CfgTpFields::timeRef
-        const CfgTpFields::flags& flags; ///< @b flags field, see @ref CfgTpFields::flags
-        const CfgTpFields::res& res; ///< @b res field, see @ref CfgTpFields::res
-        const CfgTpFields::antennaCableDelay& antennaCableDelay; ///< @b antennaCableDelay field, see @ref CfgTpFields::antennaCableDelay
-        const CfgTpFields::rfGroupDelay& rfGroupDelay; ///< @b rfGroupDelay field, see @ref CfgTpFields::rfGroupDelay
-        const CfgTpFields::userDelay& userDelay; ///< @b userDelay field, see @ref CfgTpFields::userDelay
-    };
-
-    /// @brief Get access to fields bundled into a struct
-    FieldsAsStruct fieldsAsStruct();
-
-    /// @brief Get access to @b const fields bundled into a struct
-    ConstFieldsAsStruct fieldsAsStruct() const;
-
-#else
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b interval for @ref CfgTpFields::interval field
+    ///     @li @b length for @ref CfgTpFields::length field
+    ///     @li @b status for @ref CfgTpFields::status field
+    ///     @li @b timeRef for @ref CfgTpFields::timeRef field
+    ///     @li @b flags for @ref CfgTpFields::flags field
+    ///     @li @b res for @ref CfgTpFields::res field
+    ///     @li @b antennaCableDelay for @ref CfgTpFields::antennaCableDelay field
+    ///     @li @b rfGroupDelay for @ref CfgTpFields::rfGroupDelay field
+    ///     @li @b userDelay for @ref CfgTpFields::userDelay field
     COMMS_MSG_FIELDS_ACCESS(Base,
         interval,
         length,
@@ -191,7 +156,6 @@ public:
         rfGroupDelay,
         userDelay
     );
-#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     CfgTp() = default;

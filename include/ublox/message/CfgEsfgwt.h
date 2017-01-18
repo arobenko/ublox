@@ -33,20 +33,18 @@ namespace message
 /// @see CfgEsfgwt
 struct CfgEsfgwtFields
 {
-    /// @brief Bits access enumerator for @ref flags bitmask field.
-    enum
-    {
-        flags_setVehicle = 12,  ///< @b setVehicle bit index
-        flags_setTime, ///< @b setTime bit index
-        flags_setWt, ///< @b setWt bit index
-        flags_numOfValues ///< upper limit of available bits
-    };
-
     /// @brief Definition of "flags" field.
-    using flags =
+    struct flags : public
         field::common::X2T<
             comms::option::BitmaskReservedBits<0x8fff, 0>
-        >;
+        >
+    {
+        /// @brief Provide names for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS(setVehicle=12, setTime, setWt);
+    };
 
     /// @brief Definition of "id" field.
     using id = field::common::U2;
@@ -129,7 +127,8 @@ struct CfgEsfgwtFields
 /// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
 ///     various implementation options. @n
-///     See @ref CfgEsfgwtFields and for definition of the fields this message contains.
+///     See @ref CfgEsfgwtFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class CfgEsfgwt : public
@@ -148,76 +147,27 @@ class CfgEsfgwt : public
     > Base;
 public:
 
-#ifdef FOR_DOXYGEN_DOC_ONLY
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_flags, ///< @b flags field, see @ref CfgEsfgwtFields::flags
-        FieldIdx_id, ///< @b id field, see @ref CfgEsfgwtFields::id
-        FieldIdx_wtFactor, ///< @b wtFactor field, see @ref CfgEsfgwtFields::wtFactor
-        FieldIdx_reserved1, ///< @b reserved1 field, see @ref CfgEsfgwtFields::reserved1
-        FieldIdx_wtQuantError, ///< @b wtQuantError field, see @ref CfgEsfgwtFields::wtQuantError
-        FieldIdx_timeTagFactor, ///< @b timeTagFactor field, see @ref CfgEsfgwtFields::timeTagFactor
-        FieldIdx_wtCountMax, ///< @b wtCountMax field, see @ref CfgEsfgwtFields::wtCountMax
-        FieldIdx_timeTagMax, ///< @b timeTagMax field, see @ref CfgEsfgwtFields::timeTagMax
-        FieldIdx_wtLatency, ///< @b wtLatency field, see @ref CfgEsfgwtFields::wtLatency
-        FieldIdx_reserved2, ///< @b reserved2 field, see @ref CfgEsfgwtFields::reserved2
-        FieldIdx_wtFrequency, ///< @b wtFrequency field, see @ref CfgEsfgwtFields::wtFrequency
-        FieldIdx_reserved3, ///< @b reserved3 field, see @ref CfgEsfgwtFields::reserved3
-        FieldIdx_speedDeadBand, ///< @b speedDeadBand field, see @ref CfgEsfgwtFields::speedDeadBand
-        FieldIdx_reserved4, ///< @b reserved4 field, see @ref CfgEsfgwtFields::reserved4
-        FieldIdx_reserved5, ///< @b reserved5 field, see @ref CfgEsfgwtFields::reserved5
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-
-    /// @brief Access to fields bundled as a struct
-    struct FieldsAsStruct
-    {
-        CfgEsfgwtFields::flags& flags; ///< @b flags field, see @ref CfgEsfgwtFields::flags
-        CfgEsfgwtFields::id& id; ///< @b id field, see @ref CfgEsfgwtFields::id
-        CfgEsfgwtFields::wtFactor& wtFactor; ///< @b wtFactor field, see @ref CfgEsfgwtFields::wtFactor
-        CfgEsfgwtFields::reserved1& reserved1; ///< @b reserved1 field, see @ref CfgEsfgwtFields::reserved1
-        CfgEsfgwtFields::wtQuantError& wtQuantError; ///< @b wtQuantError field, see @ref CfgEsfgwtFields::wtQuantError
-        CfgEsfgwtFields::timeTagFactor& timeTagFactor; ///< @b timeTagFactor field, see @ref CfgEsfgwtFields::timeTagFactor
-        CfgEsfgwtFields::wtCountMax& wtCountMax; ///< @b wtCountMax field, see @ref CfgEsfgwtFields::wtCountMax
-        CfgEsfgwtFields::timeTagMax& timeTagMax; ///< @b timeTagMax field, see @ref CfgEsfgwtFields::timeTagMax
-        CfgEsfgwtFields::wtLatency& wtLatency; ///< @b wtLatency field, see @ref CfgEsfgwtFields::wtLatency
-        CfgEsfgwtFields::reserved2& reserved2; ///< @b reserved2 field, see @ref CfgEsfgwtFields::reserved2
-        CfgEsfgwtFields::wtFrequency& wtFrequency; ///< @b wtFrequency field, see @ref CfgEsfgwtFields::wtFrequency
-        CfgEsfgwtFields::reserved3& reserved3; ///< @b reserved3 field, see @ref CfgEsfgwtFields::reserved3
-        CfgEsfgwtFields::speedDeadBand& speedDeadBand; ///< @b speedDeadBand field, see @ref CfgEsfgwtFields::speedDeadBand
-        CfgEsfgwtFields::reserved4& reserved4; ///< @b reserved4 field, see @ref CfgEsfgwtFields::reserved4
-        CfgEsfgwtFields::reserved5& reserved5; ///< @b reserved5 field, see @ref CfgEsfgwtFields::reserved5
-    };
-
-    /// @brief Access to @b const fields bundled as a struct
-    struct ConstFieldsAsStruct
-    {
-        const CfgEsfgwtFields::flags& flags; ///< @b flags field, see @ref CfgEsfgwtFields::flags
-        const CfgEsfgwtFields::id& id; ///< @b id field, see @ref CfgEsfgwtFields::id
-        const CfgEsfgwtFields::wtFactor& wtFactor; ///< @b wtFactor field, see @ref CfgEsfgwtFields::wtFactor
-        const CfgEsfgwtFields::reserved1& reserved1; ///< @b reserved1 field, see @ref CfgEsfgwtFields::reserved1
-        const CfgEsfgwtFields::wtQuantError& wtQuantError; ///< @b wtQuantError field, see @ref CfgEsfgwtFields::wtQuantError
-        const CfgEsfgwtFields::timeTagFactor& timeTagFactor; ///< @b timeTagFactor field, see @ref CfgEsfgwtFields::timeTagFactor
-        const CfgEsfgwtFields::wtCountMax& wtCountMax; ///< @b wtCountMax field, see @ref CfgEsfgwtFields::wtCountMax
-        const CfgEsfgwtFields::timeTagMax& timeTagMax; ///< @b timeTagMax field, see @ref CfgEsfgwtFields::timeTagMax
-        const CfgEsfgwtFields::wtLatency& wtLatency; ///< @b wtLatency field, see @ref CfgEsfgwtFields::wtLatency
-        const CfgEsfgwtFields::reserved2& reserved2; ///< @b reserved2 field, see @ref CfgEsfgwtFields::reserved2
-        const CfgEsfgwtFields::wtFrequency& wtFrequency; ///< @b wtFrequency field, see @ref CfgEsfgwtFields::wtFrequency
-        const CfgEsfgwtFields::reserved3& reserved3; ///< @b reserved3 field, see @ref CfgEsfgwtFields::reserved3
-        const CfgEsfgwtFields::speedDeadBand& speedDeadBand; ///< @b speedDeadBand field, see @ref CfgEsfgwtFields::speedDeadBand
-        const CfgEsfgwtFields::reserved4& reserved4; ///< @b reserved4 field, see @ref CfgEsfgwtFields::reserved4
-        const CfgEsfgwtFields::reserved5& reserved5; ///< @b reserved5 field, see @ref CfgEsfgwtFields::reserved5
-    };
-
-    /// @brief Get access to fields bundled into a struct
-    FieldsAsStruct fieldsAsStruct();
-
-    /// @brief Get access to @b const fields bundled into a struct
-    ConstFieldsAsStruct fieldsAsStruct() const;
-
-#else
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b flags for @ref CfgEsfgwtFields::flags field
+    ///     @li @b id for @ref CfgEsfgwtFields::id field
+    ///     @li @b wtFactor for @ref CfgEsfgwtFields::wtFactor field
+    ///     @li @b reserved1 for @ref CfgEsfgwtFields::reserved1 field
+    ///     @li @b wtQuantError for @ref CfgEsfgwtFields::wtQuantError field
+    ///     @li @b timeTagFactor for @ref CfgEsfgwtFields::timeTagFactor field
+    ///     @li @b wtCountMax for @ref CfgEsfgwtFields::wtCountMax field
+    ///     @li @b timeTagMax for @ref CfgEsfgwtFields::timeTagMax field
+    ///     @li @b wtLatency for @ref CfgEsfgwtFields::wtLatency field
+    ///     @li @b reserved2 for @ref CfgEsfgwtFields::reserved2 field
+    ///     @li @b wtFrequency for @ref CfgEsfgwtFields::wtFrequency field
+    ///     @li @b reserved3 for @ref CfgEsfgwtFields::reserved3 field
+    ///     @li @b speedDeadBand for @ref CfgEsfgwtFields::speedDeadBand field
+    ///     @li @b reserved4 for @ref CfgEsfgwtFields::reserved4 field
+    ///     @li @b reserved5 for @ref CfgEsfgwtFields::reserved5 field
     COMMS_MSG_FIELDS_ACCESS(Base,
         flags,
         id,
@@ -235,7 +185,6 @@ public:
         reserved4,
         reserved5
     );
-#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     CfgEsfgwt() = default;

@@ -48,9 +48,9 @@ QVariantMap createProps_gnssToFilter()
     props.name("gnssToFilter")
          .add("gps")
          .add("sbas")
-         .add(CfgNmeaExtFields::gnssToFilter_qzss, "qzss")
+         .add(CfgNmeaExtFields::gnssToFilter::BitIdx_qzss, "qzss")
          .add("qlonass");
-    assert(props.bits().size() == CfgNmeaExtFields::gnssToFilter_numOfValues);
+    assert(props.bits().size() == CfgNmeaExtFields::gnssToFilter::BitIdx_numOfValues);
     return props.asMap();
 }
 

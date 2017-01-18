@@ -42,14 +42,6 @@ struct CfgTmode2Fields
         NumOfValues ///< number of available values
     };
 
-    /// @brief Bits access enumeration for @ref flags bitmask field.
-    enum
-    {
-        flags_lla, ///< @b lla bit index
-        flags_altInv, ///< @b altInv bit index
-        flags_numOfValues ///< number of available bits
-    };
-
     /// @brief Definition of "timeMode" field.
     using timeMode =
         field::common::EnumT<
@@ -61,10 +53,17 @@ struct CfgTmode2Fields
     using reserved1 = field::common::res1;
 
     /// @brief Definition of "flags" field.
-    using flags =
+    struct flags : public
         field::common::X2T<
             comms::option::BitmaskReservedBits<0xfffc, 0>
-        >;
+        >
+    {
+        /// @brief Provide names for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS(lla, altInv);
+    };
 
     /// @brief Definition of "ecefX" field.
     using ecefX =
@@ -138,7 +137,8 @@ struct CfgTmode2Fields
 /// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
 ///     various implementation options. @n
-///     See @ref CfgTmode2Fields and for definition of the fields this message contains.
+///     See @ref CfgTmode2Fields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 ///
 ///     @b NOTE, that Ublox binary protocol specification reinterprets value of
 ///     some fields based on the value of @b lla bit in @b flags (see @ref CfgTmode2Fields::flags)
@@ -169,66 +169,24 @@ class CfgTmode2 : public
     > Base;
 public:
 
-#ifdef FOR_DOXYGEN_DOC_ONLY
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_timeMode, ///< @b timeMode field, see @ref CfgTmode2Fields::timeMode
-        FieldIdx_reserved1, ///< @b reserved1 field, see @ref CfgTmode2Fields::reserved1
-        FieldIdx_flags, ///< @b flags field, see @ref CfgTmode2Fields::flags
-        FieldIdx_ecefX, ///< @b ecefX field, see @ref CfgTmode2Fields::ecefX
-        FieldIdx_lat, ///< @b lat field, see @ref CfgTmode2Fields::lat
-        FieldIdx_ecefY, ///< @b ecefY field, see @ref CfgTmode2Fields::ecefY
-        FieldIdx_lon, ///< @b lon field, see @ref CfgTmode2Fields::lon
-        FieldIdx_ecefZ, ///< @b ecefZ field, see @ref CfgTmode2Fields::ecefZ
-        FieldIdx_alt, ///< @b alt field, see @ref CfgTmode2Fields::alt
-        FieldIdx_fixedPosAcc, ///< @b fixedPosAcc field, see @ref CfgTmode2Fields::fixedPosAcc
-        FieldIdx_svinMinDur, ///< @b svinMinDur field, see @ref CfgTmode2Fields::svinMinDur
-        FieldIdx_svinAccLimit, ///< @b svinAccLimit field, see @ref CfgTmode2Fields::svinAccLimit
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    /// @brief Access to fields bundled as a struct
-    struct FieldsAsStruct
-    {
-        CfgTmode2Fields::timeMode& timeMode; ///< @b timeMode field, see @ref CfgTmode2Fields::timeMode
-        CfgTmode2Fields::reserved1& reserved1; ///< @b reserved1 field, see @ref CfgTmode2Fields::reserved1
-        CfgTmode2Fields::flags& flags; ///< @b flags field, see @ref CfgTmode2Fields::flags
-        CfgTmode2Fields::ecefX& ecefX; ///< @b ecefX field, see @ref CfgTmode2Fields::ecefX
-        CfgTmode2Fields::lat& lat; ///< @b lat field, see @ref CfgTmode2Fields::lat
-        CfgTmode2Fields::ecefY& ecefY; ///< @b ecefY field, see @ref CfgTmode2Fields::ecefY
-        CfgTmode2Fields::lon& lon; ///< @b lon field, see @ref CfgTmode2Fields::lon
-        CfgTmode2Fields::ecefZ& ecefZ; ///< @b ecefZ field, see @ref CfgTmode2Fields::ecefZ
-        CfgTmode2Fields::alt& alt; ///< @b alt field, see @ref CfgTmode2Fields::alt
-        CfgTmode2Fields::fixedPosAcc& fixedPosAcc; ///< @b fixedPosAcc field, see @ref CfgTmode2Fields::fixedPosAcc
-        CfgTmode2Fields::svinMinDur& svinMinDur; ///< @b svinMinDur field, see @ref CfgTmode2Fields::svinMinDur
-        CfgTmode2Fields::svinAccLimit& svinAccLimit; ///< @b svinAccLimit field, see @ref CfgTmode2Fields::svinAccLimit
-    };
-
-    /// @brief Access to @b const fields bundled as a struct
-    struct ConstFieldsAsStruct
-    {
-        CfgTmode2Fields::timeMode& timeMode; ///< @b timeMode field, see @ref CfgTmode2Fields::timeMode
-        CfgTmode2Fields::reserved1& reserved1; ///< @b reserved1 field, see @ref CfgTmode2Fields::reserved1
-        CfgTmode2Fields::flags& flags; ///< @b flags field, see @ref CfgTmode2Fields::flags
-        CfgTmode2Fields::ecefX& ecefX; ///< @b ecefX field, see @ref CfgTmode2Fields::ecefX
-        CfgTmode2Fields::lat& lat; ///< @b lat field, see @ref CfgTmode2Fields::lat
-        CfgTmode2Fields::ecefY& ecefY; ///< @b ecefY field, see @ref CfgTmode2Fields::ecefY
-        CfgTmode2Fields::lon& lon; ///< @b lon field, see @ref CfgTmode2Fields::lon
-        CfgTmode2Fields::ecefZ& ecefZ; ///< @b ecefZ field, see @ref CfgTmode2Fields::ecefZ
-        CfgTmode2Fields::alt& alt; ///< @b alt field, see @ref CfgTmode2Fields::alt
-        CfgTmode2Fields::fixedPosAcc& fixedPosAcc; ///< @b fixedPosAcc field, see @ref CfgTmode2Fields::fixedPosAcc
-        CfgTmode2Fields::svinMinDur& svinMinDur; ///< @b svinMinDur field, see @ref CfgTmode2Fields::svinMinDur
-        CfgTmode2Fields::svinAccLimit& svinAccLimit; ///< @b svinAccLimit field, see @ref CfgTmode2Fields::svinAccLimit
-    };
-
-    /// @brief Get access to fields bundled into a struct
-    FieldsAsStruct fieldsAsStruct();
-
-    /// @brief Get access to @b const fields bundled into a struct
-    ConstFieldsAsStruct fieldsAsStruct() const;
-
-#else
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b timeMode for @ref CfgTmode2Fields::timeMode field
+    ///     @li @b reserved1 for @ref CfgTmode2Fields::reserved1 field
+    ///     @li @b flags for @ref CfgTmode2Fields::flags field
+    ///     @li @b ecefX for @ref CfgTmode2Fields::ecefX field
+    ///     @li @b lat for @ref CfgTmode2Fields::lat field
+    ///     @li @b ecefY for @ref CfgTmode2Fields::ecefY field
+    ///     @li @b lon for @ref CfgTmode2Fields::lon field
+    ///     @li @b ecefZ for @ref CfgTmode2Fields::ecefZ field
+    ///     @li @b alt for @ref CfgTmode2Fields::alt field
+    ///     @li @b fixedPosAcc for @ref CfgTmode2Fields::fixedPosAcc field
+    ///     @li @b svinMinDur for @ref CfgTmode2Fields::svinMinDur field
+    ///     @li @b svinAccLimit for @ref CfgTmode2Fields::svinAccLimit field
     COMMS_MSG_FIELDS_ACCESS(Base,
         timeMode,
         reserved1,
@@ -243,7 +201,6 @@ public:
         svinMinDur,
         svinAccLimit
     );
-#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
 
     /// @brief Default constructor
@@ -307,7 +264,7 @@ public:
 
         auto cartesianMode = comms::field::OptionalMode::Exists;
         auto geodeticMode = comms::field::OptionalMode::Missing;
-        if (flagsField.getBitValue(CfgTmode2Fields::flags_lla)) {
+        if (flagsField.getBitValue(CfgTmode2Fields::flags::BitIdx_lla)) {
             std::swap(cartesianMode, geodeticMode);
         }
 
@@ -340,7 +297,7 @@ public:
 
         auto cartesianMode = comms::field::OptionalMode::Exists;
         auto geodeticMode = comms::field::OptionalMode::Missing;
-        if (flagsField.getBitValue(CfgTmode2Fields::flags_lla)) {
+        if (flagsField.getBitValue(CfgTmode2Fields::flags::BitIdx_lla)) {
             std::swap(cartesianMode, geodeticMode);
         }
 

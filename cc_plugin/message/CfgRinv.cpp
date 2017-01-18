@@ -46,7 +46,7 @@ QVariantMap createProps_flags()
     props.name("flags")
          .add("dump")
          .add("binary");
-    assert(props.bits().size() == CfgRinvFields::data_numOfValues);
+    assert(props.bits().size() == CfgRinvFields::flags::BitIdx_numOfValues);
     return props.asMap();
 }
 

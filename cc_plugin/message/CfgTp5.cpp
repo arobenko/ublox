@@ -57,7 +57,7 @@ QVariantMap createProps_flags()
          .add("alignToTow")
          .add("polarity")
          .add("gridUtcGps");
-    assert(props.bits().size() == CfgTp5Fields::flags_numOfValues);
+    assert(props.bits().size() == CfgTp5Fields::flags::BitIdx_numOfValues);
     return props.asMap();
 }
 

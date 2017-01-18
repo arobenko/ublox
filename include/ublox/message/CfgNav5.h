@@ -35,20 +35,6 @@ namespace message
 /// @see CfgNav5
 struct CfgNav5Fields
 {
-    /// @brief Bits access enumeration for @ref mask bitmask field.
-    enum
-    {
-        mask_dyn, ///< @b dyn bit index
-        mask_minEl, ///< @b minEl bit index
-        mask_posFixMode, ///< @b posFixMode bit index
-        mask_drLim, ///< @b drLim bit index
-        mask_posMask, ///< @b posMask bit index
-        mask_timeMask, ///< @b timeMask bit index
-        mask_staticHoldMask, ///< @b staticHoldMask bit index
-        mask_dgpsMask, ///< @b dgps bit index
-        mask_numOfValues ///< number of available bits
-    };
-
     /// @brief Value enumeration for @ref dynModel enum value field.
     enum class DynModel : std::uint8_t
     {
@@ -94,10 +80,17 @@ struct CfgNav5Fields
     };
 
     /// @brief Definition of "mask" field.
-    using mask =
+    struct mask : public
         field::common::X2T<
             comms::option::BitmaskReservedBits<0xff00, 0>
-        >;
+        >
+    {
+        /// @brief Provide names for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS(dyn, minEl, posFixMode, drLim, posMask, timeMask, staticHoldMask, dgps);
+    };
 
     /// @brief Definition of "dynModel" field.
     using dynModel =
@@ -185,7 +178,8 @@ struct CfgNav5Fields
 /// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
 ///     various implementation options. @n
-///     See @ref CfgNav5Fields and for definition of the fields this message contains.
+///     See @ref CfgNav5Fields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class CfgNav5 : public
@@ -204,84 +198,30 @@ class CfgNav5 : public
     > Base;
 public:
 
-#ifdef FOR_DOXYGEN_DOC_ONLY
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_mask, ///< @b mask field, see @ref CfgNav5Fields::mask
-        FieldIdx_dynModel, ///< @b dynModel field, see @ref CfgNav5Fields::dynModel
-        FieldIdx_fixMode, ///< @b fixMode field, see @ref CfgNav5Fields::fixMode
-        FieldIdx_fixedAlt, ///< @b fixedAlt field, see @ref CfgNav5Fields::fixedAlt
-        FieldIdx_fixedAltVar, ///< @b fixedAltVar field, see @ref CfgNav5Fields::fixedAltVar
-        FieldIdx_minElev, ///< @b minElev field, see @ref CfgNav5Fields::minElev
-        FieldIdx_drLimit, ///< @b drLimit field, see @ref CfgNav5Fields::drLimit
-        FieldIdx_pDOP, ///< @b pDOP field, see @ref CfgNav5Fields::pDOP
-        FieldIdx_tDOP, ///< @b tDOP field, see @ref CfgNav5Fields::tDOP
-        FieldIdx_pAcc, ///< @b pAcc field, see @ref CfgNav5Fields::pAcc
-        FieldIdx_tAcc, ///< @b tAcc field, see @ref CfgNav5Fields::tAcc
-        FieldIdx_staticHoldThreash, ///< @b staticHoldThreash field, see @ref CfgNav5Fields::staticHoldThreash
-        FieldIdx_dgpsTimeOut, ///< @b dgpsTimeOut field, see @ref CfgNav5Fields::dgpsTimeOut
-        FieldIdx_cnoThreshNumSVs, ///< @b cnoThreshNumSVs field, see @ref CfgNav5Fields::cnoThreshNumSVs
-        FieldIdx_cnoThresh, ///< @b cnoThresh field, see @ref CfgNav5Fields::cnoThresh
-        FieldIdx_reserved2, ///< @b reserved2 field, see @ref CfgNav5Fields::reserved2
-        FieldIdx_reserved3, ///< @b reserved3 field, see @ref CfgNav5Fields::reserved3
-        FieldIdx_reserved4, ///< @b reserved4 field, see @ref CfgNav5Fields::reserved4
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    /// @brief Access to fields bundled as a struct
-    struct FieldsAsStruct
-    {
-        CfgNav5Fields::mask& mask; ///< @b mask field, see @ref CfgNav5Fields::mask
-        CfgNav5Fields::dynModel& dynModel; ///< @b dynModel field, see @ref CfgNav5Fields::dynModel
-        CfgNav5Fields::fixMode& fixMode; ///< @b fixMode field, see @ref CfgNav5Fields::fixMode
-        CfgNav5Fields::fixedAlt& fixedAlt; ///< @b fixedAlt field, see @ref CfgNav5Fields::fixedAlt
-        CfgNav5Fields::fixedAltVar& fixedAltVar; ///< @b fixedAltVar field, see @ref CfgNav5Fields::fixedAltVar
-        CfgNav5Fields::minElev& minElev; ///< @b minElev field, see @ref CfgNav5Fields::minElev
-        CfgNav5Fields::drLimit& drLimit; ///< @b drLimit field, see @ref CfgNav5Fields::drLimit
-        CfgNav5Fields::pDOP& pDOP; ///< @b pDOP field, see @ref CfgNav5Fields::pDOP
-        CfgNav5Fields::tDOP& tDOP; ///< @b tDOP field, see @ref CfgNav5Fields::tDOP
-        CfgNav5Fields::pAcc& pAcc; ///< @b pAcc field, see @ref CfgNav5Fields::pAcc
-        CfgNav5Fields::tAcc& tAcc; ///< @b tAcc field, see @ref CfgNav5Fields::tAcc
-        CfgNav5Fields::staticHoldThreash& staticHoldThreash; ///< @b staticHoldThreash field, see @ref CfgNav5Fields::staticHoldThreash
-        CfgNav5Fields::dgpsTimeOut& dgpsTimeOut; ///< @b dgpsTimeOut field, see @ref CfgNav5Fields::dgpsTimeOut
-        CfgNav5Fields::cnoThreshNumSVs& cnoThreshNumSVs; ///< @b cnoThreshNumSVs field, see @ref CfgNav5Fields::cnoThreshNumSVs
-        CfgNav5Fields::cnoThresh& cnoThresh; ///< @b cnoThresh field, see @ref CfgNav5Fields::cnoThresh
-        CfgNav5Fields::reserved2& reserved2; ///< @b reserved2 field, see @ref CfgNav5Fields::reserved2
-        CfgNav5Fields::reserved3& reserved3; ///< @b reserved3 field, see @ref CfgNav5Fields::reserved3
-        CfgNav5Fields::reserved4& reserved4; ///< @b reserved4 field, see @ref CfgNav5Fields::reserved4
-    };
-
-    /// @brief Access to @b const fields bundled as a struct
-    struct ConstFieldsAsStruct
-    {
-        const CfgNav5Fields::mask& mask; ///< @b mask field, see @ref CfgNav5Fields::mask
-        const CfgNav5Fields::dynModel& dynModel; ///< @b dynModel field, see @ref CfgNav5Fields::dynModel
-        const CfgNav5Fields::fixMode& fixMode; ///< @b fixMode field, see @ref CfgNav5Fields::fixMode
-        const CfgNav5Fields::fixedAlt& fixedAlt; ///< @b fixedAlt field, see @ref CfgNav5Fields::fixedAlt
-        const CfgNav5Fields::fixedAltVar& fixedAltVar; ///< @b fixedAltVar field, see @ref CfgNav5Fields::fixedAltVar
-        const CfgNav5Fields::minElev& minElev; ///< @b minElev field, see @ref CfgNav5Fields::minElev
-        const CfgNav5Fields::drLimit& drLimit; ///< @b drLimit field, see @ref CfgNav5Fields::drLimit
-        const CfgNav5Fields::pDOP& pDOP; ///< @b pDOP field, see @ref CfgNav5Fields::pDOP
-        const CfgNav5Fields::tDOP& tDOP; ///< @b tDOP field, see @ref CfgNav5Fields::tDOP
-        const CfgNav5Fields::pAcc& pAcc; ///< @b pAcc field, see @ref CfgNav5Fields::pAcc
-        const CfgNav5Fields::tAcc& tAcc; ///< @b tAcc field, see @ref CfgNav5Fields::tAcc
-        const CfgNav5Fields::staticHoldThreash& staticHoldThreash; ///< @b staticHoldThreash field, see @ref CfgNav5Fields::staticHoldThreash
-        const CfgNav5Fields::dgpsTimeOut& dgpsTimeOut; ///< @b dgpsTimeOut field, see @ref CfgNav5Fields::dgpsTimeOut
-        const CfgNav5Fields::cnoThreshNumSVs& cnoThreshNumSVs; ///< @b cnoThreshNumSVs field, see @ref CfgNav5Fields::cnoThreshNumSVs
-        const CfgNav5Fields::cnoThresh& cnoThresh; ///< @b cnoThresh field, see @ref CfgNav5Fields::cnoThresh
-        const CfgNav5Fields::reserved2& reserved2; ///< @b reserved2 field, see @ref CfgNav5Fields::reserved2
-        const CfgNav5Fields::reserved3& reserved3; ///< @b reserved3 field, see @ref CfgNav5Fields::reserved3
-        const CfgNav5Fields::reserved4& reserved4; ///< @b reserved4 field, see @ref CfgNav5Fields::reserved4
-    };
-
-    /// @brief Get access to fields bundled into a struct
-    FieldsAsStruct fieldsAsStruct();
-
-    /// @brief Get access to @b const fields bundled into a struct
-    ConstFieldsAsStruct fieldsAsStruct() const;
-
-#else
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b mask for @ref CfgNav5Fields::mask field
+    ///     @li @b dynModel for @ref CfgNav5Fields::dynModel field
+    ///     @li @b fixMode for @ref CfgNav5Fields::fixMode field
+    ///     @li @b fixedAlt for @ref CfgNav5Fields::fixedAlt field
+    ///     @li @b fixedAltVar for @ref CfgNav5Fields::fixedAltVar field
+    ///     @li @b minElev for @ref CfgNav5Fields::minElev field
+    ///     @li @b drLimit for @ref CfgNav5Fields::drLimit field
+    ///     @li @b pDOP for @ref CfgNav5Fields::pDOP field
+    ///     @li @b tDOP for @ref CfgNav5Fields::tDOP field
+    ///     @li @b pAcc for @ref CfgNav5Fields::pAcc field
+    ///     @li @b tAcc for @ref CfgNav5Fields::tAcc field
+    ///     @li @b staticHoldThreash for @ref CfgNav5Fields::staticHoldThreash field
+    ///     @li @b dgpsTimeOut for @ref CfgNav5Fields::dgpsTimeOut field
+    ///     @li @b cnoThreshNumSVs for @ref CfgNav5Fields::cnoThreshNumSVs field
+    ///     @li @b cnoThresh for @ref CfgNav5Fields::cnoThresh field
+    ///     @li @b reserved2 for @ref CfgNav5Fields::reserved2 field
+    ///     @li @b reserved3 for @ref CfgNav5Fields::reserved3 field
+    ///     @li @b reserved4 for @ref CfgNav5Fields::reserved4 field
     COMMS_MSG_FIELDS_ACCESS(Base,
         mask,
         dynModel,
@@ -302,7 +242,6 @@ public:
         reserved3,
         reserved4
     );
-#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     CfgNav5() = default;

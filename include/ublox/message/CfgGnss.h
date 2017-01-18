@@ -63,24 +63,6 @@ struct CfgGnssFields
         }
     };
 
-    /// @brief Bit access anumerator for @ref flags bitmask field
-    enum
-    {
-        flags_enable, ///< @b enable bit numer
-        flags_numOfValues ///< number of available bits
-    };
-
-    /// @brief Use this enumerator to access member fields of @ref block bundle field.
-    enum
-    {
-        block_gnssId,  ///< @b index of @ref gnssId member field
-        block_resTrkCh,  ///< @b index of @ref resTrkCh member field
-        block_maxTrkCh,  ///< @b index of @ref maxTrkCh member field
-        block_reserved1,  ///< @b index of @ref reserved1 member field
-        block_flags,  ///< @b index of @ref flags member field
-        block_numOfValues  ///< number of member fields
-    };
-
     /// @brief Definition of "msgVer" field.
     using msgVer =
         field::common::U1T<
@@ -113,13 +95,20 @@ struct CfgGnssFields
     using reserved1 = field::common::res1;
 
     /// @brief Definition of "flags" field.
-    using flags =
+    struct flags : public
         field::common::X4T<
             comms::option::BitmaskReservedBits<0xfffffffe, 0>
-        >;
+        >
+    {
+        /// @brief Provide names for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS(enable);
+    };
 
-    /// @brief Definition of a single configuration block
-    using block =
+    /// @brief Base class for @ref block
+    using blockBase =
         field::common::BundleT<
             std::tuple<
                 gnssId,
@@ -129,6 +118,16 @@ struct CfgGnssFields
                 flags
             >
         >;
+
+    /// @brief Definition of a single configuration block
+    struct block : public blockBase
+    {
+        /// @brief Allow access to internal fields.
+        /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
+        ///     related to @b comms::field::Bitfield class from COMMS library
+        ///     for details.
+        COMMS_FIELD_MEMBERS_ACCESS(blockBase, gnssId, resTrkCh, maxTrkCh, reserved1, flags);
+    };
 
     /// @brief Definition of the list of configuration blocks
     using blocksList = field::common::ListT<block>;
@@ -148,7 +147,8 @@ struct CfgGnssFields
 /// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
 ///     various implementation options. @n
-///     See @ref CfgGnssFields and for definition of the fields this message contains.
+///     See @ref CfgGnssFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class CfgGnss : public
@@ -169,47 +169,18 @@ class CfgGnss : public
     > Base;
 public:
 
-#ifdef FOR_DOXYGEN_DOC_ONLY
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_msgVer, ///< @b msgVer field, see @ref CfgGnssFields::msgVer
-        FieldIdx_numTrkChHw, ///< @b numTrkChHw field, see @ref CfgGnssFields::numTrkChHw
-        FieldIdx_numTrkChUse, ///< @b numTrkChUse field, see @ref CfgGnssFields::numTrkChUse
-        FieldIdx_numConfigBlocks, ///< @b numConfigBlocks field, see @ref CfgGnssFields::numConfigBlocks
-        FieldIdx_blocksList, ///< @b blocksList field, see @ref CfgGnssFields::blocksList
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    /// @brief Access to fields bundled as a struct
-    struct FieldsAsStruct
-    {
-        CfgGnssFields::msgVer& msgVer; ///< @b msgVer field, see @ref CfgGnssFields::msgVer
-        CfgGnssFields::numTrkChHw& numTrkChHw; ///< @b numTrkChHw field, see @ref CfgGnssFields::numTrkChHw
-        CfgGnssFields::numTrkChUse& numTrkChUse; ///< @b numTrkChUse field, see @ref CfgGnssFields::numTrkChUse
-        CfgGnssFields::numConfigBlocks& numConfigBlocks; ///< @b numConfigBlocks field, see @ref CfgGnssFields::numConfigBlocks
-        CfgGnssFields::blocksList& blocksList; ///< @b blocksList field, see @ref CfgGnssFields::blocksList
-    };
-
-    /// @brief Access to @b const fields bundled as a struct
-    struct ConstFieldsAsStruct
-    {
-        const CfgGnssFields::msgVer& msgVer; ///< @b msgVer field, see @ref CfgGnssFields::msgVer
-        const CfgGnssFields::numTrkChHw& numTrkChHw; ///< @b numTrkChHw field, see @ref CfgGnssFields::numTrkChHw
-        const CfgGnssFields::numTrkChUse& numTrkChUse; ///< @b numTrkChUse field, see @ref CfgGnssFields::numTrkChUse
-        const CfgGnssFields::numConfigBlocks& numConfigBlocks; ///< @b numConfigBlocks field, see @ref CfgGnssFields::numConfigBlocks
-        const CfgGnssFields::blocksList& blocksList; ///< @b blocksList field, see @ref CfgGnssFields::blocksList
-    };
-
-    /// @brief Get access to fields bundled into a struct
-    FieldsAsStruct fieldsAsStruct();
-
-    /// @brief Get access to @b const fields bundled into a struct
-    ConstFieldsAsStruct fieldsAsStruct() const;
-
-#else
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b msgVer for @ref CfgGnssFields::msgVer field
+    ///     @li @b numTrkChHw for @ref CfgGnssFields::numTrkChHw field
+    ///     @li @b numTrkChUse for @ref CfgGnssFields::numTrkChUse field
+    ///     @li @b numConfigBlocks for @ref CfgGnssFields::numConfigBlocks field
+    ///     @li @b blocksList for @ref CfgGnssFields::blocksList field
     COMMS_MSG_FIELDS_ACCESS(Base, msgVer, numTrkChHw, numTrkChUse, numConfigBlocks, blocksList);
-#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     CfgGnss() = default;

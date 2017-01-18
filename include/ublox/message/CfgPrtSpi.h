@@ -52,15 +52,6 @@ struct CfgPrtSpiFields : public CfgPrtFields
         NumOfValues ///< number of available values
     };
 
-    /// @brief Use this enumeration to access member fields of @ref mode bitfield.
-    enum
-    {
-        mode_spiMode = 1, ///< index of @ref spiMode member field
-        mode_flowControl = 3, ///< index of @ref flowControl member field
-        mode_ffCnt = 5, ///< index of @ref ffCnt member field
-        mode_numOfValues = 7 ///< number of available member fields
-    };
-
     /// @brief Definition of "portID" field.
     using portID =
         field::common::EnumT<
@@ -150,7 +141,8 @@ struct CfgPrtSpiFields : public CfgPrtFields
 /// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
 ///     various implementation options. @n
-///     See @ref CfgPrtSpiFields and for definition of the fields this message contains.
+///     See @ref CfgPrtSpiFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class CfgPrtSpi : public
@@ -171,57 +163,21 @@ class CfgPrtSpi : public
     > Base;
 public:
 
-#ifdef FOR_DOXYGEN_DOC_ONLY
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_portID, ///< @b portID field, see @ref CfgPrtSpiFields::portID
-        FieldIdx_reserved0, ///< @b reserved0 field, see @ref CfgPrtSpiFields::reserved0
-        FieldIdx_txReady, ///< @b txReady field, see @ref CfgPrtFields::txReady
-        FieldIdx_mode, ///< @b mode field, see @ref CfgPrtSpiFields::mode
-        FieldIdx_reserved3, ///< @b reserved3 field, see @ref CfgPrtSpiFields::reserved3
-        FieldIdx_inProtoMask, ///< @b inProtoMask field, see @ref CfgPrtFields::inProtoMask
-        FieldIdx_outProtoMask, ///< @b outProtoMask field, see @ref CfgPrtFields::outProtoMask
-        FieldIdx_flags, ///< @b flags field, see @ref CfgPrtFields::flags
-        FieldIdx_reserved5, ///< @b reserved5 field, see @ref CfgPrtSpiFields::reserved5
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    /// @brief Access to fields bundled as a struct
-    struct FieldsAsStruct
-    {
-        CfgPrtSpiFields::portID& portID; ///< @b portID field, see @ref CfgPrtSpiFields::portID
-        CfgPrtSpiFields::reserved0& reserved0; ///< @b reserved0 field, see @ref CfgPrtSpiFields::reserved0
-        CfgPrtFields::txReady& txReady; ///< @b txReady field, see @ref CfgPrtFields::txReady
-        CfgPrtSpiFields::mode& mode; ///< @b mode field, see @ref CfgPrtSpiFields::mode
-        CfgPrtSpiFields::reserved3& reserved3; ///< @b reserved3 field, see @ref CfgPrtSpiFields::reserved3
-        CfgPrtFields::inProtoMask& inProtoMask; ///< @b inProtoMask field, see @ref CfgPrtFields::inProtoMask
-        CfgPrtFields::outProtoMask& outProtoMask; ///< @b outProtoMask field, see @ref CfgPrtFields::outProtoMask
-        CfgPrtFields::flags& flags; ///< @b flags field, see @ref CfgPrtFields::flags
-        CfgPrtSpiFields::reserved5& reserved5; ///< @b reserved5 field, see @ref CfgPrtSpiFields::reserved5
-    };
-
-    /// @brief Access to @b const fields bundled as a struct
-    struct ConstFieldsAsStruct
-    {
-        const CfgPrtSpiFields::portID& portID; ///< @b portID field, see @ref CfgPrtSpiFields::portID
-        const CfgPrtSpiFields::reserved0& reserved0; ///< @b reserved0 field, see @ref CfgPrtSpiFields::reserved0
-        const CfgPrtFields::txReady& txReady; ///< @b txReady field, see @ref CfgPrtFields::txReady
-        const CfgPrtSpiFields::mode& mode; ///< @b mode field, see @ref CfgPrtSpiFields::mode
-        const CfgPrtSpiFields::reserved3& reserved3; ///< @b reserved3 field, see @ref CfgPrtSpiFields::reserved3
-        const CfgPrtFields::inProtoMask& inProtoMask; ///< @b inProtoMask field, see @ref CfgPrtFields::inProtoMask
-        const CfgPrtFields::outProtoMask& outProtoMask; ///< @b outProtoMask field, see @ref CfgPrtFields::outProtoMask
-        const CfgPrtFields::flags& flags; ///< @b flags field, see @ref CfgPrtFields::flags
-        const CfgPrtSpiFields::reserved5& reserved5; ///< @b reserved5 field, see @ref CfgPrtSpiFields::reserved5
-    };
-
-    /// @brief Get access to fields bundled into a struct
-    FieldsAsStruct fieldsAsStruct();
-
-    /// @brief Get access to @b const fields bundled into a struct
-    ConstFieldsAsStruct fieldsAsStruct() const;
-
-#else
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b portID for @ref CfgPrtSpiFields::portID field
+    ///     @li @b reserved0 for @ref CfgPrtSpiFields::reserved0 field
+    ///     @li @b txReady for @ref CfgPrtFields::txReady field
+    ///     @li @b mode for @ref CfgPrtSpiFields::mode field
+    ///     @li @b reserved3 for @ref CfgPrtSpiFields::reserved3 field
+    ///     @li @b inProtoMask for @ref CfgPrtFields::inProtoMask field
+    ///     @li @b outProtoMask for @ref CfgPrtFields::outProtoMask field
+    ///     @li @b flags for @ref CfgPrtFields::flags field
+    ///     @li @b reserved5 for @ref CfgPrtSpiFields::reserved5 field
     COMMS_MSG_FIELDS_ACCESS(Base,
         portID,
         reserved0,
@@ -233,7 +189,6 @@ public:
         flags,
         reserved5
     );
-#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     CfgPrtSpi() = default;

@@ -70,7 +70,8 @@ struct CfgRateFields
 /// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
 ///     various implementation options. @n
-///     See @ref CfgRateFields and for definition of the fields this message contains.
+///     See @ref CfgRateFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class CfgRate : public
@@ -89,40 +90,16 @@ class CfgRate : public
     > Base;
 public:
 
-#ifdef FOR_DOXYGEN_DOC_ONLY
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_measRate, ///< @b measRate field, see @ref CfgRateFields::measRate
-        FieldIdx_navRate, ///< @b navRate field, see @ref CfgRateFields::navRate
-        FieldIdx_timeRef, ///< @b timeRef field, see @ref CfgRateFields::timeRef
-        FieldIdx_numOfValues ///< number of available fields
-    };
-    /// @brief Access to fields bundled as a struct
-    struct FieldsAsStruct
-    {
-        CfgRateFields::measRate& measRate; ///< @b measRate field, see @ref CfgRateFields::measRate
-        CfgRateFields::navRate& navRate; ///< @b navRate field, see @ref CfgRateFields::navRate
-        CfgRateFields::timeRef& timeRef; ///< @b timeRef field, see @ref CfgRateFields::timeRef
-    };
-
-    /// @brief Access to @b const fields bundled as a struct
-    struct ConstFieldsAsStruct
-    {
-        const CfgRateFields::measRate& measRate; ///< @b measRate field, see @ref CfgRateFields::measRate
-        const CfgRateFields::navRate& navRate; ///< @b navRate field, see @ref CfgRateFields::navRate
-        const CfgRateFields::timeRef& timeRef; ///< @b timeRef field, see @ref CfgRateFields::timeRef
-    };
-
-    /// @brief Get access to fields bundled into a struct
-    FieldsAsStruct fieldsAsStruct();
-
-    /// @brief Get access to @b const fields bundled into a struct
-    ConstFieldsAsStruct fieldsAsStruct() const;
-
-#else
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b measRate for @ref CfgRateFields::measRate field
+    ///     @li @b navRate for @ref CfgRateFields::navRate field
+    ///     @li @b timeRef for @ref CfgRateFields::timeRef field
     COMMS_MSG_FIELDS_ACCESS(Base, measRate, navRate, timeRef);
-#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     CfgRate() = default;

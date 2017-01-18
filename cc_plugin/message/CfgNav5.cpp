@@ -56,7 +56,7 @@ QVariantMap createProps_mask()
          .add("timeMask")
          .add("staticHoldMask")
          .add("dgpsMask");
-    assert(props.bits().size() == CfgNav5Fields::mask_numOfValues);
+    assert(props.bits().size() == CfgNav5Fields::mask::BitIdx_numOfValues);
     return props.asMap();
 }
 

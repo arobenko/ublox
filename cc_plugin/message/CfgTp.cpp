@@ -69,7 +69,7 @@ QVariantMap createProps_flags()
     cc::property::field::ForField<CfgTpFields::flags> props;
     props.name("flags")
          .add("syncMode");
-    assert(props.bits().size() == CfgTpFields::flags_numOfValues);
+    assert(props.bits().size() == CfgTpFields::flags::BitIdx_numOfValues);
     return props.asMap();
 }
 

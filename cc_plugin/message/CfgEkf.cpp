@@ -55,13 +55,13 @@ QVariantMap createProps_actionFlags()
 {
     cc::property::field::ForField<CfgEkfFields::actionFlags> props;
     props.name("actionFlags")
-         .add(CfgEkfFields::actionFlags_clTab, "clTab")
+         .add(CfgEkfFields::actionFlags::BitIdx_clTab, "clTab")
          .add("clCalib")
-         .add(CfgEkfFields::actionFlags_nomTacho, "nomTacho")
+         .add(CfgEkfFields::actionFlags::BitIdx_nomTacho, "nomTacho")
          .add("nomGyro")
          .add("setTemp")
          .add("dir");
-    assert(props.bits().size() == CfgEkfFields::actionFlags_numOfValues);
+    assert(props.bits().size() == CfgEkfFields::actionFlags::BitIdx_numOfValues);
     return props.asMap();
 }
 
@@ -71,7 +71,7 @@ QVariantMap createProps_configFlags()
     props.name("configFlags")
          .add("pulsesPerM")
          .add("useSerWt");
-    assert(props.bits().size() == CfgEkfFields::configFlags_numOfValues);
+    assert(props.bits().size() == CfgEkfFields::configFlags::BitIdx_numOfValues);
     return props.asMap();
 }
 
@@ -81,7 +81,7 @@ QVariantMap createProps_inverseFlags()
     props.name("inverseFlags")
          .add("invDir")
          .add("invGyro");
-    assert(props.bits().size() == CfgEkfFields::inverseFlags_numOfValues);
+    assert(props.bits().size() == CfgEkfFields::inverseFlags::BitIdx_numOfValues);
     return props.asMap();
 }
 

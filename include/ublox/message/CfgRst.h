@@ -35,25 +35,6 @@ namespace message
 /// @see CfgRst
 struct CfgRstFields
 {
-    /// @brief Bits access enumeration for @ref navBbrMask bitmask field.
-    enum
-    {
-        navBbrMask_eph, ///< @b eph bit index
-        navBbrMask_alm, ///< @b alm bit index
-        navBbrMask_health, ///< @b health bit index
-        navBbrMask_klob, ///< @b klob bit index
-        navBbrMask_pos, ///< @b pos bit index
-        navBbrMask_clkd, ///< @b clkd bit index
-        navBbrMask_osc, ///< @b osc bit index
-        navBbrMask_utc, ///< @b utc bit index
-        navBbrMask_rtc, ///< @b rtc bit index
-        navBbrMask_sfdr = 11, ///< @b sfdr bit index
-        navBbrMask_vmon, ///< @b vmon bit index
-        navBbrMask_tct, ///< @b tct bit index
-        navBbrMask_aop = 15, ///< @b aop bit index
-        navBbrMask_numOfValues ///< upper limit for available bits
-    };
-
     /// @brief Value enumeration for @ref resetMode field
     enum class ResetMode : std::uint8_t
     {
@@ -87,7 +68,14 @@ struct CfgRstFields
     };
 
     /// @brief Definition of "navBbrMask" field.
-    using navBbrMask = field::common::X2;
+    struct navBbrMask : public field::common::X2
+    {
+        /// @brief Provide names for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS(eph, alm, health, klob, pos, clkd, osc, utc, rtc, sfdr=11, vmon, tct, aop=15);
+    };
 
     /// @brief Definition of "resetMode" field.
     using resetMode =
@@ -112,7 +100,8 @@ struct CfgRstFields
 /// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
 ///     various implementation options. @n
-///     See @ref CfgRstFields and for definition of the fields this message contains.
+///     See @ref CfgRstFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class CfgRst : public
@@ -131,41 +120,16 @@ class CfgRst : public
     > Base;
 public:
 
-#ifdef FOR_DOXYGEN_DOC_ONLY
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_navBbrMask, ///< @b navBbrMask field, see @ref CfgRstFields::navBbrMask
-        FieldIdx_resetMode, ///< @b resetMode field, see @ref CfgRstFields::resetMode
-        FieldIdx_reserved1, ///< @b reserved1 field, see @ref CfgRstFields::reserved1
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    /// @brief Access to fields bundled as a struct
-    struct FieldsAsStruct
-    {
-        CfgRstFields::navBbrMask& navBbrMask; ///< @b navBbrMask field, see @ref CfgRstFields::navBbrMask
-        CfgRstFields::resetMode& resetMode; ///< @b resetMode field, see @ref CfgRstFields::resetMode
-        CfgRstFields::reserved1& reserved1; ///< @b reserved1 field, see @ref CfgRstFields::reserved1
-    };
-
-    /// @brief Access to @b const fields bundled as a struct
-    struct ConstFieldsAsStruct
-    {
-        const CfgRstFields::navBbrMask& navBbrMask; ///< @b navBbrMask field, see @ref CfgRstFields::navBbrMask
-        const CfgRstFields::resetMode& resetMode; ///< @b resetMode field, see @ref CfgRstFields::resetMode
-        const CfgRstFields::reserved1& reserved1; ///< @b reserved1 field, see @ref CfgRstFields::reserved1
-    };
-
-    /// @brief Get access to fields bundled into a struct
-    FieldsAsStruct fieldsAsStruct();
-
-    /// @brief Get access to @b const fields bundled into a struct
-    ConstFieldsAsStruct fieldsAsStruct() const;
-
-#else
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b navBbrMask for @ref CfgRstFields::navBbrMask field
+    ///     @li @b resetMode for @ref CfgRstFields::resetMode field
+    ///     @li @b reserved1 for @ref CfgRstFields::reserved1 field
     COMMS_MSG_FIELDS_ACCESS(Base, navBbrMask, resetMode, reserved1);
-#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     CfgRst() = default;

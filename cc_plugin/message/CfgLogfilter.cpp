@@ -50,7 +50,7 @@ QVariantMap createProps_flags()
          .add("recordEnabled")
          .add("psmOncePerWakupEnabled")
          .add("applyAllFilterSettings");
-    assert(props.bits().size() == CfgLogfilterFields::flags_numOfValues);
+    assert(props.bits().size() == CfgLogfilterFields::flags::BitIdx_numOfValues);
     return props.asMap();
 }
 

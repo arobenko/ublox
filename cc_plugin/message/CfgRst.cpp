@@ -54,11 +54,11 @@ QVariantMap createProps_navBbrMask()
          .add("osc")
          .add("utc")
          .add("rtc")
-         .add(CfgRstFields::navBbrMask_sfdr, "sfdr")
+         .add(CfgRstFields::navBbrMask::BitIdx_sfdr, "sfdr")
          .add("vmon")
          .add("tct")
-         .add(CfgRstFields::navBbrMask_aop, "aop");
-    assert(props.bits().size() == CfgRstFields::navBbrMask_numOfValues);
+         .add(CfgRstFields::navBbrMask::BitIdx_aop, "aop");
+    assert(props.bits().size() == CfgRstFields::navBbrMask::BitIdx_numOfValues);
     return props.asMap();
 }
 

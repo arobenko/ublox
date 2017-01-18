@@ -77,17 +77,6 @@ struct CfgPrtUartFields : public CfgPrtFields
         }
     };
 
-    enum
-    {
-        mode_reserved1,
-        mode_charLen,
-        mode_reserved2,
-        mode_parity,
-        mode_nStopBits,
-        mode_reserved3,
-        mode_numOfValues
-    };
-
     /// @brief Definition of "portID" field.
     using portID =
         field::common::EnumT<
@@ -121,8 +110,8 @@ struct CfgPrtUartFields : public CfgPrtFields
             comms::option::ValidNumValueRange<0, (int)StopBits::NumOfValues - 1>
         >;
 
-    /// @brief Definition of "mode" field.
-    using mode =
+    /// @brief Base class for @ref mode field
+    using modeBase =
         field::common::BitfieldT<
             std::tuple<
                 field::common::X1T<
@@ -137,6 +126,16 @@ struct CfgPrtUartFields : public CfgPrtFields
                 field::common::res4T<comms::option::FixedBitLength<18> >
             >
         >;
+
+    /// @brief Definition of "mode" field.
+    struct mode : public modeBase
+    {
+        /// @brief Allow access to internal fields.
+        /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
+        ///     related to @b comms::field::Bitfield class from COMMS library
+        ///     for details.
+        COMMS_FIELD_MEMBERS_ACCESS(modeBase, reserved1, charLen, reserved2, parity, nStopBits, reserved3);
+    };
 
     /// @brief Definition of "baudRate" field.
     using baudRate = field::common::U4;
@@ -159,7 +158,8 @@ struct CfgPrtUartFields : public CfgPrtFields
 /// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
 ///     various implementation options. @n
-///     See @ref CfgPrtUartFields and for definition of the fields this message contains.
+///     See @ref CfgPrtUartFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class CfgPrtUart : public
@@ -180,58 +180,21 @@ class CfgPrtUart : public
     > Base;
 public:
 
-#ifdef FOR_DOXYGEN_DOC_ONLY
-
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_portID, ///< @b portID field, see @ref CfgPrtUartFields::portID
-        FieldIdx_reserved0, ///< @b reserved0 field, see @ref CfgPrtUartFields::reserved0
-        FieldIdx_txReady, ///< @b txReady field, see @ref CfgPrtFields::txReady
-        FieldIdx_mode, ///< @b mode field, see @ref CfgPrtUartFields::mode
-        FieldIdx_baudRate, ///< @b baudRate field, see @ref CfgPrtUartFields::baudRate
-        FieldIdx_inProtoMask, ///< @b inProtoMask field, see @ref CfgPrtFields::inProtoMask
-        FieldIdx_outProtoMask, ///< @b outProtoMask field, see @ref CfgPrtFields::outProtoMask
-        FieldIdx_flags, ///< @b flags field, see @ref CfgPrtFields::flags
-        FieldIdx_reserved5, ///< @b reserved5 field, see @ref CfgPrtUartFields::reserved5
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    /// @brief Access to fields bundled as a struct
-    struct FieldsAsStruct
-    {
-        CfgPrtUartFields::portID& portID; ///< @b portID field, see @ref CfgPrtUartFields::portID
-        CfgPrtUartFields::reserved0& reserved0; ///< @b reserved0 field, see @ref CfgPrtUartFields::reserved0
-        CfgPrtFields::txReady& txReady; ///< @b txReady field, see @ref CfgPrtFields::txReady
-        CfgPrtUartFields::mode& mode; ///< @b mode field, see @ref CfgPrtUartFields::mode
-        CfgPrtUartFields::baudRate& baudRate; ///< @b baudRate field, see @ref CfgPrtUartFields::baudRate
-        CfgPrtFields::inProtoMask& inProtoMask; ///< @b inProtoMask field, see @ref CfgPrtFields::inProtoMask
-        CfgPrtFields::outProtoMask& outProtoMask; ///< @b outProtoMask field, see @ref CfgPrtFields::outProtoMask
-        CfgPrtFields::flags& flags; ///< @b flags field, see @ref CfgPrtFields::flags
-        CfgPrtUartFields::reserved5& reserved5; ///< @b reserved5 field, see @ref CfgPrtUartFields::reserved5
-    };
-
-    /// @brief Access to @b const fields bundled as a struct
-    struct ConstFieldsAsStruct
-    {
-        CfgPrtUartFields::portID& portID; ///< @b portID field, see @ref CfgPrtUartFields::portID
-        CfgPrtUartFields::reserved0& reserved0; ///< @b reserved0 field, see @ref CfgPrtUartFields::reserved0
-        CfgPrtFields::txReady& txReady; ///< @b txReady field, see @ref CfgPrtFields::txReady
-        CfgPrtUartFields::mode& mode; ///< @b mode field, see @ref CfgPrtUartFields::mode
-        CfgPrtUartFields::baudRate& baudRate; ///< @b baudRate field, see @ref CfgPrtUartFields::baudRate
-        CfgPrtFields::inProtoMask& inProtoMask; ///< @b inProtoMask field, see @ref CfgPrtFields::inProtoMask
-        CfgPrtFields::outProtoMask& outProtoMask; ///< @b outProtoMask field, see @ref CfgPrtFields::outProtoMask
-        CfgPrtFields::flags& flags; ///< @b flags field, see @ref CfgPrtFields::flags
-        CfgPrtUartFields::reserved5& reserved5; ///< @b reserved5 field, see @ref CfgPrtUartFields::reserved5
-    };
-
-    /// @brief Get access to fields bundled into a struct
-    FieldsAsStruct fieldsAsStruct();
-
-    /// @brief Get access to @b const fields bundled into a struct
-    ConstFieldsAsStruct fieldsAsStruct() const;
-
-#else
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b portID for @ref CfgPrtUartFields::portID field
+    ///     @li @b reserved0 for @ref CfgPrtUartFields::reserved0 field
+    ///     @li @b txReady for @ref CfgPrtFields::txReady field
+    ///     @li @b mode for @ref CfgPrtUartFields::mode field
+    ///     @li @b baudRate for @ref CfgPrtUartFields::baudRate field
+    ///     @li @b inProtoMask for @ref CfgPrtFields::inProtoMask field
+    ///     @li @b outProtoMask for @ref CfgPrtFields::outProtoMask field
+    ///     @li @b flags for @ref CfgPrtFields::flags field
+    ///     @li @b reserved5 for @ref CfgPrtUartFields::reserved5 field
     COMMS_MSG_FIELDS_ACCESS(Base,
         portID,
         reserved0,
@@ -243,7 +206,6 @@ public:
         flags,
         reserved5
     );
-#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     CfgPrtUart() = default;

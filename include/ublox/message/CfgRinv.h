@@ -33,19 +33,18 @@ namespace message
 /// @see CfgRinv
 struct CfgRinvFields
 {
-    /// @brief Bits access enumeration for @ref flags bitmask field.
-    enum
-    {
-        data_dump, ///< @b dump bit index
-        data_binary, ///< @b binary bit index
-        data_numOfValues ///< number of available bits
-    };
-
     /// @brief Definition of "flags" field.
-    using flags =
+    struct flags : public
         field::common::X1T<
             comms::option::BitmaskReservedBits<0xfc, 0>
-        >;
+        >
+    {
+        /// @brief Provide names for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS(dump, binary);
+    };
 
     /// @brief Definition of "data" field.
     using data =
@@ -62,7 +61,8 @@ struct CfgRinvFields
 /// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
 ///     various implementation options. @n
-///     See @ref CfgRinvFields and for definition of the fields this message contains.
+///     See @ref CfgRinvFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class CfgRinv : public
@@ -81,38 +81,15 @@ class CfgRinv : public
     > Base;
 public:
 
-#ifdef FOR_DOXYGEN_DOC_ONLY
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_flags, ///< @b flags field, see @ref CfgRinvFields::flags
-        FieldIdx_data, ///< @b data field, see @ref CfgRinvFields::data
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    /// @brief Access to fields bundled as a struct
-    struct FieldsAsStruct
-    {
-        CfgRinvFields::flags& flags; ///< @b flags field, see @ref CfgRinvFields::flags
-        CfgRinvFields::data& data; ///< @b data field, see @ref CfgRinvFields::data
-    };
-
-    /// @brief Access to @b const fields bundled as a struct
-    struct ConstFieldsAsStruct
-    {
-        const CfgRinvFields::flags& flags; ///< @b flags field, see @ref CfgRinvFields::flags
-        const CfgRinvFields::data& data; ///< @b data field, see @ref CfgRinvFields::data
-    };
-
-    /// @brief Get access to fields bundled into a struct
-    FieldsAsStruct fieldsAsStruct();
-
-    /// @brief Get access to @b const fields bundled into a struct
-    ConstFieldsAsStruct fieldsAsStruct() const;
-
-#else
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b flags for @ref CfgRinvFields::flags field
+    ///     @li @b data for @ref CfgRinvFields::data field
     COMMS_MSG_FIELDS_ACCESS(Base, flags, data);
-#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     CfgRinv() = default;

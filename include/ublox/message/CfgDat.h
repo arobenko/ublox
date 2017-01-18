@@ -86,7 +86,8 @@ struct CfgDatFields
 /// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
 ///     various implementation options. @n
-///     See @ref CfgDatFields and for definition of the fields this message contains.
+///     See @ref CfgDatFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class CfgDat : public
@@ -105,63 +106,23 @@ class CfgDat : public
     > Base;
 public:
 
-#ifdef FOR_DOXYGEN_DOC_ONLY
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_datumNum,  ///< @b datumNum field, see @ref CfgDatFields::datumNum
-        FieldIdx_datumName,  ///< @b datumName field, see @ref CfgDatFields::datumName
-        FieldIdx_majA,  ///< @b majA field, see @ref CfgDatFields::majA
-        FieldIdx_flat,  ///< @b flat field, see @ref CfgDatFields::flat
-        FieldIdx_dX,  ///< @b dX field, see @ref CfgDatFields::dX
-        FieldIdx_dY,  ///< @b dY field, see @ref CfgDatFields::dY
-        FieldIdx_dZ,  ///< @b dZ field, see @ref CfgDatFields::dZ
-        FieldIdx_rotX,  ///< @b rotX field, see @ref CfgDatFields::rotX
-        FieldIdx_rotY,  ///< @b rotY field, see @ref CfgDatFields::rotY
-        FieldIdx_rotZ,  ///< @b rotZ field, see @ref CfgDatFields::rotZ
-        FieldIdx_scale,  ///< @b scale field, see @ref CfgDatFields::scale
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    /// @brief Access to fields bundled as a struct
-    struct FieldsAsStruct
-    {
-        CfgDatFields::datumNum& datumNum;  ///< @b datumNum field, see @ref CfgDatFields::datumNum
-        CfgDatFields::datumName& datumName;  ///< @b datumName field, see @ref CfgDatFields::datumName
-        CfgDatFields::majA& majA;  ///< @b majA field, see @ref CfgDatFields::majA
-        CfgDatFields::flat& flat;  ///< @b flat field, see @ref CfgDatFields::flat
-        CfgDatFields::dX& dX;  ///< @b dX field, see @ref CfgDatFields::dX
-        CfgDatFields::dY& dY;  ///< @b dY field, see @ref CfgDatFields::dY
-        CfgDatFields::dZ& dZ;  ///< @b dZ field, see @ref CfgDatFields::dZ
-        CfgDatFields::rotX& rotX;  ///< @b rotX field, see @ref CfgDatFields::rotX
-        CfgDatFields::rotY& rotY;  ///< @b rotY field, see @ref CfgDatFields::rotY
-        CfgDatFields::rotZ& rotZ;  ///< @b rotZ field, see @ref CfgDatFields::rotZ
-        CfgDatFields::scale& scale;  ///< @b scale field, see @ref CfgDatFields::scale
-    };
-
-    /// @brief Access to @b const fields bundled as a struct
-    struct ConstFieldsAsStruct
-    {
-        const CfgDatFields::datumNum& datumNum;  ///< @b datumNum field, see @ref CfgDatFields::datumNum
-        const CfgDatFields::datumName& datumName;  ///< @b datumName field, see @ref CfgDatFields::datumName
-        const CfgDatFields::majA& majA;  ///< @b majA field, see @ref CfgDatFields::majA
-        const CfgDatFields::flat& flat;  ///< @b flat field, see @ref CfgDatFields::flat
-        const CfgDatFields::dX& dX;  ///< @b dX field, see @ref CfgDatFields::dX
-        const CfgDatFields::dY& dY;  ///< @b dY field, see @ref CfgDatFields::dY
-        const CfgDatFields::dZ& dZ;  ///< @b dZ field, see @ref CfgDatFields::dZ
-        const CfgDatFields::rotX& rotX;  ///< @b rotX field, see @ref CfgDatFields::rotX
-        const CfgDatFields::rotY& rotY;  ///< @b rotY field, see @ref CfgDatFields::rotY
-        const CfgDatFields::rotZ& rotZ;  ///< @b rotZ field, see @ref CfgDatFields::rotZ
-        const CfgDatFields::scale& scale;  ///< @b scale field, see @ref CfgDatFields::scale
-    };
-
-    /// @brief Get access to fields bundled into a struct
-    FieldsAsStruct fieldsAsStruct();
-
-    /// @brief Get access to @b const fields bundled into a struct
-    ConstFieldsAsStruct fieldsAsStruct() const;
-
-#else
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b datumNum for @ref CfgDatFields::datumNum field
+    ///     @li @b datumName for @ref CfgDatFields::datumName field
+    ///     @li @b majA for @ref CfgDatFields::majA field
+    ///     @li @b flat for @ref CfgDatFields::flat field
+    ///     @li @b dX for @ref CfgDatFields::dX field
+    ///     @li @b dY for @ref CfgDatFields::dY field
+    ///     @li @b dZ for @ref CfgDatFields::dZ field
+    ///     @li @b rotX for @ref CfgDatFields::rotX field
+    ///     @li @b rotY for @ref CfgDatFields::rotY field
+    ///     @li @b rotZ for @ref CfgDatFields::rotZ field
+    ///     @li @b scale for @ref CfgDatFields::scale field
     COMMS_MSG_FIELDS_ACCESS(Base,
         datumNum,
         datumName,
@@ -175,7 +136,6 @@ public:
         rotZ,
         scale
     );
-#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     CfgDat() = default;

@@ -50,7 +50,8 @@ struct CfgPrtPollPortFields : public CfgPrtFields
 /// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
 ///     various implementation options. @n
-///     See @ref CfgPrtPollPortFields and for definition of the fields this message contains.
+///     See @ref CfgPrtPollPortFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class CfgPrtPollPort : public
@@ -69,35 +70,14 @@ class CfgPrtPollPort : public
     > Base;
 public:
 
-#ifdef FOR_DOXYGEN_DOC_ONLY
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_portID, ///< @b portID field, see @ref CfgPrtPollPortFields::portID
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    /// @brief Access to fields bundled as a struct
-    struct FieldsAsStruct
-    {
-        CfgPrtPollPortFields::portID& portID; ///< @b portID field, see @ref CfgPrtPollPortFields::portID
-    };
-
-    /// @brief Access to @b const fields bundled as a struct
-    struct ConstFieldsAsStruct
-    {
-        const CfgPrtPollPortFields::portID& portID; ///< @b portID field, see @ref CfgPrtPollPortFields::portID
-    };
-
-    /// @brief Get access to fields bundled into a struct
-    FieldsAsStruct fieldsAsStruct();
-
-    /// @brief Get access to @b const fields bundled into a struct
-    ConstFieldsAsStruct fieldsAsStruct() const;
-
-#else
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b portID for @ref CfgPrtPollPortFields::portID field
     COMMS_MSG_FIELDS_ACCESS(Base, portID);
-#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     CfgPrtPollPort() = default;

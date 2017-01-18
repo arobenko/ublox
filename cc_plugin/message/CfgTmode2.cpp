@@ -59,7 +59,7 @@ QVariantMap createProps_flags()
     props.name("flags")
          .add("lla")
          .add("altInv");
-    assert(props.bits().size() == CfgTmode2Fields::flags_numOfValues);
+    assert(props.bits().size() == CfgTmode2Fields::flags::BitIdx_numOfValues);
     return props.asMap();
 }
 

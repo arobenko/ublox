@@ -33,20 +33,18 @@ namespace message
 /// @see CfgFxn
 struct CfgFxnFields
 {
-    /// @brief Bits access enumerator for @ref flags bitmask field.
-    enum
-    {
-        flags_sleep = 1, ///< @b sleep bit index
-        flags_absAlign = 3, ///< @b absAlign bit index
-        flags_onOff, ///< @b onOff bit index
-        flags_numOfValues ///< upper limit of available bits
-    };
-
     /// @brief Definition of "flags" field.
-    using flags =
+    struct flags : public
         field::common::X4T<
             comms::option::BitmaskReservedBits<0xffffffe5, 0>
-        >;
+        >
+    {
+        /// @brief Provide names for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS(sleep=1, absAlign=3, onOff);
+    };
 
     /// @brief Definition of "tReacq" field.
     using tReacq = field::common::U4T<field::common::Scaling_ms2s>;
@@ -90,7 +88,8 @@ struct CfgFxnFields
 /// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
 ///     various implementation options. @n
-///     See @ref CfgFxnFields and for definition of the fields this message contains.
+///     See @ref CfgFxnFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class CfgFxn : public
@@ -109,57 +108,21 @@ class CfgFxn : public
     > Base;
 public:
 
-#ifdef FOR_DOXYGEN_DOC_ONLY
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_flags, ///< @b flags field, see @ref CfgFxnFields::flags
-        FieldIdx_tReacq, ///< @b tReacq field, see @ref CfgFxnFields::tReacq
-        FieldIdx_tAcq, ///< @b tAcq field, see @ref CfgFxnFields::tAcq
-        FieldIdx_tReacqOff, ///< @b tReacqOff field, see @ref CfgFxnFields::tReacqOff
-        FieldIdx_tAcqOff, ///< @b tAcqOff field, see @ref CfgFxnFields::tAcqOff
-        FieldIdx_tOn, ///< @b tOn field, see @ref CfgFxnFields::tOn
-        FieldIdx_tOff, ///< @b tOff field, see @ref CfgFxnFields::tOff
-        FieldIdx_res, ///< @b res field, see @ref CfgFxnFields::res
-        FieldIdx_baseTow, ///< @b baseTow field, see @ref CfgFxnFields::baseTow
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    /// @brief Access to fields bundled as a struct
-    struct FieldsAsStruct
-    {
-        CfgFxnFields::flags& flags; ///< @b flags field, see @ref CfgFxnFields::flags
-        CfgFxnFields::tReacq& tReacq; ///< @b tReacq field, see @ref CfgFxnFields::tReacq
-        CfgFxnFields::tAcq& tAcq; ///< @b tAcq field, see @ref CfgFxnFields::tAcq
-        CfgFxnFields::tReacqOff& tReacqOff; ///< @b tReacqOff field, see @ref CfgFxnFields::tReacqOff
-        CfgFxnFields::tAcqOff& tAcqOff; ///< @b tAcqOff field, see @ref CfgFxnFields::tAcqOff
-        CfgFxnFields::tOn& tOn; ///< @b tOn field, see @ref CfgFxnFields::tOn
-        CfgFxnFields::tOff& tOff; ///< @b tOff field, see @ref CfgFxnFields::tOff
-        CfgFxnFields::res& res; ///< @b res field, see @ref CfgFxnFields::res
-        CfgFxnFields::baseTow& baseTow; ///< @b baseTow field, see @ref CfgFxnFields::baseTow
-    };
-
-    /// @brief Access to @b const fields bundled as a struct
-    struct ConstFieldsAsStruct
-    {
-        const CfgFxnFields::flags& flags; ///< @b flags field, see @ref CfgFxnFields::flags
-        const CfgFxnFields::tReacq& tReacq; ///< @b tReacq field, see @ref CfgFxnFields::tReacq
-        const CfgFxnFields::tAcq& tAcq; ///< @b tAcq field, see @ref CfgFxnFields::tAcq
-        const CfgFxnFields::tReacqOff& tReacqOff; ///< @b tReacqOff field, see @ref CfgFxnFields::tReacqOff
-        const CfgFxnFields::tAcqOff& tAcqOff; ///< @b tAcqOff field, see @ref CfgFxnFields::tAcqOff
-        const CfgFxnFields::tOn& tOn; ///< @b tOn field, see @ref CfgFxnFields::tOn
-        const CfgFxnFields::tOff& tOff; ///< @b tOff field, see @ref CfgFxnFields::tOff
-        const CfgFxnFields::res& res; ///< @b res field, see @ref CfgFxnFields::res
-        const CfgFxnFields::baseTow& baseTow; ///< @b baseTow field, see @ref CfgFxnFields::baseTow
-    };
-
-    /// @brief Get access to fields bundled into a struct
-    FieldsAsStruct fieldsAsStruct();
-
-    /// @brief Get access to @b const fields bundled into a struct
-    ConstFieldsAsStruct fieldsAsStruct() const;
-
-#else
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b flags for @ref CfgFxnFields::flags field
+    ///     @li @b tReacq for @ref CfgFxnFields::tReacq field
+    ///     @li @b tAcq for @ref CfgFxnFields::tAcq field
+    ///     @li @b tReacqOff for @ref CfgFxnFields::tReacqOff field
+    ///     @li @b tAcqOff for @ref CfgFxnFields::tAcqOff field
+    ///     @li @b tOn for @ref CfgFxnFields::tOn field
+    ///     @li @b tOff for @ref CfgFxnFields::tOff field
+    ///     @li @b res for @ref CfgFxnFields::res field
+    ///     @li @b baseTow for @ref CfgFxnFields::baseTow field
     COMMS_MSG_FIELDS_ACCESS(Base,
         flags,
         tReacq,
@@ -171,7 +134,6 @@ public:
         res,
         baseTow
     );
-#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     CfgFxn() = default;

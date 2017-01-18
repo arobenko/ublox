@@ -105,7 +105,8 @@ struct CfgPrtDdcFields : public CfgPrtFields
 /// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
 ///     various implementation options. @n
-///     See @ref CfgPrtDdcFields and for definition of the fields this message contains.
+///     See @ref CfgPrtDdcFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class CfgPrtDdc : public
@@ -126,57 +127,21 @@ class CfgPrtDdc : public
     > Base;
 public:
 
-#ifdef FOR_DOXYGEN_DOC_ONLY
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_portID, ///< @b portID field, see @ref CfgPrtDdcFields::portID
-        FieldIdx_reserved0, ///< @b reserved0 field, see @ref CfgPrtDdcFields::reserved0
-        FieldIdx_txReady, ///< @b txReady field, see @ref CfgPrtFields::txReady
-        FieldIdx_mode, ///< @b mode field, see @ref CfgPrtDdcFields::mode
-        FieldIdx_reserved3, ///< @b reserved3 field, see @ref CfgPrtDdcFields::reserved3
-        FieldIdx_inProtoMask, ///< @b inProtoMask field, see @ref CfgPrtFields::inProtoMask
-        FieldIdx_outProtoMask, ///< @b outProtoMask field, see @ref CfgPrtFields::outProtoMask
-        FieldIdx_flags, ///< @b flags field, see @ref CfgPrtFields::flags
-        FieldIdx_reserved5, ///< @b reserved5 field, see @ref CfgPrtDdcFields::reserved5
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    /// @brief Access to fields bundled as a struct
-    struct FieldsAsStruct
-    {
-        CfgPrtDdcFields::portID& portID; ///< @b portID field, see @ref CfgPrtDdcFields::portID
-        CfgPrtDdcFields::reserved0& reserved0; ///< @b reserved0 field, see @ref CfgPrtDdcFields::reserved0
-        CfgPrtDdcFields::txReady& txReady; ///< @b txReady field, see @ref CfgPrtFields::txReady
-        CfgPrtDdcFields::mode& mode; ///< @b mode field, see @ref CfgPrtDdcFields::mode
-        CfgPrtDdcFields::reserved3& reserved3; ///< @b reserved3 field, see @ref CfgPrtDdcFields::reserved3
-        CfgPrtFields::inProtoMask& inProtoMask; ///< @b inProtoMask field, see @ref CfgPrtFields::inProtoMask
-        CfgPrtFields::outProtoMask& outProtoMask; ///< @b outProtoMask field, see @ref CfgPrtFields::outProtoMask
-        CfgPrtFields::flags& flags; ///< @b flags field, see @ref CfgPrtFields::flags
-        CfgPrtDdcFields::reserved5& reserved5; ///< @b reserved5 field, see @ref CfgPrtDdcFields::reserved5
-    };
-
-    /// @brief Access to @b const fields bundled as a struct
-    struct ConstFieldsAsStruct
-    {
-        const CfgPrtDdcFields::portID& portID; ///< @b portID field, see @ref CfgPrtDdcFields::portID
-        const CfgPrtDdcFields::reserved0& reserved0; ///< @b reserved0 field, see @ref CfgPrtDdcFields::reserved0
-        const CfgPrtDdcFields::txReady& txReady; ///< @b txReady field, see @ref CfgPrtFields::txReady
-        const CfgPrtDdcFields::mode& mode; ///< @b mode field, see @ref CfgPrtDdcFields::mode
-        const CfgPrtDdcFields::reserved3& reserved3; ///< @b reserved3 field, see @ref CfgPrtDdcFields::reserved3
-        const CfgPrtFields::inProtoMask& inProtoMask; ///< @b inProtoMask field, see @ref CfgPrtFields::inProtoMask
-        const CfgPrtFields::outProtoMask& outProtoMask; ///< @b outProtoMask field, see @ref CfgPrtFields::outProtoMask
-        const CfgPrtFields::flags& flags; ///< @b flags field, see @ref CfgPrtFields::flags
-        const CfgPrtDdcFields::reserved5& reserved5; ///< @b reserved5 field, see @ref CfgPrtDdcFields::reserved5
-    };
-
-    /// @brief Get access to fields bundled into a struct
-    FieldsAsStruct fieldsAsStruct();
-
-    /// @brief Get access to @b const fields bundled into a struct
-    ConstFieldsAsStruct fieldsAsStruct() const;
-
-#else
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b portID for @ref CfgPrtDdcFields::portID field
+    ///     @li @b reserved0 for @ref CfgPrtDdcFields::reserved0 field
+    ///     @li @b txReady for @ref CfgPrtFields::txReady field
+    ///     @li @b mode for @ref CfgPrtDdcFields::mode field
+    ///     @li @b reserved3 for @ref CfgPrtDdcFields::reserved3 field
+    ///     @li @b inProtoMask for @ref CfgPrtFields::inProtoMask field
+    ///     @li @b outProtoMask for @ref CfgPrtFields::outProtoMask field
+    ///     @li @b flags for @ref CfgPrtFields::flags field
+    ///     @li @b reserved5 for @ref CfgPrtDdcFields::reserved5 field
     COMMS_MSG_FIELDS_ACCESS(Base,
         portID,
         reserved0,
@@ -188,7 +153,6 @@ public:
         flags,
         reserved5
     );
-#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     CfgPrtDdc() = default;

@@ -33,85 +33,32 @@ namespace message
 /// @see CfgSbas
 struct CfgSbasFields
 {
-    /// @brief Bits access enumeration for @ref mode bitmask field.
-    enum
-    {
-        mode_enabled, ///< @b enabled bit index
-        mode_test, ///< @b test bit index
-        mode_numOfValues ///< number of available bits
-    };
-
-    /// @brief Bits access enumeration for @ref usage bitmask field.
-    enum
-    {
-        usage_range, ///< @b range bit index
-        usage_diffCorr, ///< @b diffCorr bit index
-        usage_integrity, ///< @b integrity bit index
-        usage_numOfValues ///< number of available bits
-    };
-
-    /// @brief Bits access enumeration for @ref scanmode2 bitmask field.
-    enum
-    {
-        scanmode2_PRN152, ///< @b PRN152 bit index
-        scanmode2_PRN153, ///< @b PRN153 bit index
-        scanmode2_PRN154, ///< @b PRN154 bit index
-        scanmode2_PRN155, ///< @b PRN155 bit index
-        scanmode2_PRN156, ///< @b PRN156 bit index
-        scanmode2_PRN157, ///< @b PRN157 bit index
-        scanmode2_PRN158, ///< @b PRN158 bit index
-        scanmode2_numOfValues ///< number of available bits
-    };
-
-    /// @brief Bits access enumeration for @ref scanmode1 bitmask field.
-    enum
-    {
-        scanmode1_PRN120, ///< @b PRN120 bit index
-        scanmode1_PRN121, ///< @b PRN121 bit index
-        scanmode1_PRN122, ///< @b PRN122 bit index
-        scanmode1_PRN123, ///< @b PRN123 bit index
-        scanmode1_PRN124, ///< @b PRN124 bit index
-        scanmode1_PRN125, ///< @b PRN125 bit index
-        scanmode1_PRN126, ///< @b PRN126 bit index
-        scanmode1_PRN127, ///< @b PRN127 bit index
-        scanmode1_PRN128, ///< @b PRN128 bit index
-        scanmode1_PRN129, ///< @b PRN129 bit index
-        scanmode1_PRN130, ///< @b PRN130 bit index
-        scanmode1_PRN131, ///< @b PRN131 bit index
-        scanmode1_PRN132, ///< @b PRN132 bit index
-        scanmode1_PRN133, ///< @b PRN133 bit index
-        scanmode1_PRN134, ///< @b PRN134 bit index
-        scanmode1_PRN135, ///< @b PRN135 bit index
-        scanmode1_PRN136, ///< @b PRN136 bit index
-        scanmode1_PRN137, ///< @b PRN137 bit index
-        scanmode1_PRN138, ///< @b PRN138 bit index
-        scanmode1_PRN139, ///< @b PRN139 bit index
-        scanmode1_PRN140, ///< @b PRN140 bit index
-        scanmode1_PRN141, ///< @b PRN141 bit index
-        scanmode1_PRN142, ///< @b PRN142 bit index
-        scanmode1_PRN143, ///< @b PRN143 bit index
-        scanmode1_PRN144, ///< @b PRN144 bit index
-        scanmode1_PRN145, ///< @b PRN145 bit index
-        scanmode1_PRN146, ///< @b PRN146 bit index
-        scanmode1_PRN147, ///< @b PRN147 bit index
-        scanmode1_PRN148, ///< @b PRN148 bit index
-        scanmode1_PRN149, ///< @b PRN149 bit index
-        scanmode1_PRN150, ///< @b PRN150 bit index
-        scanmode1_PRN151, ///< @b PRN151 bit index
-        scanmode1_numOfValues ///< number of available bits
-    };
 
     /// @brief Definition of "mode" field.
-    using mode =
+    struct mode : public
         field::common::X1T<
             comms::option::BitmaskReservedBits<0xfc, 0>
-        >;
+        >
+    {
+        /// @brief Provide names for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS(enabled, test);
+    };
 
     /// @brief Definition of "usage" field.
-    using usage =
+    struct usage : public
         field::common::X1T<
             comms::option::BitmaskReservedBits<0xf8, 0>
-        >;
+        >
+    {
+        /// @brief Provide names for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS(range, diffCorr, integrity);
+    };
 
     /// @brief Definition of "maxSBAS" field.
     using maxSBAS =
@@ -120,13 +67,60 @@ struct CfgSbasFields
         >;
 
     /// @brief Definition of "scanmode2" field.
-    using scanmode2 =
+    struct scanmode2 : public
         field::common::X1T<
             comms::option::BitmaskReservedBits<0x80, 0>
-        >;
+        >
+    {
+        /// @brief Provide names for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS(PRN152, PRN153, PRN154, PRN155, PRN156, PRN157, PRN158);
+    };
 
     /// @brief Definition of "scanmode1" field.
-    using scanmode1 = field::common::X4;
+    struct scanmode1 : public field::common::X4
+    {
+        /// @brief Provide names for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS(
+            PRN120,
+            PRN121,
+            PRN122,
+            PRN123,
+            PRN124,
+            PRN125,
+            PRN126,
+            PRN127,
+            PRN128,
+            PRN129,
+            PRN130,
+            PRN131,
+            PRN132,
+            PRN133,
+            PRN134,
+            PRN135,
+            PRN136,
+            PRN137,
+            PRN138,
+            PRN139,
+            PRN140,
+            PRN141,
+            PRN142,
+            PRN143,
+            PRN144,
+            PRN145,
+            PRN146,
+            PRN147,
+            PRN148,
+            PRN149,
+            PRN150,
+            PRN151
+        );
+    };
 
     /// @brief All the fields bundled in std::tuple.
     using All = std::tuple<
@@ -142,7 +136,8 @@ struct CfgSbasFields
 /// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
 ///     various implementation options. @n
-///     See @ref CfgSbasFields and for definition of the fields this message contains.
+///     See @ref CfgSbasFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class CfgSbas : public
@@ -161,47 +156,18 @@ class CfgSbas : public
     > Base;
 public:
 
-#ifdef FOR_DOXYGEN_DOC_ONLY
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_mode, ///< @b mode field, see @ref CfgSbasFields::mode
-        FieldIdx_usage, ///< @b usage field, see @ref CfgSbasFields::usage
-        FieldIdx_maxSBAS, ///< @b maxSBAS field, see @ref CfgSbasFields::maxSBAS
-        FieldIdx_scanmode2, ///< @b scanmode2 field, see @ref CfgSbasFields::scanmode2
-        FieldIdx_scanmode1, ///< @b scanmode1 field, see @ref CfgSbasFields::scanmode1
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    /// @brief Access to fields bundled as a struct
-    struct FieldsAsStruct
-    {
-        CfgSbasFields::mode& mode; ///< @b mode field, see @ref CfgSbasFields::mode
-        CfgSbasFields::usage& usage; ///< @b usage field, see @ref CfgSbasFields::usage
-        CfgSbasFields::maxSBAS& maxSBAS; ///< @b maxSBAS field, see @ref CfgSbasFields::maxSBAS
-        CfgSbasFields::scanmode2& scanmode2; ///< @b scanmode2 field, see @ref CfgSbasFields::scanmode2
-        CfgSbasFields::scanmode1& scanmode1; ///< @b scanmode1 field, see @ref CfgSbasFields::scanmode1
-    };
-
-    /// @brief Access to @b const fields bundled as a struct
-    struct ConstFieldsAsStruct
-    {
-        CfgSbasFields::mode& mode; ///< @b mode field, see @ref CfgSbasFields::mode
-        CfgSbasFields::usage& usage; ///< @b usage field, see @ref CfgSbasFields::usage
-        CfgSbasFields::maxSBAS& maxSBAS; ///< @b maxSBAS field, see @ref CfgSbasFields::maxSBAS
-        CfgSbasFields::scanmode2& scanmode2; ///< @b scanmode2 field, see @ref CfgSbasFields::scanmode2
-        CfgSbasFields::scanmode1& scanmode1; ///< @b scanmode1 field, see @ref CfgSbasFields::scanmode1
-    };
-
-    /// @brief Get access to fields bundled into a struct
-    FieldsAsStruct fieldsAsStruct();
-
-    /// @brief Get access to @b const fields bundled into a struct
-    ConstFieldsAsStruct fieldsAsStruct() const;
-
-#else
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b mode for @ref CfgSbasFields::mode field
+    ///     @li @b usage for @ref CfgSbasFields::usage field
+    ///     @li @b maxSBAS for @ref CfgSbasFields::maxSBAS field
+    ///     @li @b scanmode2 for @ref CfgSbasFields::scanmode2 field
+    ///     @li @b scanmode1 for @ref CfgSbasFields::scanmode1 field
     COMMS_MSG_FIELDS_ACCESS(Base, mode, usage, maxSBAS, scanmode2, scanmode1);
-#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     CfgSbas() = default;

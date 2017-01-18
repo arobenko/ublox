@@ -97,7 +97,7 @@ QVariantMap createProps_flags()
          .add(createSingleBitMask("doNotEnterOff"))
          .add(modeProps.asMap())
          .add(createReservedProps());
-    assert(props.members().size() == CfgPm2Fields::flags_numOfValues);
+    assert(props.members().size() == CfgPm2Fields::flags::FieldIdx_numOfValues);
     return props.asMap();
 }
 

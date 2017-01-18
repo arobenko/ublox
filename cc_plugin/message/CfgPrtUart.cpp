@@ -86,7 +86,7 @@ QVariantMap createProps_mode()
          .add(parityProps.asMap())
          .add(nStopBitsProps.asMap())
          .add(createReservedFunc());
-    assert(props.members().size() == CfgPrtUartFields::mode_numOfValues);
+    assert(props.members().size() == CfgPrtUartFields::mode::FieldIdx_numOfValues);
     return props.asMap();
 }
 

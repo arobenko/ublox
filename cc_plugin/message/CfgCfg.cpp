@@ -49,9 +49,9 @@ QVariantMap createProps_mask(const char* name)
          .add("infMsg")
          .add("navConf")
          .add("rxmConf")
-         .add(CfgCfgFields::mask_rinvConf, "rinvConf")
+         .add(CfgCfgFields::mask::BitIdx_rinvConf, "rinvConf")
          .add("antConf");
-    assert(props.bits().size() == CfgCfgFields::mask_numOfValues);
+    assert(props.bits().size() == CfgCfgFields::mask::BitIdx_numOfValues);
     return props.asMap();
 }
 
@@ -64,8 +64,8 @@ QVariantMap createProps_deviceMask()
          .add("devBBR")
          .add("devFlash")
          .add("devEEPROM")
-         .add(CfgCfgFields::deviceMask_devSpiFlash, "devSpiFlash");
-    assert(props.bits().size() == CfgCfgFields::deviceMask_numOfValues);
+         .add(CfgCfgFields::deviceMaskBitmask::BitIdx_devSpiFlash, "devSpiFlash");
+    assert(props.bits().size() == CfgCfgFields::deviceMaskBitmask::BitIdx_numOfValues);
 
     return
         cc::property::field::ForField<CfgCfgFields::deviceMask>()

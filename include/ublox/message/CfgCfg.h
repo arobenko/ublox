@@ -34,36 +34,18 @@ namespace message
 /// @see CfgCfg
 struct CfgCfgFields
 {
-
-    /// @brief Bits access enumerator for @ref clearMask, @ref saveMask, and
-    ///     @ref loadMask bitmask fields.
-    enum
-    {
-        mask_ioPort,  ///< @b ioPort bit index
-        mask_msgConf, ///< @b msgConf bit index
-        mask_infMsg, ///< @b infMsg bit index
-        mask_navConf, ///< @b navConf bit index
-        mask_rxmConf, ///< @b rxmConf bit index
-        mask_rinvConf = 9,  ///< @b rinvConf bit index
-        mask_antConf, ///< @b antConf bit index
-        mask_numOfValues ///< @b upper limit for available bits
-    };
-
-    /// @brief Bits access enumerator for @ref deviceMask bitmask field.
-    enum
-    {
-        deviceMask_devBBR,  ///< @b devBBR bit index
-        deviceMask_devFlash,  ///< @b devFlash bit index
-        deviceMask_devEEPROM,  ///< @b devEEPROM bit index
-        deviceMask_devSpiFlash = 4,  ///< @b devSpiFlash bit index
-        deviceMask_numOfValues ///< @b upper limit for available bits
-    };
-
     /// @brief common definition for @ref clearMask, @ref saveMask, and @ref loadMask fields
-    using mask =
+    struct mask : public
         field::common::X4T<
             comms::option::BitmaskReservedBits<0xfffff9e0, 0>
-        >;
+        >
+    {
+        /// @brief Provide names for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS(ioPort, msgConf, infMsg, navConf, rxmConf, rinvConf=9, antConf);
+    };
 
     /// @brief Definition of "clearMask" field.
     using clearMask = mask;
@@ -74,13 +56,19 @@ struct CfgCfgFields
     /// @brief Definition of "loadMask" field.
     using loadMask = mask;
 
-    /// @brief Definition of "deviceMask" field.
-    using deviceMask =
-        field::common::OptionalT<
-            field::common::X1T<
-                comms::option::BitmaskReservedBits<0xe8, 0>
-            >
-        >;
+    /// @brief Definition of "deviceMask" bitmask field.
+    struct deviceMaskBitmask : public
+            field::common::X1T<comms::option::BitmaskReservedBits<0xe8, 0> >
+    {
+        /// @brief Provide names for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS(devBBR, devFlash, devEEPROM, devSpiFlash=4);
+    };
+
+    /// @brief Definition of optional "deviceMask" field.
+    using deviceMask = field::common::OptionalT<deviceMaskBitmask>;
 
     /// @brief All the fields bundled in std::tuple.
     using All = std::tuple<
@@ -95,7 +83,8 @@ struct CfgCfgFields
 /// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
 ///     various implementation options. @n
-///     See @ref CfgCfgFields and for definition of the fields this message contains.
+///     See @ref CfgCfgFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class CfgCfg : public
@@ -114,44 +103,17 @@ class CfgCfg : public
     > Base;
 public:
 
-#ifdef FOR_DOXYGEN_DOC_ONLY
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_clearMask, ///< @b clearMask field, see @ref CfgCfgFields::clearMask
-        FieldIdx_saveMask, ///< @b saveMask field, see @ref CfgCfgFields::saveMask
-        FieldIdx_loadMask, ///< @b loadMask field, see @ref CfgCfgFields::loadMask
-        FieldIdx_deviceMask, ///< @b deviceMask field, see @ref CfgCfgFields::deviceMask
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    /// @brief Access to fields bundled as a struct
-    struct FieldsAsStruct
-    {
-        CfgCfgFields::clearMask& clearMask; ///< @b clearMask field, see @ref CfgCfgFields::clearMask
-        CfgCfgFields::saveMask& saveMask; ///< @b saveMask field, see @ref CfgCfgFields::saveMask
-        CfgCfgFields::loadMask& loadMask; ///< @b loadMask field, see @ref CfgCfgFields::loadMask
-        CfgCfgFields::deviceMask& deviceMask; ///< @b deviceMask field, see @ref CfgCfgFields::deviceMask
-    };
-
-    /// @brief Access to @b const fields bundled as a struct
-    struct ConstFieldsAsStruct
-    {
-        const CfgCfgFields::clearMask& clearMask; ///< @b clearMask field, see @ref CfgCfgFields::clearMask
-        const CfgCfgFields::saveMask& saveMask; ///< @b saveMask field, see @ref CfgCfgFields::saveMask
-        const CfgCfgFields::loadMask& loadMask; ///< @b loadMask field, see @ref CfgCfgFields::loadMask
-        const CfgCfgFields::deviceMask& deviceMask; ///< @b deviceMask field, see @ref CfgCfgFields::deviceMask
-    };
-
-    /// @brief Get access to fields bundled into a struct
-    FieldsAsStruct fieldsAsStruct();
-
-    /// @brief Get access to @b const fields bundled into a struct
-    ConstFieldsAsStruct fieldsAsStruct() const;
-
-#else
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b clearMask for @ref CfgCfgFields::clearMask field
+    ///     @li @b saveMask for @ref CfgCfgFields::saveMask field
+    ///     @li @b loadMask for @ref CfgCfgFields::loadMask field
+    ///     @li @b deviceMask for @ref CfgCfgFields::deviceMask field
     COMMS_MSG_FIELDS_ACCESS(Base, clearMask, saveMask, loadMask, deviceMask);
-#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     CfgCfg() = default;

@@ -58,7 +58,7 @@ QVariantMap createProps_config()
 
     cc::property::field::ForField<CfgItfmFields::enable> enableProps;
     enableProps.add("enable").serialisedHidden();
-    assert(enableProps.bits().size() == CfgItfmFields::config_enable_numOfValues);
+    assert(enableProps.bits().size() == CfgItfmFields::enable::BitIdx_numOfValues);
 
     cc::property::field::ForField<CfgItfmFields::config> props;
     props.name("config")
@@ -66,7 +66,7 @@ QVariantMap createProps_config()
          .add(cwThresholdProps.asMap())
          .add(reserved1Props.asMap())
          .add(enableProps.asMap());
-    assert(props.members().size() == CfgItfmFields::config_numOfValues);
+    assert(props.members().size() == CfgItfmFields::config::FieldIdx_numOfValues);
     return props.asMap();
 }
 
@@ -91,7 +91,7 @@ QVariantMap createProps_config2()
          .add(reserved2Props.asMap())
          .add(antSettingProps.asMap())
          .add(reserved3Props.asMap());
-    assert(props.members().size() == CfgItfmFields::config2_numOfValues);
+    assert(props.members().size() == CfgItfmFields::config2::FieldIdx_numOfValues);
     return props.asMap();
 }
 

@@ -65,7 +65,8 @@ struct CfgPrtUsbFields : public CfgPrtFields
 /// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
 ///     various implementation options. @n
-///     See @ref CfgPrtUsbFields and for definition of the fields this message contains.
+///     See @ref CfgPrtUsbFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class CfgPrtUsb : public
@@ -86,57 +87,21 @@ class CfgPrtUsb : public
     > Base;
 public:
 
-#ifdef FOR_DOXYGEN_DOC_ONLY
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_portID, ///< @b portID field, see @ref CfgPrtUsbFields::portID
-        FieldIdx_reserved0, ///< @b reserved0 field, see @ref CfgPrtUsbFields::reserved0
-        FieldIdx_txReady, ///< @b txReady field, see @ref CfgPrtFields::txReady
-        FieldIdx_reserved2, ///< @b reserved2 field, see @ref CfgPrtUsbFields::reserved2
-        FieldIdx_reserved3, ///< @b reserved3 field, see @ref CfgPrtUsbFields::reserved3
-        FieldIdx_inProtoMask, ///< @b inProtoMask field, see @ref CfgPrtFields::inProtoMask
-        FieldIdx_outProtoMask, ///< @b outProtoMask field, see @ref CfgPrtFields::outProtoMask
-        FieldIdx_reserved4, ///< @b reserved4 field, see @ref CfgPrtUsbFields::reserved4
-        FieldIdx_reserved5, ///< @b reserved5 field, see @ref CfgPrtUsbFields::reserved5
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    /// @brief Access to fields bundled as a struct
-    struct FieldsAsStruct
-    {
-        CfgPrtUsbFields::portID& portID; ///< @b portID field, see @ref CfgPrtUsbFields::portID
-        CfgPrtUsbFields::reserved0& reserved0; ///< @b reserved0 field, see @ref CfgPrtUsbFields::reserved0
-        CfgPrtFields::txReady& txReady; ///< @b txReady field, see @ref CfgPrtFields::txReady
-        CfgPrtUsbFields::reserved2& reserved2; ///< @b reserved2 field, see @ref CfgPrtUsbFields::reserved2
-        CfgPrtUsbFields::reserved3& reserved3; ///< @b reserved3 field, see @ref CfgPrtUsbFields::reserved3
-        CfgPrtFields::inProtoMask& inProtoMask; ///< @b inProtoMask field, see @ref CfgPrtFields::inProtoMask
-        CfgPrtFields::outProtoMask& outProtoMask; ///< @b outProtoMask field, see @ref CfgPrtFields::outProtoMask
-        CfgPrtUsbFields::reserved4& reserved4; ///< @b reserved4 field, see @ref CfgPrtUsbFields::reserved4
-        CfgPrtUsbFields::reserved5& reserved5; ///< @b reserved5 field, see @ref CfgPrtUsbFields::reserved5
-    };
-
-    /// @brief Access to @b const fields bundled as a struct
-    struct ConstFieldsAsStruct
-    {
-        const CfgPrtUsbFields::portID& portID; ///< @b portID field, see @ref CfgPrtUsbFields::portID
-        const CfgPrtUsbFields::reserved0& reserved0; ///< @b reserved0 field, see @ref CfgPrtUsbFields::reserved0
-        const CfgPrtFields::txReady& txReady; ///< @b txReady field, see @ref CfgPrtFields::txReady
-        const CfgPrtUsbFields::reserved2& reserved2; ///< @b reserved2 field, see @ref CfgPrtUsbFields::reserved2
-        const CfgPrtUsbFields::reserved3& reserved3; ///< @b reserved3 field, see @ref CfgPrtUsbFields::reserved3
-        const CfgPrtFields::inProtoMask& inProtoMask; ///< @b inProtoMask field, see @ref CfgPrtFields::inProtoMask
-        const CfgPrtFields::outProtoMask& outProtoMask; ///< @b outProtoMask field, see @ref CfgPrtFields::outProtoMask
-        const CfgPrtUsbFields::reserved4& reserved4; ///< @b reserved4 field, see @ref CfgPrtUsbFields::reserved4
-        const CfgPrtUsbFields::reserved5& reserved5; ///< @b reserved5 field, see @ref CfgPrtUsbFields::reserved5
-    };
-
-    /// @brief Get access to fields bundled into a struct
-    FieldsAsStruct fieldsAsStruct();
-
-    /// @brief Get access to @b const fields bundled into a struct
-    ConstFieldsAsStruct fieldsAsStruct() const;
-
-#else
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b portID for @ref CfgPrtUsbFields::portID field
+    ///     @li @b reserved0 for @ref CfgPrtUsbFields::reserved0 field
+    ///     @li @b txReady for @ref CfgPrtFields::txReady field
+    ///     @li @b reserved2 for @ref CfgPrtUsbFields::reserved2 field
+    ///     @li @b reserved3 for @ref CfgPrtUsbFields::reserved3 field
+    ///     @li @b inProtoMask for @ref CfgPrtFields::inProtoMask field
+    ///     @li @b outProtoMask for @ref CfgPrtFields::outProtoMask field
+    ///     @li @b reserved4 for @ref CfgPrtUsbFields::reserved4 field
+    ///     @li @b reserved5 for @ref CfgPrtUsbFields::reserved5 field
     COMMS_MSG_FIELDS_ACCESS(Base,
         portID,
         reserved0,
@@ -148,7 +113,6 @@ public:
         reserved4,
         reserved5
     );
-#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");

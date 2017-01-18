@@ -36,20 +36,6 @@ struct CfgTp5Fields
     /// @brief Value enumeration for @ref tpIdx field
     using TpIdx = field::cfg::TpIdx;
 
-    /// @brief Bits access enumeration for @ref flags bitmask field.
-    enum
-    {
-        flags_active, ///< @b active bit index
-        flags_logGpsFreq, ///< @b logGpsFreq bit index
-        flags_lockedOtherSet, ///< @b lockedOtherSet bit index
-        flags_isFreq, ///< @b isFreq bit index
-        flags_isLength, ///< @b isLength bit index
-        flags_alignToTow, ///< @b alignToTow bit index
-        flags_polarity, ///< @b polarity bit index
-        flags_gridUtcGps, ///< @b gridUtcGps bit index
-        flags_numOfValues///< number of available bits
-    };
-
     /// @brief Definition of "tpIdx" field.
     using tpIdx = field::cfg::tpIdx;
 
@@ -81,10 +67,17 @@ struct CfgTp5Fields
     using userConfigDelay = field::common::I4T<field::common::Scaling_ns2s>;
 
     /// @brief Definition of "flags" field.
-    using flags =
+    struct flags : public
         field::common::X4T<
             comms::option::BitmaskReservedBits<0xffffff00, 0>
-        >;
+        >
+    {
+        /// @brief Provide names for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS(active, logGpsFreq, lockedOtherSet, isFreq, isLength, alignToTow, polarity, flags_gridUtcGps);
+    };
 
     /// @brief All the fields bundled in std::tuple.
     using All = std::tuple<
@@ -106,7 +99,8 @@ struct CfgTp5Fields
 /// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
 ///     various implementation options. @n
-///     See @ref CfgTp5Fields and for definition of the fields this message contains.
+///     See @ref CfgTp5Fields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class CfgTp5 : public
@@ -125,63 +119,23 @@ class CfgTp5 : public
     > Base;
 public:
 
-#ifdef FOR_DOXYGEN_DOC_ONLY
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_tpIdx, ///< @b tpIdx field, see @ref CfgTp5Fields::tpIdx
-        FieldIdx_reserved0, ///< @b reserved0 field, see @ref CfgTp5Fields::reserved0
-        FieldIdx_reserved1, ///< @b reserved1 field, see @ref CfgTp5Fields::reserved1
-        FieldIdx_antCableDelay, ///< @b antCableDelay field, see @ref CfgTp5Fields::antCableDelay
-        FieldIdx_rfGroupDelay, ///< @b rfGroupDelay field, see @ref CfgTp5Fields::rfGroupDelay
-        FieldIdx_freqPeriod, ///< @b freqPeriod field, see @ref CfgTp5Fields::freqPeriod
-        FieldIdx_freqPeriodLock, ///< @b freqPeriodLock field, see @ref CfgTp5Fields::freqPeriodLock
-        FieldIdx_pulseLenRatio, ///< @b pulseLenRatio field, see @ref CfgTp5Fields::pulseLenRatio
-        FieldIdx_pulseLenRatioLock, ///< @b pulseLenRatioLock field, see @ref CfgTp5Fields::pulseLenRatioLock
-        FieldIdx_userConfigDelay, ///< @b userConfigDelay field, see @ref CfgTp5Fields::userConfigDelay
-        FieldIdx_flags, ///< @b flags field, see @ref CfgTp5Fields::flags
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    /// @brief Access to fields bundled as a struct
-    struct FieldsAsStruct
-    {
-        CfgTp5Fields::tpIdx& tpIdx; ///< @b tpIdx field, see @ref CfgTp5Fields::tpIdx
-        CfgTp5Fields::reserved0& reserved0; ///< @b reserved0 field, see @ref CfgTp5Fields::reserved0
-        CfgTp5Fields::reserved1& reserved1; ///< @b reserved1 field, see @ref CfgTp5Fields::reserved1
-        CfgTp5Fields::antCableDelay& antCableDelay; ///< @b antCableDelay field, see @ref CfgTp5Fields::antCableDelay
-        CfgTp5Fields::rfGroupDelay& rfGroupDelay; ///< @b rfGroupDelay field, see @ref CfgTp5Fields::rfGroupDelay
-        CfgTp5Fields::freqPeriod& freqPeriod; ///< @b freqPeriod field, see @ref CfgTp5Fields::freqPeriod
-        CfgTp5Fields::freqPeriodLock& freqPeriodLock; ///< @b freqPeriodLock field, see @ref CfgTp5Fields::freqPeriodLock
-        CfgTp5Fields::pulseLenRatio& pulseLenRatio; ///< @b pulseLenRatio field, see @ref CfgTp5Fields::pulseLenRatio
-        CfgTp5Fields::pulseLenRatioLock& pulseLenRatioLock; ///< @b pulseLenRatioLock field, see @ref CfgTp5Fields::pulseLenRatioLock
-        CfgTp5Fields::userConfigDelay& userConfigDelay; ///< @b userConfigDelay field, see @ref CfgTp5Fields::userConfigDelay
-        CfgTp5Fields::flags& flags; ///< @b flags field, see @ref CfgTp5Fields::flags
-    };
-
-    /// @brief Access to @b const fields bundled as a struct
-    struct ConstFieldsAsStruct
-    {
-        const CfgTp5Fields::tpIdx& tpIdx; ///< @b tpIdx field, see @ref CfgTp5Fields::tpIdx
-        const CfgTp5Fields::reserved0& reserved0; ///< @b reserved0 field, see @ref CfgTp5Fields::reserved0
-        const CfgTp5Fields::reserved1& reserved1; ///< @b reserved1 field, see @ref CfgTp5Fields::reserved1
-        const CfgTp5Fields::antCableDelay& antCableDelay; ///< @b antCableDelay field, see @ref CfgTp5Fields::antCableDelay
-        const CfgTp5Fields::rfGroupDelay& rfGroupDelay; ///< @b rfGroupDelay field, see @ref CfgTp5Fields::rfGroupDelay
-        const CfgTp5Fields::freqPeriod& freqPeriod; ///< @b freqPeriod field, see @ref CfgTp5Fields::freqPeriod
-        const CfgTp5Fields::freqPeriodLock& freqPeriodLock; ///< @b freqPeriodLock field, see @ref CfgTp5Fields::freqPeriodLock
-        const CfgTp5Fields::pulseLenRatio& pulseLenRatio; ///< @b pulseLenRatio field, see @ref CfgTp5Fields::pulseLenRatio
-        const CfgTp5Fields::pulseLenRatioLock& pulseLenRatioLock; ///< @b pulseLenRatioLock field, see @ref CfgTp5Fields::pulseLenRatioLock
-        const CfgTp5Fields::userConfigDelay& userConfigDelay; ///< @b userConfigDelay field, see @ref CfgTp5Fields::userConfigDelay
-        const CfgTp5Fields::flags& flags; ///< @b flags field, see @ref CfgTp5Fields::flags
-    };
-
-    /// @brief Get access to fields bundled into a struct
-    FieldsAsStruct fieldsAsStruct();
-
-    /// @brief Get access to @b const fields bundled into a struct
-    ConstFieldsAsStruct fieldsAsStruct() const;
-
-#else
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b tpIdx for @ref CfgTp5Fields::tpIdx field
+    ///     @li @b reserved0 for @ref CfgTp5Fields::reserved0 field
+    ///     @li @b reserved1 for @ref CfgTp5Fields::reserved1 field
+    ///     @li @b antCableDelay for @ref CfgTp5Fields::antCableDelay field
+    ///     @li @b rfGroupDelay for @ref CfgTp5Fields::rfGroupDelay field
+    ///     @li @b freqPeriod for @ref CfgTp5Fields::freqPeriod field
+    ///     @li @b freqPeriodLock for @ref CfgTp5Fields::freqPeriodLock field
+    ///     @li @b pulseLenRatio for @ref CfgTp5Fields::pulseLenRatio field
+    ///     @li @b pulseLenRatioLock for @ref CfgTp5Fields::pulseLenRatioLock field
+    ///     @li @b userConfigDelay for @ref CfgTp5Fields::userConfigDelay field
+    ///     @li @b flags for @ref CfgTp5Fields::flags field
     COMMS_MSG_FIELDS_ACCESS(Base,
         tpIdx,
         reserved0,
@@ -195,7 +149,6 @@ public:
         userConfigDelay,
         flags
     );
-#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     CfgTp5() = default;

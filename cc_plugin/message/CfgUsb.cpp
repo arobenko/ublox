@@ -47,7 +47,7 @@ QVariantMap createProps_flags()
     props.name("flags")
          .add("reEnum")
          .add("powerMode");
-    assert(props.bits().size() == CfgUsbFields::flags_numOfValues);
+    assert(props.bits().size() == CfgUsbFields::flags::BitIdx_numOfValues);
     return props.asMap();
 }
 

@@ -33,14 +33,6 @@ namespace message
 /// @see CfgUsb
 struct CfgUsbFields
 {
-    /// @brief Bits access enumeration for @ref flags bitmask field.
-    enum
-    {
-        flags_reEnum, ///< @b reEnum bit index
-        flags_powerMode, ///< @b powerMode bit index
-        flags_numOfValues /// number of available bits
-    };
-
     /// @brief Definition of "vendorID" field.
     using vendorID = field::common::U2;
 
@@ -61,10 +53,17 @@ struct CfgUsbFields
     using powerConsumption = field::common::U2;
 
     /// @brief Definition of "flags" field.
-    using flags =
+    struct flags : public
         field::common::X2T<
             comms::option::BitmaskReservedBits<0xfffc, 0>
-        >;
+        >
+    {
+        /// @brief Provide names for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS(reEnum, powerMode);
+    };
 
     /// @brief Definition of "vendorString" field.
     using vendorString = field::common::ZString<32>;
@@ -93,7 +92,8 @@ struct CfgUsbFields
 /// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
 ///     various implementation options. @n
-///     See @ref CfgUsbFields and for definition of the fields this message contains.
+///     See @ref CfgUsbFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class CfgUsb : public
@@ -112,57 +112,21 @@ class CfgUsb : public
     > Base;
 public:
 
-#ifdef FOR_DOXYGEN_DOC_ONLY
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_vendorID, ///< @b vendorID field, see @ref CfgUsbFields::vendorID
-        FieldIdx_productID, ///< @b productID field, see @ref CfgUsbFields::productID
-        FieldIdx_reserved1, ///< @b reserved1 field, see @ref CfgUsbFields::reserved1
-        FieldIdx_reserved2, ///< @b reserved2 field, see @ref CfgUsbFields::reserved2
-        FieldIdx_powerConsumption, ///< @b powerConsumption field, see @ref CfgUsbFields::powerConsumption
-        FieldIdx_flags, ///< @b flags field, see @ref CfgUsbFields::flags
-        FieldIdx_vendorString, ///< @b vendorString field, see @ref CfgUsbFields::vendorString
-        FieldIdx_productString, ///< @b productString field, see @ref CfgUsbFields::productString
-        FieldIdx_serialNumber, ///< @b serialNumber field, see @ref CfgUsbFields::serialNumber
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    /// @brief Access to fields bundled as a struct
-    struct FieldsAsStruct
-    {
-        CfgUsbFields::vendorID& vendorID; ///< @b vendorID field, see @ref CfgUsbFields::vendorID
-        CfgUsbFields::productID& productID; ///< @b productID field, see @ref CfgUsbFields::productID
-        CfgUsbFields::reserved1& reserved1; ///< @b reserved1 field, see @ref CfgUsbFields::reserved1
-        CfgUsbFields::reserved2& reserved2; ///< @b reserved2 field, see @ref CfgUsbFields::reserved2
-        CfgUsbFields::powerConsumption& powerConsumption; ///< @b powerConsumption field, see @ref CfgUsbFields::powerConsumption
-        CfgUsbFields::flags& flags; ///< @b flags field, see @ref CfgUsbFields::flags
-        CfgUsbFields::vendorString& vendorString; ///< @b vendorString field, see @ref CfgUsbFields::vendorString
-        CfgUsbFields::productString& productString; ///< @b productString field, see @ref CfgUsbFields::productString
-        CfgUsbFields::serialNumber& serialNumber; ///< @b serialNumber field, see @ref CfgUsbFields::serialNumber
-    };
-
-    /// @brief Access to @b const fields bundled as a struct
-    struct ConstFieldsAsStruct
-    {
-        const CfgUsbFields::vendorID& vendorID; ///< @b vendorID field, see @ref CfgUsbFields::vendorID
-        const CfgUsbFields::productID& productID; ///< @b productID field, see @ref CfgUsbFields::productID
-        const CfgUsbFields::reserved1& reserved1; ///< @b reserved1 field, see @ref CfgUsbFields::reserved1
-        const CfgUsbFields::reserved2& reserved2; ///< @b reserved2 field, see @ref CfgUsbFields::reserved2
-        const CfgUsbFields::powerConsumption& powerConsumption; ///< @b powerConsumption field, see @ref CfgUsbFields::powerConsumption
-        const CfgUsbFields::flags& flags; ///< @b flags field, see @ref CfgUsbFields::flags
-        const CfgUsbFields::vendorString& vendorString; ///< @b vendorString field, see @ref CfgUsbFields::vendorString
-        const CfgUsbFields::productString& productString; ///< @b productString field, see @ref CfgUsbFields::productString
-        const CfgUsbFields::serialNumber& serialNumber; ///< @b serialNumber field, see @ref CfgUsbFields::serialNumber
-    };
-
-    /// @brief Get access to fields bundled into a struct
-    FieldsAsStruct fieldsAsStruct();
-
-    /// @brief Get access to @b const fields bundled into a struct
-    ConstFieldsAsStruct fieldsAsStruct() const;
-
-#else
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b vendorID for @ref CfgUsbFields::vendorID field
+    ///     @li @b productID for @ref CfgUsbFields::productID field
+    ///     @li @b reserved1 for @ref CfgUsbFields::reserved1 field
+    ///     @li @b reserved2 for @ref CfgUsbFields::reserved2 field
+    ///     @li @b powerConsumption for @ref CfgUsbFields::powerConsumption field
+    ///     @li @b flags for @ref CfgUsbFields::flags field
+    ///     @li @b vendorString for @ref CfgUsbFields::vendorString field
+    ///     @li @b productString for @ref CfgUsbFields::productString field
+    ///     @li @b serialNumber for @ref CfgUsbFields::serialNumber field
     COMMS_MSG_FIELDS_ACCESS(Base,
         vendorID,
         productID,
@@ -174,7 +138,6 @@ public:
         productString,
         serialNumber
     );
-#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     CfgUsb() = default;

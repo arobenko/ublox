@@ -33,15 +33,6 @@ namespace message
 /// @see CfgLogfilter
 struct CfgLogfilterFields
 {
-    /// @brief Bits access enumeration for @ref flags bitmask field.
-    enum
-    {
-        flags_recordEnabled, ///< @b recordEnabled bit index
-        flags_psmOncePerWakupEnabled, ///< @b psmOncePerWakupEnabled bit index
-        flags_applyAllFilterSettings, ///< @b applyAllFilterSettings bit index
-        flags_numOfValues ///< number of available bits
-    };
-
     /// @brief Definition of "version" field.
     using version =
         field::common::U1T<
@@ -50,10 +41,17 @@ struct CfgLogfilterFields
         >;
 
     /// @brief Definition of "flags" field.
-    using flags =
+    struct flags : public
         field::common::X1T<
             comms::option::BitmaskReservedBits<0xf8, 0>
-        >;
+        >
+    {
+        /// @brief Provide names for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS(recordEnabled, psmOncePerWakupEnabled, applyAllFilterSettings);
+    };
 
     /// @brief Definition of "minInterval" field.
     using minInterval = field::common::U2;
@@ -82,7 +80,8 @@ struct CfgLogfilterFields
 /// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
 ///     various implementation options. @n
-///     See @ref CfgLogfilterFields and for definition of the fields this message contains.
+///     See @ref CfgLogfilterFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class CfgLogfilter : public
@@ -101,50 +100,19 @@ class CfgLogfilter : public
     > Base;
 public:
 
-#ifdef FOR_DOXYGEN_DOC_ONLY
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_version, ///< @b version field, see @ref CfgLogfilterFields::version
-        FieldIdx_flags, ///< @b flags field, see @ref CfgLogfilterFields::flags
-        FieldIdx_minInterval, ///< @b minInterval field, see @ref CfgLogfilterFields::minInterval
-        FieldIdx_timeThreshold, ///< @b timeThreshold field, see @ref CfgLogfilterFields::timeThreshold
-        FieldIdx_speedThreshold, ///< @b speedThreshold field, see @ref CfgLogfilterFields::speedThreshold
-        FieldIdx_positionThreshold, ///< @b positionThreshold field, see @ref CfgLogfilterFields::positionThreshold
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    /// @brief Access to fields bundled as a struct
-    struct FieldsAsStruct
-    {
-        CfgLogfilterFields::version& version; ///< @b version field, see @ref CfgLogfilterFields::version
-        CfgLogfilterFields::flags& flags; ///< @b flags field, see @ref CfgLogfilterFields::flags
-        CfgLogfilterFields::minInterval& minInterval; ///< @b minInterval field, see @ref CfgLogfilterFields::minInterval
-        CfgLogfilterFields::timeThreshold& timeThreshold; ///< @b timeThreshold field, see @ref CfgLogfilterFields::timeThreshold
-        CfgLogfilterFields::speedThreshold& speedThreshold; ///< @b speedThreshold field, see @ref CfgLogfilterFields::speedThreshold
-        CfgLogfilterFields::positionThreshold& positionThreshold; ///< @b positionThreshold field, see @ref CfgLogfilterFields::positionThreshold
-    };
-
-    /// @brief Access to @b const fields bundled as a struct
-    struct ConstFieldsAsStruct
-    {
-        const CfgLogfilterFields::version& version; ///< @b version field, see @ref CfgLogfilterFields::version
-        const CfgLogfilterFields::flags& flags; ///< @b flags field, see @ref CfgLogfilterFields::flags
-        const CfgLogfilterFields::minInterval& minInterval; ///< @b minInterval field, see @ref CfgLogfilterFields::minInterval
-        const CfgLogfilterFields::timeThreshold& timeThreshold; ///< @b timeThreshold field, see @ref CfgLogfilterFields::timeThreshold
-        const CfgLogfilterFields::speedThreshold& speedThreshold; ///< @b speedThreshold field, see @ref CfgLogfilterFields::speedThreshold
-        const CfgLogfilterFields::positionThreshold& positionThreshold; ///< @b positionThreshold field, see @ref CfgLogfilterFields::positionThreshold
-    };
-
-    /// @brief Get access to fields bundled into a struct
-    FieldsAsStruct fieldsAsStruct();
-
-    /// @brief Get access to @b const fields bundled into a struct
-    ConstFieldsAsStruct fieldsAsStruct() const;
-
-#else
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b version for @ref CfgLogfilterFields::version field
+    ///     @li @b flags for @ref CfgLogfilterFields::flags field
+    ///     @li @b minInterval for @ref CfgLogfilterFields::minInterval field
+    ///     @li @b timeThreshold for @ref CfgLogfilterFields::timeThreshold field
+    ///     @li @b speedThreshold for @ref CfgLogfilterFields::speedThreshold field
+    ///     @li @b positionThreshold for @ref CfgLogfilterFields::positionThreshold field
     COMMS_MSG_FIELDS_ACCESS(Base, version, flags, minInterval, timeThreshold, speedThreshold, positionThreshold);
-#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     CfgLogfilter() = default;

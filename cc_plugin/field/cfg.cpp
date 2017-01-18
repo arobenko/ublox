@@ -155,7 +155,7 @@ QVariantMap createProps_nmeaFilter()
          .add("dateFilt")
          .add("gpsOnlyFilter")
          .add("trackFilt");
-    assert(props.bits().size() == ublox::message::CfgNmeaFields::filter_numOfValues);
+    assert(props.bits().size() == ublox::message::CfgNmeaFields::filter::BitIdx_numOfValues);
     return props.asMap();
 }
 
@@ -175,7 +175,7 @@ QVariantMap createProps_nmeaFlags()
     props.name("flags")
          .add("compat")
          .add("consider");
-    assert(props.bits().size() == ublox::message::CfgNmeaFields::flags_numOfValues);
+    assert(props.bits().size() == ublox::message::CfgNmeaFields::flags::BitIdx_numOfValues);
     return props.asMap();
 }
 

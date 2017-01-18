@@ -77,7 +77,7 @@ QVariantMap createProps_flags()
               .add("updateRtc")
               .add("updateEPH")
               .serialisedHidden();
-    assert(flagsProps.bits().size() == CfgPmFields::remainingFlags_numOfValues);
+    assert(flagsProps.bits().size() == CfgPmFields::remainingFlags::BitIdx_numOfValues);
 
     cc::property::field::ForField<CfgPmFields::flags> props;
     props.name("flags")
@@ -89,7 +89,7 @@ QVariantMap createProps_flags()
          .add(createReservedProps())
          .add(createEnableDisableProps("limitPeakCurr"))
          .add(flagsProps.asMap());
-    assert(props.members().size() == CfgPmFields::flags_numOfValues);
+    assert(props.members().size() == CfgPmFields::flags::FieldIdx_numOfValues);
     return props.asMap();
 }
 

@@ -196,7 +196,7 @@ struct AidIniFields
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
         COMMS_BITMASK_BITS(pos, time, clockD, tp, clockF, lla, altInv, prevTm, utc=10);
-    };;
+    };
 
     /// @brief All the fields bundled in std::tuple.
     using All = std::tuple<

@@ -78,7 +78,8 @@ struct CfgDatUserFields
 /// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
 ///     various implementation options. @n
-///     See @ref CfgDatUserFields and for definition of the fields this message contains.
+///     See @ref CfgDatUserFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class CfgDatUser : public
@@ -97,57 +98,21 @@ class CfgDatUser : public
     > Base;
 public:
 
-#ifdef FOR_DOXYGEN_DOC_ONLY
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_majA,  ///< @b majA field, see @ref CfgDatUserFields::majA
-        FieldIdx_flat,  ///< @b flat field, see @ref CfgDatUserFields::flat
-        FieldIdx_dX,  ///< @b dX field, see @ref CfgDatUserFields::dX
-        FieldIdx_dY,  ///< @b dY field, see @ref CfgDatUserFields::dY
-        FieldIdx_dZ,  ///< @b dZ field, see @ref CfgDatUserFields::dZ
-        FieldIdx_rotX,  ///< @b rotX field, see @ref CfgDatUserFields::rotX
-        FieldIdx_rotY,  ///< @b rotY field, see @ref CfgDatUserFields::rotY
-        FieldIdx_rotZ,  ///< @b rotZ field, see @ref CfgDatUserFields::rotZ
-        FieldIdx_scale,  ///< @b scale field, see @ref CfgDatUserFields::scale
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    /// @brief Access to fields bundled as a struct
-    struct FieldsAsStruct
-    {
-        CfgDatUserFields::majA& majA;  ///< @b majA field, see @ref CfgDatUserFields::majA
-        CfgDatUserFields::flat& flat;  ///< @b flat field, see @ref CfgDatUserFields::flat
-        CfgDatUserFields::dX& dX;  ///< @b dX field, see @ref CfgDatUserFields::dX
-        CfgDatUserFields::dY& dY;  ///< @b dY field, see @ref CfgDatUserFields::dY
-        CfgDatUserFields::dZ& dZ;  ///< @b dZ field, see @ref CfgDatUserFields::dZ
-        CfgDatUserFields::rotX& rotX;  ///< @b rotX field, see @ref CfgDatUserFields::rotX
-        CfgDatUserFields::rotY& rotY;  ///< @b rotY field, see @ref CfgDatUserFields::rotY
-        CfgDatUserFields::rotZ& rotZ;  ///< @b rotZ field, see @ref CfgDatUserFields::rotZ
-        CfgDatUserFields::scale& scale;  ///< @b scale field, see @ref CfgDatUserFields::scale
-    };
-
-    /// @brief Access to @b const fields bundled as a struct
-    struct ConstFieldsAsStruct
-    {
-        const CfgDatUserFields::majA& majA;  ///< @b majA field, see @ref CfgDatUserFields::majA
-        const CfgDatUserFields::flat& flat;  ///< @b flat field, see @ref CfgDatUserFields::flat
-        const CfgDatUserFields::dX& dX;  ///< @b dX field, see @ref CfgDatUserFields::dX
-        const CfgDatUserFields::dY& dY;  ///< @b dY field, see @ref CfgDatUserFields::dY
-        const CfgDatUserFields::dZ& dZ;  ///< @b dZ field, see @ref CfgDatUserFields::dZ
-        const CfgDatUserFields::rotX& rotX;  ///< @b rotX field, see @ref CfgDatUserFields::rotX
-        const CfgDatUserFields::rotY& rotY;  ///< @b rotY field, see @ref CfgDatUserFields::rotY
-        const CfgDatUserFields::rotZ& rotZ;  ///< @b rotZ field, see @ref CfgDatUserFields::rotZ
-        const CfgDatUserFields::scale& scale;  ///< @b scale field, see @ref CfgDatUserFields::scale
-    };
-
-    /// @brief Get access to fields bundled into a struct
-    FieldsAsStruct fieldsAsStruct();
-
-    /// @brief Get access to @b const fields bundled into a struct
-    ConstFieldsAsStruct fieldsAsStruct() const;
-
-#else
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b majA for @ref CfgDatUserFields::majA field
+    ///     @li @b flat for @ref CfgDatUserFields::flat field
+    ///     @li @b dX for @ref CfgDatUserFields::dX field
+    ///     @li @b dY for @ref CfgDatUserFields::dY field
+    ///     @li @b dZ for @ref CfgDatUserFields::dZ field
+    ///     @li @b rotX for @ref CfgDatUserFields::rotX field
+    ///     @li @b rotY for @ref CfgDatUserFields::rotY field
+    ///     @li @b rotZ for @ref CfgDatUserFields::rotZ field
+    ///     @li @b scale for @ref CfgDatUserFields::scale field
     COMMS_MSG_FIELDS_ACCESS(Base,
         majA,
         flat,
@@ -159,7 +124,6 @@ public:
         rotZ,
         scale
     );
-#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     CfgDatUser() = default;

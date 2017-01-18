@@ -59,28 +59,6 @@ struct CfgPmFields
     /// @brief Value enumeration for @ref limitPeakCurr field.
     using LimitPeakCurr = DisabledEnabled;
 
-    /// @brief Use this enumeration to access member fields of @ref flags bitfield.
-    enum
-    {
-        flags_internal = 1, ///< @b index of @b internal member field
-        flags_extintSelect, ///< @b index of @b extintSelect member field
-        flags_extintWake, ///< @b index of @b extintWake member field
-        flags_extintBackup, ///< @b index of @b extintBackup member field
-        flags_limitPeakCurr = flags_extintBackup + 2,  ///< @b index of @b limitPeakCurr member field
-        flags_remainingFlags, ///< @b index of @b remainingFlags member field
-        flags_numOfValues ///< upper limit for available member fields
-    };
-
-    /// @brief Bits access enumeration for @ref remainingFlags bitmask field.
-    enum
-    {
-        remainingFlags_waitTimeFix, ///< @b waitTimeFix bit index
-        remainingFlags_updateRTC, ///< @b updateRTC bit index
-        remainingFlags_updateEPH, ///< @b updateEPH bit index
-        remainingFlags_numOfValues ///< number of available bits
-    };
-
-
     /// @brief Definition of "version" field.
     using version =
         field::common::U1T<
@@ -137,14 +115,21 @@ struct CfgPmFields
         >;
 
     /// @brief Definition of remaining bits in @ref flags bitfield field as a single bitmask.
-    using remainingFlags =
+    struct remainingFlags : public
         field::common::X4T<
             comms::option::FixedBitLength<22>,
             comms::option::BitmaskReservedBits<0xfffffff8, 0>
-        >;
+        >
+    {
+        /// @brief Provide names for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS(waitTimeFix, updateRTC, updateEPH);
+    };
 
-    /// @brief Definition of "flags" field.
-    using flags =
+    /// @brief Base class for @ref flags field.
+    using flagsBase =
         field::common::BitfieldT<
             std::tuple<
                 field::common::res1T<
@@ -161,6 +146,16 @@ struct CfgPmFields
                 remainingFlags
             >
         >;
+
+    /// @brief Definition of "flags" field.
+    struct flags : public flagsBase
+    {
+        /// @brief Allow access to internal fields.
+        /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
+        ///     related to @b comms::field::Bitfield class from COMMS library
+        ///     for details.
+        COMMS_FIELD_MEMBERS_ACCESS(flagsBase, invalid1, internal, extintSelect, extintWake, extintBackup, invalid2, limitPeakCurr, remainingFlags);
+    };
 
     /// @brief Definition of "updatePeriod" field.
     using updatePeriod = field::common::U4T<field::common::Scaling_ms2s>;
@@ -196,7 +191,8 @@ struct CfgPmFields
 /// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
 ///     various implementation options. @n
-///     See @ref CfgPmFields and for definition of the fields this message contains.
+///     See @ref CfgPmFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class CfgPm : public
@@ -215,60 +211,22 @@ class CfgPm : public
     > Base;
 public:
 
-#ifdef FOR_DOXYGEN_DOC_ONLY
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_version, ///< @b version field, see @ref CfgPmFields::version
-        FieldIdx_reserved1, ///< @b reserved1 field, see @ref CfgPmFields::reserved1
-        FieldIdx_reserved2, ///< @b reserved2 field, see @ref CfgPmFields::reserved2
-        FieldIdx_reserved3, ///< @b reserved3 field, see @ref CfgPmFields::reserved3
-        FieldIdx_flags, ///< @b flags field, see @ref CfgPmFields::flags
-        FieldIdx_updatePeriod, ///< @b updatePeriod field, see @ref CfgPmFields::updatePeriod
-        FieldIdx_searchPeriod, ///< @b searchPeriod field, see @ref CfgPmFields::searchPeriod
-        FieldIdx_gridOffset, ///< @b gridOffset field, see @ref CfgPmFields::gridOffset
-        FieldIdx_onTime, ///< @b onTime field, see @ref CfgPmFields::onTime
-        FieldIdx_minAcqTime, ///< @b minAcqTime field, see @ref CfgPmFields::minAcqTime
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    /// @brief Access to fields bundled as a struct
-    struct FieldsAsStruct
-    {
-        CfgPmFields::version& version; ///< @b version field, see @ref CfgPmFields::version
-        CfgPmFields::reserved1& reserved1; ///< @b reserved1 field, see @ref CfgPmFields::reserved1
-        CfgPmFields::reserved2& reserved2; ///< @b reserved2 field, see @ref CfgPmFields::reserved2
-        CfgPmFields::reserved3& reserved3; ///< @b reserved3 field, see @ref CfgPmFields::reserved3
-        CfgPmFields::flags& flags; ///< @b flags field, see @ref CfgPmFields::flags
-        CfgPmFields::updatePeriod& updatePeriod; ///< @b updatePeriod field, see @ref CfgPmFields::updatePeriod
-        CfgPmFields::searchPeriod& searchPeriod; ///< @b searchPeriod field, see @ref CfgPmFields::searchPeriod
-        CfgPmFields::gridOffset& gridOffset; ///< @b gridOffset field, see @ref CfgPmFields::gridOffset
-        CfgPmFields::onTime& onTime; ///< @b onTime field, see @ref CfgPmFields::onTime
-        CfgPmFields::minAcqTime& minAcqTime; ///< @b minAcqTime field, see @ref CfgPmFields::minAcqTime
-    };
-
-    /// @brief Access to @b const fields bundled as a struct
-    struct ConstFieldsAsStruct
-    {
-        const CfgPmFields::version& version; ///< @b version field, see @ref CfgPmFields::version
-        const CfgPmFields::reserved1& reserved1; ///< @b reserved1 field, see @ref CfgPmFields::reserved1
-        const CfgPmFields::reserved2& reserved2; ///< @b reserved2 field, see @ref CfgPmFields::reserved2
-        const CfgPmFields::reserved3& reserved3; ///< @b reserved3 field, see @ref CfgPmFields::reserved3
-        const CfgPmFields::flags& flags; ///< @b flags field, see @ref CfgPmFields::flags
-        const CfgPmFields::updatePeriod& updatePeriod; ///< @b updatePeriod field, see @ref CfgPmFields::updatePeriod
-        const CfgPmFields::searchPeriod& searchPeriod; ///< @b searchPeriod field, see @ref CfgPmFields::searchPeriod
-        const CfgPmFields::gridOffset& gridOffset; ///< @b gridOffset field, see @ref CfgPmFields::gridOffset
-        const CfgPmFields::onTime& onTime; ///< @b onTime field, see @ref CfgPmFields::onTime
-        const CfgPmFields::minAcqTime& minAcqTime; ///< @b minAcqTime field, see @ref CfgPmFields::minAcqTime
-    };
-
-    /// @brief Get access to fields bundled into a struct
-    FieldsAsStruct fieldsAsStruct();
-
-    /// @brief Get access to @b const fields bundled into a struct
-    ConstFieldsAsStruct fieldsAsStruct() const;
-
-#else
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b version for @ref CfgPmFields::version field
+    ///     @li @b reserved1 for @ref CfgPmFields::reserved1 field
+    ///     @li @b reserved2 for @ref CfgPmFields::reserved2 field
+    ///     @li @b reserved3 for @ref CfgPmFields::reserved3 field
+    ///     @li @b flags for @ref CfgPmFields::flags field
+    ///     @li @b updatePeriod for @ref CfgPmFields::updatePeriod field
+    ///     @li @b searchPeriod for @ref CfgPmFields::searchPeriod field
+    ///     @li @b gridOffset for @ref CfgPmFields::gridOffset field
+    ///     @li @b onTime for @ref CfgPmFields::onTime field
+    ///     @li @b minAcqTime for @ref CfgPmFields::minAcqTime field
     COMMS_MSG_FIELDS_ACCESS(Base,
         version,
         reserved1,
@@ -281,7 +239,6 @@ public:
         onTime,
         minAcqTime
     );
-#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     CfgPm() = default;

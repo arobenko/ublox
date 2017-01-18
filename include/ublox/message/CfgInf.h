@@ -36,16 +36,6 @@ struct CfgInfFields
     /// @brief Protocol ID enumeration.
     using ProtocolId = field::cfg::ProtocolId;
 
-    /// @brief Use this enumeration to access member fields of @ref element bundle.
-    enum
-    {
-        element_protocolID, ///< index of @ref protocolID member field
-        element_reserved0, ///< index of @ref reserved0 member field
-        element_reserved1, ///< index of @ref reserved1 member field
-        element_infMsgMask, ///< index of @ref infMsgMask member field
-        element_numOfValues ///< number of member fields
-    };
-
     /// @brief Use this enumeration to access right bitmask in @ref infMsgMask list field.
     enum
     {
@@ -58,17 +48,6 @@ struct CfgInfFields
         infMsgMask_numOfValues ///< number of available masks
     };
 
-    /// @brief Bits access enumeration for @ref mask bitmask field from @ref infMsgMask list.
-    enum
-    {
-        mask_ERROR, ///< @b ERROR bit index
-        mask_WARNING, ///< @b WARNING bit index
-        mask_NOTICE, ///< @b NOTICE bit index
-        mask_DEBUG, ///< @b DEBUG bit index
-        mask_TEST, ///< @b TEST bit index
-        mask_numOfValues ///< number of available bits
-    };
-
     /// @brief Definition of "protocolID" field.
     using protocolID = field::cfg::protocolID;
 
@@ -79,8 +58,15 @@ struct CfgInfFields
     using reserved1 = field::common::res2;
 
     /// @brief definition of single bitmask value field in @ref infMsgMask field
-    using mask =
-        field::common::X1T<comms::option::BitmaskReservedBits<0xe0, 0> >;
+    struct mask : public
+        field::common::X1T<comms::option::BitmaskReservedBits<0xe0, 0> >
+    {
+        /// @brief Provide names for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS(ERROR, WARNING, NOTICE, DEBUG, TEST);
+    };
 
     /// @brief Definition of "infMsgMask" field.
     using infMsgMask =
@@ -89,8 +75,8 @@ struct CfgInfFields
             comms::option::SequenceFixedSize<infMsgMask_numOfValues>
         >;
 
-    /// @brief Definition of a single configuration bundle element in @ref list field.
-    using element =
+    /// @brief Base class for the @ref element.
+    using elementBase =
         field::common::BundleT<
             std::tuple<
                 protocolID,
@@ -99,6 +85,16 @@ struct CfgInfFields
                 infMsgMask
             >
         >;
+
+    /// @brief Definition of a single configuration bundle element in @ref list field.
+    struct element : public elementBase
+    {
+        /// @brief Allow access to internal fields.
+        /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
+        ///     related to @b comms::field::Bitfield class from COMMS library
+        ///     for details.
+        COMMS_FIELD_MEMBERS_ACCESS(elementBase, protocolID, reserved0, reserved1, infMsgMask);
+    };
 
     /// @brief @ref CfgInf message may contain multiple configuration elements
     ///     (see @ref element). This field defines a list of such elements.
@@ -114,7 +110,8 @@ struct CfgInfFields
 /// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
 ///     various implementation options. @n
-///     See @ref CfgInfFields and for definition of the fields this message contains.
+///     See @ref CfgInfFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class CfgInf : public
@@ -133,35 +130,14 @@ class CfgInf : public
     > Base;
 public:
 
-#ifdef FOR_DOXYGEN_DOC_ONLY
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_list, ///< @b list of configurations, see @ref CfgInfFields::list
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    /// @brief Access to fields bundled as a struct
-    struct FieldsAsStruct
-    {
-        CfgInfFields::list& list; ///< @b list of configurations, see @ref CfgInfFields::list
-    };
-
-    /// @brief Access to @b const fields bundled as a struct
-    struct ConstFieldsAsStruct
-    {
-        const CfgInfFields::list& list; ///< @b list of configurations, see @ref CfgInfFields::list
-    };
-
-    /// @brief Get access to fields bundled into a struct
-    FieldsAsStruct fieldsAsStruct();
-
-    /// @brief Get access to @b const fields bundled into a struct
-    ConstFieldsAsStruct fieldsAsStruct() const;
-
-#else
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b list for @ref CfgInfFields::list field
     COMMS_MSG_FIELDS_ACCESS(Base, list);
-#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     CfgInf() = default;
