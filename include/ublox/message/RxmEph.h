@@ -68,7 +68,8 @@ struct RxmEphFields
 /// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
 ///     various implementation options. @n
-///     See @ref RxmEphFields and for definition of the fields this message contains.
+///     See @ref RxmEphFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class RxmEph : public
@@ -88,48 +89,18 @@ class RxmEph : public
         comms::option::HasDoRefresh
     > Base;
 public:
-
-#ifdef FOR_DOXYGEN_DOC_ONLY
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_svid, ///< svid field, see @ref RxmEphFields::svid
-        FieldIdx_how, ///< how field, see @ref RxmEphFields::how
-        FieldIdx_sf1d, ///< sf1d field, see @ref RxmEphFields::sf1d
-        FieldIdx_sf2d, ///< sf2d field, see @ref RxmEphFields::sf2d
-        FieldIdx_sf3d, ///< sf3d field, see @ref RxmEphFields::sf3d
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    /// @brief Access to fields bundled as a struct
-    struct FieldsAsStruct
-    {
-        RxmEphFields::svid& svid; ///< svid field, see @ref RxmEphFields::svid
-        RxmEphFields::how& how; ///< how field, see @ref RxmEphFields::how
-        RxmEphFields::sf1d& sf1d; ///< sf1d field, see @ref RxmEphFields::sf1d
-        RxmEphFields::sf2d& sf2d; ///< sf2d field, see @ref RxmEphFields::sf2d
-        RxmEphFields::sf3d& sf3d; ///< sf3d field, see @ref RxmEphFields::sf3d
-    };
-
-    /// @brief Access to @b const fields bundled as a struct
-    struct ConstFieldsAsStruct
-    {
-        const RxmEphFields::svid& svid; ///< svid field, see @ref RxmEphFields::svid
-        const RxmEphFields::how& how; ///< how field, see @ref RxmEphFields::how
-        const RxmEphFields::sf1d& sf1d; ///< sf1d field, see @ref RxmEphFields::sf1d
-        const RxmEphFields::sf2d& sf2d; ///< sf2d field, see @ref RxmEphFields::sf2d
-        const RxmEphFields::sf3d& sf3d; ///< sf3d field, see @ref RxmEphFields::sf3d
-    };
-
-    /// @brief Get access to fields bundled into a struct
-    FieldsAsStruct fieldsAsStruct();
-
-    /// @brief Get access to @b const fields bundled into a struct
-    ConstFieldsAsStruct fieldsAsStruct() const;
-
-#else
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b svid for @ref RxmEphFields::svid field
+    ///     @li @b how for @ref RxmEphFields::how field
+    ///     @li @b sf1d for @ref RxmEphFields::sf1d field
+    ///     @li @b sf2d for @ref RxmEphFields::sf2d field
+    ///     @li @b sf3d for @ref RxmEphFields::sf3d field
     COMMS_MSG_FIELDS_ACCESS(Base, svid, how, sf1d, sf2d, sf3d);
-#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     /// @details Marks "sf1d" (see @ref RxmEphFields::sf1d),
@@ -137,13 +108,9 @@ public:
     ///     fields to be missing.
     RxmEph()
     {
-        auto& allFields = Base::fields();
-        auto& sf1dField = std::get<FieldIdx_sf1d>(allFields);
-        auto& sf2dField = std::get<FieldIdx_sf2d>(allFields);
-        auto& sf3dField = std::get<FieldIdx_sf3d>(allFields);
-        sf1dField.setMode(comms::field::OptionalMode::Missing);
-        sf2dField.setMode(comms::field::OptionalMode::Missing);
-        sf3dField.setMode(comms::field::OptionalMode::Missing);
+        field_sf1d().setMissing();
+        field_sf2d().setMissing();
+        field_sf3d().setMissing();
     }
 
     /// @brief Copy constructor

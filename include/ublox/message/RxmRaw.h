@@ -33,19 +33,6 @@ namespace message
 /// @see RxmRaw
 struct RxmRawFields
 {
-    /// @brief Use this enumeration to access member fields of @ref block bundle.
-    enum
-    {
-        block_cpMes, ///< index of @ref cpMes member field
-        block_prMes, ///< index of @ref prMes member field
-        block_doMes, ///< index of @ref doMes member field
-        block_sv, ///< index of @ref sv member field
-        block_mesQI, ///< index of @ref mesQI member field
-        block_cno, ///< index of @ref cno member field
-        block_lli, ///< index of @ref lli member field
-        block_numOfValues ///< number of available member fields
-    };
-
     /// @brief Definition of "rcvTow" field.
     using rcvTow = field::common::I4T<field::common::Scaling_ms2s>;
 
@@ -79,8 +66,8 @@ struct RxmRawFields
     /// @brief Definition of "lli" field.
     using lli = field::common::U1;
 
-    /// @brief Definition of a single block of @ref data
-    using block =
+    /// @brief Base class of @ref block field.
+    using blockBase =
         field::common::BundleT<
             std::tuple<
                 cpMes,
@@ -92,6 +79,16 @@ struct RxmRawFields
                 lli
             >
         >;
+
+    /// @brief Definition of a single block of @ref data
+    struct block : public blockBase
+    {
+        /// @brief Allow access to internal fields.
+        /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
+        ///     related to @b comms::field::Bitfield class from COMMS library
+        ///     for details.
+        COMMS_FIELD_MEMBERS_ACCESS(blockBase, cpMes, prMes, doMes, sv, mesQI, cno, lli);
+    };
 
     /// @brief Definition of the list of blocks (@ref block)
     using data =
@@ -114,7 +111,8 @@ struct RxmRawFields
 /// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
 ///     various implementation options. @n
-///     See @ref RxmRawFields and for definition of the fields this message contains.
+///     See @ref RxmRawFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class RxmRaw : public
@@ -135,47 +133,18 @@ class RxmRaw : public
     > Base;
 public:
 
-#ifdef FOR_DOXYGEN_DOC_ONLY
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_rcvTow, ///< @b rcvTow field, see @ref RxmRawFields::rcvTow
-        FieldIdx_week, ///< @b week field, see @ref RxmRawFields::week
-        FieldIdx_numSV, ///< @b numSV field, see @ref RxmRawFields::numSV
-        FieldIdx_reserved1, ///< @b reserved1 field, see @ref RxmRawFields::reserved1
-        FieldIdx_data, ///< @b data field, see @ref RxmRawFields::data
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    /// @brief Access to fields bundled as a struct
-    struct FieldsAsStruct
-    {
-        RxmRawFields::rcvTow& rcvTow; ///< @b rcvTow field, see @ref RxmRawFields::rcvTow
-        RxmRawFields::week& week; ///< @b week field, see @ref RxmRawFields::week
-        RxmRawFields::numSV& numSV; ///< @b numSV field, see @ref RxmRawFields::numSV
-        RxmRawFields::reserved1& reserved1; ///< @b reserved1 field, see @ref RxmRawFields::reserved1
-        RxmRawFields::data& data; ///< @b data field, see @ref RxmRawFields::data
-    };
-
-    /// @brief Access to @b const fields bundled as a struct
-    struct ConstFieldsAsStruct
-    {
-        const RxmRawFields::rcvTow& rcvTow; ///< @b rcvTow field, see @ref RxmRawFields::rcvTow
-        const RxmRawFields::week& week; ///< @b week field, see @ref RxmRawFields::week
-        const RxmRawFields::numSV& numSV; ///< @b numSV field, see @ref RxmRawFields::numSV
-        const RxmRawFields::reserved1& reserved1; ///< @b reserved1 field, see @ref RxmRawFields::reserved1
-        const RxmRawFields::data& data; ///< @b data field, see @ref RxmRawFields::data
-    };
-
-    /// @brief Get access to fields bundled into a struct
-    FieldsAsStruct fieldsAsStruct();
-
-    /// @brief Get access to @b const fields bundled into a struct
-    ConstFieldsAsStruct fieldsAsStruct() const;
-
-#else
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b rcvTow for @ref RxmRawFields::rcvTow field
+    ///     @li @b week for @ref RxmRawFields::week field
+    ///     @li @b numSV for @ref RxmRawFields::numSV field
+    ///     @li @b reserved1 for @ref RxmRawFields::reserved1 field
+    ///     @li @b data for @ref RxmRawFields::data field
     COMMS_MSG_FIELDS_ACCESS(Base, rcvTow, week, numSV, reserved1, data);
-#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
 
     /// @brief Default constructor

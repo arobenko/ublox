@@ -54,7 +54,7 @@ QVariantMap createProps_data()
         .add(cc::property::field::ForField<RxmRawFields::cno>().name("cno").asMap())
         .add(cc::property::field::ForField<RxmRawFields::lli>().name("lli").asMap());
 
-    assert(blockProps.members().size() == RxmRawFields::block_numOfValues);
+    assert(blockProps.members().size() == RxmRawFields::block::FieldIdx_numOfValues);
 
     return
         cc::property::field::ForField<RxmRawFields::data>()

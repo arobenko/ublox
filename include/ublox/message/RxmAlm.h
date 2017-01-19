@@ -60,7 +60,8 @@ struct RxmAlmFields
 /// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
 ///     various implementation options. @n
-///     See @ref RxmAlmFields and for definition of the fields this message contains.
+///     See @ref RxmAlmFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class RxmAlm : public
@@ -81,49 +82,22 @@ class RxmAlm : public
     > Base;
 public:
 
-#ifdef FOR_DOXYGEN_DOC_ONLY
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_svid, ///< svid field, see @ref RxmAlmFields::svid
-        FieldIdx_week, ///< week field, see @ref RxmAlmFields::week
-        FieldIdx_dwrd, ///< dwrd field, see @ref RxmAlmFields::dwrd
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    /// @brief Access to fields bundled as a struct
-    struct FieldsAsStruct
-    {
-        RxmAlmFields::svid& svid; ///< svid field, see @ref RxmAlmFields::svid
-        RxmAlmFields::week& week; ///< svid field, see @ref RxmAlmFields::week
-        RxmAlmFields::dwrd& dwrd; ///< dwrd field, see @ref RxmAlmFields::dwrd
-    };
-
-    /// @brief Access to @b const fields bundled as a struct
-    struct ConstFieldsAsStruct
-    {
-        const RxmAlmFields::svid& svid; ///< svid field, see @ref RxmAlmFields::svid
-        const RxmAlmFields::week& week; ///< svid field, see @ref RxmAlmFields::week
-        const RxmAlmFields::dwrd& dwrd; ///< dwrd field, see @ref RxmAlmFields::dwrd
-    };
-
-    /// @brief Get access to fields bundled into a struct
-    FieldsAsStruct fieldsAsStruct();
-
-    /// @brief Get access to @b const fields bundled into a struct
-    ConstFieldsAsStruct fieldsAsStruct() const;
-
-#else
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b svid for @ref RxmAlmFields::svid field
+    ///     @li @b week for @ref RxmAlmFields::week field
+    ///     @li @b dwrd for @ref RxmAlmFields::dwrd field
     COMMS_MSG_FIELDS_ACCESS(Base, svid, week, dwrd);
-#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     /// @details Marks "dwrd" (see @ref RxmAlmFields::dwrd) to be missing.
     RxmAlm()
     {
-        auto& allFields = Base::fields();
-        auto& dataField = std::get<FieldIdx_dwrd>(allFields);
-        dataField.setMode(comms::field::OptionalMode::Missing);
+        field_dwrd().setMissing();
     }
 
     /// @brief Copy constructor

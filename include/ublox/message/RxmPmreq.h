@@ -33,21 +33,21 @@ namespace message
 /// @see RxmPmreq
 struct RxmPmreqFields
 {
-    /// @brief Bits access enumeration for bits in @b flags bitmask field
-    enum
-    {
-        flags_backup = 1, ///< @b backup bit index
-        flags_numOfValues ///< upper limit for available bits
-    };
-
     /// @brief Definition of "duration" field.
     using duration = field::common::U4T<field::common::Scaling_ms2s>;
 
     /// @brief Definition of "flags" field.
-    using flags =
+    struct flags : public
         field::common::X4T<
             comms::option::BitmaskReservedBits<0xfffffffd, 0>
-        >;
+        >
+    {
+        /// @brief Provide names for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS(backup=1);
+    };
 
     /// @brief All the fields bundled in std::tuple.
     using All = std::tuple<
@@ -60,7 +60,8 @@ struct RxmPmreqFields
 /// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
 ///     various implementation options. @n
-///     See @ref RxmPmreqFields and for definition of the fields this message contains.
+///     See @ref RxmPmreqFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class RxmPmreq : public
@@ -79,38 +80,15 @@ class RxmPmreq : public
     > Base;
 public:
 
-#ifdef FOR_DOXYGEN_DOC_ONLY
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_duration, ///< @b duration field, see @ref RxmPmreqFields::duration
-        FieldIdx_flags, ///< @b flags field, see @ref RxmPmreqFields::flags
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    /// @brief Access to fields bundled as a struct
-    struct FieldsAsStruct
-    {
-        RxmPmreqFields::duration& duration; ///< duration field, see @ref RxmPmreqFields::duration
-        RxmPmreqFields::flags& flags; ///< flags field, see @ref RxmPmreqFields::flags
-    };
-
-    /// @brief Access to @b const fields bundled as a struct
-    struct ConstFieldsAsStruct
-    {
-        const RxmPmreqFields::duration& duration; ///< duration field, see @ref RxmPmreqFields::duration
-        const RxmPmreqFields::flags& flags; ///< flags field, see @ref RxmPmreqFields::flags
-    };
-
-    /// @brief Get access to fields bundled into a struct
-    FieldsAsStruct fieldsAsStruct();
-
-    /// @brief Get access to @b const fields bundled into a struct
-    ConstFieldsAsStruct fieldsAsStruct() const;
-
-#else
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b duration for @ref RxmPmreqFields::duration field
+    ///     @li @b flags for @ref RxmPmreqFields::flags field
     COMMS_MSG_FIELDS_ACCESS(Base, duration, flags);
-#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     RxmPmreq() = default;

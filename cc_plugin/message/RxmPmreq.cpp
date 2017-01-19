@@ -46,7 +46,7 @@ QVariantMap createProps_flags()
     cc::property::field::ForField<RxmPmreqFields::flags> props;
     props.name("flags")
          .add(1, "backup");
-    assert(props.bits().size() == RxmPmreqFields::flags_numOfValues);
+    assert(props.bits().size() == RxmPmreqFields::flags::BitIdx_numOfValues);
     return props.asMap();
 }
 

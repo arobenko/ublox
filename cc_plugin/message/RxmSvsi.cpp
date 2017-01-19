@@ -54,14 +54,14 @@ QVariantMap createProps_svFlag()
                    .add("notAvail")
                    .serialisedHidden();
 
-    assert(svFlagBitsProps.bits().size() == RxmSvsiFields::svFlagBits_numOfValues);
+    assert(svFlagBitsProps.bits().size() == RxmSvsiFields::svFlagBits::BitIdx_numOfValues);
 
     cc::property::field::ForField<RxmSvsiFields::svFlag> props;
     props.name("svFlag")
          .add(uraProps.asMap())
          .add(svFlagBitsProps.asMap());
 
-    assert(props.members().size() == RxmSvsiFields::svFlag_numOfValues);
+    assert(props.members().size() == RxmSvsiFields::svFlag::FieldIdx_numOfValues);
     return props.asMap();
 }
 
@@ -81,7 +81,7 @@ QVariantMap createProps_age()
     props.name("age")
          .add(createAgePropsFunc("almAge"))
          .add(createAgePropsFunc("ephAge"));
-    assert(props.members().size() == RxmSvsiFields::age_numOfValues);
+    assert(props.members().size() == RxmSvsiFields::age::FieldIdx_numOfValues);
 
     return props.asMap();
 }
@@ -94,7 +94,7 @@ QVariantMap createProps_data()
               .add(cc::property::field::ForField<RxmSvsiFields::azim>().name("azim").asMap())
               .add(cc::property::field::ForField<RxmSvsiFields::elev>().name("elev").asMap())
               .add(createProps_age());
-    assert(blockProps.members().size() == RxmSvsiFields::block_numOfValues);
+    assert(blockProps.members().size() == RxmSvsiFields::block::FieldIdx_numOfValues);
 
     return
         cc::property::field::ForField<RxmSvsiFields::data>()

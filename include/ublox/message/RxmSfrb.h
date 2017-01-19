@@ -58,7 +58,8 @@ struct RxmSfrbFields
 /// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
 ///     various implementation options. @n
-///     See @ref RxmSfrbFields and for definition of the fields this message contains.
+///     See @ref RxmSfrbFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class RxmSfrb : public
@@ -77,41 +78,16 @@ class RxmSfrb : public
     > Base;
 public:
 
-#ifdef FOR_DOXYGEN_DOC_ONLY
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_chn, ///< @b chn field, see @ref RxmSfrbFields::chn
-        FieldIdx_svid, ///< @b svid field, see @ref RxmSfrbFields::svid
-        FieldIdx_dwrd, ///< @b dwrd field, see @ref RxmSfrbFields::dwrd
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    /// @brief Access to fields bundled as a struct
-    struct FieldsAsStruct
-    {
-        RxmSfrbFields::chn& chn; ///< @b chn field, see @ref RxmSfrbFields::chn
-        RxmSfrbFields::svid& svid; ///< @b svid field, see @ref RxmSfrbFields::svid
-        RxmSfrbFields::dwrd& dwrd; ///< @b dwrd field, see @ref RxmSfrbFields::dwrd
-    };
-
-    /// @brief Access to @b const fields bundled as a struct
-    struct ConstFieldsAsStruct
-    {
-        const RxmSfrbFields::chn& chn; ///< @b chn field, see @ref RxmSfrbFields::chn
-        const RxmSfrbFields::svid& svid; ///< @b svid field, see @ref RxmSfrbFields::svid
-        const RxmSfrbFields::dwrd& dwrd; ///< @b dwrd field, see @ref RxmSfrbFields::dwrd
-    };
-
-    /// @brief Get access to fields bundled into a struct
-    FieldsAsStruct fieldsAsStruct();
-
-    /// @brief Get access to @b const fields bundled into a struct
-    ConstFieldsAsStruct fieldsAsStruct() const;
-
-#else
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b chn for @ref RxmSfrbFields::chn field
+    ///     @li @b svid for @ref RxmSfrbFields::svid field
+    ///     @li @b dwrd for @ref RxmSfrbFields::dwrd field
     COMMS_MSG_FIELDS_ACCESS(Base, chn, svid, dwrd);
-#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     RxmSfrb() = default;
