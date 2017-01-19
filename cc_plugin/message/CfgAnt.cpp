@@ -1,5 +1,5 @@
 //
-// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2017 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -49,7 +49,7 @@ QVariantMap createProps_flags()
          .add("ocd")
          .add("pdwnOnSCD")
          .add("recovery");
-    assert(props.bits().size() == CfgAntFields::flags_numOfValues);
+    assert(props.bits().size() == CfgAntFields::flags::BitIdx_numOfValues);
     return props.asMap();
 }
 
@@ -68,7 +68,7 @@ QVariantMap createProps_pins()
     cc::property::field::BitmaskValue bitsProps;
     bitsProps.add("reconfig")
              .serialisedHidden();
-    assert(bitsProps.bits().size() == CfgAntFields::pins_reconfig_numOfValues);
+    assert(bitsProps.bits().size() == CfgAntFields::reconfig::BitIdx_numOfValues);
 
     cc::property::field::ForField<CfgAntFields::pins> props;
     props.name("pins")
@@ -76,7 +76,7 @@ QVariantMap createProps_pins()
          .add(createPinPropsFunc("pinSCD"))
          .add(createPinPropsFunc("pinOCD"))
          .add(bitsProps.asMap());
-    assert(props.members().size() == CfgAntFields::pins_numOfValues);
+    assert(props.members().size() == CfgAntFields::pins::FieldIdx_numOfValues);
     return props.asMap();
 }
 

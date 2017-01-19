@@ -1,5 +1,5 @@
 //
-// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2017 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -33,14 +33,6 @@ namespace message
 /// @see TimTp
 struct TimTpFields
 {
-    /// @brief Bits access enumeration for bits in @ref flags bitmask field.
-    enum
-    {
-        flags_timeBase, ///< @b timeBase bit index
-        flags_utc, ///< @b utc bit index
-        flags_numOfValues ///< number of available bits
-    };
-
     /// @brief Definition of "towMS" field.
     using towMS = field::common::U4T<field::common::Scaling_ms2s>;
 
@@ -54,10 +46,17 @@ struct TimTpFields
     using week = field::common::U2;
 
     /// @brief Definition of "flags" field.
-    using flags =
+    struct flags : public
         field::common::X1T<
             comms::option::BitmaskReservedBits<0xfc, 0>
-        >;
+        >
+    {
+        /// @brief Provide names for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS(timeBase, utc);
+    };
 
     /// @brief Definition of "reserved" field.
     using reserved = field::common::res1;
@@ -74,12 +73,11 @@ struct TimTpFields
 };
 
 /// @brief Definition of TIM-TP message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
-///     See @ref TimTpFields and for definition of the fields this message contains.
+///     various implementation options. @n
+///     See @ref TimTpFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class TimTp : public
@@ -87,31 +85,30 @@ class TimTp : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_TIM_TP>,
         comms::option::FieldsImpl<TimTpFields::All>,
-        comms::option::DispatchImpl<TimTp<TMsgBase> >
+        comms::option::MsgType<TimTp<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_TIM_TP>,
         comms::option::FieldsImpl<TimTpFields::All>,
-        comms::option::DispatchImpl<TimTp<TMsgBase> >
+        comms::option::MsgType<TimTp<TMsgBase> >
     > Base;
 public:
 
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_towMS, ///< @b towMS field, see @ref TimTpFields::towMS
-        FieldIdx_towSubMS, ///< @b towSubMS field, see @ref TimTpFields::towSubMS
-        FieldIdx_qErr, ///< @b qErr field, see @ref TimTpFields::qErr
-        FieldIdx_week, ///< @b week field, see @ref TimTpFields::week
-        FieldIdx_flags, ///< @b flags field, see @ref TimTpFields::flags
-        FieldIdx_reserved, ///< @b reserved field, see @ref TimTpFields::reserved
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b towMS for @ref TimTpFields::towMS field
+    ///     @li @b towSubMS for @ref TimTpFields::towSubMS field
+    ///     @li @b qErr for @ref TimTpFields::qErr field
+    ///     @li @b week for @ref TimTpFields::week field
+    ///     @li @b flags for @ref TimTpFields::flags field
+    ///     @li @b reserved for @ref TimTpFields::reserved field
+    COMMS_MSG_FIELDS_ACCESS(Base, towMS, towSubMS, qErr, week, flags, reserved);
 
     /// @brief Default constructor
     TimTp() = default;

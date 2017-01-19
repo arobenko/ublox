@@ -1,5 +1,5 @@
 //
-// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2017 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -83,12 +83,11 @@ struct CfgDatFields
 };
 
 /// @brief Definition of CFG-DAT message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
-///     See @ref CfgDatFields and for definition of the fields this message contains.
+///     various implementation options. @n
+///     See @ref CfgDatFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class CfgDat : public
@@ -96,36 +95,47 @@ class CfgDat : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_DAT>,
         comms::option::FieldsImpl<CfgDatFields::All>,
-        comms::option::DispatchImpl<CfgDat<TMsgBase> >
+        comms::option::MsgType<CfgDat<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_DAT>,
         comms::option::FieldsImpl<CfgDatFields::All>,
-        comms::option::DispatchImpl<CfgDat<TMsgBase> >
+        comms::option::MsgType<CfgDat<TMsgBase> >
     > Base;
 public:
 
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_datumNum,  ///< @b datumNum field, see @ref CfgDatFields::datumNum
-        FieldIdx_datumName,  ///< @b datumName field, see @ref CfgDatFields::datumName
-        FieldIdx_majA,  ///< @b majA field, see @ref CfgDatFields::majA
-        FieldIdx_flat,  ///< @b flat field, see @ref CfgDatFields::flat
-        FieldIdx_dX,  ///< @b dX field, see @ref CfgDatFields::dX
-        FieldIdx_dY,  ///< @b dY field, see @ref CfgDatFields::dY
-        FieldIdx_dZ,  ///< @b dZ field, see @ref CfgDatFields::dZ
-        FieldIdx_rotX,  ///< @b rotX field, see @ref CfgDatFields::rotX
-        FieldIdx_rotY,  ///< @b rotY field, see @ref CfgDatFields::rotY
-        FieldIdx_rotZ,  ///< @b rotZ field, see @ref CfgDatFields::rotZ
-        FieldIdx_scale,  ///< @b scal field, see @ref CfgDatFields::scale
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b datumNum for @ref CfgDatFields::datumNum field
+    ///     @li @b datumName for @ref CfgDatFields::datumName field
+    ///     @li @b majA for @ref CfgDatFields::majA field
+    ///     @li @b flat for @ref CfgDatFields::flat field
+    ///     @li @b dX for @ref CfgDatFields::dX field
+    ///     @li @b dY for @ref CfgDatFields::dY field
+    ///     @li @b dZ for @ref CfgDatFields::dZ field
+    ///     @li @b rotX for @ref CfgDatFields::rotX field
+    ///     @li @b rotY for @ref CfgDatFields::rotY field
+    ///     @li @b rotZ for @ref CfgDatFields::rotZ field
+    ///     @li @b scale for @ref CfgDatFields::scale field
+    COMMS_MSG_FIELDS_ACCESS(Base,
+        datumNum,
+        datumName,
+        majA,
+        flat,
+        dX,
+        dY,
+        dZ,
+        rotX,
+        rotY,
+        rotZ,
+        scale
+    );
 
     /// @brief Default constructor
     CfgDat() = default;

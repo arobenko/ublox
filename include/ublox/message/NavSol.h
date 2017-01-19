@@ -1,5 +1,5 @@
 //
-// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2017 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -33,16 +33,6 @@ namespace message
 /// @see NavSol
 struct NavSolFields
 {
-    /// @brief Bits access enumeration for bits in @b flags fields
-    enum
-    {
-        flags_GPSfixOK, ///< @b GPSfixOK bit index
-        flags_DiffSoln, ///< @b DiffSoln bit index
-        flags_WKNSET, ///< @b WKNSET bit index
-        flags_TOWSET, ///< @b TOWSET bit index
-        flags_numOfValues ///< number of available bits
-    };
-
     /// @brief Definition of "iTOW" field.
     using iTOW = field::nav::iTOW;
 
@@ -56,10 +46,17 @@ struct NavSolFields
     using gpsFix = field::nav::gpsFix;
 
     /// @brief Definition of "flags" field.
-    using flags =
+    struct flags : public
         field::common::X1T<
             comms::option::BitmaskReservedBits<0xf0, 0>
-        >;
+        >
+    {
+        /// @brief Provide names for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS(GPSfixOK, DiffSoln, WKNSET, TOWSET);
+    };
 
     /// @brief Definition of "ecefX" field.
     using ecefX = field::nav::ecefX;
@@ -120,12 +117,11 @@ struct NavSolFields
 };
 
 /// @brief Definition of NAV-SOL message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
-///     See @ref NavSolFields and for definition of the fields this message contains.
+///     various implementation options. @n
+///     See @ref NavSolFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class NavSol : public
@@ -133,42 +129,58 @@ class NavSol : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_SOL>,
         comms::option::FieldsImpl<NavSolFields::All>,
-        comms::option::DispatchImpl<NavSol<TMsgBase> >
+        comms::option::MsgType<NavSol<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_SOL>,
         comms::option::FieldsImpl<NavSolFields::All>,
-        comms::option::DispatchImpl<NavSol<TMsgBase> >
+        comms::option::MsgType<NavSol<TMsgBase> >
     > Base;
 public:
 
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_iTOW, ///< @b iTOW field, see @ref NavSolFields::iTOW
-        FieldIdx_fTOW, ///< @b fTOW field, see @ref NavSolFields::fTOW
-        FieldIdx_week, ///< @b week field, see @ref NavSolFields::week
-        FieldIdx_gpsFix, ///< @b gpsFix field, see @ref NavSolFields::gpsFix
-        FieldIdx_flags, ///< @b flags field, see @ref NavSolFields::flags
-        FieldIdx_ecefX, ///< @b ecefX field, see @ref NavSolFields::ecefX
-        FieldIdx_ecefY, ///< @b ecefY field, see @ref NavSolFields::ecefY
-        FieldIdx_ecefZ, ///< @b ecefZ field, see @ref NavSolFields::ecefZ
-        FieldIdx_pAcc, ///< @b pAcc field, see @ref NavSolFields::pAcc
-        FieldIdx_ecefVX, ///< @b ecefVX field, see @ref NavSolFields::ecefVX
-        FieldIdx_ecefVY, ///< @b ecefVY field, see @ref NavSolFields::ecefVY
-        FieldIdx_ecefVZ, ///< @b ecefVZ field, see @ref NavSolFields::ecefVZ
-        FieldIdx_sAcc, ///< @b sAcc field, see @ref NavSolFields::sAcc
-        FieldIdx_pDOP, ///< @b pDop field, see @ref NavSolFields::pDOP
-        FieldIdx_reserved1, ///< @b reserved1 field, see @ref NavSolFields::reserved1
-        FieldIdx_numSV, ///< @b numSV field, see @ref NavSolFields::numSV
-        FieldIdx_reserved2, ///< @b reserved2 field, see @ref NavSolFields::reserved2
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b iTOW for @ref NavSolFields::iTOW field
+    ///     @li @b fTOW for @ref NavSolFields::fTOW field
+    ///     @li @b week for @ref NavSolFields::week field
+    ///     @li @b gpsFix for @ref NavSolFields::gpsFix field
+    ///     @li @b ecefX for @ref NavSolFields::ecefX field
+    ///     @li @b ecefY for @ref NavSolFields::ecefY field
+    ///     @li @b ecefZ for @ref NavSolFields::ecefZ field
+    ///     @li @b pAcc for @ref NavSolFields::pAcc field
+    ///     @li @b ecefVX for @ref NavSolFields::ecefVX field
+    ///     @li @b ecefVY for @ref NavSolFields::ecefVY field
+    ///     @li @b ecefVZ for @ref NavSolFields::ecefVZ field
+    ///     @li @b sAcc for @ref NavSolFields::sAcc field
+    ///     @li @b pDOP for @ref NavSolFields::pDOP field
+    ///     @li @b reserved1 for @ref NavSolFields::reserved1 field
+    ///     @li @b numSV for @ref NavSolFields::numSV field
+    ///     @li @b reserved2 for @ref NavSolFields::reserved2 field
+    COMMS_MSG_FIELDS_ACCESS(Base,
+        iTOW,
+        fTOW,
+        week,
+        gpsFix,
+        flags,
+        ecefX,
+        ecefY,
+        ecefZ,
+        pAcc,
+        ecefVX,
+        ecefVY,
+        ecefVZ,
+        sAcc,
+        pDOP,
+        reserved1,
+        numSV,
+        reserved2
+    );
 
     /// @brief Default constructor
     NavSol() = default;

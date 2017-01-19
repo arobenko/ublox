@@ -1,5 +1,5 @@
 //
-// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2017 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -45,10 +45,10 @@ QVariantMap createProps_flags()
 {
     cc::property::field::ForField<CfgEsfgwtFields::flags> props;
     props.name("flags")
-         .add(CfgEsfgwtFields::flags_setVehicle, "setVehicle")
+         .add(CfgEsfgwtFields::flags::BitIdx_setVehicle, "setVehicle")
          .add("setTime")
          .add("setWt");
-    assert(props.bits().size() == CfgEsfgwtFields::flags_numOfValues);
+    assert(props.bits().size() == CfgEsfgwtFields::flags::BitIdx_numOfValues);
     return props.asMap();
 }
 

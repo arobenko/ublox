@@ -1,5 +1,5 @@
 //
-// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2017 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -42,35 +42,6 @@ struct TimTm2Fields
         NumOfValues ///< number of available values
     };
 
-    /// @brief Use this enumeration to access member fields of @ref flags bitfield.
-    enum
-    {
-        flags_lowBits, ///< index of @ref flagsLowBits member field
-        flags_timeBase, ///< index of @ref timeBase member field
-        flags_highBits, ///< index of @ref flagsHighBits member field
-        flags_numOfValues ///< number of member fields
-    };
-
-    /// @brief Bits access enumeration for bits in @b flagsLowBits member of
-    ///     @ref flags bitfield field.
-    enum
-    {
-        flagsLowBits_mode, ///< @b mode bit index
-        flagsLowBits_run, ///< @b run bit index
-        flagsLowBits_newFallingEdge, ///< @b newFallingEdge bit index
-        flagsLowBits_numOfValues ///< number of available bits
-    };
-
-    /// @brief Bits access enumeration for bits in @b flagsHighBits member of
-    ///     @ref flags bitfield field.
-    enum
-    {
-        flagsHighBits_utc, ///< @b utc bit index
-        flagsHighBits_time, ///< @b time bit index
-        flagsHighBits_newRisingEdge, ///< @b newRisingEdge bit index
-        flagsHighBits_numOfValues ///< number of available bits
-    };
-
     /// @brief Definition of "ch" field.
     using ch =
         field::common::U1T<
@@ -79,11 +50,18 @@ struct TimTm2Fields
 
     /// @brief Definition of the 3 least significant bits of @ref flags bitfield
     ///     as a separate bitmask member field.
-    using flagsLowBits =
+    struct flagsLowBits : public
         field::common::X1T<
             comms::option::FixedBitLength<3>,
             comms::option::BitmaskReservedBits<0xf8, 0>
-        >;
+        >
+    {
+        /// @brief Provide names for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS(mode, run, newFallingEdge);
+    };
 
     /// @brief Definition of "timeBase" member field of @ref flags bitfield.
     using timeBase =
@@ -95,14 +73,21 @@ struct TimTm2Fields
 
     /// @brief Definition of the 3 most significant bits of @ref flags bitfield
     ///     as a separate bitmask member field.
-    using flagsHighBits =
+    struct flagsHighBits : public
         field::common::X1T<
             comms::option::FixedBitLength<3>,
             comms::option::BitmaskReservedBits<0xf8, 0>
-        >;
+        >
+    {
+        /// @brief Provide names for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS(utc, time, newRisingEdge);
+    };
 
-    /// @brief Definition of "flags" field.
-    using flags =
+    /// @brief Base class of @ref flags field
+    using flagsBase =
         field::common::BitfieldT<
             std::tuple<
                 flagsLowBits,
@@ -110,6 +95,16 @@ struct TimTm2Fields
                 flagsHighBits
             >
         >;
+
+    /// @brief Definition of "flags" field.
+    struct flags : public flagsBase
+    {
+        /// @brief Allow access to internal fields.
+        /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
+        ///     related to @b comms::field::Bitfield class from COMMS library
+        ///     for details.
+        COMMS_FIELD_MEMBERS_ACCESS(flagsBase, flagsLowBits, timeBase, flagsHighBits);
+    };
 
     /// @brief Definition of "count" field.
     using count = field::common::U2;
@@ -152,12 +147,11 @@ struct TimTm2Fields
 };
 
 /// @brief Definition of TIM-TM2 message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
-///     See @ref TimTm2Fields and for definition of the fields this message contains.
+///     various implementation options. @n
+///     See @ref TimTm2Fields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class TimTm2 : public
@@ -165,35 +159,45 @@ class TimTm2 : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_TIM_TM2>,
         comms::option::FieldsImpl<TimTm2Fields::All>,
-        comms::option::DispatchImpl<TimTm2<TMsgBase> >
+        comms::option::MsgType<TimTm2<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_TIM_TM2>,
         comms::option::FieldsImpl<TimTm2Fields::All>,
-        comms::option::DispatchImpl<TimTm2<TMsgBase> >
+        comms::option::MsgType<TimTm2<TMsgBase> >
     > Base;
 public:
 
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_ch, ///< @b ch field, see @ref TimTm2Fields::ch
-        FieldIdx_flags, ///< @b flags field, see @ref TimTm2Fields::flags
-        FieldIdx_count, ///< @b count field, see @ref TimTm2Fields::count
-        FieldIdx_wnR, ///< @b wnR field, see @ref TimTm2Fields::wnR
-        FieldIdx_wnF, ///< @b wnF field, see @ref TimTm2Fields::wnF
-        FieldIdx_towMsR, ///< @b towMsR field, see @ref TimTm2Fields::towMsR
-        FieldIdx_towSubMsR, ///< @b towSubMsR field, see @ref TimTm2Fields::towSubMsR
-        FieldIdx_towMsF, ///< @b towMsF field, see @ref TimTm2Fields::towMsF
-        FieldIdx_towSubMsF, ///< @b towSubMsF field, see @ref TimTm2Fields::towSubMsF
-        FieldIdx_accEst, ///< @b accEst field, see @ref TimTm2Fields::accEst
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b ch for @ref TimTm2Fields::ch field
+    ///     @li @b flags for @ref TimTm2Fields::flags field
+    ///     @li @b count for @ref TimTm2Fields::count field
+    ///     @li @b wnR for @ref TimTm2Fields::wnR field
+    ///     @li @b wnF for @ref TimTm2Fields::wnF field
+    ///     @li @b towMsR for @ref TimTm2Fields::towMsR field
+    ///     @li @b towSubMsR for @ref TimTm2Fields::towSubMsR field
+    ///     @li @b towMsF for @ref TimTm2Fields::towMsF field
+    ///     @li @b towSubMsF for @ref TimTm2Fields::towSubMsF field
+    ///     @li @b accEst for @ref TimTm2Fields::accEst field
+    COMMS_MSG_FIELDS_ACCESS(Base,
+        ch,
+        flags,
+        count,
+        wnR,
+        wnF,
+        towMsR,
+        towSubMsR,
+        towMsF,
+        towSubMsF,
+        accEst
+    );
 
     /// @brief Default constructor
     TimTm2() = default;

@@ -1,5 +1,5 @@
 //
-// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2017 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -41,34 +41,6 @@ struct CfgEkfFields
         NumOfValues ///< Number of values
     };
 
-    /// @brief Bits access enumerator for @ref actionFlags bitmask field.
-    enum
-    {
-        actionFlags_clTab = 1, ///< @b clTab bit index
-        actionFlags_clCalib = 2, ///< @b clCalib bit index
-        actionFlags_nomTacho = 4, ///< @b nomTacho bit index
-        actionFlags_nomGyro = 5, ///< @b nomGyro bit index
-        actionFlags_setTemp = 6, ///< @b setTemp bit index
-        actionFlags_dir = 7, ///< @b dir bit index
-        actionFlags_numOfValues ///< upper limit of available bits
-    };
-
-    /// @brief Bits access enumerator for @ref configFlags bitmask field.
-    enum
-    {
-        configFlags_pulsesPerM, ///< @b pulsesPerM bit index
-        configFlags_useSerWt, ///< @b useSerWt bit index
-        configFlags_numOfValues ///< number of available bits
-    };
-
-    /// @brief Bits access enumerator for @ref inverseFlags bitmask field.
-    enum
-    {
-        inverseFlags_invDir, ///< @b invDir bit index
-        inverseFlags_invGyro, ///< @b invGyro bit index
-        inverseFlags_numOfValues ///< number of available bits
-    };
-
     /// @brief Definition of "disableEkf" field.
     using disableEkf =
         field::common::EnumT<
@@ -77,22 +49,43 @@ struct CfgEkfFields
         >;
 
     /// @brief Definition of "actionFlags" field.
-    using actionFlags =
+    struct actionFlags : public
         field::common::X1T<
             comms::option::BitmaskReservedBits<0x9, 0>
-        >;
+        >
+    {
+        /// @brief Provide names for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS(clTab=1, clCalib=2, nomTacho=4, nomGyro=5, setTemp=6, dir=7);
+    };
 
     /// @brief Definition of "configFlags" field.
-    using configFlags =
+    struct configFlags : public
         field::common::X1T<
             comms::option::BitmaskReservedBits<0xfc, 0>
-        >;
+        >
+    {
+        /// @brief Provide names for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS(pulsesPerM, useSerWt);
+    };
 
     /// @brief Definition of "inverseFlags" field.
-    using inverseFlags =
+    struct inverseFlags : public
         field::common::X1T<
             comms::option::BitmaskReservedBits<0xfc, 0>
-        >;
+        >
+    {
+        /// @brief Provide names for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS(invDir, invGyro);
+    };
 
     /// @brief Definition of "reserved2" field.
     using reserved2 = field::common::res4;
@@ -141,12 +134,11 @@ struct CfgEkfFields
 };
 
 /// @brief Definition of CFG-EKF message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
-///     See @ref CfgEkfFields and for definition of the fields this message contains.
+///     various implementation options. @n
+///     See @ref CfgEkfFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class CfgEkf : public
@@ -154,35 +146,45 @@ class CfgEkf : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_EKF>,
         comms::option::FieldsImpl<CfgEkfFields::All>,
-        comms::option::DispatchImpl<CfgEkf<TMsgBase> >
+        comms::option::MsgType<CfgEkf<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_EKF>,
         comms::option::FieldsImpl<CfgEkfFields::All>,
-        comms::option::DispatchImpl<CfgEkf<TMsgBase> >
+        comms::option::MsgType<CfgEkf<TMsgBase> >
     > Base;
 public:
 
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_disableEkf, ///< @b disableEkf field, see @ref CfgEkfFields::disableEkf
-        FieldIdx_actionFlags, ///< @b actionFlags field, see @ref CfgEkfFields::actionFlags
-        FieldIdx_configFlags, ///< @b configFlags field, see @ref CfgEkfFields::configFlags
-        FieldIdx_inverseFlags, ///< @b inverseFlags field, see @ref CfgEkfFields::inverseFlags
-        FieldIdx_reserved2, ///< @b reserved2 field, see @ref CfgEkfFields::reserved2
-        FieldIdx_nomPPDist, ///< @b nomPPDist field, see @ref CfgEkfFields::nomPPDist
-        FieldIdx_nomZero, ///< @b nomZero field, see @ref CfgEkfFields::nomZero
-        FieldIdx_nomSens, ///< @b nomSens field, see @ref CfgEkfFields::nomSens
-        FieldIdx_rmsTemp, ///< @b rmsTemp field, see @ref CfgEkfFields::rmsTemp
-        FieldIdx_tempUpdate, ///< @b tempUpdate field, see @ref CfgEkfFields::tempUpdate
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b disableEkf for @ref CfgEkfFields::disableEkf field
+    ///     @li @b actionFlags for @ref CfgEkfFields::actionFlags field
+    ///     @li @b configFlags for @ref CfgEkfFields::configFlags field
+    ///     @li @b inverseFlags for @ref CfgEkfFields::inverseFlags field
+    ///     @li @b reserved2 for @ref CfgEkfFields::reserved2 field
+    ///     @li @b nomPPDist for @ref CfgEkfFields::nomPPDist field
+    ///     @li @b nomZero for @ref CfgEkfFields::nomZero field
+    ///     @li @b nomSens for @ref CfgEkfFields::nomSens field
+    ///     @li @b rmsTemp for @ref CfgEkfFields::rmsTemp field
+    ///     @li @b tempUpdate for @ref CfgEkfFields::tempUpdate field
+    COMMS_MSG_FIELDS_ACCESS(Base,
+        disableEkf,
+        actionFlags,
+        configFlags,
+        inverseFlags,
+        reserved2,
+        nomPPDist,
+        nomZero,
+        nomSens,
+        rmsTemp,
+        tempUpdate
+    );
 
     /// @brief Default constructor
     CfgEkf() = default;
@@ -202,7 +204,6 @@ public:
     /// @brief Move assignment
     CfgEkf& operator=(CfgEkf&&) = default;
 };
-
 
 }  // namespace message
 

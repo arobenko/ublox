@@ -1,5 +1,5 @@
 //
-// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2017 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -33,15 +33,6 @@ namespace message
 /// @see NavTimeutc
 struct NavTimeutcFields
 {
-    /// @brief Bits access enumeration for bits in @b valid bitmask field
-    enum
-    {
-        valid_validTOW, ///< @b validTOW bit index
-        valid_validWKN, ///< @b validWKN bit index
-        valid_validUTC, ///< @b validUTC bit index
-        valid_numOfValues ///< number of available bits
-    };
-
     /// @brief Definition of "iTOW" field.
     using iTOW = field::nav::iTOW;
 
@@ -70,7 +61,15 @@ struct NavTimeutcFields
     using sec = field::nav::sec;
 
     /// @brief Definition of "valid" field.
-    using valid = field::common::X1T<comms::option::BitmaskReservedBits<0xf8, 0> >;
+    struct validBits : public
+        field::common::X1T<comms::option::BitmaskReservedBits<0xf8, 0> >
+    {
+        /// @brief Provide names for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS(validTOW, validWKN, validUTC);
+    };
 
     /// @brief All the fields bundled in std::tuple.
     using All = std::tuple<
@@ -83,17 +82,16 @@ struct NavTimeutcFields
         hour,
         min,
         sec,
-        valid
+        validBits
     >;
 };
 
 /// @brief Definition of NAV-TIMEUTC message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
-///     See @ref NavTimeutcFields and for definition of the fields this message contains.
+///     various implementation options. @n
+///     See @ref NavTimeutcFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class NavTimeutc : public
@@ -101,35 +99,34 @@ class NavTimeutc : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_TIMEUTC>,
         comms::option::FieldsImpl<NavTimeutcFields::All>,
-        comms::option::DispatchImpl<NavTimeutc<TMsgBase> >
+        comms::option::MsgType<NavTimeutc<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_TIMEUTC>,
         comms::option::FieldsImpl<NavTimeutcFields::All>,
-        comms::option::DispatchImpl<NavTimeutc<TMsgBase> >
+        comms::option::MsgType<NavTimeutc<TMsgBase> >
     > Base;
 public:
 
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_iTOW, ///< @b iTOW field, see @ref NavTimeutcFields::iTOW
-        FieldIdx_tAcc, ///< @b tAcc field, see @ref NavTimeutcFields::tAcc
-        FieldIdx_nano, ///< @b nano field, see @ref NavTimeutcFields::nano
-        FieldIdx_year, ///< @b year field, see @ref NavTimeutcFields::year
-        FieldIdx_month, ///< @b month field, see @ref NavTimeutcFields::month
-        FieldIdx_day, ///< @b day field, see @ref NavTimeutcFields::day
-        FieldIdx_hour, ///< @b hour field, see @ref NavTimeutcFields::hour
-        FieldIdx_min, ///< @b min field, see @ref NavTimeutcFields::min
-        FieldIdx_sec, ///< @b sec field, see @ref NavTimeutcFields::sec
-        FieldIdx_valid, ///< @b valid field, see @ref NavTimeutcFields::valid
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b iTOW for @ref NavTimeutcFields::iTOW field
+    ///     @li @b tAcc for @ref NavTimeutcFields::tAcc field
+    ///     @li @b nano for @ref NavTimeutcFields::nano field
+    ///     @li @b year for @ref NavTimeutcFields::year field
+    ///     @li @b month for @ref NavTimeutcFields::month field
+    ///     @li @b day for @ref NavTimeutcFields::day field
+    ///     @li @b hour for @ref NavTimeutcFields::hour field
+    ///     @li @b min for @ref NavTimeutcFields::min field
+    ///     @li @b sec for @ref NavTimeutcFields::sec field
+    ///     @li @b valid for @ref NavTimeutcFields::validBits field
+    COMMS_MSG_FIELDS_ACCESS(Base, iTOW, tAcc, nano, year, month, day, hour, min, sec, valid);
 
     /// @brief Default constructor
     NavTimeutc() = default;

@@ -1,5 +1,5 @@
 //
-// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2017 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -67,7 +67,7 @@ QVariantMap createProps_flags()
     cc::property::field::ForField<CfgGnssFields::flags> props;
     props.name("flags")
          .add("enable");
-    assert(props.bits().size() == CfgGnssFields::flags_numOfValues);
+    assert(props.bits().size() == CfgGnssFields::flags::BitIdx_numOfValues);
     return props.asMap();
 }
 
@@ -80,7 +80,7 @@ QVariantMap createProps_data()
         .add(cc::property::field::ForField<CfgGnssFields::maxTrkCh>().name("maxTrkCh").asMap())
         .add(cc_plugin::field::common::props_reserved(1))
         .add(createProps_flags());
-    assert(blockProps.members().size() == CfgGnssFields::block_numOfValues);
+    assert(blockProps.members().size() == CfgGnssFields::block::FieldIdx_numOfValues);
 
     return
         cc::property::field::ForField<CfgGnssFields::blocksList>()

@@ -1,5 +1,5 @@
 //
-// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2017 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -46,14 +46,14 @@ QVariantMap createProps_mask1()
 {
     cc::property::field::ForField<CfgNavx5Fields::mask1> props;
     props.name("mask1")
-         .add(CfgNavx5Fields::mask1_minMax, "manMax")
-         .add(CfgNavx5Fields::mask1_minCno, "minCno")
-         .add(CfgNavx5Fields::mask1_initial3dfix, "initial3dfix")
-         .add(CfgNavx5Fields::mask1_wknRoll, "wknRoll")
-         .add(CfgNavx5Fields::mask1_ppp, "ppp")
-         .add(CfgNavx5Fields::mask1_aop, "aop");
+         .add(CfgNavx5Fields::mask1::BitIdx_minMax, "manMax")
+         .add(CfgNavx5Fields::mask1::BitIdx_minCno, "minCno")
+         .add(CfgNavx5Fields::mask1::BitIdx_initial3dfix, "initial3dfix")
+         .add(CfgNavx5Fields::mask1::BitIdx_wknRoll, "wknRoll")
+         .add(CfgNavx5Fields::mask1::BitIdx_ppp, "ppp")
+         .add(CfgNavx5Fields::mask1::BitIdx_aop, "aop");
 
-    assert(props.bits().size() == CfgNavx5Fields::mask1_numOfValues);
+    assert(props.bits().size() == CfgNavx5Fields::mask1::BitIdx_numOfValues);
     return props.asMap();
 }
 
@@ -72,7 +72,7 @@ QVariantMap createProps_aopCfg()
     cc::property::field::ForField<CfgNavx5Fields::aopCfg> props;
     props.name("aopCfg")
          .add("useAOP");
-    assert(props.bits().size() == CfgNavx5Fields::aopCfg_numOfValues);
+    assert(props.bits().size() == CfgNavx5Fields::aopCfg::BitIdx_numOfValues);
     return props.asMap();
 }
 

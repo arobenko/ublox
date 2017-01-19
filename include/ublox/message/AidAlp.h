@@ -1,5 +1,5 @@
 //
-// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2017 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -80,12 +80,11 @@ struct AidAlpFields
 };
 
 /// @brief Definition of AID-ALP message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
-///     See @ref AidAlpFields and for definition of the fields this message contains.
+///     various implementation options. @n
+///     See @ref AidAlpFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class AidAlp : public
@@ -93,34 +92,33 @@ class AidAlp : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_ALP>,
         comms::option::FieldsImpl<AidAlpFields::All>,
-        comms::option::DispatchImpl<AidAlp<TMsgBase> >
+        comms::option::MsgType<AidAlp<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_ALP>,
         comms::option::FieldsImpl<AidAlpFields::All>,
-        comms::option::DispatchImpl<AidAlp<TMsgBase> >
+        comms::option::MsgType<AidAlp<TMsgBase> >
     > Base;
 public:
 
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_predTow, ///< predTow field, see @ref AidAlpFields::predTow
-        FieldIdx_predDur, ///< predDur field, see @ref AidAlpFields::predDur
-        FieldIdx_age, ///< age field, see @ref AidAlpFields::age
-        FieldIdx_predWno, ///< predWno field, see @ref AidAlpFields::predWno
-        FieldIdx_almWno, ///< almWno field, see @ref AidAlpFields::almWno
-        FieldIdx_reserved1, ///< reserved1 field, see @ref AidAlpFields::reserved1
-        FieldIdx_svs, ///< svs field, see @ref AidAlpFields::svs
-        FieldIdx_reserved2, ///< reserved2 field, see @ref AidAlpFields::reserved2
-        FieldIdx_reserved3, ///< reserved3 field, see @ref AidAlpFields::reserved3
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b predTow for @ref AidAlpFields::predTow field
+    ///     @li @b predDur for @ref AidAlpFields::predDur field
+    ///     @li @b age for @ref AidAlpFields::age field
+    ///     @li @b predWno for @ref AidAlpFields::predWno field
+    ///     @li @b almWno for @ref AidAlpFields::almWno field
+    ///     @li @b reserved1 for @ref AidAlpFields::reserved1 field
+    ///     @li @b svs for @ref AidAlpFields::svs field
+    ///     @li @b reserved2 for @ref AidAlpFields::reserved2 field
+    ///     @li @b reserved3 for @ref AidAlpFields::reserved3 field
+    COMMS_MSG_FIELDS_ACCESS(Base, predTow, predDur, age, predWno, almWno, reserved1, svs, reserved2, reserved3);
 
     /// @brief Default constructor
     AidAlp() = default;

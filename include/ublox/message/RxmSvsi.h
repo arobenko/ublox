@@ -1,5 +1,5 @@
 //
-// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2017 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -33,44 +33,6 @@ namespace message
 /// @see RxmSvsi
 struct RxmSvsiFields
 {
-    /// @brief Use this enumeration to access member fields of @ref svFlag bitfield.
-    enum
-    {
-        svFlag_ura, ///< index of @ref ura member field.
-        svFlag_bits, ///< index of @ref svFlagBits member field.
-        svFlag_numOfValues ///< number of available member fields.
-    };
-
-    /// @brief Bits access enumeration for bits in @b svFlagBits member of
-    ///     @ref svFlag bitfield field.
-    enum
-    {
-        svFlagBits_healthy, ///< @b healthy bit index
-        svFlagBits_ephVal, ///< @b ephVal bit index
-        svFlagBits_almVal, ///< @b almVal bit index
-        svFlagBits_notAvail, ///< @b notAvail bit index
-        svFlagBits_numOfValues ///< number of available bits
-    };
-
-    /// @brief Use this enumeration to access member fields of @ref age bitfield.
-    enum
-    {
-        age_almAge, ///< index of @ref almAge member field.
-        age_ephAge, ///< index of @ref ephAge member field.
-        age_numOfValues  ///< number of available member fields.
-    };
-
-    /// @brief Use this enumeration to access member fields of @ref block bundle.
-    enum
-    {
-        block_svid,
-        block_svFlag,
-        block_azim,
-        block_elev,
-        block_age,
-        block_numOfValues
-    };
-
     /// @brief Definition of "iTOW" field.
     using iTOW = field::rxm::iTOW;
 
@@ -95,19 +57,36 @@ struct RxmSvsiFields
 
     /// @brief Definition of the remaining bits in @ref svFlag bitfield as a
     ///     single bitmask field.
-    using svFlagBits =
+    struct svFlagBits : public
         field::common::X1T<
             comms::option::FixedBitLength<4>
-        >;
+        >
+    {
+        /// @brief Provide names for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS(healthy, ephVal, almVal, notAvail);
+    };
 
-    /// @brief Definition of "svFlag" field.
-    using svFlag =
+    /// @brief Base class of @ref svFlag field
+    using svFlagBase =
         field::common::BitfieldT<
             std::tuple<
                 ura,
                 svFlagBits
             >
         >;
+
+    /// @brief Definition of "svFlag" field.
+    struct svFlag : public svFlagBase
+    {
+        /// @brief Allow access to internal fields.
+        /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
+        ///     related to @b comms::field::Bitfield class from COMMS library
+        ///     for details.
+        COMMS_FIELD_MEMBERS_ACCESS(svFlagBase, ura, svFlagBits);
+    };
 
     /// @brief Definition of "azim" field.
     using azim = field::common::I2;
@@ -125,8 +104,8 @@ struct RxmSvsiFields
     /// @brief Definition of "ephAge" member fields in @ref age bitfield.
     using ephAge = almAge;
 
-    /// @brief Definition of "age" field.
-    using age =
+    /// @brief Base class of @ref age field
+    using ageBase =
         field::common::BitfieldT<
             std::tuple<
                 almAge,
@@ -134,8 +113,18 @@ struct RxmSvsiFields
             >
         >;
 
-    /// @brief Definition of a single block of @ref data list
-    using block =
+    /// @brief Definition of "age" field.
+    struct age : public ageBase
+    {
+        /// @brief Allow access to internal fields.
+        /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
+        ///     related to @b comms::field::Bitfield class from COMMS library
+        ///     for details.
+        COMMS_FIELD_MEMBERS_ACCESS(ageBase, almAge, ephAge);
+    };
+
+    /// @brief Base class of @ref block field
+    using blockBase =
         field::common::BundleT<
             std::tuple<
                 svid,
@@ -145,6 +134,16 @@ struct RxmSvsiFields
                 age
             >
         >;
+
+    /// @brief Definition of a single block of @ref data list
+    struct block : public blockBase
+    {
+        /// @brief Allow access to internal fields.
+        /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
+        ///     related to @b comms::field::Bitfield class from COMMS library
+        ///     for details.
+        COMMS_FIELD_MEMBERS_ACCESS(blockBase, svid, svFlag, azim, elev, age);
+    };
 
     /// @brief Definition of the list of blocks (@ref block)
     using data =
@@ -164,12 +163,11 @@ struct RxmSvsiFields
 };
 
 /// @brief Definition of RXM-SVSI message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
-///     See @ref RxmSvsiFields and for definition of the fields this message contains.
+///     various implementation options. @n
+///     See @ref RxmSvsiFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class RxmSvsi : public
@@ -177,30 +175,31 @@ class RxmSvsi : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_RXM_SVSI>,
         comms::option::FieldsImpl<RxmSvsiFields::All>,
-        comms::option::DispatchImpl<RxmSvsi<TMsgBase> >
+        comms::option::MsgType<RxmSvsi<TMsgBase> >,
+        comms::option::HasDoRefresh
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_RXM_SVSI>,
         comms::option::FieldsImpl<RxmSvsiFields::All>,
-        comms::option::DispatchImpl<RxmSvsi<TMsgBase> >
+        comms::option::MsgType<RxmSvsi<TMsgBase> >,
+        comms::option::HasDoRefresh
     > Base;
 public:
 
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_iTOW, ///< @b iTOW field, see @ref RxmSvsiFields::iTOW
-        FieldIdx_week, ///< @b week field, see @ref RxmSvsiFields::week
-        FieldIdx_numVis, ///< @b numVis field, see @ref RxmSvsiFields::numVis
-        FieldIdx_numSV, ///< @b numSV field, see @ref RxmSvsiFields::numSV
-        FieldIdx_data, ///< @b data field, see @ref RxmSvsiFields::data
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b iTOW for @ref RxmSvsiFields::iTOW field
+    ///     @li @b week for @ref RxmSvsiFields::week field
+    ///     @li @b numVis for @ref RxmSvsiFields::numVis field
+    ///     @li @b numSV for @ref RxmSvsiFields::numSV field
+    ///     @li @b data for @ref RxmSvsiFields::data field
+    COMMS_MSG_FIELDS_ACCESS(Base, iTOW, week, numVis, numSV, data);
 
     /// @brief Default constructor
     RxmSvsi() = default;
@@ -220,10 +219,11 @@ public:
     /// @brief Move assignment
     RxmSvsi& operator=(RxmSvsi&&) = default;
 
-protected:
-    virtual comms::ErrorStatus readImpl(
-        typename Base::ReadIterator& iter,
-        std::size_t len) override
+    /// @brief Provides custom read functionality.
+    /// @details Number of elements in @ref RxmSvsiFields::data depends on
+    ///     the value in @ref RxmSvsiFields::numSV
+    template <typename TIter>
+    comms::ErrorStatus doRead(TIter& iter, std::size_t len)
     {
         auto es = Base::template readFieldsUntil<FieldIdx_data>(iter, len);
         if (es != comms::ErrorStatus::Success) {
@@ -238,7 +238,10 @@ protected:
         return Base::template readFieldsFrom<FieldIdx_data>(iter, len);
     }
 
-    virtual bool refreshImpl() override
+    /// @brief Provides custom refresh functionality
+    /// @details The value of @ref RxmSvsiFields::numSV field depends on
+    ///     actual number of elements in @ref RxmSvsiFields::data.
+    bool doRefresh()
     {
         auto& allFields = Base::fields();
         auto& numSvField = std::get<FieldIdx_numSV>(allFields);

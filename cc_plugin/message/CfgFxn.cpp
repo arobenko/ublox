@@ -1,5 +1,5 @@
 //
-// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2017 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -45,10 +45,10 @@ QVariantMap createProps_flags()
 {
     cc::property::field::ForField<CfgFxnFields::flags> props;
     props.name("flags")
-         .add(CfgFxnFields::flags_sleep, "sleep")
-         .add(CfgFxnFields::flags_absAlign, "absAlign")
+         .add(CfgFxnFields::flags::BitIdx_sleep, "sleep")
+         .add(CfgFxnFields::flags::BitIdx_absAlign, "absAlign")
          .add("onOff");
-    assert(props.bits().size() == CfgFxnFields::flags_numOfValues);
+    assert(props.bits().size() == CfgFxnFields::flags::BitIdx_numOfValues);
     return props.asMap();
 }
 

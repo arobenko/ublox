@@ -1,5 +1,5 @@
 //
-// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2017 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -33,15 +33,6 @@ namespace message
 /// @see LogInfo
 struct LogInfoFields
 {
-    /// @brief Bits access enumeration for @ref status bitmask field.
-    enum
-    {
-        status_recording = 3, ///< @b recording bit index
-        status_inactive, ///< @b inactive bit index
-        status_circular, ///< @b circular bit index
-        status_numOfValues ///< upper limit for available bits
-    };
-
     /// @brief Definition of "version" field.
     using version =
         field::common::U1T<
@@ -113,10 +104,17 @@ struct LogInfoFields
     using reserved5  = field::common::res1;
 
     /// @brief Definition of "status" field.
-    using status =
+    struct status : public
         field::common::X1T<
             comms::option::BitmaskReservedBits<0xc7, 0>
-        >;
+        >
+    {
+        /// @brief Provide names for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS(recording=3, inactive, circular);
+    };
 
     /// @brief Definition of "reserved6" field.
     using reserved6  = field::common::res3;
@@ -151,12 +149,11 @@ struct LogInfoFields
 };
 
 /// @brief Definition of LOG-INFO message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
-///     See @ref LogInfoFields and for definition of the fields this message contains.
+///     various implementation options. @n
+///     See @ref LogInfoFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class LogInfo : public
@@ -164,49 +161,73 @@ class LogInfo : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_LOG_INFO>,
         comms::option::FieldsImpl<LogInfoFields::All>,
-        comms::option::DispatchImpl<LogInfo<TMsgBase> >
+        comms::option::MsgType<LogInfo<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_LOG_INFO>,
         comms::option::FieldsImpl<LogInfoFields::All>,
-        comms::option::DispatchImpl<LogInfo<TMsgBase> >
+        comms::option::MsgType<LogInfo<TMsgBase> >
     > Base;
 public:
 
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_version, ///< @b version field, see @ref LogInfoFields::version
-        FieldIdx_reserved1, ///< @b reserved1 field, see @ref LogInfoFields::reserved1
-        FieldIdx_filestoreCapacity, ///< @b filestoreCapacity field, see @ref LogInfoFields::filestoreCapacity
-        FieldIdx_reserved2, ///< @b reserved2 field, see @ref LogInfoFields::reserved2
-        FieldIdx_reserved3, ///< @b reserved3 field, see @ref LogInfoFields::reserved3
-        FieldIdx_currentMaxLogSize, ///< @b currentMaxLogSize field, see @ref LogInfoFields::currentMaxLogSize
-        FieldIdx_currentLogSize, ///< @b currentLogSize field, see @ref LogInfoFields::currentLogSize
-        FieldIdx_entryCount, ///< @b entryCount field, see @ref LogInfoFields::entryCount
-        FieldIdx_oldestYear, ///< @b oldestYear field, see @ref LogInfoFields::oldestYear
-        FieldIdx_oldestMonth, ///< @b oldestMonth field, see @ref LogInfoFields::oldestMonth
-        FieldIdx_oldestDay, ///< @b oldestDay field, see @ref LogInfoFields::oldestDay
-        FieldIdx_oldestHour, ///< @b oldestHour field, see @ref LogInfoFields::oldestHour
-        FieldIdx_oldestMinute, ///< @b oldestMinute field, see @ref LogInfoFields::oldestMinute
-        FieldIdx_oldestSecond, ///< @b oldestSecond field, see @ref LogInfoFields::oldestSecond
-        FieldIdx_reserved4, ///< @b reserved4 field, see @ref LogInfoFields::reserved4
-        FieldIdx_newestYear, ///< @b newestYear field, see @ref LogInfoFields::newestYear
-        FieldIdx_newestMonth, ///< @b newestMonth field, see @ref LogInfoFields::newestMonth
-        FieldIdx_newestDay, ///< @b newestDay field, see @ref LogInfoFields::newestDay
-        FieldIdx_newestHour, ///< @b newestHour field, see @ref LogInfoFields::newestHour
-        FieldIdx_newestMinute, ///< @b newestMinute field, see @ref LogInfoFields::newestMinute
-        FieldIdx_newestSecond, ///< @b newestSecond field, see @ref LogInfoFields::newestSecond
-        FieldIdx_reserved5, ///< @b reserved5 field, see @ref LogInfoFields::reserved5
-        FieldIdx_status, ///< @b status field, see @ref LogInfoFields::status
-        FieldIdx_reserved6, ///< @b reserved6 field, see @ref LogInfoFields::reserved6
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b version for @ref LogInfoFields::version field
+    ///     @li @b reserved1 for @ref LogInfoFields::reserved1 field
+    ///     @li @b filestoreCapacity for @ref LogInfoFields::filestoreCapacity field
+    ///     @li @b reserved2 for @ref LogInfoFields::reserved2 field
+    ///     @li @b reserved3 for @ref LogInfoFields::reserved3 field
+    ///     @li @b currentMaxLogSize for @ref LogInfoFields::currentMaxLogSize field
+    ///     @li @b currentLogSize for @ref LogInfoFields::currentLogSize field
+    ///     @li @b entryCount for @ref LogInfoFields::entryCount field
+    ///     @li @b oldestYear for @ref LogInfoFields::oldestYear field
+    ///     @li @b oldestMonth for @ref LogInfoFields::oldestMonth field
+    ///     @li @b oldestDay for @ref LogInfoFields::oldestDay field
+    ///     @li @b oldestHour for @ref LogInfoFields::oldestHour field
+    ///     @li @b oldestMinute for @ref LogInfoFields::oldestMinute field
+    ///     @li @b oldestSecond for @ref LogInfoFields::oldestSecond field
+    ///     @li @b reserved4 for @ref LogInfoFields::reserved4 field
+    ///     @li @b newestYear for @ref LogInfoFields::newestYear field
+    ///     @li @b newestMonth for @ref LogInfoFields::newestMonth field
+    ///     @li @b newestDay for @ref LogInfoFields::newestDay field
+    ///     @li @b newestHour for @ref LogInfoFields::newestHour field
+    ///     @li @b newestMinute for @ref LogInfoFields::newestMinute field
+    ///     @li @b newestSecond for @ref LogInfoFields::newestSecond field
+    ///     @li @b reserved5 for @ref LogInfoFields::reserved5 field
+    ///     @li @b status for @ref LogInfoFields::status field
+    ///     @li @b reserved6 for @ref LogInfoFields::reserved6 field
+    COMMS_MSG_FIELDS_ACCESS(Base,
+        version,
+        reserved1,
+        filestoreCapacity,
+        reserved2,
+        reserved3,
+        currentMaxLogSize,
+        currentLogSize,
+        entryCount,
+        oldestYear,
+        oldestMonth,
+        oldestDay,
+        oldestHour,
+        oldestMinute,
+        oldestSecond,
+        reserved4,
+        newestYear,
+        newestMonth,
+        newestDay,
+        newestHour,
+        newestMinute,
+        newestSecond,
+        reserved5,
+        status,
+        reserved6
+    );
 
     /// @brief Default constructor
     LogInfo() = default;

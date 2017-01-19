@@ -1,5 +1,5 @@
 //
-// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2017 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -42,12 +42,11 @@ struct LogStringFields
 };
 
 /// @brief Definition of LOG-STRING message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
+///     various implementation options. @n
 ///     See @ref LogStringFields and for definition of the fields this message contains.
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class LogString : public
@@ -55,26 +54,25 @@ class LogString : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_LOG_STRING>,
         comms::option::FieldsImpl<LogStringFields::All>,
-        comms::option::DispatchImpl<LogString<TMsgBase> >
+        comms::option::MsgType<LogString<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_LOG_STRING>,
         comms::option::FieldsImpl<LogStringFields::All>,
-        comms::option::DispatchImpl<LogString<TMsgBase> >
+        comms::option::MsgType<LogString<TMsgBase> >
     > Base;
 public:
 
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_bytes, ///< @b bytes field, see @ref LogStringFields::bytes
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b bytes for @ref LogStringFields::bytes field
+    COMMS_MSG_FIELDS_ACCESS(Base, bytes);
 
     /// @brief Default constructor
     LogString() = default;

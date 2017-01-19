@@ -1,5 +1,5 @@
 //
-// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2017 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -97,7 +97,7 @@ QVariantMap createProps_flags()
          .add(createSingleBitMask("doNotEnterOff"))
          .add(modeProps.asMap())
          .add(createReservedProps());
-    assert(props.members().size() == CfgPm2Fields::flags_numOfValues);
+    assert(props.members().size() == CfgPm2Fields::flags::FieldIdx_numOfValues);
     return props.asMap();
 }
 

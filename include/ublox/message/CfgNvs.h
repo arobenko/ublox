@@ -1,5 +1,5 @@
 //
-// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2017 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -33,15 +33,6 @@ namespace message
 /// @see CfgNvs
 struct CfgNvsFields
 {
-    /// @brief Bits access enumeration for @ref clearMask, @ref saveMask,
-    ///     and @ref loadMask fields
-    enum
-    {
-        mask_alm = 17, ///< @b alm bit index
-        mask_aop = 29, ///< @b aop bit index
-        mask_numOfValues ///< upper limit for available bits
-    };
-
     /// @brief Bits access enumeration for @ref deviceMask bitmask field
     enum
     {
@@ -54,10 +45,17 @@ struct CfgNvsFields
 
     /// @brief Common mask field definition for @ref clearMask, @ref saveMask,
     ///     and @ref loadMask
-    using mask =
+    struct mask : public
         field::common::X4T<
             comms::option::BitmaskReservedBits<0xdffdffff, 0>
-        >;
+        >
+    {
+        /// @brief Provide names for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS(alm=17, aop=29);
+    };
 
     /// @brief Definition of "clearMask" field.
     using clearMask = mask;
@@ -69,10 +67,17 @@ struct CfgNvsFields
     using loadMask = mask;
 
     /// @brief Definition of "deviceMask" field.
-    using deviceMask =
+    struct deviceMask : public
         field::common::X1T<
             comms::option::BitmaskReservedBits<0xe8, 0>
-        >;
+        >
+    {
+        /// @brief Provide names for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS(devBBR, devFlash, devEEPROM, devSpiFlash=4);
+    };
 
     /// @brief All the fields bundled in std::tuple.
     using All = std::tuple<
@@ -84,12 +89,11 @@ struct CfgNvsFields
 };
 
 /// @brief Definition of CFG-NVS message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
-///     See @ref CfgNvsFields and for definition of the fields this message contains.
+///     various implementation options. @n
+///     See @ref CfgNvsFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class CfgNvs : public
@@ -97,29 +101,28 @@ class CfgNvs : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_NVS>,
         comms::option::FieldsImpl<CfgNvsFields::All>,
-        comms::option::DispatchImpl<CfgNvs<TMsgBase> >
+        comms::option::MsgType<CfgNvs<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_NVS>,
         comms::option::FieldsImpl<CfgNvsFields::All>,
-        comms::option::DispatchImpl<CfgNvs<TMsgBase> >
+        comms::option::MsgType<CfgNvs<TMsgBase> >
     > Base;
 public:
 
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_clearMask, ///< @b clearMask field, see @ref CfgNvsFields::clearMask
-        FieldIdx_saveMask, ///< @b saveMask field, see @ref CfgNvsFields::saveMask
-        FieldIdx_loadMask, ///< @b loadMask field, see @ref CfgNvsFields::loadMask
-        FieldIdx_deviceMask, ///< @b deviceMask field, see @ref CfgNvsFields::deviceMask
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b clearMask for @ref CfgNvsFields::clearMask field
+    ///     @li @b saveMask for @ref CfgNvsFields::saveMask field
+    ///     @li @b loadMask for @ref CfgNvsFields::loadMask field
+    ///     @li @b deviceMask for @ref CfgNvsFields::deviceMask field
+    COMMS_MSG_FIELDS_ACCESS(Base, clearMask, saveMask, loadMask, deviceMask);
 
     /// @brief Default constructor
     CfgNvs() = default;

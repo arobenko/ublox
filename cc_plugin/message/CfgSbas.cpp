@@ -1,5 +1,5 @@
 //
-// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2017 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -47,7 +47,7 @@ QVariantMap createProps_mode()
     props.name("mode")
          .add("enabled")
          .add("test");
-    assert(props.bits().size() == CfgSbasFields::mode_numOfValues);
+    assert(props.bits().size() == CfgSbasFields::mode::BitIdx_numOfValues);
     return props.asMap();
 }
 
@@ -58,7 +58,7 @@ QVariantMap createProps_usage()
          .add("range")
          .add("diffCorr")
          .add("integrity");
-    assert(props.bits().size() == CfgSbasFields::usage_numOfValues);
+    assert(props.bits().size() == CfgSbasFields::usage::BitIdx_numOfValues);
     return props.asMap();
 }
 
@@ -81,8 +81,8 @@ QVariantList createFieldsProperties()
     props.append(createProps_usage());
     props.append(
         cc::property::field::ForField<CfgSbasFields::maxSBAS>().name("maxSBAS").asMap());
-    props.append(createProps_scanmode(2, 152, CfgSbasFields::scanmode2_numOfValues));
-    props.append(createProps_scanmode(1, 120, CfgSbasFields::scanmode1_numOfValues));
+    props.append(createProps_scanmode(2, 152, CfgSbasFields::scanmode2::BitIdx_numOfValues));
+    props.append(createProps_scanmode(1, 120, CfgSbasFields::scanmode1::BitIdx_numOfValues));
     assert(props.size() == CfgSbas::FieldIdx_numOfValues);
     return props;
 }

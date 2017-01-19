@@ -1,5 +1,5 @@
 //
-// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2017 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -34,16 +34,6 @@ namespace message
 /// @see CfgNmeaExt
 struct CfgNmeaExtFields : public CfgNmeaFields
 {
-    /// @brief Bits access enumeration for @ref gnssToFilter bitmask field.
-    enum
-    {
-        gnssToFilter_gps, ///< @b gps bit index
-        gnssToFilter_sbas, ///< @b sbas bit index
-        gnssToFilter_qzss = 4, ///< @b qzss bit index
-        gnssToFilter_glonass, ///< @b glonass bit index
-        gnssToFilter_numOfValues ///< upper limit for available bits
-    };
-
     /// @brief Value enumeration for @ref svNumbering field.
     enum class SvNumbering : std::uint8_t
     {
@@ -71,10 +61,17 @@ struct CfgNmeaExtFields : public CfgNmeaFields
     };
 
     /// @brief Definition of "gnssToFilter" field.
-    using gnssToFilter =
+    struct gnssToFilter : public
         field::common::X4T<
             comms::option::BitmaskReservedBits<0xffffffcc, 0>
-        >;
+        >
+    {
+        /// @brief Provide names for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS(gps, sbas, qzss=4, glonass);
+    };
 
     /// @brief Definition of "svNumbering" field.
     using svNumbering =
@@ -116,12 +113,11 @@ struct CfgNmeaExtFields : public CfgNmeaFields
 };
 
 /// @brief Definition of CFG-NMEA (@b extended) message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
-///     See @ref CfgNmeaExtFields and for definition of the fields this message contains.
+///     various implementation options. @n
+///     See @ref CfgNmeaExtFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class CfgNmeaExt : public
@@ -129,34 +125,43 @@ class CfgNmeaExt : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_NMEA>,
         comms::option::FieldsImpl<CfgNmeaExtFields::All>,
-        comms::option::DispatchImpl<CfgNmeaExt<TMsgBase> >
+        comms::option::MsgType<CfgNmeaExt<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_NMEA>,
         comms::option::FieldsImpl<CfgNmeaExtFields::All>,
-        comms::option::DispatchImpl<CfgNmeaExt<TMsgBase> >
+        comms::option::MsgType<CfgNmeaExt<TMsgBase> >
     > Base;
 public:
 
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_filter, ///< @b filter field, see @ref CfgNmeaExtFields::filter
-        FieldIdx_nmeaVersion, ///< @b nmeaVersion field, see @ref CfgNmeaExtFields::nmeaVersion
-        FieldIdx_numSV, ///< @b numSV field, see @ref CfgNmeaExtFields::numSV
-        FieldIdx_flags, ///< @b flags field, see @ref CfgNmeaExtFields::flags
-        FieldIdx_gnssToFilter, ///< @b gnssToFilter field, see @ref CfgNmeaExtFields::gnssToFilter
-        FieldIdx_svNumbering, ///< @b svNumbering field, see @ref CfgNmeaExtFields::svNumbering
-        FieldIdx_mainTalkerId, ///< @b mainTalkerId field, see @ref CfgNmeaExtFields::mainTalkerId
-        FieldIdx_gsvTalkerId, ///< @b gsvTalkerId field, see @ref CfgNmeaExtFields::gsvTalkerId
-        FieldIdx_reserved, ///< @b reserved field, see @ref CfgNmeaExtFields::reserved
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b filter for @ref CfgNmeaFields::filter field
+    ///     @li @b nmeaVersion for @ref CfgNmeaExtFields::nmeaVersion field
+    ///     @li @b numSV for @ref CfgNmeaExtFields::numSV field
+    ///     @li @b flags for @ref CfgNmeaFields::flags field
+    ///     @li @b gnssToFilter for @ref CfgNmeaExtFields::gnssToFilter field
+    ///     @li @b svNumbering for @ref CfgNmeaExtFields::svNumbering field
+    ///     @li @b mainTalkerId for @ref CfgNmeaExtFields::mainTalkerId field
+    ///     @li @b gsvTalkerId for @ref CfgNmeaExtFields::gsvTalkerId field
+    ///     @li @b reserved for @ref CfgNmeaExtFields::reserved field
+    COMMS_MSG_FIELDS_ACCESS(Base,
+        filter,
+        nmeaVersion,
+        numSV,
+        flags,
+        gnssToFilter,
+        svNumbering,
+        mainTalkerId,
+        gsvTalkerId,
+        reserved
+    );
 
     /// @brief Default constructor
     CfgNmeaExt() = default;

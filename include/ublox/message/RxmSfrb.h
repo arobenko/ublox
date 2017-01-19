@@ -1,5 +1,5 @@
 //
-// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2017 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -55,12 +55,11 @@ struct RxmSfrbFields
 };
 
 /// @brief Definition of RXM-SFRB message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
-///     See @ref RxmSfrbFields and for definition of the fields this message contains.
+///     various implementation options. @n
+///     See @ref RxmSfrbFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class RxmSfrb : public
@@ -68,28 +67,27 @@ class RxmSfrb : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_RXM_SFRB>,
         comms::option::FieldsImpl<RxmSfrbFields::All>,
-        comms::option::DispatchImpl<RxmSfrb<TMsgBase> >
+        comms::option::MsgType<RxmSfrb<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_RXM_SFRB>,
         comms::option::FieldsImpl<RxmSfrbFields::All>,
-        comms::option::DispatchImpl<RxmSfrb<TMsgBase> >
+        comms::option::MsgType<RxmSfrb<TMsgBase> >
     > Base;
 public:
 
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_chn, ///< @b chn field, see @ref RxmSfrbFields::chn
-        FieldIdx_svid, ///< @b svid field, see @ref RxmSfrbFields::svid
-        FieldIdx_dwrd, ///< @b dwrd field, see @ref RxmSfrbFields::dwrd
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b chn for @ref RxmSfrbFields::chn field
+    ///     @li @b svid for @ref RxmSfrbFields::svid field
+    ///     @li @b dwrd for @ref RxmSfrbFields::dwrd field
+    COMMS_MSG_FIELDS_ACCESS(Base, chn, svid, dwrd);
 
     /// @brief Default constructor
     RxmSfrb() = default;

@@ -1,5 +1,5 @@
 //
-// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2017 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -88,18 +88,16 @@ struct AidHuiFields
     using klobB3 = field::common::R4;
 
     /// @brief Definition of "flags" field.
-    using flags =
+    struct flags : public
         field::common::X4T<
             comms::option::BitmaskReservedBits<0xfffffff8, 0>
-        >;
-
-    /// @brief Enumerator to access bits in @ref flags bitmask field
-    enum
+        >
     {
-        flags_healthValid, ///< "healthValid" bit
-        flags_utcValid, ///< "utcValid" bit
-        flags_klobValid, ///< "klobValid" bit
-        flags_numOfValues ///< number of available bits
+        /// @brief Provide names for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS(healthValid, utcValid, klobValid);
     };
 
     /// @brief All the fields bundled in std::tuple.
@@ -127,12 +125,11 @@ struct AidHuiFields
 };
 
 /// @brief Definition of AID-HUI message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
-///     See @ref AidHuiFields and for definition of the fields this message contains.
+///     various implementation options. @n
+///     See @ref AidHuiFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class AidHui : public
@@ -140,44 +137,62 @@ class AidHui : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_HUI>,
         comms::option::FieldsImpl<AidHuiFields::All>,
-        comms::option::DispatchImpl<AidHui<TMsgBase> >
+        comms::option::MsgType<AidHui<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_HUI>,
         comms::option::FieldsImpl<AidHuiFields::All>,
-        comms::option::DispatchImpl<AidHui<TMsgBase> >
+        comms::option::MsgType<AidHui<TMsgBase> >
     > Base;
 public:
 
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_health, ///< health field, see @ref AidHuiFields::health
-        FieldIdx_utcA0, ///< utcA0 field, see @ref AidHuiFields::utcA0
-        FieldIdx_utcA1, ///< utcA1 field, see @ref AidHuiFields::utcA1
-        FieldIdx_utcTOW, ///< utcTOW field, see @ref AidHuiFields::utcTOW
-        FieldIdx_utcWNT, ///< utcWNT field, see @ref AidHuiFields::utcWNT
-        FieldIdx_utcLS, ///< utcLC field, see @ref AidHuiFields::utcLS
-        FieldIdx_utcWNF, ///< utcWNF field, see @ref AidHuiFields::utcWNF
-        FieldIdx_utcDN, ///< utcDN field, see @ref AidHuiFields::utcDN
-        FieldIdx_utcLSF, ///< utcLSF field, see @ref AidHuiFields::utcLSF
-        FieldIdx_utcSpare, ///< utcSpare field, see @ref AidHuiFields::utcSpare
-        FieldIdx_klobA0, ///< klobA0 field, see @ref AidHuiFields::klobA0
-        FieldIdx_klobA1, ///< klobA1 field, see @ref AidHuiFields::klobA1
-        FieldIdx_klobA2, ///< klobA2 field, see @ref AidHuiFields::klobA2
-        FieldIdx_klobA3, ///< klobA3 field, see @ref AidHuiFields::klobA3
-        FieldIdx_klobB0, ///< klobB0 field, see @ref AidHuiFields::klobB0
-        FieldIdx_klobB1, ///< klobB1 field, see @ref AidHuiFields::klobB1
-        FieldIdx_klobB2, ///< klobB2 field, see @ref AidHuiFields::klobB2
-        FieldIdx_klobB3, ///< klobB3 field, see @ref AidHuiFields::klobB3
-        FieldIdx_flags, ///< flags field, see @ref AidHuiFields::flags
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b health for @ref AidHuiFields::health field
+    ///     @li @b utcA0 for @ref AidHuiFields::utcA0 field
+    ///     @li @b utcA1 for @ref AidHuiFields::utcA1 field
+    ///     @li @b utcTOW for @ref AidHuiFields::utcTOW field
+    ///     @li @b utcWNT for @ref AidHuiFields::utcWNT field
+    ///     @li @b utcLS for @ref AidHuiFields::utcLS field
+    ///     @li @b utcWNF for @ref AidHuiFields::utcWNF field
+    ///     @li @b utcDN for @ref AidHuiFields::utcDN field
+    ///     @li @b utcLSF for @ref AidHuiFields::utcLSF field
+    ///     @li @b utcSpare for @ref AidHuiFields::utcSpare field
+    ///     @li @b klobA0 for @ref AidHuiFields::klobA0 field
+    ///     @li @b klobA1 for @ref AidHuiFields::klobA1 field
+    ///     @li @b klobA2 for @ref AidHuiFields::klobA2 field
+    ///     @li @b klobA3 for @ref AidHuiFields::klobA3 field
+    ///     @li @b klobB0 for @ref AidHuiFields::klobB0 field
+    ///     @li @b klobB1 for @ref AidHuiFields::klobB1 field
+    ///     @li @b klobB2 for @ref AidHuiFields::klobB2 field
+    ///     @li @b klobB3 for @ref AidHuiFields::klobB3 field
+    ///     @li @b flags for @ref AidHuiFields::flags field
+    COMMS_MSG_FIELDS_ACCESS(Base,
+        health,
+        utcA0,
+        utcA1,
+        utcTOW,
+        utcWNT,
+        utcLS,
+        utcWNF,
+        utcDN,
+        utcLSF,
+        utcSpare,
+        klobA0,
+        klobA1,
+        klobA2,
+        klobA3,
+        klobB0,
+        klobB1,
+        klobB2,
+        klobB3,
+        flags);
 
     /// @brief Default constructor
     AidHui() = default;

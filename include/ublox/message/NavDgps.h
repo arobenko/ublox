@@ -1,5 +1,5 @@
 //
-// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2017 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -41,34 +41,6 @@ struct NavDgpsFields
         NumOfValues ///< number of available values
     };
 
-
-    /// @brief Use this enumeration to access member fields of @ref flags bitfield.
-    enum
-    {
-        flags_channel, ///< index of @ref channel member field
-        flags_bits, ///< index of @ref flagsBits member field
-        flags_numOfValues ///< number of available member fields
-    };
-
-    /// @brief Bits access enumeration for bits in @b flagsBits member of
-    ///     @ref flags bitfield field.
-    enum
-    {
-        flagsBits_dgpsUsed, ///< @b dgpsUsed bit index
-        flagsBits_numOfValues ///< number of available bits
-    };
-
-    /// @brief Use this enumeration to access member fields of @ref block bundle.
-    enum
-    {
-        block_svid, ///< index of @ref svid member field
-        block_flags, ///< index of @ref flags member field
-        block_ageC, ///< index of @ref ageC member field
-        block_prc, ///< index of @ref prc member field
-        block_prrc, ///< index of @ref prrc member field
-        block_numOfValues ///< number of availble member fields
-    };
-
     /// @brief Definition of "iTOW" field.
     using iTOW = field::nav::iTOW;
 
@@ -105,20 +77,37 @@ struct NavDgpsFields
         >;
 
     /// @brief Definition of remaining bits as a single bitmask member field in @ref flags bitfield.
-    using flagsBits =
+    struct flagsBits : public
         field::common::X1T<
             comms::option::FixedBitLength<4>,
             comms::option::BitmaskReservedBits<0xfe, 0>
-        >;
+        >
+    {
+        /// @brief Provide names for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS(dgpsUsed);
+    };
 
-    /// @brief Definition of "flags" field.
-    using flags =
+    /// @brief Base class for @ref flags field.
+    using flagsBase =
         field::common::BitfieldT<
             std::tuple<
                 channel,
                 flagsBits
             >
         >;
+
+    /// @brief Definition of "flags" field.
+    struct flags : public flagsBase
+    {
+        /// @brief Allow access to internal fields.
+        /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
+        ///     related to @b comms::field::Bitfield class from COMMS library
+        ///     for details.
+        COMMS_FIELD_MEMBERS_ACCESS(flagsBase, channel, flagsBits);
+    };
 
     /// @brief Definition of "agec" field.
     using ageC = field::common::U2T<field::common::Scaling_ms2s>;
@@ -129,8 +118,8 @@ struct NavDgpsFields
     /// @brief Definition of "prrc" field.
     using prrc = field::common::R4;
 
-    /// @brief Definition of the repeated block as a single bundle field
-    using block =
+    /// @brief Base class of @ref block field
+    using blockBase =
         field::common::BundleT<
             std::tuple<
                 svid,
@@ -140,6 +129,16 @@ struct NavDgpsFields
                 prrc
             >
         >;
+
+    /// @brief Definition of the repeated block as a single bundle field
+    struct block : public blockBase
+    {
+        /// @brief Allow access to internal fields.
+        /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
+        ///     related to @b comms::field::Bitfield class from COMMS library
+        ///     for details.
+        COMMS_FIELD_MEMBERS_ACCESS(blockBase, svid, flags, ageC, prc, prrc);
+    };
 
     /// @brief Definition of the list of repeated blocks (@ref block).
     using data =
@@ -162,12 +161,11 @@ struct NavDgpsFields
 };
 
 /// @brief Definition of NAV-DGPS message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
-///     See @ref NavDgpsFields and for definition of the fields this message contains.
+///     various implementation options. @n
+///     See @ref NavDgpsFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class NavDgps : public
@@ -175,33 +173,43 @@ class NavDgps : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_DGPS>,
         comms::option::FieldsImpl<NavDgpsFields::All>,
-        comms::option::DispatchImpl<NavDgps<TMsgBase> >
+        comms::option::MsgType<NavDgps<TMsgBase> >,
+        comms::option::HasDoRefresh
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_DGPS>,
         comms::option::FieldsImpl<NavDgpsFields::All>,
-        comms::option::DispatchImpl<NavDgps<TMsgBase> >
+        comms::option::MsgType<NavDgps<TMsgBase> >,
+        comms::option::HasDoRefresh
     > Base;
 public:
 
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_iTOW, ///< @b iTOW field, see @ref NavDgpsFields::iTOW
-        FieldIdx_age, ///< @b age field, see @ref NavDgpsFields::age
-        FieldIdx_baseId, ///< @b baseId field, see @ref NavDgpsFields::baseId
-        FieldIdx_baseHealth, ///< @b baseHealth field, see @ref NavDgpsFields::baseHealth
-        FieldIdx_numCh, ///< @b numCh field, see @ref NavDgpsFields::numCh
-        FieldIdx_status, ///< @b status field, see @ref NavDgpsFields::status
-        FieldIdx_reserved1, ///< @b reserved1 field, see @ref NavDgpsFields::reserved1
-        FieldIdx_data, ///< @b data field, see @ref NavDgpsFields::data
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b iTOW for @ref NavDgpsFields::iTOW field
+    ///     @li @b age for @ref NavDgpsFields::age field
+    ///     @li @b baseId for @ref NavDgpsFields::baseId field
+    ///     @li @b baseHealth for @ref NavDgpsFields::baseHealth field
+    ///     @li @b numCh for @ref NavDgpsFields::numCh field
+    ///     @li @b status for @ref NavDgpsFields::status field
+    ///     @li @b reserved1 for @ref NavDgpsFields::reserved1 field
+    ///     @li @b data for @ref NavDgpsFields::data field
+    COMMS_MSG_FIELDS_ACCESS(Base,
+        iTOW,
+        age,
+        baseId,
+        baseHealth,
+        numCh,
+        status,
+        reserved1,
+        data
+    );
 
     /// @brief Default constructor
     NavDgps() = default;
@@ -221,15 +229,12 @@ public:
     /// @brief Move assignment
     NavDgps& operator=(NavDgps&&) = default;
 
-protected:
-
-    /// @brief Overrides read functionality provided by the base class.
+    /// @brief Provides custom read functionality.
     /// @details The number of blocks in @b data (@ref NavDgpsFields::data)
     ///     list is determined by the value of @b numCh (@ref NavDgpsFields::numCh)
     ///     field.
-    virtual comms::ErrorStatus readImpl(
-        typename Base::ReadIterator& iter,
-        std::size_t len) override
+    template <typename TIter>
+    comms::ErrorStatus doRead(TIter& iter, std::size_t len)
     {
         auto es = Base::template readFieldsUntil<FieldIdx_data>(iter, len);
         if (es != comms::ErrorStatus::Success) {
@@ -244,12 +249,12 @@ protected:
         return Base::template readFieldsFrom<FieldIdx_data>(iter, len);
     }
 
-    /// @brief Overrides default refreshing functionality provided by the interface class.
+    /// @brief Provides custom refresh functionality
     /// @details The value of @b numCh (@ref NavDgpsFields::numCh) field is
     ///     determined by the number of elements in the internal storage collection
     ///     of the @b data (@ref NavDgpsFields::data) list.
     /// @return @b true in case the value of "numCh" field was modified, @b false otherwise
-    virtual bool refreshImpl() override
+    bool doRefresh()
     {
         auto& allFields = Base::fields();
         auto& numChField = std::get<FieldIdx_numCh>(allFields);

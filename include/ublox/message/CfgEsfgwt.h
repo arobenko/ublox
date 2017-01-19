@@ -1,5 +1,5 @@
 //
-// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2017 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -33,20 +33,18 @@ namespace message
 /// @see CfgEsfgwt
 struct CfgEsfgwtFields
 {
-    /// @brief Bits access enumerator for @ref flags bitmask field.
-    enum
-    {
-        flags_setVehicle = 12,  ///< @b setVehicle bit index
-        flags_setTime, ///< @b setTime bit index
-        flags_setWt, ///< @b setWt bit index
-        flags_numOfValues ///< upper limit of available bits
-    };
-
     /// @brief Definition of "flags" field.
-    using flags =
+    struct flags : public
         field::common::X2T<
             comms::option::BitmaskReservedBits<0x8fff, 0>
-        >;
+        >
+    {
+        /// @brief Provide names for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS(setVehicle=12, setTime, setWt);
+    };
 
     /// @brief Definition of "id" field.
     using id = field::common::U2;
@@ -126,12 +124,11 @@ struct CfgEsfgwtFields
 };
 
 /// @brief Definition of CFG-ESFGWT message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
-///     See @ref CfgEsfgwtFields and for definition of the fields this message contains.
+///     various implementation options. @n
+///     See @ref CfgEsfgwtFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class CfgEsfgwt : public
@@ -139,40 +136,55 @@ class CfgEsfgwt : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_ESFGWT>,
         comms::option::FieldsImpl<CfgEsfgwtFields::All>,
-        comms::option::DispatchImpl<CfgEsfgwt<TMsgBase> >
+        comms::option::MsgType<CfgEsfgwt<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_ESFGWT>,
         comms::option::FieldsImpl<CfgEsfgwtFields::All>,
-        comms::option::DispatchImpl<CfgEsfgwt<TMsgBase> >
+        comms::option::MsgType<CfgEsfgwt<TMsgBase> >
     > Base;
 public:
 
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_flags, ///< @b flags field, see @ref CfgEsfgwtFields::flags
-        FieldIdx_id, ///< @b id field, see @ref CfgEsfgwtFields::id
-        FieldIdx_wtFactor, ///< @b wtFactor field, see @ref CfgEsfgwtFields::wtFactor
-        FieldIdx_reserved1, ///< @b reserved1 field, see @ref CfgEsfgwtFields::reserved1
-        FieldIdx_wtQuantError, ///< @b wtQuantError field, see @ref CfgEsfgwtFields::wtQuantError
-        FieldIdx_timeTagFactor, ///< @b timeTagFactor field, see @ref CfgEsfgwtFields::timeTagFactor
-        FieldIdx_wtCountMax, ///< @b wtCountMax field, see @ref CfgEsfgwtFields::wtCountMax
-        FieldIdx_timeTagMax, ///< @b timeTagMax field, see @ref CfgEsfgwtFields::timeTagMax
-        FieldIdx_wtLatency, ///< @b wtLatency field, see @ref CfgEsfgwtFields::wtLatency
-        FieldIdx_reserved2, ///< @b reserved2 field, see @ref CfgEsfgwtFields::reserved2
-        FieldIdx_wtFrequency, ///< @b wtFrequency field, see @ref CfgEsfgwtFields::wtFrequency
-        FieldIdx_reserved3, ///< @b reserved3 field, see @ref CfgEsfgwtFields::reserved3
-        FieldIdx_speedDeadBand, ///< @b speedDeadBand field, see @ref CfgEsfgwtFields::speedDeadBand
-        FieldIdx_reserved4, ///< @b reserved4 field, see @ref CfgEsfgwtFields::reserved4
-        FieldIdx_reserved5, ///< @b reserved5 field, see @ref CfgEsfgwtFields::reserved5
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b flags for @ref CfgEsfgwtFields::flags field
+    ///     @li @b id for @ref CfgEsfgwtFields::id field
+    ///     @li @b wtFactor for @ref CfgEsfgwtFields::wtFactor field
+    ///     @li @b reserved1 for @ref CfgEsfgwtFields::reserved1 field
+    ///     @li @b wtQuantError for @ref CfgEsfgwtFields::wtQuantError field
+    ///     @li @b timeTagFactor for @ref CfgEsfgwtFields::timeTagFactor field
+    ///     @li @b wtCountMax for @ref CfgEsfgwtFields::wtCountMax field
+    ///     @li @b timeTagMax for @ref CfgEsfgwtFields::timeTagMax field
+    ///     @li @b wtLatency for @ref CfgEsfgwtFields::wtLatency field
+    ///     @li @b reserved2 for @ref CfgEsfgwtFields::reserved2 field
+    ///     @li @b wtFrequency for @ref CfgEsfgwtFields::wtFrequency field
+    ///     @li @b reserved3 for @ref CfgEsfgwtFields::reserved3 field
+    ///     @li @b speedDeadBand for @ref CfgEsfgwtFields::speedDeadBand field
+    ///     @li @b reserved4 for @ref CfgEsfgwtFields::reserved4 field
+    ///     @li @b reserved5 for @ref CfgEsfgwtFields::reserved5 field
+    COMMS_MSG_FIELDS_ACCESS(Base,
+        flags,
+        id,
+        wtFactor,
+        reserved1,
+        wtQuantError,
+        timeTagFactor,
+        wtCountMax,
+        timeTagMax,
+        wtLatency,
+        reserved2,
+        wtFrequency,
+        reserved3,
+        speedDeadBand,
+        reserved4,
+        reserved5
+    );
 
     /// @brief Default constructor
     CfgEsfgwt() = default;

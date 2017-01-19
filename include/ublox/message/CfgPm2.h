@@ -1,5 +1,5 @@
 //
-// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2017 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -67,50 +67,6 @@ struct CfgPm2Fields
         NumOfValues ///< number of available values
     };
 
-    /// @brief Use this enumeration to access member fields of @ref flags bitfield.
-    enum
-    {
-        flags_reserved, ///< @b index of @b reserved member field
-        flags_extintSelect, ///< @b index of @b extintSelect member field
-        flags_extintWake, ///< @b index of @b extintWake member field
-        flags_extintBackup, ///< @b index of @b extintBackup member field
-        flags_limitPeakCurr = flags_extintBackup + 2,  ///< @b index of @b limitPeakCurr member field
-        flags_waitTimeFix, ///< @b index of @b waitTimeFix member field
-        flags_updateRTC, ///< @b index of @b updateRTC member field
-        flags_updateEPH, ///< @b index of @b updateEPH member field
-        flags_doNotEnterOff = flags_updateEPH + 2,  ///< @b index of @b doNotEnterOff member field
-        flags_mode,  ///< @b index of @b mode member field
-        flags_numOfValues = flags_mode + 2  ///< number of available member fields
-    };
-
-    /// @brief Single bit access enumerator for @ref waitTimeFix member of @ref flags.
-    enum
-    {
-        waitTimeFix_bit, ///< single available bit
-        waitTimeFix_numOfValues ///< number of available bits
-    };
-
-    /// @brief Single bit access enumerator for @ref updateRTC member of @ref flags.
-    enum
-    {
-        updateRTC_bit, ///< single available bit
-        updateRTC_numOfValues ///< number of available bits
-    };
-
-    /// @brief Single bit access enumerator for @ref updateEPH member of @ref flags.
-    enum
-    {
-        updateEPH_bit, ///< single available bit
-        updateEPH_numOfValues ///< number of available bits
-    };
-
-    /// @brief Single bit access enumerator for @ref doNotEnterOff member of @ref flags.
-    enum
-    {
-        doNotEnterOff_bit, ///< single available bit
-        doNotEnterOff_numOfValues ///< number of available bits
-    };
-
     /// @brief Definition of "version" field.
     using version =
         field::common::U1T<
@@ -166,20 +122,48 @@ struct CfgPm2Fields
         >;
 
     /// @brief Definition of "waitTimeFix" bit as a bitmask member of @ref flags bitfield field.
-    using waitTimeFix =
-        field::common::X1T<comms::option::FixedBitLength<1> >;
+    struct waitTimeFix : public
+        field::common::X1T<comms::option::FixedBitLength<1> >
+    {
+        /// @brief Provide names for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS(bit);
+    };
 
     /// @brief Definition of "updateRTC" bit as a bitmask member of @ref flags bitfield field.
-    using updateRTC =
-        field::common::X1T<comms::option::FixedBitLength<1> >;
+    struct updateRTC : public
+        field::common::X1T<comms::option::FixedBitLength<1> >
+    {
+        /// @brief Provide names for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS(bit);
+    };
 
     /// @brief Definition of "updateEPH" bit as a bitmask member of @ref flags bitfield field.
-    using updateEPH =
-        field::common::X1T<comms::option::FixedBitLength<1> >;
+    struct updateEPH : public
+        field::common::X1T<comms::option::FixedBitLength<1> >
+    {
+        /// @brief Provide names for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS(bit);
+    };
 
     /// @brief Definition of "doNotEnterOff" bit as a bitmask member of @ref flags bitfield field.
-    using doNotEnterOff =
-        field::common::X1T<comms::option::FixedBitLength<1> >;
+    struct doNotEnterOff : public
+        field::common::X1T<comms::option::FixedBitLength<1> >
+    {
+        /// @brief Provide names for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS(bit);
+    };
 
     /// @brief Definition of "mode" member of @ref flags bitfield field.
     using mode =
@@ -189,8 +173,8 @@ struct CfgPm2Fields
             comms::option::FixedBitLength<2>
         >;
 
-    /// @brief Definition of "flags" field.
-    using flags =
+    /// @brief Base class of @ref flags field.
+    using flagsBase =
         field::common::BitfieldT<
             std::tuple<
                 reserved,
@@ -214,6 +198,29 @@ struct CfgPm2Fields
                 >
             >
         >;
+
+    /// @brief Definition of "flags" field.
+    struct flags : public flagsBase
+    {
+        /// @brief Allow access to internal fields.
+        /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
+        ///     related to @b comms::field::Bitfield class from COMMS library
+        ///     for details.
+        COMMS_FIELD_MEMBERS_ACCESS(flagsBase,
+            invalid1,
+            extintSelect,
+            extintWake,
+            extintBackup,
+            invalid2,
+            limitPeakCurr,
+            waitTimeFix,
+            updateRTC,
+            updateEPH,
+            invalid3,
+            doNotEnterOff,
+            mode,
+            invalid4);
+    };
 
     /// @brief Definition of "updatePeriod" field.
     using updatePeriod = field::common::U4T<field::common::Scaling_ms2s>;
@@ -278,12 +285,11 @@ struct CfgPm2Fields
 };
 
 /// @brief Definition of CFG-PM2 message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
-///     See @ref CfgPm2Fields and for definition of the fields this message contains.
+///     various implementation options. @n
+///     See @ref CfgPm2Fields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class CfgPm2 : public
@@ -291,43 +297,60 @@ class CfgPm2 : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_PM2>,
         comms::option::FieldsImpl<CfgPm2Fields::All>,
-        comms::option::DispatchImpl<CfgPm2<TMsgBase> >
+        comms::option::MsgType<CfgPm2<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_PM2>,
         comms::option::FieldsImpl<CfgPm2Fields::All>,
-        comms::option::DispatchImpl<CfgPm2<TMsgBase> >
+        comms::option::MsgType<CfgPm2<TMsgBase> >
     > Base;
 public:
-
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_version, ///< @b version field, see @ref CfgPm2Fields::version
-        FieldIdx_reserved1, ///< @b reserved1 field, see @ref CfgPm2Fields::reserved1
-        FieldIdx_reserved2, ///< @b reserved2 field, see @ref CfgPm2Fields::reserved2
-        FieldIdx_reserved3, ///< @b reserved3 field, see @ref CfgPm2Fields::reserved3
-        FieldIdx_flags, ///< @b flags field, see @ref CfgPm2Fields::flags
-        FieldIdx_updatePeriod, ///< @b updatePeriod field, see @ref CfgPm2Fields::updatePeriod
-        FieldIdx_searchPeriod, ///< @b searchPeriod field, see @ref CfgPm2Fields::searchPeriod
-        FieldIdx_gridOffset, ///< @b gridOffset field, see @ref CfgPm2Fields::gridOffset
-        FieldIdx_onTime, ///< @b onTime field, see @ref CfgPm2Fields::onTime
-        FieldIdx_minAcqTime, ///< @b minAcqTime field, see @ref CfgPm2Fields::minAcqTime
-        FieldIdx_reserved4, ///< @b reserved4 field, see @ref CfgPm2Fields::reserved4
-        FieldIdx_reserved5, ///< @b reserved5 field, see @ref CfgPm2Fields::reserved5
-        FieldIdx_reserved6, ///< @b reserved6 field, see @ref CfgPm2Fields::reserved6
-        FieldIdx_reserved7, ///< @b reserved7 field, see @ref CfgPm2Fields::reserved7
-        FieldIdx_reserved8, ///< @b reserved8 field, see @ref CfgPm2Fields::reserved8
-        FieldIdx_reserved9, ///< @b reserved9 field, see @ref CfgPm2Fields::reserved9
-        FieldIdx_reserved10, ///< @b reserved10 field, see @ref CfgPm2Fields::reserved10
-        FieldIdx_reserved11, ///< @b reserved11 field, see @ref CfgPm2Fields::reserved11
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b version for @ref CfgPm2Fields::version field
+    ///     @li @b reserved1 for @ref CfgPm2Fields::reserved1 field
+    ///     @li @b reserved2 for @ref CfgPm2Fields::reserved2 field
+    ///     @li @b reserved3 for @ref CfgPm2Fields::reserved3 field
+    ///     @li @b flags for @ref CfgPm2Fields::flags field
+    ///     @li @b updatePeriod for @ref CfgPm2Fields::updatePeriod field
+    ///     @li @b searchPeriod for @ref CfgPm2Fields::searchPeriod field
+    ///     @li @b gridOffset for @ref CfgPm2Fields::gridOffset field
+    ///     @li @b onTime for @ref CfgPm2Fields::onTime field
+    ///     @li @b minAcqTime for @ref CfgPm2Fields::minAcqTime field
+    ///     @li @b reserved4 for @ref CfgPm2Fields::reserved4 field
+    ///     @li @b reserved5 for @ref CfgPm2Fields::reserved5 field
+    ///     @li @b reserved6 for @ref CfgPm2Fields::reserved6 field
+    ///     @li @b reserved7 for @ref CfgPm2Fields::reserved7 field
+    ///     @li @b reserved8 for @ref CfgPm2Fields::reserved8 field
+    ///     @li @b reserved9 for @ref CfgPm2Fields::reserved9 field
+    ///     @li @b reserved10 for @ref CfgPm2Fields::reserved10 field
+    ///     @li @b reserved11 for @ref CfgPm2Fields::reserved11 field
+    COMMS_MSG_FIELDS_ACCESS(Base,
+        version,
+        reserved1,
+        reserved2,
+        reserved3,
+        flags,
+        updatePeriod,
+        searchPeriod,
+        gridOffset,
+        onTime,
+        minAcqTime,
+        reserved4,
+        reserved5,
+        reserved6,
+        reserved7,
+        reserved8,
+        reserved9,
+        reserved10,
+        reserved11
+    );
 
     /// @brief Default constructor
     CfgPm2() = default;

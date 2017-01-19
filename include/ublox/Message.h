@@ -1,5 +1,5 @@
 //
-// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2017 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -43,8 +43,7 @@ class MessageT : public
     comms::Message<
         TOptions...,
         comms::option::LittleEndian,
-        comms::option::MsgIdType<MsgId> >,
-        comms::option::RefreshInterface
+        comms::option::MsgIdType<MsgId> >
 {
 public:
 
@@ -66,36 +65,6 @@ public:
     /// @brief Move assignment operator
     MessageT& operator=(MessageT&&) = default;
 
-#ifdef FOR_DOXYGEN_DOC_ONLY
-    /// @brief Refresh the contents of the message.
-    /// @details In Ublox binary protocol in some messages contents of specific
-    ///     fields may limit the value of other field(s). A call to this function
-    ///     is intended to bring the contents of the message to a valid state
-    ///     after one or more of the fields was updated. @n
-    ///     This function calls refreshImpl() virtual function and returns the value
-    ///     returned by the latter. The expected behaviour from overriding functions
-    ///     in the derived classes is to return @b true if value of at least one
-    ///     field was modified, and @b false if values of all the fields remained intact.
-    /// @return Whatever call to virtual refreshImpl() returns.
-    bool refresh()
-    {
-        return refreshImpl();
-    }
-#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
-
-protected:
-
-#ifdef FOR_DOXYGEN_DOC_ONLY
-    /// @brief Polymorphic refresh functionality.
-    /// @details Invoked by non-virtual refresh() interface function. By default
-    ///     does nothing and returns false. It may be overridden by the
-    ///     derived class.
-    /// @return Default implementation always returns @b false.
-    virtual bool refreshImpl()
-    {
-        return false;
-    }
-#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 };
 
 /// @brief Default Ublox interface class.

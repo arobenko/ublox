@@ -1,5 +1,5 @@
 //
-// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2017 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -86,7 +86,7 @@ QVariantMap createProps_mode()
          .add(parityProps.asMap())
          .add(nStopBitsProps.asMap())
          .add(createReservedFunc());
-    assert(props.members().size() == CfgPrtUartFields::mode_numOfValues);
+    assert(props.members().size() == CfgPrtUartFields::mode::FieldIdx_numOfValues);
     return props.asMap();
 }
 

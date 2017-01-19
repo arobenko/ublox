@@ -1,5 +1,5 @@
 //
-// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2017 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -33,16 +33,6 @@ namespace message
 /// @see NavStatus
 struct NavStatusFields
 {
-    /// @brief Bits access enumeration for bits in @b flags bitmask field.
-    enum
-    {
-        flags_gpsFixOK, ///< @b gpsFixOk bit index
-        flags_diffSoln, ///< @b diffSoln bit index
-        flags_wknSet, ///< @b wknSen bit index
-        flags_towSet, ///< @b towSet bit index
-        flags_numOfValues ///< number of available bits
-    };
-
     /// @brief Value enumeration for @ref dgpsIStat field
     enum class DgpsIStat : std::uint8_t
     {
@@ -71,22 +61,6 @@ struct NavStatusFields
         NumOfValues ///< number of available values
     };
 
-    /// @brief Use this enumeration to access member fields of @ref fixStat bitfield.
-    enum
-    {
-        fixStat_dgpsIStat, ///< index of @ref dgpsIStat member field
-        fixStat_mapMatching = fixStat_dgpsIStat + 2,  ///< index of @ref mapMatching member field
-        fixStat_numOfValues ///< number of available member fields
-    };
-
-    /// @brief Use this enumeration to access member fields of @ref flags2 bitfield.
-    enum
-    {
-        flags2_psmState, ///< index of @ref psmState member field
-        flags2_numOfValues = flags2_psmState + 2 ///< number of available member fields
-    };
-
-
     /// @brief Definition of "iTOW" field.
     using iTOW = field::nav::iTOW;
 
@@ -94,10 +68,17 @@ struct NavStatusFields
     using gpsFix = field::nav::gpsFix;
 
     /// @brief Definition of "flags" field.
-    using flags =
+    struct flags : public
         field::common::X1T<
             comms::option::BitmaskReservedBits<0xf0, 0>
-        >;
+        >
+    {
+        /// @brief Provide names for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS(gpsFixOk, diffSoln, wknSet, towSet);
+    };
 
     /// @brief Definition of "dgpsIStat" member fields of @ref fixStat bitfield.
     using dgpsIStat =
@@ -115,8 +96,8 @@ struct NavStatusFields
             comms::option::FixedBitLength<2>
         >;
 
-    /// @brief Definition of "fixStat" field.
-    using fixStat =
+    /// @brief Base class of @ref fixStat field
+    using fixStatBase =
         field::common::BitfieldT<
             std::tuple<
                 dgpsIStat,
@@ -127,6 +108,16 @@ struct NavStatusFields
             >
         >;
 
+    /// @brief Definition of "fixStat" field.
+    struct fixStat : public fixStatBase
+    {
+        /// @brief Allow access to internal fields.
+        /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
+        ///     related to @b comms::field::Bitfield class from COMMS library
+        ///     for details.
+        COMMS_FIELD_MEMBERS_ACCESS(fixStatBase, dgpsIStat, reserved, mapMatching);
+    };
+
     /// @brief Definition of "psmState" member fields of @ref flags2 bitfield.
     using psmState =
         field::common::EnumT<
@@ -135,8 +126,8 @@ struct NavStatusFields
             comms::option::FixedBitLength<2>
         >;
 
-    /// @brief Definition of "flags2" field.
-    using flags2 =
+    /// @brief Base class of @ref flags2 field.
+    using flags2Base =
         field::common::BitfieldT<
             std::tuple<
                 psmState,
@@ -145,6 +136,16 @@ struct NavStatusFields
                 >
             >
         >;
+
+    /// @brief Definition of "flags2" field.
+    struct flags2 : public flags2Base
+    {
+        /// @brief Allow access to internal fields.
+        /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
+        ///     related to @b comms::field::Bitfield class from COMMS library
+        ///     for details.
+        COMMS_FIELD_MEMBERS_ACCESS(flags2Base, psmState, reserved);
+    };
 
     /// @brief Definition of "ttff" field.
     using ttff = field::common::U4T<field::common::Scaling_ms2s>;
@@ -165,12 +166,11 @@ struct NavStatusFields
 };
 
 /// @brief Definition of NAV-STATUS message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
-///     See @ref NavStatusFields and for definition of the fields this message contains.
+///     various implementation options. @n
+///     See @ref NavStatusFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class NavStatus : public
@@ -178,32 +178,31 @@ class NavStatus : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_STATUS>,
         comms::option::FieldsImpl<NavStatusFields::All>,
-        comms::option::DispatchImpl<NavStatus<TMsgBase> >
+        comms::option::MsgType<NavStatus<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_STATUS>,
         comms::option::FieldsImpl<NavStatusFields::All>,
-        comms::option::DispatchImpl<NavStatus<TMsgBase> >
+        comms::option::MsgType<NavStatus<TMsgBase> >
     > Base;
 public:
 
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_iTOW, ///< @b iTOW field, see @ref NavStatusFields::iTOW
-        FieldIdx_gpsFix, ///< @b gpsFix field, see @ref NavStatusFields::gpsFix
-        FieldIdx_flags, ///< @b flags field, see @ref NavStatusFields::flags
-        FieldIdx_fixStat, ///< @b fixStat field, see @ref NavStatusFields::fixStat
-        FieldIdx_flags2, ///< @b flags2 field, see @ref NavStatusFields::flags2
-        FieldIdx_ttff, ///< @b ttff field, see @ref NavStatusFields::ttff
-        FieldIdx_msss, ///< @b msss field, see @ref NavStatusFields::msss
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b iTOW for @ref NavStatusFields::iTOW field
+    ///     @li @b gpsFix for @ref NavStatusFields::gpsFix field
+    ///     @li @b flags for @ref NavStatusFields::flags field
+    ///     @li @b fixStat for @ref NavStatusFields::fixStat field
+    ///     @li @b flags2 for @ref NavStatusFields::flags2 field
+    ///     @li @b ttff for @ref NavStatusFields::ttff field
+    ///     @li @b msss for @ref NavStatusFields::msss field
+    COMMS_MSG_FIELDS_ACCESS(Base, iTOW, gpsFix, flags, fixStat, flags2, ttff, msss);
 
     /// @brief Default constructor
     NavStatus() = default;

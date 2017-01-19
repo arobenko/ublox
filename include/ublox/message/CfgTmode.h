@@ -1,5 +1,5 @@
 //
-// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2017 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -86,12 +86,11 @@ struct CfgTmodeFields
 };
 
 /// @brief Definition of CFG-TMODE message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
-///     See @ref CfgTmodeFields and for definition of the fields this message contains.
+///     various implementation options. @n
+///     See @ref CfgTmodeFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class CfgTmode : public
@@ -99,32 +98,31 @@ class CfgTmode : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_TMODE>,
         comms::option::FieldsImpl<CfgTmodeFields::All>,
-        comms::option::DispatchImpl<CfgTmode<TMsgBase> >
+        comms::option::MsgType<CfgTmode<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_TMODE>,
         comms::option::FieldsImpl<CfgTmodeFields::All>,
-        comms::option::DispatchImpl<CfgTmode<TMsgBase> >
+        comms::option::MsgType<CfgTmode<TMsgBase> >
     > Base;
 public:
 
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_timeMode, ///< @b timeMode field, see @ref CfgTmodeFields::timeMode
-        FieldIdx_fixedPosX, ///< @b fixedPosX field, see @ref CfgTmodeFields::fixedPosX
-        FieldIdx_fixedPosY, ///< @b fixedPosY field, see @ref CfgTmodeFields::fixedPosY
-        FieldIdx_fixedPosZ, ///< @b fixedPosZ field, see @ref CfgTmodeFields::fixedPosZ
-        FieldIdx_fixedPosVar, ///< @b fixedPosVar field, see @ref CfgTmodeFields::fixedPosVar
-        FieldIdx_svinMinDur, ///< @b svinMinDur field, see @ref CfgTmodeFields::svinMinDur
-        FieldIdx_svinVarLimit, ///< @b svinVarLimit field, see @ref CfgTmodeFields::svinVarLimit
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b timeMode for @ref CfgTmodeFields::timeMode field
+    ///     @li @b fixedPosX for @ref CfgTmodeFields::fixedPosX field
+    ///     @li @b fixedPosY for @ref CfgTmodeFields::fixedPosY field
+    ///     @li @b fixedPosZ for @ref CfgTmodeFields::fixedPosZ field
+    ///     @li @b fixedPosVar for @ref CfgTmodeFields::fixedPosVar field
+    ///     @li @b svinMinDur for @ref CfgTmodeFields::svinMinDur field
+    ///     @li @b svinVarLimit for @ref CfgTmodeFields::svinVarLimit field
+    COMMS_MSG_FIELDS_ACCESS(Base, timeMode, fixedPosX, fixedPosY, fixedPosZ, fixedPosVar, svinMinDur, svinVarLimit);
 
     /// @brief Default constructor
     CfgTmode() = default;

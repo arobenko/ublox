@@ -1,5 +1,5 @@
 //
-// Copyright 2015 - 2015 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2017 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -117,12 +117,11 @@ struct MonHw2Fields
 };
 
 /// @brief Definition of MON-HW2 message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
-///     See @ref MonHw2Fields and for definition of the fields this message contains.
+///     various implementation options. @n
+///     See @ref MonHw2Fields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class MonHw2 : public
@@ -130,35 +129,45 @@ class MonHw2 : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_MON_HW2>,
         comms::option::FieldsImpl<MonHw2Fields::All>,
-        comms::option::DispatchImpl<MonHw2<TMsgBase> >
+        comms::option::MsgType<MonHw2<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_MON_HW2>,
         comms::option::FieldsImpl<MonHw2Fields::All>,
-        comms::option::DispatchImpl<MonHw2<TMsgBase> >
+        comms::option::MsgType<MonHw2<TMsgBase> >
     > Base;
 public:
 
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_ofsI, ///< @b ofsI field, see @ref MonHw2Fields::ofsI
-        FieldIdx_magI, ///< @b magI field, see @ref MonHw2Fields::magI
-        FieldIdx_ofsQ, ///< @b ofsQ field, see @ref MonHw2Fields::ofsQ
-        FieldIdx_magQ, ///< @b magQ field, see @ref MonHw2Fields::magQ
-        FieldIdx_cfgSource, ///< @b cfgSource field, see @ref MonHw2Fields::cfgSource
-        FieldIdx_reserved0, ///< @b reserved0 field, see @ref MonHw2Fields::reserved0
-        FieldIdx_lowLevelCfg, ///< @b lowLevelCfg field, see @ref MonHw2Fields::lowLevelCfg
-        FieldIdx_reserved1, ///< @b reserved1 field, see @ref MonHw2Fields::reserved1
-        FieldIdx_postStatus, ///< @b postStatus field, see @ref MonHw2Fields::postStatus
-        FieldIdx_reserved2, ///< @b reserved2 field, see @ref MonHw2Fields::reserved2
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b ofsI for @ref MonHw2Fields::ofsI field
+    ///     @li @b magI for @ref MonHw2Fields::magI field
+    ///     @li @b ofsQ for @ref MonHw2Fields::ofsQ field
+    ///     @li @b magQ for @ref MonHw2Fields::magQ field
+    ///     @li @b cfgSource for @ref MonHw2Fields::cfgSource field
+    ///     @li @b reserved0 for @ref MonHw2Fields::reserved0 field
+    ///     @li @b lowLevelCfg for @ref MonHw2Fields::lowLevelCfg field
+    ///     @li @b reserved1 for @ref MonHw2Fields::reserved1 field
+    ///     @li @b postStatus for @ref MonHw2Fields::postStatus field
+    ///     @li @b reserved2 for @ref MonHw2Fields::reserved2 field
+    COMMS_MSG_FIELDS_ACCESS(Base,
+        ofsI,
+        magI,
+        ofsQ,
+        magQ,
+        cfgSource,
+        reserved0,
+        lowLevelCfg,
+        reserved1,
+        postStatus,
+        reserved2
+    );
 
     /// @brief Default constructor
     MonHw2() = default;

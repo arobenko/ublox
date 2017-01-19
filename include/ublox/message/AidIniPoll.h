@@ -1,5 +1,5 @@
 //
-// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2017 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -37,11 +37,9 @@ struct AidIniPollFields
 };
 
 /// @brief Definition of AID-INI @b poll) message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
+///     various implementation options. @n
 ///     See @ref AidIniPollFields and for definition of the fields this message contains.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
@@ -50,14 +48,14 @@ class AidIniPoll : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_INI>,
         comms::option::FieldsImpl<AidIniPollFields::All>,
-        comms::option::DispatchImpl<AidIniPoll<TMsgBase> >
+        comms::option::MsgType<AidIniPoll<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_INI>,
         comms::option::FieldsImpl<AidIniPollFields::All>,
-        comms::option::DispatchImpl<AidIniPoll<TMsgBase> >
+        comms::option::MsgType<AidIniPoll<TMsgBase> >
     > Base;
 public:
 

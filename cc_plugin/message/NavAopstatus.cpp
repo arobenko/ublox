@@ -1,5 +1,5 @@
 //
-// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2017 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -47,7 +47,7 @@ QVariantMap createProps_aopCfg()
     cc::property::field::ForField<NavAopstatusFields::aopCfg> props;
     props.name("aopCfg")
          .add("useAOP");
-    assert(props.bits().size() == NavAopstatusFields::aopCfg_numOfValues);
+    assert(props.bits().size() == NavAopstatusFields::aopCfg::BitIdx_numOfValues);
     return props.asMap();
 }
 

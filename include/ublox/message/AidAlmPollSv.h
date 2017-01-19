@@ -1,5 +1,5 @@
 //
-// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2017 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -42,12 +42,11 @@ struct AidAlmPollSvFields
 
 /// @brief Definition of AID-ALM (<b>poll SV</b>) message
 /// @details Poll request for AID-ALM (@ref AidAlm) message with requested SV.@n
-///     Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+///     Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
-///     See @ref AidAlmPollSvFields for definition of the fields this message contains.
+///     various implementation options. @n
+///     See @ref AidAlmPollSvFields for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class AidAlmPollSv : public
@@ -55,27 +54,25 @@ class AidAlmPollSv : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_ALM>,
         comms::option::FieldsImpl<AidAlmPollSvFields::All>,
-        comms::option::DispatchImpl<AidAlmPollSv<TMsgBase> >
+        comms::option::MsgType<AidAlmPollSv<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_ALM>,
         comms::option::FieldsImpl<AidAlmPollSvFields::All>,
-        comms::option::DispatchImpl<AidAlmPollSv<TMsgBase> >
+        comms::option::MsgType<AidAlmPollSv<TMsgBase> >
     > Base;
 public:
 
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_svid, ///< svid field, see @ref AidAlmPollSvFields::svid
-        FieldIdx_numOfValues  ///< number of available fields
-    };
-
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
-
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b svid for @ref AidAlmPollSvFields::svid field
+    COMMS_MSG_FIELDS_ACCESS(Base, svid);
 
     /// @brief Default constructor
     AidAlmPollSv() = default;

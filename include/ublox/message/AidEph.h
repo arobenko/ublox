@@ -1,5 +1,5 @@
 //
-// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2017 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -65,12 +65,11 @@ struct AidEphFields
 };
 
 /// @brief Definition of AID-EPH message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
-///     See @ref AidEphFields and for definition of the fields this message contains.
+///     various implementation options. @n
+///     See @ref AidEphFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class AidEph : public
@@ -78,30 +77,30 @@ class AidEph : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_EPH>,
         comms::option::FieldsImpl<AidEphFields::All>,
-        comms::option::DispatchImpl<AidEph<TMsgBase> >
+        comms::option::MsgType<AidEph<TMsgBase> >,
+        comms::option::HasDoRefresh
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_EPH>,
         comms::option::FieldsImpl<AidEphFields::All>,
-        comms::option::DispatchImpl<AidEph<TMsgBase> >
+        comms::option::MsgType<AidEph<TMsgBase> >,
+        comms::option::HasDoRefresh
     > Base;
 public:
-
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_svid, ///< svid field, see @ref AidEphFields::svid
-        FieldIdx_how, ///< how field, see @ref AidEphFields::how
-        FieldIdx_sf1d, ///< sf1d field, see @ref AidEphFields::sf1d
-        FieldIdx_sf2d, ///< sf2d field, see @ref AidEphFields::sf2d
-        FieldIdx_sf3d, ///< sf3d field, see @ref AidEphFields::sf3d
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b svid for @ref AidEphFields::svid field
+    ///     @li @b how for @ref AidEphFields::how field
+    ///     @li @b sf1d for @ref AidEphFields::sf1d field
+    ///     @li @b sf2d for @ref AidEphFields::sf2d field
+    ///     @li @b sf3d for @ref AidEphFields::sf3d field
+    COMMS_MSG_FIELDS_ACCESS(Base, svid, how, sf1d, sf2d, sf3d);
 
     /// @brief Default constructor
     /// @details Marks "sf1d" (see @ref AidEphFields::sf1d),
@@ -109,13 +108,9 @@ public:
     ///     fields to be missing.
     AidEph()
     {
-        auto& allFields = Base::fields();
-        auto& sf1dField = std::get<FieldIdx_sf1d>(allFields);
-        auto& sf2dField = std::get<FieldIdx_sf2d>(allFields);
-        auto& sf3dField = std::get<FieldIdx_sf3d>(allFields);
-        sf1dField.setMode(comms::field::OptionalMode::Missing);
-        sf2dField.setMode(comms::field::OptionalMode::Missing);
-        sf3dField.setMode(comms::field::OptionalMode::Missing);
+        field_sf1d().setMissing();
+        field_sf2d().setMissing();
+        field_sf3d().setMissing();
     }
 
     /// @brief Copy constructor
@@ -133,17 +128,14 @@ public:
     /// @brief Move assignment
     AidEph& operator=(AidEph&&) = default;
 
-protected:
-
-    /// @brief Overrides read functionality provided by the base class.
+    /// @brief Provides custom read functionality.
     /// @details The existence of "sf1d" (see @ref AidEphFields::sf1d),
     ///     "sf2d" (see @ref AidEphFields::sf2d), and "sf3d" (see @ref AidEphFields::sf3d)
     ///     is determined by the contents of "how" (see @ref AidEphFields::how)
     ///     field. If the value of the latter is 0, the "sfXd" fields are marked to
     ///     be missing, otherwise they exist.
-    virtual comms::ErrorStatus readImpl(
-        typename Base::ReadIterator& iter,
-        std::size_t len) override
+    template <typename TIter>
+    comms::ErrorStatus doRead(TIter& iter, std::size_t len)
     {
         auto es = Base::template readFieldsUntil<FieldIdx_sf1d>(iter, len);
         if (es != comms::ErrorStatus::Success) {
@@ -166,14 +158,14 @@ protected:
         return Base::template readFieldsFrom<FieldIdx_sf1d>(iter, len);
     }
 
-    /// @brief Overrides default refreshing functionality provided by the interface class.
+    /// @brief Provides custom refresh functionality
     /// @details The existence of "sf1d" (see @ref AidEphFields::sf1d),
     ///     "sf2d" (see @ref AidEphFields::sf2d), and "sf3d" (see @ref AidEphFields::sf3d)
     ///     is determined by the contents of "how" (see @ref AidEphFields::how)
     ///     field. If the value of the latter is 0, the "sfXd" fields are marked to
     ///     be missing, otherwise they exist.
     /// @return @b true in case the modes of "sfXd" fields were modified, @b false otherwise
-    virtual bool refreshImpl() override
+    bool doRefresh()
     {
         auto& allFields = Base::fields();
         auto& howField = std::get<FieldIdx_how>(allFields);

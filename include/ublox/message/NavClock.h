@@ -1,5 +1,5 @@
 //
-// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2017 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -59,12 +59,11 @@ struct NavClockFields
 };
 
 /// @brief Definition of NAV-CLOCK message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
-///     See @ref NavClockFields and for definition of the fields this message contains.
+///     various implementation options. @n
+///     See @ref NavClockFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class NavClock : public
@@ -72,30 +71,29 @@ class NavClock : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_CLOCK>,
         comms::option::FieldsImpl<NavClockFields::All>,
-        comms::option::DispatchImpl<NavClock<TMsgBase> >
+        comms::option::MsgType<NavClock<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_CLOCK>,
         comms::option::FieldsImpl<NavClockFields::All>,
-        comms::option::DispatchImpl<NavClock<TMsgBase> >
+        comms::option::MsgType<NavClock<TMsgBase> >
     > Base;
 public:
 
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_iTOW, ///< @b iTOW field, see @ref NavClockFields::iTOW
-        FieldIdx_clkB, ///< @b clkB field, see @ref NavClockFields::clkB
-        FieldIdx_clkD, ///< @b clkD field, see @ref NavClockFields::clkD
-        FieldIdx_tAcc, ///< @b tAcc field, see @ref NavClockFields::tAcc
-        FieldIdx_fAcc, ///< @b fAcc field, see @ref NavClockFields::fAcc
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b iTOW for @ref NavClockFields::iTOW field
+    ///     @li @b clkB for @ref NavClockFields::clkB field
+    ///     @li @b clkD for @ref NavClockFields::clkD field
+    ///     @li @b tAcc for @ref NavClockFields::tAcc field
+    ///     @li @b fAcc for @ref NavClockFields::fAcc field
+    COMMS_MSG_FIELDS_ACCESS(Base, iTOW, clkB, clkD, tAcc, fAcc);
 
     /// @brief Default constructor
     NavClock() = default;

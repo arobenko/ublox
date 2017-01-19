@@ -1,5 +1,5 @@
 //
-// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2017 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -67,12 +67,11 @@ struct NavPosllhFields
 };
 
 /// @brief Definition of NAV-POSLLH message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
-///     See @ref NavPosllhFields and for definition of the fields this message contains.
+///     various implementation options. @n
+///     See @ref NavPosllhFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class NavPosllh : public
@@ -80,32 +79,31 @@ class NavPosllh : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_POSLLH>,
         comms::option::FieldsImpl<NavPosllhFields::All>,
-        comms::option::DispatchImpl<NavPosllh<TMsgBase> >
+        comms::option::MsgType<NavPosllh<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_POSLLH>,
         comms::option::FieldsImpl<NavPosllhFields::All>,
-        comms::option::DispatchImpl<NavPosllh<TMsgBase> >
+        comms::option::MsgType<NavPosllh<TMsgBase> >
     > Base;
 public:
 
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_iTOW, ///< @b iTOW field, see @ref NavPosllhFields::iTOW
-        FieldIdx_lon, ///< @b lon field, see @ref NavPosllhFields::lon
-        FieldIdx_lat, ///< @b lat field, see @ref NavPosllhFields::lat
-        FieldIdx_height, ///< @b height field, see @ref NavPosllhFields::height
-        FieldIdx_hMSL, ///< @b hMSL field, see @ref NavPosllhFields::hMSL
-        FieldIdx_hAcc, ///< @b hAcc field, see @ref NavPosllhFields::hAcc
-        FieldIdx_vAcc, ///< @b vAcc field, see @ref NavPosllhFields::vAcc
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b iTOW for @ref NavPosllhFields::iTOW field
+    ///     @li @b lon for @ref NavPosllhFields::lon field
+    ///     @li @b lat for @ref NavPosllhFields::lat field
+    ///     @li @b height for @ref NavPosllhFields::height field
+    ///     @li @b hMSL for @ref NavPosllhFields::hMSL field
+    ///     @li @b hAcc for @ref NavPosllhFields::hAcc field
+    ///     @li @b vAcc for @ref NavPosllhFields::vAcc field
+    COMMS_MSG_FIELDS_ACCESS(Base, iTOW, lon, lat, height, hMSL, hAcc, vAcc);
 
     /// @brief Default constructor
     NavPosllh() = default;

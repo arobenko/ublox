@@ -1,5 +1,5 @@
 //
-// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2017 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -33,19 +33,6 @@ namespace message
 /// @see RxmRaw
 struct RxmRawFields
 {
-    /// @brief Use this enumeration to access member fields of @ref block bundle.
-    enum
-    {
-        block_cpMes, ///< index of @ref cpMes member field
-        block_prMes, ///< index of @ref prMes member field
-        block_doMes, ///< index of @ref doMes member field
-        block_sv, ///< index of @ref sv member field
-        block_mesQI, ///< index of @ref mesQI member field
-        block_cno, ///< index of @ref cno member field
-        block_lli, ///< index of @ref lli member field
-        block_numOfValues ///< number of available member fields
-    };
-
     /// @brief Definition of "rcvTow" field.
     using rcvTow = field::common::I4T<field::common::Scaling_ms2s>;
 
@@ -79,8 +66,8 @@ struct RxmRawFields
     /// @brief Definition of "lli" field.
     using lli = field::common::U1;
 
-    /// @brief Definition of a single block of @ref data
-    using block =
+    /// @brief Base class of @ref block field.
+    using blockBase =
         field::common::BundleT<
             std::tuple<
                 cpMes,
@@ -92,6 +79,16 @@ struct RxmRawFields
                 lli
             >
         >;
+
+    /// @brief Definition of a single block of @ref data
+    struct block : public blockBase
+    {
+        /// @brief Allow access to internal fields.
+        /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
+        ///     related to @b comms::field::Bitfield class from COMMS library
+        ///     for details.
+        COMMS_FIELD_MEMBERS_ACCESS(blockBase, cpMes, prMes, doMes, sv, mesQI, cno, lli);
+    };
 
     /// @brief Definition of the list of blocks (@ref block)
     using data =
@@ -111,12 +108,11 @@ struct RxmRawFields
 };
 
 /// @brief Definition of RXM-RAW message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
-///     See @ref RxmRawFields and for definition of the fields this message contains.
+///     various implementation options. @n
+///     See @ref RxmRawFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class RxmRaw : public
@@ -124,30 +120,32 @@ class RxmRaw : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_RXM_RAW>,
         comms::option::FieldsImpl<RxmRawFields::All>,
-        comms::option::DispatchImpl<RxmRaw<TMsgBase> >
+        comms::option::MsgType<RxmRaw<TMsgBase> >,
+        comms::option::HasDoRefresh
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_RXM_RAW>,
         comms::option::FieldsImpl<RxmRawFields::All>,
-        comms::option::DispatchImpl<RxmRaw<TMsgBase> >
+        comms::option::MsgType<RxmRaw<TMsgBase> >,
+        comms::option::HasDoRefresh
     > Base;
 public:
 
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_rcvTow, ///< @b rcvTow field, see @ref RxmRawFields::rcvTow
-        FieldIdx_week, ///< @b week field, see @ref RxmRawFields::week
-        FieldIdx_numSV, ///< @b numSV field, see @ref RxmRawFields::numSV
-        FieldIdx_reserved1, ///< @b reserved1 field, see @ref RxmRawFields::reserved1
-        FieldIdx_data, ///< @b data field, see @ref RxmRawFields::data
-        FieldIdx_numOfValues ///< number of available fields
-    };
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b rcvTow for @ref RxmRawFields::rcvTow field
+    ///     @li @b week for @ref RxmRawFields::week field
+    ///     @li @b numSV for @ref RxmRawFields::numSV field
+    ///     @li @b reserved1 for @ref RxmRawFields::reserved1 field
+    ///     @li @b data for @ref RxmRawFields::data field
+    COMMS_MSG_FIELDS_ACCESS(Base, rcvTow, week, numSV, reserved1, data);
 
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
 
     /// @brief Default constructor
     RxmRaw() = default;
@@ -167,14 +165,11 @@ public:
     /// @brief Move assignment
     RxmRaw& operator=(RxmRaw&&) = default;
 
-protected:
-
-    /// @brief Overrides read functionality provided by the base class.
+    /// @brief Provides custom read functionality.
     /// @details The number of blocks in @b data (@ref RxmRawFields::data) list
     ///     is determined by the value of @b numSV (@ref RxmRawFields::numSV) field.
-    virtual comms::ErrorStatus readImpl(
-        typename Base::ReadIterator& iter,
-        std::size_t len) override
+    template <typename TIter>
+    comms::ErrorStatus doRead(TIter& iter, std::size_t len)
     {
         auto es = Base::template readFieldsUntil<FieldIdx_data>(iter, len);
         if (es != comms::ErrorStatus::Success) {
@@ -189,11 +184,11 @@ protected:
         return Base::template readFieldsFrom<FieldIdx_data>(iter, len);
     }
 
-    /// @brief Overrides default refreshing functionality provided by the interface class.
+    /// @brief Provides custom refresh functionality
     /// @details The value of @b numSV (@ref RxmRawFields::numSV) field is determined
     ///     by the amount of blocks stored in @b data (@ref RxmRawFields::data) list.
     /// @return @b true in case the value of "numSV" field was modified, @b false otherwise
-    virtual bool refreshImpl() override
+    bool doRefresh()
     {
         auto& allFields = Base::fields();
         auto& numSvField = std::get<FieldIdx_numSV>(allFields);

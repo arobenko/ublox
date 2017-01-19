@@ -56,7 +56,7 @@ as with [comms_champion](https://github.com/arobenko/comms_champion), it will ca
 all the required dependencies to be found automatically. The installation
 directory can be specified using **CC_UBLOX_INSTALL_DIR** variable.
 
->$> cmake -DCMAKE_BUILD_TYPE=Release -DCC_UBLOX_INSTALL_DIR= /path/to/comms_champion/build/install /path/to/ublox/sources
+>$> cmake -DCMAKE_BUILD_TYPE=Release -DCC_UBLOX_INSTALL_DIR=/path/to/comms_champion/build/install /path/to/ublox/sources
 
 If the produced headers/finaries are not desired to be mixed, the location
 of the [comms_champion](https://github.com/arobenko/comms_champion)
@@ -101,7 +101,7 @@ For example, discard all other tools, just install the **UBLOX** library:
 
 >$> mkdir build && cd build
 
->$> cmake -DCMAKE_BUILD_TYPE=Release UBLOX_CC_INSTALL_PATH=/path/to/comms_champioin/sources -DUBLOX_LIB_ONLY=ON ..
+>$> cmake -DCC_UBLOX_LIB_ONLY=ON ..
 
 >$> make install 
 

@@ -1,5 +1,5 @@
 //
-// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2017 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -75,12 +75,11 @@ struct TimSvinFields
 };
 
 /// @brief Definition of TIM-SVIN message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
-///     See @ref TimSvinFields and for definition of the fields this message contains.
+///     various implementation options. @n
+///     See @ref TimSvinFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class TimSvin : public
@@ -88,34 +87,33 @@ class TimSvin : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_TIM_SVIN>,
         comms::option::FieldsImpl<TimSvinFields::All>,
-        comms::option::DispatchImpl<TimSvin<TMsgBase> >
+        comms::option::MsgType<TimSvin<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_TIM_SVIN>,
         comms::option::FieldsImpl<TimSvinFields::All>,
-        comms::option::DispatchImpl<TimSvin<TMsgBase> >
+        comms::option::MsgType<TimSvin<TMsgBase> >
     > Base;
 public:
 
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_dur, ///< @b dur field, see @ref TimSvinFields::dur
-        FieldIdx_meanX, ///< @b meanX field, see @ref TimSvinFields::meanX
-        FieldIdx_meanY, ///< @b meanY field, see @ref TimSvinFields::meanY
-        FieldIdx_meanZ, ///< @b meanZ field, see @ref TimSvinFields::meanZ
-        FieldIdx_meanV, ///< @b meanV field, see @ref TimSvinFields::meanV
-        FieldIdx_obs, ///< @b obs field, see @ref TimSvinFields::obs
-        FieldIdx_valid, ///< @b valid field, see @ref TimSvinFields::valid
-        FieldIdx_active, ///< @b active field, see @ref TimSvinFields::active
-        FieldIdx_reserved, ///< @b reserved field, see @ref TimSvinFields::reserved
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b dur for @ref TimSvinFields::dur field
+    ///     @li @b meanX for @ref TimSvinFields::meanX field
+    ///     @li @b meanY for @ref TimSvinFields::meanY field
+    ///     @li @b meanZ for @ref TimSvinFields::meanZ field
+    ///     @li @b meanV for @ref TimSvinFields::meanV field
+    ///     @li @b obs for @ref TimSvinFields::obs field
+    ///     @li @b valid for @ref TimSvinFields::valid field
+    ///     @li @b active for @ref TimSvinFields::active field
+    ///     @li @b reserved for @ref TimSvinFields::reserved field
+    COMMS_MSG_FIELDS_ACCESS(Base, dur, meanX, meanY, meanZ, meanV, obs, valid, active, reserved);
 
     /// @brief Default constructor
     TimSvin() = default;

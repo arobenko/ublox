@@ -1,5 +1,5 @@
 //
-// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2017 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -75,12 +75,11 @@ struct MonMsgppFields
 };
 
 /// @brief Definition of MON-MSGPP message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
-///     See @ref MonMsgppFields and for definition of the fields this message contains.
+///     various implementation options. @n
+///     See @ref MonMsgppFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class MonMsgpp : public
@@ -88,32 +87,31 @@ class MonMsgpp : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_MON_MSGPP>,
         comms::option::FieldsImpl<MonMsgppFields::All>,
-        comms::option::DispatchImpl<MonMsgpp<TMsgBase> >
+        comms::option::MsgType<MonMsgpp<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_MON_MSGPP>,
         comms::option::FieldsImpl<MonMsgppFields::All>,
-        comms::option::DispatchImpl<MonMsgpp<TMsgBase> >
+        comms::option::MsgType<MonMsgpp<TMsgBase> >
     > Base;
 public:
 
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_msg1, ///< @b msg1 field, see @ref MonMsgppFields::msg1
-        FieldIdx_msg2, ///< @b msg2 field, see @ref MonMsgppFields::msg2
-        FieldIdx_msg3, ///< @b msg3 field, see @ref MonMsgppFields::msg3
-        FieldIdx_msg4, ///< @b msg4 field, see @ref MonMsgppFields::msg4
-        FieldIdx_msg5, ///< @b msg5 field, see @ref MonMsgppFields::msg5
-        FieldIdx_msg6, ///< @b msg6 field, see @ref MonMsgppFields::msg6
-        FieldIdx_skipped, ///< @b skipped field, see @ref MonMsgppFields::skipped
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b msg1 for @ref MonMsgppFields::msg1 field
+    ///     @li @b msg2 for @ref MonMsgppFields::msg2 field
+    ///     @li @b msg3 for @ref MonMsgppFields::msg3 field
+    ///     @li @b msg4 for @ref MonMsgppFields::msg4 field
+    ///     @li @b msg5 for @ref MonMsgppFields::msg5 field
+    ///     @li @b msg6 for @ref MonMsgppFields::msg6 field
+    ///     @li @b skipped for @ref MonMsgppFields::skipped field
+    COMMS_MSG_FIELDS_ACCESS(Base, msg1, msg2, msg3, msg4, msg5, msg6, skipped);
 
     /// @brief Default constructor
     MonMsgpp() = default;

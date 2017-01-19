@@ -1,5 +1,5 @@
 //
-// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2017 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -56,7 +56,7 @@ QVariantMap createProps_infMsgMask()
                  .add("NOTICE")
                  .add("DEBUG")
                  .add("TEST");
-            assert(props.bits().size() == CfgInfFields::mask_numOfValues);
+            assert(props.bits().size() == CfgInfFields::mask::BitIdx_numOfValues);
             return props.asMap();
         };
 
@@ -80,7 +80,7 @@ QVariantMap createProps_list()
              .add(field::common::props_reserved(0))
              .add(field::common::props_reserved(1))
              .add(createProps_infMsgMask());
-    assert(elemProps.members().size() == CfgInfFields::element_numOfValues);
+    assert(elemProps.members().size() == CfgInfFields::element::FieldIdx_numOfValues);
 
     return
         cc::property::field::ForField<CfgInfFields::list>()

@@ -1,5 +1,5 @@
 //
-// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2017 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -63,13 +63,13 @@ QVariantMap createProps_flags()
     flagsBitsProps.name("flags")
                   .add("dgpsUsed")
                   .serialisedHidden();
-    assert(flagsBitsProps.bits().size() == NavDgpsFields::flagsBits_numOfValues);
+    assert(flagsBitsProps.bits().size() == NavDgpsFields::flagsBits::BitIdx_numOfValues);
 
     cc::property::field::ForField<NavDgpsFields::flags> props;
     props.name("flags")
          .add(channelProps.asMap())
          .add(flagsBitsProps.asMap());
-    assert(props.members().size() == NavDgpsFields::flags_numOfValues);
+    assert(props.members().size() == NavDgpsFields::flags::FieldIdx_numOfValues);
     return props.asMap();
 }
 
@@ -105,7 +105,7 @@ QVariantMap createProps_data()
               .add(createProps_ageC())
               .add(createProps_prc())
               .add(createProps_prrc());
-    assert(blockProps.members().size() == NavDgpsFields::block_numOfValues);
+    assert(blockProps.members().size() == NavDgpsFields::block::FieldIdx_numOfValues);
 
     return
         cc::property::field::ForField<NavDgpsFields::data>()

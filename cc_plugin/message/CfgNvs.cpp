@@ -1,5 +1,5 @@
 //
-// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2017 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -44,9 +44,9 @@ QVariantMap createProps_mask(const char* name)
 {
     cc::property::field::ForField<CfgNvsFields::mask> props;
     props.name(name)
-         .add(ublox::message::CfgNvsFields::mask_alm, "alm")
-         .add(ublox::message::CfgNvsFields::mask_aop, "aop");
-    assert(props.bits().size() == CfgNvsFields::mask_numOfValues);
+         .add(ublox::message::CfgNvsFields::mask::BitIdx_alm, "alm")
+         .add(ublox::message::CfgNvsFields::mask::BitIdx_aop, "aop");
+    assert(props.bits().size() == CfgNvsFields::mask::BitIdx_numOfValues);
     return props.asMap();
 }
 
@@ -57,8 +57,8 @@ QVariantMap createProps_deviceMask()
          .add("devBBR")
          .add("devFlash")
          .add("devEEPROM")
-         .add(CfgNvsFields::deviceMask_devSpiFlash, "devSpiFlash");
-    assert(props.bits().size() == CfgNvsFields::deviceMask_numOfValues);
+         .add(CfgNvsFields::deviceMask::BitIdx_devSpiFlash, "devSpiFlash");
+    assert(props.bits().size() == CfgNvsFields::deviceMask::BitIdx_numOfValues);
     return props.asMap();
 }
 

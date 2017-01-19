@@ -1,5 +1,5 @@
 //
-// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2017 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -63,24 +63,6 @@ struct CfgGnssFields
         }
     };
 
-    /// @brief Bit access anumerator for @ref flags bitmask field
-    enum
-    {
-        flags_enable, ///< @b enable bit numer
-        flags_numOfValues ///< number of available bits
-    };
-
-    /// @brief Use this enumerator to access member fields of @ref block bundle field.
-    enum
-    {
-        block_gnssId,  ///< @b index of @ref gnssId member field
-        block_resTrkCh,  ///< @b index of @ref resTrkCh member field
-        block_maxTrkCh,  ///< @b index of @ref maxTrkCh member field
-        block_reserved1,  ///< @b index of @ref reserved1 member field
-        block_flags,  ///< @b index of @ref flags member field
-        block_numOfValues  ///< number of member fields
-    };
-
     /// @brief Definition of "msgVer" field.
     using msgVer =
         field::common::U1T<
@@ -113,13 +95,20 @@ struct CfgGnssFields
     using reserved1 = field::common::res1;
 
     /// @brief Definition of "flags" field.
-    using flags =
+    struct flags : public
         field::common::X4T<
             comms::option::BitmaskReservedBits<0xfffffffe, 0>
-        >;
+        >
+    {
+        /// @brief Provide names for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS(enable);
+    };
 
-    /// @brief Definition of a single configuration block
-    using block =
+    /// @brief Base class for @ref block
+    using blockBase =
         field::common::BundleT<
             std::tuple<
                 gnssId,
@@ -129,6 +118,16 @@ struct CfgGnssFields
                 flags
             >
         >;
+
+    /// @brief Definition of a single configuration block
+    struct block : public blockBase
+    {
+        /// @brief Allow access to internal fields.
+        /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
+        ///     related to @b comms::field::Bitfield class from COMMS library
+        ///     for details.
+        COMMS_FIELD_MEMBERS_ACCESS(blockBase, gnssId, resTrkCh, maxTrkCh, reserved1, flags);
+    };
 
     /// @brief Definition of the list of configuration blocks
     using blocksList = field::common::ListT<block>;
@@ -145,12 +144,11 @@ struct CfgGnssFields
 };
 
 /// @brief Definition of CFG-GNSS message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
-///     See @ref CfgGnssFields and for definition of the fields this message contains.
+///     various implementation options. @n
+///     See @ref CfgGnssFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class CfgGnss : public
@@ -158,30 +156,31 @@ class CfgGnss : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_GNSS>,
         comms::option::FieldsImpl<CfgGnssFields::All>,
-        comms::option::DispatchImpl<CfgGnss<TMsgBase> >
+        comms::option::MsgType<CfgGnss<TMsgBase> >,
+        comms::option::HasDoRefresh
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_GNSS>,
         comms::option::FieldsImpl<CfgGnssFields::All>,
-        comms::option::DispatchImpl<CfgGnss<TMsgBase> >
+        comms::option::MsgType<CfgGnss<TMsgBase> >,
+        comms::option::HasDoRefresh
     > Base;
 public:
 
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_msgVer, ///< @b msgVer field, see @ref CfgGnssFields::msgVer
-        FieldIdx_numTrkChHw, ///< @b numTrkChHw field, see @ref CfgGnssFields::numTrkChHw
-        FieldIdx_numTrkChUse, ///< @b numTrkChUse field, see @ref CfgGnssFields::numTrkChUse
-        FieldIdx_numConfigBlocks, ///< @b numConfigBlocks field, see @ref CfgGnssFields::numConfigBlocks
-        FieldIdx_blocksList, ///< @b blocksList field, see @ref CfgGnssFields::blocksList
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b msgVer for @ref CfgGnssFields::msgVer field
+    ///     @li @b numTrkChHw for @ref CfgGnssFields::numTrkChHw field
+    ///     @li @b numTrkChUse for @ref CfgGnssFields::numTrkChUse field
+    ///     @li @b numConfigBlocks for @ref CfgGnssFields::numConfigBlocks field
+    ///     @li @b blocksList for @ref CfgGnssFields::blocksList field
+    COMMS_MSG_FIELDS_ACCESS(Base, msgVer, numTrkChHw, numTrkChUse, numConfigBlocks, blocksList);
 
     /// @brief Default constructor
     CfgGnss() = default;
@@ -201,15 +200,12 @@ public:
     /// @brief Move assignment
     CfgGnss& operator=(CfgGnss&&) = default;
 
-protected:
-
-    /// @brief Overrides read functionality provided by the base class.
+    /// @brief Provides custom read functionality.
     /// @details The size of "blocksList" (see @ref CfgGnssFields::blocksList) list is
     ///     determined (forced) by the value of "numConfigBlocks" (see @ref CfgGnssFields::numConfigBlocks)
     ///     field.
-    virtual comms::ErrorStatus readImpl(
-        typename Base::ReadIterator& iter,
-        std::size_t len) override
+    template <typename TIter>
+    comms::ErrorStatus doRead(TIter& iter, std::size_t len)
     {
         auto es = Base::template readFieldsUntil<FieldIdx_blocksList>(iter, len);
         if (es != comms::ErrorStatus::Success) {
@@ -224,12 +220,12 @@ protected:
         return Base::template readFieldsFrom<FieldIdx_blocksList>(iter, len);
     }
 
-    /// @brief Overrides default refreshing functionality provided by the interface class.
+    /// @brief Provides custom refresh functionality
     /// @details The value of "numConfigBlocks" (see @ref CfgGnssFields::numConfigBlocks) is
     ///     determined by the size of the"blocksList" (see @ref CfgGnssFields::blocksList) list
     ///     field.
     /// @return @b true in case the value of @b "numConfigBlocks" field was modified, @b false otherwise
-    virtual bool refreshImpl() override
+    bool doRefresh()
     {
         auto& allFields = Base::fields();
         auto& numBlocksField = std::get<FieldIdx_numConfigBlocks>(allFields);

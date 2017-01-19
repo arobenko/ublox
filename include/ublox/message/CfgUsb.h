@@ -1,5 +1,5 @@
 //
-// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2017 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -33,14 +33,6 @@ namespace message
 /// @see CfgUsb
 struct CfgUsbFields
 {
-    /// @brief Bits access enumeration for @ref flags bitmask field.
-    enum
-    {
-        flags_reEnum, ///< @b reEnum bit index
-        flags_powerMode, ///< @b powerMode bit index
-        flags_numOfValues /// number of available bits
-    };
-
     /// @brief Definition of "vendorID" field.
     using vendorID = field::common::U2;
 
@@ -61,10 +53,17 @@ struct CfgUsbFields
     using powerConsumption = field::common::U2;
 
     /// @brief Definition of "flags" field.
-    using flags =
+    struct flags : public
         field::common::X2T<
             comms::option::BitmaskReservedBits<0xfffc, 0>
-        >;
+        >
+    {
+        /// @brief Provide names for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS(reEnum, powerMode);
+    };
 
     /// @brief Definition of "vendorString" field.
     using vendorString = field::common::ZString<32>;
@@ -90,12 +89,11 @@ struct CfgUsbFields
 };
 
 /// @brief Definition of CFG-USB message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
-///     See @ref CfgUsbFields and for definition of the fields this message contains.
+///     various implementation options. @n
+///     See @ref CfgUsbFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class CfgUsb : public
@@ -103,34 +101,43 @@ class CfgUsb : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_USB>,
         comms::option::FieldsImpl<CfgUsbFields::All>,
-        comms::option::DispatchImpl<CfgUsb<TMsgBase> >
+        comms::option::MsgType<CfgUsb<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_USB>,
         comms::option::FieldsImpl<CfgUsbFields::All>,
-        comms::option::DispatchImpl<CfgUsb<TMsgBase> >
+        comms::option::MsgType<CfgUsb<TMsgBase> >
     > Base;
 public:
 
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_vendorID, ///< @b vendorID field, see @ref CfgUsbFields::flags
-        FieldIdx_productID, ///< @b productID field, see @ref CfgUsbFields::productID
-        FieldIdx_reserved1, ///< @b reserved1 field, see @ref CfgUsbFields::reserved1
-        FieldIdx_reserved2, ///< @b reserved2 field, see @ref CfgUsbFields::reserved2
-        FieldIdx_powerConsumption, ///< @b powerConsumption field, see @ref CfgUsbFields::powerConsumption
-        FieldIdx_flags, ///< @b flags field, see @ref CfgUsbFields::flags
-        FieldIdx_vendorString, ///< @b vendorString field, see @ref CfgUsbFields::vendorString
-        FieldIdx_productString, ///< @b productString field, see @ref CfgUsbFields::productString
-        FieldIdx_serialNumber, ///< @b serialNumber field, see @ref CfgUsbFields::serialNumber
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b vendorID for @ref CfgUsbFields::vendorID field
+    ///     @li @b productID for @ref CfgUsbFields::productID field
+    ///     @li @b reserved1 for @ref CfgUsbFields::reserved1 field
+    ///     @li @b reserved2 for @ref CfgUsbFields::reserved2 field
+    ///     @li @b powerConsumption for @ref CfgUsbFields::powerConsumption field
+    ///     @li @b flags for @ref CfgUsbFields::flags field
+    ///     @li @b vendorString for @ref CfgUsbFields::vendorString field
+    ///     @li @b productString for @ref CfgUsbFields::productString field
+    ///     @li @b serialNumber for @ref CfgUsbFields::serialNumber field
+    COMMS_MSG_FIELDS_ACCESS(Base,
+        vendorID,
+        productID,
+        reserved1,
+        reserved2,
+        powerConsumption,
+        flags,
+        vendorString,
+        productString,
+        serialNumber
+    );
 
     /// @brief Default constructor
     CfgUsb() = default;

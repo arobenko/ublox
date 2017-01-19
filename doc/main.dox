@@ -17,10 +17,8 @@
 ///
 /// It is recommended to get to know the @b COMMS library and its features first,
 /// in order to understand how to use this one. The documentation of the
-/// @b COMMS library can be downloaded as 
-/// <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/doc_comms.zip">zip archive</a> 
-/// or browsed online 
-/// <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/index.html">here</a>.  
+/// @b COMMS library can be downloaded from
+/// <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/doc_comms.zip">here</a>. 
 ///
 /// @section ublox_how_to_use How to Use
 /// First of all, please make sure that the headers of @b COMMS library as well
@@ -114,7 +112,8 @@
 /// Also note, that every message definition in the @b UBLOX library is a
 /// template class with one template parameter, which is expected to be the
 /// common interface class. That's the reason for redefining all messages
-/// inside @b myproj namespace above.  
+/// inside @b myproj namespace above. 
+///
 ///
 /// @subsection ublox_how_to_use_protocol Transport Protocol
 /// Now it is time to define the "protocol stack" which is used to process the
@@ -132,6 +131,10 @@
 /// of all the messages that need to be recognised in the received input and
 /// processed. All the messages that are received, but weren't included in
 /// this bundle, will be discarded.
+///
+/// @b IMPORTANT: All the messages in @b InputMessage tuple must be sorted according
+/// to their numeric message ID. It is recommended to take ublox::InputMessage
+/// definition as the basis and remove all unnecessary messages from it. 
 ///
 /// @subsection ublox_how_to_use_handler Define Handler
 /// The next step is to actually define the message processing class (@b MyProjHandler), that was
@@ -201,8 +204,45 @@
 /// is expected to override any "handle(...)" function of interest, including the "fall back"
 /// one with any custom functionality.  
 ///
-/// Inside the handling functions the internal fields can be accessed using
-/// "fields()" member function of the message object.
+/// Inside the handling functions the internal fields can be accessed various
+/// means. Every message class uses @b COMMS_MSG_FIELDS_ACCESS() macro from 
+/// the @b COMMS library (see its definition on the documentation page of 
+/// @b comms::MessageBase class) to provide names for the fields and allow
+/// convenient access to the fields.
+/// 
+/// The most convenient way to access is to use accessor functions that start
+/// with @b field_* prefix and ending with field's name suffix:
+/// @code
+/// #include "comms/comms.h"
+///
+/// namespace myproj
+/// {
+///     class MyProjHandler : public comms::GenericHandler<MyProjMessage, InputMessages>
+///     {
+///     public:
+///         virtual void handle(NavPosecef& msg) override {
+///             auto& iTOW = msg.field_iTOW(); // Access to iTOW field;
+///             auto& ecefX = msg.field_ecefX(); // Access to ecefX field;
+///             auto& ecefY = msg.field_ecefY(); // Access to ecefY field;
+///             auto& ecefZ = msg.field_ecefZ(); // Access to ecefZ field;
+///
+///             auto iTowVal = iTOW.value(); // Get iTOW value
+///             auto ecefXVal = ecefX.value(); // Get ecefX value
+///             auto ecefYVal = ecefY.value(); // Get ecefY value
+///             auto ecefZVal = ecefZ.value(); // Get ecefZ value
+///
+///             ... // Do something with the values
+///         }
+///
+///         ...
+///     };
+/// } // namespace myproj
+/// @endcode
+/// Another possible way is to get an access to the tuple of fields using
+/// inherited @b fields() member function and then use numeric indices to
+/// access the elements of the tuple. The same @b COMMS_MSG_FIELDS_ACCESS() macro
+/// creates internal @b FieldIdx enum type, every value of which prefixed with
+/// @b FieldIdx_ and has the field's name suffix. 
 /// @code
 /// #include "comms/comms.h"
 ///
@@ -302,7 +342,7 @@
 ///     ProtStack protStack;
 ///
 ///     // Serialised output data
-///     std::array<std::uint8_t*, 1024> dataOut;
+///     std::array<std::uint8_t, 1024> dataOut;
 ///
 ///     void sendMsg(const MyProjMessage& msg)
 ///     {
@@ -316,7 +356,7 @@
 ///         // Get the number of written bytes
 ///         auto writtenLen = 
 ///             static_cast<std::size_t>(
-///                 std::distance(ProtStack::WriteIterator(&dataOut[0], iter));
+///                 std::distance(ProtStack::WriteIterator(&dataOut[0]), iter));
 ///
 ///         ... // Send writtenLen bytes from dataOut buffer over I/O link
 ///     }
@@ -518,7 +558,7 @@
 ///
 /// In order to properly understand what the fields are, and how to operate with
 /// them, it is recommended to thoroughly read the 
-/// <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/page_field_tutorial.html">Fields Tutorial</a> 
+/// <b>Fields Tutorial</b> 
 /// page in the @b COMMS library documentation.
 ///
 /// @subsection ublox_fields_scaling Scaling Field Value
@@ -606,5 +646,51 @@
 /// must be serialised prior to <b>message ID</b>. In order to properly handle
 /// this case, the ublox::field::MsgId field is defined to have <b>big endian</b>
 /// serialisation, while all other fields use <b>little endian</b>
-
+///
+/// @subsection ublox_fields_bitmasks Bitmasks
+/// There are multiple bitmask fields that inherit from 
+/// @b comms::field::BitmaskValue (for example ublox::message::CfgPrtFields::outProtoMask).
+/// This bitmask fields use @b COMMS_BITMASK_BITS() macro from @b COMMS library
+/// to define names for the bits. This macro will create @b BitIdx enum with
+/// all the values prefixed with @b BitIdx_, which cat be used to get/set
+/// bit values. 
+/// @code
+/// using CfgPrtUsb = ublox::message::CfgPrtUsb<MyProjMessage>;
+///
+/// CfgPrtUsb msg;
+/// auto& outProtoMaskField = msg.field_outProtoMask();
+///
+/// using OutProtoMaskField = ublox::message::CfgPrtFields::outProtoMask;
+/// outProtoMaskField.setBitValue(OutProtoMaskField::BitIdx_outUbx, true);
+/// outProtoMaskField.setBitValue(OutProtoMaskField::BitIdx_outNmea, false);
+/// } // namespace myproj
+/// @endcode 
+///
+/// @subsection ublox_fields_complex Complex Fields
+/// There are multiple complex fields, such as bitfields (for example 
+/// ublox::message::CfgPrtFields::txReady) or bundles (for example
+/// ublox::message::NavSvinfoFields::block). These complex fields inherit
+/// from @b comms::field::Bitfield or @b comms::field::Bundle respectively and
+/// use @b COMMS_FIELD_MEMBERS_ACCESS() macro from @b COMMS library to define
+/// names to their member fields. The easiest way to access member fields is
+/// to use @b field_* prefixed access functions generated by the used macro.
+/// For example:
+/// @code
+/// namespace myproj
+/// {
+/// using CfgPrtUsb = ublox::message::CfgPrtUsb<MyProjMessage>;
+///
+/// CfgPrtUsb msg;
+/// auto& txReadyField = msg.field_txReady();
+/// auto& enField = txReadyField.field_en();
+/// auto& polField = txReadyField.field_pol();
+/// auto& pinField = txReadyField.field_pin();
+/// auto& thresField = txReadyField.field_thres();
+///
+/// enField.value() = ...;
+/// polField.value() = ...;
+/// pinField.value() = ...;
+/// thresField.value() = ...;
+/// } // namespace myproj
+/// @endcode
 

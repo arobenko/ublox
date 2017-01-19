@@ -1,5 +1,5 @@
 //
-// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2017 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -76,12 +76,11 @@ struct NavVelnedFields
 };
 
 /// @brief Definition of NAV-VELNED message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
-///     See @ref NavVelnedFields and for definition of the fields this message contains.
+///     various implementation options. @n
+///     See @ref NavVelnedFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class NavVelned : public
@@ -89,34 +88,33 @@ class NavVelned : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_VELNED>,
         comms::option::FieldsImpl<NavVelnedFields::All>,
-        comms::option::DispatchImpl<NavVelned<TMsgBase> >
+        comms::option::MsgType<NavVelned<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_VELNED>,
         comms::option::FieldsImpl<NavVelnedFields::All>,
-        comms::option::DispatchImpl<NavVelned<TMsgBase> >
+        comms::option::MsgType<NavVelned<TMsgBase> >
     > Base;
 public:
 
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_iTOW, ///< @b iTOW field, see @ref NavVelnedFields::iTOW
-        FieldIdx_velN, ///< @b velN field, see @ref NavVelnedFields::velN
-        FieldIdx_velE, ///< @b velE field, see @ref NavVelnedFields::velE
-        FieldIdx_velD, ///< @b velD field, see @ref NavVelnedFields::velD
-        FieldIdx_speed, ///< @b speed field, see @ref NavVelnedFields::speed
-        FieldIdx_gSpeed, ///< @b gSpeed field, see @ref NavVelnedFields::gSpeed
-        FieldIdx_heading, ///< @b heading field, see @ref NavVelnedFields::heading
-        FieldIdx_sAcc, ///< @b sAcc field, see @ref NavVelnedFields::sAcc
-        FieldIdx_cAcc, ///< @b cAcc field, see @ref NavVelnedFields::cAcc
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b iTOW for @ref NavVelnedFields::iTOW field
+    ///     @li @b velN for @ref NavVelnedFields::velN field
+    ///     @li @b velE for @ref NavVelnedFields::velE field
+    ///     @li @b velD for @ref NavVelnedFields::velD field
+    ///     @li @b speed for @ref NavVelnedFields::speed field
+    ///     @li @b gSpeed for @ref NavVelnedFields::gSpeed field
+    ///     @li @b heading for @ref NavVelnedFields::heading field
+    ///     @li @b sAcc for @ref NavVelnedFields::sAcc field
+    ///     @li @b cAcc for @ref NavVelnedFields::cAcc field
+    COMMS_MSG_FIELDS_ACCESS(Base, iTOW, velN, velE, velD, speed, gSpeed, heading, sAcc, cAcc);
 
     /// @brief Default constructor
     NavVelned() = default;

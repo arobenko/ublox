@@ -1,5 +1,5 @@
 //
-// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2017 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -63,12 +63,11 @@ struct AidAopFields
 };
 
 /// @brief Definition of AID-AOP message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
-///     See @ref AidAopFields and for definition of the fields this message contains.
+///     various implementation options. @n
+///     See @ref AidAopFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class AidAop : public
@@ -76,28 +75,27 @@ class AidAop : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_AOP>,
         comms::option::FieldsImpl<AidAopFields::All>,
-        comms::option::DispatchImpl<AidAop<TMsgBase> >
+        comms::option::MsgType<AidAop<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_AOP>,
         comms::option::FieldsImpl<AidAopFields::All>,
-        comms::option::DispatchImpl<AidAop<TMsgBase> >
+        comms::option::MsgType<AidAop<TMsgBase> >
     > Base;
 public:
 
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_svid, ///< svid field, see @ref AidAopFields::svid
-        FieldIdx_data, ///< data field, see @ref AidAopFields::data
-        FieldIdx_optional, ///< optional field, see @ref AidAopFields::optional
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b svid for @ref AidAopFields::svid field
+    ///     @li @b data for @ref AidAopFields::data field
+    ///     @li @b optional for @ref AidAopFields::optional field
+    COMMS_MSG_FIELDS_ACCESS(Base, svid, data, optional);
 
     /// @brief Default constructor
     AidAop() = default;

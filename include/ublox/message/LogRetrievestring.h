@@ -1,5 +1,5 @@
 //
-// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2017 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -93,12 +93,11 @@ struct LogRetrievestringFields
 };
 
 /// @brief Definition of LOG-RETRIEVESTRING message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
-///     See @ref LogRetrievestringFields and for definition of the fields this message contains.
+///     various implementation options. @n
+///     See @ref LogRetrievestringFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class LogRetrievestring : public
@@ -106,37 +105,51 @@ class LogRetrievestring : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_LOG_RETRIEVESTRING>,
         comms::option::FieldsImpl<LogRetrievestringFields::All>,
-        comms::option::DispatchImpl<LogRetrievestring<TMsgBase> >
+        comms::option::MsgType<LogRetrievestring<TMsgBase> >,
+        comms::option::HasDoRefresh
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_LOG_RETRIEVESTRING>,
         comms::option::FieldsImpl<LogRetrievestringFields::All>,
-        comms::option::DispatchImpl<LogRetrievestring<TMsgBase> >
+        comms::option::MsgType<LogRetrievestring<TMsgBase> >,
+        comms::option::HasDoRefresh
     > Base;
 public:
 
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_entryIndex, ///< @b entryIndex field, see @ref LogRetrievestringFields::entryIndex
-        FieldIdx_version, ///< @b version field, see @ref LogRetrievestringFields::version
-        FieldIdx_reserved1, ///< @b reserved1 field, see @ref LogRetrievestringFields::reserved1
-        FieldIdx_year, ///< @b year field, see @ref LogRetrievestringFields::year
-        FieldIdx_month, ///< @b month field, see @ref LogRetrievestringFields::month
-        FieldIdx_day, ///< @b day field, see @ref LogRetrievestringFields::day
-        FieldIdx_hour, ///< @b hour field, see @ref LogRetrievestringFields::hour
-        FieldIdx_minute, ///< @b minute field, see @ref LogRetrievestringFields::minute
-        FieldIdx_second, ///< @b second field, see @ref LogRetrievestringFields::second
-        FieldIdx_reserved2, ///< @b reserved2 field, see @ref LogRetrievestringFields::reserved2
-        FieldIdx_byteCount, ///< @b byteCount field, see @ref LogRetrievestringFields::byteCount
-        FieldIdx_bytes, ///< @b bytes field, see @ref LogRetrievestringFields::bytes
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b entryIndex for @ref LogRetrievestringFields::entryIndex field
+    ///     @li @b version for @ref LogRetrievestringFields::version field
+    ///     @li @b reserved1 for @ref LogRetrievestringFields::reserved1 field
+    ///     @li @b year for @ref LogRetrievestringFields::year field
+    ///     @li @b month for @ref LogRetrievestringFields::month field
+    ///     @li @b day for @ref LogRetrievestringFields::day field
+    ///     @li @b hour for @ref LogRetrievestringFields::hour field
+    ///     @li @b minute for @ref LogRetrievestringFields::minute field
+    ///     @li @b second for @ref LogRetrievestringFields::second field
+    ///     @li @b reserved2 for @ref LogRetrievestringFields::reserved2 field
+    ///     @li @b byteCount for @ref LogRetrievestringFields::byteCount field
+    ///     @li @b bytes for @ref LogRetrievestringFields::bytes field
+    COMMS_MSG_FIELDS_ACCESS(Base,
+        entryIndex,
+        version,
+        reserved1,
+        year,
+        month,
+        day,
+        hour,
+        minute,
+        second,
+        reserved2,
+        byteCount,
+        bytes
+    );
 
     /// @brief Default constructor
     LogRetrievestring() = default;
@@ -156,15 +169,12 @@ public:
     /// @brief Move assignment
     LogRetrievestring& operator=(LogRetrievestring&&) = default;
 
-protected:
-
-    /// @brief Overrides read functionality provided by the base class.
+    /// @brief Provides custom read functionality.
     /// @details The number of characters in @b bytes (@ref LogRetrievestringFields::bytes)
     ///     string is determined by the value of @b byteCount
     ///     (@ref LogRetrievestringFields::byteCount) field.
-    virtual comms::ErrorStatus readImpl(
-        typename Base::ReadIterator& iter,
-        std::size_t len) override
+    template <typename TIter>
+    comms::ErrorStatus doRead(TIter& iter, std::size_t len)
     {
         auto es = Base::template readFieldsUntil<FieldIdx_bytes>(iter, len);
         if (es != comms::ErrorStatus::Success) {
@@ -179,12 +189,12 @@ protected:
         return Base::template readFieldsFrom<FieldIdx_bytes>(iter, len);
     }
 
-    /// @brief Overrides default refreshing functionality provided by the interface class.
+    /// @brief Provides custom refresh functionality
     /// @details The value of @b byteCount (@ref LogRetrievestringFields::byteCount)
     ///     field is determined by the size of the internal string of
     ///     @b bytes (@ref LogRetrievestringFields::bytes) field.
     /// @return @b true in case the value of "byteCount" field was modified, @b false otherwise
-    virtual bool refreshImpl() override
+    bool doRefresh()
     {
         auto& allFields = Base::fields();
         auto& countField = std::get<FieldIdx_byteCount>(allFields);

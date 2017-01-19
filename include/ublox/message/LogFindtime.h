@@ -1,5 +1,5 @@
 //
-// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2017 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -63,12 +63,11 @@ struct LogFindtimeFields
 };
 
 /// @brief Definition of LOG-FINDTIME message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
-///     See @ref LogFindtimeFields and for definition of the fields this message contains.
+///     various implementation options. @n
+///     See @ref LogFindtimeFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class LogFindtime : public
@@ -76,29 +75,28 @@ class LogFindtime : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_LOG_FINDTIME>,
         comms::option::FieldsImpl<LogFindtimeFields::All>,
-        comms::option::DispatchImpl<LogFindtime<TMsgBase> >
+        comms::option::MsgType<LogFindtime<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_LOG_FINDTIME>,
         comms::option::FieldsImpl<LogFindtimeFields::All>,
-        comms::option::DispatchImpl<LogFindtime<TMsgBase> >
+        comms::option::MsgType<LogFindtime<TMsgBase> >
     > Base;
 public:
 
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_version, ///< @b version field, see @ref LogFindtimeFields::version
-        FieldIdx_type, ///< @b type field, see @ref LogFindtimeFields::type
-        FieldIdx_reserved1, ///< @b reserved1 field, see @ref LogFindtimeFields::reserved1
-        FieldIdx_entryNumber, ///< @b entryNumber field, see @ref LogFindtimeFields::entryNumber
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b version for @ref LogFindtimeFields::version field
+    ///     @li @b type for @ref LogFindtimeFields::type field
+    ///     @li @b reserved1 for @ref LogFindtimeFields::reserved1 field
+    ///     @li @b entryNumber for @ref LogFindtimeFields::entryNumber field
+    COMMS_MSG_FIELDS_ACCESS(Base, version, type, reserved1, entryNumber);
 
     /// @brief Default constructor
     LogFindtime() = default;
@@ -118,16 +116,13 @@ public:
     /// @brief Move assignment
     LogFindtime& operator=(LogFindtime&&) = default;
 
-protected:
-
-    /// @brief Overrides read functionality provided by the base class.
+    /// @brief Provides custom read functionality.
     /// @details The function performs read up to the @b type field (@ref
     /// LogFindtimeFields::type) and checks its value. If it's valid (has value 1),
     /// the read continues for the rest of the fields. Otherwise
     /// comms::ErrorStatus::InvalidMsgData is returned.
-    virtual comms::ErrorStatus readImpl(
-        typename Base::ReadIterator& iter,
-        std::size_t len) override
+    template <typename TIter>
+    comms::ErrorStatus doRead(TIter& iter, std::size_t len)
     {
         auto es = Base::template readFieldsUntil<FieldIdx_reserved1>(iter, len);
         if (es != comms::ErrorStatus::Success) {

@@ -1,5 +1,5 @@
 //
-// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2017 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -35,25 +35,6 @@ namespace message
 /// @see CfgRst
 struct CfgRstFields
 {
-    /// @brief Bits access enumeration for @ref navBbrMask bitmask field.
-    enum
-    {
-        navBbrMask_eph, ///< @b eph bit index
-        navBbrMask_alm, ///< @b alm bit index
-        navBbrMask_health, ///< @b health bit index
-        navBbrMask_klob, ///< @b klob bit index
-        navBbrMask_pos, ///< @b pos bit index
-        navBbrMask_clkd, ///< @b clkd bit index
-        navBbrMask_osc, ///< @b osc bit index
-        navBbrMask_utc, ///< @b utc bit index
-        navBbrMask_rtc, ///< @b rtc bit index
-        navBbrMask_sfdr = 11, ///< @b sfdr bit index
-        navBbrMask_vmon, ///< @b vmon bit index
-        navBbrMask_tct, ///< @b tct bit index
-        navBbrMask_aop = 15, ///< @b aop bit index
-        navBbrMask_numOfValues ///< upper limit for available bits
-    };
-
     /// @brief Value enumeration for @ref resetMode field
     enum class ResetMode : std::uint8_t
     {
@@ -87,7 +68,14 @@ struct CfgRstFields
     };
 
     /// @brief Definition of "navBbrMask" field.
-    using navBbrMask = field::common::X2;
+    struct navBbrMask : public field::common::X2
+    {
+        /// @brief Provide names for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS(eph, alm, health, klob, pos, clkd, osc, utc, rtc, sfdr=11, vmon, tct, aop=15);
+    };
 
     /// @brief Definition of "resetMode" field.
     using resetMode =
@@ -109,12 +97,11 @@ struct CfgRstFields
 };
 
 /// @brief Definition of CFG-RST message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
-///     See @ref CfgRstFields and for definition of the fields this message contains.
+///     various implementation options. @n
+///     See @ref CfgRstFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class CfgRst : public
@@ -122,28 +109,27 @@ class CfgRst : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_RST>,
         comms::option::FieldsImpl<CfgRstFields::All>,
-        comms::option::DispatchImpl<CfgRst<TMsgBase> >
+        comms::option::MsgType<CfgRst<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_RST>,
         comms::option::FieldsImpl<CfgRstFields::All>,
-        comms::option::DispatchImpl<CfgRst<TMsgBase> >
+        comms::option::MsgType<CfgRst<TMsgBase> >
     > Base;
 public:
 
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_navBbrMask, ///< @b navBbrMask field, see @ref CfgRstFields::navBbrMask
-        FieldIdx_resetMode, ///< @b resetMode field, see @ref CfgRstFields::resetMode
-        FieldIdx_reserved1, ///< @b reserved1 field, see @ref CfgRstFields::reserved1
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b navBbrMask for @ref CfgRstFields::navBbrMask field
+    ///     @li @b resetMode for @ref CfgRstFields::resetMode field
+    ///     @li @b reserved1 for @ref CfgRstFields::reserved1 field
+    COMMS_MSG_FIELDS_ACCESS(Base, navBbrMask, resetMode, reserved1);
 
     /// @brief Default constructor
     CfgRst() = default;

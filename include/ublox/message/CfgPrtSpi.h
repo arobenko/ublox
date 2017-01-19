@@ -1,5 +1,5 @@
 //
-// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2017 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -52,15 +52,6 @@ struct CfgPrtSpiFields : public CfgPrtFields
         NumOfValues ///< number of available values
     };
 
-    /// @brief Use this enumeration to access member fields of @ref mode bitfield.
-    enum
-    {
-        mode_spiMode = 1, ///< index of @ref spiMode member field
-        mode_flowControl = 3, ///< index of @ref flowControl member field
-        mode_ffCnt = 5, ///< index of @ref ffCnt member field
-        mode_numOfValues = 7 ///< number of available member fields
-    };
-
     /// @brief Definition of "portID" field.
     using portID =
         field::common::EnumT<
@@ -92,7 +83,7 @@ struct CfgPrtSpiFields : public CfgPrtFields
         >;
 
     /// @brief Definition of "mode" field.
-    using mode =
+    class mode : public
         field::common::BitfieldT<
             std::tuple<
                 field::common::res1T<comms::option::FixedBitLength<1> >,
@@ -103,7 +94,34 @@ struct CfgPrtSpiFields : public CfgPrtFields
                 ffCnt,
                 field::common::res4T< comms::option::FixedBitLength<16> >
             >
-        >;
+        >
+    {
+        typedef
+            field::common::BitfieldT<
+                std::tuple<
+                    field::common::res1T<comms::option::FixedBitLength<1> >,
+                    spiMode,
+                    field::common::res1T<comms::option::FixedBitLength<3> >,
+                    flowControl,
+                    field::common::res1T<comms::option::FixedBitLength<1> >,
+                    ffCnt,
+                    field::common::res4T< comms::option::FixedBitLength<16> >
+                >
+            > Base;
+    public:
+        /// @brief Allow access to internal fields.
+        /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
+        ///     related to @b comms::field::Bitfield class from COMMS library
+        ///     for details.
+        COMMS_FIELD_MEMBERS_ACCESS(Base,
+            unused0,
+            spiMode,
+            unused1,
+            flowControl,
+            unused2,
+            ffCnt,
+            unused3);
+    };
 
     /// @brief All the fields bundled in std::tuple.
     using All = std::tuple<
@@ -120,12 +138,11 @@ struct CfgPrtSpiFields : public CfgPrtFields
 };
 
 /// @brief Definition of CFG-PRT (@b SPI) message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
-///     See @ref CfgPrtSpiFields and for definition of the fields this message contains.
+///     various implementation options. @n
+///     See @ref CfgPrtSpiFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class CfgPrtSpi : public
@@ -133,34 +150,45 @@ class CfgPrtSpi : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_PRT>,
         comms::option::FieldsImpl<CfgPrtSpiFields::All>,
-        comms::option::DispatchImpl<CfgPrtSpi<TMsgBase> >
+        comms::option::MsgType<CfgPrtSpi<TMsgBase> >,
+        comms::option::HasDoRefresh
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_PRT>,
         comms::option::FieldsImpl<CfgPrtSpiFields::All>,
-        comms::option::DispatchImpl<CfgPrtSpi<TMsgBase> >
+        comms::option::MsgType<CfgPrtSpi<TMsgBase> >,
+        comms::option::HasDoRefresh
     > Base;
 public:
 
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_portID, ///< @b portID field, see @ref CfgPrtSpiFields::portID
-        FieldIdx_reserved0, ///< @b reserved0 field, see @ref CfgPrtSpiFields::reserved0
-        FieldIdx_txReady, ///< @b txReady field, see @ref CfgPrtSpiFields::txReady
-        FieldIdx_mode, ///< @b mode field, see @ref CfgPrtSpiFields::mode
-        FieldIdx_reserved3, ///< @b reserved3 field, see @ref CfgPrtSpiFields::reserved3
-        FieldIdx_inProtoMask, ///< @b inProtoMask field, see @ref CfgPrtSpiFields::inProtoMask
-        FieldIdx_outProtoMask, ///< @b outProtoMask field, see @ref CfgPrtSpiFields::outProtoMask
-        FieldIdx_flags, ///< @b flags field, see @ref CfgPrtSpiFields::flags
-        FieldIdx_reserved5, ///< @b reserved5 field, see @ref CfgPrtSpiFields::reserved5
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b portID for @ref CfgPrtSpiFields::portID field
+    ///     @li @b reserved0 for @ref CfgPrtSpiFields::reserved0 field
+    ///     @li @b txReady for @ref CfgPrtFields::txReady field
+    ///     @li @b mode for @ref CfgPrtSpiFields::mode field
+    ///     @li @b reserved3 for @ref CfgPrtSpiFields::reserved3 field
+    ///     @li @b inProtoMask for @ref CfgPrtFields::inProtoMask field
+    ///     @li @b outProtoMask for @ref CfgPrtFields::outProtoMask field
+    ///     @li @b flags for @ref CfgPrtFields::flags field
+    ///     @li @b reserved5 for @ref CfgPrtSpiFields::reserved5 field
+    COMMS_MSG_FIELDS_ACCESS(Base,
+        portID,
+        reserved0,
+        txReady,
+        mode,
+        reserved3,
+        inProtoMask,
+        outProtoMask,
+        flags,
+        reserved5
+    );
 
     /// @brief Default constructor
     CfgPrtSpi() = default;
@@ -180,15 +208,13 @@ public:
     /// @brief Move assignment
     CfgPrtSpi& operator=(CfgPrtSpi&&) = default;
 
-protected:
-    /// @brief Overrides read functionality provided by the base class.
+    /// @brief Provides custom read functionality.
     /// @details Reads only first "portID" field (@ref CfgPrtSpiFields::portID) and
     ///     checks its value. If the value is @b NOT CfgPrtSpiFields::PortId::SPI,
     ///     the read operation fails with comms::ErrorStatus::InvalidMsgData error
     ///     status. Otherwise the read operation continues as expected.
-    virtual comms::ErrorStatus readImpl(
-        typename Base::ReadIterator& iter,
-        std::size_t len) override
+    template <typename TIter>
+    comms::ErrorStatus doRead(TIter& iter, std::size_t len)
     {
         auto es = Base::template readFieldsUntil<FieldIdx_reserved0>(iter, len);
         if (es != comms::ErrorStatus::Success) {
@@ -204,11 +230,11 @@ protected:
         return Base::template readFieldsFrom<FieldIdx_reserved0>(iter, len);
     }
 
-    /// @brief Overrides default refreshing functionality provided by the interface class.
+    /// @brief Provides custom refresh functionality
     /// @details This function makes sure that the value of the
     ///     "portID" field (@ref CfgPrtSpiFields::portID) remains CfgPrtSpiFields::PortId::SPI.
     /// @return @b true in case the "portID" field was modified, @b false otherwise
-    virtual bool refreshImpl() override
+    bool doRefresh()
     {
         auto& allFields = Base::fields();
         auto& portIdField = std::get<FieldIdx_portID>(allFields);
@@ -219,7 +245,6 @@ protected:
         portIdField.value() = CfgPrtSpiFields::PortId::SPI;
         return true;
     }
-
 };
 
 

@@ -1,5 +1,5 @@
 //
-// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2017 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -44,29 +44,6 @@ struct NavEkfstatusFields
         NumOfValues ///< number of available values
     };
 
-    /// @brief Use this enumeration to access member fields of @ref calibStatus bitfield.
-    enum
-    {
-        calibStatus_calibTacho, ///< index of @ref calibTacho member field
-        calibStatus_calibGyro, ///< index of @ref calibGyro member field
-        calibStatus_calibGyroB, ///< index of @ref calibGyroB member field
-        calibStatus_numOfValues = calibStatus_calibGyroB + 2 ///< number of available member fields
-    };
-
-    /// @brief Bits access enumeration for bits in @b measUsed bitmask field.
-    enum
-    {
-        measUsed_pulse, ///< @b pulse bit index
-        measUsed_direction, ///< @b directin bit index
-        measUsed_gyro, ///< @b gyro bit index
-        measUsed_temp, ///< @b temp bit index
-        measUsed_pos, ///< @b pos bit index
-        measUsed_vel, ///< @b vel bit index
-        measUsed_errGyro, ///< @b errGyro bit index
-        measUsed_errPulse, ///< @b errPulse bit index
-        measUsed_numOfValues ///< number of available bits
-    };
-
     /// @brief Definition of "pulses" field.
     using pulses = field::common::I4;
 
@@ -96,8 +73,8 @@ struct NavEkfstatusFields
     /// @brief Definition of "calibGyroB" member field of @ref calibStatus bitfield
     using calibGyroB = calibTacho;
 
-    /// @brief Definition of "calibStatus" field.
-    using calibStatus =
+    /// @brief Base class for @ref calibStatus field
+    using calibStatusBase =
         field::common::BitfieldT<
             std::tuple<
                 calibTacho,
@@ -106,6 +83,16 @@ struct NavEkfstatusFields
                 field::common::res1T<comms::option::FixedBitLength<2> >
             >
         >;
+
+    /// @brief Definition of "calibStatus" field.
+    struct calibStatus : public calibStatusBase
+    {
+        /// @brief Allow access to internal fields.
+        /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
+        ///     related to @b comms::field::Bitfield class from COMMS library
+        ///     for details.
+        COMMS_FIELD_MEMBERS_ACCESS(calibStatusBase, calibTacho, calibGyro, calibGyroB, reserved);
+    };
 
     /// @brief Definition of "pulseScale" field.
     using pulseScale = field::common::I4T<comms::option::ScalingRatio<1, 100000> >;
@@ -126,7 +113,14 @@ struct NavEkfstatusFields
     using accGyroScale = field::common::I2T<comms::option::ScalingRatio<1, 10000> >;
 
     /// @brief Definition of "measUsed" field.
-    using measUsed = field::common::X1;
+    struct measUsed : public field::common::X1
+    {
+        /// @brief Provide names for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS(pulse, direction, gyro, temp, pos, vel, errGyro, errPulse);
+    };
 
     /// @brief Definition of "reserved2" field.
     using reserved2 = field::common::res1;
@@ -151,12 +145,11 @@ struct NavEkfstatusFields
 };
 
 /// @brief Definition of NAV-EKFSTATUS message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
-///     See @ref NavEkfstatusFields and for definition of the fields this message contains.
+///     various implementation options. @n
+///     See @ref NavEkfstatusFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class NavEkfstatus : public
@@ -164,39 +157,53 @@ class NavEkfstatus : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_EKFSTATUS>,
         comms::option::FieldsImpl<NavEkfstatusFields::All>,
-        comms::option::DispatchImpl<NavEkfstatus<TMsgBase> >
+        comms::option::MsgType<NavEkfstatus<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_EKFSTATUS>,
         comms::option::FieldsImpl<NavEkfstatusFields::All>,
-        comms::option::DispatchImpl<NavEkfstatus<TMsgBase> >
+        comms::option::MsgType<NavEkfstatus<TMsgBase> >
     > Base;
 public:
 
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_pulses, ///< @b pulses field, see @ref NavEkfstatusFields::pulses
-        FieldIdx_period, ///< @b period field, see @ref NavEkfstatusFields::period
-        FieldIdx_gyroMean, ///< @b gyroMean field, see @ref NavEkfstatusFields::gyroMean
-        FieldIdx_temperature, ///< @b temperature field, see @ref NavEkfstatusFields::temperature
-        FieldIdx_direction, ///< @b direction field, see @ref NavEkfstatusFields::direction
-        FieldIdx_calibStatus, ///< @b calibStatus field, see @ref NavEkfstatusFields::calibStatus
-        FieldIdx_pulseScale, ///< @b pulseScale field, see @ref NavEkfstatusFields::pulseScale
-        FieldIdx_gyroBias, ///< @b pulses field, see @ref NavEkfstatusFields::pulses
-        FieldIdx_gyroScale, ///< @b gyroBias field, see @ref NavEkfstatusFields::gyroBias
-        FieldIdx_accPulseScale, ///< @b accPulseScale field, see @ref NavEkfstatusFields::accPulseScale
-        FieldIdx_accGyroBias, ///< @b pulses field, see @ref NavEkfstatusFields::pulses
-        FieldIdx_accGyroScale, ///< @b accGyroBias field, see @ref NavEkfstatusFields::accGyroBias
-        FieldIdx_measUsed, ///< @b measUsed field, see @ref NavEkfstatusFields::measUsed
-        FieldIdx_reserved2, ///< @b reserved2 field, see @ref NavEkfstatusFields::reserved2
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b pulses for @ref NavEkfstatusFields::pulses field
+    ///     @li @b period for @ref NavEkfstatusFields::period field
+    ///     @li @b gyroMean for @ref NavEkfstatusFields::gyroMean field
+    ///     @li @b temperature for @ref NavEkfstatusFields::temperature field
+    ///     @li @b direction for @ref NavEkfstatusFields::direction field
+    ///     @li @b calibStatus for @ref NavEkfstatusFields::calibStatus field
+    ///     @li @b pulseScale for @ref NavEkfstatusFields::pulseScale field
+    ///     @li @b gyroBias for @ref NavEkfstatusFields::gyroBias field
+    ///     @li @b gyroScale for @ref NavEkfstatusFields::gyroScale field
+    ///     @li @b accPulseScale for @ref NavEkfstatusFields::accPulseScale field
+    ///     @li @b accGyroBias for @ref NavEkfstatusFields::accGyroBias field
+    ///     @li @b accGyroScale for @ref NavEkfstatusFields::accGyroScale field
+    ///     @li @b measUsed for @ref NavEkfstatusFields::measUsed field
+    ///     @li @b reserved2 for @ref NavEkfstatusFields::reserved2 field
+    COMMS_MSG_FIELDS_ACCESS(Base,
+        pulses,
+        period,
+        gyroMean,
+        temperature,
+        direction,
+        calibStatus,
+        pulseScale,
+        gyroBias,
+        gyroScale,
+        accPulseScale,
+        accGyroBias,
+        accGyroScale,
+        measUsed,
+        reserved2
+    );
 
     /// @brief Default constructor
     NavEkfstatus() = default;

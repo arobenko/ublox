@@ -1,5 +1,5 @@
 //
-// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2017 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -65,13 +65,12 @@ struct AidAlpStatusFields
 ///     This message is sent by the receiver as a response to @ref AidAlpData
 ///     message with either @b ack or @b nak status values. @n
 ///     @b NOTE, that it can also be sent to the receiver to indicate end of the
-///     data transfer. @b
-///     Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+///     data transfer. @n
+///     Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
-///     See @ref AidAlpStatusFields and for definition of the fields this message contains.
+///     various implementation options. @n
+///     See @ref AidAlpStatusFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class AidAlpStatus : public
@@ -79,26 +78,25 @@ class AidAlpStatus : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_ALP>,
         comms::option::FieldsImpl<AidAlpStatusFields::All>,
-        comms::option::DispatchImpl<AidAlpStatus<TMsgBase> >
+        comms::option::MsgType<AidAlpStatus<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_ALP>,
         comms::option::FieldsImpl<AidAlpStatusFields::All>,
-        comms::option::DispatchImpl<AidAlpStatus<TMsgBase> >
+        comms::option::MsgType<AidAlpStatus<TMsgBase> >
     > Base;
 public:
 
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_status, ///< status field, see @ref AidAlpStatusFields::status
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b status for @ref AidAlpStatusFields::status field
+    COMMS_MSG_FIELDS_ACCESS(Base, status);
 
     /// @brief Default constructor
     AidAlpStatus() = default;
@@ -118,10 +116,9 @@ public:
     /// @brief Move assignment
     AidAlpStatus& operator=(AidAlpStatus&&) = default;
 
-protected:
-    virtual comms::ErrorStatus readImpl(
-        typename Base::ReadIterator& iter,
-        std::size_t len) override
+    /// @brief Provide custom read functionality.
+    template <typename TIter>
+    comms::ErrorStatus doRead(TIter& iter, std::size_t len)
     {
         auto& allFields = Base::fields();
         auto& statusField = std::get<FieldIdx_status>(allFields);
@@ -129,7 +126,7 @@ protected:
             return comms::ErrorStatus::InvalidMsgData;
         }
 
-        return Base::readImpl(iter, len);
+        return Base::doRead(iter, len);
     }
 
 };

@@ -1,5 +1,5 @@
 //
-// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2017 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -59,7 +59,7 @@ QVariantMap createProps_flags()
     props.name("flags")
          .add("lla")
          .add("altInv");
-    assert(props.bits().size() == CfgTmode2Fields::flags_numOfValues);
+    assert(props.bits().size() == CfgTmode2Fields::flags::BitIdx_numOfValues);
     return props.asMap();
 }
 

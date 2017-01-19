@@ -1,5 +1,5 @@
 //
-// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2017 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -42,14 +42,6 @@ struct CfgTmode2Fields
         NumOfValues ///< number of available values
     };
 
-    /// @brief Bits access enumeration for @ref flags bitmask field.
-    enum
-    {
-        flags_lla, ///< @b lla bit index
-        flags_altInv, ///< @b altInv bit index
-        flags_numOfValues ///< number of available bits
-    };
-
     /// @brief Definition of "timeMode" field.
     using timeMode =
         field::common::EnumT<
@@ -61,10 +53,17 @@ struct CfgTmode2Fields
     using reserved1 = field::common::res1;
 
     /// @brief Definition of "flags" field.
-    using flags =
+    struct flags : public
         field::common::X2T<
             comms::option::BitmaskReservedBits<0xfffc, 0>
-        >;
+        >
+    {
+        /// @brief Provide names for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS(lla, altInv);
+    };
 
     /// @brief Definition of "ecefX" field.
     using ecefX =
@@ -135,12 +134,11 @@ struct CfgTmode2Fields
 };
 
 /// @brief Definition of AID-TMODE2 message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
-///     See @ref CfgTmode2Fields and for definition of the fields this message contains.
+///     various implementation options. @n
+///     See @ref CfgTmode2Fields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 ///
 ///     @b NOTE, that Ublox binary protocol specification reinterprets value of
 ///     some fields based on the value of @b lla bit in @b flags (see @ref CfgTmode2Fields::flags)
@@ -158,37 +156,52 @@ class CfgTmode2 : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_TMODE2>,
         comms::option::FieldsImpl<CfgTmode2Fields::All>,
-        comms::option::DispatchImpl<CfgTmode2<TMsgBase> >
+        comms::option::MsgType<CfgTmode2<TMsgBase> >,
+        comms::option::HasDoRefresh
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_TMODE2>,
         comms::option::FieldsImpl<CfgTmode2Fields::All>,
-        comms::option::DispatchImpl<CfgTmode2<TMsgBase> >
+        comms::option::MsgType<CfgTmode2<TMsgBase> >,
+        comms::option::HasDoRefresh
     > Base;
 public:
 
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_timeMode, ///< @b timeMode field, see @ref CfgTmode2Fields::timeMode
-        FieldIdx_reserved1, ///< @b reserved1 field, see @ref CfgTmode2Fields::reserved1
-        FieldIdx_flags, ///< @b flags field, see @ref CfgTmode2Fields::flags
-        FieldIdx_ecefX, ///< @b ecefX field, see @ref CfgTmode2Fields::ecefX
-        FieldIdx_lat, ///< @b lat field, see @ref CfgTmode2Fields::lat
-        FieldIdx_ecefY, ///< @b ecefY field, see @ref CfgTmode2Fields::ecefY
-        FieldIdx_lon, ///< @b lon field, see @ref CfgTmode2Fields::lon
-        FieldIdx_ecefZ, ///< @b ecefZ field, see @ref CfgTmode2Fields::ecefZ
-        FieldIdx_alt, ///< @b alt field, see @ref CfgTmode2Fields::alt
-        FieldIdx_fixedPosAcc, ///< @b fixedPosAcc field, see @ref CfgTmode2Fields::fixedPosAcc
-        FieldIdx_svinMinDur, ///< @b svinMinDur field, see @ref CfgTmode2Fields::svinMinDur
-        FieldIdx_svinAccLimit, ///< @b svinAccLimit field, see @ref CfgTmode2Fields::svinAccLimit
-        FieldIdx_numOfValues ///< number of available fields
-    };
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b timeMode for @ref CfgTmode2Fields::timeMode field
+    ///     @li @b reserved1 for @ref CfgTmode2Fields::reserved1 field
+    ///     @li @b flags for @ref CfgTmode2Fields::flags field
+    ///     @li @b ecefX for @ref CfgTmode2Fields::ecefX field
+    ///     @li @b lat for @ref CfgTmode2Fields::lat field
+    ///     @li @b ecefY for @ref CfgTmode2Fields::ecefY field
+    ///     @li @b lon for @ref CfgTmode2Fields::lon field
+    ///     @li @b ecefZ for @ref CfgTmode2Fields::ecefZ field
+    ///     @li @b alt for @ref CfgTmode2Fields::alt field
+    ///     @li @b fixedPosAcc for @ref CfgTmode2Fields::fixedPosAcc field
+    ///     @li @b svinMinDur for @ref CfgTmode2Fields::svinMinDur field
+    ///     @li @b svinAccLimit for @ref CfgTmode2Fields::svinAccLimit field
+    COMMS_MSG_FIELDS_ACCESS(Base,
+        timeMode,
+        reserved1,
+        flags,
+        ecefX,
+        lat,
+        ecefY,
+        lon,
+        ecefZ,
+        alt,
+        fixedPosAcc,
+        svinMinDur,
+        svinAccLimit
+    );
 
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
 
     /// @brief Default constructor
     /// @details The existing/missing mode of the optional fields is determined
@@ -205,19 +218,17 @@ public:
         auto& ecefYField = std::get<FieldIdx_ecefY>(allFields);
         auto& ecefZField = std::get<FieldIdx_ecefZ>(allFields);
 
-        static const auto DefaultCartesianMode = comms::field::OptionalMode::Exists;
-        ecefXField.setMode(DefaultCartesianMode);
-        ecefYField.setMode(DefaultCartesianMode);
-        ecefZField.setMode(DefaultCartesianMode);
+        ecefXField.setExists();
+        ecefYField.setExists();
+        ecefZField.setExists();
 
         auto& latField = std::get<FieldIdx_lat>(allFields);
         auto& lonField = std::get<FieldIdx_lon>(allFields);
         auto& altField = std::get<FieldIdx_alt>(allFields);
 
-        static const auto DefaultGeodeticMode = comms::field::OptionalMode::Missing;
-        latField.setMode(DefaultGeodeticMode);
-        lonField.setMode(DefaultGeodeticMode);
-        altField.setMode(DefaultGeodeticMode);
+        latField.setMissing();
+        lonField.setMissing();
+        altField.setMissing();
     }
 
     /// @brief Copy constructor
@@ -235,16 +246,13 @@ public:
     /// @brief Move assignment
     CfgTmode2& operator=(CfgTmode2&&) = default;
 
-protected:
-
-    /// @brief Overrides read functionality provided by the base class.
+    /// @brief Provides custom read functionality.
     /// @details This function performs read of the first fields up to the
     ///     @b flags (see @ref CfgTmode2Fields::flags). Based on the value of
     ///     @b lla bit, the relevant optional fields are marked as either
     ///     @b existing or @b missing and the read continues until the end.
-    virtual comms::ErrorStatus readImpl(
-        typename Base::ReadIterator& iter,
-        std::size_t len) override
+    template <typename TIter>
+    comms::ErrorStatus doRead(TIter& iter, std::size_t len)
     {
         auto es = Base::template readFieldsUntil<FieldIdx_ecefX>(iter, len);
         if (es != comms::ErrorStatus::Success) {
@@ -256,7 +264,7 @@ protected:
 
         auto cartesianMode = comms::field::OptionalMode::Exists;
         auto geodeticMode = comms::field::OptionalMode::Missing;
-        if (flagsField.getBitValue(CfgTmode2Fields::flags_lla)) {
+        if (flagsField.getBitValue(CfgTmode2Fields::flags::BitIdx_lla)) {
             std::swap(cartesianMode, geodeticMode);
         }
 
@@ -277,19 +285,19 @@ protected:
         return Base::template readFieldsFrom<FieldIdx_ecefX>(iter, len);
     }
 
-    /// @brief Overrides default refreshing functionality provided by the interface class.
+    /// @brief Provides custom refresh functionality
     /// @details The function checks the value of @b lla bit in the @b flags
     ///     (see @ref CfgTmode2Fields::flags) field and modifies mode of relevant
     ///     @b optional fields accordingly.
     /// @return @b true in case the mode of any optional field was modified, @b false otherwise
-    virtual bool refreshImpl() override
+    bool doRefresh()
     {
         auto& allFields = Base::fields();
         auto& flagsField = std::get<FieldIdx_flags>(allFields);
 
         auto cartesianMode = comms::field::OptionalMode::Exists;
         auto geodeticMode = comms::field::OptionalMode::Missing;
-        if (flagsField.getBitValue(CfgTmode2Fields::flags_lla)) {
+        if (flagsField.getBitValue(CfgTmode2Fields::flags::BitIdx_lla)) {
             std::swap(cartesianMode, geodeticMode);
         }
 
@@ -317,9 +325,7 @@ protected:
         altField.setMode(geodeticMode);
         return true;
     }
-
 };
-
 
 }  // namespace message
 

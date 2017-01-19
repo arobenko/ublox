@@ -1,5 +1,5 @@
 //
-// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2017 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -89,12 +89,11 @@ struct AidAlpsrvFields
 };
 
 /// @brief Definition of AID-ALPSRV message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
-///     See @ref AidAlpsrvFields and for definition of the fields this message contains.
+///     various implementation options. @n
+///     See @ref AidAlpsrvFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class AidAlpsrv : public
@@ -102,35 +101,35 @@ class AidAlpsrv : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_ALPSRV>,
         comms::option::FieldsImpl<AidAlpsrvFields::All>,
-        comms::option::DispatchImpl<AidAlpsrv<TMsgBase> >
+        comms::option::MsgType<AidAlpsrv<TMsgBase> >,
+        comms::option::HasDoRefresh
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_ALPSRV>,
         comms::option::FieldsImpl<AidAlpsrvFields::All>,
-        comms::option::DispatchImpl<AidAlpsrv<TMsgBase> >
+        comms::option::MsgType<AidAlpsrv<TMsgBase> >,
+        comms::option::HasDoRefresh
     > Base;
 public:
-
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_idSize, ///< idSize field, see @ref AidAlpsrvFields::idSize
-        FieldIdx_type, ///< type field, see @ref AidAlpsrvFields::type
-        FieldIdx_ofs, ///< ofs field, see @ref AidAlpsrvFields::ofs
-        FieldIdx_size, ///< size field, see @ref AidAlpsrvFields::size
-        FieldIdx_fileId, ///< type fileId, see @ref AidAlpsrvFields::fileId
-        FieldIdx_dataSize, ///< dataSize field, see @ref AidAlpsrvFields::dataSize
-        FieldIdx_id1, ///< id1 field, see @ref AidAlpsrvFields::id1
-        FieldIdx_id2, ///< id2 field, see @ref AidAlpsrvFields::id2
-        FieldIdx_id3, ///< id3 field, see @ref AidAlpsrvFields::id3
-        FieldIdx_data, ///< data field, see @ref AidAlpsrvFields::data
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b idSize for @ref AidAlpsrvFields::idSize field
+    ///     @li @b type for @ref AidAlpsrvFields::type field
+    ///     @li @b ofs for @ref AidAlpsrvFields::ofs field
+    ///     @li @b size for @ref AidAlpsrvFields::size field
+    ///     @li @b fileId for @ref AidAlpsrvFields::fileId field
+    ///     @li @b dataSize for @ref AidAlpsrvFields::dataSize field
+    ///     @li @b id1 for @ref AidAlpsrvFields::id1 field
+    ///     @li @b id2 for @ref AidAlpsrvFields::id2 field
+    ///     @li @b id3 for @ref AidAlpsrvFields::id3 field
+    ///     @li @b data for @ref AidAlpsrvFields::data field
+    COMMS_MSG_FIELDS_ACCESS(Base, idSize, type, ofs, size, fileId, dataSize, id1, id2, id3, data);
 
     /// @brief Default constructor
     AidAlpsrv() = default;
@@ -150,18 +149,15 @@ public:
     /// @brief Move assignment
     AidAlpsrv& operator=(AidAlpsrv&&) = default;
 
-protected:
-
-    /// @brief Overrides read functionality provided by the base class.
+    /// @brief Provides custom read functionality.
     /// @details The function reads all the fields up and including "type"
     ///     (see @ref AidAlpsrvFields::type). If its value is invalid (equal to
     ///     0xff), the read operation fails with comms::ErrorStatus::InvalidMsgData
     ///     error status, otherwise continues. The size of the "data" list
     ///     (see @ref AidAlpsrvFields::data) is determined by the value of
     ///     "dataSize" field (see @ref AidAlpsrvFields::dataSize).
-    virtual comms::ErrorStatus readImpl(
-        typename Base::ReadIterator& iter,
-        std::size_t len) override
+    template <typename TIter>
+    comms::ErrorStatus doRead(TIter& iter, std::size_t len)
     {
         auto es = Base::template readFieldsUntil<FieldIdx_ofs>(iter, len);
         if (es != comms::ErrorStatus::Success) {
@@ -187,11 +183,11 @@ protected:
         return Base::template readFieldsFrom<FieldIdx_data>(iter, len);
     }
 
-    /// @brief Overrides default refreshing functionality provided by the interface class.
+    /// @brief Provides custom refreshing functionality.
     /// @details The value of "dataSize" field (see @ref AidAlpsrvFields::dataSize) is
     ///     determined by the size of the "data" list (see @ref AidAlpsrvFields::data).
     /// @return @b true in case the mode of "dataSize" field was modified, @b false otherwise
-    virtual bool refreshImpl() override
+    bool doRefresh()
     {
         auto& allFields = Base::fields();
         auto& dataSizeField = std::get<FieldIdx_dataSize>(allFields);
@@ -203,7 +199,6 @@ protected:
         dataSizeField.value() = dataField.value().size();
         return true;
     }
-
 };
 
 

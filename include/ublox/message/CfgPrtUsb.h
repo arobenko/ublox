@@ -1,5 +1,5 @@
 //
-// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2017 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -62,12 +62,11 @@ struct CfgPrtUsbFields : public CfgPrtFields
 };
 
 /// @brief Definition of CFG-PRT (@b USB) message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
-///     See @ref CfgPrtUsbFields and for definition of the fields this message contains.
+///     various implementation options. @n
+///     See @ref CfgPrtUsbFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class CfgPrtUsb : public
@@ -75,31 +74,45 @@ class CfgPrtUsb : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_PRT>,
         comms::option::FieldsImpl<CfgPrtUsbFields::All>,
-        comms::option::DispatchImpl<CfgPrtUsb<TMsgBase> >
+        comms::option::MsgType<CfgPrtUsb<TMsgBase> >,
+        comms::option::HasDoRefresh
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_PRT>,
         comms::option::FieldsImpl<CfgPrtUsbFields::All>,
-        comms::option::DispatchImpl<CfgPrtUsb<TMsgBase> >
+        comms::option::MsgType<CfgPrtUsb<TMsgBase> >,
+        comms::option::HasDoRefresh
     > Base;
 public:
 
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_portID, ///< @b portID field, see @ref CfgPrtUsbFields::portID
-        FieldIdx_reserved0, ///< @b reserved0 field, see @ref CfgPrtUsbFields::reserved0
-        FieldIdx_txReady, ///< @b txReady field, see @ref CfgPrtUsbFields::txReady
-        FieldIdx_reserved2, ///< @b reserved2 field, see @ref CfgPrtUsbFields::reserved2
-        FieldIdx_reserved3, ///< @b reserved3 field, see @ref CfgPrtUsbFields::reserved3
-        FieldIdx_inProtoMask, ///< @b inProtoMask field, see @ref CfgPrtUsbFields::inProtoMask
-        FieldIdx_outProtoMask, ///< @b outProtoMask field, see @ref CfgPrtUsbFields::outProtoMask
-        FieldIdx_reserved4, ///< @b reserved4 field, see @ref CfgPrtUsbFields::reserved4
-        FieldIdx_reserved5, ///< @b reserved5 field, see @ref CfgPrtUsbFields::reserved5
-        FieldIdx_numOfValues ///< number of available fields
-    };
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b portID for @ref CfgPrtUsbFields::portID field
+    ///     @li @b reserved0 for @ref CfgPrtUsbFields::reserved0 field
+    ///     @li @b txReady for @ref CfgPrtFields::txReady field
+    ///     @li @b reserved2 for @ref CfgPrtUsbFields::reserved2 field
+    ///     @li @b reserved3 for @ref CfgPrtUsbFields::reserved3 field
+    ///     @li @b inProtoMask for @ref CfgPrtFields::inProtoMask field
+    ///     @li @b outProtoMask for @ref CfgPrtFields::outProtoMask field
+    ///     @li @b reserved4 for @ref CfgPrtUsbFields::reserved4 field
+    ///     @li @b reserved5 for @ref CfgPrtUsbFields::reserved5 field
+    COMMS_MSG_FIELDS_ACCESS(Base,
+        portID,
+        reserved0,
+        txReady,
+        reserved2,
+        reserved3,
+        inProtoMask,
+        outProtoMask,
+        reserved4,
+        reserved5
+    );
 
     static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
         "Number of fields is incorrect");
@@ -122,15 +135,13 @@ public:
     /// @brief Move assignment
     CfgPrtUsb& operator=(CfgPrtUsb&&) = default;
 
-protected:
-    /// @brief Overrides read functionality provided by the base class.
+    /// @brief Provides custom read functionality.
     /// @details Reads only first "portID" field (@ref CfgPrtUsbFields::portID) and
     ///     checks its value. If the value is @b NOT CfgPrtUsbFields::PortId::USB,
     ///     the read operation fails with comms::ErrorStatus::InvalidMsgData error
     ///     status. Otherwise the read operation continues as expected.
-    virtual comms::ErrorStatus readImpl(
-        typename Base::ReadIterator& iter,
-        std::size_t len) override
+    template <typename TIter>
+    comms::ErrorStatus doRead(TIter& iter, std::size_t len)
     {
         auto es = Base::template readFieldsUntil<FieldIdx_reserved0>(iter, len);
         if (es != comms::ErrorStatus::Success) {
@@ -146,11 +157,11 @@ protected:
         return Base::template readFieldsFrom<FieldIdx_reserved0>(iter, len);
     }
 
-    /// @brief Overrides default refreshing functionality provided by the interface class.
+    /// @brief Provides custom refresh functionality
     /// @details This function makes sure that the value of the
     ///     "portID" field (@ref CfgPrtUsbFields::portID) remains CfgPrtUsbFields::PortId::USB.
     /// @return @b true in case the "portID" field was modified, @b false otherwise
-    virtual bool refreshImpl() override
+    bool doRefresh()
     {
         auto& allFields = Base::fields();
         auto& portIdField = std::get<FieldIdx_portID>(allFields);
@@ -163,7 +174,6 @@ protected:
     }
 
 };
-
 
 }  // namespace message
 

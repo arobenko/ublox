@@ -1,5 +1,5 @@
 //
-// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2017 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -33,19 +33,18 @@ namespace message
 /// @see CfgRinv
 struct CfgRinvFields
 {
-    /// @brief Bits access enumeration for @ref flags bitmask field.
-    enum
-    {
-        data_dump, ///< @b dump bit index
-        data_binary, ///< @b binary bit index
-        data_numOfValues ///< number of available bits
-    };
-
     /// @brief Definition of "flags" field.
-    using flags =
+    struct flags : public
         field::common::X1T<
             comms::option::BitmaskReservedBits<0xfc, 0>
-        >;
+        >
+    {
+        /// @brief Provide names for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS(dump, binary);
+    };
 
     /// @brief Definition of "data" field.
     using data =
@@ -59,12 +58,11 @@ struct CfgRinvFields
 };
 
 /// @brief Definition of CFG-RINV message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
-///     See @ref CfgRinvFields and for definition of the fields this message contains.
+///     various implementation options. @n
+///     See @ref CfgRinvFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class CfgRinv : public
@@ -72,27 +70,26 @@ class CfgRinv : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_RINV>,
         comms::option::FieldsImpl<CfgRinvFields::All>,
-        comms::option::DispatchImpl<CfgRinv<TMsgBase> >
+        comms::option::MsgType<CfgRinv<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_RINV>,
         comms::option::FieldsImpl<CfgRinvFields::All>,
-        comms::option::DispatchImpl<CfgRinv<TMsgBase> >
+        comms::option::MsgType<CfgRinv<TMsgBase> >
     > Base;
 public:
 
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_flags, ///< @b flags field, see @ref CfgRinvFields::flags
-        FieldIdx_data, ///< @b data field, see @ref CfgRinvFields::data
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b flags for @ref CfgRinvFields::flags field
+    ///     @li @b data for @ref CfgRinvFields::data field
+    COMMS_MSG_FIELDS_ACCESS(Base, flags, data);
 
     /// @brief Default constructor
     CfgRinv() = default;

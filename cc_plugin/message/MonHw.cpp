@@ -1,5 +1,5 @@
 //
-// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2017 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -71,7 +71,7 @@ QVariantMap createProps_flags()
     rtcCalibProps.name("flags")
                  .add("rtcCalib")
                  .serialisedHidden();
-    assert(rtcCalibProps.bits().size() == MonHwFields::rtcCalib_numOfValues);
+    assert(rtcCalibProps.bits().size() == MonHwFields::rtcCalib::BitIdx_numOfValues);
 
     cc::property::field::ForField<MonHwFields::safeBoot> safeBootProps;
     safeBootProps.name("safeBoot")
@@ -97,7 +97,7 @@ QVariantMap createProps_flags()
          .add(safeBootProps.asMap())
          .add(jammingStateProps.asMap())
          .add(reservedProps.asMap());
-    assert(props.members().size() == MonHwFields::flags_numOfValues);
+    assert(props.members().size() == MonHwFields::flags::FieldIdx_numOfValues);
     return props.asMap();
 }
 

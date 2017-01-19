@@ -1,5 +1,5 @@
 //
-// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2017 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -61,12 +61,11 @@ struct LogRetrieveFields
 };
 
 /// @brief Definition of LOG-RETRIEVE message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
-///     See @ref LogRetrieveFields and for definition of the fields this message contains.
+///     various implementation options. @n
+///     See @ref LogRetrieveFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class LogRetrieve : public
@@ -74,29 +73,28 @@ class LogRetrieve : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_LOG_RETRIEVE>,
         comms::option::FieldsImpl<LogRetrieveFields::All>,
-        comms::option::DispatchImpl<LogRetrieve<TMsgBase> >
+        comms::option::MsgType<LogRetrieve<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_LOG_RETRIEVE>,
         comms::option::FieldsImpl<LogRetrieveFields::All>,
-        comms::option::DispatchImpl<LogRetrieve<TMsgBase> >
+        comms::option::MsgType<LogRetrieve<TMsgBase> >
     > Base;
 public:
 
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_startNumber, ///< @b startNumber field, see @ref LogRetrieveFields::startNumber
-        FieldIdx_entryCount, ///< @b entryCount field, see @ref LogRetrieveFields::entryCount
-        FieldIdx_version, ///< @b version field, see @ref LogRetrieveFields::version
-        FieldIdx_reserved, ///< @b reserved field, see @ref LogRetrieveFields::reserved
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b startNumber for @ref LogRetrieveFields::startNumber field
+    ///     @li @b entryCount for @ref LogRetrieveFields::entryCount field
+    ///     @li @b version for @ref LogRetrieveFields::version field
+    ///     @li @b reserved for @ref LogRetrieveFields::reserved field
+    COMMS_MSG_FIELDS_ACCESS(Base, startNumber, entryCount, version, reserved);
 
     /// @brief Default constructor
     LogRetrieve() = default;

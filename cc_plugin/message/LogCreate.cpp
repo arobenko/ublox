@@ -1,5 +1,5 @@
 //
-// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2017 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -46,7 +46,7 @@ QVariantMap createProps_logCfg()
     cc::property::field::ForField<LogCreateFields::logCfg> props;
     props.name("logCfg")
          .add("circular");
-    assert(props.bits().size() == LogCreateFields::logCfg_numOfValues);
+    assert(props.bits().size() == LogCreateFields::logCfg::BitIdx_numOfValues);
     return props.asMap();
 }
 

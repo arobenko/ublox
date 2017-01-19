@@ -1,5 +1,5 @@
 //
-// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2017 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -71,23 +71,6 @@ struct MonHwFields
         NumOfValues ///< number of available values
     };
 
-    /// @brief Use this enumeration to access member fields of @ref flags bitfield.
-    enum
-    {
-        flags_rtcCalib, ///< index of @ref rtcCalib member field
-        flags_safeBoot, ///< index of @ref safeBoot member field
-        flags_jammingState, ///< index of @ref jammingState member field
-        flags_numOfValues = flags_jammingState + 2 ///< number of member fields
-    };
-
-    /// @brief Bits access enumeration for bits in @b rtcCalib member of
-    ///     @ref flags bitfield field.
-    enum
-    {
-        rtcCalib_bit, ///< single bit index
-        rtcCalib_numOfValues ///< number of available bits
-    };
-
     /// @brief Definition of "pinSel" field.
     using pinSel = field::common::X4;
 
@@ -121,10 +104,17 @@ struct MonHwFields
         >;
 
     /// @brief Definition of "rtcCalib" single bit bitmask member field of @ref flags bitfield.
-    using rtcCalib =
+    struct rtcCalib : public
         field::common::X1T<
             comms::option::FixedBitLength<1>
-        >;
+        >
+    {
+        /// @brief Provide names for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS(bit);
+    };
 
     /// @brief Definition of "safeBoot" member field of @ref flags bitfield.
     using safeBoot =
@@ -142,8 +132,8 @@ struct MonHwFields
             comms::option::FixedBitLength<2>
         >;
 
-    /// @brief Definition of "flags" field.
-    using flags =
+    /// @brief Base class of @ref flags field.
+    using flagsBase =
         field::common::BitfieldT<
             std::tuple<
                 rtcCalib,
@@ -154,6 +144,16 @@ struct MonHwFields
                 >
             >
         >;
+
+    /// @brief Definition of "flags" field.
+    struct flags : public flagsBase
+    {
+        /// @brief Allow access to internal fields.
+        /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
+        ///     related to @b comms::field::Bitfield class from COMMS library
+        ///     for details.
+        COMMS_FIELD_MEMBERS_ACCESS(flagsBase, rtcCalib, safeBoot, jammingState, reserved);
+    };
 
     /// @brief Definition of "reserved1" field.
     using reserved1 = field::common::res1;
@@ -206,12 +206,11 @@ struct MonHwFields
 };
 
 /// @brief Definition of MON-HW message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
-///     See @ref MonHwFields and for definition of the fields this message contains.
+///     various implementation options. @n
+///     See @ref MonHwFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class MonHw : public
@@ -219,42 +218,59 @@ class MonHw : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_MON_HW>,
         comms::option::FieldsImpl<MonHwFields::All>,
-        comms::option::DispatchImpl<MonHw<TMsgBase> >
+        comms::option::MsgType<MonHw<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_MON_HW>,
         comms::option::FieldsImpl<MonHwFields::All>,
-        comms::option::DispatchImpl<MonHw<TMsgBase> >
+        comms::option::MsgType<MonHw<TMsgBase> >
     > Base;
 public:
 
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_pinSel, ///< @b pinSel field, see @ref MonHwFields::pinSel
-        FieldIdx_pinBank, ///< @b pinBank field, see @ref MonHwFields::pinBank
-        FieldIdx_pinDir, ///< @b pinDir field, see @ref MonHwFields::pinDir
-        FieldIdx_pinVal, ///< @b pinVal field, see @ref MonHwFields::pinVal
-        FieldIdx_noisePerMS, ///< @b noisePerMS field, see @ref MonHwFields::noisePerMS
-        FieldIdx_agcCnt, ///< @b agcCnt field, see @ref MonHwFields::agcCnt
-        FieldIdx_aStatus, ///< @b aStatus field, see @ref MonHwFields::aStatus
-        FieldIdx_aPower, ///< @b aPower field, see @ref MonHwFields::aPower
-        FieldIdx_flags, ///< @b flags field, see @ref MonHwFields::flags
-        FieldIdx_reserved1, ///< @b reserved1 field, see @ref MonHwFields::reserved1
-        FieldIdx_usedMask, ///< @b usedMask field, see @ref MonHwFields::usedMask
-        FieldIdx_VP, ///< @b VP field, see @ref MonHwFields::VP
-        FieldIdx_jamInd, ///< @b jamInd field, see @ref MonHwFields::jamInd
-        FieldIdx_reserved3, ///< @b reserved3 field, see @ref MonHwFields::reserved3
-        FieldIdx_pinIrq, ///< @b pinIrq field, see @ref MonHwFields::pinIrq
-        FieldIdx_pullH, ///< @b pullH field, see @ref MonHwFields::pullH
-        FieldIdx_pullL, ///< @b pullL field, see @ref MonHwFields::pullL
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b pinSel for @ref MonHwFields::pinSel field
+    ///     @li @b pinBank for @ref MonHwFields::pinBank field
+    ///     @li @b pinDir for @ref MonHwFields::pinDir field
+    ///     @li @b pinVal for @ref MonHwFields::pinVal field
+    ///     @li @b noisePerMS for @ref MonHwFields::noisePerMS field
+    ///     @li @b agcCnt for @ref MonHwFields::agcCnt field
+    ///     @li @b aStatus for @ref MonHwFields::aStatus field
+    ///     @li @b aPower for @ref MonHwFields::aPower field
+    ///     @li @b flags for @ref MonHwFields::flags field
+    ///     @li @b reserved1 for @ref MonHwFields::reserved1 field
+    ///     @li @b usedMask for @ref MonHwFields::usedMask field
+    ///     @li @b VP for @ref MonHwFields::VP field
+    ///     @li @b jamInd for @ref MonHwFields::jamInd field
+    ///     @li @b reserved3 for @ref MonHwFields::reserved3 field
+    ///     @li @b pinIrq for @ref MonHwFields::pinIrq field
+    ///     @li @b pullH for @ref MonHwFields::pullH field
+    ///     @li @b pullL for @ref MonHwFields::pullL field
+    COMMS_MSG_FIELDS_ACCESS(Base,
+        pinSel,
+        pinBank,
+        pinDir,
+        pinVal,
+        noisePerMS,
+        agcCnt,
+        aStatus,
+        aPower,
+        flags,
+        reserved1,
+        usedMask,
+        VP,
+        jamInd,
+        reserved3,
+        pinIrq,
+        pullH,
+        pullL
+    );
 
     /// @brief Default constructor
     MonHw() = default;

@@ -1,5 +1,5 @@
 //
-// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2017 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -57,12 +57,11 @@ struct AidAlmFields
 };
 
 /// @brief Definition of AID-ALM message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
-///     See @ref AidAlmFields and for definition of the fields this message contains.
+///     various implementation options. @n
+///     See @ref AidAlmFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class AidAlm : public
@@ -70,36 +69,34 @@ class AidAlm : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_ALM>,
         comms::option::FieldsImpl<AidAlmFields::All>,
-        comms::option::DispatchImpl<AidAlm<TMsgBase> >
+        comms::option::MsgType<AidAlm<TMsgBase> >,
+        comms::option::HasDoRefresh
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_ALM>,
         comms::option::FieldsImpl<AidAlmFields::All>,
-        comms::option::DispatchImpl<AidAlm<TMsgBase> >
+        comms::option::MsgType<AidAlm<TMsgBase> >,
+        comms::option::HasDoRefresh
     > Base;
 public:
-
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_svid, ///< svid field, see @ref AidAlmFields::svid
-        FieldIdx_week, ///< week field, see @ref AidAlmFields::week
-        FieldIdx_dwrd, ///< dwrd field, see @ref AidAlmFields::dwrd
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b svid for @ref AidAlmFields::svid field
+    ///     @li @b week for @ref AidAlmFields::week field
+    ///     @li @b dwrd for @ref AidAlmFields::dwrd field
+    COMMS_MSG_FIELDS_ACCESS(Base, svid, week, dwrd);
 
     /// @brief Default constructor
     /// @details Marks "dwrd" (see @ref AidAlmFields::dwrd) to be missing.
     AidAlm()
     {
-        auto& allFields = Base::fields();
-        auto& dataField = std::get<FieldIdx_dwrd>(allFields);
-        dataField.setMode(comms::field::OptionalMode::Missing);
+        field_dwrd().setMissing();
     }
 
     /// @brief Copy constructor
@@ -117,16 +114,13 @@ public:
     /// @brief Move assignment
     AidAlm& operator=(AidAlm&&) = default;
 
-protected:
-
-    /// @brief Overrides read functionality provided by the base class.
+    /// @brief Provides custom read functionality.
     /// @details The existence of "dwrd" (see @ref AidAlmFields::dwrd) is
     ///     determined by the contents of "week" (see @ref AidAlmFields::week)
     ///     field. If the value of the latter is 0, the "dwrd" is marked to
     ///     be missing, otherwise it exists.
-    virtual comms::ErrorStatus readImpl(
-        typename Base::ReadIterator& iter,
-        std::size_t len) override
+    template <typename TIter>
+    comms::ErrorStatus doRead(TIter& iter, std::size_t len)
     {
         auto es = Base::template readFieldsUntil<FieldIdx_dwrd>(iter, len);
         if (es != comms::ErrorStatus::Success) {
@@ -145,13 +139,13 @@ protected:
         return Base::template readFieldsFrom<FieldIdx_dwrd>(iter, len);
     }
 
-    /// @brief Overrides default refreshing functionality provided by the interface class.
+    /// @brief Provides custom refresh functionality
     /// @details The existence of "dwrd" (see @ref AidAlmFields::dwrd) is
     ///     determined by the contents of "week" (see @ref AidAlmFields::week)
     ///     field. If the value of the latter is 0, the "dwrd" is marked to
     ///     be missing, otherwise it exists.
     /// @return @b true in case the mode of "dwrd" field was modified, @b false otherwise
-    virtual bool refreshImpl() override
+    bool doRefresh()
     {
         auto& allFields = Base::fields();
         auto& weekField = std::get<FieldIdx_week>(allFields);
@@ -168,7 +162,6 @@ protected:
         dataField.setMode(expectedMode);
         return true;
     }
-
 };
 
 

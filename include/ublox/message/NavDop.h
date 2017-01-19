@@ -1,5 +1,5 @@
 //
-// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2017 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -71,12 +71,11 @@ struct NavDopFields
 };
 
 /// @brief Definition of NAV-DOP message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
-///     See @ref NavDopFields and for definition of the fields this message contains.
+///     various implementation options. @n
+///     See @ref NavDopFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class NavDop : public
@@ -84,33 +83,32 @@ class NavDop : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_DOP>,
         comms::option::FieldsImpl<NavDopFields::All>,
-        comms::option::DispatchImpl<NavDop<TMsgBase> >
+        comms::option::MsgType<NavDop<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_DOP>,
         comms::option::FieldsImpl<NavDopFields::All>,
-        comms::option::DispatchImpl<NavDop<TMsgBase> >
+        comms::option::MsgType<NavDop<TMsgBase> >
     > Base;
 public:
 
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_iTOW, ///< @b iTOW field, see @ref NavDopFields::iTOW
-        FieldIdx_gDOP, ///< @b gDOP field, see @ref NavDopFields::gDOP
-        FieldIdx_pDOP, ///< @b pDOP field, see @ref NavDopFields::pDOP
-        FieldIdx_tDOP, ///< @b tDOP field, see @ref NavDopFields::tDOP
-        FieldIdx_vDOP, ///< @b vDOP field, see @ref NavDopFields::vDOP
-        FieldIdx_hDOP, ///< @b hDOP field, see @ref NavDopFields::hDOP
-        FieldIdx_nDOP, ///< @b nDOP field, see @ref NavDopFields::nDOP
-        FieldIdx_eDOP, ///< @b eDOP field, see @ref NavDopFields::eDOP
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b iTOW for @ref NavDopFields::iTOW field
+    ///     @li @b gDOP for @ref NavDopFields::gDOP field
+    ///     @li @b pDOP for @ref NavDopFields::pDOP field
+    ///     @li @b tDOP for @ref NavDopFields::tDOP field
+    ///     @li @b vDOP for @ref NavDopFields::vDOP field
+    ///     @li @b hDOP for @ref NavDopFields::hDOP field
+    ///     @li @b nDOP for @ref NavDopFields::nDOP field
+    ///     @li @b eDOP for @ref NavDopFields::eDOP field
+    COMMS_MSG_FIELDS_ACCESS(Base, iTOW, gDOP, pDOP, tDOP, vDOP, hDOP, nDOP, eDOP);
 
     /// @brief Default constructor
     NavDop() = default;

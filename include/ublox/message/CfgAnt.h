@@ -1,5 +1,5 @@
 //
-// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2017 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -34,40 +34,18 @@ namespace message
 struct CfgAntFields
 {
 
-    /// @brief Bits access enumeration for @ref flags bitmask field.
-    enum
-    {
-        flags_svcs, ///< @b svcs bit index
-        flags_csd, ///< @b csd bit index
-        flags_ocd, ///< @b ocd bit index
-        flags_pdwnOnSCD, ///< @b pdwnOnSCD bit index
-        flags_recovery, ///< @b recovery bit index
-        flags_numOfValues ///< number of available bits
-    };
-
-    /// @brief Use this enumeration to access member fields of @ref pins bitfield.
-    enum
-    {
-        pins_pinSwitch, ///< @b index of @b pinSwith member field
-        pins_pinSCD, ///< @b index of @b pinSCD member field
-        pins_pinOCD, ///< @b index of @b pinOCD member field
-        pins_reconfig, ///< @b index of @b reconfig member field
-        pins_numOfValues ///< number of member fields
-    };
-
-    /// @brief Bits access enumeration for bits in @b reconfig member of
-    ///     @ref pins bitfield field.
-    enum
-    {
-        pins_reconfig_reconfig, ///< internal index of @b reconfig bit
-        pins_reconfig_numOfValues ///< number of available bits
-    };
-
     /// @brief Definition of "flags" field.
-    using flags =
+    struct flags : public
         field::common::X2T<
             comms::option::BitmaskReservedBits<0xffe0, 0>
-        >;
+        >
+    {
+        /// @brief Provide names for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS(svcs, csd, ocd, pdwnOnSCD, recovery);
+    };
 
     /// @brief Common definition of @b pinSwitch, @b pinSCD, and @b pinOCD member
     ///     fields of @ref pins bitfield field.
@@ -77,18 +55,36 @@ struct CfgAntFields
             comms::option::ValidNumValueRange<0, 0x1f>
         >;
 
-    /// @brief Definition of "pins" field.
-    using pins =
+    /// @brief Definition of @b reconfig bit as single bit bitmask
+    struct reconfig : public field::common::X1T<comms::option::FixedBitLength<1> >
+    {
+        /// @brief Provide names for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS(bit);
+    };
+
+    /// @brief Definition of the bitfield base class of @ref pins field
+    using pinsBase =
         field::common::BitfieldT<
             std::tuple<
                 pinX,
                 pinX,
                 pinX,
-                field::common::X1T<
-                    comms::option::FixedBitLength<1>
-                >
+                reconfig
             >
         >;
+
+    /// @brief Definition of "pins" field.
+    struct pins : public pinsBase
+    {
+        /// @brief Allow access to internal fields.
+        /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
+        ///     related to @b comms::field::Bitfield class from COMMS library
+        ///     for details.
+        COMMS_FIELD_MEMBERS_ACCESS(pinsBase, pinSwith, pinSCD, pinOCD, reconfig);
+    };
 
     /// @brief All the fields bundled in std::tuple.
     using All = std::tuple<
@@ -98,12 +94,11 @@ struct CfgAntFields
 };
 
 /// @brief Definition of CFG-ANT message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
-///     See @ref CfgAntFields and for definition of the fields this message contains.
+///     various implementation options. @n
+///     See @ref CfgAntFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class CfgAnt : public
@@ -111,27 +106,26 @@ class CfgAnt : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_ANT>,
         comms::option::FieldsImpl<CfgAntFields::All>,
-        comms::option::DispatchImpl<CfgAnt<TMsgBase> >
+        comms::option::MsgType<CfgAnt<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_ANT>,
         comms::option::FieldsImpl<CfgAntFields::All>,
-        comms::option::DispatchImpl<CfgAnt<TMsgBase> >
+        comms::option::MsgType<CfgAnt<TMsgBase> >
     > Base;
 public:
 
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_flags, ///< @b flags field, see @ref CfgAntFields::flags
-        FieldIdx_pins, ///< @b pins field, see @ref CfgAntFields::pins
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b flags for @ref CfgAntFields::flags field
+    ///     @li @b pins for @ref CfgAntFields::pins field
+    COMMS_MSG_FIELDS_ACCESS(Base, flags, pins);
 
     /// @brief Default constructor
     CfgAnt() = default;

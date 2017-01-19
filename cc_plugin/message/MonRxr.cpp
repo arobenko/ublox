@@ -1,5 +1,5 @@
 //
-// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2017 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -46,7 +46,7 @@ QVariantMap createProps_flags()
     cc::property::field::ForField<MonRxrFields::flags> props;
     props.name("flags")
          .add("awake");
-    assert(props.bits().size() == MonRxrFields::flags_numOfValues);
+    assert(props.bits().size() == MonRxrFields::flags::BitIdx_numOfValues);
     return props.asMap();
 }
 

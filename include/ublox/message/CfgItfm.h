@@ -1,5 +1,5 @@
 //
-// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2017 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -34,16 +34,6 @@ namespace message
 struct CfgItfmFields
 {
 
-    /// @brief Use this enumeration to access member fields of @ref config bitfield.
-    enum
-    {
-        config_bbThreshold, ///< @b index of @ref bbThreshold member field
-        config_cwThreshold, ///< @b index of @ref cwThreshold member field
-        config_reserved1, ///< @b index of @ref reserved1 member field
-        config_enable, ///< @b index of @ref enable member field
-        config_numOfValues ///< number of member fields
-    };
-
     /// @brief Bits access enumeration for @ref enable bitmask member field in @ref config bitfield.
     enum
     {
@@ -58,15 +48,6 @@ struct CfgItfmFields
         Passive, ///< @b passive
         Active, ///< @b active
         NumOfValues ///< number of available values
-    };
-
-    /// @brief Use this enumeration to access member fields of @ref config2 bitfield.
-    enum
-    {
-        config2_reserved2, ///< @b index of @ref reserved2 member field
-        config2_antSetting, ///< @b index of @ref antSetting member field
-        config2_reserved3, ///< @b index of @ref reserved3 member field
-        config2_numOfValues ///< number of member fields
     };
 
     /// @brief Definition of "bbThreshold" member field in @ref config bitmask.
@@ -93,10 +74,17 @@ struct CfgItfmFields
 
     /// @brief Definition of the bitmask member field with single "enable" bit
     ///     in @ref config bitmask.
-    using enable =
+    struct enable : public
         field::common::X1T<
             comms::option::FixedBitLength<1>
-        >;
+        >
+    {
+        /// @brief Provide names for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS(bit);
+    };
 
     /// @brief Definition of "reserved2" member field in @ref config2 bitmask.
     using reserved2 =
@@ -120,8 +108,8 @@ struct CfgItfmFields
             comms::option::FixedBitLength<18>
         >;
 
-    /// @brief Definition of "config" field.
-    using config =
+    /// @brief Base class for @ref config
+    using configBase =
         field::common::BitfieldT<
             std::tuple<
                 bbThreshold,
@@ -131,8 +119,18 @@ struct CfgItfmFields
             >
         >;
 
-    /// @brief Definition of "config2" field.
-    using config2 =
+    /// @brief Definition of "config" field.
+    struct config : public configBase
+    {
+        /// @brief Allow access to internal fields.
+        /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
+        ///     related to @b comms::field::Bitfield class from COMMS library
+        ///     for details.
+        COMMS_FIELD_MEMBERS_ACCESS(configBase, bbThreshold, cwThreshold, reserved1, enable);
+    };
+
+    /// @brief Base class for @ref config2
+    using config2Base =
         field::common::BitfieldT<
             std::tuple<
                 reserved2,
@@ -140,6 +138,16 @@ struct CfgItfmFields
                 reserved3
             >
         >;
+
+    /// @brief Definition of "config2" field.
+    struct config2 : public config2Base
+    {
+        /// @brief Allow access to internal fields.
+        /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
+        ///     related to @b comms::field::Bitfield class from COMMS library
+        ///     for details.
+        COMMS_FIELD_MEMBERS_ACCESS(config2Base, reserved2, antSetting, reserved3);
+    };
 
     /// @brief All the fields bundled in std::tuple.
     using All = std::tuple<
@@ -149,12 +157,11 @@ struct CfgItfmFields
 };
 
 /// @brief Definition of CFG-ITFM message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
-///     See @ref CfgItfmFields and for definition of the fields this message contains.
+///     various implementation options. @n
+///     See @ref CfgItfmFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class CfgItfm : public
@@ -162,27 +169,26 @@ class CfgItfm : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_ITFM>,
         comms::option::FieldsImpl<CfgItfmFields::All>,
-        comms::option::DispatchImpl<CfgItfm<TMsgBase> >
+        comms::option::MsgType<CfgItfm<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_ITFM>,
         comms::option::FieldsImpl<CfgItfmFields::All>,
-        comms::option::DispatchImpl<CfgItfm<TMsgBase> >
+        comms::option::MsgType<CfgItfm<TMsgBase> >
     > Base;
 public:
 
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_config, ///< @b config field, see @ref CfgItfmFields::config
-        FieldIdx_config2, ///< @b config2 field, see @ref CfgItfmFields::config2
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b config for @ref CfgItfmFields::config field
+    ///     @li @b config2 for @ref CfgItfmFields::config2 field
+    COMMS_MSG_FIELDS_ACCESS(Base, config, config2);
 
     /// @brief Default constructor
     CfgItfm() = default;

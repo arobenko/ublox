@@ -1,5 +1,5 @@
 //
-// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2017 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -35,20 +35,6 @@ namespace message
 /// @see CfgNav5
 struct CfgNav5Fields
 {
-    /// @brief Bits access enumeration for @ref mask bitmask field.
-    enum
-    {
-        mask_dyn, ///< @b dyn bit index
-        mask_minEl, ///< @b minEl bit index
-        mask_posFixMode, ///< @b posFixMode bit index
-        mask_drLim, ///< @b drLim bit index
-        mask_posMask, ///< @b posMask bit index
-        mask_timeMask, ///< @b timeMask bit index
-        mask_staticHoldMask, ///< @b staticHoldMask bit index
-        mask_dgpsMask, ///< @b dgps bit index
-        mask_numOfValues ///< number of available bits
-    };
-
     /// @brief Value enumeration for @ref dynModel enum value field.
     enum class DynModel : std::uint8_t
     {
@@ -94,10 +80,17 @@ struct CfgNav5Fields
     };
 
     /// @brief Definition of "mask" field.
-    using mask =
+    struct mask : public
         field::common::X2T<
             comms::option::BitmaskReservedBits<0xff00, 0>
-        >;
+        >
+    {
+        /// @brief Provide names for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS(dyn, minEl, posFixMode, drLim, posMask, timeMask, staticHoldMask, dgps);
+    };
 
     /// @brief Definition of "dynModel" field.
     using dynModel =
@@ -182,12 +175,11 @@ struct CfgNav5Fields
 };
 
 /// @brief Definition of CFG-NAV5 message
-/// @details Inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1MessageBase.html">comms::MessageBase</a>
+/// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
-///     @b comms::option::StaticNumIdImpl, @b comms::option::FieldsImpl, and
-///     @b comms::option::DispatchImpl as options. @n
-///     See @ref CfgNav5Fields and for definition of the fields this message contains.
+///     various implementation options. @n
+///     See @ref CfgNav5Fields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class CfgNav5 : public
@@ -195,43 +187,61 @@ class CfgNav5 : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_NAV5>,
         comms::option::FieldsImpl<CfgNav5Fields::All>,
-        comms::option::DispatchImpl<CfgNav5<TMsgBase> >
+        comms::option::MsgType<CfgNav5<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_NAV5>,
         comms::option::FieldsImpl<CfgNav5Fields::All>,
-        comms::option::DispatchImpl<CfgNav5<TMsgBase> >
+        comms::option::MsgType<CfgNav5<TMsgBase> >
     > Base;
 public:
 
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_mask, ///< @b mask field, see @ref CfgNav5Fields::mask
-        FieldIdx_dynModel, ///< @b dynModel field, see @ref CfgNav5Fields::dynModel
-        FieldIdx_fixMode, ///< @b fixMode field, see @ref CfgNav5Fields::fixMode
-        FieldIdx_fixedAlt, ///< @b fixedAlt field, see @ref CfgNav5Fields::fixedAlt
-        FieldIdx_fixedAltVar, ///< @b fixedAltVar field, see @ref CfgNav5Fields::fixedAltVar
-        FieldIdx_minElev, ///< @b minElev field, see @ref CfgNav5Fields::minElev
-        FieldIdx_drLimit, ///< @b drLimit field, see @ref CfgNav5Fields::drLimit
-        FieldIdx_pDOP, ///< @b pDOP field, see @ref CfgNav5Fields::pDOP
-        FieldIdx_tDOP, ///< @b tDOP field, see @ref CfgNav5Fields::tDOP
-        FieldIdx_pAcc, ///< @b pAcc field, see @ref CfgNav5Fields::pAcc
-        FieldIdx_tAcc, ///< @b tAcc field, see @ref CfgNav5Fields::tAcc
-        FieldIdx_staticHoldThreash, ///< @b staticHoldThreash field, see @ref CfgNav5Fields::staticHoldThreash
-        FieldIdx_dgpsTimeOut, ///< @b dgpsTimeOut field, see @ref CfgNav5Fields::dgpsTimeOut
-        FieldIdx_cnoThreshNumSVs, ///< @b cnoThreshNumSVs field, see @ref CfgNav5Fields::cnoThreshNumSVs
-        FieldIdx_cnoThresh, ///< @b cnoThresh field, see @ref CfgNav5Fields::cnoThresh
-        FieldIdx_reserved2, ///< @b reserved2 field, see @ref CfgNav5Fields::reserved2
-        FieldIdx_reserved3, ///< @b reserved3 field, see @ref CfgNav5Fields::reserved3
-        FieldIdx_reserved4, ///< @b reserved4 field, see @ref CfgNav5Fields::reserved4
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b mask for @ref CfgNav5Fields::mask field
+    ///     @li @b dynModel for @ref CfgNav5Fields::dynModel field
+    ///     @li @b fixMode for @ref CfgNav5Fields::fixMode field
+    ///     @li @b fixedAlt for @ref CfgNav5Fields::fixedAlt field
+    ///     @li @b fixedAltVar for @ref CfgNav5Fields::fixedAltVar field
+    ///     @li @b minElev for @ref CfgNav5Fields::minElev field
+    ///     @li @b drLimit for @ref CfgNav5Fields::drLimit field
+    ///     @li @b pDOP for @ref CfgNav5Fields::pDOP field
+    ///     @li @b tDOP for @ref CfgNav5Fields::tDOP field
+    ///     @li @b pAcc for @ref CfgNav5Fields::pAcc field
+    ///     @li @b tAcc for @ref CfgNav5Fields::tAcc field
+    ///     @li @b staticHoldThreash for @ref CfgNav5Fields::staticHoldThreash field
+    ///     @li @b dgpsTimeOut for @ref CfgNav5Fields::dgpsTimeOut field
+    ///     @li @b cnoThreshNumSVs for @ref CfgNav5Fields::cnoThreshNumSVs field
+    ///     @li @b cnoThresh for @ref CfgNav5Fields::cnoThresh field
+    ///     @li @b reserved2 for @ref CfgNav5Fields::reserved2 field
+    ///     @li @b reserved3 for @ref CfgNav5Fields::reserved3 field
+    ///     @li @b reserved4 for @ref CfgNav5Fields::reserved4 field
+    COMMS_MSG_FIELDS_ACCESS(Base,
+        mask,
+        dynModel,
+        fixMode,
+        fixedAlt,
+        fixedAltVar,
+        minElev,
+        drLimit,
+        pDOP,
+        tDOP,
+        pAcc,
+        tAcc,
+        staticHoldThreash,
+        dgpsTimeOut,
+        cnoThreshNumSVs,
+        cnoThresh,
+        reserved2,
+        reserved3,
+        reserved4
+    );
 
     /// @brief Default constructor
     CfgNav5() = default;
