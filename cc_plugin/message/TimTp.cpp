@@ -56,7 +56,7 @@ QVariantMap createProps_flags()
     props.name("flags")
          .add("timeBase")
          .add("utc");
-    assert(props.bits().size() == TimTpFields::flags_numOfValues);
+    assert(props.bits().size() == TimTpFields::flags::BitIdx_numOfValues);
     return props.asMap();
 }
 

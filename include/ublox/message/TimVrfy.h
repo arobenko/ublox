@@ -107,7 +107,8 @@ struct TimVrfyFields
 /// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
 ///     various implementation options. @n
-///     See @ref TimVrfyFields and for definition of the fields this message contains.
+///     See @ref TimVrfyFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class TimVrfy : public
@@ -126,54 +127,20 @@ class TimVrfy : public
     > Base;
 public:
 
-#ifdef FOR_DOXYGEN_DOC_ONLY
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_itow, ///< @b itow field, see @ref TimVrfyFields::itow
-        FieldIdx_frac, ///< @b frac field, see @ref TimVrfyFields::frac
-        FieldIdx_deltaMS, ///< @b deltaMS field, see @ref TimVrfyFields::deltaMS
-        FieldIdx_deltaNS, ///< @b deltaNS field, see @ref TimVrfyFields::deltaNS
-        FieldIdx_wno, ///< @b wno field, see @ref TimVrfyFields::wno
-        FieldIdx_flags, ///< @b flags field, see @ref TimVrfyFields::flags
-        FieldIdx_reserved1, ///< @b reserved1 field, see @ref TimVrfyFields::reserved1
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-
-    /// @brief Access to fields bundled as a struct
-    struct FieldsAsStruct
-    {
-        TimVrfyFields::itow& itow; ///< @b itow field, see @ref TimVrfyFields::itow
-        TimVrfyFields::frac& frac; ///< @b frac field, see @ref TimVrfyFields::frac
-        TimVrfyFields::deltaMS& deltaMS; ///< @b deltaMS field, see @ref TimVrfyFields::deltaMS
-        TimVrfyFields::deltaNS& deltaNS; ///< @b deltaNS field, see @ref TimVrfyFields::deltaNS
-        TimVrfyFields::wno& wno; ///< @b wno field, see @ref TimVrfyFields::wno
-        TimVrfyFields::flags& flags; ///< @b flags field, see @ref TimVrfyFields::flags
-        TimVrfyFields::reserved1& reserved1; ///< @b reserved1 field, see @ref TimVrfyFields::reserved1
-    };
-
-    /// @brief Access to @b const fields bundled as a struct
-    struct ConstFieldsAsStruct
-    {
-        const TimVrfyFields::itow& itow; ///< @b itow field, see @ref TimVrfyFields::itow
-        const TimVrfyFields::frac& frac; ///< @b frac field, see @ref TimVrfyFields::frac
-        const TimVrfyFields::deltaMS& deltaMS; ///< @b deltaMS field, see @ref TimVrfyFields::deltaMS
-        const TimVrfyFields::deltaNS& deltaNS; ///< @b deltaNS field, see @ref TimVrfyFields::deltaNS
-        const TimVrfyFields::wno& wno; ///< @b wno field, see @ref TimVrfyFields::wno
-        const TimVrfyFields::flags& flags; ///< @b flags field, see @ref TimVrfyFields::flags
-        const TimVrfyFields::reserved1& reserved1; ///< @b reserved1 field, see @ref TimVrfyFields::reserved1
-    };
-
-    /// @brief Get access to fields bundled into a struct
-    FieldsAsStruct fieldsAsStruct();
-
-    /// @brief Get access to @b const fields bundled into a struct
-    ConstFieldsAsStruct fieldsAsStruct() const;
-
-#else
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b itow for @ref TimVrfyFields::itow field
+    ///     @li @b frac for @ref TimVrfyFields::frac field
+    ///     @li @b deltaMS for @ref TimVrfyFields::deltaMS field
+    ///     @li @b deltaNS for @ref TimVrfyFields::deltaNS field
+    ///     @li @b wno for @ref TimVrfyFields::wno field
+    ///     @li @b flags for @ref TimVrfyFields::flags field
+    ///     @li @b reserved1 for @ref TimVrfyFields::reserved1 field
     COMMS_MSG_FIELDS_ACCESS(Base, itow, frac, deltaMS, deltaNS, wno, flags, reserved1);
-#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     TimVrfy() = default;

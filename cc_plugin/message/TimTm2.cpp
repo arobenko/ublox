@@ -48,7 +48,7 @@ QVariantMap createProps_flags()
                  .add("run")
                  .add("newFallingEdge")
                  .serialisedHidden();
-    assert(lowFlagsProps.bits().size() == TimTm2Fields::flagsLowBits_numOfValues);
+    assert(lowFlagsProps.bits().size() == TimTm2Fields::flagsLowBits::BitIdx_numOfValues);
 
     cc::property::field::ForField<TimTm2Fields::timeBase> timeBaseProps;
     timeBaseProps.name("timeBase")
@@ -63,14 +63,14 @@ QVariantMap createProps_flags()
                   .add("time")
                   .add("newRisingEdge")
                   .serialisedHidden();
-    assert(highFlagsProps.bits().size() == TimTm2Fields::flagsHighBits_numOfValues);
+    assert(highFlagsProps.bits().size() == TimTm2Fields::flagsHighBits::BitIdx_numOfValues);
 
     cc::property::field::ForField<TimTm2Fields::flags> props;
     props.name("flags")
          .add(lowFlagsProps.asMap())
          .add(timeBaseProps.asMap())
          .add(highFlagsProps.asMap());
-    assert(props.members().size() == TimTm2Fields::flags_numOfValues);
+    assert(props.members().size() == TimTm2Fields::flags::FieldIdx_numOfValues);
     return props.asMap();
 }
 

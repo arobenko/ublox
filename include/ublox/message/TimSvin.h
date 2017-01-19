@@ -78,7 +78,8 @@ struct TimSvinFields
 /// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
 ///     various implementation options. @n
-///     See @ref TimSvinFields and for definition of the fields this message contains.
+///     See @ref TimSvinFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class TimSvin : public
@@ -97,59 +98,22 @@ class TimSvin : public
     > Base;
 public:
 
-#ifdef FOR_DOXYGEN_DOC_ONLY
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_dur, ///< @b dur field, see @ref TimSvinFields::dur
-        FieldIdx_meanX, ///< @b meanX field, see @ref TimSvinFields::meanX
-        FieldIdx_meanY, ///< @b meanY field, see @ref TimSvinFields::meanY
-        FieldIdx_meanZ, ///< @b meanZ field, see @ref TimSvinFields::meanZ
-        FieldIdx_meanV, ///< @b meanV field, see @ref TimSvinFields::meanV
-        FieldIdx_obs, ///< @b obs field, see @ref TimSvinFields::obs
-        FieldIdx_valid, ///< @b valid field, see @ref TimSvinFields::valid
-        FieldIdx_active, ///< @b active field, see @ref TimSvinFields::active
-        FieldIdx_reserved, ///< @b reserved field, see @ref TimSvinFields::reserved
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    /// @brief Access to fields bundled as a struct
-    struct FieldsAsStruct
-    {
-        TimSvinFields::dur& dur; ///< @b dur field, see @ref TimSvinFields::dur
-        TimSvinFields::meanX& meanX; ///< @b meanX field, see @ref TimSvinFields::meanX
-        TimSvinFields::meanY& meanY; ///< @b meanY field, see @ref TimSvinFields::meanY
-        TimSvinFields::meanZ& meanZ; ///< @b meanZ field, see @ref TimSvinFields::meanZ
-        TimSvinFields::meanV& meanV; ///< @b meanV field, see @ref TimSvinFields::meanV
-        TimSvinFields::obs& obs; ///< @b obs field, see @ref TimSvinFields::obs
-        TimSvinFields::valid& valid; ///< @b valid field, see @ref TimSvinFields::valid
-        TimSvinFields::active& active; ///< @b active field, see @ref TimSvinFields::active
-        TimSvinFields::reserved& reserved; ///< @b reserved field, see @ref TimSvinFields::reserved
-    };
-
-    /// @brief Access to @b const fields bundled as a struct
-    struct ConstFieldsAsStruct
-    {
-        const TimSvinFields::dur& dur; ///< @b dur field, see @ref TimSvinFields::dur
-        const TimSvinFields::meanX& meanX; ///< @b meanX field, see @ref TimSvinFields::meanX
-        const TimSvinFields::meanY& meanY; ///< @b meanY field, see @ref TimSvinFields::meanY
-        const TimSvinFields::meanZ& meanZ; ///< @b meanZ field, see @ref TimSvinFields::meanZ
-        const TimSvinFields::meanV& meanV; ///< @b meanV field, see @ref TimSvinFields::meanV
-        const TimSvinFields::obs& obs; ///< @b obs field, see @ref TimSvinFields::obs
-        const TimSvinFields::valid& valid; ///< @b valid field, see @ref TimSvinFields::valid
-        const TimSvinFields::active& active; ///< @b active field, see @ref TimSvinFields::active
-        const TimSvinFields::reserved& reserved; ///< @b reserved field, see @ref TimSvinFields::reserved
-    };
-
-    /// @brief Get access to fields bundled into a struct
-    FieldsAsStruct fieldsAsStruct();
-
-    /// @brief Get access to @b const fields bundled into a struct
-    ConstFieldsAsStruct fieldsAsStruct() const;
-
-#else
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b dur for @ref TimSvinFields::dur field
+    ///     @li @b meanX for @ref TimSvinFields::meanX field
+    ///     @li @b meanY for @ref TimSvinFields::meanY field
+    ///     @li @b meanZ for @ref TimSvinFields::meanZ field
+    ///     @li @b meanV for @ref TimSvinFields::meanV field
+    ///     @li @b obs for @ref TimSvinFields::obs field
+    ///     @li @b valid for @ref TimSvinFields::valid field
+    ///     @li @b active for @ref TimSvinFields::active field
+    ///     @li @b reserved for @ref TimSvinFields::reserved field
     COMMS_MSG_FIELDS_ACCESS(Base, dur, meanX, meanY, meanZ, meanV, obs, valid, active, reserved);
-#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     TimSvin() = default;
