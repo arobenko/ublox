@@ -53,16 +53,6 @@ struct NavSbasFields
         GPS = 16, ///< GPS
     };
 
-    /// @brief Bits access enumeration for bits in @b service bitmask field
-    enum
-    {
-        service_Ranging, ///< @b Ranging bit index
-        service_Corrections, ///< @b Corrections bit index
-        service_Integrity, ///< @b Integrity bit index
-        service_Testmode,///< @b Testmode bit index
-        service_NumOfValues ///< number of available bits
-    };
-
     /// @brief Custom validator for @ref mode field.
     struct ModeValidator
     {
@@ -118,10 +108,17 @@ struct NavSbasFields
         >;
 
     /// @brief Definition of "service" field.
-    using service =
+    struct service : public
         field::common::X1T<
             comms::option::BitmaskReservedBits<0xf0, 0>
-        >;
+        >
+    {
+        /// @brief Provide names for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS(Ranging, Corrections, Integrity, Testmode);
+    };
 
     /// @brief Definition of "cnt" field.
     using cnt = field::common::U1;
@@ -156,8 +153,8 @@ struct NavSbasFields
     /// @brief Definition of "ic" field.
     using ic = field::common::U2T<field::common::Scaling_cm2m>;
 
-    /// @brief Definition of the block of fields used in @ref data list
-    using block =
+    /// @brief Base class of @ref block
+    using blockBase =
         field::common::BundleT<
             std::tuple<
                 svid,
@@ -171,6 +168,16 @@ struct NavSbasFields
                 ic
             >
         >;
+
+    /// @brief Definition of the block of fields used in @ref data list
+    struct block : public blockBase
+    {
+        /// @brief Allow access to internal fields.
+        /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
+        ///     related to @b comms::field::Bitfield class from COMMS library
+        ///     for details.
+        COMMS_FIELD_MEMBERS_ACCESS(blockBase, svid, flags, udre, svSys, svService, reserved1, prc, reserved2, ic);
+    };
 
     /// @brief Definition of the list of data blocks (@ref block).
     using data =
@@ -196,7 +203,8 @@ struct NavSbasFields
 /// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
 ///     various implementation options. @n
-///     See @ref NavSbasFields and for definition of the fields this message contains.
+///     See @ref NavSbasFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class NavSbas : public
@@ -217,57 +225,21 @@ class NavSbas : public
     > Base;
 public:
 
-#ifdef FOR_DOXYGEN_DOC_ONLY
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_iTOW, ///< @b iTOW field, see @ref NavSbasFields::iTOW
-        FieldIdx_geo, ///< @b geo field, see @ref NavSbasFields::geo
-        FieldIdx_mode, ///< @b mode field, see @ref NavSbasFields::mode
-        FieldIdx_sys, ///< @b sys field, see @ref NavSbasFields::sys
-        FieldIdx_service, ///< @b service field, see @ref NavSbasFields::service
-        FieldIdx_cnt, ///< @b cnt field, see @ref NavSbasFields::cnt
-        FieldIdx_reserved0, ///< @b reserved0 field, see @ref NavSbasFields::reserved0
-        FieldIdx_data, ///< @b data field, see @ref NavSbasFields::data
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-
-    /// @brief Access to fields bundled as a struct
-    struct FieldsAsStruct
-    {
-        NavSbasFields::iTOW& iTOW; ///< @b iTOW field, see @ref NavSbasFields::iTOW
-        NavSbasFields::geo& geo; ///< @b geo field, see @ref NavSbasFields::geo
-        NavSbasFields::mode& mode; ///< @b mode field, see @ref NavSbasFields::mode
-        NavSbasFields::sys& sys; ///< @b sys field, see @ref NavSbasFields::sys
-        NavSbasFields::service& service; ///< @b service field, see @ref NavSbasFields::service
-        NavSbasFields::cnt& cnt; ///< @b cnt field, see @ref NavSbasFields::cnt
-        NavSbasFields::reserved0& reserved0; ///< @b reserved0 field, see @ref NavSbasFields::reserved0
-        NavSbasFields::data& data; ///< @b data field, see @ref NavSbasFields::data
-    };
-
-    /// @brief Access to @b const fields bundled as a struct
-    struct ConstFieldsAsStruct
-    {
-        const NavSbasFields::iTOW& iTOW; ///< @b iTOW field, see @ref NavSbasFields::iTOW
-        const NavSbasFields::geo& geo; ///< @b geo field, see @ref NavSbasFields::geo
-        const NavSbasFields::mode& mode; ///< @b mode field, see @ref NavSbasFields::mode
-        const NavSbasFields::sys& sys; ///< @b sys field, see @ref NavSbasFields::sys
-        const NavSbasFields::service& service; ///< @b service field, see @ref NavSbasFields::service
-        const NavSbasFields::cnt& cnt; ///< @b cnt field, see @ref NavSbasFields::cnt
-        const NavSbasFields::reserved0& reserved0; ///< @b reserved0 field, see @ref NavSbasFields::reserved0
-        const NavSbasFields::data& data; ///< @b data field, see @ref NavSbasFields::data
-    };
-
-    /// @brief Get access to fields bundled into a struct
-    FieldsAsStruct fieldsAsStruct();
-
-    /// @brief Get access to @b const fields bundled into a struct
-    ConstFieldsAsStruct fieldsAsStruct() const;
-
-#else
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b iTOW for @ref NavSbasFields::iTOW field
+    ///     @li @b geo for @ref NavSbasFields::geo field
+    ///     @li @b mode for @ref NavSbasFields::mode field
+    ///     @li @b sys for @ref NavSbasFields::sys field
+    ///     @li @b service for @ref NavSbasFields::service field
+    ///     @li @b cnt for @ref NavSbasFields::cnt field
+    ///     @li @b reserved0 for @ref NavSbasFields::reserved0 field
+    ///     @li @b data for @ref NavSbasFields::data field
     COMMS_MSG_FIELDS_ACCESS(Base, iTOW, geo, mode, sys, service, cnt, reserved0, data);
-#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     NavSbas() = default;

@@ -78,7 +78,7 @@ QVariantMap createProps_calibStatus()
          .add(createProps_calibStatus_calib("calibGyro"))
          .add(createProps_calibStatus_calib("calibGyroB"))
          .add(createProps_calibStatus_reserved());
-    assert(props.members().size() == NavEkfstatusFields::calibStatus_numOfValues);
+    assert(props.members().size() == NavEkfstatusFields::calibStatus::FieldIdx_numOfValues);
     return props.asMap();
 }
 
@@ -94,7 +94,7 @@ QVariantMap createProps_measUsed()
          .add("vel")
          .add("errGyro")
          .add("errPulse");
-    assert(props.bits().size() == NavEkfstatusFields::measUsed_numOfValues);
+    assert(props.bits().size() == NavEkfstatusFields::measUsed::BitIdx_numOfValues);
     return props.asMap();
 }
 

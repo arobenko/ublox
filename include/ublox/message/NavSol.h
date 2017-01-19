@@ -33,16 +33,6 @@ namespace message
 /// @see NavSol
 struct NavSolFields
 {
-    /// @brief Bits access enumeration for bits in @b flags fields
-    enum
-    {
-        flags_GPSfixOK, ///< @b GPSfixOK bit index
-        flags_DiffSoln, ///< @b DiffSoln bit index
-        flags_WKNSET, ///< @b WKNSET bit index
-        flags_TOWSET, ///< @b TOWSET bit index
-        flags_numOfValues ///< number of available bits
-    };
-
     /// @brief Definition of "iTOW" field.
     using iTOW = field::nav::iTOW;
 
@@ -56,10 +46,17 @@ struct NavSolFields
     using gpsFix = field::nav::gpsFix;
 
     /// @brief Definition of "flags" field.
-    using flags =
+    struct flags : public
         field::common::X1T<
             comms::option::BitmaskReservedBits<0xf0, 0>
-        >;
+        >
+    {
+        /// @brief Provide names for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS(GPSfixOK, DiffSoln, WKNSET, TOWSET);
+    };
 
     /// @brief Definition of "ecefX" field.
     using ecefX = field::nav::ecefX;
@@ -123,7 +120,8 @@ struct NavSolFields
 /// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
 ///     various implementation options. @n
-///     See @ref NavSolFields and for definition of the fields this message contains.
+///     See @ref NavSolFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class NavSol : public
@@ -142,83 +140,28 @@ class NavSol : public
     > Base;
 public:
 
-#ifdef FOR_DOXYGEN_DOC_ONLY
-
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_iTOW, ///< @b iTOW field, see @ref NavSolFields::iTOW
-        FieldIdx_fTOW, ///< @b fTOW field, see @ref NavSolFields::fTOW
-        FieldIdx_week, ///< @b week field, see @ref NavSolFields::week
-        FieldIdx_gpsFix, ///< @b gpsFix field, see @ref NavSolFields::gpsFix
-        FieldIdx_flags, ///< @b flags field, see @ref NavSolFields::flags
-        FieldIdx_ecefX, ///< @b ecefX field, see @ref NavSolFields::ecefX
-        FieldIdx_ecefY, ///< @b ecefY field, see @ref NavSolFields::ecefY
-        FieldIdx_ecefZ, ///< @b ecefZ field, see @ref NavSolFields::ecefZ
-        FieldIdx_pAcc, ///< @b pAcc field, see @ref NavSolFields::pAcc
-        FieldIdx_ecefVX, ///< @b ecefVX field, see @ref NavSolFields::ecefVX
-        FieldIdx_ecefVY, ///< @b ecefVY field, see @ref NavSolFields::ecefVY
-        FieldIdx_ecefVZ, ///< @b ecefVZ field, see @ref NavSolFields::ecefVZ
-        FieldIdx_sAcc, ///< @b sAcc field, see @ref NavSolFields::sAcc
-        FieldIdx_pDOP, ///< @b pDop field, see @ref NavSolFields::pDOP
-        FieldIdx_reserved1, ///< @b reserved1 field, see @ref NavSolFields::reserved1
-        FieldIdx_numSV, ///< @b numSV field, see @ref NavSolFields::numSV
-        FieldIdx_reserved2, ///< @b reserved2 field, see @ref NavSolFields::reserved2
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-
-    /// @brief Access to fields bundled as a struct
-    struct FieldsAsStruct
-    {
-        NavSolFields::iTOW& iTOW; ///< @b iTOW field, see @ref NavSolFields::iTOW
-        NavSolFields::fTOW& fTOW; ///< @b fTOW field, see @ref NavSolFields::fTOW
-        NavSolFields::week& week; ///< @b week field, see @ref NavSolFields::week
-        NavSolFields::gpsFix& gpsFix; ///< @b gpsFix field, see @ref NavSolFields::gpsFix
-        NavSolFields::flags& flags; ///< @b flags field, see @ref NavSolFields::flags
-        NavSolFields::ecefX& ecefX; ///< @b ecefX field, see @ref NavSolFields::ecefX
-        NavSolFields::ecefY& ecefY; ///< @b ecefY field, see @ref NavSolFields::ecefY
-        NavSolFields::ecefZ& ecefZ; ///< @b ecefZ field, see @ref NavSolFields::ecefZ
-        NavSolFields::pAcc& pAcc; ///< @b pAcc field, see @ref NavSolFields::pAcc
-        NavSolFields::ecefVX& ecefVX; ///< @b ecefVX field, see @ref NavSolFields::ecefVX
-        NavSolFields::ecefVY& ecefVY; ///< @b ecefVY field, see @ref NavSolFields::ecefVY
-        NavSolFields::ecefVZ& ecefVZ; ///< @b ecefVZ field, see @ref NavSolFields::ecefVZ
-        NavSolFields::sAcc& sAcc; ///< @b sAcc field, see @ref NavSolFields::sAcc
-        NavSolFields::pDop& pDop; ///< @b pDop field, see @ref NavSolFields::pDOP
-        NavSolFields::reserved1& reserved1; ///< @b reserved1 field, see @ref NavSolFields::reserved1
-        NavSolFields::numSV& numSV; ///< @b numSV field, see @ref NavSolFields::numSV
-        NavSolFields::reserved2& reserved2; ///< @b reserved2 field, see @ref NavSolFields::reserved2
-    };
-
-    /// @brief Access to @b const fields bundled as a struct
-    struct ConstFieldsAsStruct
-    {
-        NavSolFields::iTOW& iTOW; ///< @b iTOW field, see @ref NavSolFields::iTOW
-        NavSolFields::fTOW& fTOW; ///< @b fTOW field, see @ref NavSolFields::fTOW
-        NavSolFields::week& week; ///< @b week field, see @ref NavSolFields::week
-        NavSolFields::gpsFix& gpsFix; ///< @b gpsFix field, see @ref NavSolFields::gpsFix
-        NavSolFields::flags& flags; ///< @b flags field, see @ref NavSolFields::flags
-        NavSolFields::ecefX& ecefX; ///< @b ecefX field, see @ref NavSolFields::ecefX
-        NavSolFields::ecefY& ecefY; ///< @b ecefY field, see @ref NavSolFields::ecefY
-        NavSolFields::ecefZ& ecefZ; ///< @b ecefZ field, see @ref NavSolFields::ecefZ
-        NavSolFields::pAcc& pAcc; ///< @b pAcc field, see @ref NavSolFields::pAcc
-        NavSolFields::ecefVX& ecefVX; ///< @b ecefVX field, see @ref NavSolFields::ecefVX
-        NavSolFields::ecefVY& ecefVY; ///< @b ecefVY field, see @ref NavSolFields::ecefVY
-        NavSolFields::ecefVZ& ecefVZ; ///< @b ecefVZ field, see @ref NavSolFields::ecefVZ
-        NavSolFields::sAcc& sAcc; ///< @b sAcc field, see @ref NavSolFields::sAcc
-        NavSolFields::pDop& pDop; ///< @b pDop field, see @ref NavSolFields::pDOP
-        NavSolFields::reserved1& reserved1; ///< @b reserved1 field, see @ref NavSolFields::reserved1
-        NavSolFields::numSV& numSV; ///< @b numSV field, see @ref NavSolFields::numSV
-        NavSolFields::reserved2& reserved2; ///< @b reserved2 field, see @ref NavSolFields::reserved2
-    };
-
-    /// @brief Get access to fields bundled into a struct
-    FieldsAsStruct fieldsAsStruct();
-
-    /// @brief Get access to @b const fields bundled into a struct
-    ConstFieldsAsStruct fieldsAsStruct() const;
-
-#else
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b iTOW for @ref NavSolFields::iTOW field
+    ///     @li @b fTOW for @ref NavSolFields::fTOW field
+    ///     @li @b week for @ref NavSolFields::week field
+    ///     @li @b gpsFix for @ref NavSolFields::gpsFix field
+    ///     @li @b ecefX for @ref NavSolFields::ecefX field
+    ///     @li @b ecefY for @ref NavSolFields::ecefY field
+    ///     @li @b ecefZ for @ref NavSolFields::ecefZ field
+    ///     @li @b pAcc for @ref NavSolFields::pAcc field
+    ///     @li @b ecefVX for @ref NavSolFields::ecefVX field
+    ///     @li @b ecefVY for @ref NavSolFields::ecefVY field
+    ///     @li @b ecefVZ for @ref NavSolFields::ecefVZ field
+    ///     @li @b sAcc for @ref NavSolFields::sAcc field
+    ///     @li @b pDOP for @ref NavSolFields::pDOP field
+    ///     @li @b reserved1 for @ref NavSolFields::reserved1 field
+    ///     @li @b numSV for @ref NavSolFields::numSV field
+    ///     @li @b reserved2 for @ref NavSolFields::reserved2 field
     COMMS_MSG_FIELDS_ACCESS(Base,
         iTOW,
         fTOW,
@@ -238,7 +181,6 @@ public:
         numSV,
         reserved2
     );
-#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     NavSol() = default;

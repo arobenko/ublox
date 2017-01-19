@@ -51,7 +51,7 @@ QVariantMap createProps_flags()
          .add("WKNSET")
          .add("TOWSET");
 
-    assert(props.bits().size() == NavSolFields::flags_numOfValues);
+    assert(props.bits().size() == NavSolFields::flags::BitIdx_numOfValues);
     return props.asMap();
 }
 

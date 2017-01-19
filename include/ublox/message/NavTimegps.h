@@ -33,15 +33,6 @@ namespace message
 /// @see NavTimegps
 struct NavTimegpsFields
 {
-    /// @brief Bits access enumeration for bits in @b valid bitmask field
-    enum
-    {
-        valid_towValid, ///< @b towValid bit index
-        valid_weekValid, ///< @b weekValid bit index
-        valid_leapSValid, ///< @b leapSValid bit index
-        valid_numOfValues ///< number of available bits
-    };
-
     /// @brief Definition of "iTOW" field.
     using iTOW = field::nav::iTOW;
 
@@ -55,7 +46,15 @@ struct NavTimegpsFields
     using leapS = field::common::I1;
 
     /// @brief Definition of "valid" field.
-    using valid = field::common::X1T<comms::option::BitmaskReservedBits<0xf8, 0> >;
+    struct validBits : public
+        field::common::X1T<comms::option::BitmaskReservedBits<0xf8, 0> >
+    {
+        /// @brief Provide names for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS(towValid, weekValid, leapSValid);
+    };
 
     /// @brief Definition of "tAcc" field.
     using tAcc = field::nav::tAcc;
@@ -66,7 +65,7 @@ struct NavTimegpsFields
         fTOW,
         week,
         leapS,
-        valid,
+        validBits,
         tAcc
     >;
 };
@@ -75,7 +74,8 @@ struct NavTimegpsFields
 /// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
 ///     various implementation options. @n
-///     See @ref NavTimegpsFields and for definition of the fields this message contains.
+///     See @ref NavTimegpsFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class NavTimegps : public
@@ -94,51 +94,19 @@ class NavTimegps : public
     > Base;
 public:
 
-#ifdef FOR_DOXYGEN_DOC_ONLY
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_iTOW, ///< @b iTOW field, see @ref NavTimegpsFields::iTOW
-        FieldIdx_fTOW, ///< @b fTOW field, see @ref NavTimegpsFields::fTOW
-        FieldIdx_week, ///< @b week field, see @ref NavTimegpsFields::week
-        FieldIdx_leapS, ///< @b leapS field, see @ref NavTimegpsFields::leapS
-        FieldIdx_valid, ///< @b valid field, see @ref NavTimegpsFields::valid
-        FieldIdx_tAcc, ///< @b tAcc field, see @ref NavTimegpsFields::tAcc
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-
-    /// @brief Access to fields bundled as a struct
-    struct FieldsAsStruct
-    {
-        NavTimegpsFields::iTOW& iTOW; ///< @b iTOW field, see @ref NavTimegpsFields::iTOW
-        NavTimegpsFields::fTOW& fTOW; ///< @b fTOW field, see @ref NavTimegpsFields::fTOW
-        NavTimegpsFields::week& week; ///< @b week field, see @ref NavTimegpsFields::week
-        NavTimegpsFields::leapS& leapS; ///< @b leapS field, see @ref NavTimegpsFields::leapS
-        NavTimegpsFields::valid& valid; ///< @b valid field, see @ref NavTimegpsFields::valid
-        NavTimegpsFields::tAcc& tAcc; ///< @b tAcc field, see @ref NavTimegpsFields::tAcc
-    };
-
-    /// @brief Access to @b const fields bundled as a struct
-    struct ConstFieldsAsStruct
-    {
-        const NavTimegpsFields::iTOW& iTOW; ///< @b iTOW field, see @ref NavTimegpsFields::iTOW
-        const NavTimegpsFields::fTOW& fTOW; ///< @b fTOW field, see @ref NavTimegpsFields::fTOW
-        const NavTimegpsFields::week& week; ///< @b week field, see @ref NavTimegpsFields::week
-        const NavTimegpsFields::leapS& leapS; ///< @b leapS field, see @ref NavTimegpsFields::leapS
-        const NavTimegpsFields::valid& valid; ///< @b valid field, see @ref NavTimegpsFields::valid
-        const NavTimegpsFields::tAcc& tAcc; ///< @b tAcc field, see @ref NavTimegpsFields::tAcc
-    };
-
-    /// @brief Get access to fields bundled into a struct
-    FieldsAsStruct fieldsAsStruct();
-
-    /// @brief Get access to @b const fields bundled into a struct
-    ConstFieldsAsStruct fieldsAsStruct() const;
-
-#else
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b iTOW for @ref NavTimegpsFields::iTOW field
+    ///     @li @b fTOW for @ref NavTimegpsFields::fTOW field
+    ///     @li @b week for @ref NavTimegpsFields::week field
+    ///     @li @b leapS for @ref NavTimegpsFields::leapS field
+    ///     @li @b valid for @ref NavTimegpsFields::validBits field
+    ///     @li @b tAcc for @ref NavTimegpsFields::tAcc field
     COMMS_MSG_FIELDS_ACCESS(Base, iTOW, fTOW, week, leapS, valid, tAcc);
-#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     NavTimegps() = default;

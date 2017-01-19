@@ -62,7 +62,8 @@ struct NavClockFields
 /// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
 ///     various implementation options. @n
-///     See @ref NavClockFields and for definition of the fields this message contains.
+///     See @ref NavClockFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class NavClock : public
@@ -81,47 +82,18 @@ class NavClock : public
     > Base;
 public:
 
-#ifdef FOR_DOXYGEN_DOC_ONLY
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_iTOW, ///< @b iTOW field, see @ref NavClockFields::iTOW
-        FieldIdx_clkB, ///< @b clkB field, see @ref NavClockFields::clkB
-        FieldIdx_clkD, ///< @b clkD field, see @ref NavClockFields::clkD
-        FieldIdx_tAcc, ///< @b tAcc field, see @ref NavClockFields::tAcc
-        FieldIdx_fAcc, ///< @b fAcc field, see @ref NavClockFields::fAcc
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    /// @brief Access to fields bundled as a struct
-    struct FieldsAsStruct
-    {
-        NavClockFields::iTOW& iTOW; ///< @b iTOW field, see @ref NavClockFields::iTOW
-        NavClockFields::clkB& clkB; ///< @b clkB field, see @ref NavClockFields::clkB
-        NavClockFields::clkD& clkD; ///< @b clkD field, see @ref NavClockFields::clkD
-        NavClockFields::tAcc& tAcc; ///< @b tAcc field, see @ref NavClockFields::tAcc
-        NavClockFields::fAcc& fAcc; ///< @b fAcc field, see @ref NavClockFields::fAcc
-    };
-
-    /// @brief Access to @b const fields bundled as a struct
-    struct ConstFieldsAsStruct
-    {
-        const NavClockFields::iTOW& iTOW; ///< @b iTOW field, see @ref NavClockFields::iTOW
-        const NavClockFields::clkB& clkB; ///< @b clkB field, see @ref NavClockFields::clkB
-        const NavClockFields::clkD& clkD; ///< @b clkD field, see @ref NavClockFields::clkD
-        const NavClockFields::tAcc& tAcc; ///< @b tAcc field, see @ref NavClockFields::tAcc
-        const NavClockFields::fAcc& fAcc; ///< @b fAcc field, see @ref NavClockFields::fAcc
-    };
-
-    /// @brief Get access to fields bundled into a struct
-    FieldsAsStruct fieldsAsStruct();
-
-    /// @brief Get access to @b const fields bundled into a struct
-    ConstFieldsAsStruct fieldsAsStruct() const;
-
-#else
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b iTOW for @ref NavClockFields::iTOW field
+    ///     @li @b clkB for @ref NavClockFields::clkB field
+    ///     @li @b clkD for @ref NavClockFields::clkD field
+    ///     @li @b tAcc for @ref NavClockFields::tAcc field
+    ///     @li @b fAcc for @ref NavClockFields::fAcc field
     COMMS_MSG_FIELDS_ACCESS(Base, iTOW, clkB, clkD, tAcc, fAcc);
-#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     NavClock() = default;

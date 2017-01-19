@@ -47,7 +47,7 @@ QVariantMap createProps_aopCfg()
     cc::property::field::ForField<NavAopstatusFields::aopCfg> props;
     props.name("aopCfg")
          .add("useAOP");
-    assert(props.bits().size() == NavAopstatusFields::aopCfg_numOfValues);
+    assert(props.bits().size() == NavAopstatusFields::aopCfg::BitIdx_numOfValues);
     return props.asMap();
 }
 

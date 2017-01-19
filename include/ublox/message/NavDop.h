@@ -74,7 +74,8 @@ struct NavDopFields
 /// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
 ///     various implementation options. @n
-///     See @ref NavDopFields and for definition of the fields this message contains.
+///     See @ref NavDopFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class NavDop : public
@@ -93,56 +94,21 @@ class NavDop : public
     > Base;
 public:
 
-#ifdef FOR_DOXYGEN_DOC_ONLY
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_iTOW, ///< @b iTOW field, see @ref NavDopFields::iTOW
-        FieldIdx_gDOP, ///< @b gDOP field, see @ref NavDopFields::gDOP
-        FieldIdx_pDOP, ///< @b pDOP field, see @ref NavDopFields::pDOP
-        FieldIdx_tDOP, ///< @b tDOP field, see @ref NavDopFields::tDOP
-        FieldIdx_vDOP, ///< @b vDOP field, see @ref NavDopFields::vDOP
-        FieldIdx_hDOP, ///< @b hDOP field, see @ref NavDopFields::hDOP
-        FieldIdx_nDOP, ///< @b nDOP field, see @ref NavDopFields::nDOP
-        FieldIdx_eDOP, ///< @b eDOP field, see @ref NavDopFields::eDOP
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    /// @brief Access to fields bundled as a struct
-    struct FieldsAsStruct
-    {
-        NavDopFields::iTOW& iTOW; ///< @b iTOW field, see @ref NavDopFields::iTOW
-        NavDopFields::gDOP& gDOP; ///< @b gDOP field, see @ref NavDopFields::gDOP
-        NavDopFields::pDOP& pDOP; ///< @b pDOP field, see @ref NavDopFields::pDOP
-        NavDopFields::tDOP& tDOP; ///< @b tDOP field, see @ref NavDopFields::tDOP
-        NavDopFields::vDOP& vDOP; ///< @b vDOP field, see @ref NavDopFields::vDOP
-        NavDopFields::hDOP& hDOP; ///< @b hDOP field, see @ref NavDopFields::hDOP
-        NavDopFields::nDOP& nDOP; ///< @b nDOP field, see @ref NavDopFields::nDOP
-        NavDopFields::eDOP& eDOP; ///< @b eDOP field, see @ref NavDopFields::eDOP
-    };
-
-    /// @brief Access to @b const fields bundled as a struct
-    struct ConstFieldsAsStruct
-    {
-        NavDopFields::iTOW& iTOW; ///< @b iTOW field, see @ref NavDopFields::iTOW
-        NavDopFields::gDOP& gDOP; ///< @b gDOP field, see @ref NavDopFields::gDOP
-        NavDopFields::pDOP& pDOP; ///< @b pDOP field, see @ref NavDopFields::pDOP
-        NavDopFields::tDOP& tDOP; ///< @b tDOP field, see @ref NavDopFields::tDOP
-        NavDopFields::vDOP& vDOP; ///< @b vDOP field, see @ref NavDopFields::vDOP
-        NavDopFields::hDOP& hDOP; ///< @b hDOP field, see @ref NavDopFields::hDOP
-        NavDopFields::nDOP& nDOP; ///< @b nDOP field, see @ref NavDopFields::nDOP
-        NavDopFields::eDOP& eDOP; ///< @b eDOP field, see @ref NavDopFields::eDOP
-    };
-
-    /// @brief Get access to fields bundled into a struct
-    FieldsAsStruct fieldsAsStruct();
-
-    /// @brief Get access to @b const fields bundled into a struct
-    ConstFieldsAsStruct fieldsAsStruct() const;
-
-#else
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b iTOW for @ref NavDopFields::iTOW field
+    ///     @li @b gDOP for @ref NavDopFields::gDOP field
+    ///     @li @b pDOP for @ref NavDopFields::pDOP field
+    ///     @li @b tDOP for @ref NavDopFields::tDOP field
+    ///     @li @b vDOP for @ref NavDopFields::vDOP field
+    ///     @li @b hDOP for @ref NavDopFields::hDOP field
+    ///     @li @b nDOP for @ref NavDopFields::nDOP field
+    ///     @li @b eDOP for @ref NavDopFields::eDOP field
     COMMS_MSG_FIELDS_ACCESS(Base, iTOW, gDOP, pDOP, tDOP, vDOP, hDOP, nDOP, eDOP);
-#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     NavDop() = default;

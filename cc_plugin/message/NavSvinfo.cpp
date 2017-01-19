@@ -69,7 +69,7 @@ QVariantMap createProps_globalFlags()
     props.name("globalFlags")
          .add(chipGenProps.asMap())
          .add(reservedProps.asMap());
-    assert(props.members().size() == NavSvinfoFields::globalFlags_numOfValues);
+    assert(props.members().size() == NavSvinfoFields::globalFlags::FieldIdx_numOfValues);
     return props.asMap();
 }
 
@@ -85,7 +85,7 @@ QVariantMap createProps_flags()
          .add("orbitAlm")
          .add("orbitAop")
          .add("smoothed");
-    assert(props.bits().size() == NavSvinfoFields::flags_numOfValues);
+    assert(props.bits().size() == NavSvinfoFields::flags::BitIdx_numOfValues);
     return props.asMap();
 }
 
@@ -148,7 +148,7 @@ QVariantMap createProps_data()
               .add(createProps_elev())
               .add(createProps_azim())
               .add(createProps_prRes());
-    assert(blockProps.members().size() == NavSvinfoFields::block_numOfValues);
+    assert(blockProps.members().size() == NavSvinfoFields::block::FieldIdx_numOfValues);
 
     return
         cc::property::field::ForField<NavSvinfoFields::data>()

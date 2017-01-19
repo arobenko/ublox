@@ -70,7 +70,8 @@ struct NavPosllhFields
 /// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
 ///     various implementation options. @n
-///     See @ref NavPosllhFields and for definition of the fields this message contains.
+///     See @ref NavPosllhFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class NavPosllh : public
@@ -89,53 +90,20 @@ class NavPosllh : public
     > Base;
 public:
 
-#ifdef FOR_DOXYGEN_DOC_ONLY
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_iTOW, ///< @b iTOW field, see @ref NavPosllhFields::iTOW
-        FieldIdx_lon, ///< @b lon field, see @ref NavPosllhFields::lon
-        FieldIdx_lat, ///< @b lat field, see @ref NavPosllhFields::lat
-        FieldIdx_height, ///< @b height field, see @ref NavPosllhFields::height
-        FieldIdx_hMSL, ///< @b hMSL field, see @ref NavPosllhFields::hMSL
-        FieldIdx_hAcc, ///< @b hAcc field, see @ref NavPosllhFields::hAcc
-        FieldIdx_vAcc, ///< @b vAcc field, see @ref NavPosllhFields::vAcc
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    /// @brief Access to fields bundled as a struct
-    struct FieldsAsStruct
-    {
-        NavPosllhFields::iTOW& iTOW; ///< @b iTOW field, see @ref NavPosllhFields::iTOW
-        NavPosllhFields::lon& lon; ///< @b lon field, see @ref NavPosllhFields::lon
-        NavPosllhFields::lat& lat; ///< @b lat field, see @ref NavPosllhFields::lat
-        NavPosllhFields::height& height; ///< @b height field, see @ref NavPosllhFields::height
-        NavPosllhFields::hMSL& hMSL; ///< @b hMSL field, see @ref NavPosllhFields::hMSL
-        NavPosllhFields::hAcc& hAcc; ///< @b hAcc field, see @ref NavPosllhFields::hAcc
-        NavPosllhFields::vAcc& vAcc; ///< @b vAcc field, see @ref NavPosllhFields::vAcc
-    };
-
-    /// @brief Access to @b const fields bundled as a struct
-    struct ConstFieldsAsStruct
-    {
-        const NavPosllhFields::iTOW& iTOW; ///< @b iTOW field, see @ref NavPosllhFields::iTOW
-        const NavPosllhFields::lon& lon; ///< @b lon field, see @ref NavPosllhFields::lon
-        const NavPosllhFields::lat& lat; ///< @b lat field, see @ref NavPosllhFields::lat
-        const NavPosllhFields::height& height; ///< @b height field, see @ref NavPosllhFields::height
-        const NavPosllhFields::hMSL& hMSL; ///< @b hMSL field, see @ref NavPosllhFields::hMSL
-        const NavPosllhFields::hAcc& hAcc; ///< @b hAcc field, see @ref NavPosllhFields::hAcc
-        const NavPosllhFields::vAcc& vAcc; ///< @b vAcc field, see @ref NavPosllhFields::vAcc
-    };
-
-    /// @brief Get access to fields bundled into a struct
-    FieldsAsStruct fieldsAsStruct();
-
-    /// @brief Get access to @b const fields bundled into a struct
-    ConstFieldsAsStruct fieldsAsStruct() const;
-
-#else
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b iTOW for @ref NavPosllhFields::iTOW field
+    ///     @li @b lon for @ref NavPosllhFields::lon field
+    ///     @li @b lat for @ref NavPosllhFields::lat field
+    ///     @li @b height for @ref NavPosllhFields::height field
+    ///     @li @b hMSL for @ref NavPosllhFields::hMSL field
+    ///     @li @b hAcc for @ref NavPosllhFields::hAcc field
+    ///     @li @b vAcc for @ref NavPosllhFields::vAcc field
     COMMS_MSG_FIELDS_ACCESS(Base, iTOW, lon, lat, height, hMSL, hAcc, vAcc);
-#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     NavPosllh() = default;

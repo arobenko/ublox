@@ -33,19 +33,19 @@ namespace message
 /// @see NavAopstatus
 struct NavAopstatusFields
 {
-    /// @brief Bits access enumeration for @ref aopCfg bitmask field.
-    enum
-    {
-        aopCfg_useAOP, ///< @b useAOP bit index
-        aopCfg_numOfValues ///< number of available bits
-    };
-
     /// @brief Definition of "iTOW" field.
     using iTOW = field::nav::iTOW;
 
     /// @brief Definition of "aopCfg" field.
-    using aopCfg =
-        field::common::X1T<comms::option::BitmaskReservedBits<0xfe, 0> >;
+    struct aopCfg : public
+        field::common::X1T<comms::option::BitmaskReservedBits<0xfe, 0> >
+    {
+        /// @brief Provide names for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS(useAOP);
+    };
 
     /// @brief Definition of "status" field.
     using status = field::common::U1;
@@ -82,7 +82,8 @@ struct NavAopstatusFields
 /// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
 ///     various implementation options. @n
-///     See @ref NavAopstatusFields and for definition of the fields this message contains.
+///     See @ref NavAopstatusFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class NavAopstatus : public
@@ -101,54 +102,20 @@ class NavAopstatus : public
     > Base;
 public:
 
-#ifdef FOR_DOXYGEN_DOC_ONLY
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_iTOW, ///< @b iTOW field, see @ref NavAopstatusFields::iTOW
-        FieldIdx_aopCfg, ///< @b aopCfg field, see @ref NavAopstatusFields::aopCfg
-        FieldIdx_status, ///< @b status field, see @ref NavAopstatusFields::status
-        FieldIdx_reserved0, ///< @b reserved0 field, see @ref NavAopstatusFields::reserved0
-        FieldIdx_reserved1, ///< @b reserved1 field, see @ref NavAopstatusFields::reserved1
-        FieldIdx_availGPS, ///< @b availGPS field, see @ref NavAopstatusFields::availGPS
-        FieldIdx_reserved2, ///< @b reserved2 field, see @ref NavAopstatusFields::reserved2
-        FieldIdx_reserved3, ///< @b reserved3 field, see @ref NavAopstatusFields::reserved3
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    /// @brief Access to fields bundled as a struct
-    struct FieldsAsStruct
-    {
-        NavAopstatusFields::iTOW& iTOW; ///< @b iTOW field, see @ref NavAopstatusFields::iTOW
-        NavAopstatusFields::aopCfg& aopCfg; ///< @b aopCfg field, see @ref NavAopstatusFields::aopCfg
-        NavAopstatusFields::status& status; ///< @b status field, see @ref NavAopstatusFields::status
-        NavAopstatusFields::reserved0& reserved0; ///< @b reserved0 field, see @ref NavAopstatusFields::reserved0
-        NavAopstatusFields::reserved1& reserved1; ///< @b reserved1 field, see @ref NavAopstatusFields::reserved1
-        NavAopstatusFields::availGPS& availGPS; ///< @b availGPS field, see @ref NavAopstatusFields::availGPS
-        NavAopstatusFields::reserved2& reserved2; ///< @b reserved2 field, see @ref NavAopstatusFields::reserved2
-        NavAopstatusFields::reserved3& reserved3; ///< @b reserved3 field, see @ref NavAopstatusFields::reserved3
-    };
-
-    /// @brief Access to @b const fields bundled as a struct
-    struct ConstFieldsAsStruct
-    {
-        const NavAopstatusFields::iTOW& iTOW; ///< @b iTOW field, see @ref NavAopstatusFields::iTOW
-        const NavAopstatusFields::aopCfg& aopCfg; ///< @b aopCfg field, see @ref NavAopstatusFields::aopCfg
-        const NavAopstatusFields::status& status; ///< @b status field, see @ref NavAopstatusFields::status
-        const NavAopstatusFields::reserved0& reserved0; ///< @b reserved0 field, see @ref NavAopstatusFields::reserved0
-        const NavAopstatusFields::reserved1& reserved1; ///< @b reserved1 field, see @ref NavAopstatusFields::reserved1
-        const NavAopstatusFields::availGPS& availGPS; ///< @b availGPS field, see @ref NavAopstatusFields::availGPS
-        const NavAopstatusFields::reserved2& reserved2; ///< @b reserved2 field, see @ref NavAopstatusFields::reserved2
-        const NavAopstatusFields::reserved3& reserved3; ///< @b reserved3 field, see @ref NavAopstatusFields::reserved3
-    };
-
-    /// @brief Get access to fields bundled into a struct
-    FieldsAsStruct fieldsAsStruct();
-
-    /// @brief Get access to @b const fields bundled into a struct
-    ConstFieldsAsStruct fieldsAsStruct() const;
-
-#else
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b iTOW for @ref NavAopstatusFields::iTOW field
+    ///     @li @b aopCfg for @ref NavAopstatusFields::aopCfg field
+    ///     @li @b status for @ref NavAopstatusFields::status field
+    ///     @li @b reserved0 for @ref NavAopstatusFields::reserved0 field
+    ///     @li @b reserved1 for @ref NavAopstatusFields::reserved1 field
+    ///     @li @b availGPS for @ref NavAopstatusFields::availGPS field
+    ///     @li @b reserved2 for @ref NavAopstatusFields::reserved2 field
+    ///     @li @b reserved3 for @ref NavAopstatusFields::reserved3 field
     COMMS_MSG_FIELDS_ACCESS(Base,
         iTOW,
         aopCfg,
@@ -159,7 +126,6 @@ public:
         reserved2,
         reserved3
     );
-#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     NavAopstatus() = default;

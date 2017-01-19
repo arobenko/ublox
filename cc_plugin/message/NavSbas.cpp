@@ -75,7 +75,7 @@ QVariantMap createProps_service(const QString& propsName)
          .add("Corrections")
          .add("Integrity")
          .add("Testmode");
-    assert(props.bits().size() == NavSbasFields::service_NumOfValues);
+    assert(props.bits().size() == NavSbasFields::service::BitIdx_numOfValues);
     return props.asMap();
 }
 

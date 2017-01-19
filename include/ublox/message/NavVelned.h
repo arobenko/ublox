@@ -79,7 +79,8 @@ struct NavVelnedFields
 /// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
 ///     various implementation options. @n
-///     See @ref NavVelnedFields and for definition of the fields this message contains.
+///     See @ref NavVelnedFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class NavVelned : public
@@ -98,59 +99,22 @@ class NavVelned : public
     > Base;
 public:
 
-#ifdef FOR_DOXYGEN_DOC_ONLY
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_iTOW, ///< @b iTOW field, see @ref NavVelnedFields::iTOW
-        FieldIdx_velN, ///< @b velN field, see @ref NavVelnedFields::velN
-        FieldIdx_velE, ///< @b velE field, see @ref NavVelnedFields::velE
-        FieldIdx_velD, ///< @b velD field, see @ref NavVelnedFields::velD
-        FieldIdx_speed, ///< @b speed field, see @ref NavVelnedFields::speed
-        FieldIdx_gSpeed, ///< @b gSpeed field, see @ref NavVelnedFields::gSpeed
-        FieldIdx_heading, ///< @b heading field, see @ref NavVelnedFields::heading
-        FieldIdx_sAcc, ///< @b sAcc field, see @ref NavVelnedFields::sAcc
-        FieldIdx_cAcc, ///< @b cAcc field, see @ref NavVelnedFields::cAcc
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    /// @brief Access to fields bundled as a struct
-    struct FieldsAsStruct
-    {
-        NavVelnedFields::iTOW& iTOW; ///< @b iTOW field, see @ref NavVelnedFields::iTOW
-        NavVelnedFields::velN& velN; ///< @b velN field, see @ref NavVelnedFields::velN
-        NavVelnedFields::velE& velE; ///< @b velE field, see @ref NavVelnedFields::velE
-        NavVelnedFields::velD& velD; ///< @b velD field, see @ref NavVelnedFields::velD
-        NavVelnedFields::speed& speed; ///< @b speed field, see @ref NavVelnedFields::speed
-        NavVelnedFields::gSpeed& gSpeed; ///< @b gSpeed field, see @ref NavVelnedFields::gSpeed
-        NavVelnedFields::heading& heading; ///< @b heading field, see @ref NavVelnedFields::heading
-        NavVelnedFields::sAcc& sAcc; ///< @b sAcc field, see @ref NavVelnedFields::sAcc
-        NavVelnedFields::cAcc& cAcc; ///< @b cAcc field, see @ref NavVelnedFields::cAcc
-    };
-
-    /// @brief Access to @b const fields bundled as a struct
-    struct ConstFieldsAsStruct
-    {
-        const NavVelnedFields::iTOW& iTOW; ///< @b iTOW field, see @ref NavVelnedFields::iTOW
-        const NavVelnedFields::velN& velN; ///< @b velN field, see @ref NavVelnedFields::velN
-        const NavVelnedFields::velE& velE; ///< @b velE field, see @ref NavVelnedFields::velE
-        const NavVelnedFields::velD& velD; ///< @b velD field, see @ref NavVelnedFields::velD
-        const NavVelnedFields::speed& speed; ///< @b speed field, see @ref NavVelnedFields::speed
-        const NavVelnedFields::gSpeed& gSpeed; ///< @b gSpeed field, see @ref NavVelnedFields::gSpeed
-        const NavVelnedFields::heading& heading; ///< @b heading field, see @ref NavVelnedFields::heading
-        const NavVelnedFields::sAcc& sAcc; ///< @b sAcc field, see @ref NavVelnedFields::sAcc
-        const NavVelnedFields::cAcc& cAcc; ///< @b cAcc field, see @ref NavVelnedFields::cAcc
-    };
-
-    /// @brief Get access to fields bundled into a struct
-    FieldsAsStruct fieldsAsStruct();
-
-    /// @brief Get access to @b const fields bundled into a struct
-    ConstFieldsAsStruct fieldsAsStruct() const;
-
-#else
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b iTOW for @ref NavVelnedFields::iTOW field
+    ///     @li @b velN for @ref NavVelnedFields::velN field
+    ///     @li @b velE for @ref NavVelnedFields::velE field
+    ///     @li @b velD for @ref NavVelnedFields::velD field
+    ///     @li @b speed for @ref NavVelnedFields::speed field
+    ///     @li @b gSpeed for @ref NavVelnedFields::gSpeed field
+    ///     @li @b heading for @ref NavVelnedFields::heading field
+    ///     @li @b sAcc for @ref NavVelnedFields::sAcc field
+    ///     @li @b cAcc for @ref NavVelnedFields::cAcc field
     COMMS_MSG_FIELDS_ACCESS(Base, iTOW, velN, velE, velD, speed, gSpeed, heading, sAcc, cAcc);
-#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     NavVelned() = default;

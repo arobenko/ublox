@@ -52,7 +52,7 @@ QVariantMap createProps_flags()
             .add("wknSet")
             .add("towSet");
 
-    assert(props.bits().size() == NavStatusFields::flags_numOfValues);
+    assert(props.bits().size() == NavStatusFields::flags::BitIdx_numOfValues);
     return props.asMap();
 }
 
@@ -85,7 +85,7 @@ QVariantMap createProps_fixStat()
             .add(dgpsIStatProps.asMap())
             .add(reservedProps.asMap())
             .add(mapMatchingProps.asMap());
-    assert(fixStatProps.members().size() == NavStatusFields::fixStat_numOfValues);
+    assert(fixStatProps.members().size() == NavStatusFields::fixStat::FieldIdx_numOfValues);
     return fixStatProps.asMap();
 }
 
@@ -108,7 +108,7 @@ QVariantMap createProps_flags2()
         cc::property::field::ForField<NavStatusFields::flags2>()
             .add(psmStateProps.asMap())
             .add(reservedProps.asMap());
-    assert(flags2Props.members().size() == NavStatusFields::flags2_numOfValues);
+    assert(flags2Props.members().size() == NavStatusFields::flags2::FieldIdx_numOfValues);
     return flags2Props.asMap();
 }
 

@@ -55,12 +55,12 @@ QVariantMap createProps_leapS()
 
 QVariantMap createProps_valid()
 {
-    cc::property::field::ForField<NavTimegpsFields::valid> props;
+    cc::property::field::ForField<NavTimegpsFields::validBits> props;
     props.name("valid")
          .add("towValid")
          .add("weekValid")
          .add("leapSValid");
-    assert(props.bits().size() == NavTimegpsFields::valid_numOfValues);
+    assert(props.bits().size() == NavTimegpsFields::validBits::BitIdx_numOfValues);
     return props.asMap();
 }
 

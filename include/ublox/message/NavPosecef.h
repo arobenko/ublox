@@ -61,7 +61,8 @@ struct NavPosecefFields
 /// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
 ///     various implementation options. @n
-///     See @ref NavPosecefFields and for definition of the fields this message contains.
+///     See @ref NavPosecefFields and for definition of the fields this message contains
+///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
 class NavPosecef : public
@@ -80,47 +81,18 @@ class NavPosecef : public
     > Base;
 public:
 
-#ifdef FOR_DOXYGEN_DOC_ONLY
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_iTow, ///< @b iTOW field, see @ref NavPosecefFields::iTOW
-        FieldIdx_ecefX, ///< @b ecefX field, see @ref NavPosecefFields::ecefX
-        FieldIdx_ecefY, ///< @b ecefY field, see @ref NavPosecefFields::ecefY
-        FieldIdx_ecefZ, ///< @b ecefZ field, see @ref NavPosecefFields::ecefZ
-        FieldIdx_pAcc, ///< @b pAcc field, see @ref NavPosecefFields::pAcc
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    /// @brief Access to fields bundled as a struct
-    struct FieldsAsStruct
-    {
-        NavPosecefFields::iTOW& iTOW; ///< @b iTOW field, see @ref NavPosecefFields::iTOW
-        NavPosecefFields::ecefX& ecefX; ///< @b ecefX field, see @ref NavPosecefFields::ecefX
-        NavPosecefFields::ecefY& ecefY; ///< @b ecefY field, see @ref NavPosecefFields::ecefY
-        NavPosecefFields::ecefZ& ecefZ; ///< @b ecefZ field, see @ref NavPosecefFields::ecefZ
-        NavPosecefFields::pAcc& pAcc; ///< @b pAcc field, see @ref NavPosecefFields::pAcc
-    };
-
-    /// @brief Access to @b const fields bundled as a struct
-    struct ConstFieldsAsStruct
-    {
-        const NavPosecefFields::iTOW& iTOW; ///< @b iTOW field, see @ref NavPosecefFields::iTOW
-        const NavPosecefFields::ecefX& ecefX; ///< @b ecefX field, see @ref NavPosecefFields::ecefX
-        const NavPosecefFields::ecefY& ecefY; ///< @b ecefY field, see @ref NavPosecefFields::ecefY
-        const NavPosecefFields::ecefZ& ecefZ; ///< @b ecefZ field, see @ref NavPosecefFields::ecefZ
-        const NavPosecefFields::pAcc& pAcc; ///< @b pAcc field, see @ref NavPosecefFields::pAcc
-    };
-
-    /// @brief Get access to fields bundled into a struct
-    FieldsAsStruct fieldsAsStruct();
-
-    /// @brief Get access to @b const fields bundled into a struct
-    ConstFieldsAsStruct fieldsAsStruct() const;
-
-#else
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
+    ///     related to @b comms::MessageBase class from COMMS library
+    ///     for details.
+    ///
+    ///     The field names are:
+    ///     @li @b iTOW for @ref NavPosecefFields::iTOW field
+    ///     @li @b ecefX for @ref NavPosecefFields::ecefX field
+    ///     @li @b ecefY for @ref NavPosecefFields::ecefY field
+    ///     @li @b ecefZ for @ref NavPosecefFields::ecefZ field
+    ///     @li @b pAcc for @ref NavPosecefFields::pAcc field
     COMMS_MSG_FIELDS_ACCESS(Base, iTOW, ecefX, ecefY, ecefZ, pAcc);
-#endif // #ifdef FOR_DOXYGEN_DOC_ONLY
 
     /// @brief Default constructor
     NavPosecef() = default;

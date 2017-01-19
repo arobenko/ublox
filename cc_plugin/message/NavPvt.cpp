@@ -44,13 +44,13 @@ using ublox::message::NavPvtFields;
 
 QVariantMap createProps_valid()
 {
-    cc::property::field::ForField<NavPvtFields::valid> props;
+    cc::property::field::ForField<NavPvtFields::validBits> props;
     props.name("valid")
          .add("validDate")
          .add("validTime")
          .add("fullyResolved");
 
-    assert(props.bits().size() == NavPvtFields::valid_numOfValues);
+    assert(props.bits().size() == NavPvtFields::validBits::BitIdx_numOfValues);
     return props.asMap();
 }
 
@@ -62,7 +62,7 @@ QVariantMap createProps_flags()
              .add("diffSoln")
              .serialisedHidden();
 
-    assert(bitsProps.bits().size() == NavPvtFields::flagsBits_numOfValues);
+    assert(bitsProps.bits().size() == NavPvtFields::flagsBits::BitIdx_numOfValues);
 
     cc::property::field::ForField<NavPvtFields::psmState> psmStateProps;
     psmStateProps.name("psmState")
@@ -78,7 +78,7 @@ QVariantMap createProps_flags()
     cc::property::field::ForField<NavPvtFields::flags> props;
     props.add(bitsProps.asMap())
          .add(psmStateProps.asMap());
-    assert(props.members().size() == (int)NavPvtFields::flags_numOfValues);
+    assert(props.members().size() == (int)NavPvtFields::flags::FieldIdx_numOfValues);
     return props.asMap();
 }
 
