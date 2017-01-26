@@ -106,7 +106,7 @@ public:
     ///     @li @b leapS for @ref NavTimegpsFields::leapS field
     ///     @li @b valid for @ref NavTimegpsFields::validBits field
     ///     @li @b tAcc for @ref NavTimegpsFields::tAcc field
-    COMMS_MSG_FIELDS_ACCESS(Base, iTOW, fTOW, week, leapS, valid, tAcc);
+    COMMS_MSG_FIELDS_ACCESS(iTOW, fTOW, week, leapS, valid, tAcc);
 
     /// @brief Default constructor
     NavTimegps() = default;

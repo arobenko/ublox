@@ -100,7 +100,7 @@ public:
     ///     @li @b sf1d for @ref AidEphFields::sf1d field
     ///     @li @b sf2d for @ref AidEphFields::sf2d field
     ///     @li @b sf3d for @ref AidEphFields::sf3d field
-    COMMS_MSG_FIELDS_ACCESS(Base, svid, how, sf1d, sf2d, sf3d);
+    COMMS_MSG_FIELDS_ACCESS(svid, how, sf1d, sf2d, sf3d);
 
     /// @brief Default constructor
     /// @details Marks "sf1d" (see @ref AidEphFields::sf1d),

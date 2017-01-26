@@ -66,8 +66,8 @@ struct RxmRawFields
     /// @brief Definition of "lli" field.
     using lli = field::common::U1;
 
-    /// @brief Base class of @ref block field.
-    using blockBase =
+    /// @brief Definition of a single block of @ref data
+    struct block : public
         field::common::BundleT<
             std::tuple<
                 cpMes,
@@ -78,16 +78,13 @@ struct RxmRawFields
                 cno,
                 lli
             >
-        >;
-
-    /// @brief Definition of a single block of @ref data
-    struct block : public blockBase
+        >
     {
         /// @brief Allow access to internal fields.
         /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
         ///     related to @b comms::field::Bitfield class from COMMS library
         ///     for details.
-        COMMS_FIELD_MEMBERS_ACCESS(blockBase, cpMes, prMes, doMes, sv, mesQI, cno, lli);
+        COMMS_FIELD_MEMBERS_ACCESS(cpMes, prMes, doMes, sv, mesQI, cno, lli);
     };
 
     /// @brief Definition of the list of blocks (@ref block)
@@ -144,7 +141,7 @@ public:
     ///     @li @b numSV for @ref RxmRawFields::numSV field
     ///     @li @b reserved1 for @ref RxmRawFields::reserved1 field
     ///     @li @b data for @ref RxmRawFields::data field
-    COMMS_MSG_FIELDS_ACCESS(Base, rcvTow, week, numSV, reserved1, data);
+    COMMS_MSG_FIELDS_ACCESS(rcvTow, week, numSV, reserved1, data);
 
 
     /// @brief Default constructor

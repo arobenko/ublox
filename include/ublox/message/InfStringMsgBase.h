@@ -74,7 +74,7 @@ public:
     ///
     ///     The field names are:
     ///     @li @b str for InfStringMsgBaseFields::str field
-    COMMS_MSG_FIELDS_ACCESS(Base, str);
+    COMMS_MSG_FIELDS_ACCESS(str);
 
 
     /// @brief Default constructor

@@ -70,23 +70,20 @@ struct NavSvinfoFields
             comms::option::ValidNumValueRange<0, (int)ChipGen::NumOfValues - 1>
         >;
 
-    /// @brief Base class of @ref globalFlags field
-    using globalFlagsBase =
+    /// @brief Definition of "globalFlags" field.
+    struct globalFlags : public
         field::common::BitfieldT<
             std::tuple<
                 chipGen,
                 field::common::res1T<comms::option::FixedBitLength<5> >
             >
-        >;
-
-    /// @brief Definition of "globalFlags" field.
-    struct globalFlags : public globalFlagsBase
+        >
     {
         /// @brief Allow access to internal fields.
         /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
         ///     related to @b comms::field::Bitfield class from COMMS library
         ///     for details.
-        COMMS_FIELD_MEMBERS_ACCESS(globalFlagsBase, chipGen, reserved);
+        COMMS_FIELD_MEMBERS_ACCESS(chipGen, reserved);
     };
 
     /// @brief Definition of "reserved2" field.
@@ -127,8 +124,9 @@ struct NavSvinfoFields
     /// @brief Definition of "prRes" field.
     using prRes = field::common::I4T<field::common::Scaling_cm2m>;
 
-    /// @brief Base class of @ref block field.
-    using blockBase =
+    /// @brief Definition of a block field repeated multiple times in @ref
+    ///     data list.
+    struct block : public
         field::common::BundleT<
             std::tuple<
                 chn,
@@ -140,17 +138,13 @@ struct NavSvinfoFields
                 azim,
                 prRes
             >
-        >;
-
-    /// @brief Definition of a block field repeated multiple times in @ref
-    ///     data list.
-    struct block : public blockBase
+        >
     {
         /// @brief Allow access to internal fields.
         /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
         ///     related to @b comms::field::Bitfield class from COMMS library
         ///     for details.
-        COMMS_FIELD_MEMBERS_ACCESS(blockBase, chn, svid, flags, quality, cno, elev, azim, prRes);
+        COMMS_FIELD_MEMBERS_ACCESS(chn, svid, flags, quality, cno, elev, azim, prRes);
     };
 
     /// @brief Definition of "data" field as list of blocks (@ref block).
@@ -207,7 +201,7 @@ public:
     ///     @li @b globalFlags for @ref NavSvinfoFields::globalFlags field
     ///     @li @b reserved2 for @ref NavSvinfoFields::reserved2 field
     ///     @li @b data for @ref NavSvinfoFields::data field
-    COMMS_MSG_FIELDS_ACCESS(Base, iTOW, numCh, globalFlags, reserved2, data);
+    COMMS_MSG_FIELDS_ACCESS(iTOW, numCh, globalFlags, reserved2, data);
 
     /// @brief Default constructor
     NavSvinfo() = default;

@@ -118,7 +118,7 @@ public:
     ///     @li @b svs for @ref AidAlpFields::svs field
     ///     @li @b reserved2 for @ref AidAlpFields::reserved2 field
     ///     @li @b reserved3 for @ref AidAlpFields::reserved3 field
-    COMMS_MSG_FIELDS_ACCESS(Base, predTow, predDur, age, predWno, almWno, reserved1, svs, reserved2, reserved3);
+    COMMS_MSG_FIELDS_ACCESS(predTow, predDur, age, predWno, almWno, reserved1, svs, reserved2, reserved3);
 
     /// @brief Default constructor
     AidAlp() = default;

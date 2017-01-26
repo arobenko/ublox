@@ -80,7 +80,7 @@ public:
     ///     The field names are:
     ///     @li @b id for @ref CfgMsgCurrentFields::id field
     ///     @li @b rate for @ref CfgMsgCurrentFields::rate field
-    COMMS_MSG_FIELDS_ACCESS(Base, id, rate);
+    COMMS_MSG_FIELDS_ACCESS(id, rate);
 
     /// @brief Default constructor
     CfgMsgCurrent() = default;

@@ -92,7 +92,7 @@ public:
     ///     @li @b ecefY for @ref NavPosecefFields::ecefY field
     ///     @li @b ecefZ for @ref NavPosecefFields::ecefZ field
     ///     @li @b pAcc for @ref NavPosecefFields::pAcc field
-    COMMS_MSG_FIELDS_ACCESS(Base, iTOW, ecefX, ecefY, ecefZ, pAcc);
+    COMMS_MSG_FIELDS_ACCESS(iTOW, ecefX, ecefY, ecefZ, pAcc);
 
     /// @brief Default constructor
     NavPosecef() = default;

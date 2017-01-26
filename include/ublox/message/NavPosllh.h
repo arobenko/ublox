@@ -103,7 +103,7 @@ public:
     ///     @li @b hMSL for @ref NavPosllhFields::hMSL field
     ///     @li @b hAcc for @ref NavPosllhFields::hAcc field
     ///     @li @b vAcc for @ref NavPosllhFields::vAcc field
-    COMMS_MSG_FIELDS_ACCESS(Base, iTOW, lon, lat, height, hMSL, hAcc, vAcc);
+    COMMS_MSG_FIELDS_ACCESS(iTOW, lon, lat, height, hMSL, hAcc, vAcc);
 
     /// @brief Default constructor
     NavPosllh() = default;

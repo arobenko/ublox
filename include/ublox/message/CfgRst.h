@@ -129,7 +129,7 @@ public:
     ///     @li @b navBbrMask for @ref CfgRstFields::navBbrMask field
     ///     @li @b resetMode for @ref CfgRstFields::resetMode field
     ///     @li @b reserved1 for @ref CfgRstFields::reserved1 field
-    COMMS_MSG_FIELDS_ACCESS(Base, navBbrMask, resetMode, reserved1);
+    COMMS_MSG_FIELDS_ACCESS(navBbrMask, resetMode, reserved1);
 
     /// @brief Default constructor
     CfgRst() = default;

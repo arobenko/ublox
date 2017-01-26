@@ -96,7 +96,7 @@ public:
     ///
     ///     The field names are:
     ///     @li @b status for @ref AidAlpStatusFields::status field
-    COMMS_MSG_FIELDS_ACCESS(Base, status);
+    COMMS_MSG_FIELDS_ACCESS(status);
 
     /// @brief Default constructor
     AidAlpStatus() = default;

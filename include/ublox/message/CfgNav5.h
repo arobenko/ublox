@@ -222,7 +222,7 @@ public:
     ///     @li @b reserved2 for @ref CfgNav5Fields::reserved2 field
     ///     @li @b reserved3 for @ref CfgNav5Fields::reserved3 field
     ///     @li @b reserved4 for @ref CfgNav5Fields::reserved4 field
-    COMMS_MSG_FIELDS_ACCESS(Base,
+    COMMS_MSG_FIELDS_ACCESS(
         mask,
         dynModel,
         fixMode,

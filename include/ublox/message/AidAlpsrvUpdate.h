@@ -111,7 +111,7 @@ public:
     ///     @li @b size for @ref AidAlpsrvUpdateFields::size field
     ///     @li @b fileId for @ref AidAlpsrvUpdateFields::fileId field
     ///     @li @b data for @ref AidAlpsrvUpdateFields::data field
-    COMMS_MSG_FIELDS_ACCESS(Base, idSize, type, ofs, size, fileId, data);
+    COMMS_MSG_FIELDS_ACCESS(idSize, type, ofs, size, fileId, data);
 
     /// @brief Default constructor
     AidAlpsrvUpdate() = default;

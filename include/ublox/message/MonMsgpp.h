@@ -111,7 +111,7 @@ public:
     ///     @li @b msg5 for @ref MonMsgppFields::msg5 field
     ///     @li @b msg6 for @ref MonMsgppFields::msg6 field
     ///     @li @b skipped for @ref MonMsgppFields::skipped field
-    COMMS_MSG_FIELDS_ACCESS(Base, msg1, msg2, msg3, msg4, msg5, msg6, skipped);
+    COMMS_MSG_FIELDS_ACCESS(msg1, msg2, msg3, msg4, msg5, msg6, skipped);
 
     /// @brief Default constructor
     MonMsgpp() = default;

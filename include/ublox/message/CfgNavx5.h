@@ -262,7 +262,7 @@ public:
     ///     @li @b reserved15 for @ref CfgNavx5Fields::reserved15 field
     ///     @li @b reserved3 for @ref CfgNavx5Fields::reserved3 field
     ///     @li @b reserved4 for @ref CfgNavx5Fields::reserved4 field
-    COMMS_MSG_FIELDS_ACCESS(Base,
+    COMMS_MSG_FIELDS_ACCESS(
         version,
         mask1,
         reserved0,

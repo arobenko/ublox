@@ -79,7 +79,7 @@ public:
     ///
     ///     The field names are:
     ///     @li @b alpData for @ref AidAlpDataFields::alpData field
-    COMMS_MSG_FIELDS_ACCESS(Base, alpData);
+    COMMS_MSG_FIELDS_ACCESS(alpData);
 
     /// @brief Default constructor
     AidAlpData() = default;

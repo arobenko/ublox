@@ -140,7 +140,7 @@ public:
     ///     @li @b wno for @ref TimVrfyFields::wno field
     ///     @li @b flags for @ref TimVrfyFields::flags field
     ///     @li @b reserved1 for @ref TimVrfyFields::reserved1 field
-    COMMS_MSG_FIELDS_ACCESS(Base, itow, frac, deltaMS, deltaNS, wno, flags, reserved1);
+    COMMS_MSG_FIELDS_ACCESS(itow, frac, deltaMS, deltaNS, wno, flags, reserved1);
 
     /// @brief Default constructor
     TimVrfy() = default;

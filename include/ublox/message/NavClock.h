@@ -93,7 +93,7 @@ public:
     ///     @li @b clkD for @ref NavClockFields::clkD field
     ///     @li @b tAcc for @ref NavClockFields::tAcc field
     ///     @li @b fAcc for @ref NavClockFields::fAcc field
-    COMMS_MSG_FIELDS_ACCESS(Base, iTOW, clkB, clkD, tAcc, fAcc);
+    COMMS_MSG_FIELDS_ACCESS(iTOW, clkB, clkD, tAcc, fAcc);
 
     /// @brief Default constructor
     NavClock() = default;

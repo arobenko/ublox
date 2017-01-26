@@ -96,7 +96,7 @@ public:
     ///     @li @b type for @ref LogFindtimeFields::type field
     ///     @li @b reserved1 for @ref LogFindtimeFields::reserved1 field
     ///     @li @b entryNumber for @ref LogFindtimeFields::entryNumber field
-    COMMS_MSG_FIELDS_ACCESS(Base, version, type, reserved1, entryNumber);
+    COMMS_MSG_FIELDS_ACCESS(version, type, reserved1, entryNumber);
 
     /// @brief Default constructor
     LogFindtime() = default;

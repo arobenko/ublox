@@ -88,7 +88,7 @@ public:
     ///     The field names are:
     ///     @li @b duration for @ref RxmPmreqFields::duration field
     ///     @li @b flags for @ref RxmPmreqFields::flags field
-    COMMS_MSG_FIELDS_ACCESS(Base, duration, flags);
+    COMMS_MSG_FIELDS_ACCESS(duration, flags);
 
     /// @brief Default constructor
     RxmPmreq() = default;

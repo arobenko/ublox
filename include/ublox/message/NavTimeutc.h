@@ -126,7 +126,7 @@ public:
     ///     @li @b min for @ref NavTimeutcFields::min field
     ///     @li @b sec for @ref NavTimeutcFields::sec field
     ///     @li @b valid for @ref NavTimeutcFields::validBits field
-    COMMS_MSG_FIELDS_ACCESS(Base, iTOW, tAcc, nano, year, month, day, hour, min, sec, valid);
+    COMMS_MSG_FIELDS_ACCESS(iTOW, tAcc, nano, year, month, day, hour, min, sec, valid);
 
     /// @brief Default constructor
     NavTimeutc() = default;

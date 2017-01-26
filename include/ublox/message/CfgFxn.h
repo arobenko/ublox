@@ -123,7 +123,7 @@ public:
     ///     @li @b tOff for @ref CfgFxnFields::tOff field
     ///     @li @b res for @ref CfgFxnFields::res field
     ///     @li @b baseTow for @ref CfgFxnFields::baseTow field
-    COMMS_MSG_FIELDS_ACCESS(Base,
+    COMMS_MSG_FIELDS_ACCESS(
         flags,
         tReacq,
         tAcq,

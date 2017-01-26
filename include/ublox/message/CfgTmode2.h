@@ -187,7 +187,7 @@ public:
     ///     @li @b fixedPosAcc for @ref CfgTmode2Fields::fixedPosAcc field
     ///     @li @b svinMinDur for @ref CfgTmode2Fields::svinMinDur field
     ///     @li @b svinAccLimit for @ref CfgTmode2Fields::svinAccLimit field
-    COMMS_MSG_FIELDS_ACCESS(Base,
+    COMMS_MSG_FIELDS_ACCESS(
         timeMode,
         reserved1,
         flags,

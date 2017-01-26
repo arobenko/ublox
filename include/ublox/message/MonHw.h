@@ -132,8 +132,8 @@ struct MonHwFields
             comms::option::FixedBitLength<2>
         >;
 
-    /// @brief Base class of @ref flags field.
-    using flagsBase =
+    /// @brief Definition of "flags" field.
+    struct flags : public
         field::common::BitfieldT<
             std::tuple<
                 rtcCalib,
@@ -143,16 +143,13 @@ struct MonHwFields
                     comms::option::FixedBitLength<4>
                 >
             >
-        >;
-
-    /// @brief Definition of "flags" field.
-    struct flags : public flagsBase
+        >
     {
         /// @brief Allow access to internal fields.
         /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
         ///     related to @b comms::field::Bitfield class from COMMS library
         ///     for details.
-        COMMS_FIELD_MEMBERS_ACCESS(flagsBase, rtcCalib, safeBoot, jammingState, reserved);
+        COMMS_FIELD_MEMBERS_ACCESS(rtcCalib, safeBoot, jammingState, reserved);
     };
 
     /// @brief Definition of "reserved1" field.
@@ -252,7 +249,7 @@ public:
     ///     @li @b pinIrq for @ref MonHwFields::pinIrq field
     ///     @li @b pullH for @ref MonHwFields::pullH field
     ///     @li @b pullL for @ref MonHwFields::pullL field
-    COMMS_MSG_FIELDS_ACCESS(Base,
+    COMMS_MSG_FIELDS_ACCESS(
         pinSel,
         pinBank,
         pinDir,

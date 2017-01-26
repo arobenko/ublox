@@ -156,7 +156,7 @@ public:
     ///     @li @b reserved1 for @ref MonHw2Fields::reserved1 field
     ///     @li @b postStatus for @ref MonHw2Fields::postStatus field
     ///     @li @b reserved2 for @ref MonHw2Fields::reserved2 field
-    COMMS_MSG_FIELDS_ACCESS(Base,
+    COMMS_MSG_FIELDS_ACCESS(
         ofsI,
         magI,
         ofsQ,

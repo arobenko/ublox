@@ -123,7 +123,7 @@ public:
     ///     @li @b rotY for @ref CfgDatFields::rotY field
     ///     @li @b rotZ for @ref CfgDatFields::rotZ field
     ///     @li @b scale for @ref CfgDatFields::scale field
-    COMMS_MSG_FIELDS_ACCESS(Base,
+    COMMS_MSG_FIELDS_ACCESS(
         datumNum,
         datumName,
         majA,

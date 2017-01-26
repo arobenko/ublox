@@ -78,23 +78,20 @@ struct MonTxbufFields
         COMMS_BITMASK_BITS(mem, alloc);
     };
 
-    /// @brief Base class of @ref errors field.
-    using errorsBase =
+    /// @brief Definition of "errors" field.
+    struct errors : public
         field::common::BitfieldT<
             std::tuple<
                 limit,
                 errorsBits
             >
-        >;
-
-    /// @brief Definition of "errors" field.
-    struct errors : public errorsBase
+        >
     {
         /// @brief Allow access to internal fields.
         /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
         ///     related to @b comms::field::Bitfield class from COMMS library
         ///     for details.
-        COMMS_FIELD_MEMBERS_ACCESS(errorsBase, limit, errorsBits);
+        COMMS_FIELD_MEMBERS_ACCESS(limit, errorsBits);
     };
 
     /// @brief Definition of "reserved1" field.
@@ -149,7 +146,7 @@ public:
     ///     @li @b tPeakUsage for @ref MonTxbufFields::tPeakUsage field
     ///     @li @b errors for @ref MonTxbufFields::errors field
     ///     @li @b reserved1 for @ref MonTxbufFields::reserved1 field
-    COMMS_MSG_FIELDS_ACCESS(Base,
+    COMMS_MSG_FIELDS_ACCESS(
         pending,
         usage,
         peakUsage,

@@ -108,7 +108,7 @@ public:
     ///     @li @b week for @ref TimTpFields::week field
     ///     @li @b flags for @ref TimTpFields::flags field
     ///     @li @b reserved for @ref TimTpFields::reserved field
-    COMMS_MSG_FIELDS_ACCESS(Base, towMS, towSubMS, qErr, week, flags, reserved);
+    COMMS_MSG_FIELDS_ACCESS(towMS, towSubMS, qErr, week, flags, reserved);
 
     /// @brief Default constructor
     TimTp() = default;

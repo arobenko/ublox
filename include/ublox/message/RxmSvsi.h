@@ -69,23 +69,20 @@ struct RxmSvsiFields
         COMMS_BITMASK_BITS(healthy, ephVal, almVal, notAvail);
     };
 
-    /// @brief Base class of @ref svFlag field
-    using svFlagBase =
+    /// @brief Definition of "svFlag" field.
+    struct svFlag : public
         field::common::BitfieldT<
             std::tuple<
                 ura,
                 svFlagBits
             >
-        >;
-
-    /// @brief Definition of "svFlag" field.
-    struct svFlag : public svFlagBase
+        >
     {
         /// @brief Allow access to internal fields.
         /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
         ///     related to @b comms::field::Bitfield class from COMMS library
         ///     for details.
-        COMMS_FIELD_MEMBERS_ACCESS(svFlagBase, ura, svFlagBits);
+        COMMS_FIELD_MEMBERS_ACCESS(ura, svFlagBits);
     };
 
     /// @brief Definition of "azim" field.
@@ -104,27 +101,24 @@ struct RxmSvsiFields
     /// @brief Definition of "ephAge" member fields in @ref age bitfield.
     using ephAge = almAge;
 
-    /// @brief Base class of @ref age field
-    using ageBase =
+    /// @brief Definition of "age" field.
+    struct age : public
         field::common::BitfieldT<
             std::tuple<
                 almAge,
                 ephAge
             >
-        >;
-
-    /// @brief Definition of "age" field.
-    struct age : public ageBase
+        >
     {
         /// @brief Allow access to internal fields.
         /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
         ///     related to @b comms::field::Bitfield class from COMMS library
         ///     for details.
-        COMMS_FIELD_MEMBERS_ACCESS(ageBase, almAge, ephAge);
+        COMMS_FIELD_MEMBERS_ACCESS(almAge, ephAge);
     };
 
-    /// @brief Base class of @ref block field
-    using blockBase =
+    /// @brief Definition of a single block of @ref data list
+    struct block : public
         field::common::BundleT<
             std::tuple<
                 svid,
@@ -133,16 +127,13 @@ struct RxmSvsiFields
                 elev,
                 age
             >
-        >;
-
-    /// @brief Definition of a single block of @ref data list
-    struct block : public blockBase
+        >
     {
         /// @brief Allow access to internal fields.
         /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
         ///     related to @b comms::field::Bitfield class from COMMS library
         ///     for details.
-        COMMS_FIELD_MEMBERS_ACCESS(blockBase, svid, svFlag, azim, elev, age);
+        COMMS_FIELD_MEMBERS_ACCESS(svid, svFlag, azim, elev, age);
     };
 
     /// @brief Definition of the list of blocks (@ref block)
@@ -199,7 +190,7 @@ public:
     ///     @li @b numVis for @ref RxmSvsiFields::numVis field
     ///     @li @b numSV for @ref RxmSvsiFields::numSV field
     ///     @li @b data for @ref RxmSvsiFields::data field
-    COMMS_MSG_FIELDS_ACCESS(Base, iTOW, week, numVis, numSV, data);
+    COMMS_MSG_FIELDS_ACCESS(iTOW, week, numVis, numSV, data);
 
     /// @brief Default constructor
     RxmSvsi() = default;

@@ -129,7 +129,7 @@ public:
     ///     @li @b id2 for @ref AidAlpsrvFields::id2 field
     ///     @li @b id3 for @ref AidAlpsrvFields::id3 field
     ///     @li @b data for @ref AidAlpsrvFields::data field
-    COMMS_MSG_FIELDS_ACCESS(Base, idSize, type, ofs, size, fileId, dataSize, id1, id2, id3, data);
+    COMMS_MSG_FIELDS_ACCESS(idSize, type, ofs, size, fileId, dataSize, id1, id2, id3, data);
 
     /// @brief Default constructor
     AidAlpsrv() = default;

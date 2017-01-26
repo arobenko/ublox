@@ -91,7 +91,7 @@ public:
     ///     @li @b svid for @ref RxmAlmFields::svid field
     ///     @li @b week for @ref RxmAlmFields::week field
     ///     @li @b dwrd for @ref RxmAlmFields::dwrd field
-    COMMS_MSG_FIELDS_ACCESS(Base, svid, week, dwrd);
+    COMMS_MSG_FIELDS_ACCESS(svid, week, dwrd);
 
     /// @brief Default constructor
     /// @details Marks "dwrd" (see @ref RxmAlmFields::dwrd) to be missing.

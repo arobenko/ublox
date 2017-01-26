@@ -73,7 +73,7 @@ public:
     ///
     ///     The field names are:
     ///     @li @b datumNum for @ref CfgDatStandardFields::datumNum field
-    COMMS_MSG_FIELDS_ACCESS(Base, datumNum);
+    COMMS_MSG_FIELDS_ACCESS(datumNum);
 
     /// @brief Default constructor
     CfgDatStandard() = default;

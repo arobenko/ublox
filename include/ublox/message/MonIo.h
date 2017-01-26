@@ -60,8 +60,8 @@ struct MonIoFields
     /// @brief Definition of "reserved1" field.
     using reserved1 = field::common::U2;
 
-    /// @brief Base class for @ref block bundle
-    using blockBase =
+    /// @brief Definition of the single block of data.
+    struct block : public
         field::common::BundleT<
             std::tuple<
                 rxBytes,
@@ -74,16 +74,13 @@ struct MonIoFields
                 txBusy,
                 reserved1
             >
-        >;
-
-    /// @brief Definition of the single block of data.
-    struct block : public blockBase
+        >
     {
         /// @brief Allow access to internal fields.
         /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
         ///     related to @b comms::field::Bitfield class from COMMS library
         ///     for details.
-        COMMS_FIELD_MEMBERS_ACCESS(blockBase,
+        COMMS_FIELD_MEMBERS_ACCESS(
             rxBytes,
             txBytes,
             parityErrs,
@@ -136,7 +133,7 @@ public:
     ///
     ///     The field names are:
     ///     @li @b data for @ref MonIoFields::data field
-    COMMS_MSG_FIELDS_ACCESS(Base, data);
+    COMMS_MSG_FIELDS_ACCESS(data);
 
     /// @brief Default constructor
     MonIo() = default;

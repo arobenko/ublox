@@ -86,24 +86,21 @@ struct TimTm2Fields
         COMMS_BITMASK_BITS(utc, time, newRisingEdge);
     };
 
-    /// @brief Base class of @ref flags field
-    using flagsBase =
+    /// @brief Definition of "flags" field.
+    struct flags : public
         field::common::BitfieldT<
             std::tuple<
                 flagsLowBits,
                 timeBase,
                 flagsHighBits
             >
-        >;
-
-    /// @brief Definition of "flags" field.
-    struct flags : public flagsBase
+        >
     {
         /// @brief Allow access to internal fields.
         /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
         ///     related to @b comms::field::Bitfield class from COMMS library
         ///     for details.
-        COMMS_FIELD_MEMBERS_ACCESS(flagsBase, flagsLowBits, timeBase, flagsHighBits);
+        COMMS_FIELD_MEMBERS_ACCESS(flagsLowBits, timeBase, flagsHighBits);
     };
 
     /// @brief Definition of "count" field.
@@ -186,7 +183,7 @@ public:
     ///     @li @b towMsF for @ref TimTm2Fields::towMsF field
     ///     @li @b towSubMsF for @ref TimTm2Fields::towSubMsF field
     ///     @li @b accEst for @ref TimTm2Fields::accEst field
-    COMMS_MSG_FIELDS_ACCESS(Base,
+    COMMS_MSG_FIELDS_ACCESS(
         ch,
         flags,
         count,

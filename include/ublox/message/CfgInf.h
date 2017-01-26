@@ -75,8 +75,8 @@ struct CfgInfFields
             comms::option::SequenceFixedSize<infMsgMask_numOfValues>
         >;
 
-    /// @brief Base class for the @ref element.
-    using elementBase =
+    /// @brief Definition of a single configuration bundle element in @ref list field.
+    struct element : public
         field::common::BundleT<
             std::tuple<
                 protocolID,
@@ -84,16 +84,13 @@ struct CfgInfFields
                 reserved1,
                 infMsgMask
             >
-        >;
-
-    /// @brief Definition of a single configuration bundle element in @ref list field.
-    struct element : public elementBase
+        >
     {
         /// @brief Allow access to internal fields.
         /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
         ///     related to @b comms::field::Bitfield class from COMMS library
         ///     for details.
-        COMMS_FIELD_MEMBERS_ACCESS(elementBase, protocolID, reserved0, reserved1, infMsgMask);
+        COMMS_FIELD_MEMBERS_ACCESS(protocolID, reserved0, reserved1, infMsgMask);
     };
 
     /// @brief @ref CfgInf message may contain multiple configuration elements
@@ -137,7 +134,7 @@ public:
     ///
     ///     The field names are:
     ///     @li @b list for @ref CfgInfFields::list field
-    COMMS_MSG_FIELDS_ACCESS(Base, list);
+    COMMS_MSG_FIELDS_ACCESS(list);
 
     /// @brief Default constructor
     CfgInf() = default;

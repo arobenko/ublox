@@ -136,7 +136,7 @@ public:
     ///     @li @b reserved2 for @ref LogRetrievestringFields::reserved2 field
     ///     @li @b byteCount for @ref LogRetrievestringFields::byteCount field
     ///     @li @b bytes for @ref LogRetrievestringFields::bytes field
-    COMMS_MSG_FIELDS_ACCESS(Base,
+    COMMS_MSG_FIELDS_ACCESS(
         entryIndex,
         version,
         reserved1,

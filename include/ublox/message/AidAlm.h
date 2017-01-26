@@ -90,7 +90,7 @@ public:
     ///     @li @b svid for @ref AidAlmFields::svid field
     ///     @li @b week for @ref AidAlmFields::week field
     ///     @li @b dwrd for @ref AidAlmFields::dwrd field
-    COMMS_MSG_FIELDS_ACCESS(Base, svid, week, dwrd);
+    COMMS_MSG_FIELDS_ACCESS(svid, week, dwrd);
 
     /// @brief Default constructor
     /// @details Marks "dwrd" (see @ref AidAlmFields::dwrd) to be missing.

@@ -153,8 +153,8 @@ struct NavSbasFields
     /// @brief Definition of "ic" field.
     using ic = field::common::U2T<field::common::Scaling_cm2m>;
 
-    /// @brief Base class of @ref block
-    using blockBase =
+    /// @brief Definition of the block of fields used in @ref data list
+    struct block : public
         field::common::BundleT<
             std::tuple<
                 svid,
@@ -167,16 +167,13 @@ struct NavSbasFields
                 reserved2,
                 ic
             >
-        >;
-
-    /// @brief Definition of the block of fields used in @ref data list
-    struct block : public blockBase
+        >
     {
         /// @brief Allow access to internal fields.
         /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
         ///     related to @b comms::field::Bitfield class from COMMS library
         ///     for details.
-        COMMS_FIELD_MEMBERS_ACCESS(blockBase, svid, flags, udre, svSys, svService, reserved1, prc, reserved2, ic);
+        COMMS_FIELD_MEMBERS_ACCESS(svid, flags, udre, svSys, svService, reserved1, prc, reserved2, ic);
     };
 
     /// @brief Definition of the list of data blocks (@ref block).
@@ -239,7 +236,7 @@ public:
     ///     @li @b cnt for @ref NavSbasFields::cnt field
     ///     @li @b reserved0 for @ref NavSbasFields::reserved0 field
     ///     @li @b data for @ref NavSbasFields::data field
-    COMMS_MSG_FIELDS_ACCESS(Base, iTOW, geo, mode, sys, service, cnt, reserved0, data);
+    COMMS_MSG_FIELDS_ACCESS(iTOW, geo, mode, sys, service, cnt, reserved0, data);
 
     /// @brief Default constructor
     NavSbas() = default;

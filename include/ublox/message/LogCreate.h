@@ -119,7 +119,7 @@ public:
     ///     @li @b reserved for @ref LogCreateFields::reserved field
     ///     @li @b logSize for @ref LogCreateFields::logSize field
     ///     @li @b userDefinedSize for @ref LogCreateFields::userDefinedSize field
-    COMMS_MSG_FIELDS_ACCESS(Base, version, logCfg, reserved, logSize, userDefinedSize);
+    COMMS_MSG_FIELDS_ACCESS(version, logCfg, reserved, logSize, userDefinedSize);
 
     /// @brief Default constructor
     LogCreate() = default;

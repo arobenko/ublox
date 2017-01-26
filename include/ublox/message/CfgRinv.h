@@ -89,7 +89,7 @@ public:
     ///     The field names are:
     ///     @li @b flags for @ref CfgRinvFields::flags field
     ///     @li @b data for @ref CfgRinvFields::data field
-    COMMS_MSG_FIELDS_ACCESS(Base, flags, data);
+    COMMS_MSG_FIELDS_ACCESS(flags, data);
 
     /// @brief Default constructor
     CfgRinv() = default;

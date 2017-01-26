@@ -76,7 +76,7 @@ public:
     ///
     ///     The field names are:
     ///     @li @b protocolID for @ref CfgInfPollFields::protocolID field
-    COMMS_MSG_FIELDS_ACCESS(Base, protocolID);
+    COMMS_MSG_FIELDS_ACCESS(protocolID);
 
     /// @brief Default constructor
     CfgInfPoll() = default;

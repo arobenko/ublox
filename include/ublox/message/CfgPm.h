@@ -128,8 +128,8 @@ struct CfgPmFields
         COMMS_BITMASK_BITS(waitTimeFix, updateRTC, updateEPH);
     };
 
-    /// @brief Base class for @ref flags field.
-    using flagsBase =
+    /// @brief Definition of "flags" field.
+    struct flags : public
         field::common::BitfieldT<
             std::tuple<
                 field::common::res1T<
@@ -145,16 +145,13 @@ struct CfgPmFields
                 limitPeakCurr,
                 remainingFlags
             >
-        >;
-
-    /// @brief Definition of "flags" field.
-    struct flags : public flagsBase
+        >
     {
         /// @brief Allow access to internal fields.
         /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
         ///     related to @b comms::field::Bitfield class from COMMS library
         ///     for details.
-        COMMS_FIELD_MEMBERS_ACCESS(flagsBase, invalid1, internal, extintSelect, extintWake, extintBackup, invalid2, limitPeakCurr, remainingFlags);
+        COMMS_FIELD_MEMBERS_ACCESS(invalid1, internal, extintSelect, extintWake, extintBackup, invalid2, limitPeakCurr, remainingFlags);
     };
 
     /// @brief Definition of "updatePeriod" field.
@@ -227,7 +224,7 @@ public:
     ///     @li @b gridOffset for @ref CfgPmFields::gridOffset field
     ///     @li @b onTime for @ref CfgPmFields::onTime field
     ///     @li @b minAcqTime for @ref CfgPmFields::minAcqTime field
-    COMMS_MSG_FIELDS_ACCESS(Base,
+    COMMS_MSG_FIELDS_ACCESS(
         version,
         reserved1,
         reserved2,

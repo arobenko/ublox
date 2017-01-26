@@ -151,7 +151,7 @@ public:
     ///     @li @b mainTalkerId for @ref CfgNmeaExtFields::mainTalkerId field
     ///     @li @b gsvTalkerId for @ref CfgNmeaExtFields::gsvTalkerId field
     ///     @li @b reserved for @ref CfgNmeaExtFields::reserved field
-    COMMS_MSG_FIELDS_ACCESS(Base,
+    COMMS_MSG_FIELDS_ACCESS(
         filter,
         nmeaVersion,
         numSV,

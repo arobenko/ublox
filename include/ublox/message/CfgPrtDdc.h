@@ -72,19 +72,12 @@ struct CfgPrtDdcFields : public CfgPrtFields
             >
         >
     {
-        typedef field::common::BitfieldT<
-            std::tuple<
-                field::common::res1T<comms::option::FixedBitLength<1> >,
-                slaveAddr,
-                field::common::res4T<comms::option::FixedBitLength<24> >
-            >
-        > Base;
     public:
         /// @brief Allow access to internal fields.
         /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
         ///     related to @b comms::field::Bitfield class from COMMS library
         ///     for details.
-        COMMS_FIELD_MEMBERS_ACCESS(Base, unused0, slaveAddr, unused1);
+        COMMS_FIELD_MEMBERS_ACCESS(unused0, slaveAddr, unused1);
     };
 
     /// @brief All the fields bundled in std::tuple.
@@ -142,7 +135,7 @@ public:
     ///     @li @b outProtoMask for @ref CfgPrtFields::outProtoMask field
     ///     @li @b flags for @ref CfgPrtFields::flags field
     ///     @li @b reserved5 for @ref CfgPrtDdcFields::reserved5 field
-    COMMS_MSG_FIELDS_ACCESS(Base,
+    COMMS_MSG_FIELDS_ACCESS(
         portID,
         reserved0,
         txReady,

@@ -107,8 +107,8 @@ struct CfgGnssFields
         COMMS_BITMASK_BITS(enable);
     };
 
-    /// @brief Base class for @ref block
-    using blockBase =
+    /// @brief Definition of a single configuration block
+    struct block : public
         field::common::BundleT<
             std::tuple<
                 gnssId,
@@ -117,16 +117,13 @@ struct CfgGnssFields
                 reserved1,
                 flags
             >
-        >;
-
-    /// @brief Definition of a single configuration block
-    struct block : public blockBase
+        >
     {
         /// @brief Allow access to internal fields.
         /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
         ///     related to @b comms::field::Bitfield class from COMMS library
         ///     for details.
-        COMMS_FIELD_MEMBERS_ACCESS(blockBase, gnssId, resTrkCh, maxTrkCh, reserved1, flags);
+        COMMS_FIELD_MEMBERS_ACCESS(gnssId, resTrkCh, maxTrkCh, reserved1, flags);
     };
 
     /// @brief Definition of the list of configuration blocks
@@ -180,7 +177,7 @@ public:
     ///     @li @b numTrkChUse for @ref CfgGnssFields::numTrkChUse field
     ///     @li @b numConfigBlocks for @ref CfgGnssFields::numConfigBlocks field
     ///     @li @b blocksList for @ref CfgGnssFields::blocksList field
-    COMMS_MSG_FIELDS_ACCESS(Base, msgVer, numTrkChHw, numTrkChUse, numConfigBlocks, blocksList);
+    COMMS_MSG_FIELDS_ACCESS(msgVer, numTrkChHw, numTrkChUse, numConfigBlocks, blocksList);
 
     /// @brief Default constructor
     CfgGnss() = default;

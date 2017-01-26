@@ -87,7 +87,7 @@ public:
     ///     @li @b chn for @ref RxmSfrbFields::chn field
     ///     @li @b svid for @ref RxmSfrbFields::svid field
     ///     @li @b dwrd for @ref RxmSfrbFields::dwrd field
-    COMMS_MSG_FIELDS_ACCESS(Base, chn, svid, dwrd);
+    COMMS_MSG_FIELDS_ACCESS(chn, svid, dwrd);
 
     /// @brief Default constructor
     RxmSfrb() = default;

@@ -127,7 +127,7 @@ public:
     ///     @li @b vendorString for @ref CfgUsbFields::vendorString field
     ///     @li @b productString for @ref CfgUsbFields::productString field
     ///     @li @b serialNumber for @ref CfgUsbFields::serialNumber field
-    COMMS_MSG_FIELDS_ACCESS(Base,
+    COMMS_MSG_FIELDS_ACCESS(
         vendorID,
         productID,
         reserved1,

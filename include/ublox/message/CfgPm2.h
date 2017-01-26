@@ -173,8 +173,8 @@ struct CfgPm2Fields
             comms::option::FixedBitLength<2>
         >;
 
-    /// @brief Base class of @ref flags field.
-    using flagsBase =
+    /// @brief Definition of "flags" field.
+    struct flags : public
         field::common::BitfieldT<
             std::tuple<
                 reserved,
@@ -197,16 +197,13 @@ struct CfgPm2Fields
                     comms::option::FixedBitLength<13>
                 >
             >
-        >;
-
-    /// @brief Definition of "flags" field.
-    struct flags : public flagsBase
+        >
     {
         /// @brief Allow access to internal fields.
         /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
         ///     related to @b comms::field::Bitfield class from COMMS library
         ///     for details.
-        COMMS_FIELD_MEMBERS_ACCESS(flagsBase,
+        COMMS_FIELD_MEMBERS_ACCESS(
             invalid1,
             extintSelect,
             extintWake,
@@ -331,7 +328,7 @@ public:
     ///     @li @b reserved9 for @ref CfgPm2Fields::reserved9 field
     ///     @li @b reserved10 for @ref CfgPm2Fields::reserved10 field
     ///     @li @b reserved11 for @ref CfgPm2Fields::reserved11 field
-    COMMS_MSG_FIELDS_ACCESS(Base,
+    COMMS_MSG_FIELDS_ACCESS(
         version,
         reserved1,
         reserved2,

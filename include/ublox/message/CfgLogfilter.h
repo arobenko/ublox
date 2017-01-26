@@ -112,7 +112,7 @@ public:
     ///     @li @b timeThreshold for @ref CfgLogfilterFields::timeThreshold field
     ///     @li @b speedThreshold for @ref CfgLogfilterFields::speedThreshold field
     ///     @li @b positionThreshold for @ref CfgLogfilterFields::positionThreshold field
-    COMMS_MSG_FIELDS_ACCESS(Base, version, flags, minInterval, timeThreshold, speedThreshold, positionThreshold);
+    COMMS_MSG_FIELDS_ACCESS(version, flags, minInterval, timeThreshold, speedThreshold, positionThreshold);
 
     /// @brief Default constructor
     CfgLogfilter() = default;

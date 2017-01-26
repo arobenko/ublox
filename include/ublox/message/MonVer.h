@@ -85,7 +85,7 @@ public:
     ///     @li @b swVersion for @ref MonVerFields::swVersion field
     ///     @li @b hwVersion for @ref MonVerFields::hwVersion field
     ///     @li @b extensions for @ref MonVerFields::extensions field
-    COMMS_MSG_FIELDS_ACCESS(Base, swVersion, hwVersion, extensions);
+    COMMS_MSG_FIELDS_ACCESS(swVersion, hwVersion, extensions);
 
     /// @brief Default constructor
     MonVer() = default;

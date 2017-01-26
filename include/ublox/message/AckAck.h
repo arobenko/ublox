@@ -71,7 +71,7 @@ public:
     ///
     ///     The field names are:
     ///     @li @b id for @ref AckAckFields::id field
-    COMMS_MSG_FIELDS_ACCESS(Base, id);
+    COMMS_MSG_FIELDS_ACCESS(id);
 
     /// @brief Default constructor
     AckAck() = default;

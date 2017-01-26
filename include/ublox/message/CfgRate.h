@@ -99,7 +99,7 @@ public:
     ///     @li @b measRate for @ref CfgRateFields::measRate field
     ///     @li @b navRate for @ref CfgRateFields::navRate field
     ///     @li @b timeRef for @ref CfgRateFields::timeRef field
-    COMMS_MSG_FIELDS_ACCESS(Base, measRate, navRate, timeRef);
+    COMMS_MSG_FIELDS_ACCESS(measRate, navRate, timeRef);
 
     /// @brief Default constructor
     CfgRate() = default;

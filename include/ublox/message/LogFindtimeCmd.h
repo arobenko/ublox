@@ -124,7 +124,7 @@ public:
     ///     @li @b minute for @ref LogFindtimeCmdFields::minute field
     ///     @li @b second for @ref LogFindtimeCmdFields::second field
     ///     @li @b reserved2 for @ref LogFindtimeCmdFields::reserved2 field
-    COMMS_MSG_FIELDS_ACCESS(Base,
+    COMMS_MSG_FIELDS_ACCESS(
         version,
         type,
         reserved1,

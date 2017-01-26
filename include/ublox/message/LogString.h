@@ -72,7 +72,7 @@ public:
     ///
     ///     The field names are:
     ///     @li @b bytes for @ref LogStringFields::bytes field
-    COMMS_MSG_FIELDS_ACCESS(Base, bytes);
+    COMMS_MSG_FIELDS_ACCESS(bytes);
 
     /// @brief Default constructor
     LogString() = default;

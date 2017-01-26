@@ -91,7 +91,7 @@ public:
     ///     @li @b pending for @ref MonRxbufFields::pending field
     ///     @li @b usage for @ref MonRxbufFields::usage field
     ///     @li @b peakUsage for @ref MonRxbufFields::peakUsage field
-    COMMS_MSG_FIELDS_ACCESS(Base, pending, usage, peakUsage);
+    COMMS_MSG_FIELDS_ACCESS(pending, usage, peakUsage);
 
     /// @brief Default constructor
     MonRxbuf() = default;

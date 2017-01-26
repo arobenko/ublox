@@ -122,7 +122,7 @@ public:
     ///     @li @b saveMask for @ref CfgNvsFields::saveMask field
     ///     @li @b loadMask for @ref CfgNvsFields::loadMask field
     ///     @li @b deviceMask for @ref CfgNvsFields::deviceMask field
-    COMMS_MSG_FIELDS_ACCESS(Base, clearMask, saveMask, loadMask, deviceMask);
+    COMMS_MSG_FIELDS_ACCESS(clearMask, saveMask, loadMask, deviceMask);
 
     /// @brief Default constructor
     CfgNvs() = default;

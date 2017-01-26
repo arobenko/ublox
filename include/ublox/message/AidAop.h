@@ -95,7 +95,7 @@ public:
     ///     @li @b svid for @ref AidAopFields::svid field
     ///     @li @b data for @ref AidAopFields::data field
     ///     @li @b optional for @ref AidAopFields::optional field
-    COMMS_MSG_FIELDS_ACCESS(Base, svid, data, optional);
+    COMMS_MSG_FIELDS_ACCESS(svid, data, optional);
 
     /// @brief Default constructor
     AidAop() = default;

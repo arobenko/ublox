@@ -90,23 +90,20 @@ struct NavDgpsFields
         COMMS_BITMASK_BITS(dgpsUsed);
     };
 
-    /// @brief Base class for @ref flags field.
-    using flagsBase =
+    /// @brief Definition of "flags" field.
+    struct flags : public
         field::common::BitfieldT<
             std::tuple<
                 channel,
                 flagsBits
             >
-        >;
-
-    /// @brief Definition of "flags" field.
-    struct flags : public flagsBase
+        >
     {
         /// @brief Allow access to internal fields.
         /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
         ///     related to @b comms::field::Bitfield class from COMMS library
         ///     for details.
-        COMMS_FIELD_MEMBERS_ACCESS(flagsBase, channel, flagsBits);
+        COMMS_FIELD_MEMBERS_ACCESS(channel, flagsBits);
     };
 
     /// @brief Definition of "agec" field.
@@ -118,8 +115,8 @@ struct NavDgpsFields
     /// @brief Definition of "prrc" field.
     using prrc = field::common::R4;
 
-    /// @brief Base class of @ref block field
-    using blockBase =
+    /// @brief Definition of the repeated block as a single bundle field
+    struct block : public
         field::common::BundleT<
             std::tuple<
                 svid,
@@ -128,16 +125,13 @@ struct NavDgpsFields
                 prc,
                 prrc
             >
-        >;
-
-    /// @brief Definition of the repeated block as a single bundle field
-    struct block : public blockBase
+        >
     {
         /// @brief Allow access to internal fields.
         /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
         ///     related to @b comms::field::Bitfield class from COMMS library
         ///     for details.
-        COMMS_FIELD_MEMBERS_ACCESS(blockBase, svid, flags, ageC, prc, prrc);
+        COMMS_FIELD_MEMBERS_ACCESS(svid, flags, ageC, prc, prrc);
     };
 
     /// @brief Definition of the list of repeated blocks (@ref block).
@@ -200,7 +194,7 @@ public:
     ///     @li @b status for @ref NavDgpsFields::status field
     ///     @li @b reserved1 for @ref NavDgpsFields::reserved1 field
     ///     @li @b data for @ref NavDgpsFields::data field
-    COMMS_MSG_FIELDS_ACCESS(Base,
+    COMMS_MSG_FIELDS_ACCESS(
         iTOW,
         age,
         baseId,

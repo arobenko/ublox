@@ -72,7 +72,7 @@ public:
     ///
     ///     The field names are:
     ///     @li @b svid for @ref AidAlmPollSvFields::svid field
-    COMMS_MSG_FIELDS_ACCESS(Base, svid);
+    COMMS_MSG_FIELDS_ACCESS(svid);
 
     /// @brief Default constructor
     AidAlmPollSv() = default;

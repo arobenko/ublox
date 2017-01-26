@@ -73,8 +73,8 @@ struct NavEkfstatusFields
     /// @brief Definition of "calibGyroB" member field of @ref calibStatus bitfield
     using calibGyroB = calibTacho;
 
-    /// @brief Base class for @ref calibStatus field
-    using calibStatusBase =
+    /// @brief Definition of "calibStatus" field.
+    struct calibStatus : public
         field::common::BitfieldT<
             std::tuple<
                 calibTacho,
@@ -82,16 +82,13 @@ struct NavEkfstatusFields
                 calibGyroB,
                 field::common::res1T<comms::option::FixedBitLength<2> >
             >
-        >;
-
-    /// @brief Definition of "calibStatus" field.
-    struct calibStatus : public calibStatusBase
+        >
     {
         /// @brief Allow access to internal fields.
         /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
         ///     related to @b comms::field::Bitfield class from COMMS library
         ///     for details.
-        COMMS_FIELD_MEMBERS_ACCESS(calibStatusBase, calibTacho, calibGyro, calibGyroB, reserved);
+        COMMS_FIELD_MEMBERS_ACCESS(calibTacho, calibGyro, calibGyroB, reserved);
     };
 
     /// @brief Definition of "pulseScale" field.
@@ -188,7 +185,7 @@ public:
     ///     @li @b accGyroScale for @ref NavEkfstatusFields::accGyroScale field
     ///     @li @b measUsed for @ref NavEkfstatusFields::measUsed field
     ///     @li @b reserved2 for @ref NavEkfstatusFields::reserved2 field
-    COMMS_MSG_FIELDS_ACCESS(Base,
+    COMMS_MSG_FIELDS_ACCESS(
         pulses,
         period,
         gyroMean,
