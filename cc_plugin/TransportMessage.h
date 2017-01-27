@@ -33,23 +33,23 @@ namespace details
 
 using TransportMessageFields =
     std::tuple<
-        ublox::details::SyncField1<cc_plugin::Stack::Message::Field>,
-        ublox::details::SyncField2<cc_plugin::Stack::Message::Field>,
+        ublox::details::SyncField1<cc_plugin::Message::Field>,
+        ublox::details::SyncField2<cc_plugin::Message::Field>,
         ublox::field::MsgId,
-        ublox::details::LengthField<cc_plugin::Stack::Message::Field>,
-        ublox::details::DataField<cc_plugin::Stack::Message::Field>,
-        ublox::details::ChecksumField<cc_plugin::Stack::Message::Field>
+        ublox::details::LengthField<cc_plugin::Message::Field>,
+        ublox::details::DataField<cc_plugin::Message::Field>,
+        ublox::details::ChecksumField<cc_plugin::Message::Field>
     >;
 
 }  // namespace details
 
 class TransportMessage : public
     comms_champion::TransportMessageBase<
-        cc_plugin::Stack::Message,
+        cc_plugin::Message,
         details::TransportMessageFields>
 {
     typedef comms_champion::TransportMessageBase<
-        cc_plugin::Stack::Message,
+        cc_plugin::Message,
         details::TransportMessageFields> Base;
 public:
     enum FieldIdx

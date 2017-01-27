@@ -1,5 +1,5 @@
 //
-// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2017 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -135,11 +135,11 @@ using Stack =
                 protocol::ChecksumCalc,
                 comms::protocol::MsgIdLayer<
                     ublox::field::MsgId,
+                    TMsgBase,
                     TMessages,
                     comms::protocol::MsgSizeLayer<
                         details::LengthField<typename TMsgBase::Field>,
                         comms::protocol::MsgDataLayer<
-                            TMsgBase,
                             details::DataField<typename TMsgBase::Field, TDataFieldStorageOptions>
                         >
                     >,
