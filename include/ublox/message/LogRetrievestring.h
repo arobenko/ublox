@@ -70,12 +70,17 @@ struct LogRetrievestringFields
     using byteCount = field::common::U2;
 
     /// @brief Definition of "bytes" field.
+    /// @tparam TOpt Extra option(s)
+    template <typename TOpt = comms::option::EmptyOption>
     using bytes =
         field::common::StringT<
-            comms::option::SequenceSizeForcingEnabled
+            comms::option::SequenceSizeForcingEnabled,
+            TOpt
         >;
 
     /// @brief All the fields bundled in std::tuple.
+    /// @tparam TBytesOpt Extra option(s) for @ref bytes field
+    template <typename TBytesOpt>
     using All = std::tuple<
         entryIndex,
         version,
@@ -88,7 +93,7 @@ struct LogRetrievestringFields
         second,
         reserved2,
         byteCount,
-        bytes
+        bytes<TBytesOpt>
     >;
 };
 
@@ -99,21 +104,24 @@ struct LogRetrievestringFields
 ///     See @ref LogRetrievestringFields and for definition of the fields this message contains
 ///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
-template <typename TMsgBase = Message>
+/// @tparam TBytesOpt Extra option(s) for @b bytes field
+template <
+    typename TMsgBase = Message,
+    typename TBytesOpt = comms::option::EmptyOption>
 class LogRetrievestring : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_LOG_RETRIEVESTRING>,
-        comms::option::FieldsImpl<LogRetrievestringFields::All>,
-        comms::option::MsgType<LogRetrievestring<TMsgBase> >,
+        comms::option::FieldsImpl<LogRetrievestringFields::All<TBytesOpt> >,
+        comms::option::MsgType<LogRetrievestring<TMsgBase, TBytesOpt> >,
         comms::option::HasDoRefresh
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_LOG_RETRIEVESTRING>,
-        comms::option::FieldsImpl<LogRetrievestringFields::All>,
-        comms::option::MsgType<LogRetrievestring<TMsgBase> >,
+        comms::option::FieldsImpl<LogRetrievestringFields::All<TBytesOpt> >,
+        comms::option::MsgType<LogRetrievestring<TMsgBase, TBytesOpt> >,
         comms::option::HasDoRefresh
     > Base;
 public:

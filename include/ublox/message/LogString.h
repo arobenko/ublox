@@ -33,11 +33,15 @@ namespace message
 struct LogStringFields
 {
     /// @brief Definition of "bytes" field.
-    using bytes = field::common::String;
+    /// @tparam TOpt Extra option(s)
+    template <typename TOpt = comms::option::EmptyOption>
+    using bytes = field::common::StringT<TOpt>;
 
     /// @brief All the fields bundled in std::tuple.
+    /// @tparam TOpt Extra option(s) for @ref bytes field
+    template <typename TOpt>
     using All = std::tuple<
-        bytes
+        bytes<TOpt>
     >;
 };
 
@@ -48,21 +52,18 @@ struct LogStringFields
 ///     See @ref LogStringFields and for definition of the fields this message contains.
 ///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
-template <typename TMsgBase = Message>
+/// @tparam TBytesOpt Extra option(s) for @b bytes field
+template <
+    typename TMsgBase = Message,
+    typename TBytesOpt = comms::option::EmptyOption>
 class LogString : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_LOG_STRING>,
-        comms::option::FieldsImpl<LogStringFields::All>,
-        comms::option::MsgType<LogString<TMsgBase> >
+        comms::option::FieldsImpl<LogStringFields::All<TBytesOpt> >,
+        comms::option::MsgType<LogString<TMsgBase, TBytesOpt> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_LOG_STRING>,
-        comms::option::FieldsImpl<LogStringFields::All>,
-        comms::option::MsgType<LogString<TMsgBase> >
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.

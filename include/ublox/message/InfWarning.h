@@ -30,8 +30,14 @@ namespace message
 
 /// @brief Definition of INF-WARNING message
 /// @tparam TMsgBase Common interface class for all the messages.
-template <typename TMsgBase = Message>
-class InfWarning : public InfStringMsgBase<MsgId_INF_WARNING, TMsgBase>
+/// @tparam TStrOpt Extra option(s) for @b str field
+template <typename TMsgBase = Message, typename TStrOpt = comms::option::EmptyOption>
+class InfWarning : public
+    InfStringMsgBase<
+        MsgId_INF_WARNING,
+        TMsgBase,
+        TStrOpt,
+        InfWarning<TMsgBase, TStrOpt> >
 {
 public:
     /// @brief Default constructor

@@ -34,11 +34,15 @@ namespace message
 struct InfStringMsgBaseFields
 {
     /// @brief Definition of "str" field.
-    using str = field::common::String;
+    /// @tparam TOpt Extra option(s)
+    template <typename TOpt = comms::option::EmptyOption>
+    using str = field::common::StringT<TOpt>;
 
     /// @brief All the fields bundled in std::tuple.
+    /// @tparam TOpt Extra option(s) for @ref str field
+    template <typename TOpt>
     using All = std::tuple<
-        str
+        str<TOpt>
     >;
 };
 
@@ -50,21 +54,17 @@ struct InfStringMsgBaseFields
 ///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TId ID of actual INF-* message
 /// @tparam TMsgBase Common interface class for all the messages.
-template <MsgId TId, typename TMsgBase = Message>
+/// @tparam TStrOpt Extra option(s) for @b str field
+/// @tparam TActual Actual message type
+template <MsgId TId, typename TMsgBase, typename TStrOpt, typename TActual>
 class InfStringMsgBase : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<TId>,
-        comms::option::FieldsImpl<InfStringMsgBaseFields::All>,
-        comms::option::MsgType<InfStringMsgBase<TId, TMsgBase> >
+        comms::option::FieldsImpl<InfStringMsgBaseFields::All<TStrOpt> >,
+        comms::option::MsgType<TActual>
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<TId>,
-        comms::option::FieldsImpl<InfStringMsgBaseFields::All>,
-        comms::option::MsgType<InfStringMsgBase<TId, TMsgBase> >
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.

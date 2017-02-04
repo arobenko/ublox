@@ -73,7 +73,7 @@ QVariantList createFieldsProperties()
     props.append(cc_plugin::field::common::props_reserved(2));
     props.append(createProps_byteCount());
     props.append(
-        cc::property::field::ForField<LogRetrievestringFields::bytes>().name("bytes").asMap());
+        cc::property::field::ForField<LogRetrievestringFields::bytes<> >().name("bytes").asMap());
     assert(props.size() == LogRetrievestring::FieldIdx_numOfValues);
     return props;
 }
