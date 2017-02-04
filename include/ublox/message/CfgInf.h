@@ -69,20 +69,25 @@ struct CfgInfFields
     };
 
     /// @brief Definition of "infMsgMask" field.
+    /// @tparam TOpt Extra option(s)
+    template <typename TOpt = comms::option::EmptyOption>
     using infMsgMask =
         field::common::ListT<
             mask,
-            comms::option::SequenceFixedSize<infMsgMask_numOfValues>
+            comms::option::SequenceFixedSize<infMsgMask_numOfValues>,
+            TOpt
         >;
 
     /// @brief Definition of a single configuration bundle element in @ref list field.
+    /// @tparam TOpt Extra option(s) for @ref infMsgMask field.
+    template <typename TOpt = comms::option::EmptyOption>
     struct element : public
         field::common::BundleT<
             std::tuple<
                 protocolID,
                 reserved0,
                 reserved1,
-                infMsgMask
+                infMsgMask<TOpt>
             >
         >
     {
@@ -95,11 +100,21 @@ struct CfgInfFields
 
     /// @brief @ref CfgInf message may contain multiple configuration elements
     ///     (see @ref element). This field defines a list of such elements.
-    using list = field::common::ListT<element>;
+    /// @tparam TListOpt Extra option(s) for @ref list field itself.
+    /// @tparam TInfMsgMaskOpt Extra option(s) for @ref infMsgMask field.
+    template <
+        typename TListOpt = comms::option::EmptyOption,
+        typename TInfMsgMaskOpt = comms::option::EmptyOption>
+    using list = field::common::ListT<element<TInfMsgMaskOpt>, TListOpt>;
 
     /// @brief All the fields bundled in std::tuple.
+    /// @tparam TListOpt Extra option(s) for @ref list field.
+    /// @tparam TInfMsgMaskOpt Extra option(s) for @ref infMsgMask field.
+    template <
+        typename TListOpt = comms::option::EmptyOption,
+        typename TInfMsgMaskOpt = comms::option::EmptyOption>
     using All = std::tuple<
-        list
+        list<TListOpt, TInfMsgMaskOpt>
     >;
 };
 
@@ -110,21 +125,20 @@ struct CfgInfFields
 ///     See @ref CfgInfFields and for definition of the fields this message contains
 ///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
-template <typename TMsgBase = Message>
+/// @tparam TListOpt Extra option(s) for @b list field.
+/// @tparam TInfMsgMaskOpt Extra option(s) for @b infMsgMask field.
+template <
+    typename TMsgBase = Message,
+    typename TListOpt = comms::option::EmptyOption,
+    typename TInfMsgMaskOpt = comms::option::EmptyOption>
 class CfgInf : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_INF>,
-        comms::option::FieldsImpl<CfgInfFields::All>,
-        comms::option::MsgType<CfgInf<TMsgBase> >
+        comms::option::FieldsImpl<CfgInfFields::All<TListOpt, TInfMsgMaskOpt> >,
+        comms::option::MsgType<CfgInf<TMsgBase, TListOpt, TInfMsgMaskOpt> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_CFG_INF>,
-        comms::option::FieldsImpl<CfgInfFields::All>,
-        comms::option::MsgType<CfgInf<TMsgBase> >
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.

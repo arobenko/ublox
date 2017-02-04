@@ -159,10 +159,13 @@ struct MonHwFields
     using usedMask = field::common::X4;
 
     /// @brief Definition of "VP" field.
+    /// @tparam TOpt Extra option(s)
+    template <typename TOpt = comms::option::EmptyOption>
     using VP =
         field::common::ListT<
             field::common::U1,
-            comms::option::SequenceFixedSize<17>
+            comms::option::SequenceFixedSize<17>,
+            TOpt
         >;
 
     /// @brief Definition of "jamInd" field.
@@ -181,6 +184,8 @@ struct MonHwFields
     using pullL = field::common::X4;
 
     /// @brief All the fields bundled in std::tuple.
+    /// @tparam TOpt Extra option(s) for @ref VP field
+    template <typename TOpt>
     using All = std::tuple<
         pinSel,
         pinBank,
@@ -193,7 +198,7 @@ struct MonHwFields
         flags,
         reserved1,
         usedMask,
-        VP,
+        VP<TOpt>,
         jamInd,
         reserved3,
         pinIrq,
@@ -209,21 +214,16 @@ struct MonHwFields
 ///     See @ref MonHwFields and for definition of the fields this message contains
 ///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
-template <typename TMsgBase = Message>
+/// @tparam TVpOpt Extra option(s) for @b VP field
+template <typename TMsgBase = Message, typename TVpOpt = comms::option::EmptyOption>
 class MonHw : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_MON_HW>,
-        comms::option::FieldsImpl<MonHwFields::All>,
-        comms::option::MsgType<MonHw<TMsgBase> >
+        comms::option::FieldsImpl<MonHwFields::All<TVpOpt> >,
+        comms::option::MsgType<MonHw<TMsgBase, TVpOpt> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_MON_HW>,
-        comms::option::FieldsImpl<MonHwFields::All>,
-        comms::option::MsgType<MonHw<TMsgBase> >
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.

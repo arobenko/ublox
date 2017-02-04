@@ -148,19 +148,24 @@ struct NavSvinfoFields
     };
 
     /// @brief Definition of "data" field as list of blocks (@ref block).
+    /// @tparam TOpt Extra option(s)
+    template <typename TOpt = comms::option::EmptyOption>
     using data =
         field::common::ListT<
             block,
-            comms::option::SequenceSizeForcingEnabled
+            comms::option::SequenceSizeForcingEnabled,
+            TOpt
         >;
 
     /// @brief All the fields bundled in std::tuple.
+    /// @tparam TOpt Extra option(s) for @ref data field
+    template <typename TOpt>
     using All = std::tuple<
         iTOW,
         numCh,
         globalFlags,
         reserved2,
-        data
+        data<TOpt>
     >;
 };
 
@@ -171,21 +176,22 @@ struct NavSvinfoFields
 ///     See @ref NavSvinfoFields and for definition of the fields this message contains
 ///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
-template <typename TMsgBase = Message>
+/// @tparam TDataOpt Extra option(s) for @b data field
+template <typename TMsgBase = Message, typename TDataOpt = comms::option::EmptyOption>
 class NavSvinfo : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_SVINFO>,
-        comms::option::FieldsImpl<NavSvinfoFields::All>,
-        comms::option::MsgType<NavSvinfo<TMsgBase> >,
+        comms::option::FieldsImpl<NavSvinfoFields::All<TDataOpt> >,
+        comms::option::MsgType<NavSvinfo<TMsgBase, TDataOpt> >,
         comms::option::HasDoRefresh
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_SVINFO>,
-        comms::option::FieldsImpl<NavSvinfoFields::All>,
-        comms::option::MsgType<NavSvinfo<TMsgBase> >,
+        comms::option::FieldsImpl<NavSvinfoFields::All<TDataOpt> >,
+        comms::option::MsgType<NavSvinfo<TMsgBase, TDataOpt> >,
         comms::option::HasDoRefresh
     > Base;
 public:

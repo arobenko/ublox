@@ -108,7 +108,7 @@ QVariantMap createProps_data()
     assert(blockProps.members().size() == NavDgpsFields::block::FieldIdx_numOfValues);
 
     return
-        cc::property::field::ForField<NavDgpsFields::data>()
+        cc::property::field::ForField<NavDgpsFields::data<> >()
             .name("data")
             .add(blockProps.asMap())
             .serialisedHidden()

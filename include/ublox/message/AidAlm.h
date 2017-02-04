@@ -40,19 +40,24 @@ struct AidAlmFields
     using week = field::common::U4;
 
     /// @brief Definition of "dwrd" field.
+    /// @tparam TOpt Extra option(s) for the held list
+    template <typename TOpt = comms::option::EmptyOption>
     using dwrd =
         field::common::OptionalT<
             field::common::ListT<
                 field::common::U4,
-                comms::option::SequenceFixedSize<8>
+                comms::option::SequenceFixedSize<8>,
+                TOpt
             >
         >;
 
     /// @brief All the fields bundled in std::tuple.
+    /// @tparam TOpt Extra option(s) for @ref dwrd field
+    template <typename TOpt>
     using All = std::tuple<
         svid,
         week,
-        dwrd
+        dwrd<TOpt>
     >;
 };
 
@@ -63,21 +68,22 @@ struct AidAlmFields
 ///     See @ref AidAlmFields and for definition of the fields this message contains
 ///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
-template <typename TMsgBase = Message>
+/// @tparam TDwrdOpt Extra option(s) for @b dwrd field
+template <typename TMsgBase = Message, typename TDwrdOpt = comms::option::EmptyOption>
 class AidAlm : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_ALM>,
-        comms::option::FieldsImpl<AidAlmFields::All>,
-        comms::option::MsgType<AidAlm<TMsgBase> >,
+        comms::option::FieldsImpl<AidAlmFields::All<TDwrdOpt> >,
+        comms::option::MsgType<AidAlm<TMsgBase, TDwrdOpt> >,
         comms::option::HasDoRefresh
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_ALM>,
-        comms::option::FieldsImpl<AidAlmFields::All>,
-        comms::option::MsgType<AidAlm<TMsgBase> >,
+        comms::option::FieldsImpl<AidAlmFields::All<TDwrdOpt> >,
+        comms::option::MsgType<AidAlm<TMsgBase, TDwrdOpt> >,
         comms::option::HasDoRefresh
     > Base;
 public:

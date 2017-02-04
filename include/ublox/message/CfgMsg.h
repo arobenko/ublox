@@ -38,16 +38,21 @@ struct CfgMsgFields
     using id = ublox::field::MsgId;
 
     /// @brief Definition of "rate" field.
+    /// @tparam TOpt Extra option(s)
+    template <typename TOpt = comms::option::EmptyOption>
     using rate =
         field::common::ListT<
             field::common::U1,
-            comms::option::SequenceFixedSize<6>
+            comms::option::SequenceFixedSize<6>,
+            TOpt
         >;
 
     /// @brief All the fields bundled in std::tuple.
+    /// @tparam TOpt Extra option(s) for @ref rate field
+    template <typename TOpt>
     using All = std::tuple<
         id,
-        rate
+        rate<TOpt>
     >;
 };
 
@@ -58,21 +63,16 @@ struct CfgMsgFields
 ///     See @ref CfgMsgFields and for definition of the fields this message contains
 ///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
-template <typename TMsgBase = Message>
+/// @tparam TRateOpt Extra option(s) for @b rate field
+template <typename TMsgBase = Message, typename TRateOpt = comms::option::EmptyOption>
 class CfgMsg : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_MSG>,
-        comms::option::FieldsImpl<CfgMsgFields::All>,
-        comms::option::MsgType<CfgMsg<TMsgBase> >
+        comms::option::FieldsImpl<CfgMsgFields::All<TRateOpt> >,
+        comms::option::MsgType<CfgMsg<TMsgBase, TRateOpt> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_CFG_MSG>,
-        comms::option::FieldsImpl<CfgMsgFields::All>,
-        comms::option::MsgType<CfgMsg<TMsgBase> >
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.

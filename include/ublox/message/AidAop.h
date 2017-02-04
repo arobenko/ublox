@@ -39,26 +39,35 @@ struct AidAopFields
     using svid = field::aid::svid;
 
     /// @brief Definition of "data" field.
+    /// @tparam TOpt Extra option(s)
+    template <typename TOpt = comms::option::EmptyOption>
     using data =
         field::common::ListT<
             std::uint8_t,
-            comms::option::SequenceFixedSize<59>
+            comms::option::SequenceFixedSize<59>,
+            TOpt
         >;
 
     /// @brief Definition of "optional" field.
+    /// @tparam TOpt Extra option(s)
+    template <typename TOpt = comms::option::EmptyOption>
     using optional =
         field::common::OptionalT<
             field::common::ListT<
                 std::uint8_t,
-                comms::option::SequenceFixedSize<48 * 3>
+                comms::option::SequenceFixedSize<48 * 3>,
+                TOpt
             >
         >;
 
     /// @brief All the fields bundled in std::tuple.
+    /// @tparam TDataOpt Extra option(s) for @ref data field
+    /// @tparam TOptionalOpt Extra option(s) for @ref optional field
+    template <typename TDataOpt, typename TOptionalOpt>
     using All = std::tuple<
         svid,
-        data,
-        optional
+        data<TDataOpt>,
+        optional<TOptionalOpt>
     >;
 };
 
@@ -69,21 +78,20 @@ struct AidAopFields
 ///     See @ref AidAopFields and for definition of the fields this message contains
 ///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
-template <typename TMsgBase = Message>
+/// @tparam TDataOpt Extra option(s) for @b data field
+/// @tparam TOptionalOpt Extra option(s) for @b optional field
+template <
+    typename TMsgBase = Message,
+    typename TDataOpt = comms::option::EmptyOption,
+    typename TOptionalOpt = comms::option::EmptyOption>
 class AidAop : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_AOP>,
-        comms::option::FieldsImpl<AidAopFields::All>,
-        comms::option::MsgType<AidAop<TMsgBase> >
+        comms::option::FieldsImpl<AidAopFields::All<TDataOpt, TOptionalOpt> >,
+        comms::option::MsgType<AidAop<TMsgBase, TDataOpt, TOptionalOpt> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_AID_AOP>,
-        comms::option::FieldsImpl<AidAopFields::All>,
-        comms::option::MsgType<AidAop<TMsgBase> >
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.

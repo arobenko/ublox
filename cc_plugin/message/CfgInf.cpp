@@ -60,7 +60,7 @@ QVariantMap createProps_infMsgMask()
             return props.asMap();
         };
 
-    cc::property::field::ForField<CfgInfFields::infMsgMask> props;
+    cc::property::field::ForField<CfgInfFields::infMsgMask<> > props;
     props.name("infMsgMask")
          .add(createBitmaskProps("DDC"))
          .add(createBitmaskProps("UART"))
@@ -75,15 +75,15 @@ QVariantMap createProps_infMsgMask()
 
 QVariantMap createProps_list()
 {
-    cc::property::field::ForField<CfgInfFields::element> elemProps;
+    cc::property::field::ForField<CfgInfFields::element<> > elemProps;
     elemProps.add(field::cfg::props_protocolID())
              .add(field::common::props_reserved(0))
              .add(field::common::props_reserved(1))
              .add(createProps_infMsgMask());
-    assert(elemProps.members().size() == CfgInfFields::element::FieldIdx_numOfValues);
+    assert(elemProps.members().size() == CfgInfFields::element<>::FieldIdx_numOfValues);
 
     return
-        cc::property::field::ForField<CfgInfFields::list>()
+        cc::property::field::ForField<CfgInfFields::list<> >()
             .name("list")
             .add(elemProps.asMap())
             .serialisedHidden()

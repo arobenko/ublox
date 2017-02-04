@@ -103,10 +103,10 @@ QVariantMap createProps_flags()
 
 QVariantMap createProps_VP()
 {
-    cc::property::field::ForField<MonHwFields::VP> props;
+    cc::property::field::ForField<MonHwFields::VP<>> props;
     props.name("VP").serialisedHidden();
 
-    for (auto idx = 0U; idx < MonHwFields::VP::ParsedOptions::SequenceFixedSize; ++idx) {
+    for (auto idx = 0U; idx < MonHwFields::VP<>::ParsedOptions::SequenceFixedSize; ++idx) {
         props.add(cc::property::field::IntValue().name(QString("%1").arg(idx)).asMap());
     }
 

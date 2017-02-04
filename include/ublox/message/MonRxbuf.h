@@ -34,27 +34,37 @@ namespace message
 struct MonRxbufFields
 {
     /// @brief Definition of "pending" field.
+    /// @tparam TOpt Extra option(s)
+    template <typename TOpt = comms::option::EmptyOption>
     using pending =
         field::common::ListT<
             field::common::U2,
-            comms::option::SequenceFixedSize<6>
+            comms::option::SequenceFixedSize<6>,
+            TOpt
         >;
 
     /// @brief Definition of "usage" field.
+    /// @tparam TOpt Extra option(s)
+    template <typename TOpt = comms::option::EmptyOption>
     using usage =
         field::common::ListT<
             field::common::U1T<comms::option::ValidNumValueRange<0, 100> >,
-            comms::option::SequenceFixedSize<6>
+            comms::option::SequenceFixedSize<6>,
+            TOpt
         >;
 
     /// @brief Definition of "peakUsage" field.
-    using peakUsage = usage;
+    /// @tparam TOpt Extra option(s)
+    template <typename TOpt = comms::option::EmptyOption>
+    using peakUsage = usage<TOpt>;
 
     /// @brief All the fields bundled in std::tuple.
+    /// @tparam TOpt Extra option(s) for @ref pending, @ref usage, and @b peakUsage fields
+    template <typename TOpt>
     using All = std::tuple<
-        pending,
-        usage,
-        peakUsage
+        pending<TOpt>,
+        usage<TOpt>,
+        peakUsage<TOpt>
     >;
 };
 
@@ -65,21 +75,16 @@ struct MonRxbufFields
 ///     See @ref MonRxbufFields and for definition of the fields this message contains
 ///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
-template <typename TMsgBase = Message>
+/// @tparam TOpt Extra option(s) for @b pending, @b usage and @b peakUsage fields
+template <typename TMsgBase = Message, typename TOpt = comms::option::EmptyOption>
 class MonRxbuf : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_MON_RXBUF>,
-        comms::option::FieldsImpl<MonRxbufFields::All>,
-        comms::option::MsgType<MonRxbuf<TMsgBase> >
+        comms::option::FieldsImpl<MonRxbufFields::All<TOpt> >,
+        comms::option::MsgType<MonRxbuf<TMsgBase, TOpt> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_MON_RXBUF>,
-        comms::option::FieldsImpl<MonRxbufFields::All>,
-        comms::option::MsgType<MonRxbuf<TMsgBase> >
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.

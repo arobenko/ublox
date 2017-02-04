@@ -34,43 +34,62 @@ namespace message
 struct MonMsgppFields
 {
     /// @brief Definition of "msg1" field.
+    /// @tparam TOpt Extra option(s)
+    template <typename TOpt = comms::option::EmptyOption>
     using msg1 =
         field::common::ListT<
             field::common::U2,
-            comms::option::SequenceFixedSize<8>
+            comms::option::SequenceFixedSize<8>,
+            TOpt
         >;
 
     /// @brief Definition of "msg2" field.
-    using msg2 = msg1;
+    /// @tparam TOpt Extra option(s)
+    template <typename TOpt = comms::option::EmptyOption>
+    using msg2 = msg1<TOpt>;
 
-    /// @brief Definition of "msg2" field.
-    using msg3 = msg1;
+    /// @brief Definition of "msg3" field.
+    /// @tparam TOpt Extra option(s)
+    template <typename TOpt = comms::option::EmptyOption>
+    using msg3 = msg1<TOpt>;
 
-    /// @brief Definition of "msg2" field.
-    using msg4 = msg1;
+    /// @brief Definition of "msg4" field.
+    /// @tparam TOpt Extra option(s)
+    template <typename TOpt = comms::option::EmptyOption>
+    using msg4 = msg1<TOpt>;
 
-    /// @brief Definition of "msg2" field.
-    using msg5 = msg1;
+    /// @brief Definition of "msg5" field.
+    /// @tparam TOpt Extra option(s)
+    template <typename TOpt = comms::option::EmptyOption>
+    using msg5 = msg1<TOpt>;
 
-    /// @brief Definition of "msg2" field.
-    using msg6 = msg1;
+    /// @brief Definition of "msg6" field.
+    /// @tparam TOpt Extra option(s)
+    template <typename TOpt = comms::option::EmptyOption>
+    using msg6 = msg1<TOpt>;
 
-    /// @brief Definition of "msg2" field.
+    /// @brief Definition of "skipped" field.
+    /// @tparam TOpt Extra option(s)
+    template <typename TOpt = comms::option::EmptyOption>
     using skipped =
         field::common::ListT<
             field::common::U4,
-            comms::option::SequenceFixedSize<6>
+            comms::option::SequenceFixedSize<6>,
+            TOpt
         >;
 
     /// @brief All the fields bundled in std::tuple.
+    /// @tparam TMsgOpt Extra option(s) for @b msgX fields
+    /// @tparam TSkippedOpt Extra option(s) for @ref skipped fields
+    template <typename TMsgOpt, typename TSkippedOpt>
     using All = std::tuple<
-        msg1,
-        msg2,
-        msg3,
-        msg4,
-        msg5,
-        msg6,
-        skipped
+        msg1<TMsgOpt>,
+        msg2<TMsgOpt>,
+        msg3<TMsgOpt>,
+        msg4<TMsgOpt>,
+        msg5<TMsgOpt>,
+        msg6<TMsgOpt>,
+        skipped<TSkippedOpt>
     >;
 };
 
@@ -81,21 +100,20 @@ struct MonMsgppFields
 ///     See @ref MonMsgppFields and for definition of the fields this message contains
 ///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
-template <typename TMsgBase = Message>
+/// @tparam TMsgOpt Extra option(s) for @b msgX fields
+/// @tparam TSkippedOpt Extra option(s) for @b skipped fields
+template <
+    typename TMsgBase = Message,
+    typename TMsgOpt = comms::option::EmptyOption,
+    typename TSkippedOpt = comms::option::EmptyOption>
 class MonMsgpp : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_MON_MSGPP>,
-        comms::option::FieldsImpl<MonMsgppFields::All>,
-        comms::option::MsgType<MonMsgpp<TMsgBase> >
+        comms::option::FieldsImpl<MonMsgppFields::All<TMsgOpt, TSkippedOpt> >,
+        comms::option::MsgType<MonMsgpp<TMsgBase, TMsgOpt, TSkippedOpt> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_MON_MSGPP>,
-        comms::option::FieldsImpl<MonMsgppFields::All>,
-        comms::option::MsgType<MonMsgpp<TMsgBase> >
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.

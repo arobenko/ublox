@@ -40,17 +40,22 @@ struct RxmSfrbFields
     using svid = field::rxm::svid;
 
     /// @brief Definition of "dword" field.
+    /// @tparam TOpt Extra option(s)
+    template <typename TOpt = comms::option::EmptyOption>
     using dwrd =
         field::common::ListT<
             field::common::U4,
-            comms::option::SequenceFixedSize<10>
+            comms::option::SequenceFixedSize<10>,
+            TOpt
         >;
 
     /// @brief All the fields bundled in std::tuple.
+    /// @tparam TOpt Extra option(s) for @ref dwrd field
+    template <typename TOpt>
     using All = std::tuple<
         chn,
         svid,
-        dwrd
+        dwrd<TOpt>
     >;
 };
 
@@ -61,21 +66,16 @@ struct RxmSfrbFields
 ///     See @ref RxmSfrbFields and for definition of the fields this message contains
 ///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
-template <typename TMsgBase = Message>
+/// @tparam TDwrdOpt Extra option(s) for @b bytes field
+template <typename TMsgBase = Message, typename TDwrdOpt = comms::option::EmptyOption>
 class RxmSfrb : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_RXM_SFRB>,
-        comms::option::FieldsImpl<RxmSfrbFields::All>,
-        comms::option::MsgType<RxmSfrb<TMsgBase> >
+        comms::option::FieldsImpl<RxmSfrbFields::All<TDwrdOpt> >,
+        comms::option::MsgType<RxmSfrb<TMsgBase, TDwrdOpt> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_RXM_SFRB>,
-        comms::option::FieldsImpl<RxmSfrbFields::All>,
-        comms::option::MsgType<RxmSfrb<TMsgBase> >
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.

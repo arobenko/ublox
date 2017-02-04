@@ -40,27 +40,36 @@ struct RxmEphFields
     using how = field::common::U4;
 
     /// @brief Definition of "sf1d" field.
+    /// @tparam TOpt Extra option(s)
+    template <typename TOpt = comms::option::EmptyOption>
     using sf1d =
         field::common::OptionalT<
             field::common::ListT<
                 field::common::U4,
-                comms::option::SequenceFixedSize<8>
+                comms::option::SequenceFixedSize<8>,
+                TOpt
             >
         >;
 
     /// @brief Definition of "sf2d" field.
-    using sf2d = sf1d;
+    /// @tparam TOpt Extra option(s)
+    template <typename TOpt = comms::option::EmptyOption>
+    using sf2d = sf1d<TOpt>;
 
     /// @brief Definition of "sf3d" field.
-    using sf3d = sf1d;
+    /// @tparam TOpt Extra option(s)
+    template <typename TOpt = comms::option::EmptyOption>
+    using sf3d = sf1d<TOpt>;
 
     /// @brief All the fields bundled in std::tuple.
+    /// @tparam TOpt Extra option(s) for @ref sf1d, @ref sf2d, and @ref sf3d field
+    template <typename TOpt>
     using All = std::tuple<
         svid,
         how,
-        sf1d,
-        sf2d,
-        sf3d
+        sf1d<TOpt>,
+        sf2d<TOpt>,
+        sf3d<TOpt>
     >;
 };
 
@@ -71,21 +80,22 @@ struct RxmEphFields
 ///     See @ref RxmEphFields and for definition of the fields this message contains
 ///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
-template <typename TMsgBase = Message>
+/// @tparam TSfOpt Extra option(s) for @b sfXd field
+template <typename TMsgBase = Message, typename TSfOpt = comms::option::EmptyOption>
 class RxmEph : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_RXM_EPH>,
-        comms::option::FieldsImpl<RxmEphFields::All>,
-        comms::option::MsgType<RxmEph<TMsgBase> >,
+        comms::option::FieldsImpl<RxmEphFields::All<TSfOpt> >,
+        comms::option::MsgType<RxmEph<TMsgBase, TSfOpt> >,
         comms::option::HasDoRefresh
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_RXM_EPH>,
-        comms::option::FieldsImpl<RxmEphFields::All>,
-        comms::option::MsgType<RxmEph<TMsgBase> >,
+        comms::option::FieldsImpl<RxmEphFields::All<TSfOpt> >,
+        comms::option::MsgType<RxmEph<TMsgBase, TSfOpt> >,
         comms::option::HasDoRefresh
     > Base;
 public:

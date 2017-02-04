@@ -47,13 +47,17 @@ struct CfgRinvFields
     };
 
     /// @brief Definition of "data" field.
+    /// @tparam TOpt Extra option(s)
+    template <typename TOpt = comms::option::EmptyOption>
     using data =
-        field::common::ListT<std::uint8_t>;
+        field::common::ListT<std::uint8_t, TOpt>;
 
     /// @brief All the fields bundled in std::tuple.
+    /// @tparam TOpt Extra option(s) for @ref data field
+    template <typename TOpt>
     using All = std::tuple<
         flags,
-        data
+        data<TOpt>
     >;
 };
 
@@ -64,21 +68,16 @@ struct CfgRinvFields
 ///     See @ref CfgRinvFields and for definition of the fields this message contains
 ///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
-template <typename TMsgBase = Message>
+/// @tparam TDataOpt Extra option(s) for @b bytes field
+template <typename TMsgBase = Message, typename TDataOpt = comms::option::EmptyOption>
 class CfgRinv : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_RINV>,
-        comms::option::FieldsImpl<CfgRinvFields::All>,
-        comms::option::MsgType<CfgRinv<TMsgBase> >
+        comms::option::FieldsImpl<CfgRinvFields::All<TDataOpt> >,
+        comms::option::MsgType<CfgRinv<TMsgBase, TDataOpt> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_CFG_RINV>,
-        comms::option::FieldsImpl<CfgRinvFields::All>,
-        comms::option::MsgType<CfgRinv<TMsgBase> >
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.

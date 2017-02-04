@@ -127,15 +127,19 @@ struct CfgGnssFields
     };
 
     /// @brief Definition of the list of configuration blocks
-    using blocksList = field::common::ListT<block>;
+    /// @tparam TOpt Extra option(s)
+    template <typename TOpt = comms::option::EmptyOption>
+    using blocksList = field::common::ListT<block, TOpt>;
 
     /// @brief All the fields bundled in std::tuple.
+    /// @tparam TOpt Extra option(s) for @ref blocksList field
+    template <typename TOpt>
     using All = std::tuple<
         msgVer,
         numTrkChHw,
         numTrkChUse,
         numConfigBlocks,
-        blocksList
+        blocksList<TOpt>
     >;
 
 };
@@ -147,21 +151,22 @@ struct CfgGnssFields
 ///     See @ref CfgGnssFields and for definition of the fields this message contains
 ///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
-template <typename TMsgBase = Message>
+/// @tparam TBlocksListOpt Extra option(s) for @b blocksList field
+template <typename TMsgBase = Message, typename TBlocksListOpt = comms::option::EmptyOption>
 class CfgGnss : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_GNSS>,
-        comms::option::FieldsImpl<CfgGnssFields::All>,
-        comms::option::MsgType<CfgGnss<TMsgBase> >,
+        comms::option::FieldsImpl<CfgGnssFields::All<TBlocksListOpt> >,
+        comms::option::MsgType<CfgGnss<TMsgBase, TBlocksListOpt> >,
         comms::option::HasDoRefresh
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_GNSS>,
-        comms::option::FieldsImpl<CfgGnssFields::All>,
-        comms::option::MsgType<CfgGnss<TMsgBase> >,
+        comms::option::FieldsImpl<CfgGnssFields::All<TBlocksListOpt> >,
+        comms::option::MsgType<CfgGnss<TMsgBase, TBlocksListOpt> >,
         comms::option::HasDoRefresh
     > Base;
 public:

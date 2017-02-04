@@ -151,7 +151,7 @@ QVariantMap createProps_data()
     assert(blockProps.members().size() == NavSvinfoFields::block::FieldIdx_numOfValues);
 
     return
-        cc::property::field::ForField<NavSvinfoFields::data>()
+        cc::property::field::ForField<NavSvinfoFields::data<> >()
             .name("data")
             .add(blockProps.asMap())
             .serialisedHidden()

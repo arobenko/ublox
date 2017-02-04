@@ -97,7 +97,7 @@ QVariantMap createProps_data()
     assert(blockProps.members().size() == RxmSvsiFields::block::FieldIdx_numOfValues);
 
     return
-        cc::property::field::ForField<RxmSvsiFields::data>()
+        cc::property::field::ForField<RxmSvsiFields::data<> >()
             .name("data")
             .serialisedHidden()
             .add(blockProps.asMap())

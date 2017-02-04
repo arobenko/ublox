@@ -70,7 +70,7 @@ QVariantList createFieldsProperties()
     props.append(
         cc::property::field::ForField<AidAlpsrvFields::id3>().name("id3").asMap());
     props.append(
-        cc::property::field::ForField<AidAlpsrvFields::data>().name("data").asMap());
+        cc::property::field::ForField<AidAlpsrvFields::data<> >().name("data").asMap());
     assert(props.size() == AidAlpsrv::FieldIdx_numOfValues);
     return props;
 }

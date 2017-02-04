@@ -43,7 +43,7 @@ using ublox::message::MonMsgppFields;
 
 QVariantMap createProps_msgX(int idx)
 {
-    cc::property::field::ForField<MonMsgppFields::msg1> props;
+    cc::property::field::ForField<MonMsgppFields::msg1<> > props;
     props.name(QString("msg%1").arg(idx)).serialisedHidden();
     for (auto i = 0; i < 8; ++i) {
         props.add(
@@ -54,7 +54,7 @@ QVariantMap createProps_msgX(int idx)
 
 QVariantMap createProps_skipped()
 {
-    cc::property::field::ForField<MonMsgppFields::skipped> props;
+    cc::property::field::ForField<MonMsgppFields::skipped<> > props;
     props.name("skipped").serialisedHidden();
     for (auto i = 0; i < 6; ++i) {
         props.add(

@@ -93,12 +93,15 @@ struct MonIoFields
     };
 
     /// @brief Definition of the list of blocks.
-    using data =
-        field::common::ListT<block>;
+    /// @tparam TOpt Extra option(s)
+    template <typename TOpt = comms::option::EmptyOption>
+    using data = field::common::ListT<block, TOpt>;
 
     /// @brief All the fields bundled in std::tuple.
+    /// @tparam TOpt Extra option(s) for @ref data field
+    template <typename TOpt>
     using All = std::tuple<
-        data
+        data<TOpt>
     >;
 };
 
@@ -109,21 +112,16 @@ struct MonIoFields
 ///     See @ref MonIoFields and for definition of the fields this message contains
 ///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
-template <typename TMsgBase = Message>
+/// @tparam TDataOpt Extra option(s) for @b data field
+template <typename TMsgBase = Message, typename TDataOpt = comms::option::EmptyOption>
 class MonIo : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_MON_IO>,
-        comms::option::FieldsImpl<MonIoFields::All>,
-        comms::option::MsgType<MonIo<TMsgBase> >
+        comms::option::FieldsImpl<MonIoFields::All<TDataOpt> >,
+        comms::option::MsgType<MonIo<TMsgBase, TDataOpt> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_MON_IO>,
-        comms::option::FieldsImpl<MonIoFields::All>,
-        comms::option::MsgType<MonIo<TMsgBase> >
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.

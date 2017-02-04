@@ -57,7 +57,7 @@ QVariantMap createProps_data()
     assert(blockProps.members().size() == MonIoFields::block::FieldIdx_numOfValues);
 
     return
-        cc::property::field::ForField<MonIoFields::data>()
+        cc::property::field::ForField<MonIoFields::data<> >()
             .name("data")
             .add(blockProps.asMap())
             .serialisedHidden()

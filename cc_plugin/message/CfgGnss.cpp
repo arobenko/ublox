@@ -83,7 +83,7 @@ QVariantMap createProps_data()
     assert(blockProps.members().size() == CfgGnssFields::block::FieldIdx_numOfValues);
 
     return
-        cc::property::field::ForField<CfgGnssFields::blocksList>()
+        cc::property::field::ForField<CfgGnssFields::blocksList<> >()
             .name("data")
             .add(blockProps.asMap())
             .serialisedHidden()

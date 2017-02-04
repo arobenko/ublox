@@ -58,7 +58,9 @@ QVariantMap createProps_reserved1()
     return
         cc::property::field::ForField<MonHw2Fields::reserved1>()
             .name("reserved1")
-            .add(cc::property::field::IntValue().serialisedHidden().asMap())
+            .add(cc::property::field::IntValue().name("reserved1").asMap())
+            .add(cc::property::field::IntValue().name("reserved1 (2)").asMap())
+            .serialisedHidden()
             .asMap();
 }
 

@@ -137,19 +137,24 @@ struct RxmSvsiFields
     };
 
     /// @brief Definition of the list of blocks (@ref block)
+    /// @tparam TOpt Extra option(s)
+    template <typename TOpt = comms::option::EmptyOption>
     using data =
         field::common::ListT<
             block,
-            comms::option::SequenceSizeForcingEnabled
+            comms::option::SequenceSizeForcingEnabled,
+            TOpt
         >;
 
     /// @brief All the fields bundled in std::tuple.
+    /// @tparam TOpt Extra option(s) for @ref data field
+    template <typename TOpt>
     using All = std::tuple<
         iTOW,
         week,
         numVis,
         numSV,
-        data
+        data<TOpt>
     >;
 };
 
@@ -159,22 +164,22 @@ struct RxmSvsiFields
 ///     various implementation options. @n
 ///     See @ref RxmSvsiFields and for definition of the fields this message contains
 ///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
-/// @tparam TMsgBase Common interface class for all the messages.
-template <typename TMsgBase = Message>
+/// @tparam TDataOpt Extra option(s) for @b data field
+template <typename TMsgBase = Message, typename TDataOpt = comms::option::EmptyOption>
 class RxmSvsi : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_RXM_SVSI>,
-        comms::option::FieldsImpl<RxmSvsiFields::All>,
-        comms::option::MsgType<RxmSvsi<TMsgBase> >,
+        comms::option::FieldsImpl<RxmSvsiFields::All<TDataOpt> >,
+        comms::option::MsgType<RxmSvsi<TMsgBase, TDataOpt> >,
         comms::option::HasDoRefresh
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_RXM_SVSI>,
-        comms::option::FieldsImpl<RxmSvsiFields::All>,
-        comms::option::MsgType<RxmSvsi<TMsgBase> >,
+        comms::option::FieldsImpl<RxmSvsiFields::All<TDataOpt> >,
+        comms::option::MsgType<RxmSvsi<TMsgBase, TDataOpt> >,
         comms::option::HasDoRefresh
     > Base;
 public:

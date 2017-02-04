@@ -177,13 +177,18 @@ struct NavSbasFields
     };
 
     /// @brief Definition of the list of data blocks (@ref block).
+    /// @tparam TOpt Extra option(s)
+    template <typename TOpt = comms::option::EmptyOption>
     using data =
         field::common::ListT<
             block,
-            comms::option::SequenceSizeForcingEnabled
+            comms::option::SequenceSizeForcingEnabled,
+            TOpt
         >;
 
     /// @brief All the fields bundled in std::tuple.
+    /// @tparam TOpt Extra option(s) for @ref data field
+    template <typename TOpt>
     using All = std::tuple<
         iTOW,
         geo,
@@ -192,7 +197,7 @@ struct NavSbasFields
         service,
         cnt,
         reserved0,
-        data
+        data<TOpt>
     >;
 };
 
@@ -203,21 +208,22 @@ struct NavSbasFields
 ///     See @ref NavSbasFields and for definition of the fields this message contains
 ///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
-template <typename TMsgBase = Message>
+/// @tparam TDataOpt Extra option(s) for @b data field
+template <typename TMsgBase = Message, typename TDataOpt = comms::option::EmptyOption>
 class NavSbas : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_SBAS>,
-        comms::option::FieldsImpl<NavSbasFields::All>,
-        comms::option::MsgType<NavSbas<TMsgBase> >,
+        comms::option::FieldsImpl<NavSbasFields::All<TDataOpt> >,
+        comms::option::MsgType<NavSbas<TMsgBase, TDataOpt> >,
         comms::option::HasDoRefresh
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_SBAS>,
-        comms::option::FieldsImpl<NavSbasFields::All>,
-        comms::option::MsgType<NavSbas<TMsgBase> >,
+        comms::option::FieldsImpl<NavSbasFields::All<TDataOpt> >,
+        comms::option::MsgType<NavSbas<TMsgBase, TDataOpt> >,
         comms::option::HasDoRefresh
     > Base;
 public:
