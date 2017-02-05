@@ -97,7 +97,7 @@ using DataField =
 ///     The outermost layer is
 ///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1protocol_1_1SyncPrefixLayer.html">comms::protocol::SyncPrefixLayer</a>.
 ///     Please see its documentation for public interface description.
-/// @tparam TMsgBase Interface class for all the messages, expected to be some
+/// @tparam TMsgBase Interface class for all the @b input messages, expected to be some
 ///     variant of ublox::MessageT class with options.
 /// @tparam TMessages Types of all messages that this protocol stack must
 ///     identify during read and support creation of proper message object.
