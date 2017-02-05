@@ -469,8 +469,8 @@
 /// using NavSvinfoDataStorage = boost::static_vector<ListElem, 128>;
 /// using InNavSvinfo = ublox::message::NavSvinfo<MyInputMessage, comms::option::CustomStorageType<NavSvinfoDataStorage> >
 /// @endcode 
-/// 
-/// 
+/// Please refer to the documentation of the actual classes for detailed 
+/// description of the extra options the class is allowed to receive.
 ///
 /// @section ublox_fields More About Fields
 /// Every message may contain zero or more fields. All the fields relevant
