@@ -116,7 +116,7 @@ public:
     ///     @li @b availGPS for @ref NavAopstatusFields::availGPS field
     ///     @li @b reserved2 for @ref NavAopstatusFields::reserved2 field
     ///     @li @b reserved3 for @ref NavAopstatusFields::reserved3 field
-    COMMS_MSG_FIELDS_ACCESS(Base,
+    COMMS_MSG_FIELDS_ACCESS(
         iTOW,
         aopCfg,
         status,

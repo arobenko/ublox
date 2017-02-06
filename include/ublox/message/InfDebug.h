@@ -30,8 +30,14 @@ namespace message
 
 /// @brief Definition of INF-DEBUG message
 /// @tparam TMsgBase Common interface class for all the messages.
-template <typename TMsgBase = Message>
-class InfDebug : public InfStringMsgBase<MsgId_INF_DEBUG, TMsgBase>
+/// @tparam TStrOpt Extra option(s) for @b str field
+template <typename TMsgBase = Message, typename TStrOpt = comms::option::EmptyOption>
+class InfDebug : public
+    InfStringMsgBase<
+        MsgId_INF_DEBUG,
+        TMsgBase,
+        TStrOpt,
+        InfDebug<TMsgBase, TStrOpt> >
 {
 public:
     /// @brief Default constructor

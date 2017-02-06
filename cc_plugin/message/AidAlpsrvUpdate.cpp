@@ -52,7 +52,7 @@ QVariantMap createProps_size()
 QVariantMap createProps_data()
 {
     return
-        cc::property::field::ForField<AidAlpsrvUpdateFields::data>()
+        cc::property::field::ForField<AidAlpsrvUpdateFields::data<> >()
             .name("data")
             .add(cc::property::field::IntValue().asMap())
             .serialisedHidden()

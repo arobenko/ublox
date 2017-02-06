@@ -114,7 +114,7 @@ public:
     ///     @li @b heading for @ref NavVelnedFields::heading field
     ///     @li @b sAcc for @ref NavVelnedFields::sAcc field
     ///     @li @b cAcc for @ref NavVelnedFields::cAcc field
-    COMMS_MSG_FIELDS_ACCESS(Base, iTOW, velN, velE, velD, speed, gSpeed, heading, sAcc, cAcc);
+    COMMS_MSG_FIELDS_ACCESS(iTOW, velN, velE, velD, speed, gSpeed, heading, sAcc, cAcc);
 
     /// @brief Default constructor
     NavVelned() = default;

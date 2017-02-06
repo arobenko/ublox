@@ -33,14 +33,6 @@ namespace message
 /// @see CfgItfm
 struct CfgItfmFields
 {
-
-    /// @brief Bits access enumeration for @ref enable bitmask member field in @ref config bitfield.
-    enum
-    {
-        config_enable_enable, ///< @b enable bit index
-        config_enable_numOfValues ///< number of available bits
-    };
-
     /// @brief Value enumeration for @ref antSetting member field in @ref config2 bitmask.
     enum class AntSetting : std::uint8_t
     {
@@ -108,8 +100,8 @@ struct CfgItfmFields
             comms::option::FixedBitLength<18>
         >;
 
-    /// @brief Base class for @ref config
-    using configBase =
+    /// @brief Definition of "config" field.
+    struct config : public
         field::common::BitfieldT<
             std::tuple<
                 bbThreshold,
@@ -117,36 +109,30 @@ struct CfgItfmFields
                 reserved1,
                 enable
             >
-        >;
-
-    /// @brief Definition of "config" field.
-    struct config : public configBase
+        >
     {
         /// @brief Allow access to internal fields.
         /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
         ///     related to @b comms::field::Bitfield class from COMMS library
         ///     for details.
-        COMMS_FIELD_MEMBERS_ACCESS(configBase, bbThreshold, cwThreshold, reserved1, enable);
+        COMMS_FIELD_MEMBERS_ACCESS(bbThreshold, cwThreshold, reserved1, enable);
     };
 
-    /// @brief Base class for @ref config2
-    using config2Base =
+    /// @brief Definition of "config2" field.
+    struct config2 : public
         field::common::BitfieldT<
             std::tuple<
                 reserved2,
                 antSetting,
                 reserved3
             >
-        >;
-
-    /// @brief Definition of "config2" field.
-    struct config2 : public config2Base
+        >
     {
         /// @brief Allow access to internal fields.
         /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
         ///     related to @b comms::field::Bitfield class from COMMS library
         ///     for details.
-        COMMS_FIELD_MEMBERS_ACCESS(config2Base, reserved2, antSetting, reserved3);
+        COMMS_FIELD_MEMBERS_ACCESS(reserved2, antSetting, reserved3);
     };
 
     /// @brief All the fields bundled in std::tuple.
@@ -188,7 +174,7 @@ public:
     ///     The field names are:
     ///     @li @b config for @ref CfgItfmFields::config field
     ///     @li @b config2 for @ref CfgItfmFields::config2 field
-    COMMS_MSG_FIELDS_ACCESS(Base, config, config2);
+    COMMS_MSG_FIELDS_ACCESS(config, config2);
 
     /// @brief Default constructor
     CfgItfm() = default;

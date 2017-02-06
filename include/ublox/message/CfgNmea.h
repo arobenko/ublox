@@ -132,7 +132,7 @@ public:
     ///     @li @b nmeaVersion for @ref CfgNmeaFields::nmeaVersion field
     ///     @li @b numSV for @ref CfgNmeaFields::numSV field
     ///     @li @b flags for @ref CfgNmeaFields::flags field
-    COMMS_MSG_FIELDS_ACCESS(Base, filter, nmeaVersion, numSV, flags);
+    COMMS_MSG_FIELDS_ACCESS(filter, nmeaVersion, numSV, flags);
 
     /// @brief Default constructor
     CfgNmea() = default;

@@ -202,7 +202,7 @@ public:
     ///     @li @b reserved5 for @ref LogInfoFields::reserved5 field
     ///     @li @b status for @ref LogInfoFields::status field
     ///     @li @b reserved6 for @ref LogInfoFields::reserved6 field
-    COMMS_MSG_FIELDS_ACCESS(Base,
+    COMMS_MSG_FIELDS_ACCESS(
         version,
         reserved1,
         filestoreCapacity,

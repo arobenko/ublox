@@ -173,7 +173,7 @@ public:
     ///     @li @b nomSens for @ref CfgEkfFields::nomSens field
     ///     @li @b rmsTemp for @ref CfgEkfFields::rmsTemp field
     ///     @li @b tempUpdate for @ref CfgEkfFields::tempUpdate field
-    COMMS_MSG_FIELDS_ACCESS(Base,
+    COMMS_MSG_FIELDS_ACCESS(
         disableEkf,
         actionFlags,
         configFlags,

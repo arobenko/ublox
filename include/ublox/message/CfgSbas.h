@@ -167,7 +167,7 @@ public:
     ///     @li @b maxSBAS for @ref CfgSbasFields::maxSBAS field
     ///     @li @b scanmode2 for @ref CfgSbasFields::scanmode2 field
     ///     @li @b scanmode1 for @ref CfgSbasFields::scanmode1 field
-    COMMS_MSG_FIELDS_ACCESS(Base, mode, usage, maxSBAS, scanmode2, scanmode1);
+    COMMS_MSG_FIELDS_ACCESS(mode, usage, maxSBAS, scanmode2, scanmode1);
 
     /// @brief Default constructor
     CfgSbas() = default;

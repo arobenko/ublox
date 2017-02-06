@@ -94,7 +94,7 @@ public:
     ///     @li @b entryCount for @ref LogRetrieveFields::entryCount field
     ///     @li @b version for @ref LogRetrieveFields::version field
     ///     @li @b reserved for @ref LogRetrieveFields::reserved field
-    COMMS_MSG_FIELDS_ACCESS(Base, startNumber, entryCount, version, reserved);
+    COMMS_MSG_FIELDS_ACCESS(startNumber, entryCount, version, reserved);
 
     /// @brief Default constructor
     LogRetrieve() = default;

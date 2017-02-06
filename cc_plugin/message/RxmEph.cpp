@@ -56,7 +56,7 @@ QVariantMap createProps_sfxd(int sfIdx)
     }
 
     return
-        cc::property::field::ForField<RxmEphFields::sf1d>()
+        cc::property::field::ForField<RxmEphFields::sf1d<> >()
             .name(nameVal)
             .field(listProps.asMap())
             .uncheckable()

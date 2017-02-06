@@ -66,15 +66,24 @@ struct CfgUsbFields
     };
 
     /// @brief Definition of "vendorString" field.
-    using vendorString = field::common::ZString<32>;
+    /// @tparam TOpt Extra option(s)
+    template <typename TOpt = comms::option::EmptyOption>
+    using vendorString = field::common::ZString<32, TOpt>;
 
     /// @brief Definition of "productString" field.
-    using productString = field::common::ZString<32>;
+    /// @tparam TOpt Extra option(s)
+    template <typename TOpt = comms::option::EmptyOption>
+    using productString = field::common::ZString<32, TOpt>;
 
     /// @brief Definition of "serialNumber" field.
-    using serialNumber = field::common::ZString<32>;
+    /// @tparam TOpt Extra option(s)
+    template <typename TOpt = comms::option::EmptyOption>
+    using serialNumber = field::common::ZString<32, TOpt>;
 
     /// @brief All the fields bundled in std::tuple.
+    /// @tparam TOpt Extra option(s) for @ref vendorString, @ref productString
+    ///     and @ref serialNumber fields
+    template <typename TOpt>
     using All = std::tuple<
         vendorID,
         productID,
@@ -82,9 +91,9 @@ struct CfgUsbFields
         reserved2,
         powerConsumption,
         flags,
-        vendorString,
-        productString,
-        serialNumber
+        vendorString<TOpt>,
+        productString<TOpt>,
+        serialNumber<TOpt>
     >;
 };
 
@@ -95,21 +104,17 @@ struct CfgUsbFields
 ///     See @ref CfgUsbFields and for definition of the fields this message contains
 ///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
-template <typename TMsgBase = Message>
+/// @tparam TStrsOpt Extra option(s) for @b vendorString, @b productString
+///     and @b serialNumber fields
+template <typename TMsgBase = Message, typename TStrsOpt = comms::option::EmptyOption>
 class CfgUsb : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_USB>,
-        comms::option::FieldsImpl<CfgUsbFields::All>,
-        comms::option::MsgType<CfgUsb<TMsgBase> >
+        comms::option::FieldsImpl<CfgUsbFields::All<TStrsOpt> >,
+        comms::option::MsgType<CfgUsb<TMsgBase, TStrsOpt> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_CFG_USB>,
-        comms::option::FieldsImpl<CfgUsbFields::All>,
-        comms::option::MsgType<CfgUsb<TMsgBase> >
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.
@@ -127,7 +132,7 @@ public:
     ///     @li @b vendorString for @ref CfgUsbFields::vendorString field
     ///     @li @b productString for @ref CfgUsbFields::productString field
     ///     @li @b serialNumber for @ref CfgUsbFields::serialNumber field
-    COMMS_MSG_FIELDS_ACCESS(Base,
+    COMMS_MSG_FIELDS_ACCESS(
         vendorID,
         productID,
         reserved1,

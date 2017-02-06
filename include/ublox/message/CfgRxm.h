@@ -115,7 +115,7 @@ public:
     ///     The field names are:
     ///     @li @b reserved1 for @ref CfgRxmFields::reserved1 field
     ///     @li @b lpMode for @ref CfgRxmFields::lpMode field
-    COMMS_MSG_FIELDS_ACCESS(Base, reserved1, lpMode);
+    COMMS_MSG_FIELDS_ACCESS(reserved1, lpMode);
 
     /// @brief Default constructor
     CfgRxm() = default;

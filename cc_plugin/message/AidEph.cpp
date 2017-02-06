@@ -48,14 +48,14 @@ QVariantMap createProps_sfxd(int sfIdx)
     listProps.name(name).serialisedHidden();
 
     static const auto NumOfElems =
-        AidEphFields::sf1d::Field::ParsedOptions::SequenceFixedSize;
+        AidEphFields::sf1d<>::Field::ParsedOptions::SequenceFixedSize;
     for (auto idx = 0U; idx < NumOfElems; ++idx) {
         listProps.add(
             cc::property::field::IntValue().name(QString("%1").arg(idx, 1, 10, QChar('0'))).asMap());
     }
 
     return
-        cc::property::field::ForField<AidEphFields::sf1d>()
+        cc::property::field::ForField<AidEphFields::sf1d<> >()
             .name(name)
             .field(listProps.asMap())
             .uncheckable()

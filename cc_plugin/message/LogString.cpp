@@ -45,7 +45,7 @@ QVariantList createFieldsProperties()
 {
     QVariantList props;
     props.append(
-        cc::property::field::ForField<LogStringFields::bytes>().name("bytes").asMap());
+        cc::property::field::ForField<LogStringFields::bytes<> >().name("bytes").asMap());
 
     assert(props.size() == LogString::FieldIdx_numOfValues);
     return props;

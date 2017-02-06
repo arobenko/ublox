@@ -30,8 +30,14 @@ namespace message
 
 /// @brief Definition of INF-ERROR message
 /// @tparam TMsgBase Common interface class for all the messages.
-template <typename TMsgBase = Message>
-class InfError : public InfStringMsgBase<MsgId_INF_ERROR, TMsgBase>
+/// @tparam TStrOpt Extra option(s) for @b str field
+template <typename TMsgBase = Message, typename TStrOpt = comms::option::EmptyOption>
+class InfError : public
+    InfStringMsgBase<
+        MsgId_INF_ERROR,
+        TMsgBase,
+        TStrOpt,
+        InfError<TMsgBase, TStrOpt> >
 {
 public:
     /// @brief Default constructor

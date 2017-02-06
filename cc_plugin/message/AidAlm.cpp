@@ -47,7 +47,7 @@ QVariantMap createProps_dwrd()
     listProps.name(Name).serialisedHidden();
 
     static const auto NumOfElems =
-        AidAlmFields::dwrd::Field::ParsedOptions::SequenceFixedSize;
+        AidAlmFields::dwrd<>::Field::ParsedOptions::SequenceFixedSize;
 
     for (auto idx = 0U; idx < NumOfElems; ++idx) {
         listProps.add(
@@ -55,7 +55,7 @@ QVariantMap createProps_dwrd()
     }
 
     return
-        cc::property::field::ForField<AidAlmFields::dwrd>()
+        cc::property::field::ForField<AidAlmFields::dwrd<> >()
             .name(Name)
             .field(listProps.asMap())
             .uncheckable()

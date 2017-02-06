@@ -80,8 +80,8 @@ struct AidIniFields
             field::common::U2
         >;
 
-    /// @brief Definition of the base class for @ref dateBitfield
-    using dateBitfieldBase =
+    /// @brief Definition of the @ref date bitfield
+    struct dateBitfield : public
         field::common::BitfieldT<
             std::tuple<
                 field::common::U1T<
@@ -95,16 +95,13 @@ struct AidIniFields
                     comms::option::FixedBitLength<8>
                 >
             >
-        >;
-
-    /// @brief Definition of the @ref date bitfield
-    struct dateBitfield : public dateBitfieldBase
+        >
     {
         /// @brief Allow access to internal fields.
         /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
         ///     related to @b comms::field::Bitfield class from COMMS library
         ///     for details.
-        COMMS_FIELD_MEMBERS_ACCESS(dateBitfieldBase, month, year);
+        COMMS_FIELD_MEMBERS_ACCESS(month, year);
     };
 
     /// @brief Definition of "date" field.
@@ -116,8 +113,8 @@ struct AidIniFields
             field::common::U4T<field::common::Scaling_ms2s>
         >;
 
-    /// @brief Definition of the base class for @ref timeBitfield
-    using timeBitfieldBase =
+    /// @brief Definition of the @ref time bitfield
+    struct timeBitfield : public
         field::common::BitfieldT<
             std::tuple<
                 field::common::U1T<
@@ -137,16 +134,13 @@ struct AidIniFields
                     comms::option::FixedBitLength<8>
                 >
             >
-        >;
-
-    /// @brief Definition of the @ref time bitfield
-    struct timeBitfield : public timeBitfieldBase
+        >
     {
         /// @brief Allow access to internal fields.
         /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
         ///     related to @b comms::field::Bitfield class from COMMS library
         ///     for details.
-        COMMS_FIELD_MEMBERS_ACCESS(timeBitfieldBase, sec, min, hour, day);
+        COMMS_FIELD_MEMBERS_ACCESS(sec, min, hour, day);
     };
 
     /// @brief Definition of "time" field.
@@ -285,7 +279,7 @@ public:
     ///     @li @b clkDAcc for @ref AidIniFields::clkDAcc field
     ///     @li @b freqAcc for @ref AidIniFields::freqAcc field
     ///     @li @b flags for @ref AidIniFields::flags field
-    COMMS_MSG_FIELDS_ACCESS(Base,
+    COMMS_MSG_FIELDS_ACCESS(
         ecefX,
         lat,
         ecefY,

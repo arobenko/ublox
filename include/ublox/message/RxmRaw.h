@@ -66,8 +66,8 @@ struct RxmRawFields
     /// @brief Definition of "lli" field.
     using lli = field::common::U1;
 
-    /// @brief Base class of @ref block field.
-    using blockBase =
+    /// @brief Definition of a single block of @ref data
+    struct block : public
         field::common::BundleT<
             std::tuple<
                 cpMes,
@@ -78,32 +78,34 @@ struct RxmRawFields
                 cno,
                 lli
             >
-        >;
-
-    /// @brief Definition of a single block of @ref data
-    struct block : public blockBase
+        >
     {
         /// @brief Allow access to internal fields.
         /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
         ///     related to @b comms::field::Bitfield class from COMMS library
         ///     for details.
-        COMMS_FIELD_MEMBERS_ACCESS(blockBase, cpMes, prMes, doMes, sv, mesQI, cno, lli);
+        COMMS_FIELD_MEMBERS_ACCESS(cpMes, prMes, doMes, sv, mesQI, cno, lli);
     };
 
     /// @brief Definition of the list of blocks (@ref block)
+    /// @tparam TOpt Extra option(s)
+    template <typename TOpt = comms::option::EmptyOption>
     using data =
         field::common::ListT<
             block,
-            comms::option::SequenceSizeForcingEnabled
+            comms::option::SequenceSizeForcingEnabled,
+            TOpt
         >;
 
     /// @brief All the fields bundled in std::tuple.
+    /// @tparam TOpt Extra option(s) for @ref data field
+    template <typename TOpt>
     using All = std::tuple<
         rcvTow,
         week,
         numSV,
         reserved1,
-        data
+        data<TOpt>
     >;
 };
 
@@ -114,21 +116,22 @@ struct RxmRawFields
 ///     See @ref RxmRawFields and for definition of the fields this message contains
 ///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
-template <typename TMsgBase = Message>
+/// @tparam TDataOpt Extra option(s) for @b data field
+template <typename TMsgBase = Message, typename TDataOpt = comms::option::EmptyOption>
 class RxmRaw : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_RXM_RAW>,
-        comms::option::FieldsImpl<RxmRawFields::All>,
-        comms::option::MsgType<RxmRaw<TMsgBase> >,
+        comms::option::FieldsImpl<RxmRawFields::All<TDataOpt> >,
+        comms::option::MsgType<RxmRaw<TMsgBase, TDataOpt> >,
         comms::option::HasDoRefresh
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_RXM_RAW>,
-        comms::option::FieldsImpl<RxmRawFields::All>,
-        comms::option::MsgType<RxmRaw<TMsgBase> >,
+        comms::option::FieldsImpl<RxmRawFields::All<TDataOpt> >,
+        comms::option::MsgType<RxmRaw<TMsgBase, TDataOpt> >,
         comms::option::HasDoRefresh
     > Base;
 public:
@@ -144,7 +147,7 @@ public:
     ///     @li @b numSV for @ref RxmRawFields::numSV field
     ///     @li @b reserved1 for @ref RxmRawFields::reserved1 field
     ///     @li @b data for @ref RxmRawFields::data field
-    COMMS_MSG_FIELDS_ACCESS(Base, rcvTow, week, numSV, reserved1, data);
+    COMMS_MSG_FIELDS_ACCESS(rcvTow, week, numSV, reserved1, data);
 
 
     /// @brief Default constructor

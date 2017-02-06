@@ -52,7 +52,9 @@ using protocolID =
 using datumNum = common::U2;
 
 /// @brief Definition of common "datumName" field.
-using datumName = common::ZString<6>;
+/// @tparam TOpt Extra option(s)
+template <typename TOpt = comms::option::EmptyOption>
+using datumName = common::ZString<6, TOpt>;
 
 /// @brief Definition of common "majA" field used in CFG-DAT messages.
 using datMajA = common::R8;

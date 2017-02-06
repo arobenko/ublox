@@ -44,7 +44,7 @@ using ublox::message::RxmSfrbFields;
 
 QVariantMap createProps_dwrd()
 {
-    cc::property::field::ForField<RxmSfrbFields::dwrd> props;
+    cc::property::field::ForField<RxmSfrbFields::dwrd<> > props;
     props.name("dwrd").serialisedHidden();
     for (auto idx = 0U; idx < 10U; ++idx) {
         props.add(

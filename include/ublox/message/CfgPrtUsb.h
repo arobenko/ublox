@@ -102,7 +102,7 @@ public:
     ///     @li @b outProtoMask for @ref CfgPrtFields::outProtoMask field
     ///     @li @b reserved4 for @ref CfgPrtUsbFields::reserved4 field
     ///     @li @b reserved5 for @ref CfgPrtUsbFields::reserved5 field
-    COMMS_MSG_FIELDS_ACCESS(Base,
+    COMMS_MSG_FIELDS_ACCESS(
         portID,
         reserved0,
         txReady,

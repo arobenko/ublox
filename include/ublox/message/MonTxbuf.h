@@ -35,21 +35,29 @@ struct MonTxbufFields
 {
 
     /// @brief Definition of "pending" field.
+    /// @tparam TOpt Extra option(s)
+    template <typename TOpt = comms::option::EmptyOption>
     using pending =
         field::common::ListT<
             field::common::U2,
-            comms::option::SequenceFixedSize<6>
+            comms::option::SequenceFixedSize<6>,
+            TOpt
         >;
 
     /// @brief Definition of "usage" field.
+    /// @tparam TOpt Extra option(s)
+    template <typename TOpt = comms::option::EmptyOption>
     using usage =
         field::common::ListT<
             field::common::U1T<comms::option::ValidNumValueRange<0, 100> >,
-            comms::option::SequenceFixedSize<6>
+            comms::option::SequenceFixedSize<6>,
+            TOpt
         >;
 
     /// @brief Definition of "peakUsage" field.
-    using peakUsage = usage;
+    /// @tparam TOpt Extra option(s)
+    template <typename TOpt = comms::option::EmptyOption>
+    using peakUsage = usage<TOpt>;
 
     /// @brief Definition of "tUsage" field.
     using tUsage = field::common::U1T<comms::option::ValidNumValueRange<0, 100> >;
@@ -78,33 +86,32 @@ struct MonTxbufFields
         COMMS_BITMASK_BITS(mem, alloc);
     };
 
-    /// @brief Base class of @ref errors field.
-    using errorsBase =
+    /// @brief Definition of "errors" field.
+    struct errors : public
         field::common::BitfieldT<
             std::tuple<
                 limit,
                 errorsBits
             >
-        >;
-
-    /// @brief Definition of "errors" field.
-    struct errors : public errorsBase
+        >
     {
         /// @brief Allow access to internal fields.
         /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
         ///     related to @b comms::field::Bitfield class from COMMS library
         ///     for details.
-        COMMS_FIELD_MEMBERS_ACCESS(errorsBase, limit, errorsBits);
+        COMMS_FIELD_MEMBERS_ACCESS(limit, errorsBits);
     };
 
     /// @brief Definition of "reserved1" field.
     using reserved1 = field::common::res1;
 
     /// @brief All the fields bundled in std::tuple.
+    /// @tparam TOpt Extra option(s) for @ref pending, @ref usage, and @b peakUsage fields
+    template <typename TOpt>
     using All = std::tuple<
-        pending,
-        usage,
-        peakUsage,
+        pending<TOpt>,
+        usage<TOpt>,
+        peakUsage<TOpt>,
         tUsage,
         tPeakUsage,
         errors,
@@ -119,21 +126,16 @@ struct MonTxbufFields
 ///     See @ref MonTxbufFields and for definition of the fields this message contains
 ///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
-template <typename TMsgBase = Message>
+/// @tparam TOpt Extra option(s) for @b pending, @b usage and @b peakUsage fields
+template <typename TMsgBase = Message, typename TOpt = comms::option::EmptyOption>
 class MonTxbuf : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_MON_TXBUF>,
-        comms::option::FieldsImpl<MonTxbufFields::All>,
-        comms::option::MsgType<MonTxbuf<TMsgBase> >
+        comms::option::FieldsImpl<MonTxbufFields::All<TOpt> >,
+        comms::option::MsgType<MonTxbuf<TMsgBase, TOpt> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_MON_TXBUF>,
-        comms::option::FieldsImpl<MonTxbufFields::All>,
-        comms::option::MsgType<MonTxbuf<TMsgBase> >
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.
@@ -149,7 +151,7 @@ public:
     ///     @li @b tPeakUsage for @ref MonTxbufFields::tPeakUsage field
     ///     @li @b errors for @ref MonTxbufFields::errors field
     ///     @li @b reserved1 for @ref MonTxbufFields::reserved1 field
-    COMMS_MSG_FIELDS_ACCESS(Base,
+    COMMS_MSG_FIELDS_ACCESS(
         pending,
         usage,
         peakUsage,

@@ -122,7 +122,7 @@ public:
     ///     @li @b fixedPosVar for @ref CfgTmodeFields::fixedPosVar field
     ///     @li @b svinMinDur for @ref CfgTmodeFields::svinMinDur field
     ///     @li @b svinVarLimit for @ref CfgTmodeFields::svinVarLimit field
-    COMMS_MSG_FIELDS_ACCESS(Base, timeMode, fixedPosX, fixedPosY, fixedPosZ, fixedPosVar, svinMinDur, svinVarLimit);
+    COMMS_MSG_FIELDS_ACCESS(timeMode, fixedPosX, fixedPosY, fixedPosZ, fixedPosVar, svinMinDur, svinVarLimit);
 
     /// @brief Default constructor
     CfgTmode() = default;

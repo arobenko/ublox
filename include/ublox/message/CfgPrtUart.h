@@ -110,8 +110,8 @@ struct CfgPrtUartFields : public CfgPrtFields
             comms::option::ValidNumValueRange<0, (int)StopBits::NumOfValues - 1>
         >;
 
-    /// @brief Base class for @ref mode field
-    using modeBase =
+    /// @brief Definition of "mode" field.
+    struct mode : public
         field::common::BitfieldT<
             std::tuple<
                 field::common::X1T<
@@ -125,16 +125,13 @@ struct CfgPrtUartFields : public CfgPrtFields
                 nStopBits,
                 field::common::res4T<comms::option::FixedBitLength<18> >
             >
-        >;
-
-    /// @brief Definition of "mode" field.
-    struct mode : public modeBase
+        >
     {
         /// @brief Allow access to internal fields.
         /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
         ///     related to @b comms::field::Bitfield class from COMMS library
         ///     for details.
-        COMMS_FIELD_MEMBERS_ACCESS(modeBase, reserved1, charLen, reserved2, parity, nStopBits, reserved3);
+        COMMS_FIELD_MEMBERS_ACCESS(reserved1, charLen, reserved2, parity, nStopBits, reserved3);
     };
 
     /// @brief Definition of "baudRate" field.
@@ -195,7 +192,7 @@ public:
     ///     @li @b outProtoMask for @ref CfgPrtFields::outProtoMask field
     ///     @li @b flags for @ref CfgPrtFields::flags field
     ///     @li @b reserved5 for @ref CfgPrtUartFields::reserved5 field
-    COMMS_MSG_FIELDS_ACCESS(Base,
+    COMMS_MSG_FIELDS_ACCESS(
         portID,
         reserved0,
         txReady,

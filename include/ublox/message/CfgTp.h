@@ -145,7 +145,7 @@ public:
     ///     @li @b antennaCableDelay for @ref CfgTpFields::antennaCableDelay field
     ///     @li @b rfGroupDelay for @ref CfgTpFields::rfGroupDelay field
     ///     @li @b userDelay for @ref CfgTpFields::userDelay field
-    COMMS_MSG_FIELDS_ACCESS(Base,
+    COMMS_MSG_FIELDS_ACCESS(
         interval,
         length,
         status,

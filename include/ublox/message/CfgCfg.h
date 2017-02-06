@@ -113,7 +113,7 @@ public:
     ///     @li @b saveMask for @ref CfgCfgFields::saveMask field
     ///     @li @b loadMask for @ref CfgCfgFields::loadMask field
     ///     @li @b deviceMask for @ref CfgCfgFields::deviceMask field
-    COMMS_MSG_FIELDS_ACCESS(Base, clearMask, saveMask, loadMask, deviceMask);
+    COMMS_MSG_FIELDS_ACCESS(clearMask, saveMask, loadMask, deviceMask);
 
     /// @brief Default constructor
     CfgCfg() = default;

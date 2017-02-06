@@ -38,12 +38,16 @@ namespace message
 struct AidAlpDataFields
 {
     /// @brief Definition of "alpData" field.
-    using alpData = field::common::ListT<field::common::U2>;
+    /// @tparam TOpt Extra option(s)
+    template <typename TOpt = comms::option::EmptyOption>
+    using alpData = field::common::ListT<field::common::U2, TOpt>;
 
 
     /// @brief All the fields bundled in std::tuple.
+    /// @tparam TOpt Extra option(s) for @ref alpData field
+    template <typename TOpt>
     using All = std::tuple<
-        alpData
+        alpData<TOpt>
     >;
 };
 
@@ -56,21 +60,16 @@ struct AidAlpDataFields
 ///     See @ref AidAlpDataFields and for definition of the fields this message contains
 ///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
-template <typename TMsgBase = Message>
+/// @tparam TAlpDataOpt Extra option(s) for @b alpData field
+template <typename TMsgBase = Message, typename TAlpDataOpt = comms::option::EmptyOption>
 class AidAlpData : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_ALP>,
-        comms::option::FieldsImpl<AidAlpDataFields::All>,
-        comms::option::MsgType<AidAlpData<TMsgBase> >
+        comms::option::FieldsImpl<AidAlpDataFields::All<TAlpDataOpt> >,
+        comms::option::MsgType<AidAlpData<TMsgBase, TAlpDataOpt> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_AID_ALP>,
-        comms::option::FieldsImpl<AidAlpDataFields::All>,
-        comms::option::MsgType<AidAlpData<TMsgBase> >
-    > Base;
 public:
     /// @brief Allow access to internal fields.
     /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
@@ -79,7 +78,7 @@ public:
     ///
     ///     The field names are:
     ///     @li @b alpData for @ref AidAlpDataFields::alpData field
-    COMMS_MSG_FIELDS_ACCESS(Base, alpData);
+    COMMS_MSG_FIELDS_ACCESS(alpData);
 
     /// @brief Default constructor
     AidAlpData() = default;

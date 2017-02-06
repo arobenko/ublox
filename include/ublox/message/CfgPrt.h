@@ -102,21 +102,12 @@ struct CfgPrtFields
             >
         >
     {
-        typedef
-            field::common::BitfieldT<
-                std::tuple<
-                    en,
-                    pol,
-                    pin,
-                    thres
-                >
-            > Base;
     public:
         /// @brief Allow access to internal fields.
         /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
         ///     related to @b comms::field::Bitfield class from COMMS library
         ///     for details.
-        COMMS_FIELD_MEMBERS_ACCESS(Base, en, pol, pin, thres);
+        COMMS_FIELD_MEMBERS_ACCESS(en, pol, pin, thres);
     };
 
     /// @brief Definition of "reserved3" field

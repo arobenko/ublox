@@ -96,8 +96,8 @@ struct NavStatusFields
             comms::option::FixedBitLength<2>
         >;
 
-    /// @brief Base class of @ref fixStat field
-    using fixStatBase =
+    /// @brief Definition of "fixStat" field.
+    struct fixStat : public
         field::common::BitfieldT<
             std::tuple<
                 dgpsIStat,
@@ -106,16 +106,13 @@ struct NavStatusFields
                 >,
                 mapMatching
             >
-        >;
-
-    /// @brief Definition of "fixStat" field.
-    struct fixStat : public fixStatBase
+        >
     {
         /// @brief Allow access to internal fields.
         /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
         ///     related to @b comms::field::Bitfield class from COMMS library
         ///     for details.
-        COMMS_FIELD_MEMBERS_ACCESS(fixStatBase, dgpsIStat, reserved, mapMatching);
+        COMMS_FIELD_MEMBERS_ACCESS(dgpsIStat, reserved, mapMatching);
     };
 
     /// @brief Definition of "psmState" member fields of @ref flags2 bitfield.
@@ -126,8 +123,8 @@ struct NavStatusFields
             comms::option::FixedBitLength<2>
         >;
 
-    /// @brief Base class of @ref flags2 field.
-    using flags2Base =
+    /// @brief Definition of "flags2" field.
+    struct flags2 : public
         field::common::BitfieldT<
             std::tuple<
                 psmState,
@@ -135,16 +132,13 @@ struct NavStatusFields
                     comms::option::FixedBitLength<6>
                 >
             >
-        >;
-
-    /// @brief Definition of "flags2" field.
-    struct flags2 : public flags2Base
+        >
     {
         /// @brief Allow access to internal fields.
         /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
         ///     related to @b comms::field::Bitfield class from COMMS library
         ///     for details.
-        COMMS_FIELD_MEMBERS_ACCESS(flags2Base, psmState, reserved);
+        COMMS_FIELD_MEMBERS_ACCESS(psmState, reserved);
     };
 
     /// @brief Definition of "ttff" field.
@@ -202,7 +196,7 @@ public:
     ///     @li @b flags2 for @ref NavStatusFields::flags2 field
     ///     @li @b ttff for @ref NavStatusFields::ttff field
     ///     @li @b msss for @ref NavStatusFields::msss field
-    COMMS_MSG_FIELDS_ACCESS(Base, iTOW, gpsFix, flags, fixStat, flags2, ttff, msss);
+    COMMS_MSG_FIELDS_ACCESS(iTOW, gpsFix, flags, fixStat, flags2, ttff, msss);
 
     /// @brief Default constructor
     NavStatus() = default;

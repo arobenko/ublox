@@ -96,24 +96,12 @@ struct CfgPrtSpiFields : public CfgPrtFields
             >
         >
     {
-        typedef
-            field::common::BitfieldT<
-                std::tuple<
-                    field::common::res1T<comms::option::FixedBitLength<1> >,
-                    spiMode,
-                    field::common::res1T<comms::option::FixedBitLength<3> >,
-                    flowControl,
-                    field::common::res1T<comms::option::FixedBitLength<1> >,
-                    ffCnt,
-                    field::common::res4T< comms::option::FixedBitLength<16> >
-                >
-            > Base;
     public:
         /// @brief Allow access to internal fields.
         /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
         ///     related to @b comms::field::Bitfield class from COMMS library
         ///     for details.
-        COMMS_FIELD_MEMBERS_ACCESS(Base,
+        COMMS_FIELD_MEMBERS_ACCESS(
             unused0,
             spiMode,
             unused1,
@@ -178,7 +166,7 @@ public:
     ///     @li @b outProtoMask for @ref CfgPrtFields::outProtoMask field
     ///     @li @b flags for @ref CfgPrtFields::flags field
     ///     @li @b reserved5 for @ref CfgPrtSpiFields::reserved5 field
-    COMMS_MSG_FIELDS_ACCESS(Base,
+    COMMS_MSG_FIELDS_ACCESS(
         portID,
         reserved0,
         txReady,

@@ -44,7 +44,7 @@ using ublox::message::MonVerFields;
 QVariantMap createProps_extensions()
 {
     return
-        cc::property::field::ForField<MonVerFields::extensions>()
+        cc::property::field::ForField<MonVerFields::extensions<>>()
          .name("extenstions")
          .add(cc::property::field::String().asMap())
          .serialisedHidden()
@@ -55,9 +55,9 @@ QVariantList createFieldsProperties()
 {
     QVariantList props;
     props.append(
-        cc::property::field::ForField<MonVerFields::swVersion>().name("swVersion").asMap());
+        cc::property::field::ForField<MonVerFields::swVersion<> >().name("swVersion").asMap());
     props.append(
-        cc::property::field::ForField<MonVerFields::hwVersion>().name("hwVersion").asMap());
+        cc::property::field::ForField<MonVerFields::hwVersion<> >().name("hwVersion").asMap());
     props.append(createProps_extensions());
 
     assert(props.size() == MonVer::FieldIdx_numOfValues);

@@ -168,7 +168,7 @@ public:
     ///     @li @b speedDeadBand for @ref CfgEsfgwtFields::speedDeadBand field
     ///     @li @b reserved4 for @ref CfgEsfgwtFields::reserved4 field
     ///     @li @b reserved5 for @ref CfgEsfgwtFields::reserved5 field
-    COMMS_MSG_FIELDS_ACCESS(Base,
+    COMMS_MSG_FIELDS_ACCESS(
         flags,
         id,
         wtFactor,

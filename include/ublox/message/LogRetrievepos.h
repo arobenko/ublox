@@ -172,7 +172,7 @@ public:
     ///     @li @b reserved1 for @ref LogRetrieveposFields::reserved1 field
     ///     @li @b numSV for @ref LogRetrieveposFields::numSV field
     ///     @li @b reserved2 for @ref LogRetrieveposFields::reserved2 field
-    COMMS_MSG_FIELDS_ACCESS(Base,
+    COMMS_MSG_FIELDS_ACCESS(
         entryIndex,
         lon,
         lat,

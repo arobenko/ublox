@@ -64,11 +64,11 @@ QVariantList createFieldsProperties()
         cc::property::field::ForField<CfgUsbFields::powerConsumption>().name("powerConsumption").asMap());
     props.append(createProps_flags());
     props.append(
-        cc::property::field::ForField<CfgUsbFields::vendorString>().name("vendorString").asMap());
+        cc::property::field::ForField<CfgUsbFields::vendorString<> >().name("vendorString").asMap());
     props.append(
-        cc::property::field::ForField<CfgUsbFields::productString>().name("productString").asMap());
+        cc::property::field::ForField<CfgUsbFields::productString<> >().name("productString").asMap());
     props.append(
-            cc::property::field::ForField<CfgUsbFields::serialNumber>().name("serialNumber").asMap());
+            cc::property::field::ForField<CfgUsbFields::serialNumber<> >().name("serialNumber").asMap());
     assert(props.size() == CfgUsb::FieldIdx_numOfValues);
     return props;
 }

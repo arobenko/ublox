@@ -69,23 +69,20 @@ struct RxmSvsiFields
         COMMS_BITMASK_BITS(healthy, ephVal, almVal, notAvail);
     };
 
-    /// @brief Base class of @ref svFlag field
-    using svFlagBase =
+    /// @brief Definition of "svFlag" field.
+    struct svFlag : public
         field::common::BitfieldT<
             std::tuple<
                 ura,
                 svFlagBits
             >
-        >;
-
-    /// @brief Definition of "svFlag" field.
-    struct svFlag : public svFlagBase
+        >
     {
         /// @brief Allow access to internal fields.
         /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
         ///     related to @b comms::field::Bitfield class from COMMS library
         ///     for details.
-        COMMS_FIELD_MEMBERS_ACCESS(svFlagBase, ura, svFlagBits);
+        COMMS_FIELD_MEMBERS_ACCESS(ura, svFlagBits);
     };
 
     /// @brief Definition of "azim" field.
@@ -104,27 +101,24 @@ struct RxmSvsiFields
     /// @brief Definition of "ephAge" member fields in @ref age bitfield.
     using ephAge = almAge;
 
-    /// @brief Base class of @ref age field
-    using ageBase =
+    /// @brief Definition of "age" field.
+    struct age : public
         field::common::BitfieldT<
             std::tuple<
                 almAge,
                 ephAge
             >
-        >;
-
-    /// @brief Definition of "age" field.
-    struct age : public ageBase
+        >
     {
         /// @brief Allow access to internal fields.
         /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
         ///     related to @b comms::field::Bitfield class from COMMS library
         ///     for details.
-        COMMS_FIELD_MEMBERS_ACCESS(ageBase, almAge, ephAge);
+        COMMS_FIELD_MEMBERS_ACCESS(almAge, ephAge);
     };
 
-    /// @brief Base class of @ref block field
-    using blockBase =
+    /// @brief Definition of a single block of @ref data list
+    struct block : public
         field::common::BundleT<
             std::tuple<
                 svid,
@@ -133,32 +127,34 @@ struct RxmSvsiFields
                 elev,
                 age
             >
-        >;
-
-    /// @brief Definition of a single block of @ref data list
-    struct block : public blockBase
+        >
     {
         /// @brief Allow access to internal fields.
         /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
         ///     related to @b comms::field::Bitfield class from COMMS library
         ///     for details.
-        COMMS_FIELD_MEMBERS_ACCESS(blockBase, svid, svFlag, azim, elev, age);
+        COMMS_FIELD_MEMBERS_ACCESS(svid, svFlag, azim, elev, age);
     };
 
     /// @brief Definition of the list of blocks (@ref block)
+    /// @tparam TOpt Extra option(s)
+    template <typename TOpt = comms::option::EmptyOption>
     using data =
         field::common::ListT<
             block,
-            comms::option::SequenceSizeForcingEnabled
+            comms::option::SequenceSizeForcingEnabled,
+            TOpt
         >;
 
     /// @brief All the fields bundled in std::tuple.
+    /// @tparam TOpt Extra option(s) for @ref data field
+    template <typename TOpt>
     using All = std::tuple<
         iTOW,
         week,
         numVis,
         numSV,
-        data
+        data<TOpt>
     >;
 };
 
@@ -168,22 +164,22 @@ struct RxmSvsiFields
 ///     various implementation options. @n
 ///     See @ref RxmSvsiFields and for definition of the fields this message contains
 ///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
-/// @tparam TMsgBase Common interface class for all the messages.
-template <typename TMsgBase = Message>
+/// @tparam TDataOpt Extra option(s) for @b data field
+template <typename TMsgBase = Message, typename TDataOpt = comms::option::EmptyOption>
 class RxmSvsi : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_RXM_SVSI>,
-        comms::option::FieldsImpl<RxmSvsiFields::All>,
-        comms::option::MsgType<RxmSvsi<TMsgBase> >,
+        comms::option::FieldsImpl<RxmSvsiFields::All<TDataOpt> >,
+        comms::option::MsgType<RxmSvsi<TMsgBase, TDataOpt> >,
         comms::option::HasDoRefresh
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_RXM_SVSI>,
-        comms::option::FieldsImpl<RxmSvsiFields::All>,
-        comms::option::MsgType<RxmSvsi<TMsgBase> >,
+        comms::option::FieldsImpl<RxmSvsiFields::All<TDataOpt> >,
+        comms::option::MsgType<RxmSvsi<TMsgBase, TDataOpt> >,
         comms::option::HasDoRefresh
     > Base;
 public:
@@ -199,7 +195,7 @@ public:
     ///     @li @b numVis for @ref RxmSvsiFields::numVis field
     ///     @li @b numSV for @ref RxmSvsiFields::numSV field
     ///     @li @b data for @ref RxmSvsiFields::data field
-    COMMS_MSG_FIELDS_ACCESS(Base, iTOW, week, numVis, numSV, data);
+    COMMS_MSG_FIELDS_ACCESS(iTOW, week, numVis, numSV, data);
 
     /// @brief Default constructor
     RxmSvsi() = default;

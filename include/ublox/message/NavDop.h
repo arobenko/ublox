@@ -108,7 +108,7 @@ public:
     ///     @li @b hDOP for @ref NavDopFields::hDOP field
     ///     @li @b nDOP for @ref NavDopFields::nDOP field
     ///     @li @b eDOP for @ref NavDopFields::eDOP field
-    COMMS_MSG_FIELDS_ACCESS(Base, iTOW, gDOP, pDOP, tDOP, vDOP, hDOP, nDOP, eDOP);
+    COMMS_MSG_FIELDS_ACCESS(iTOW, gDOP, pDOP, tDOP, vDOP, hDOP, nDOP, eDOP);
 
     /// @brief Default constructor
     NavDop() = default;

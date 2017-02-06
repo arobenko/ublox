@@ -136,7 +136,7 @@ public:
     ///     @li @b pulseLenRatioLock for @ref CfgTp5Fields::pulseLenRatioLock field
     ///     @li @b userConfigDelay for @ref CfgTp5Fields::userConfigDelay field
     ///     @li @b flags for @ref CfgTp5Fields::flags field
-    COMMS_MSG_FIELDS_ACCESS(Base,
+    COMMS_MSG_FIELDS_ACCESS(
         tpIdx,
         reserved0,
         reserved1,

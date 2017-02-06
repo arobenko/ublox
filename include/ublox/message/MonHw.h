@@ -132,8 +132,8 @@ struct MonHwFields
             comms::option::FixedBitLength<2>
         >;
 
-    /// @brief Base class of @ref flags field.
-    using flagsBase =
+    /// @brief Definition of "flags" field.
+    struct flags : public
         field::common::BitfieldT<
             std::tuple<
                 rtcCalib,
@@ -143,16 +143,13 @@ struct MonHwFields
                     comms::option::FixedBitLength<4>
                 >
             >
-        >;
-
-    /// @brief Definition of "flags" field.
-    struct flags : public flagsBase
+        >
     {
         /// @brief Allow access to internal fields.
         /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
         ///     related to @b comms::field::Bitfield class from COMMS library
         ///     for details.
-        COMMS_FIELD_MEMBERS_ACCESS(flagsBase, rtcCalib, safeBoot, jammingState, reserved);
+        COMMS_FIELD_MEMBERS_ACCESS(rtcCalib, safeBoot, jammingState, reserved);
     };
 
     /// @brief Definition of "reserved1" field.
@@ -162,10 +159,13 @@ struct MonHwFields
     using usedMask = field::common::X4;
 
     /// @brief Definition of "VP" field.
+    /// @tparam TOpt Extra option(s)
+    template <typename TOpt = comms::option::EmptyOption>
     using VP =
         field::common::ListT<
             field::common::U1,
-            comms::option::SequenceFixedSize<17>
+            comms::option::SequenceFixedSize<17>,
+            TOpt
         >;
 
     /// @brief Definition of "jamInd" field.
@@ -184,6 +184,8 @@ struct MonHwFields
     using pullL = field::common::X4;
 
     /// @brief All the fields bundled in std::tuple.
+    /// @tparam TOpt Extra option(s) for @ref VP field
+    template <typename TOpt>
     using All = std::tuple<
         pinSel,
         pinBank,
@@ -196,7 +198,7 @@ struct MonHwFields
         flags,
         reserved1,
         usedMask,
-        VP,
+        VP<TOpt>,
         jamInd,
         reserved3,
         pinIrq,
@@ -212,21 +214,16 @@ struct MonHwFields
 ///     See @ref MonHwFields and for definition of the fields this message contains
 ///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
-template <typename TMsgBase = Message>
+/// @tparam TVpOpt Extra option(s) for @b VP field
+template <typename TMsgBase = Message, typename TVpOpt = comms::option::EmptyOption>
 class MonHw : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_MON_HW>,
-        comms::option::FieldsImpl<MonHwFields::All>,
-        comms::option::MsgType<MonHw<TMsgBase> >
+        comms::option::FieldsImpl<MonHwFields::All<TVpOpt> >,
+        comms::option::MsgType<MonHw<TMsgBase, TVpOpt> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_MON_HW>,
-        comms::option::FieldsImpl<MonHwFields::All>,
-        comms::option::MsgType<MonHw<TMsgBase> >
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.
@@ -252,7 +249,7 @@ public:
     ///     @li @b pinIrq for @ref MonHwFields::pinIrq field
     ///     @li @b pullH for @ref MonHwFields::pullH field
     ///     @li @b pullL for @ref MonHwFields::pullL field
-    COMMS_MSG_FIELDS_ACCESS(Base,
+    COMMS_MSG_FIELDS_ACCESS(
         pinSel,
         pinBank,
         pinDir,

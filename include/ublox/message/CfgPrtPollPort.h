@@ -77,7 +77,7 @@ public:
     ///
     ///     The field names are:
     ///     @li @b portID for @ref CfgPrtPollPortFields::portID field
-    COMMS_MSG_FIELDS_ACCESS(Base, portID);
+    COMMS_MSG_FIELDS_ACCESS(portID);
 
     /// @brief Default constructor
     CfgPrtPollPort() = default;

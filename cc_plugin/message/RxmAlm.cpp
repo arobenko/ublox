@@ -56,7 +56,7 @@ QVariantMap createProps_dwrd()
     }
 
     return
-        cc::property::field::ForField<RxmAlmFields::dwrd>()
+        cc::property::field::ForField<RxmAlmFields::dwrd<> >()
             .name(Name)
             .field(listProps.asMap())
             .uncheckable()

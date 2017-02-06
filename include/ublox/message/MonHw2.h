@@ -90,9 +90,11 @@ struct MonHw2Fields
 
     /// @brief Definition of "reserved1" field.
     using reserved1 =
-        field::common::ListT<
-            field::common::res4,
-            comms::option::SequenceFixedSize<2>
+        field::common::BundleT<
+            std::tuple<
+                field::common::res4,
+                field::common::res4
+            >
         >;
 
     /// @brief Definition of "postStatus" field.
@@ -156,7 +158,7 @@ public:
     ///     @li @b reserved1 for @ref MonHw2Fields::reserved1 field
     ///     @li @b postStatus for @ref MonHw2Fields::postStatus field
     ///     @li @b reserved2 for @ref MonHw2Fields::reserved2 field
-    COMMS_MSG_FIELDS_ACCESS(Base,
+    COMMS_MSG_FIELDS_ACCESS(
         ofsI,
         magI,
         ofsQ,

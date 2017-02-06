@@ -65,8 +65,8 @@ struct CfgAntFields
         COMMS_BITMASK_BITS(bit);
     };
 
-    /// @brief Definition of the bitfield base class of @ref pins field
-    using pinsBase =
+    /// @brief Definition of "pins" field.
+    struct pins : public
         field::common::BitfieldT<
             std::tuple<
                 pinX,
@@ -74,16 +74,13 @@ struct CfgAntFields
                 pinX,
                 reconfig
             >
-        >;
-
-    /// @brief Definition of "pins" field.
-    struct pins : public pinsBase
+        >
     {
         /// @brief Allow access to internal fields.
         /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
         ///     related to @b comms::field::Bitfield class from COMMS library
         ///     for details.
-        COMMS_FIELD_MEMBERS_ACCESS(pinsBase, pinSwith, pinSCD, pinOCD, reconfig);
+        COMMS_FIELD_MEMBERS_ACCESS(pinSwith, pinSCD, pinOCD, reconfig);
     };
 
     /// @brief All the fields bundled in std::tuple.
@@ -125,7 +122,7 @@ public:
     ///     The field names are:
     ///     @li @b flags for @ref CfgAntFields::flags field
     ///     @li @b pins for @ref CfgAntFields::pins field
-    COMMS_MSG_FIELDS_ACCESS(Base, flags, pins);
+    COMMS_MSG_FIELDS_ACCESS(flags, pins);
 
     /// @brief Default constructor
     CfgAnt() = default;

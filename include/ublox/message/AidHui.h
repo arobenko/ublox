@@ -173,7 +173,7 @@ public:
     ///     @li @b klobB2 for @ref AidHuiFields::klobB2 field
     ///     @li @b klobB3 for @ref AidHuiFields::klobB3 field
     ///     @li @b flags for @ref AidHuiFields::flags field
-    COMMS_MSG_FIELDS_ACCESS(Base,
+    COMMS_MSG_FIELDS_ACCESS(
         health,
         utcA0,
         utcA1,

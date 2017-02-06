@@ -74,7 +74,7 @@ public:
     ///
     ///     The field names are:
     ///     @li @b tpIdx for @ref CfgTp5PollSelectFields::tpIdx field
-    COMMS_MSG_FIELDS_ACCESS(Base, tpIdx);
+    COMMS_MSG_FIELDS_ACCESS(tpIdx);
 
     /// @brief Default constructor
     CfgTp5PollSelect() = default;

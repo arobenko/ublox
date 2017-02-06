@@ -107,23 +107,20 @@ struct NavPvtFields
             comms::option::ValidNumValueRange<0, (int)PsmState::NumOfValues - 1>
         >;
 
-    /// @brief Base class for @ref flags field.
-    using flagsBase =
+    /// @brief Definition of "flags" field.
+    struct flags : public
         field::common::BitfieldT<
             std::tuple<
                 flagsBits,
                 psmState
             >
-        >;
-
-    /// @brief Definition of "flags" field.
-    struct flags : public flagsBase
+        >
     {
         /// @brief Allow access to internal fields.
         /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
         ///     related to @b comms::field::Bitfield class from COMMS library
         ///     for details.
-        COMMS_FIELD_MEMBERS_ACCESS(flagsBase, flagsBits, psmState);
+        COMMS_FIELD_MEMBERS_ACCESS(flagsBits, psmState);
     };
 
     /// @brief Definition of "reserved1" field.
@@ -274,7 +271,7 @@ public:
     ///     @li @b pDOP for @ref NavPvtFields::pDOP field
     ///     @li @b reserved2 for @ref NavPvtFields::reserved2 field
     ///     @li @b reserved3 for @ref NavPvtFields::reserved3 field
-    COMMS_MSG_FIELDS_ACCESS(Base,
+    COMMS_MSG_FIELDS_ACCESS(
         iTOW,
         year,
         month,

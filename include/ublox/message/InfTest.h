@@ -30,8 +30,14 @@ namespace message
 
 /// @brief Definition of INF-TEST message
 /// @tparam TMsgBase Common interface class for all the messages.
-template <typename TMsgBase = Message>
-class InfTest : public InfStringMsgBase<MsgId_INF_TEST, TMsgBase>
+/// @tparam TStrOpt Extra option(s) for @b str field
+template <typename TMsgBase = Message, typename TStrOpt = comms::option::EmptyOption>
+class InfTest : public
+    InfStringMsgBase<
+        MsgId_INF_TEST,
+        TMsgBase,
+        TStrOpt,
+        InfTest<TMsgBase, TStrOpt> >
 {
 public:
     /// @brief Default constructor

@@ -55,7 +55,7 @@ QVariantList createFieldsProperties()
     QVariantList props;
     props.append(createProps_flags());
     props.append(
-        cc::property::field::ForField<CfgRinvFields::data>().name("data").asMap());
+        cc::property::field::ForField<CfgRinvFields::data<> >().name("data").asMap());
 
     assert(props.size() == CfgRinv::FieldIdx_numOfValues);
     return props;

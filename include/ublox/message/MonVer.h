@@ -32,23 +32,42 @@ namespace message
 /// @see MonVer
 struct MonVerFields
 {
-    /// @brief Definition of "pullL" field.
-    using swVersion = field::common::ZString<30>;
+    /// @brief Definition of "swVersion" field.
+    /// @tparam TOpt Extra option(s)
+    template <typename TOpt = comms::option::EmptyOption>
+    using swVersion = field::common::ZString<30, TOpt>;
 
-    /// @brief Definition of "pullL" field.
-    using hwVersion = field::common::ZString<10>;
+    /// @brief Definition of "hwVersion" field.
+    /// @tparam TOpt Extra option(s)
+    template <typename TOpt = comms::option::EmptyOption>
+    using hwVersion = field::common::ZString<10, TOpt>;
 
-    /// @brief Definition of "pullL" field.
+    /// @brief Definition of "extensions" field.
+    /// @tparam TListOpt Extra option(s) for the list
+    /// @tparam TStrOpt Extra option(s) for the string
+    template <
+        typename TListOpt = comms::option::EmptyOption,
+        typename TStrOpt = comms::option::EmptyOption>
     using extensions =
         field::common::ListT<
-            field::common::ZString<30>
+            field::common::ZString<30, TStrOpt>,
+            TListOpt
         >;
 
     /// @brief All the fields bundled in std::tuple.
+    /// @tparam TSwVerOpt Extra option(s) for @ref swVersion field
+    /// @tparam THwVerOpt Extra option(s) for @ref hwVersion field
+    /// @tparam TExtStrOpt Extra option(s) for strings of @ref extensions field.
+    /// @tparam TExtListOpt Extra option(s) for @ref extensions field
+    template <
+        typename TSwVerOpt,
+        typename THwVerOpt,
+        typename TExtStrOpt,
+        typename TExtListOpt>
     using All = std::tuple<
-        swVersion,
-        hwVersion,
-        extensions
+        swVersion<TSwVerOpt>,
+        hwVersion<THwVerOpt>,
+        extensions<TExtListOpt, TExtStrOpt>
     >;
 };
 
@@ -59,21 +78,24 @@ struct MonVerFields
 ///     See @ref MonVerFields and for definition of the fields this message contains
 ///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
-template <typename TMsgBase = Message>
+/// @tparam TSwVerOpt Extra option(s) for @b swVersion field
+/// @tparam THwVerOpt Extra option(s) for @b hwVersion field
+/// @tparam TExtStrOpt Extra option(s) for strings of @b extensions field.
+/// @tparam TExtListOpt Extra option(s) for @b TExtListOpt field
+template <
+    typename TMsgBase = Message,
+    typename TSwVerOpt = comms::option::EmptyOption,
+    typename THwVerOpt = comms::option::EmptyOption,
+    typename TExtStrOpt = comms::option::EmptyOption,
+    typename TExtListOpt = comms::option::EmptyOption>
 class MonVer : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_MON_VER>,
-        comms::option::FieldsImpl<MonVerFields::All>,
-        comms::option::MsgType<MonVer<TMsgBase> >
+        comms::option::FieldsImpl<MonVerFields::All<TSwVerOpt, THwVerOpt, TExtStrOpt, TExtListOpt> >,
+        comms::option::MsgType<MonVer<TMsgBase, TSwVerOpt, THwVerOpt, TExtStrOpt, TExtListOpt> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_MON_VER>,
-        comms::option::FieldsImpl<MonVerFields::All>,
-        comms::option::MsgType<MonVer<TMsgBase> >
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.
@@ -85,7 +107,7 @@ public:
     ///     @li @b swVersion for @ref MonVerFields::swVersion field
     ///     @li @b hwVersion for @ref MonVerFields::hwVersion field
     ///     @li @b extensions for @ref MonVerFields::extensions field
-    COMMS_MSG_FIELDS_ACCESS(Base, swVersion, hwVersion, extensions);
+    COMMS_MSG_FIELDS_ACCESS(swVersion, hwVersion, extensions);
 
     /// @brief Default constructor
     MonVer() = default;

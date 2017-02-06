@@ -83,7 +83,7 @@ public:
     ///
     ///     The field names are:
     ///     @li @b flags for @ref MonRxrFields::flags field
-    COMMS_MSG_FIELDS_ACCESS(Base, flags);
+    COMMS_MSG_FIELDS_ACCESS(flags);
 
     /// @brief Default constructor
     MonRxr() = default;

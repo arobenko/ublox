@@ -153,8 +153,8 @@ struct NavSbasFields
     /// @brief Definition of "ic" field.
     using ic = field::common::U2T<field::common::Scaling_cm2m>;
 
-    /// @brief Base class of @ref block
-    using blockBase =
+    /// @brief Definition of the block of fields used in @ref data list
+    struct block : public
         field::common::BundleT<
             std::tuple<
                 svid,
@@ -167,26 +167,28 @@ struct NavSbasFields
                 reserved2,
                 ic
             >
-        >;
-
-    /// @brief Definition of the block of fields used in @ref data list
-    struct block : public blockBase
+        >
     {
         /// @brief Allow access to internal fields.
         /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
         ///     related to @b comms::field::Bitfield class from COMMS library
         ///     for details.
-        COMMS_FIELD_MEMBERS_ACCESS(blockBase, svid, flags, udre, svSys, svService, reserved1, prc, reserved2, ic);
+        COMMS_FIELD_MEMBERS_ACCESS(svid, flags, udre, svSys, svService, reserved1, prc, reserved2, ic);
     };
 
     /// @brief Definition of the list of data blocks (@ref block).
+    /// @tparam TOpt Extra option(s)
+    template <typename TOpt = comms::option::EmptyOption>
     using data =
         field::common::ListT<
             block,
-            comms::option::SequenceSizeForcingEnabled
+            comms::option::SequenceSizeForcingEnabled,
+            TOpt
         >;
 
     /// @brief All the fields bundled in std::tuple.
+    /// @tparam TOpt Extra option(s) for @ref data field
+    template <typename TOpt>
     using All = std::tuple<
         iTOW,
         geo,
@@ -195,7 +197,7 @@ struct NavSbasFields
         service,
         cnt,
         reserved0,
-        data
+        data<TOpt>
     >;
 };
 
@@ -206,21 +208,22 @@ struct NavSbasFields
 ///     See @ref NavSbasFields and for definition of the fields this message contains
 ///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
-template <typename TMsgBase = Message>
+/// @tparam TDataOpt Extra option(s) for @b data field
+template <typename TMsgBase = Message, typename TDataOpt = comms::option::EmptyOption>
 class NavSbas : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_SBAS>,
-        comms::option::FieldsImpl<NavSbasFields::All>,
-        comms::option::MsgType<NavSbas<TMsgBase> >,
+        comms::option::FieldsImpl<NavSbasFields::All<TDataOpt> >,
+        comms::option::MsgType<NavSbas<TMsgBase, TDataOpt> >,
         comms::option::HasDoRefresh
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_SBAS>,
-        comms::option::FieldsImpl<NavSbasFields::All>,
-        comms::option::MsgType<NavSbas<TMsgBase> >,
+        comms::option::FieldsImpl<NavSbasFields::All<TDataOpt> >,
+        comms::option::MsgType<NavSbas<TMsgBase, TDataOpt> >,
         comms::option::HasDoRefresh
     > Base;
 public:
@@ -239,7 +242,7 @@ public:
     ///     @li @b cnt for @ref NavSbasFields::cnt field
     ///     @li @b reserved0 for @ref NavSbasFields::reserved0 field
     ///     @li @b data for @ref NavSbasFields::data field
-    COMMS_MSG_FIELDS_ACCESS(Base, iTOW, geo, mode, sys, service, cnt, reserved0, data);
+    COMMS_MSG_FIELDS_ACCESS(iTOW, geo, mode, sys, service, cnt, reserved0, data);
 
     /// @brief Default constructor
     NavSbas() = default;

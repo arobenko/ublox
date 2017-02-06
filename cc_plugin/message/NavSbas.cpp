@@ -94,7 +94,7 @@ QVariantMap createProps_data()
 
 
     return
-        cc::property::field::ForField<NavSbasFields::data>()
+        cc::property::field::ForField<NavSbasFields::data<> >()
             .name("data")
             .add(blockProps.asMap())
             .serialisedHidden()

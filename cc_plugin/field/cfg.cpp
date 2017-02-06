@@ -246,7 +246,7 @@ const QVariantMap& props_datumNum()
 const QVariantMap& props_datumName()
 {
     static const QVariantMap Props =
-        cc::property::field::ForField<ublox::field::cfg::datumName>()
+        cc::property::field::ForField<ublox::field::cfg::datumName<> >()
             .name("datumName")
             .asMap();
     return Props;

@@ -93,7 +93,7 @@ public:
     ///     @li @b ecefVY for @ref NavVelecefFields::ecefVY field
     ///     @li @b ecefVZ for @ref NavVelecefFields::ecefVZ field
     ///     @li @b sAcc for @ref NavVelecefFields::sAcc field
-    COMMS_MSG_FIELDS_ACCESS(Base, iTOW, ecefVX, ecefVY, ecefVZ, sAcc);
+    COMMS_MSG_FIELDS_ACCESS(iTOW, ecefVX, ecefVY, ecefVZ, sAcc);
 
     /// @brief Default constructor
     NavVelecef() = default;

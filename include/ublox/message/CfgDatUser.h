@@ -113,7 +113,7 @@ public:
     ///     @li @b rotY for @ref CfgDatUserFields::rotY field
     ///     @li @b rotZ for @ref CfgDatUserFields::rotZ field
     ///     @li @b scale for @ref CfgDatUserFields::scale field
-    COMMS_MSG_FIELDS_ACCESS(Base,
+    COMMS_MSG_FIELDS_ACCESS(
         majA,
         flat,
         dX,

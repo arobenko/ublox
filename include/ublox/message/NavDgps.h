@@ -90,23 +90,20 @@ struct NavDgpsFields
         COMMS_BITMASK_BITS(dgpsUsed);
     };
 
-    /// @brief Base class for @ref flags field.
-    using flagsBase =
+    /// @brief Definition of "flags" field.
+    struct flags : public
         field::common::BitfieldT<
             std::tuple<
                 channel,
                 flagsBits
             >
-        >;
-
-    /// @brief Definition of "flags" field.
-    struct flags : public flagsBase
+        >
     {
         /// @brief Allow access to internal fields.
         /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
         ///     related to @b comms::field::Bitfield class from COMMS library
         ///     for details.
-        COMMS_FIELD_MEMBERS_ACCESS(flagsBase, channel, flagsBits);
+        COMMS_FIELD_MEMBERS_ACCESS(channel, flagsBits);
     };
 
     /// @brief Definition of "agec" field.
@@ -118,8 +115,8 @@ struct NavDgpsFields
     /// @brief Definition of "prrc" field.
     using prrc = field::common::R4;
 
-    /// @brief Base class of @ref block field
-    using blockBase =
+    /// @brief Definition of the repeated block as a single bundle field
+    struct block : public
         field::common::BundleT<
             std::tuple<
                 svid,
@@ -128,26 +125,28 @@ struct NavDgpsFields
                 prc,
                 prrc
             >
-        >;
-
-    /// @brief Definition of the repeated block as a single bundle field
-    struct block : public blockBase
+        >
     {
         /// @brief Allow access to internal fields.
         /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
         ///     related to @b comms::field::Bitfield class from COMMS library
         ///     for details.
-        COMMS_FIELD_MEMBERS_ACCESS(blockBase, svid, flags, ageC, prc, prrc);
+        COMMS_FIELD_MEMBERS_ACCESS(svid, flags, ageC, prc, prrc);
     };
 
     /// @brief Definition of the list of repeated blocks (@ref block).
+    /// @tparam TOpt Extra option(s)
+    template <typename TOpt = comms::option::EmptyOption>
     using data =
         field::common::ListT<
             block,
-            comms::option::SequenceSizeForcingEnabled
+            comms::option::SequenceSizeForcingEnabled,
+            TOpt
         >;
 
     /// @brief All the fields bundled in std::tuple.
+    /// @tparam TOpt Extra option(s) for @ref data field
+    template <typename TOpt>
     using All = std::tuple<
         iTOW,
         age,
@@ -156,7 +155,7 @@ struct NavDgpsFields
         numCh,
         status,
         reserved1,
-        data
+        data<TOpt>
     >;
 };
 
@@ -167,21 +166,22 @@ struct NavDgpsFields
 ///     See @ref NavDgpsFields and for definition of the fields this message contains
 ///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
-template <typename TMsgBase = Message>
+/// @tparam TDataOpt Extra option(s) for @b data field
+template <typename TMsgBase = Message, typename TDataOpt = comms::option::EmptyOption>
 class NavDgps : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_DGPS>,
-        comms::option::FieldsImpl<NavDgpsFields::All>,
-        comms::option::MsgType<NavDgps<TMsgBase> >,
+        comms::option::FieldsImpl<NavDgpsFields::All<TDataOpt> >,
+        comms::option::MsgType<NavDgps<TMsgBase, TDataOpt> >,
         comms::option::HasDoRefresh
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_NAV_DGPS>,
-        comms::option::FieldsImpl<NavDgpsFields::All>,
-        comms::option::MsgType<NavDgps<TMsgBase> >,
+        comms::option::FieldsImpl<NavDgpsFields::All<TDataOpt> >,
+        comms::option::MsgType<NavDgps<TMsgBase, TDataOpt> >,
         comms::option::HasDoRefresh
     > Base;
 public:
@@ -200,7 +200,7 @@ public:
     ///     @li @b status for @ref NavDgpsFields::status field
     ///     @li @b reserved1 for @ref NavDgpsFields::reserved1 field
     ///     @li @b data for @ref NavDgpsFields::data field
-    COMMS_MSG_FIELDS_ACCESS(Base,
+    COMMS_MSG_FIELDS_ACCESS(
         iTOW,
         age,
         baseId,

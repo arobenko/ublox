@@ -113,7 +113,7 @@ public:
     ///     @li @b valid for @ref TimSvinFields::valid field
     ///     @li @b active for @ref TimSvinFields::active field
     ///     @li @b reserved for @ref TimSvinFields::reserved field
-    COMMS_MSG_FIELDS_ACCESS(Base, dur, meanX, meanY, meanZ, meanV, obs, valid, active, reserved);
+    COMMS_MSG_FIELDS_ACCESS(dur, meanX, meanY, meanZ, meanV, obs, valid, active, reserved);
 
     /// @brief Default constructor
     TimSvin() = default;

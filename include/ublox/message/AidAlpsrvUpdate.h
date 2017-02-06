@@ -56,20 +56,25 @@ struct AidAlpsrvUpdateFields
     using fileId = field::common::U2;
 
     /// @brief Definition of "data" field.
+    /// @tparam TOpt Extra option(s)
+    template <typename TOpt = comms::option::EmptyOption>
     using data =
         field::common::ListT<
             field::common::U2,
-            comms::option::SequenceSizeForcingEnabled
+            comms::option::SequenceSizeForcingEnabled,
+            TOpt
         >;
 
     /// @brief All the fields bundled in std::tuple.
+    /// @tparam TOpt Extra option(s) for @ref data field
+    template <typename TOpt>
     using All = std::tuple<
         idSize,
         type,
         ofs,
         size,
         fileId,
-        data
+        data<TOpt>
     >;
 };
 
@@ -80,21 +85,22 @@ struct AidAlpsrvUpdateFields
 ///     See @ref AidAlpsrvUpdateFields and for definition of the fields this message contains
 ///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
-template <typename TMsgBase = Message>
+/// @tparam TDataOpt Extra option(s) for @b data field
+template <typename TMsgBase = Message, typename TDataOpt = comms::option::EmptyOption>
 class AidAlpsrvUpdate : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_ALPSRV>,
-        comms::option::FieldsImpl<AidAlpsrvUpdateFields::All>,
-        comms::option::MsgType<AidAlpsrvUpdate<TMsgBase> >,
+        comms::option::FieldsImpl<AidAlpsrvUpdateFields::All<TDataOpt> >,
+        comms::option::MsgType<AidAlpsrvUpdate<TMsgBase, TDataOpt> >,
         comms::option::HasDoRefresh
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_ALPSRV>,
-        comms::option::FieldsImpl<AidAlpsrvUpdateFields::All>,
-        comms::option::MsgType<AidAlpsrvUpdate<TMsgBase> >,
+        comms::option::FieldsImpl<AidAlpsrvUpdateFields::All<TDataOpt> >,
+        comms::option::MsgType<AidAlpsrvUpdate<TMsgBase, TDataOpt> >,
         comms::option::HasDoRefresh
     > Base;
 public:
@@ -111,7 +117,7 @@ public:
     ///     @li @b size for @ref AidAlpsrvUpdateFields::size field
     ///     @li @b fileId for @ref AidAlpsrvUpdateFields::fileId field
     ///     @li @b data for @ref AidAlpsrvUpdateFields::data field
-    COMMS_MSG_FIELDS_ACCESS(Base, idSize, type, ofs, size, fileId, data);
+    COMMS_MSG_FIELDS_ACCESS(idSize, type, ofs, size, fileId, data);
 
     /// @brief Default constructor
     AidAlpsrvUpdate() = default;

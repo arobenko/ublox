@@ -37,7 +37,9 @@ struct CfgDatFields
     using datumNum = field::cfg::datumNum;
 
     /// @brief Definition of "datumName" field.
-    using datumName = field::cfg::datumName;
+    /// @tparam TOpt Extra option(s)
+    template <typename TOpt = comms::option::EmptyOption>
+    using datumName = field::cfg::datumName<TOpt>;
 
     /// @brief Definition of "majA" field.
     using majA = field::cfg::datMajA;
@@ -67,9 +69,11 @@ struct CfgDatFields
     using scale = field::cfg::datScale;
 
     /// @brief All the fields bundled in std::tuple.
+    /// @tparam TOpt Extra option(s) for @ref datumName field
+    template <typename TOpt>
     using All = std::tuple<
         datumNum,
-        datumName,
+        datumName<TOpt>,
         majA,
         flat,
         dX,
@@ -89,21 +93,16 @@ struct CfgDatFields
 ///     See @ref CfgDatFields and for definition of the fields this message contains
 ///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
-template <typename TMsgBase = Message>
+/// @tparam TDatumNameOpt Extra option(s) for @b datumName field
+template <typename TMsgBase = Message, typename TDatumNameOpt = comms::option::EmptyOption>
 class CfgDat : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_DAT>,
-        comms::option::FieldsImpl<CfgDatFields::All>,
-        comms::option::MsgType<CfgDat<TMsgBase> >
+        comms::option::FieldsImpl<CfgDatFields::All<TDatumNameOpt> >,
+        comms::option::MsgType<CfgDat<TMsgBase, TDatumNameOpt> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_CFG_DAT>,
-        comms::option::FieldsImpl<CfgDatFields::All>,
-        comms::option::MsgType<CfgDat<TMsgBase> >
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.
@@ -123,7 +122,7 @@ public:
     ///     @li @b rotY for @ref CfgDatFields::rotY field
     ///     @li @b rotZ for @ref CfgDatFields::rotZ field
     ///     @li @b scale for @ref CfgDatFields::scale field
-    COMMS_MSG_FIELDS_ACCESS(Base,
+    COMMS_MSG_FIELDS_ACCESS(
         datumNum,
         datumName,
         majA,

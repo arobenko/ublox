@@ -162,7 +162,7 @@ public:
     ///     @li @b reserved1 for @ref NavSolFields::reserved1 field
     ///     @li @b numSV for @ref NavSolFields::numSV field
     ///     @li @b reserved2 for @ref NavSolFields::reserved2 field
-    COMMS_MSG_FIELDS_ACCESS(Base,
+    COMMS_MSG_FIELDS_ACCESS(
         iTOW,
         fTOW,
         week,

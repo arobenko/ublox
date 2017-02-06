@@ -372,7 +372,8 @@ using String = StringT<>;
 ///     having fixed serialisation length.
 /// @tparam TSize Full fixed serialisation length (including zero termination) of the
 ///     string value
-template <std::size_t TSize>
+/// @tparam TOptions Extra options.
+template <std::size_t TSize, typename...TOptions>
 using ZString =
     StringT<
         comms::option::SequenceFixedSize<TSize - 1>,
@@ -380,7 +381,8 @@ using ZString =
             field::common::U1T<
                 comms::option::ValidNumValueRange<0, 0>
             >
-        >
+        >,
+        TOptions...
     >;
 
 /// @brief Common definition of bundle field.

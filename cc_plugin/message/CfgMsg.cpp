@@ -45,7 +45,7 @@ using ublox::message::CfgMsgFields;
 
 QVariantMap createProps_rate()
 {
-    cc::property::field::ForField<CfgMsgFields::rate> props;
+    cc::property::field::ForField<CfgMsgFields::rate<> > props;
     props.name("rate").serialisedHidden();
     for (auto idx = 0; idx < 6; ++idx) {
         props.add(

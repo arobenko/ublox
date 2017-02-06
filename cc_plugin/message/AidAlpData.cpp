@@ -45,7 +45,7 @@ using ublox::message::AidAlpDataFields;
 QVariantMap createProps_alpData()
 {
     return
-        cc::property::field::ForField<AidAlpDataFields::alpData>()
+        cc::property::field::ForField<AidAlpDataFields::alpData<> >()
             .name("alpData")
             .add(cc::property::field::IntValue().asMap())
             .serialisedHidden()
