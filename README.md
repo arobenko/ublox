@@ -77,6 +77,10 @@ In addition to built-in options/variables of CMake, such as **CMAKE_BUILD_TYPE**
 - **CC_UBLOX_LIB_ONLY**=ON/OFF - Exclude compilation of all the sources, install only
 **UBLOX** protocol library. Default value is **OFF**, i.e. the plugin to CommsChampion gets built.
 
+- **CC_UBLOX_AND_COMMS_LIBS_ONLY**=ON/OFF - Exclude compilation of all the sources, install only
+**UBLOX** protocol library as well as check out and install **COMMS** library headers
+as well. Default value is **OFF**, i.e. the plugin to CommsChampion gets built.
+
 - **CC_UBLOX_INSTALL_DIR**=dir - Custom installation directory. If not provided defaults to
 **install** subdirectory of the directory chosen for build (**${CMAKE_BINARY_DIR}/install**). 
 
@@ -95,7 +99,8 @@ anything from this repository. All the headers, binaries, and libraries will
 be installed in the directory specified with **CC_UBLOX_INSTALL_DIR** variable. 
 Default value of this option is **OFF**.
 
-For example, discard all other tools, just install the **UBLOX** library:
+## Build Example 1 
+Discard all other tools, just install the **UBLOX** library:
 
 >$> cd /path/to/ublox/sources
 
@@ -107,6 +112,31 @@ For example, discard all other tools, just install the **UBLOX** library:
 
 The example above will skip build of any tool available, it will just install 
 the **UBLOX** library headers in **install/include** directory
+
+## Build Example 2
+Discard all other tools, just install both **UBLOX** and **COMMS** libraries in one go:
+
+>$> cd /path/to/ublox/sources
+
+>$> mkdir build && cd build
+
+>$> cmake -DCC_UBLOX_AND_COMMS_LIBS_ONLY=ON ..
+
+>$> make install 
+
+The example above will skip build of any tool available, it will just install 
+the **UBLOX** and **COMMS** libraries headers in **install/include** directory
+
+## Build Example 3
+Install **UBLOX** library and compile (and install) the plugin for [comms_champion](https://github.com/arobenko/comms_champion)
+
+>$> cd /path/to/ublox/sources
+
+>$> mkdir build && cd build
+
+>$> cmake -DCC_MAIN_INSTALL_DIR=/path/to/comms_championg/install ..
+
+>$> make install 
 
 ## Building Documentation
 The documentation is not created during normal build process. The documentation of
