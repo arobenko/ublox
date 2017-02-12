@@ -169,6 +169,7 @@
 #include "cc_plugin/message/AidEphPoll.h"
 #include "cc_plugin/message/AidAlpsrv.h"
 #include "cc_plugin/message/AidAlpsrvUpdate.h"
+#include "cc_plugin/message/AidAop_u8.h"
 #include "cc_plugin/message/AidAop.h"
 #include "cc_plugin/message/AidAopPollSv.h"
 #include "cc_plugin/message/AidAopPoll.h"
@@ -345,6 +346,7 @@ typedef std::tuple<
     cc_plugin::message::AidEphPoll,
     cc_plugin::message::AidAlpsrv,
     cc_plugin::message::AidAlpsrvUpdate,
+    cc_plugin::message::AidAop_u8,
     cc_plugin::message::AidAop,
     cc_plugin::message::AidAopPollSv,
     cc_plugin::message::AidAopPoll,

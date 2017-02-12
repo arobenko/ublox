@@ -423,6 +423,23 @@ using numSV = U1;
 ///     multiple message classes.
 using svid = U1T<comms::option::ValidNumValueRange<1, 96> >;
 
+/// @brief Value enumeration for @ref gnssId field.
+enum class GnssId : std::uint8_t
+{
+    Gps,
+    Sbas,
+    Galileo,
+    BeiDou,
+    Imes,
+    Qzss,
+    Glonass,
+    NumOfValues
+};
+
+/// @brief Definition of common "gnssId" field.
+using gnssId =
+    EnumT<GnssId, comms::option::ValidNumValueRange<0, (int)GnssId::NumOfValues - 1> >;
+
 }  // namespace common
 
 }  // namespace field

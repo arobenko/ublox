@@ -21,6 +21,7 @@
 #pragma once
 
 #include <iterator>
+#include <tuple>
 
 #include "ublox/Message.h"
 #include "ublox/field/aid.h"
@@ -32,11 +33,17 @@ namespace message
 {
 
 /// @brief Accumulates details of all the AID-AOP message fields.
-/// @see AidAop
-struct AidAopFields
+/// @see AidAop_u8
+struct AidAopFields_u8
 {
+    /// @brief Definition of "gnssId" field.
+    using gnssId = field::common::gnssId;
+
     /// @brief Definition of "svid" field.
     using svid = field::aid::svid;
+
+    /// @brief Definition of "reserved1" field.
+    using reserved1 = field::common::res2;
 
     /// @brief Definition of "data" field.
     /// @tparam TOpt Extra option(s)
@@ -44,59 +51,45 @@ struct AidAopFields
     using data =
         field::common::ListT<
             std::uint8_t,
-            comms::option::SequenceFixedSize<59>,
+            comms::option::SequenceFixedSize<64>,
             TOpt
-        >;
-
-    /// @brief Definition of "optional" field.
-    /// @tparam TOpt Extra option(s)
-    template <typename TOpt = comms::option::EmptyOption>
-    using optional =
-        field::common::OptionalT<
-            field::common::ListT<
-                std::uint8_t,
-                comms::option::SequenceFixedSize<48 * 3>,
-                TOpt
-            >
         >;
 
     /// @brief All the fields bundled in std::tuple.
     /// @tparam TDataOpt Extra option(s) for @ref data field
-    /// @tparam TOptionalOpt Extra option(s) for @ref optional field
-    template <typename TDataOpt, typename TOptionalOpt>
+    template <typename TDataOpt>
     using All = std::tuple<
+        gnssId,
         svid,
-        data<TDataOpt>,
-        optional<TOptionalOpt>
+        reserved1,
+        data<TDataOpt>
     >;
 };
 
-/// @brief Definition of AID-AOP message
+/// @brief Definition of AID-AOP (@b ublox-8) message
 /// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
 ///     various implementation options. @n
-///     See @ref AidAopFields and for definition of the fields this message contains
+///     See @ref AidAopFields_u8 and for definition of the fields this message contains
 ///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 /// @tparam TDataOpt Extra option(s) for @b data field
-/// @tparam TOptionalOpt Extra option(s) for @b optional field
 template <
     typename TMsgBase = Message,
-    typename TDataOpt = comms::option::EmptyOption,
-    typename TOptionalOpt = comms::option::EmptyOption>
-class AidAop : public
+    typename TDataOpt = comms::option::EmptyOption>
+class AidAop_u8 : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_AOP>,
-        comms::option::FieldsImpl<AidAopFields::All<TDataOpt, TOptionalOpt> >,
-        comms::option::MsgType<AidAop<TMsgBase, TDataOpt, TOptionalOpt> >
+        comms::option::FieldsImpl<AidAopFields_u8::All<TDataOpt> >,
+        comms::option::MsgType<AidAop_u8<TMsgBase, TDataOpt> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_AOP>,
-        comms::option::FieldsImpl<AidAopFields::All<TDataOpt, TOptionalOpt> >,
-        comms::option::MsgType<AidAop<TMsgBase, TDataOpt, TOptionalOpt> >
+        comms::option::FieldsImpl<AidAopFields_u8::All<TDataOpt> >,
+        comms::option::MsgType<AidAop_u8<TMsgBase, TDataOpt> >
     > Base;
 public:
 
@@ -106,28 +99,28 @@ public:
     ///     for details.
     ///
     ///     The field names are:
-    ///     @li @b svid for @ref AidAopFields::svid field
-    ///     @li @b data for @ref AidAopFields::data field
-    ///     @li @b optional for @ref AidAopFields::optional field
-    COMMS_MSG_FIELDS_ACCESS(svid, data, optional);
+    ///     @li @b gnssId for @ref AidAopFields_u8::gnssId field
+    ///     @li @b svid for @ref AidAopFields_u8::svid field
+    ///     @li @b data for @ref AidAopFields_u8::data field
+    COMMS_MSG_FIELDS_ACCESS(gnssId, svid, reserved1, data);
 
     /// @brief Default constructor
-    AidAop() = default;
+    AidAop_u8() = default;
 
     /// @brief Copy constructor
-    AidAop(const AidAop&) = default;
+    AidAop_u8(const AidAop_u8&) = default;
 
     /// @brief Move constructor
-    AidAop(AidAop&& other) = default;
+    AidAop_u8(AidAop_u8&& other) = default;
 
     /// @brief Destructor
-    virtual ~AidAop() = default;
+    virtual ~AidAop_u8() = default;
 
     /// @brief Copy assignment
-    AidAop& operator=(const AidAop&) = default;
+    AidAop_u8& operator=(const AidAop_u8&) = default;
 
     /// @brief Move assignment
-    AidAop& operator=(AidAop&&) = default;
+    AidAop_u8& operator=(AidAop_u8&&) = default;
 
     /// @brief Provides custom read functionality.
     /// @details Verifies the data length prior to invoking default read of the fields

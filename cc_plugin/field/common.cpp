@@ -49,6 +49,23 @@ QVariantMap createProps_reserved(unsigned idx)
             .asMap();
 }
 
+QVariantMap createProps_gnssId()
+{
+    auto props =
+        cc::property::field::ForField<ublox::field::common::gnssId>()
+            .name("gnssId")
+            .add("GPS")
+            .add("SBAS")
+            .add("Galileo")
+            .add("BeiDou")
+            .add("IMES")
+            .add("QZSS")
+            .add("GLONASS");
+
+    assert(props.values().size() == (int)ublox::field::common::GnssId::NumOfValues);
+    return props.asMap();
+}
+
 }  // namespace
 
 const QVariantList& emptyProperties()
@@ -122,6 +139,12 @@ const QVariantMap& props_reserved(unsigned idx)
     }
 
     return Props[idx];
+}
+
+const QVariantMap& props_gnssId()
+{
+    static const auto Props = createProps_gnssId();
+    return Props;
 }
 
 }  // namespace common
