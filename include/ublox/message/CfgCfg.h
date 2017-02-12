@@ -37,14 +37,14 @@ struct CfgCfgFields
     /// @brief common definition for @ref clearMask, @ref saveMask, and @ref loadMask fields
     struct mask : public
         field::common::X4T<
-            comms::option::BitmaskReservedBits<0xfffff9e0, 0>
+            comms::option::BitmaskReservedBits<0xffffe1e0, 0>
         >
     {
         /// @brief Provide names for internal bits.
         /// @details See definition of @b COMMS_BITMASK_BITS macro
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
-        COMMS_BITMASK_BITS(ioPort, msgConf, infMsg, navConf, rxmConf, rinvConf=9, antConf);
+        COMMS_BITMASK_BITS(ioPort, msgConf, infMsg, navConf, rxmConf, rinvConf=9, antConf, logConf, ftsConf);
     };
 
     /// @brief Definition of "clearMask" field.
@@ -116,7 +116,10 @@ public:
     COMMS_MSG_FIELDS_ACCESS(clearMask, saveMask, loadMask, deviceMask);
 
     /// @brief Default constructor
-    CfgCfg() = default;
+    CfgCfg()
+    {
+        field_deviceMask().setMissing();
+    }
 
     /// @brief Copy constructor
     CfgCfg(const CfgCfg&) = default;
