@@ -101,6 +101,7 @@ public:
     ///     The field names are:
     ///     @li @b gnssId for @ref AidAopFields_u8::gnssId field
     ///     @li @b svid for @ref AidAopFields_u8::svid field
+    ///     @li @b reserved1 for @ref AidAopFields_u8::reserved1 field
     ///     @li @b data for @ref AidAopFields_u8::data field
     COMMS_MSG_FIELDS_ACCESS(gnssId, svid, reserved1, data);
 

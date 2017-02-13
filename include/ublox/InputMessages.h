@@ -86,6 +86,7 @@
 #include "message/CfgTmode2.h"
 #include "message/CfgGnss.h"
 #include "message/CfgLogfilter.h"
+#include "message/CfgDosc.h"
 
 #include "message/MonIo.h"
 #include "message/MonVer.h"
@@ -184,6 +185,7 @@ using InputMessages =
         message::CfgTmode2<TMessage>,
         message::CfgGnss<TMessage>,
         message::CfgLogfilter<TMessage>,
+        message::CfgDosc<TMessage>,
         message::MonIo<TMessage>,
         message::MonVer<TMessage>,
         message::MonMsgpp<TMessage>,

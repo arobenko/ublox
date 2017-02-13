@@ -107,7 +107,7 @@ enum MsgId : std::uint16_t
     MsgId_CFG_TXSLOT = 0x0653, ///< ID of CFG-TXSLOT message
     MsgId_CFG_PWR = 0x0657, ///< ID of CFG-PWR message
     MsgId_CFG_ESRC = 0x0660, ///< ID of CFG-ESRC message
-    MsgId_CFG_DOCS = 0x0661, ///< ID of CFG-DOCS message
+    MsgId_CFG_DOSC = 0x0661, ///< ID of CFG-DOSC message
     MsgId_CFG_SMGR = 0x0662, ///< ID of CFG-SMGR message
     MsgId_CFG_GEOFENCE = 0x0669, ///< ID of CFG-GEOFENCE message
     MsgId_CFG_FIXSEED = 0x0684, ///< ID of CFG-FIXSEED message
@@ -138,7 +138,7 @@ enum MsgId : std::uint16_t
     MsgId_TIM_TM2 = 0x0d03, ///< ID of TIM-TM2 message
     MsgId_TIM_SVIN = 0x0d04, ///< ID of TIM-SVIN message
     MsgId_TIM_VRFY = 0x0d06, ///< ID of TIM-VRFY message
-    MsgId_TIM_DOCS = 0x0d11, ///< ID of TIM-DOCS message
+    MsgId_TIM_DOSC = 0x0d11, ///< ID of TIM-DOSC message
     MsgId_TIM_TOS = 0x0d12, ///< ID of TIM-TOS message
     MsgId_TIM_SMEAS = 0x0d13, ///< ID of TIM-SMEAS message
     MsgId_TIM_VCOCAL = 0x0d15, ///< ID of TIM-VCOCAL message
@@ -164,8 +164,8 @@ enum MsgId : std::uint16_t
     MsgId_LOG_RETRIEVESTRING = 0x210d, ///< ID of LOG-RETRIEVESTRING message
     MsgId_LOG_FINDTIME = 0x210e, ///< ID of LOG-FINDTIME message
     MsgId_LOG_RETRIEVEPOSEXTRA = 0x210f, ///< ID of LOG-RETRIEVEPOSEXTRA message
-    MsgId_SEC_SIGN = 0x2101, ///< ID of SEC-SIGN message
-    MsgId_SEC_UNIQID = 0x2103 ///< ID of SEC-UNIQID message
+    MsgId_SEC_SIGN = 0x2701, ///< ID of SEC-SIGN message
+    MsgId_SEC_UNIQID = 0x2703 ///< ID of SEC-UNIQID message
 };
 
 }  // namespace ublox
