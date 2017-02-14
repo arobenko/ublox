@@ -96,7 +96,7 @@ QVariantMap createProps_controlIf()
 QVariantMap createProps_flags()
 {
     cc::property::field::ForField<CfgDoscFields::flags> props;
-    props.name("globalFlags")
+    props.name("flags")
          .add(createProps_isCalibrated())
          .add(createProps_controlIf())
          .add(cc::property::field::IntValue().name("reserved").hidden().asMap());
@@ -135,7 +135,7 @@ QVariantList createFieldsProperties()
 
     props.append(cc::property::field::ForField<CfgDoscFields::version>().name("version").asMap());
     props.append(createProps_numOsc());
-    props.append(cc_plugin::field::common::props_reserved(2));
+    props.append(cc_plugin::field::common::props_reserved(1));
     props.append(createProps_data());
 
     assert(props.size() == CfgDosc::FieldIdx_numOfValues);

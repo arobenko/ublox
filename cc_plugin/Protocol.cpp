@@ -17,7 +17,7 @@
 
 #include "Protocol.h"
 
-#include "cc_plugin/Stack.h"
+#include "cc_plugin/StackTmp.h"
 #include "cc_plugin/TransportMessage.h"
 
 namespace cc = comms_champion;

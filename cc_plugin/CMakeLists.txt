@@ -134,6 +134,7 @@ function (cc_plugin_ublox)
         message/CfgGnssPoll.cpp
         message/CfgLogfilter.cpp
         message/CfgLogfilterPoll.cpp
+        message/CfgEsrc.cpp
         message/CfgDosc.cpp
         message/CfgDynseed.cpp
         message/MonIo.cpp
