@@ -19,7 +19,6 @@
 
 #include <cassert>
 
-#include "cc_plugin/field/nav.h"
 #include "cc_plugin/field/common.h"
 
 template class ublox::message::CfgDosc<ublox::cc_plugin::Message>;

@@ -137,6 +137,7 @@ function (cc_plugin_ublox)
         message/CfgEsrc.cpp
         message/CfgDosc.cpp
         message/CfgDynseed.cpp
+        message/CfgFixseed.cpp
         message/MonIo.cpp
         message/MonIoPoll.cpp
         message/MonVer.cpp
@@ -239,6 +240,10 @@ endif ()
 if (NOT CC_UBLOX_FULL_SOLUTION)
     if (EXISTS "${INSTALL_DIR}/cmake/CommsChampionConfig.cmake")
         list (APPEND CMAKE_PREFIX_PATH "${INSTALL_DIR}/cmake")
+        FILE(GLOB_RECURSE comms.headers "${INSTALL_DIR}/include/comms/*.h")
+        add_custom_target(comms.headers SOURCES ${comms.headers})
+        FILE(GLOB_RECURSE cc.headers "${INSTALL_DIR}/include/comms_champion/*.h")
+        add_custom_target(cc.headers SOURCES ${cc.headers})
     endif ()
     
     if (NOT "${CC_MAIN_INSTALL_DIR}" STREQUAL "")

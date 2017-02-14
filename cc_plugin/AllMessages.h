@@ -140,8 +140,8 @@
 #include "cc_plugin/message/CfgLogfilterPoll.h"
 #include "cc_plugin/message/CfgEsrc.h"
 #include "cc_plugin/message/CfgDosc.h"
+#include "cc_plugin/message/CfgFixseed.h"
 #include "cc_plugin/message/CfgDynseed.h"
-
 #include "cc_plugin/message/MonIo.h"
 #include "cc_plugin/message/MonIoPoll.h"
 #include "cc_plugin/message/MonVer.h"
@@ -322,6 +322,7 @@ typedef std::tuple<
     cc_plugin::message::CfgLogfilterPoll,
     cc_plugin::message::CfgEsrc,
     cc_plugin::message::CfgDosc,
+    cc_plugin::message::CfgFixseed,
     cc_plugin::message::CfgDynseed,
     cc_plugin::message::MonIo,
     cc_plugin::message::MonIoPoll,
