@@ -21,6 +21,9 @@ install (
     DESTINATION ${INC_INSTALL_DIR}
 )
 
+FILE(GLOB_RECURSE protocol.headers "include/*.h")
+add_custom_target(ublox.headers SOURCES ${protocol.headers})
+
 find_package (Doxygen)
 if (DOXYGEN_FOUND)
     set (doc_output_dir "${DOC_INSTALL_DIR}/ublox")

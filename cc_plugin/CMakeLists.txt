@@ -266,3 +266,6 @@ cc_plugin_ublox ()
 if (CC_UBLOX_FULL_SOLUTION)
     add_dependencies(${THIS_PLUGIN_NAME} ${CC_EXTERNAL_TGT})
 endif ()
+
+FILE(GLOB_RECURSE plugin.headers "*.h")
+add_custom_target(cc_plugin.headers SOURCES ${plugin.headers})
