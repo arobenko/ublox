@@ -35,34 +35,6 @@ namespace message
 /// @see CfgGnss
 struct CfgGnssFields
 {
-    /// @brief Enumeration for @ref gnssId field.
-    enum class GnssId : std::uint8_t
-    {
-        GPS = 0,
-        SBAS = 1,
-        QZSS = 5,
-        GLONASS = 6
-    };
-
-    /// @brief Custom value validator for @ref gnssId field.
-    struct GnssIdValidator
-    {
-        template <typename TField>
-        bool operator()(const TField& field) const
-        {
-            auto value = field.value();
-            static const GnssId Values[] = {
-                GnssId::GPS,
-                GnssId::SBAS,
-                GnssId::QZSS,
-                GnssId::GLONASS
-            };
-
-            auto iter = std::lower_bound(std::begin(Values), std::end(Values), value);
-            return (iter != std::end(Values)) && (*iter == value);
-        }
-    };
-
     /// @brief Definition of "msgVer" field.
     using msgVer =
         field::common::U1T<
@@ -79,11 +51,7 @@ struct CfgGnssFields
     using numConfigBlocks = field::common::U1;
 
     /// @brief Definition of "gnssId" field.
-    using gnssId =
-        field::common::EnumT<
-            GnssId,
-            comms::option::ContentsValidator<GnssIdValidator>
-        >;
+    using gnssId = field::common::gnssId;
 
     /// @brief Definition of "resTrkCh" field.
     using resTrkCh = field::common::U1;
@@ -94,10 +62,12 @@ struct CfgGnssFields
     /// @brief Definition of "reserved1" field.
     using reserved1 = field::common::res1;
 
-    /// @brief Definition of "flags" field.
-    struct flags : public
-        field::common::X4T<
-            comms::option::BitmaskReservedBits<0xfffffffe, 0>
+    /// @brief Definition of "flagsLow" member field of the @ref flags bitfield.
+    struct flagsLow : public
+        field::common::X2T<
+            comms::option::BitmaskReservedBits<0xfffe, 0>,
+            comms::option::FixedBitLength<16>
+
         >
     {
         /// @brief Provide names for internal bits.
@@ -105,6 +75,28 @@ struct CfgGnssFields
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
         COMMS_BITMASK_BITS(enable);
+    };
+
+    /// @brief Definition of "sigCfgMask" member field of the @ref flags bitfield.
+    using sigCfgMask = field::common::U1T<comms::option::FixedBitLength<8> >;
+
+    /// @brief Definition of "flagsHigh" member field of the @ref flags bitfield.
+    using flagsHigh = field::common::res1T<comms::option::FixedBitLength<8> >;
+
+    struct flags : public
+        field::common::BitfieldT<
+            std::tuple<
+                flagsLow,
+                sigCfgMask,
+                flagsHigh
+            >
+        >
+    {
+        /// @brief Allow access to internal fields.
+        /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
+        ///     related to @b comms::field::Bitfield class from COMMS library
+        ///     for details.
+        COMMS_FIELD_MEMBERS_ACCESS(flagsLow, sigCfgMask, flagsHigh);
     };
 
     /// @brief Definition of a single configuration block

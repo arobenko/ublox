@@ -42,8 +42,7 @@ namespace common
 using FieldBase = ublox::Message::Field;
 
 /// @brief Common definition for 1 byte unsigned integer value field
-/// @details Defined to be
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1field_1_1IntValue.html">comms::field::IntValue</a>
+/// @details Defined to be @b comms::field::IntValue
 ///     with @ref FieldBase as a base class, @b std::uint8_t as a storage type
 ///     and @b TOptions... as extra options.
 /// @tparam TOptions Extra options.
@@ -59,8 +58,7 @@ using U1T =
 using U1 = U1T<>;
 
 /// @brief Common definition for 1 byte signed integer value field
-/// @details Defined to be
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1field_1_1IntValue.html">comms::field::IntValue</a>
+/// @details Defined to be @b comms::field::IntValue
 ///     with @ref FieldBase as a base class, @b std::int8_t as a storage type
 ///     and @b TOptions... as extra options.
 /// @tparam TOptions Extra options.
@@ -76,8 +74,7 @@ using I1T =
 using I1 = I1T<>;
 
 /// @brief Common definition for 1 byte bitmask value field
-/// @details Defined to be
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1field_1_1BitmaskValue.html">comms::field::BitmaskValue</a>
+/// @details Defined to be @b comms::field::BitmaskValue
 ///     with @ref FieldBase as a base class, 1 byte fixed length
 ///     and @b TOptions... as extra options.
 /// @tparam TOptions Extra options.
@@ -93,8 +90,7 @@ using X1T =
 using X1 = X1T<>;
 
 /// @brief Common definition for 2 bytes unsigned integer value field
-/// @details Defined to be
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1field_1_1IntValue.html">comms::field::IntValue</a>
+/// @details Defined to be @b comms::field::IntValue
 ///     with @ref FieldBase as a base class, @b std::uint16_t as a storage type
 ///     and @b TOptions... as extra options.
 /// @tparam TOptions Extra options.
@@ -110,8 +106,7 @@ using U2T =
 using U2 = U2T<>;
 
 /// @brief Common definition for 2 bytes signed integer value field
-/// @details Defined to be
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1field_1_1IntValue.html">comms::field::IntValue</a>
+/// @details Defined to be @b comms::field::IntValue
 ///     with @ref FieldBase as a base class, @b std::int16_t as a storage type
 ///     and @b TOptions... as extra options.
 /// @tparam TOptions Extra options.
@@ -127,8 +122,7 @@ using I2T =
 using I2 = I2T<>;
 
 /// @brief Common definition for 2 bytes bitmask value field
-/// @details Defined to be
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1field_1_1BitmaskValue.html">comms::field::BitmaskValue</a>
+/// @details Defined to be @b comms::field::BitmaskValue
 ///     with @ref FieldBase as a base class, 2 bytes fixed length
 ///     and @b TOptions... as extra options.
 /// @tparam TOptions Extra options.
@@ -144,8 +138,7 @@ using X2T =
 using X2 = X2T<>;
 
 /// @brief Common definition for 4 bytes unsigned integer value field
-/// @details Defined to be
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1field_1_1IntValue.html">comms::field::IntValue</a>
+/// @details Defined to be @b comms::field::IntValue
 ///     with @ref FieldBase as a base class, @b std::uint32_t as a storage type
 ///     and @b TOptions... as extra options.
 /// @tparam TOptions Extra options.
@@ -161,8 +154,7 @@ using U4T =
 using U4 = U4T<>;
 
 /// @brief Common definition for 4 bytes signed integer value field
-/// @details Defined to be
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1field_1_1IntValue.html">comms::field::IntValue</a>
+/// @details Defined to be @b comms::field::IntValue
 ///     with @ref FieldBase as a base class, @b std::int32_t as a storage type
 ///     and @b TOptions... as extra options.
 /// @tparam TOptions Extra options.
@@ -178,8 +170,7 @@ using I4T =
 using I4 = I4T<>;
 
 /// @brief Common definition for 4 bytes bitmask value field
-/// @details Defined to be
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1field_1_1BitmaskValue.html">comms::field::BitmaskValue</a>
+/// @details Defined to be @b comms::field::BitmaskValue
 ///     with @ref FieldBase as a base class, 2 bytes fixed length
 ///     and @b TOptions... as extra options.
 /// @tparam TOptions Extra options.
@@ -237,8 +228,7 @@ using res4T = U4T<comms::option::ValidNumValueRange<0, 0>, TOptions...>;
 using res4 = res4T<>;
 
 /// @brief Common definition for 4 byte IEEE 754 single precision floating point value field
-/// @details Defined to be
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1field_1_1FloatValue.html">comms::field::FloatValue</a>
+/// @details Defined to be @b comms::field::FloatValue
 ///     with @ref FieldBase as a base class, @b float as a storage type
 ///     and @b TOptions... as extra options.
 /// @tparam TOptions Extra options.
@@ -260,8 +250,7 @@ static_assert(sizeof(float) == sizeof(std::uint32_t),
     "float is expected to have size of 4 bytes");
 
 /// @brief Common definition for 4 byte IEEE 754 double precision floating point value field
-/// @details Defined to be
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1field_1_1FloatValue.html">comms::field::FloatValue</a>
+/// @details Defined to be @b comms::field::FloatValue
 ///     with @ref FieldBase as a base class, @b double as a storage type
 ///     and @b TOptions... as extra options.
 /// @tparam TOptions Extra options.
@@ -298,8 +287,7 @@ using Scaling_us2s = comms::option::ScalingRatio<1, 1000000L>;
 using Scaling_ns2s = comms::option::ScalingRatio<1, 1000000000L>;
 
 /// @brief Common definition of sequence of fields or raw bytes.
-/// @details Defined to be
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1field_1_1ArrayList.html">comms::field::ArrayList</a>
+/// @details Defined to be @b comms::field::ArrayList
 ///     with @ref FieldBase as a base class, @b TElem as the element type, and
 ///     @b TOptions as extra options.
 /// @tparam TElem Element of the list.
@@ -313,8 +301,7 @@ using ListT =
     >;
 
 /// @brief Common definition of enum value field.
-/// @details Defined to be
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1field_1_1EnumValue.html">comms::field::EnumValue</a>
+/// @details Defined to be @b comms::field::EnumValue
 ///     with @ref FieldBase as a base class, @b TEnum as the enum type, and
 ///     @b TOptions as extra options.
 /// @tparam TEnum Enum type.
@@ -328,16 +315,14 @@ using EnumT =
     >;
 
 /// @brief Common definition of optional field.
-/// @details Defined to be
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1field_1_1Optional.html">comms::field::Optional</a>
+/// @details Defined to be @b comms::field::Optional
 ///     with @b TField as the field type.
 /// @tparam TField Optional field.
 template <typename TField>
 using OptionalT = comms::field::Optional<TField>;
 
 /// @brief Common definition of bitfield field.
-/// @details Defined to be
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1field_1_1Bitfield.html">comms::field::Bitfield</a>
+/// @details Defined to be @b comms::field::Bitfield
 ///     with @ref FieldBase as a base class, all member fields bundled in @b std::tuple, and
 ///     @b TOptions as extra options.
 /// @tparam TMemFields Member fields bundled in @b std::tuple.
@@ -351,8 +336,7 @@ using BitfieldT =
     >;
 
 /// @brief Common definition of string field.
-/// @details Defined to be
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1field_1_1String.html">comms::field::String</a>
+/// @details Defined to be @b comms::field::String
 ///     with @ref FieldBase as a base class, and
 ///     @b TOptions as extra options.
 /// @tparam TOptions Extra options.
@@ -386,8 +370,7 @@ using ZString =
     >;
 
 /// @brief Common definition of bundle field.
-/// @details Defined to be
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1field_1_1Bundle.html">comms::field::Bundle</a>
+/// @details Defined to be @b comms::field::Bundle
 ///     with all member fields bundled in @b std::tuple, and
 ///     @b TOptions as extra options.
 /// @tparam TMemFields Member fields bundled in @b std::tuple.

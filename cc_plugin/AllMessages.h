@@ -323,7 +323,7 @@ typedef std::tuple<
     cc_plugin::message::CfgLogfilterPoll,
     cc_plugin::message::CfgEsrc,
     cc_plugin::message::CfgDosc,
-    cc_plugin::message::Geofence,
+    cc_plugin::message::CfgGeofence,
     cc_plugin::message::CfgFixseed,
     cc_plugin::message::CfgDynseed,
     cc_plugin::message::MonIo,

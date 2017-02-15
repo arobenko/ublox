@@ -56,8 +56,8 @@ struct CfgItfmFields
             comms::option::ValidNumValueRange<0, 0x1f>
         >;
 
-    /// @brief Definition of "reserved1" member field in @ref config bitmask.
-    using reserved1 =
+    /// @brief Definition of "algorithmBits" member field in @ref config bitmask.
+    using algorithmBits =
         field::common::U4T<
             comms::option::FixedBitLength<22>,
             comms::option::ValidNumValueRange<0x16b156, 0x16b156>,
@@ -65,7 +65,7 @@ struct CfgItfmFields
         >;
 
     /// @brief Definition of the bitmask member field with single "enable" bit
-    ///     in @ref config bitmask.
+    ///     in @ref config bitfield.
     struct enable : public
         field::common::X1T<
             comms::option::FixedBitLength<1>
@@ -78,8 +78,8 @@ struct CfgItfmFields
         COMMS_BITMASK_BITS(bit);
     };
 
-    /// @brief Definition of "reserved2" member field in @ref config2 bitmask.
-    using reserved2 =
+    /// @brief Definition of "generalBits" member field in @ref config2 bitmask.
+    using generalBits =
         field::common::U2T<
             comms::option::FixedBitLength<12>,
             comms::option::ValidNumValueRange<0x31e, 0x31e>,
@@ -94,11 +94,20 @@ struct CfgItfmFields
             comms::option::ValidNumValueRange<0, (int)AntSetting::NumOfValues - 1>
         >;
 
-    /// @brief Definition of "reserved3" member field in @ref config2 bitmask.
-    using reserved3 =
-        field::common::res4T<
-            comms::option::FixedBitLength<18>
-        >;
+    /// @brief Definition of the bitmask member field with single "enable2" bit
+    ///     in @ref config2 bitfield.
+    struct enable2 : public
+        field::common::X1T<
+            comms::option::FixedBitLength<1>
+        >
+    {
+        /// @brief Provide names for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS(bit);
+    };
+
 
     /// @brief Definition of "config" field.
     struct config : public
@@ -106,7 +115,7 @@ struct CfgItfmFields
             std::tuple<
                 bbThreshold,
                 cwThreshold,
-                reserved1,
+                algorithmBits,
                 enable
             >
         >
@@ -115,16 +124,19 @@ struct CfgItfmFields
         /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
         ///     related to @b comms::field::Bitfield class from COMMS library
         ///     for details.
-        COMMS_FIELD_MEMBERS_ACCESS(bbThreshold, cwThreshold, reserved1, enable);
+        COMMS_FIELD_MEMBERS_ACCESS(bbThreshold, cwThreshold, algorithmBits, enable);
     };
 
     /// @brief Definition of "config2" field.
     struct config2 : public
         field::common::BitfieldT<
             std::tuple<
-                reserved2,
+                generalBits,
                 antSetting,
-                reserved3
+                enable2,
+                field::common::res4T<
+                    comms::option::FixedBitLength<17>
+                >
             >
         >
     {
@@ -132,7 +144,7 @@ struct CfgItfmFields
         /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
         ///     related to @b comms::field::Bitfield class from COMMS library
         ///     for details.
-        COMMS_FIELD_MEMBERS_ACCESS(reserved2, antSetting, reserved3);
+        COMMS_FIELD_MEMBERS_ACCESS(generalBits, antSetting, enable2, reserved);
     };
 
     /// @brief All the fields bundled in std::tuple.
