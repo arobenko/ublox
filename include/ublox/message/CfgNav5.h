@@ -46,6 +46,7 @@ struct CfgNav5Fields
         Airborne_1g, ///< Airborne with <1g Acceleration
         Airborne_2g,///< Airborne with <2g Acceleration
         Airborne_4g,///< Airborne with <4g Acceleration
+        WristWatch, ///< Wrist worn watch
     };
 
     /// @brief Custom value validator for @ref dynModel field.
@@ -62,7 +63,8 @@ struct CfgNav5Fields
                 DynModel::Sea,
                 DynModel::Airborne_1g,
                 DynModel::Airborne_2g,
-                DynModel::Airborne_4g
+                DynModel::Airborne_4g,
+                DynModel::WristWatch,
             };
 
             auto value = field.value();
@@ -89,7 +91,17 @@ struct CfgNav5Fields
         /// @details See definition of @b COMMS_BITMASK_BITS macro
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
-        COMMS_BITMASK_BITS(dyn, minEl, posFixMode, drLim, posMask, timeMask, staticHoldMask, dgps);
+        COMMS_BITMASK_BITS(
+            dyn,
+            minEl,
+            posFixMode,
+            drLim,
+            posMask,
+            timeMask,
+            staticHoldMask,
+            dgpsMask,
+            cnoThreshold,
+            utc=10);
     };
 
     /// @brief Definition of "dynModel" field.
@@ -143,13 +155,53 @@ struct CfgNav5Fields
     using cnoThresh = field::common::U1;
 
     /// @brief Definition of "reserved2" field.
-    using reserved2 = field::common::res2;
+    using reserved1 = field::common::res2;
+
+    /// @brief Definition of "staticHoldMaxDist" field.
+    using staticHoldMaxDist = field::common::U2;
+
+    /// @brief Value enumeration for @ref utcStandard enum value field.
+    enum class UtcStandard : std::uint8_t
+    {
+        Automatic, ///< Automatic, gerived from used GNSS
+        Us = 3, ///< Operated by U.S. Naval Observatory (GPS)
+        SovietUnion = 6, ///<  Operated by former Soviet Unioin (GLONASS)
+        China = 7, ///< Operated by Chine (BeiDou)
+    };
+
+    /// @brief Custom value validator for @ref utcStandard field.
+    struct UtcStandardValidator
+    {
+        template <typename TField>
+        bool operator()(const TField& field) const
+        {
+            static const UtcStandard Values[] = {
+                UtcStandard::Automatic,
+                UtcStandard::Us,
+                UtcStandard::SovietUnion,
+                UtcStandard::China,
+            };
+
+            auto value = field.value();
+            auto iter = std::lower_bound(std::begin(Values), std::end(Values), value);
+            return (iter != std::end(Values)) && (*iter == value);
+        }
+    };
+
+
+    /// @brief Definition of "utcStandard" field.
+    using utcStandard =
+        field::common::EnumT<
+            UtcStandard,
+            comms::option::ContentsValidator<UtcStandardValidator>
+        >;
+
+
+    /// @brief Definition of "reserved2" field.
+    using reserved2 = field::common::res1;
 
     /// @brief Definition of "reserved3" field.
     using reserved3 = field::common::res4;
-
-    /// @brief Definition of "reserved4" field.
-    using reserved4 = field::common::res4;
 
     /// @brief All the fields bundled in std::tuple.
     using All = std::tuple<
@@ -168,9 +220,11 @@ struct CfgNav5Fields
         dgpsTimeOut,
         cnoThreshNumSVs,
         cnoThresh,
+        reserved1,
+        staticHoldMaxDist,
+        utcStandard,
         reserved2,
-        reserved3,
-        reserved4
+        reserved3
     >;
 };
 
@@ -219,9 +273,11 @@ public:
     ///     @li @b dgpsTimeOut for @ref CfgNav5Fields::dgpsTimeOut field
     ///     @li @b cnoThreshNumSVs for @ref CfgNav5Fields::cnoThreshNumSVs field
     ///     @li @b cnoThresh for @ref CfgNav5Fields::cnoThresh field
+    ///     @li @b reserved1 for @ref CfgNav5Fields::reserved1 field
+    ///     @li @b staticHoldMaxDist for @ref CfgNav5Fields::staticHoldMaxDist field
+    ///     @li @b utcStandard for @ref CfgNav5Fields::utcStandard field
     ///     @li @b reserved2 for @ref CfgNav5Fields::reserved2 field
-    ///     @li @b reserved3 for @ref CfgNav5Fields::reserved3 field
-    ///     @li @b reserved4 for @ref CfgNav5Fields::reserved4 field
+    ///     @li @b reserved34 for @ref CfgNav5Fields::reserved3 field
     COMMS_MSG_FIELDS_ACCESS(
         mask,
         dynModel,
@@ -238,9 +294,11 @@ public:
         dgpsTimeOut,
         cnoThreshNumSVs,
         cnoThresh,
+        reserved1,
+        staticHoldMaxDist,
+        utcStandard,
         reserved2,
-        reserved3,
-        reserved4
+        reserved3
     );
 
     /// @brief Default constructor
