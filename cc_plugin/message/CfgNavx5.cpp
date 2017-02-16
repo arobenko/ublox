@@ -50,10 +50,21 @@ QVariantMap createProps_mask1()
          .add(CfgNavx5Fields::mask1::BitIdx_minCno, "minCno")
          .add(CfgNavx5Fields::mask1::BitIdx_initial3dfix, "initial3dfix")
          .add(CfgNavx5Fields::mask1::BitIdx_wknRoll, "wknRoll")
+         .add(CfgNavx5Fields::mask1::BitIdx_ackAid, "ackAid")
          .add(CfgNavx5Fields::mask1::BitIdx_ppp, "ppp")
          .add(CfgNavx5Fields::mask1::BitIdx_aop, "aop");
 
     assert(props.bits().size() == CfgNavx5Fields::mask1::BitIdx_numOfValues);
+    return props.asMap();
+}
+
+QVariantMap createProps_mask2()
+{
+    cc::property::field::ForField<CfgNavx5Fields::mask2> props;
+    props.name("mask2")
+         .add(CfgNavx5Fields::mask2::BitIdx_adr, "adr");
+
+    assert(props.bits().size() == CfgNavx5Fields::mask2::BitIdx_numOfValues);
     return props.asMap();
 }
 
@@ -82,35 +93,30 @@ QVariantList createFieldsProperties()
     props.append(
         cc::property::field::ForField<CfgNavx5Fields::version>().name("version").asMap());
     props.append(createProps_mask1());
-    props.append(cc_plugin::field::common::props_reserved(0));
+    props.append(createProps_mask2());
     props.append(cc_plugin::field::common::props_reserved(1));
-    props.append(cc_plugin::field::common::props_reserved(2));
     props.append(
         cc::property::field::ForField<CfgNavx5Fields::minSVs>().name("minSVs").asMap());
     props.append(
         cc::property::field::ForField<CfgNavx5Fields::maxSVs>().name("maxSVs").asMap());
     props.append(
         cc::property::field::ForField<CfgNavx5Fields::minCNO>().name("minCNO").asMap());
-    props.append(cc_plugin::field::common::props_reserved(5));
+    props.append(cc_plugin::field::common::props_reserved(2));
     props.append(createProps_boolVal("iniFix3D"));
-    props.append(cc_plugin::field::common::props_reserved(6));
-    props.append(cc_plugin::field::common::props_reserved(7));
-    props.append(cc_plugin::field::common::props_reserved(8));
+    props.append(cc_plugin::field::common::props_reserved(3));
+    props.append(createProps_boolVal("ackAiding"));
     props.append(
         cc::property::field::ForField<CfgNavx5Fields::wknRollover>().name("wknRollover").asMap());
-    props.append(cc_plugin::field::common::props_reserved(9));
-    props.append(cc_plugin::field::common::props_reserved(10));
-    props.append(cc_plugin::field::common::props_reserved(11));
+    props.append(cc_plugin::field::common::props_reserved(4));
+    props.append(cc_plugin::field::common::props_reserved(4));
     props.append(createProps_boolVal("usePPP"));
     props.append(createProps_aopCfg());
-    props.append(cc_plugin::field::common::props_reserved(12));
-    props.append(cc_plugin::field::common::props_reserved(13));
+    props.append(cc_plugin::field::common::props_reserved(5));
     props.append(
         cc::property::field::ForField<CfgNavx5Fields::aopOrbMaxErr>().name("aopOrbMaxErr").asMap());
-    props.append(cc_plugin::field::common::props_reserved(14));
-    props.append(cc_plugin::field::common::props_reserved(15));
-    props.append(cc_plugin::field::common::props_reserved(3));
-    props.append(cc_plugin::field::common::props_reserved(4));
+    props.append(cc_plugin::field::common::props_reserved(6));
+    props.append(cc_plugin::field::common::props_reserved(7));
+    props.append(createProps_boolVal("useAdr"));
     assert(props.size() == CfgNavx5::FieldIdx_numOfValues);
     return props;
 }

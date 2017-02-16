@@ -126,8 +126,11 @@ if ((UNIX) AND (NOT CC_UBLOX_NO_CCACHE))
     endif(CCACHE_FOUND)
 endif ()    
 
-include_directories(${CMAKE_SOURCE_DIR})
-include_directories(${CMAKE_SOURCE_DIR}/include)
+include_directories(
+    BEFORE
+    ${CMAKE_SOURCE_DIR}
+    ${CMAKE_SOURCE_DIR}/include
+)
 
 add_subdirectory(cc_plugin)
 

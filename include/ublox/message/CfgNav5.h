@@ -84,7 +84,7 @@ struct CfgNav5Fields
     /// @brief Definition of "mask" field.
     struct mask : public
         field::common::X2T<
-            comms::option::BitmaskReservedBits<0xff00, 0>
+            comms::option::BitmaskReservedBits<0xfa00, 0>
         >
     {
         /// @brief Provide names for internal bits.
