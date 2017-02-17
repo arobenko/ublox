@@ -83,6 +83,7 @@ struct CfgGnssFields
     /// @brief Definition of "flagsHigh" member field of the @ref flags bitfield.
     using flagsHigh = field::common::res1T<comms::option::FixedBitLength<8> >;
 
+    /// @brief Definition of the "flags" field.
     struct flags : public
         field::common::BitfieldT<
             std::tuple<

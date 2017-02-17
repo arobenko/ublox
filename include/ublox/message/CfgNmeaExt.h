@@ -49,6 +49,8 @@ struct CfgNmeaExtFields : public CfgNmeaFields
         GP, ///< GP
         GL, ///< GL
         GN, ///< GN
+        GA, ///< GA
+        GB, ///< GB
         NumOfValues ///< number of available values
     };
 
@@ -63,14 +65,14 @@ struct CfgNmeaExtFields : public CfgNmeaFields
     /// @brief Definition of "gnssToFilter" field.
     struct gnssToFilter : public
         field::common::X4T<
-            comms::option::BitmaskReservedBits<0xffffffcc, 0>
+            comms::option::BitmaskReservedBits<0xffffff8c, 0>
         >
     {
         /// @brief Provide names for internal bits.
         /// @details See definition of @b COMMS_BITMASK_BITS macro
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
-        COMMS_BITMASK_BITS(gps, sbas, qzss=4, glonass);
+        COMMS_BITMASK_BITS(gps, sbas, qzss=4, glonass, beidou);
     };
 
     /// @brief Definition of "svNumbering" field.
@@ -94,8 +96,13 @@ struct CfgNmeaExtFields : public CfgNmeaFields
             comms::option::ValidNumValueRange<0, (int)GsvTalkerId::NumOfValues - 1>
         >;
 
-    /// @brief Definition of "reserved" field.
-    using reserved = field::common::res1;
+    /// @brief Definition of "version" field.
+    using version =
+        field::common::U1T<
+            comms::option::ValidNumValueRange<0, 0>,
+            comms::option::FailOnInvalid
+        >;
+
 
     /// @brief All the fields bundled in std::tuple.
     using All = std::tuple<
@@ -107,7 +114,7 @@ struct CfgNmeaExtFields : public CfgNmeaFields
         svNumbering,
         mainTalkerId,
         gsvTalkerId,
-        reserved
+        version
     >;
 
 };
@@ -150,7 +157,7 @@ public:
     ///     @li @b svNumbering for @ref CfgNmeaExtFields::svNumbering field
     ///     @li @b mainTalkerId for @ref CfgNmeaExtFields::mainTalkerId field
     ///     @li @b gsvTalkerId for @ref CfgNmeaExtFields::gsvTalkerId field
-    ///     @li @b reserved for @ref CfgNmeaExtFields::reserved field
+    ///     @li @b version for @ref CfgNmeaExtFields::version field
     COMMS_MSG_FIELDS_ACCESS(
         filter,
         nmeaVersion,
@@ -160,7 +167,7 @@ public:
         svNumbering,
         mainTalkerId,
         gsvTalkerId,
-        reserved
+        version
     );
 
     /// @brief Default constructor

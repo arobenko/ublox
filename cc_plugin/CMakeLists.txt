@@ -103,6 +103,7 @@ function (cc_plugin_ublox)
         message/CfgAntPoll.cpp
         message/CfgSbas.cpp
         message/CfgSbasPoll.cpp
+        message/CfgNmeaExtV1.cpp
         message/CfgNmeaExt.cpp
         message/CfgNmea.cpp
         message/CfgNmeaPoll.cpp

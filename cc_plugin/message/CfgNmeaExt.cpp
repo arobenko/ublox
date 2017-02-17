@@ -42,50 +42,6 @@ namespace
 
 using ublox::message::CfgNmeaExtFields;
 
-QVariantMap createProps_gnssToFilter()
-{
-    cc::property::field::ForField<CfgNmeaExtFields::gnssToFilter> props;
-    props.name("gnssToFilter")
-         .add("gps")
-         .add("sbas")
-         .add(CfgNmeaExtFields::gnssToFilter::BitIdx_qzss, "qzss")
-         .add("qlonass");
-    assert(props.bits().size() == CfgNmeaExtFields::gnssToFilter::BitIdx_numOfValues);
-    return props.asMap();
-}
-
-QVariantMap createProps_svNumbering()
-{
-    cc::property::field::ForField<CfgNmeaExtFields::svNumbering> props;
-    props.name("svNumbering")
-         .add("Strict")
-         .add("Extended");
-    assert(props.values().size() == (int)CfgNmeaExtFields::SvNumbering::NumOfValues);
-    return props.asMap();
-}
-
-QVariantMap createProps_mainTalkerId()
-{
-    cc::property::field::ForField<CfgNmeaExtFields::mainTalkerId> props;
-    props.name("mainTalkerId")
-         .add("Not overridden")
-         .add("GP")
-         .add("GL")
-         .add("GN");
-    assert(props.values().size() == (int)CfgNmeaExtFields::MainTalkerId::NumOfValues);
-    return props.asMap();
-}
-
-QVariantMap createProps_gsvTalkerId()
-{
-    cc::property::field::ForField<CfgNmeaExtFields::gsvTalkerId> props;
-    props.name("gsvTalkerId")
-         .add("GNSS Specific")
-         .add("Main");
-    assert(props.values().size() == (int)CfgNmeaExtFields::GsvTalkerId::NumOfValues);
-    return props.asMap();
-}
-
 QVariantList createFieldsProperties()
 {
     QVariantList props;
@@ -93,11 +49,11 @@ QVariantList createFieldsProperties()
     props.append(cc_plugin::field::cfg::props_nmeaVersion());
     props.append(cc_plugin::field::cfg::props_nmeaNumSV());
     props.append(cc_plugin::field::cfg::props_nmeaFlags());
-    props.append(createProps_gnssToFilter());
-    props.append(createProps_svNumbering());
-    props.append(createProps_mainTalkerId());
-    props.append(createProps_gsvTalkerId());
-    props.append(cc_plugin::field::common::props_reserved(0));
+    props.append(cc_plugin::field::cfg::props_gnssToFilter());
+    props.append(cc_plugin::field::cfg::props_svNumbering());
+    props.append(cc_plugin::field::cfg::props_mainTalkerId());
+    props.append(cc_plugin::field::cfg::props_gsvTalkerId());
+    props.append(cc::property::field::ForField<CfgNmeaExtFields::version>().name("version").asMap());
     assert(props.size() == CfgNmeaExt::FieldIdx_numOfValues);
     return props;
 }

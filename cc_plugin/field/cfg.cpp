@@ -27,6 +27,7 @@ CC_ENABLE_WARNINGS()
 #include "ublox/message/CfgPrt.h"
 #include "ublox/message/CfgInf.h"
 #include "ublox/message/CfgNmea.h"
+#include "ublox/message/CfgNmeaExt.h"
 
 namespace cc = comms_champion;
 
@@ -169,6 +170,29 @@ QVariantMap createProps_nmeaVersion()
             .asMap();
 }
 
+QVariantMap createProps_gnssToFilter()
+{
+    cc::property::field::ForField<ublox::message::CfgNmeaExtFields::gnssToFilter> props;
+    props.name("gnssToFilter")
+         .add("gps")
+         .add("sbas")
+         .add(ublox::message::CfgNmeaExtFields::gnssToFilter::BitIdx_qzss, "qzss")
+         .add("qlonass")
+         .add("beidou");
+    assert(props.bits().size() == ublox::message::CfgNmeaExtFields::gnssToFilter::BitIdx_numOfValues);
+    return props.asMap();
+}
+
+QVariantMap createProps_svNumbering()
+{
+    cc::property::field::ForField<ublox::message::CfgNmeaExtFields::svNumbering> props;
+    props.name("svNumbering")
+         .add("Strict")
+         .add("Extended");
+    assert(props.values().size() == (int)ublox::message::CfgNmeaExtFields::SvNumbering::NumOfValues);
+    return props.asMap();
+}
+
 QVariantMap createProps_nmeaFlags()
 {
     cc::property::field::ForField<ublox::message::CfgNmeaFields::flags> props;
@@ -176,6 +200,30 @@ QVariantMap createProps_nmeaFlags()
          .add("compat")
          .add("consider");
     assert(props.bits().size() == ublox::message::CfgNmeaFields::flags::BitIdx_numOfValues);
+    return props.asMap();
+}
+
+QVariantMap createProps_gsvTalkerId()
+{
+    cc::property::field::ForField<ublox::message::CfgNmeaExtFields::gsvTalkerId> props;
+    props.name("gsvTalkerId")
+         .add("GNSS Specific")
+         .add("Main");
+    assert(props.values().size() == (int)ublox::message::CfgNmeaExtFields::GsvTalkerId::NumOfValues);
+    return props.asMap();
+}
+
+QVariantMap createProps_mainTalkerId()
+{
+    cc::property::field::ForField<ublox::message::CfgNmeaExtFields::mainTalkerId> props;
+    props.name("mainTalkerId")
+         .add("Not overridden")
+         .add("GP")
+         .add("GL")
+         .add("GN")
+         .add("GA")
+         .add("GB");
+    assert(props.values().size() == (int)ublox::message::CfgNmeaExtFields::MainTalkerId::NumOfValues);
     return props.asMap();
 }
 
@@ -345,6 +393,18 @@ const QVariantMap& props_nmeaVersion()
     return Props;
 }
 
+const QVariantMap& props_gnssToFilter()
+{
+    static const QVariantMap Props = createProps_gnssToFilter();
+    return Props;
+}
+
+const QVariantMap& props_svNumbering()
+{
+    static const QVariantMap Props = createProps_svNumbering();
+    return Props;
+}
+
 const QVariantMap& props_nmeaNumSV()
 {
     static const QVariantMap Props =
@@ -357,6 +417,18 @@ const QVariantMap& props_nmeaNumSV()
 const QVariantMap& props_nmeaFlags()
 {
     static const QVariantMap Props = createProps_nmeaFlags();
+    return Props;
+}
+
+const QVariantMap& props_mainTalkerId()
+{
+    static const QVariantMap Props = createProps_mainTalkerId();
+    return Props;
+}
+
+const QVariantMap& props_gsvTalkerId()
+{
+    static const QVariantMap Props = createProps_gsvTalkerId();
     return Props;
 }
 

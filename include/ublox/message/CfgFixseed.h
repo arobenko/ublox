@@ -64,7 +64,7 @@ struct CfgFixseedFields
         >;
 
     /// @brief All the fields bundled in std::tuple.
-    /// @tparam TOpt Extra option(s) for @ref data field
+    /// @tparam TOpt Extra option(s) for @ref list field
     template <typename TOpt>
     using All = std::tuple<
         version,
@@ -83,7 +83,7 @@ struct CfgFixseedFields
 ///     See @ref CfgFixseedFields and for definition of the fields this message contains
 ///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
-/// @tparam TDataOpt Extra option(s) for @b data field
+/// @tparam TDataOpt Extra option(s) for @b list field
 template <typename TMsgBase = Message, typename TDataOpt = comms::option::EmptyOption>
 class CfgFixseed : public
     comms::MessageBase<
@@ -114,7 +114,7 @@ public:
     ///     @li @b reserved1 for @ref CfgFixseedFields::reserved1 field
     ///     @li @b seedHi for @ref CfgFixseedFields::seedHi field
     ///     @li @b seedLo for @ref CfgFixseedFields::seedLo field
-    ///     @li @b list for @ref CfgFixseedFields::lsit field
+    ///     @li @b list for @ref CfgFixseedFields::list field
     COMMS_MSG_FIELDS_ACCESS(version, length, reserved1, seedHi, seedLo, list);
 
     /// @brief Default constructor
@@ -136,7 +136,7 @@ public:
     CfgFixseed& operator=(CfgFixseed&&) = default;
 
     /// @brief Provides custom read functionality.
-    /// @details The number of blocks in @b data (@ref CfgFixseedFields::data)
+    /// @details The number of blocks in @b list (@ref CfgFixseedFields::list)
     ///     list is determined by the value of @b length (@ref CfgFixseedFields::length)
     ///     field.
     template <typename TIter>
@@ -153,7 +153,7 @@ public:
 
     /// @brief Provides custom refresh functionality
     /// @details The value of @b length (@ref CfgFixseedFields::length) field is
-    ///     determined by number of blocks stored in @b data (@ref CfgFixseedFields::data)
+    ///     determined by number of blocks stored in @b list (@ref CfgFixseedFields::list)
     ///     list.
     /// @return @b true in case the value of "length" field was modified, @b false otherwise
     bool doRefresh()
