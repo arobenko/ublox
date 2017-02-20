@@ -145,6 +145,8 @@
 #include "cc_plugin/message/CfgGeofence.h"
 #include "cc_plugin/message/CfgFixseed.h"
 #include "cc_plugin/message/CfgDynseed.h"
+#include "cc_plugin/message/CfgPms.h"
+
 #include "cc_plugin/message/MonIo.h"
 #include "cc_plugin/message/MonIoPoll.h"
 #include "cc_plugin/message/MonVer.h"
@@ -330,6 +332,7 @@ typedef std::tuple<
     cc_plugin::message::CfgGeofence,
     cc_plugin::message::CfgFixseed,
     cc_plugin::message::CfgDynseed,
+    cc_plugin::message::CfgPms,
     cc_plugin::message::MonIo,
     cc_plugin::message::MonIoPoll,
     cc_plugin::message::MonVer,
