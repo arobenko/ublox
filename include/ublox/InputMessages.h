@@ -75,6 +75,7 @@
 #include "message/CfgNmea.h"
 #include "message/CfgUsb.h"
 #include "message/CfgTmode.h"
+#include "message/CfgOdo.h"
 #include "message/CfgNavx5.h"
 #include "message/CfgNav5.h"
 #include "message/CfgEsfgwt.h"
@@ -176,6 +177,7 @@ using InputMessages =
         message::CfgNmea<TMessage>,
         message::CfgUsb<TMessage>,
         message::CfgTmode<TMessage>,
+        message::CfgOdo<TMessage>,
         message::CfgNavx5<TMessage>,
         message::CfgNav5<TMessage>,
         message::CfgEsfgwt<TMessage>,

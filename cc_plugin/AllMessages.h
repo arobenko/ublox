@@ -116,6 +116,7 @@
 #include "cc_plugin/message/CfgTmode.h"
 #include "cc_plugin/message/CfgTmodePoll.h"
 #include "cc_plugin/message/CfgOdo.h"
+#include "cc_plugin/message/CfgOdoPoll.h"
 #include "cc_plugin/message/CfgNvs.h"
 #include "cc_plugin/message/CfgNavx5.h"
 #include "cc_plugin/message/CfgNavx5Poll.h"
@@ -306,6 +307,7 @@ typedef std::tuple<
     cc_plugin::message::CfgTmode,
     cc_plugin::message::CfgTmodePoll,
     cc_plugin::message::CfgOdo,
+    cc_plugin::message::CfgOdoPoll,
     cc_plugin::message::CfgNvs,
     cc_plugin::message::CfgNavx5,
     cc_plugin::message::CfgNavx5Poll,
