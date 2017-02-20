@@ -204,7 +204,7 @@ using res2T = U2T<comms::option::ValidNumValueRange<0, 0>, TOptions...>;
 using res2 = res2T<>;
 
 /// @brief Common definition of reserved 2 bytes field
-/// @details Defined as @ref U4T with serialisation length limit to 3 bytes and
+/// @details Defined as @ref U4T with serialisation length limit of 3 bytes and
 ///     single valid value of 0.
 /// @tparam TOptions extra options to be based to @ref U4T definition
 template <typename... TOptions>
@@ -383,6 +383,25 @@ using BundleT =
         TOptions...
     >;
 
+/// @brief Common definition of reserved 5 bytes field
+struct res5 : public BundleT<std::tuple<res1, res4> >
+{
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
+    ///     related to @b comms::field::Bitfield class from COMMS library
+    ///     for details.
+    COMMS_FIELD_MEMBERS_ACCESS(part1, part2);
+};
+
+/// @brief Common definition of reserved 5 bytes field
+struct res6 : public BundleT<std::tuple<res2, res4> >
+{
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
+    ///     related to @b comms::field::Bitfield class from COMMS library
+    ///     for details.
+    COMMS_FIELD_MEMBERS_ACCESS(part1, part2);
+};
 
 /// @brief Definition of common @b iTOW field used in multiple messages in
 ///     multiple message classes.

@@ -62,7 +62,8 @@ QVariantMap createProps_mask2()
 {
     cc::property::field::ForField<CfgNavx5Fields::mask2> props;
     props.name("mask2")
-         .add(CfgNavx5Fields::mask2::BitIdx_adr, "adr");
+         .add(CfgNavx5Fields::mask2::BitIdx_adr, "adr")
+         .add("sigAttenComp");
 
     assert(props.bits().size() == CfgNavx5Fields::mask2::BitIdx_numOfValues);
     return props.asMap();
@@ -107,15 +108,18 @@ QVariantList createFieldsProperties()
     props.append(createProps_boolVal("ackAiding"));
     props.append(
         cc::property::field::ForField<CfgNavx5Fields::wknRollover>().name("wknRollover").asMap());
+    props.append(
+        cc::property::field::ForField<CfgNavx5Fields::sigAttenCompMode>().name("sigAttenCompMode").asMap());
     props.append(cc_plugin::field::common::props_reserved(4));
-    props.append(cc_plugin::field::common::props_reserved(4));
+    props.append(cc_plugin::field::common::props_reserved(5));
+    props.append(cc_plugin::field::common::props_reserved(6));
     props.append(createProps_boolVal("usePPP"));
     props.append(createProps_aopCfg());
-    props.append(cc_plugin::field::common::props_reserved(5));
+    props.append(cc_plugin::field::common::props_reserved(7));
     props.append(
         cc::property::field::ForField<CfgNavx5Fields::aopOrbMaxErr>().name("aopOrbMaxErr").asMap());
-    props.append(cc_plugin::field::common::props_reserved(6));
-    props.append(cc_plugin::field::common::props_reserved(7));
+    props.append(cc_plugin::field::common::props_reserved(8));
+    props.append(cc_plugin::field::common::props_reserved(9));
     props.append(createProps_boolVal("useAdr"));
     assert(props.size() == CfgNavx5::FieldIdx_numOfValues);
     return props;

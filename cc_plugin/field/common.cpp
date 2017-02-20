@@ -147,6 +147,23 @@ const QVariantMap& props_gnssId()
     return Props;
 }
 
+QVariantMap createProps_reservedBundle(unsigned resIdx, unsigned elemCount)
+{
+    auto props =
+        cc::property::field::Bundle()
+            .name(QString("reserved%1").arg(resIdx, 1, 10, QChar('0')));
+
+    for (auto count = 0U; count < elemCount; ++count) {
+        props.add(QVariantMap());
+    }
+    return props.asMap();
+}
+
+QVariantMap createProps_reservedBundleTwoParts(unsigned idx)
+{
+    return createProps_reservedBundle(idx, 2);
+}
+
 }  // namespace common
 
 }  // namespace field

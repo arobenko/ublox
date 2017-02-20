@@ -66,8 +66,21 @@ struct CfgNavx5Fields
     /// @brief Value enumeration for @ref usePPP field.
     using UsePPP = BoolVal;
 
+    /// @brief Validator for @ref version field
+    struct VersionValidator
+    {
+        template <typename TField>
+        bool operator()(const TField& field) const
+        {
+            return (field.value() == 0) || (field.value() == 2);
+        }
+    };
+
     /// @brief Definition of "version" field.
-    using version = field::common::U2;
+    using version =
+        field::common::U2T<
+            comms::option::ContentsValidator<VersionValidator>
+        >;
 
     /// @brief Definition of "mask1" field.
     struct mask1 : public
@@ -85,14 +98,14 @@ struct CfgNavx5Fields
     /// @brief Definition of "mask2" field.
     struct mask2 : public
         field::common::X4T<
-            comms::option::BitmaskReservedBits<0xffffffbf, 0>
+            comms::option::BitmaskReservedBits<0xffffff3f, 0>
         >
     {
         /// @brief Provide names for internal bits.
         /// @details See definition of @b COMMS_BITMASK_BITS macro
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
-        COMMS_BITMASK_BITS(adr=6);
+        COMMS_BITMASK_BITS(adr=6, sigAttenComp);
     };
 
 
@@ -134,11 +147,17 @@ struct CfgNavx5Fields
     /// @brief Definition of "wknRollover" field.
     using wknRollover = field::common::U2;
 
-    /// @brief Definition of "reserved4" field.
-    using reserved4 = field::common::res4;
+    /// @brief Definition of "sigAttenCompMode" field.
+    using sigAttenCompMode = field::common::U1;
 
-    /// @brief Definition of "reserved8" field.
-    using reserved8 = field::common::res2;
+    /// @brief Definition of "reserved4" field.
+    using reserved4 = field::common::res1;
+
+    /// @brief Definition of "reserved5" field.
+    using reserved5 = field::common::res2;
+
+    /// @brief Definition of "reserved6" field.
+    using reserved6 = field::common::res2;
 
     /// @brief Definition of "usePPP" field.
     using usePPP =
@@ -162,7 +181,7 @@ struct CfgNavx5Fields
     };
 
     /// @brief Definition of "reserved5" field.
-    using reserved5 = field::common::res2;
+    using reserved7 = field::common::res2;
 
     /// @brief Definition of "aopOrbMaxErr" field.
     using aopOrbMaxErr =
@@ -171,11 +190,11 @@ struct CfgNavx5Fields
         >;
 
     /// @brief Definition of "reserved6" field.
-    using reserved6 = field::common::res4;
+    using reserved8 = field::common::res4;
 
 
     /// @brief Definition of "reserved7" field.
-    using reserved7 = field::common::res3;
+    using reserved9 = field::common::res3;
 
     /// @brief Value enumeration for @ref useAdr field.
     using UseAdr = BoolVal;
@@ -201,14 +220,16 @@ struct CfgNavx5Fields
         reserved3,
         ackAiding,
         wknRollover,
+        sigAttenCompMode,
         reserved4,
-        reserved8,
+        reserved5,
+        reserved6,
         usePPP,
         aopCfg,
-        reserved5,
-        aopOrbMaxErr,
-        reserved6,
         reserved7,
+        aopOrbMaxErr,
+        reserved8,
+        reserved9,
         useAdr
     >;
 };
@@ -255,14 +276,16 @@ public:
     ///     @li @b reserved3 for @ref CfgNavx5Fields::reserved3 field
     ///     @li @b ackAiding for @ref CfgNavx5Fields::ackAiding field
     ///     @li @b wknRollover for @ref CfgNavx5Fields::wknRollover field
+    ///     @li @b sigAttenCompMode for @ref CfgNavx5Fields::sigAttenCompMode field
     ///     @li @b reserved4 for @ref CfgNavx5Fields::reserved4 field
-    ///     @li @b reserved8 for @ref CfgNavx5Fields::reserved8 field
+    ///     @li @b reserved5 for @ref CfgNavx5Fields::reserved5 field
+    ///     @li @b reserved6 for @ref CfgNavx5Fields::reserved6 field
     ///     @li @b usePPP for @ref CfgNavx5Fields::usePPP field
     ///     @li @b aopCfg for @ref CfgNavx5Fields::aopCfg field
-    ///     @li @b reserved5 for @ref CfgNavx5Fields::reserved5 field
-    ///     @li @b aopOrbMaxErr for @ref CfgNavx5Fields::aopOrbMaxErr field
-    ///     @li @b reserved6 for @ref CfgNavx5Fields::reserved6 field
     ///     @li @b reserved7 for @ref CfgNavx5Fields::reserved7 field
+    ///     @li @b aopOrbMaxErr for @ref CfgNavx5Fields::aopOrbMaxErr field
+    ///     @li @b reserved8 for @ref CfgNavx5Fields::reserved8 field
+    ///     @li @b reserved9 for @ref CfgNavx5Fields::reserved9 field
     ///     @li @b useAdr for @ref CfgNavx5Fields::useAdr field
     COMMS_MSG_FIELDS_ACCESS(
         version,
@@ -277,14 +300,16 @@ public:
         reserved3,
         ackAiding,
         wknRollover,
+        sigAttenCompMode,
         reserved4,
-        reserved8,
+        reserved5,
+        reserved6,
         usePPP,
         aopCfg,
-        reserved5,
-        aopOrbMaxErr,
-        reserved6,
         reserved7,
+        aopOrbMaxErr,
+        reserved8,
+        reserved9,
         useAdr
     );
 
