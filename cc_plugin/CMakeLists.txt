@@ -111,6 +111,7 @@ function (cc_plugin_ublox)
         message/CfgUsbPoll.cpp
         message/CfgTmode.cpp
         message/CfgTmodePoll.cpp
+        message/CfgOdo.cpp
         message/CfgNvs.cpp
         message/CfgNavx5.cpp
         message/CfgNavx5Poll.cpp
