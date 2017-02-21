@@ -146,6 +146,8 @@
 #include "cc_plugin/message/CfgEsrcPoll.h"
 #include "cc_plugin/message/CfgDosc.h"
 #include "cc_plugin/message/CfgDoscPoll.h"
+#include "cc_plugin/message/CfgSmgr.h"
+#include "cc_plugin/message/CfgSmgrPoll.h"
 #include "cc_plugin/message/CfgGeofence.h"
 #include "cc_plugin/message/CfgGeofencePoll.h"
 #include "cc_plugin/message/CfgFixseed.h"
@@ -339,6 +341,8 @@ typedef std::tuple<
     cc_plugin::message::CfgEsrcPoll,
     cc_plugin::message::CfgDosc,
     cc_plugin::message::CfgDoscPoll,
+    cc_plugin::message::CfgSmgr,
+    cc_plugin::message::CfgSmgrPoll,
     cc_plugin::message::CfgGeofence,
     cc_plugin::message::CfgGeofencePoll,
     cc_plugin::message::CfgFixseed,

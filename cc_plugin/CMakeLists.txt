@@ -142,6 +142,8 @@ function (cc_plugin_ublox)
         message/CfgEsrcPoll.cpp
         message/CfgDosc.cpp
         message/CfgDoscPoll.cpp
+        message/CfgSmgr.cpp
+        message/CfgSmgrPoll.cpp
         message/CfgGeofence.cpp
         message/CfgGeofencePoll.cpp
         message/CfgFixseed.cpp

@@ -89,6 +89,7 @@
 #include "message/CfgLogfilter.h"
 #include "message/CfgEsrc.h"
 #include "message/CfgDosc.h"
+#include "message/CfgSmgr.h"
 #include "message/CfgGeofence.h"
 #include "message/CfgPms.h"
 
@@ -192,6 +193,7 @@ using InputMessages =
         message::CfgLogfilter<TMessage>,
         message::CfgEsrc<TMessage>,
         message::CfgDosc<TMessage>,
+        message::CfgSmgr<TMessage>,
         message::CfgGeofence<TMessage>,
         message::CfgPms<TMessage>,
         message::MonIo<TMessage>,
