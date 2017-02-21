@@ -141,6 +141,7 @@
 #include "cc_plugin/message/CfgGnssPoll.h"
 #include "cc_plugin/message/CfgLogfilter.h"
 #include "cc_plugin/message/CfgLogfilterPoll.h"
+#include "cc_plugin/message/CfgPwr.h"
 #include "cc_plugin/message/CfgEsrc.h"
 #include "cc_plugin/message/CfgEsrcPoll.h"
 #include "cc_plugin/message/CfgDosc.h"
@@ -150,6 +151,7 @@
 #include "cc_plugin/message/CfgFixseed.h"
 #include "cc_plugin/message/CfgDynseed.h"
 #include "cc_plugin/message/CfgPms.h"
+#include "cc_plugin/message/CfgPmsPoll.h"
 
 #include "cc_plugin/message/MonIo.h"
 #include "cc_plugin/message/MonIoPoll.h"
@@ -332,6 +334,7 @@ typedef std::tuple<
     cc_plugin::message::CfgGnssPoll,
     cc_plugin::message::CfgLogfilter,
     cc_plugin::message::CfgLogfilterPoll,
+    cc_plugin::message::CfgPwr,
     cc_plugin::message::CfgEsrc,
     cc_plugin::message::CfgEsrcPoll,
     cc_plugin::message::CfgDosc,
@@ -341,6 +344,7 @@ typedef std::tuple<
     cc_plugin::message::CfgFixseed,
     cc_plugin::message::CfgDynseed,
     cc_plugin::message::CfgPms,
+    cc_plugin::message::CfgPmsPoll,
     cc_plugin::message::MonIo,
     cc_plugin::message::MonIoPoll,
     cc_plugin::message::MonVer,

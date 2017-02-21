@@ -137,6 +137,7 @@ function (cc_plugin_ublox)
         message/CfgGnssPoll.cpp
         message/CfgLogfilter.cpp
         message/CfgLogfilterPoll.cpp
+        message/CfgPwr.cpp
         message/CfgEsrc.cpp
         message/CfgEsrcPoll.cpp
         message/CfgDosc.cpp
@@ -146,6 +147,7 @@ function (cc_plugin_ublox)
         message/CfgFixseed.cpp
         message/CfgDynseed.cpp
         message/CfgPms.cpp
+        message/CfgPmsPoll.cpp
         message/MonIo.cpp
         message/MonIoPoll.cpp
         message/MonVer.cpp
