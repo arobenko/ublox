@@ -38,6 +38,9 @@ struct CfgRateFields
     {
         UTC, ///< UTC time
         GPS, ///< GPS time
+        GLONASS, ///< Glonass time
+        BeiDou, ///< BeiDou time
+        Galileo, ///< Galileo time
         NumOfValues ///< number of available values
     };
 
