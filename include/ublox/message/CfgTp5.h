@@ -33,14 +33,14 @@ namespace message
 /// @see CfgTp5
 struct CfgTp5Fields
 {
-    /// @brief Value enumeration for @ref tpIdx field
-    using TpIdx = field::cfg::TpIdx;
-
     /// @brief Definition of "tpIdx" field.
     using tpIdx = field::cfg::tpIdx;
 
-    /// @brief Definition of "reserved0" field.
-    using reserved0 = field::common::res1;
+    /// @brief Definition of "version" field.
+    using version =
+        field::common::U1T<
+            comms::option::ValidNumValueRange<0, 1>
+        >;
 
     /// @brief Definition of "reserved1" field.
     using reserved1 = field::common::res2;
@@ -66,23 +66,78 @@ struct CfgTp5Fields
     /// @brief Definition of "userConfigDelay" field.
     using userConfigDelay = field::common::I4T<field::common::Scaling_ns2s>;
 
-    /// @brief Definition of "flags" field.
-    struct flags : public
-        field::common::X4T<
-            comms::option::BitmaskReservedBits<0xffffff00, 0>
+    /// @brief Definition of "flagsLow" member field of @ref flags bitfield.
+    struct flagsLow : public
+        field::common::X1T<
+            comms::option::FixedBitLength<7>,
+            comms::option::BitmaskReservedBits<0x80, 0>
         >
     {
         /// @brief Provide names for internal bits.
         /// @details See definition of @b COMMS_BITMASK_BITS macro
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
-        COMMS_BITMASK_BITS(active, logGpsFreq, lockedOtherSet, isFreq, isLength, alignToTow, polarity, flags_gridUtcGps);
+        COMMS_BITMASK_BITS(active, logGpsFreq, lockedOtherSet, isFreq, isLength, alignToTow, polarity);
+    };
+
+    /// @brief Enumeration for @ref gridUtcGnss field.
+    enum class GridUtcGnss : std::uint8_t
+    {
+        Utc, ///< UTC
+        Gps, ///< GPS
+        Glonass, ///< GLONASS
+        BeiDou, ///< BeiDou
+        Galileo, ///< Galileo
+        NumOfValues ///< number of available values
+    };
+
+    /// @brief Definition of common "gridUtcGnss" member field of @ref flags bitfield.
+    using gridUtcGnss =
+        field::common::EnumT<
+            GridUtcGnss,
+            comms::option::ValidNumValueRange<0, (int)GridUtcGnss::NumOfValues - 1>,
+            comms::option::FixedBitLength<4>
+        >;
+
+
+    /// @brief Enumeration for @ref syncMode field.
+    enum class SyncMode : std::uint8_t
+    {
+        SyncMode0, ///< value 0
+        SyncMode1, ///< value 1
+        NumOfValues ///< number of available values
+    };
+
+    /// @brief Definition of common "syncMode" member field of @ref flags bitfield.
+    using syncMode =
+        field::common::EnumT<
+            SyncMode,
+            comms::option::ValidNumValueRange<0, (int)SyncMode::NumOfValues - 1>,
+            comms::option::FixedBitLength<3>
+        >;
+
+    /// @brief Definition of "flags" field.
+    struct flags : public
+        field::common::BitfieldT<
+            std::tuple<
+                flagsLow,
+                gridUtcGnss,
+                syncMode,
+                field::common::res4T<comms::option::FixedBitLength<18> >
+            >
+        >
+    {
+        /// @brief Allow access to internal fields.
+        /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
+        ///     related to @b comms::field::Bitfield class from COMMS library
+        ///     for details.
+        COMMS_FIELD_MEMBERS_ACCESS(flagsLow, gridUtcGnss, syncMode, reserved);
     };
 
     /// @brief All the fields bundled in std::tuple.
     using All = std::tuple<
         tpIdx,
-        reserved0,
+        version,
         reserved1,
         antCableDelay,
         rfGroupDelay,
@@ -111,12 +166,6 @@ class CfgTp5 : public
         comms::option::MsgType<CfgTp5<TMsgBase> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_CFG_TP5>,
-        comms::option::FieldsImpl<CfgTp5Fields::All>,
-        comms::option::MsgType<CfgTp5<TMsgBase> >
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.
@@ -126,7 +175,7 @@ public:
     ///
     ///     The field names are:
     ///     @li @b tpIdx for @ref CfgTp5Fields::tpIdx field
-    ///     @li @b reserved0 for @ref CfgTp5Fields::reserved0 field
+    ///     @li @b version for @ref CfgTp5Fields::version field
     ///     @li @b reserved1 for @ref CfgTp5Fields::reserved1 field
     ///     @li @b antCableDelay for @ref CfgTp5Fields::antCableDelay field
     ///     @li @b rfGroupDelay for @ref CfgTp5Fields::rfGroupDelay field
@@ -138,7 +187,7 @@ public:
     ///     @li @b flags for @ref CfgTp5Fields::flags field
     COMMS_MSG_FIELDS_ACCESS(
         tpIdx,
-        reserved0,
+        version,
         reserved1,
         antCableDelay,
         rfGroupDelay,
