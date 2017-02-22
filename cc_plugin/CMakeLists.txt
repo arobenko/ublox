@@ -137,6 +137,7 @@ function (cc_plugin_ublox)
         message/CfgGnssPoll.cpp
         message/CfgLogfilter.cpp
         message/CfgLogfilterPoll.cpp
+        message/CfgTxslot.cpp
         message/CfgPwr.cpp
         message/CfgEsrc.cpp
         message/CfgEsrcPoll.cpp

@@ -141,6 +141,7 @@
 #include "cc_plugin/message/CfgGnssPoll.h"
 #include "cc_plugin/message/CfgLogfilter.h"
 #include "cc_plugin/message/CfgLogfilterPoll.h"
+#include "cc_plugin/message/CfgTxslot.h"
 #include "cc_plugin/message/CfgPwr.h"
 #include "cc_plugin/message/CfgEsrc.h"
 #include "cc_plugin/message/CfgEsrcPoll.h"
@@ -336,6 +337,7 @@ typedef std::tuple<
     cc_plugin::message::CfgGnssPoll,
     cc_plugin::message::CfgLogfilter,
     cc_plugin::message::CfgLogfilterPoll,
+    cc_plugin::message::CfgTxslot,
     cc_plugin::message::CfgPwr,
     cc_plugin::message::CfgEsrc,
     cc_plugin::message::CfgEsrcPoll,
