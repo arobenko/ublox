@@ -393,8 +393,18 @@ struct res5 : public BundleT<std::tuple<res1, res4> >
     COMMS_FIELD_MEMBERS_ACCESS(part1, part2);
 };
 
-/// @brief Common definition of reserved 5 bytes field
+/// @brief Common definition of reserved 6 bytes field
 struct res6 : public BundleT<std::tuple<res2, res4> >
+{
+    /// @brief Allow access to internal fields.
+    /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
+    ///     related to @b comms::field::Bitfield class from COMMS library
+    ///     for details.
+    COMMS_FIELD_MEMBERS_ACCESS(part1, part2);
+};
+
+/// @brief Common definition of reserved 7 bytes field
+struct res7 : public BundleT<std::tuple<res3, res4> >
 {
     /// @brief Allow access to internal fields.
     /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro

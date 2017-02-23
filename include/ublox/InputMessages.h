@@ -118,6 +118,8 @@
 #include "message/TimSvin.h"
 #include "message/TimVrfy.h"
 
+#include "message/EsfStatus.h"
+
 #include "message/LogInfo.h"
 #include "message/LogRetrievepos.h"
 #include "message/LogRetrievestring.h"
@@ -218,6 +220,7 @@ using InputMessages =
         message::TimTm2<TMessage>,
         message::TimSvin<TMessage>,
         message::TimVrfy<TMessage>,
+        message::EsfStatus<TMessage>,
         message::LogInfo<TMessage>,
         message::LogRetrievepos<TMessage>,
         message::LogRetrievestring<TMessage>,
