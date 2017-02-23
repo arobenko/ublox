@@ -216,6 +216,7 @@
 #include "cc_plugin/message/LogRetrievestring.h"
 #include "cc_plugin/message/LogFindtimeCmd.h"
 #include "cc_plugin/message/LogFindtime.h"
+#include "cc_plugin/message/LogRetrieveposextra.h"
 
 namespace ublox
 {
@@ -409,7 +410,8 @@ typedef std::tuple<
     cc_plugin::message::LogRetrievepos,
     cc_plugin::message::LogRetrievestring,
     cc_plugin::message::LogFindtimeCmd,
-    cc_plugin::message::LogFindtime
+    cc_plugin::message::LogFindtime,
+    cc_plugin::message::LogRetrieveposextra
 > AllMessages;
 
 }  // namespace cc_plugin

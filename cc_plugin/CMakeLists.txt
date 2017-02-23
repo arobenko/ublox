@@ -207,6 +207,7 @@ function (cc_plugin_ublox)
         message/LogRetrievestring.cpp
         message/LogFindtimeCmd.cpp
         message/LogFindtime.cpp
+        message/LogRetrieveposextra.cpp
         field/MsgId.cpp
         field/common.cpp
         field/nav.cpp
