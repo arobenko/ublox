@@ -206,6 +206,8 @@
 #include "cc_plugin/message/EsfStatus.h"
 #include "cc_plugin/message/EsfStatusPoll.h"
 
+#include "cc_plugin/message/MgaAck.h"
+
 #include "cc_plugin/message/LogErase.h"
 #include "cc_plugin/message/LogString.h"
 #include "cc_plugin/message/LogCreate.h"
@@ -401,6 +403,7 @@ typedef std::tuple<
     cc_plugin::message::TimVrfyPoll,
     cc_plugin::message::EsfStatus,
     cc_plugin::message::EsfStatusPoll,
+    cc_plugin::message::MgaAck,
     cc_plugin::message::LogErase,
     cc_plugin::message::LogString,
     cc_plugin::message::LogCreate,

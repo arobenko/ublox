@@ -120,10 +120,13 @@
 
 #include "message/EsfStatus.h"
 
+#include "message/MgaAck.h"
+
 #include "message/LogInfo.h"
 #include "message/LogRetrievepos.h"
 #include "message/LogRetrievestring.h"
 #include "message/LogFindtime.h"
+#include "message/LogRetrieveposextra.h"
 
 namespace ublox
 {
@@ -221,10 +224,12 @@ using InputMessages =
         message::TimSvin<TMessage>,
         message::TimVrfy<TMessage>,
         message::EsfStatus<TMessage>,
+        message::MgaAck<TMessage>,
         message::LogInfo<TMessage>,
         message::LogRetrievepos<TMessage>,
         message::LogRetrievestring<TMessage>,
-        message::LogFindtime<TMessage>
+        message::LogFindtime<TMessage>,
+        message::LogRetrieveposextra<TMessage>
     >;
 
 }  // namespace ublox

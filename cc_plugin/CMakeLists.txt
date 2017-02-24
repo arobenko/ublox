@@ -197,6 +197,7 @@ function (cc_plugin_ublox)
         message/TimVrfyPoll.cpp
         message/EsfStatus.cpp
         message/EsfStatusPoll.cpp
+        message/MgaAck.cpp
         message/LogErase.cpp
         message/LogString.cpp
         message/LogCreate.cpp
