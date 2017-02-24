@@ -21,7 +21,7 @@
 #pragma once
 
 #include "ublox/Message.h"
-#include "ublox/field/log.h"
+#include "ublox/field/common.h"
 
 namespace ublox
 {

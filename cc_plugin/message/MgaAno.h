@@ -19,7 +19,7 @@
 #pragma once
 
 #include "comms_champion/comms_champion.h"
-#include "ublox/message/MgaAck.h"
+#include "ublox/message/MgaAno.h"
 #include "cc_plugin/Message.h"
 #include "cc_plugin/ProtocolMessageBase.h"
 
@@ -32,19 +32,19 @@ namespace cc_plugin
 namespace message
 {
 
-class MgaAck : public
+class MgaAno : public
     ProtocolMessageBase<
-        ublox::message::MgaAck<ublox::cc_plugin::Message>,
-        MgaAck>
+        ublox::message::MgaAno<ublox::cc_plugin::Message>,
+        MgaAno>
 {
 public:
-    MgaAck();
-    MgaAck(const MgaAck&) = delete;
-    MgaAck(MgaAck&&) = delete;
-    virtual ~MgaAck();
+    MgaAno();
+    MgaAno(const MgaAno&) = delete;
+    MgaAno(MgaAno&&) = delete;
+    virtual ~MgaAno();
 
-    MgaAck& operator=(const MgaAck&);
-    MgaAck& operator=(MgaAck&&);
+    MgaAno& operator=(const MgaAno&);
+    MgaAno& operator=(MgaAno&&);
 
 protected:
     virtual const char* nameImpl() const override;
@@ -57,8 +57,8 @@ protected:
 
 }  // namespace ublox
 
-extern template class ublox::message::MgaAck<ublox::cc_plugin::Message>;
+extern template class ublox::message::MgaAno<ublox::cc_plugin::Message>;
 extern template class ublox::cc_plugin::ProtocolMessageBase<
-    ublox::message::MgaAck<ublox::cc_plugin::Message>,
-    ublox::cc_plugin::message::MgaAck>;
+    ublox::message::MgaAno<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::MgaAno>;
 
