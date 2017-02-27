@@ -120,6 +120,7 @@
 
 #include "message/EsfStatus.h"
 
+#include "message/MgaFlashAck.h"
 #include "message/MgaAck.h"
 #include "message/MgaDbd.h"
 
@@ -225,6 +226,7 @@ using InputMessages =
         message::TimSvin<TMessage>,
         message::TimVrfy<TMessage>,
         message::EsfStatus<TMessage>,
+        message::MgaFlashAck<TMessage>,
         message::MgaAck<TMessage>,
         message::MgaDbd<TMessage>,
         message::LogInfo<TMessage>,

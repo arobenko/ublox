@@ -17,13 +17,13 @@
 
 #include <cassert>
 
-#include "MgaFlashData.h"
+#include "MgaFlashStop.h"
 #include "cc_plugin/field/common.h"
 
-template class ublox::message::MgaFlashData<ublox::cc_plugin::Message>;
+template class ublox::message::MgaFlashStop<ublox::cc_plugin::Message>;
 template class ublox::cc_plugin::ProtocolMessageBase<
-    ublox::message::MgaFlashData<ublox::cc_plugin::Message>,
-    ublox::cc_plugin::message::MgaFlashData>;
+    ublox::message::MgaFlashStop<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::MgaFlashStop>;
 
 namespace cc = comms_champion;
 
@@ -39,42 +39,35 @@ namespace message
 namespace
 {
 
-using ublox::message::MgaFlashDataFields;
+using ublox::message::MgaFlashStopFields;
 
 QVariantList createFieldsProperties()
 {
     QVariantList props;
 
     props.append(
-        cc::property::field::ForField<MgaFlashDataFields::type>().name("type").readOnly().asMap());
+        cc::property::field::ForField<MgaFlashStopFields::type>().name("type").readOnly().asMap());
     props.append(
-        cc::property::field::ForField<MgaFlashDataFields::version>().name("version").asMap());
-    props.append(
-        cc::property::field::ForField<MgaFlashDataFields::sequence>().name("sequence").asMap());
-    props.append(
-        cc::property::field::ForField<MgaFlashDataFields::size>().name("size").readOnly().asMap());
-    props.append(
-        cc::property::field::ForField<MgaFlashDataFields::data<> >().name("data").asMap());
-
-    assert(props.size() == MgaFlashData::FieldIdx_numOfValues);
+        cc::property::field::ForField<MgaFlashStopFields::version>().name("version").asMap());
+    assert(props.size() == MgaFlashStop::FieldIdx_numOfValues);
     return props;
 }
 
 }  // namespace
 
-MgaFlashData::MgaFlashData() = default;
-MgaFlashData::~MgaFlashData() = default;
+MgaFlashStop::MgaFlashStop() = default;
+MgaFlashStop::~MgaFlashStop() = default;
 
-MgaFlashData& MgaFlashData::operator=(const MgaFlashData&) = default;
-MgaFlashData& MgaFlashData::operator=(MgaFlashData&&) = default;
+MgaFlashStop& MgaFlashStop::operator=(const MgaFlashStop&) = default;
+MgaFlashStop& MgaFlashStop::operator=(MgaFlashStop&&) = default;
 
-const char* MgaFlashData::nameImpl() const
+const char* MgaFlashStop::nameImpl() const
 {
-    static const char* Str = "MGA-FLASH-DATA";
+    static const char* Str = "MGA-FLASH-STOP";
     return Str;
 }
 
-const QVariantList& MgaFlashData::fieldsPropertiesImpl() const
+const QVariantList& MgaFlashStop::fieldsPropertiesImpl() const
 {
     static const auto Props = createFieldsProperties();
     return Props;

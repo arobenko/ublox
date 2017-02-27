@@ -204,6 +204,8 @@ function (cc_plugin_ublox)
         message/MgaBdsIono.cpp
         message/MgaAno.cpp
         message/MgaFlashData.cpp
+        message/MgaFlashStop.cpp
+        message/MgaFlashAck.cpp
         message/MgaAck.cpp
         message/MgaDbd.cpp
         message/MgaDbdPoll.cpp
