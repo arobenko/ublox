@@ -200,6 +200,7 @@ function (cc_plugin_ublox)
         message/MgaBdsEph.cpp
         message/MgaBdsAlm.cpp
         message/MgaBdsHealth.cpp
+        message/MgaBdsUtc.cpp
         message/MgaAno.cpp
         message/MgaAck.cpp
         message/LogErase.cpp
