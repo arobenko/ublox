@@ -201,6 +201,7 @@ function (cc_plugin_ublox)
         message/MgaBdsAlm.cpp
         message/MgaBdsHealth.cpp
         message/MgaBdsUtc.cpp
+        message/MgaBdsIono.cpp
         message/MgaAno.cpp
         message/MgaAck.cpp
         message/LogErase.cpp

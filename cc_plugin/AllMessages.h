@@ -210,6 +210,7 @@
 #include "cc_plugin/message/MgaBdsAlm.h"
 #include "cc_plugin/message/MgaBdsHealth.h"
 #include "cc_plugin/message/MgaBdsUtc.h"
+#include "cc_plugin/message/MgaBdsIono.h"
 #include "cc_plugin/message/MgaAno.h"
 #include "cc_plugin/message/MgaAck.h"
 
@@ -412,6 +413,7 @@ typedef std::tuple<
     cc_plugin::message::MgaBdsAlm,
     cc_plugin::message::MgaBdsHealth,
     cc_plugin::message::MgaBdsUtc,
+    cc_plugin::message::MgaBdsIono,
     cc_plugin::message::MgaAno,
     cc_plugin::message::MgaAck,
     cc_plugin::message::LogErase,
