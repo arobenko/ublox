@@ -213,6 +213,8 @@
 #include "cc_plugin/message/MgaBdsIono.h"
 #include "cc_plugin/message/MgaAno.h"
 #include "cc_plugin/message/MgaAck.h"
+#include "cc_plugin/message/MgaDbd.h"
+#include "cc_plugin/message/MgaDbdPoll.h"
 
 #include "cc_plugin/message/LogErase.h"
 #include "cc_plugin/message/LogString.h"
@@ -416,6 +418,8 @@ typedef std::tuple<
     cc_plugin::message::MgaBdsIono,
     cc_plugin::message::MgaAno,
     cc_plugin::message::MgaAck,
+    cc_plugin::message::MgaDbd,
+    cc_plugin::message::MgaDbdPoll,
     cc_plugin::message::LogErase,
     cc_plugin::message::LogString,
     cc_plugin::message::LogCreate,

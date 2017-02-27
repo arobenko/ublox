@@ -121,6 +121,7 @@
 #include "message/EsfStatus.h"
 
 #include "message/MgaAck.h"
+#include "message/MgaDbd.h"
 
 #include "message/LogInfo.h"
 #include "message/LogRetrievepos.h"
@@ -225,6 +226,7 @@ using InputMessages =
         message::TimVrfy<TMessage>,
         message::EsfStatus<TMessage>,
         message::MgaAck<TMessage>,
+        message::MgaDbd<TMessage>,
         message::LogInfo<TMessage>,
         message::LogRetrievepos<TMessage>,
         message::LogRetrievestring<TMessage>,

@@ -204,6 +204,8 @@ function (cc_plugin_ublox)
         message/MgaBdsIono.cpp
         message/MgaAno.cpp
         message/MgaAck.cpp
+        message/MgaDbd.cpp
+        message/MgaDbdPoll.cpp
         message/LogErase.cpp
         message/LogString.cpp
         message/LogCreate.cpp
