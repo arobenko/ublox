@@ -199,6 +199,7 @@ function (cc_plugin_ublox)
         message/EsfStatusPoll.cpp
         message/MgaBdsEph.cpp
         message/MgaBdsAlm.cpp
+        message/MgaBdsHealth.cpp
         message/MgaAno.cpp
         message/MgaAck.cpp
         message/LogErase.cpp
