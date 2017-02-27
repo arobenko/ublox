@@ -203,6 +203,7 @@ function (cc_plugin_ublox)
         message/MgaBdsUtc.cpp
         message/MgaBdsIono.cpp
         message/MgaAno.cpp
+        message/MgaFlashData.cpp
         message/MgaAck.cpp
         message/MgaDbd.cpp
         message/MgaDbdPoll.cpp
