@@ -194,6 +194,7 @@ public:
     ///     @li @b type for @ref MgaBdsEphFields::type field
     ///     @li @b version for @ref MgaBdsEphFields::version field
     ///     @li @b svId for @ref MgaBdsEphFields::svId field
+    ///     @li @b reserved1 for @ref MgaBdsEphFields::reserved1 field
     ///     @li @b SatH1 for @ref MgaBdsEphFields::SatH1 field
     ///     @li @b IODC for @ref MgaBdsEphFields::IODC field
     ///     @li @b a2 for @ref MgaBdsEphFields::a2 field

@@ -136,7 +136,7 @@ public:
     ///     @li @b svId for @ref MgaAnoFields::svId field
     ///     @li @b gnssId for @ref MgaAnoFields::gnssId field
     ///     @li @b year for @ref MgaAnoFields::year field
-    ///     @li @b month for @ref MgaAnoFields::msgPayloadStart field
+    ///     @li @b month for @ref MgaAnoFields::month field
     ///     @li @b day for @ref MgaAnoFields::day field
     ///     @li @b reserved1 for @ref MgaAnoFields::reserved1 field
     ///     @li @b data for @ref MgaAnoFields::data field
