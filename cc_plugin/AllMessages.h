@@ -206,6 +206,7 @@
 #include "cc_plugin/message/EsfStatus.h"
 #include "cc_plugin/message/EsfStatusPoll.h"
 
+#include "cc_plugin/message/MgaGalEph.h"
 #include "cc_plugin/message/MgaBdsEph.h"
 #include "cc_plugin/message/MgaBdsAlm.h"
 #include "cc_plugin/message/MgaBdsHealth.h"
@@ -414,6 +415,7 @@ typedef std::tuple<
     cc_plugin::message::TimVrfyPoll,
     cc_plugin::message::EsfStatus,
     cc_plugin::message::EsfStatusPoll,
+    cc_plugin::message::MgaGalEph,
     cc_plugin::message::MgaBdsEph,
     cc_plugin::message::MgaBdsAlm,
     cc_plugin::message::MgaBdsHealth,
