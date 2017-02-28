@@ -200,6 +200,7 @@ function (cc_plugin_ublox)
         message/MgaGalEph.cpp
         message/MgaGalAlm.cpp
         message/MgaGalTimeoffset.cpp
+        message/MgaGalUtc.cpp
         message/MgaBdsEph.cpp
         message/MgaBdsAlm.cpp
         message/MgaBdsHealth.cpp
