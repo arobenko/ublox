@@ -108,7 +108,7 @@ QVariantList createFieldsProperties()
         cc::property::field::ForField<MgaGalEphFields::dataValidityE5B>().name("dataValidityE5B").asMap());
     props.append(cc_plugin::field::common::props_reserved(3));
 
-    //assert(props.size() == MgaGalEph::FieldIdx_numOfValues);
+    assert(props.size() == MgaGalEph::FieldIdx_numOfValues);
     return props;
 }
 
