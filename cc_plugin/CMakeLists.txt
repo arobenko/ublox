@@ -208,6 +208,7 @@ function (cc_plugin_ublox)
         message/MgaBdsIono.cpp
         message/MgaGloEph.cpp
         message/MgaGloAlm.cpp
+        message/MgaGloTimeoffset.cpp
         message/MgaAno.cpp
         message/MgaFlashData.cpp
         message/MgaFlashStop.cpp

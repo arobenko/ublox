@@ -217,6 +217,7 @@
 #include "cc_plugin/message/MgaBdsIono.h"
 #include "cc_plugin/message/MgaGloEph.h"
 #include "cc_plugin/message/MgaGloAlm.h"
+#include "cc_plugin/message/MgaGloTimeoffset.h"
 #include "cc_plugin/message/MgaAno.h"
 #include "cc_plugin/message/MgaFlashData.h"
 #include "cc_plugin/message/MgaFlashStop.h"
@@ -431,6 +432,7 @@ typedef std::tuple<
     cc_plugin::message::MgaBdsIono,
     cc_plugin::message::MgaGloEph,
     cc_plugin::message::MgaGloAlm,
+    cc_plugin::message::MgaGloTimeoffset,
     cc_plugin::message::MgaAno,
     cc_plugin::message::MgaFlashData,
     cc_plugin::message::MgaFlashStop,
