@@ -206,6 +206,7 @@
 #include "cc_plugin/message/EsfStatus.h"
 #include "cc_plugin/message/EsfStatusPoll.h"
 
+#include "cc_plugin/message/MgaGpsEph.h"
 #include "cc_plugin/message/MgaGalEph.h"
 #include "cc_plugin/message/MgaGalAlm.h"
 #include "cc_plugin/message/MgaGalTimeoffset.h"
@@ -421,6 +422,7 @@ typedef std::tuple<
     cc_plugin::message::TimVrfyPoll,
     cc_plugin::message::EsfStatus,
     cc_plugin::message::EsfStatusPoll,
+    cc_plugin::message::MgaGpsEph,
     cc_plugin::message::MgaGalEph,
     cc_plugin::message::MgaGalAlm,
     cc_plugin::message::MgaGalTimeoffset,

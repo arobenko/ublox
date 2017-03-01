@@ -197,6 +197,7 @@ function (cc_plugin_ublox)
         message/TimVrfyPoll.cpp
         message/EsfStatus.cpp
         message/EsfStatusPoll.cpp
+        message/MgaGpsEph.cpp
         message/MgaGalEph.cpp
         message/MgaGalAlm.cpp
         message/MgaGalTimeoffset.cpp
