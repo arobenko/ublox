@@ -206,6 +206,7 @@ function (cc_plugin_ublox)
         message/MgaBdsHealth.cpp
         message/MgaBdsUtc.cpp
         message/MgaBdsIono.cpp
+        message/MgaGloEph.cpp
         message/MgaAno.cpp
         message/MgaFlashData.cpp
         message/MgaFlashStop.cpp
