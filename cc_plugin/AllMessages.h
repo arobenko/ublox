@@ -210,6 +210,7 @@
 #include "cc_plugin/message/MgaGpsAlm.h"
 #include "cc_plugin/message/MgaGpsHealth.h"
 #include "cc_plugin/message/MgaGpsUtc.h"
+#include "cc_plugin/message/MgaGpsIono.h"
 #include "cc_plugin/message/MgaGalEph.h"
 #include "cc_plugin/message/MgaGalAlm.h"
 #include "cc_plugin/message/MgaGalTimeoffset.h"
@@ -226,6 +227,7 @@
 #include "cc_plugin/message/MgaFlashData.h"
 #include "cc_plugin/message/MgaFlashStop.h"
 #include "cc_plugin/message/MgaFlashAck.h"
+#include "cc_plugin/message/MgaIniPosXyz.h"
 #include "cc_plugin/message/MgaAck.h"
 #include "cc_plugin/message/MgaDbd.h"
 #include "cc_plugin/message/MgaDbdPoll.h"
@@ -429,6 +431,7 @@ typedef std::tuple<
     cc_plugin::message::MgaGpsAlm,
     cc_plugin::message::MgaGpsHealth,
     cc_plugin::message::MgaGpsUtc,
+    cc_plugin::message::MgaGpsIono,
     cc_plugin::message::MgaGalEph,
     cc_plugin::message::MgaGalAlm,
     cc_plugin::message::MgaGalTimeoffset,
@@ -445,6 +448,7 @@ typedef std::tuple<
     cc_plugin::message::MgaFlashData,
     cc_plugin::message::MgaFlashStop,
     cc_plugin::message::MgaFlashAck,
+    cc_plugin::message::MgaIniPosXyz,
     cc_plugin::message::MgaAck,
     cc_plugin::message::MgaDbd,
     cc_plugin::message::MgaDbdPoll,

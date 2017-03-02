@@ -201,6 +201,7 @@ function (cc_plugin_ublox)
         message/MgaGpsAlm.cpp
         message/MgaGpsHealth.cpp
         message/MgaGpsUtc.cpp
+        message/MgaGpsIono.cpp
         message/MgaGalEph.cpp
         message/MgaGalAlm.cpp
         message/MgaGalTimeoffset.cpp
@@ -217,6 +218,7 @@ function (cc_plugin_ublox)
         message/MgaFlashData.cpp
         message/MgaFlashStop.cpp
         message/MgaFlashAck.cpp
+        message/MgaIniPosXyz.cpp
         message/MgaAck.cpp
         message/MgaDbd.cpp
         message/MgaDbdPoll.cpp
