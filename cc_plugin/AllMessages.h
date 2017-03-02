@@ -209,6 +209,7 @@
 #include "cc_plugin/message/MgaGpsEph.h"
 #include "cc_plugin/message/MgaGpsAlm.h"
 #include "cc_plugin/message/MgaGpsHealth.h"
+#include "cc_plugin/message/MgaGpsUtc.h"
 #include "cc_plugin/message/MgaGalEph.h"
 #include "cc_plugin/message/MgaGalAlm.h"
 #include "cc_plugin/message/MgaGalTimeoffset.h"
@@ -427,6 +428,7 @@ typedef std::tuple<
     cc_plugin::message::MgaGpsEph,
     cc_plugin::message::MgaGpsAlm,
     cc_plugin::message::MgaGpsHealth,
+    cc_plugin::message::MgaGpsUtc,
     cc_plugin::message::MgaGalEph,
     cc_plugin::message::MgaGalAlm,
     cc_plugin::message::MgaGalTimeoffset,
