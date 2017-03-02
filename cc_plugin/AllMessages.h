@@ -229,6 +229,7 @@
 #include "cc_plugin/message/MgaFlashAck.h"
 #include "cc_plugin/message/MgaIniPosXyz.h"
 #include "cc_plugin/message/MgaIniPosLlh.h"
+#include "cc_plugin/message/MgaIniTimeUtc.h"
 #include "cc_plugin/message/MgaAck.h"
 #include "cc_plugin/message/MgaDbd.h"
 #include "cc_plugin/message/MgaDbdPoll.h"
@@ -451,6 +452,7 @@ typedef std::tuple<
     cc_plugin::message::MgaFlashAck,
     cc_plugin::message::MgaIniPosXyz,
     cc_plugin::message::MgaIniPosLlh,
+    cc_plugin::message::MgaIniTimeUtc,
     cc_plugin::message::MgaAck,
     cc_plugin::message::MgaDbd,
     cc_plugin::message::MgaDbdPoll,

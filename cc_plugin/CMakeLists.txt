@@ -220,6 +220,7 @@ function (cc_plugin_ublox)
         message/MgaFlashAck.cpp
         message/MgaIniPosXyz.cpp
         message/MgaIniPosLlh.cpp
+        message/MgaIniTimeUtc.cpp
         message/MgaAck.cpp
         message/MgaDbd.cpp
         message/MgaDbdPoll.cpp
