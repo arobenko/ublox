@@ -219,6 +219,7 @@ function (cc_plugin_ublox)
         message/MgaFlashStop.cpp
         message/MgaFlashAck.cpp
         message/MgaIniPosXyz.cpp
+        message/MgaIniPosLlh.cpp
         message/MgaAck.cpp
         message/MgaDbd.cpp
         message/MgaDbdPoll.cpp
