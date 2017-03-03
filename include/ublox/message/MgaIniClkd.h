@@ -16,7 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 /// @file
-/// @brief Contains definition of MGA-INI-CLDK message and its fields.
+/// @brief Contains definition of MGA-INI-CLKD message and its fields.
 
 #pragma once
 
@@ -29,7 +29,7 @@ namespace ublox
 namespace message
 {
 
-/// @brief Accumulates details of all the MGA-INI-CLDK message fields.
+/// @brief Accumulates details of all the MGA-INI-CLKD message fields.
 /// @see MgaIniClkd
 struct MgaIniClkdFields
 {
@@ -66,7 +66,7 @@ struct MgaIniClkdFields
     >;
 };
 
-/// @brief Definition of MGA-INI-CLDK message
+/// @brief Definition of MGA-INI-CLKD message
 /// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
 ///     various implementation options. @n

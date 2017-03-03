@@ -223,6 +223,7 @@ function (cc_plugin_ublox)
         message/MgaIniTimeUtc.cpp
         message/MgaIniTimeGnss.cpp
         message/MgaIniClkd.cpp
+        message/MgaIniFreq.cpp
         message/MgaAck.cpp
         message/MgaDbd.cpp
         message/MgaDbdPoll.cpp
