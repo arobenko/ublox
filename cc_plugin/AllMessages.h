@@ -233,6 +233,7 @@
 #include "cc_plugin/message/MgaIniTimeGnss.h"
 #include "cc_plugin/message/MgaIniClkd.h"
 #include "cc_plugin/message/MgaIniFreq.h"
+#include "cc_plugin/message/MgaIniEop.h"
 #include "cc_plugin/message/MgaAck.h"
 #include "cc_plugin/message/MgaDbd.h"
 #include "cc_plugin/message/MgaDbdPoll.h"
@@ -459,6 +460,7 @@ typedef std::tuple<
     cc_plugin::message::MgaIniTimeGnss,
     cc_plugin::message::MgaIniClkd,
     cc_plugin::message::MgaIniFreq,
+    cc_plugin::message::MgaIniEop,
     cc_plugin::message::MgaAck,
     cc_plugin::message::MgaDbd,
     cc_plugin::message::MgaDbdPoll,

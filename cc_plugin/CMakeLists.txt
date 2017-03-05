@@ -224,6 +224,7 @@ function (cc_plugin_ublox)
         message/MgaIniTimeGnss.cpp
         message/MgaIniClkd.cpp
         message/MgaIniFreq.cpp
+        message/MgaIniEop.cpp
         message/MgaAck.cpp
         message/MgaDbd.cpp
         message/MgaDbdPoll.cpp
