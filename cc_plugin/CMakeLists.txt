@@ -213,6 +213,7 @@ function (cc_plugin_ublox)
         message/MgaBdsIono.cpp
         message/MgaQzssEph.cpp
         message/MgaQzssAlm.cpp
+        message/MgaQzssHealth.cpp
         message/MgaGloEph.cpp
         message/MgaGloAlm.cpp
         message/MgaGloTimeoffset.cpp
