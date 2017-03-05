@@ -220,6 +220,7 @@
 #include "cc_plugin/message/MgaBdsHealth.h"
 #include "cc_plugin/message/MgaBdsUtc.h"
 #include "cc_plugin/message/MgaBdsIono.h"
+#include "cc_plugin/message/MgaQzssEph.h"
 #include "cc_plugin/message/MgaGloEph.h"
 #include "cc_plugin/message/MgaGloAlm.h"
 #include "cc_plugin/message/MgaGloTimeoffset.h"
@@ -447,6 +448,7 @@ typedef std::tuple<
     cc_plugin::message::MgaBdsHealth,
     cc_plugin::message::MgaBdsUtc,
     cc_plugin::message::MgaBdsIono,
+    cc_plugin::message::MgaQzssEph,
     cc_plugin::message::MgaGloEph,
     cc_plugin::message::MgaGloAlm,
     cc_plugin::message::MgaGloTimeoffset,
