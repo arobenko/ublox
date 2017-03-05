@@ -101,6 +101,7 @@
 #include "message/MonHw.h"
 #include "message/MonHw2.h"
 #include "message/MonRxr.h"
+#include "message/MonGnss.h"
 
 #include "message/AidIni.h"
 #include "message/AidHui.h"
@@ -211,6 +212,7 @@ using InputMessages =
         message::MonHw<TMessage>,
         message::MonHw2<TMessage>,
         message::MonRxr<TMessage>,
+        message::MonGnss<TMessage>,
         message::AidIni<TMessage>,
         message::AidHui<TMessage>,
         message::AidAlm<TMessage>,

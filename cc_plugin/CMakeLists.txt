@@ -166,6 +166,8 @@ function (cc_plugin_ublox)
         message/MonHw2.cpp
         message/MonHw2Poll.cpp
         message/MonRxr.cpp
+        message/MonGnss.cpp
+        message/MonGnssPoll.cpp
         message/AidReq.cpp
         message/AidIni.cpp
         message/AidIniPoll.cpp

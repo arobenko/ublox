@@ -171,6 +171,8 @@
 #include "cc_plugin/message/MonHw2.h"
 #include "cc_plugin/message/MonHw2Poll.h"
 #include "cc_plugin/message/MonRxr.h"
+#include "cc_plugin/message/MonGnss.h"
+#include "cc_plugin/message/MonGnssPoll.h"
 
 #include "cc_plugin/message/AidReq.h"
 #include "cc_plugin/message/AidIni.h"
@@ -405,6 +407,8 @@ typedef std::tuple<
     cc_plugin::message::MonHw2,
     cc_plugin::message::MonHw2Poll,
     cc_plugin::message::MonRxr,
+    cc_plugin::message::MonGnss,
+    cc_plugin::message::MonGnssPoll,
     cc_plugin::message::AidReq,
     cc_plugin::message::AidIni,
     cc_plugin::message::AidIniPoll,
