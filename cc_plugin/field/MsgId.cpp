@@ -65,6 +65,7 @@ QVariantMap createMsgIdProperties()
             .add("NAV-GEOFENCE", MsgId_NAV_GEOFENCE)
             .add("NAV-EKFSTATUS", MsgId_NAV_EKFSTATUS)
             .add("NAV-AOPSTATUS", MsgId_NAV_AOPSTATUS)
+            .add("NAV-EOE", MsgId_NAV_EOE)
 
             .add("RXM-RAW", MsgId_RXM_RAW)
             .add("RXM-SFRB", MsgId_RXM_SFRB)

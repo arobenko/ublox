@@ -110,7 +110,8 @@ private:
             MsgId_NAV_SAT,
             MsgId_NAV_GEOFENCE,
             MsgId_NAV_EKFSTATUS,
-            MsgId_NAV_AOPSTATUS
+            MsgId_NAV_AOPSTATUS,
+            MsgId_NAV_EOE
         };
 
         auto iter = std::lower_bound(std::begin(IDs), std::end(IDs), id);
