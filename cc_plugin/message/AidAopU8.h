@@ -19,7 +19,7 @@
 #pragma once
 
 #include "comms_champion/comms_champion.h"
-#include "ublox/message/AidAop_u8.h"
+#include "ublox/message/AidAopU8.h"
 #include "cc_plugin/Message.h"
 #include "cc_plugin/ProtocolMessageBase.h"
 
@@ -32,19 +32,19 @@ namespace cc_plugin
 namespace message
 {
 
-class AidAop_u8 : public
+class AidAopU8 : public
     ProtocolMessageBase<
-        ublox::message::AidAop_u8<ublox::cc_plugin::Message>,
-        AidAop_u8>
+        ublox::message::AidAopU8<ublox::cc_plugin::Message>,
+        AidAopU8>
 {
 public:
-    AidAop_u8();
-    AidAop_u8(const AidAop_u8&) = delete;
-    AidAop_u8(AidAop_u8&&) = delete;
-    virtual ~AidAop_u8();
+    AidAopU8();
+    AidAopU8(const AidAopU8&) = delete;
+    AidAopU8(AidAopU8&&) = delete;
+    virtual ~AidAopU8();
 
-    AidAop_u8& operator=(const AidAop_u8&);
-    AidAop_u8& operator=(AidAop_u8&&);
+    AidAopU8& operator=(const AidAopU8&);
+    AidAopU8& operator=(AidAopU8&&);
 
 protected:
     virtual const char* nameImpl() const override;
@@ -57,8 +57,8 @@ protected:
 
 }  // namespace ublox
 
-extern template class ublox::message::AidAop_u8<ublox::cc_plugin::Message>;
+extern template class ublox::message::AidAopU8<ublox::cc_plugin::Message>;
 extern template class ublox::cc_plugin::ProtocolMessageBase<
-    ublox::message::AidAop_u8<ublox::cc_plugin::Message>,
-    ublox::cc_plugin::message::AidAop_u8>;
+    ublox::message::AidAopU8<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::AidAopU8>;
 

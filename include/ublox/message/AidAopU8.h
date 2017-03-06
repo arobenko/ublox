@@ -16,7 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 /// @file
-/// @brief Contains definition of AID-AOP message and its fields.
+/// @brief Contains definition of AID-AOP (@b ublox-8) message and its fields.
 
 #pragma once
 
@@ -32,9 +32,9 @@ namespace ublox
 namespace message
 {
 
-/// @brief Accumulates details of all the AID-AOP message fields.
-/// @see AidAop_u8
-struct AidAopFields_u8
+/// @brief Accumulates details of all the AID-AOP (@b ublox-8) message fields.
+/// @see AidAopU8
+struct AidAopU8Fields
 {
     /// @brief Definition of "gnssId" field.
     using gnssId = field::common::gnssId;
@@ -70,26 +70,26 @@ struct AidAopFields_u8
 /// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
 ///     various implementation options. @n
-///     See @ref AidAopFields_u8 and for definition of the fields this message contains
+///     See @ref AidAopU8Fields and for definition of the fields this message contains
 ///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 /// @tparam TDataOpt Extra option(s) for @b data field
 template <
     typename TMsgBase = Message,
     typename TDataOpt = comms::option::EmptyOption>
-class AidAop_u8 : public
+class AidAopU8 : public
     comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_AOP>,
-        comms::option::FieldsImpl<AidAopFields_u8::All<TDataOpt> >,
-        comms::option::MsgType<AidAop_u8<TMsgBase, TDataOpt> >
+        comms::option::FieldsImpl<AidAopU8Fields::All<TDataOpt> >,
+        comms::option::MsgType<AidAopU8<TMsgBase, TDataOpt> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_AID_AOP>,
-        comms::option::FieldsImpl<AidAopFields_u8::All<TDataOpt> >,
-        comms::option::MsgType<AidAop_u8<TMsgBase, TDataOpt> >
+        comms::option::FieldsImpl<AidAopU8Fields::All<TDataOpt> >,
+        comms::option::MsgType<AidAopU8<TMsgBase, TDataOpt> >
     > Base;
 public:
 
@@ -99,29 +99,29 @@ public:
     ///     for details.
     ///
     ///     The field names are:
-    ///     @li @b gnssId for @ref AidAopFields_u8::gnssId field
-    ///     @li @b svid for @ref AidAopFields_u8::svid field
-    ///     @li @b reserved1 for @ref AidAopFields_u8::reserved1 field
-    ///     @li @b data for @ref AidAopFields_u8::data field
+    ///     @li @b gnssId for @ref AidAopU8Fields::gnssId field
+    ///     @li @b svid for @ref AidAopU8Fields::svid field
+    ///     @li @b reserved1 for @ref AidAopU8Fields::reserved1 field
+    ///     @li @b data for @ref AidAopU8Fields::data field
     COMMS_MSG_FIELDS_ACCESS(gnssId, svid, reserved1, data);
 
     /// @brief Default constructor
-    AidAop_u8() = default;
+    AidAopU8() = default;
 
     /// @brief Copy constructor
-    AidAop_u8(const AidAop_u8&) = default;
+    AidAopU8(const AidAopU8&) = default;
 
     /// @brief Move constructor
-    AidAop_u8(AidAop_u8&& other) = default;
+    AidAopU8(AidAopU8&& other) = default;
 
     /// @brief Destructor
-    virtual ~AidAop_u8() = default;
+    virtual ~AidAopU8() = default;
 
     /// @brief Copy assignment
-    AidAop_u8& operator=(const AidAop_u8&) = default;
+    AidAopU8& operator=(const AidAopU8&) = default;
 
     /// @brief Move assignment
-    AidAop_u8& operator=(AidAop_u8&&) = default;
+    AidAopU8& operator=(AidAopU8&&) = default;
 
     /// @brief Provides custom read functionality.
     /// @details Verifies the data length prior to invoking default read of the fields

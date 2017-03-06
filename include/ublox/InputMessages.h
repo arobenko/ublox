@@ -111,7 +111,7 @@
 #include "message/AidEph.h"
 #include "message/AidAlpsrv.h"
 #include "message/AidAlpsrvUpdate.h"
-#include "message/AidAop_u8.h"
+#include "message/AidAopU8.h"
 #include "message/AidAop.h"
 #include "message/AidAlp.h"
 #include "message/AidAlpStatus.h"
@@ -223,7 +223,7 @@ using InputMessages =
         message::AidEph<TMessage>,
         message::AidAlpsrv<TMessage>,
         message::AidAlpsrvUpdate<TMessage>,
-        message::AidAop_u8<TMessage>,
+        message::AidAopU8<TMessage>,
         message::AidAop<TMessage>,
         message::AidAlp<TMessage>,
         message::AidAlpStatus<TMessage>,

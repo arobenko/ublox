@@ -18,12 +18,12 @@
 #include <cassert>
 
 #include "cc_plugin/field/common.h"
-#include "AidAop_u8.h"
+#include "AidAopU8.h"
 
-template class ublox::message::AidAop_u8<ublox::cc_plugin::Message>;
+template class ublox::message::AidAopU8<ublox::cc_plugin::Message>;
 template class ublox::cc_plugin::ProtocolMessageBase<
-    ublox::message::AidAop_u8<ublox::cc_plugin::Message>,
-    ublox::cc_plugin::message::AidAop_u8>;
+    ublox::message::AidAopU8<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::AidAopU8>;
 
 namespace cc = comms_champion;
 
@@ -39,7 +39,7 @@ namespace message
 namespace
 {
 
-using ublox::message::AidAopFields_u8;
+using ublox::message::AidAopU8Fields;
 
 QVariantList createFieldsProperties()
 {
@@ -48,28 +48,28 @@ QVariantList createFieldsProperties()
     props.append(field::common::props_svid());
     props.append(field::common::props_reserved(1));
     props.append(
-        cc::property::field::ForField<AidAopFields_u8::data<> >().name("data").asMap());
+        cc::property::field::ForField<AidAopU8Fields::data<> >().name("data").asMap());
 
-    assert(props.size() == AidAop_u8::FieldIdx_numOfValues);
+    assert(props.size() == AidAopU8::FieldIdx_numOfValues);
     return props;
 }
 
 }  // namespace
 
-AidAop_u8::AidAop_u8() = default;
-AidAop_u8::~AidAop_u8() = default;
+AidAopU8::AidAopU8() = default;
+AidAopU8::~AidAopU8() = default;
 
-AidAop_u8& AidAop_u8::operator=(const AidAop_u8&) = default;
-AidAop_u8& AidAop_u8::operator=(AidAop_u8&&) = default;
+AidAopU8& AidAopU8::operator=(const AidAopU8&) = default;
+AidAopU8& AidAopU8::operator=(AidAopU8&&) = default;
 
 
-const char* AidAop_u8::nameImpl() const
+const char* AidAopU8::nameImpl() const
 {
     static const char* Str = "AID-AOP (ublox-8)";
     return Str;
 }
 
-const QVariantList& AidAop_u8::fieldsPropertiesImpl() const
+const QVariantList& AidAopU8::fieldsPropertiesImpl() const
 {
     static const auto Props = createFieldsProperties();
     return Props;

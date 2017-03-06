@@ -185,7 +185,7 @@ function (cc_plugin_ublox)
         message/AidEphPoll.cpp
         message/AidAlpsrv.cpp
         message/AidAlpsrvUpdate.cpp
-        message/AidAop_u8.cpp
+        message/AidAopU8.cpp
         message/AidAop.cpp
         message/AidAopPollSv.cpp
         message/AidAopPoll.cpp
