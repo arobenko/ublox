@@ -52,6 +52,7 @@
 #include "cc_plugin/message/NavEkfstatus.h"
 #include "cc_plugin/message/NavEkfstatusPoll.h"
 #include "cc_plugin/message/NavAopstatus.h"
+#include "cc_plugin/message/NavAopstatusU8.h"
 #include "cc_plugin/message/NavAopstatusPoll.h"
 
 #include "cc_plugin/message/RxmRaw.h"
@@ -171,6 +172,8 @@
 #include "cc_plugin/message/MonHw2.h"
 #include "cc_plugin/message/MonHw2Poll.h"
 #include "cc_plugin/message/MonRxr.h"
+#include "cc_plugin/message/MonPatch.h"
+#include "cc_plugin/message/MonPatchPoll.h"
 #include "cc_plugin/message/MonGnss.h"
 #include "cc_plugin/message/MonGnssPoll.h"
 
@@ -293,6 +296,7 @@ typedef std::tuple<
     cc_plugin::message::NavEkfstatus,
     cc_plugin::message::NavEkfstatusPoll,
     cc_plugin::message::NavAopstatus,
+    cc_plugin::message::NavAopstatusU8,
     cc_plugin::message::NavAopstatusPoll,
     cc_plugin::message::RxmRaw,
     cc_plugin::message::RxmRawPoll,
@@ -407,6 +411,8 @@ typedef std::tuple<
     cc_plugin::message::MonHw2,
     cc_plugin::message::MonHw2Poll,
     cc_plugin::message::MonRxr,
+    cc_plugin::message::MonPatch,
+    cc_plugin::message::MonPatchPoll,
     cc_plugin::message::MonGnss,
     cc_plugin::message::MonGnssPoll,
     cc_plugin::message::AidReq,

@@ -52,6 +52,7 @@ function (cc_plugin_ublox)
         message/NavEkfstatus.cpp
         message/NavEkfstatusPoll.cpp
         message/NavAopstatus.cpp
+        message/NavAopstatusU8.cpp
         message/NavAopstatusPoll.cpp
         message/RxmRaw.cpp
         message/RxmRawPoll.cpp
@@ -166,6 +167,8 @@ function (cc_plugin_ublox)
         message/MonHw2.cpp
         message/MonHw2Poll.cpp
         message/MonRxr.cpp
+        message/MonPatch.cpp
+        message/MonPatchPoll.cpp
         message/MonGnss.cpp
         message/MonGnssPoll.cpp
         message/AidReq.cpp

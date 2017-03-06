@@ -40,6 +40,7 @@
 #include "message/NavSbas.h"
 #include "message/NavEkfstatus.h"
 #include "message/NavAopstatus.h"
+#include "message/NavAopstatusU8.h"
 
 #include "message/RxmRaw.h"
 #include "message/RxmSfrb.h"
@@ -101,6 +102,7 @@
 #include "message/MonHw.h"
 #include "message/MonHw2.h"
 #include "message/MonRxr.h"
+#include "message/MonPatch.h"
 #include "message/MonGnss.h"
 
 #include "message/AidIni.h"
@@ -156,6 +158,7 @@ using InputMessages =
         message::NavSbas<TMessage>,
         message::NavEkfstatus<TMessage>,
         message::NavAopstatus<TMessage>,
+        message::NavAopstatusU8<TMessage>,
         message::RxmRaw<TMessage>,
         message::RxmSfrb<TMessage>,
         message::RxmSvsi<TMessage>,
@@ -212,6 +215,7 @@ using InputMessages =
         message::MonHw<TMessage>,
         message::MonHw2<TMessage>,
         message::MonRxr<TMessage>,
+        message::MonPatch<TMessage>,
         message::MonGnss<TMessage>,
         message::AidIni<TMessage>,
         message::AidHui<TMessage>,
