@@ -49,11 +49,14 @@ function (cc_plugin_ublox)
         message/NavDgpsPoll.cpp
         message/NavSbas.cpp
         message/NavSbasPoll.cpp
+        message/NavGeofence.cpp
+        message/NavGeofencePoll.cpp
         message/NavEkfstatus.cpp
         message/NavEkfstatusPoll.cpp
         message/NavAopstatus.cpp
         message/NavAopstatusU8.cpp
         message/NavAopstatusPoll.cpp
+        message/NavEoe.cpp
         message/RxmRaw.cpp
         message/RxmRawPoll.cpp
         message/RxmSfrb.cpp

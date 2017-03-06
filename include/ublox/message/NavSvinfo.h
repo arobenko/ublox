@@ -239,11 +239,7 @@ public:
             return es;
         }
 
-        auto& allFields = Base::fields();
-        auto& numChField = std::get<FieldIdx_numCh>(allFields);
-        auto& dataField = std::get<FieldIdx_data>(allFields);
-        dataField.forceReadElemCount(numChField.value());
-
+        field_data().forceReadElemCount(field_numCh().value());
         return Base::template readFieldsFrom<FieldIdx_data>(iter, len);
     }
 
@@ -254,14 +250,11 @@ public:
     /// @return @b true in case the value of "numCh" field was modified, @b false otherwise
     bool doRefresh()
     {
-        auto& allFields = Base::fields();
-        auto& numChField = std::get<FieldIdx_numCh>(allFields);
-        auto& dataField = std::get<FieldIdx_data>(allFields);
-        if (numChField.value() == dataField.value().size()) {
+        if (field_numCh().value() == field_data().value().size()) {
             return false;
         }
 
-        numChField.value() = dataField.value().size();
+        field_numCh().value() = field_data().value().size();
         return true;
     }
 

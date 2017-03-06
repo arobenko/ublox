@@ -49,11 +49,14 @@
 #include "cc_plugin/message/NavDgpsPoll.h"
 #include "cc_plugin/message/NavSbas.h"
 #include "cc_plugin/message/NavSbasPoll.h"
+#include "cc_plugin/message/NavGeofence.h"
+#include "cc_plugin/message/NavGeofencePoll.h"
 #include "cc_plugin/message/NavEkfstatus.h"
 #include "cc_plugin/message/NavEkfstatusPoll.h"
 #include "cc_plugin/message/NavAopstatus.h"
 #include "cc_plugin/message/NavAopstatusU8.h"
 #include "cc_plugin/message/NavAopstatusPoll.h"
+#include "cc_plugin/message/NavEoe.h"
 
 #include "cc_plugin/message/RxmRaw.h"
 #include "cc_plugin/message/RxmRawPoll.h"
@@ -293,11 +296,14 @@ typedef std::tuple<
     cc_plugin::message::NavDgpsPoll,
     cc_plugin::message::NavSbas,
     cc_plugin::message::NavSbasPoll,
+    cc_plugin::message::NavGeofence,
+    cc_plugin::message::NavGeofencePoll,
     cc_plugin::message::NavEkfstatus,
     cc_plugin::message::NavEkfstatusPoll,
     cc_plugin::message::NavAopstatus,
     cc_plugin::message::NavAopstatusU8,
     cc_plugin::message::NavAopstatusPoll,
+    cc_plugin::message::NavEoe,
     cc_plugin::message::RxmRaw,
     cc_plugin::message::RxmRawPoll,
     cc_plugin::message::RxmSfrb,
