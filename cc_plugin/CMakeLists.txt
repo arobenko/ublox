@@ -33,6 +33,8 @@ function (cc_plugin_ublox)
         message/NavSolPoll.cpp
         message/NavPvt.cpp
         message/NavPvtPoll.cpp
+        message/NavOdo.cpp
+        message/NavOdoPoll.cpp
         message/NavVelecef.cpp
         message/NavVelecefPoll.cpp
         message/NavVelned.cpp

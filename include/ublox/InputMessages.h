@@ -30,6 +30,7 @@
 #include "message/NavDop.h"
 #include "message/NavSol.h"
 #include "message/NavPvt.h"
+#include "message/NavOdo.h"
 #include "message/NavVelecef.h"
 #include "message/NavVelned.h"
 #include "message/NavTimegps.h"
@@ -150,6 +151,7 @@ using InputMessages =
         message::NavDop<TMessage>,
         message::NavSol<TMessage>,
         message::NavPvt<TMessage>,
+        message::NavOdo<TMessage>,
         message::NavVelecef<TMessage>,
         message::NavVelned<TMessage>,
         message::NavTimegps<TMessage>,
