@@ -50,6 +50,7 @@ struct NavSbasFields
         WAAS = 0, ///< WAAS
         EGNOS = 1, ///< EGNOS
         MSAS = 2, ///< MSAS
+        GAGAN = 3, ///< GAGAN
         GPS = 16, ///< GPS
     };
 
@@ -78,6 +79,7 @@ struct NavSbasFields
                 Sys::WAAS,
                 Sys::EGNOS,
                 Sys::MSAS,
+                Sys::GAGAN,
                 Sys::GPS,
             };
 
