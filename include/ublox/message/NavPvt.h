@@ -384,12 +384,12 @@ public:
 
         if (len < ReqLen) {
             field_headVeh().setMissing();
-            //field_reserved3().setMissing();
+            field_reserved3().setMissing();
             return es;
         }
 
         field_headVeh().setExists();
-        //field_reserved3().setExists();
+        field_reserved3().setExists();
 
         return Base::template readFieldsFrom<FieldIdx_headVeh>(iter, len);
     }
