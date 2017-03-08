@@ -54,6 +54,8 @@
 #include "cc_plugin/message/NavSbasPoll.h"
 #include "cc_plugin/message/NavOrb.h"
 #include "cc_plugin/message/NavOrbPoll.h"
+#include "cc_plugin/message/NavSat.h"
+#include "cc_plugin/message/NavSatPoll.h"
 #include "cc_plugin/message/NavGeofence.h"
 #include "cc_plugin/message/NavGeofencePoll.h"
 #include "cc_plugin/message/NavEkfstatus.h"
@@ -306,6 +308,8 @@ typedef std::tuple<
     cc_plugin::message::NavSbasPoll,
     cc_plugin::message::NavOrb,
     cc_plugin::message::NavOrbPoll,
+    cc_plugin::message::NavSat,
+    cc_plugin::message::NavSatPoll,
     cc_plugin::message::NavGeofence,
     cc_plugin::message::NavGeofencePoll,
     cc_plugin::message::NavEkfstatus,

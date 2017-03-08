@@ -40,6 +40,7 @@
 #include "message/NavDgps.h"
 #include "message/NavSbas.h"
 #include "message/NavOrb.h"
+#include "message/NavSat.h"
 #include "message/NavGeofence.h"
 #include "message/NavEkfstatus.h"
 #include "message/NavAopstatus.h"
@@ -162,6 +163,7 @@ using InputMessages =
         message::NavDgps<TMessage>,
         message::NavSbas<TMessage>,
         message::NavOrb<TMessage>,
+        message::NavSat<TMessage>,
         message::NavGeofence<TMessage>,
         message::NavEkfstatus<TMessage>,
         message::NavAopstatus<TMessage>,

@@ -54,6 +54,8 @@ function (cc_plugin_ublox)
         message/NavSbasPoll.cpp
         message/NavOrb.cpp
         message/NavOrbPoll.cpp
+        message/NavSat.cpp
+        message/NavSatPoll.cpp
         message/NavGeofence.cpp
         message/NavGeofencePoll.cpp
         message/NavEkfstatus.cpp
