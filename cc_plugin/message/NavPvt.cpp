@@ -56,39 +56,84 @@ QVariantMap createProps_valid()
 
 QVariantMap createProps_flags()
 {
-    cc::property::field::ForField<NavPvtFields::flagsBits> bitsProps;
-    bitsProps.name("flags")
-             .add("gnssFixOK")
-             .add("diffSoln")
-             .serialisedHidden();
+    auto flagsLowProps =
+        cc::property::field::ForField<NavPvtFields::flagsLow>()
+            .name("flags")
+            .add("gnssFixOK")
+            .add("diffSoln")
+            .serialisedHidden();
 
-    assert(bitsProps.bits().size() == NavPvtFields::flagsBits::BitIdx_numOfValues);
+    assert(flagsLowProps.bits().size() == NavPvtFields::flagsLow::BitIdx_numOfValues);
 
-    cc::property::field::ForField<NavPvtFields::psmState> psmStateProps;
-    psmStateProps.name("psmState")
-                 .add("n/a")
-                 .add("ENABLED")
-                 .add("ACQUISITION")
-                 .add("TRACKING")
-                 .add("POWER OPTIMIZED TRACKING")
-                 .add("INACTIVE")
-                 .serialisedHidden();
+    auto psmStateProps =
+        cc::property::field::ForField<NavPvtFields::psmState>()
+            .name("psmState")
+            .add("n/a")
+            .add("ENABLED")
+            .add("ACQUISITION")
+            .add("TRACKING")
+            .add("POWER OPTIMIZED TRACKING")
+            .add("INACTIVE")
+            .serialisedHidden();
     assert(psmStateProps.values().size() == (int)NavPvtFields::PsmState::NumOfValues);
 
-    cc::property::field::ForField<NavPvtFields::flags> props;
-    props.add(bitsProps.asMap())
-         .add(psmStateProps.asMap());
+    auto flagsHighProps =
+        cc::property::field::ForField<NavPvtFields::flagsHigh>()
+            .add("headVehValid")
+            .serialisedHidden();
+
+    assert(flagsHighProps.bits().size() == NavPvtFields::flagsHigh::BitIdx_numOfValues);
+
+
+    auto props =
+        cc::property::field::ForField<NavPvtFields::flags>()
+            .name("flags")
+            .add(flagsLowProps.asMap())
+            .add(psmStateProps.asMap())
+            .add(flagsHighProps.asMap());
     assert(props.members().size() == (int)NavPvtFields::flags::FieldIdx_numOfValues);
     return props.asMap();
 }
 
-QVariantMap createProps_headingAcc()
+QVariantMap createProps_flags2()
+{
+    auto props =
+        cc::property::field::ForField<NavPvtFields::flags2>()
+            .name("flags2")
+            .add(NavPvtFields::flags2::BitIdx_confirmedAvai, "confirmedAvai")
+            .add("confirmedDate")
+            .add("confirmedTime")
+            .serialisedHidden();
+
+    assert(props.bits().size() == NavPvtFields::flags2::BitIdx_numOfValues);
+    return props.asMap();
+}
+
+QVariantMap createProps_heading(const QString& name)
 {
     return
-        cc::property::field::ForField<NavPvtFields::headingAcc>()
-        .name("headingAcc")
-        .scaledDecimals(5)
-        .asMap();
+        cc::property::field::IntValue()
+            .name(name)
+            .scaledDecimals(5)
+            .asMap();
+}
+
+QVariantMap createProps_headVeh()
+{
+    return
+        cc::property::field::ForField<NavPvtFields::headVeh>()
+            .name("headVeh")
+            .field(createProps_heading("headVeh"))
+            .asMap();
+}
+
+QVariantMap createProps_reserved3()
+{
+    return
+        cc::property::field::ForField<NavPvtFields::reserved3>()
+            .name("reserved3")
+            .field(cc_plugin::field::common::props_reserved(3))
+            .asMap();
 }
 
 QVariantList createFieldsProperties()
@@ -106,7 +151,7 @@ QVariantList createFieldsProperties()
     props.append(cc_plugin::field::nav::props_nano());
     props.append(cc_plugin::field::nav::props_fixType());
     props.append(createProps_flags());
-    props.append(cc_plugin::field::common::props_reserved(1));
+    props.append(createProps_flags2());
     props.append(cc_plugin::field::nav::props_numSV());
     props.append(cc_plugin::field::nav::props_lon());
     props.append(cc_plugin::field::nav::props_lat());
@@ -118,12 +163,14 @@ QVariantList createFieldsProperties()
     props.append(cc_plugin::field::nav::props_velE());
     props.append(cc_plugin::field::nav::props_velD());
     props.append(cc_plugin::field::nav::props_gSpeed());
-    props.append(cc_plugin::field::nav::props_heading());
+    props.append(createProps_heading("headMot"));
     props.append(cc_plugin::field::nav::props_sAcc());
-    props.append(createProps_headingAcc());
+    props.append(createProps_heading("headAcc"));
     props.append(cc_plugin::field::nav::props_pDOP());
+    props.append(cc_plugin::field::common::props_reserved(1));
     props.append(cc_plugin::field::common::props_reserved(2));
-    props.append(cc_plugin::field::common::props_reserved(3));
+    props.append(createProps_headVeh());
+    props.append(createProps_reserved3());
 
     assert(props.size() == NavPvt::FieldIdx_numOfValues);
     return props;

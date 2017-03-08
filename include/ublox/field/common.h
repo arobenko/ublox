@@ -318,8 +318,9 @@ using EnumT =
 /// @details Defined to be @b comms::field::Optional
 ///     with @b TField as the field type.
 /// @tparam TField Optional field.
-template <typename TField>
-using OptionalT = comms::field::Optional<TField>;
+/// @tparam TOptions Extra options
+template <typename TField, typename... TOptions>
+using OptionalT = comms::field::Optional<TField, TOptions...>;
 
 /// @brief Common definition of bitfield field.
 /// @details Defined to be @b comms::field::Bitfield
