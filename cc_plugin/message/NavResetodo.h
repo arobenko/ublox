@@ -19,7 +19,7 @@
 #pragma once
 
 #include "comms_champion/comms_champion.h"
-#include "ublox/message/NavEoe.h"
+#include "ublox/message/NavResetodo.h"
 #include "cc_plugin/Message.h"
 #include "cc_plugin/ProtocolMessageBase.h"
 
@@ -32,23 +32,22 @@ namespace cc_plugin
 namespace message
 {
 
-class NavEoe : public
+class NavResetodo : public
     ProtocolMessageBase<
-        ublox::message::NavEoe<ublox::cc_plugin::Message>,
-        NavEoe>
+        ublox::message::NavResetodo<ublox::cc_plugin::Message>,
+        NavResetodo>
 {
 public:
-    NavEoe();
-    NavEoe(const NavEoe&) = delete;
-    NavEoe(NavEoe&&) = delete;
-    virtual ~NavEoe();
+    NavResetodo();
+    NavResetodo(const NavResetodo&) = delete;
+    NavResetodo(NavResetodo&&) = delete;
+    virtual ~NavResetodo();
 
-    NavEoe& operator=(const NavEoe&);
-    NavEoe& operator=(NavEoe&&);
+    NavResetodo& operator=(const NavResetodo&);
+    NavResetodo& operator=(NavResetodo&&);
 
 protected:
     virtual const char* nameImpl() const override;
-    virtual const QVariantList& fieldsPropertiesImpl() const override;
 };
 
 }  // namespace message
@@ -58,7 +57,7 @@ protected:
 }  // namespace ublox
 
 
-extern template class ublox::message::NavEoe<ublox::cc_plugin::Message>;
+extern template class ublox::message::NavResetodo<ublox::cc_plugin::Message>;
 extern template class ublox::cc_plugin::ProtocolMessageBase<
-    ublox::message::NavEoe<ublox::cc_plugin::Message>,
-    ublox::cc_plugin::message::NavEoe>;
+    ublox::message::NavResetodo<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::NavResetodo>;

@@ -16,7 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 /// @file
-/// @brief Contains definition of NAV-EOE message and its fields.
+/// @brief Contains definition of NAV-RESETODO message and its fields.
 
 #pragma once
 
@@ -29,69 +29,49 @@ namespace ublox
 namespace message
 {
 
-/// @brief Accumulates details of all the NAV-EOE message fields.
-/// @see NavEoe
-struct NavEoeFields
+/// @brief Accumulates details of all the NAV-RESETODO message fields.
+/// @see NavResetodo
+struct NavResetodoFields
 {
-    /// @brief Definition of "iTOW" field.
-    using iTOW = field::nav::iTOW;
-
     /// @brief All the fields bundled in std::tuple.
-    using All = std::tuple<
-        iTOW
-    >;
+    using All = std::tuple<>;
 };
 
-/// @brief Definition of NAV-EOE message
+/// @brief Definition of NAV-RESETODO message
 /// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
 ///     various implementation options. @n
-///     See @ref NavEoeFields and for definition of the fields this message contains
+///     See @ref NavResetodoFields and for definition of the fields this message contains
 ///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
-class NavEoe : public
+class NavResetodo : public
     comms::MessageBase<
         TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_NAV_EOE>,
-        comms::option::FieldsImpl<NavEoeFields::All>,
-        comms::option::MsgType<NavEoe<TMsgBase> >
+        comms::option::StaticNumIdImpl<MsgId_NAV_RESETODO>,
+        comms::option::FieldsImpl<NavResetodoFields::All>,
+        comms::option::MsgType<NavResetodo<TMsgBase> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_NAV_EOE>,
-        comms::option::FieldsImpl<NavEoeFields::All>,
-        comms::option::MsgType<NavEoe<TMsgBase> >
-    > Base;
 public:
 
-    /// @brief Allow access to internal fields.
-    /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
-    ///     related to @b comms::MessageBase class from COMMS library
-    ///     for details.
-    ///
-    ///     The field names are:
-    ///     @li @b iTOW for @ref NavEoeFields::iTOW field
-    COMMS_MSG_FIELDS_ACCESS(iTOW);
-
     /// @brief Default constructor
-    NavEoe() = default;
+    NavResetodo() = default;
 
     /// @brief Copy constructor
-    NavEoe(const NavEoe&) = default;
+    NavResetodo(const NavResetodo&) = default;
 
     /// @brief Move constructor
-    NavEoe(NavEoe&& other) = default;
+    NavResetodo(NavResetodo&& other) = default;
 
     /// @brief Destructor
-    virtual ~NavEoe() = default;
+    virtual ~NavResetodo() = default;
 
     /// @brief Copy assignment
-    NavEoe& operator=(const NavEoe&) = default;
+    NavResetodo& operator=(const NavResetodo&) = default;
 
     /// @brief Move assignment
-    NavEoe& operator=(NavEoe&&) = default;
+    NavResetodo& operator=(NavResetodo&&) = default;
 };
 
 

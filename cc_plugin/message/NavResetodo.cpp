@@ -15,13 +15,18 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+#include <cassert>
 
-#pragma once
+#include "NavResetodo.h"
+#include "cc_plugin/field/nav.h"
 
-#include "comms_champion/comms_champion.h"
-#include "ublox/message/NavEoe.h"
-#include "cc_plugin/Message.h"
-#include "cc_plugin/ProtocolMessageBase.h"
+template class ublox::message::NavResetodo<ublox::cc_plugin::Message>;
+template class ublox::cc_plugin::ProtocolMessageBase<
+    ublox::message::NavResetodo<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::NavResetodo>;
+
+
+namespace cc = comms_champion;
 
 namespace ublox
 {
@@ -32,24 +37,17 @@ namespace cc_plugin
 namespace message
 {
 
-class NavEoe : public
-    ProtocolMessageBase<
-        ublox::message::NavEoe<ublox::cc_plugin::Message>,
-        NavEoe>
+NavResetodo::NavResetodo() = default;
+NavResetodo::~NavResetodo() = default;
+
+NavResetodo& NavResetodo::operator=(const NavResetodo&) = default;
+NavResetodo& NavResetodo::operator=(NavResetodo&&) = default;
+
+const char* NavResetodo::nameImpl() const
 {
-public:
-    NavEoe();
-    NavEoe(const NavEoe&) = delete;
-    NavEoe(NavEoe&&) = delete;
-    virtual ~NavEoe();
-
-    NavEoe& operator=(const NavEoe&);
-    NavEoe& operator=(NavEoe&&);
-
-protected:
-    virtual const char* nameImpl() const override;
-    virtual const QVariantList& fieldsPropertiesImpl() const override;
-};
+    static const char* Str = "NAV-RESETODO";
+    return Str;
+}
 
 }  // namespace message
 
@@ -57,8 +55,3 @@ protected:
 
 }  // namespace ublox
 
-
-extern template class ublox::message::NavEoe<ublox::cc_plugin::Message>;
-extern template class ublox::cc_plugin::ProtocolMessageBase<
-    ublox::message::NavEoe<ublox::cc_plugin::Message>,
-    ublox::cc_plugin::message::NavEoe>;

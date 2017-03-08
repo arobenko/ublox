@@ -35,6 +35,7 @@ function (cc_plugin_ublox)
         message/NavPvtPoll.cpp
         message/NavOdo.cpp
         message/NavOdoPoll.cpp
+        message/NavResetodo.cpp
         message/NavVelecef.cpp
         message/NavVelecefPoll.cpp
         message/NavVelned.cpp
