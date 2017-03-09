@@ -36,6 +36,7 @@
 #include "message/NavTimegps.h"
 #include "message/NavTimeutc.h"
 #include "message/NavClock.h"
+#include "message/NavTimebds.h"
 #include "message/NavSvinfo.h"
 #include "message/NavDgps.h"
 #include "message/NavSbas.h"
@@ -159,6 +160,7 @@ using InputMessages =
         message::NavTimegps<TMessage>,
         message::NavTimeutc<TMessage>,
         message::NavClock<TMessage>,
+        message::NavTimebds<TMessage>,
         message::NavSvinfo<TMessage>,
         message::NavDgps<TMessage>,
         message::NavSbas<TMessage>,
