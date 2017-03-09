@@ -123,14 +123,33 @@ struct NavStatusFields
             comms::option::FixedBitLength<2>
         >;
 
+    /// @brief Value enumeration for @ref spoofDetState field.
+    enum class SpoofDetState : std::uint8_t
+    {
+        Unknown, ///< Unknown or deactivated
+        NoSpoofing, ///< No spoofing indicated
+        Spoofing, ///< Spoofing indicated
+        MultipleSpoofing, ///< Multiple spoofing indications
+        NumOfValues ///< number of available values
+    };
+
+    /// @brief Definition of "spoofDetState" member fields of @ref flags2 bitfield.
+    using spoofDetState =
+        field::common::EnumT<
+            SpoofDetState,
+            comms::option::ValidNumValueRange<0, (int)SpoofDetState::NumOfValues - 1>,
+            comms::option::FixedBitLength<2>
+        >;
+
+
     /// @brief Definition of "flags2" field.
     struct flags2 : public
         field::common::BitfieldT<
             std::tuple<
                 psmState,
-                field::common::res1T<
-                    comms::option::FixedBitLength<6>
-                >
+                field::common::res1T<comms::option::FixedBitLength<1> >,
+                spoofDetState,
+                field::common::res1T<comms::option::FixedBitLength<3> >
             >
         >
     {
@@ -138,7 +157,7 @@ struct NavStatusFields
         /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
         ///     related to @b comms::field::Bitfield class from COMMS library
         ///     for details.
-        COMMS_FIELD_MEMBERS_ACCESS(psmState, reserved);
+        COMMS_FIELD_MEMBERS_ACCESS(psmState, reserved1, spoofDetState, reserved2);
     };
 
     /// @brief Definition of "ttff" field.
