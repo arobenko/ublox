@@ -19,7 +19,7 @@
 #pragma once
 
 #include "comms_champion/comms_champion.h"
-#include "ublox/message/NavTimebdsPoll.h"
+#include "ublox/message/NavTimegalPoll.h"
 #include "cc_plugin/Message.h"
 #include "cc_plugin/ProtocolMessageBase.h"
 
@@ -32,19 +32,19 @@ namespace cc_plugin
 namespace message
 {
 
-class NavTimebdsPoll : public
+class NavTimegalPoll : public
     ProtocolMessageBase<
-        ublox::message::NavTimebdsPoll<ublox::cc_plugin::Message>,
-        NavTimebdsPoll>
+        ublox::message::NavTimegalPoll<ublox::cc_plugin::Message>,
+        NavTimegalPoll>
 {
 public:
-    NavTimebdsPoll();
-    NavTimebdsPoll(const NavTimebdsPoll&) = delete;
-    NavTimebdsPoll(NavTimebdsPoll&&) = delete;
-    virtual ~NavTimebdsPoll();
+    NavTimegalPoll();
+    NavTimegalPoll(const NavTimegalPoll&) = delete;
+    NavTimegalPoll(NavTimegalPoll&&) = delete;
+    virtual ~NavTimegalPoll();
 
-    NavTimebdsPoll& operator=(const NavTimebdsPoll&);
-    NavTimebdsPoll& operator=(NavTimebdsPoll&&);
+    NavTimegalPoll& operator=(const NavTimegalPoll&);
+    NavTimegalPoll& operator=(NavTimegalPoll&&);
 
 protected:
     virtual const char* nameImpl() const override;
@@ -56,8 +56,8 @@ protected:
 
 }  // namespace ublox
 
-extern template class ublox::message::NavTimebdsPoll<ublox::cc_plugin::Message>;
+extern template class ublox::message::NavTimegalPoll<ublox::cc_plugin::Message>;
 extern template class ublox::cc_plugin::ProtocolMessageBase<
-    ublox::message::NavTimebdsPoll<ublox::cc_plugin::Message>,
-    ublox::cc_plugin::message::NavTimebdsPoll>;
+    ublox::message::NavTimegalPoll<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::NavTimegalPoll>;
 

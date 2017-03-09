@@ -15,12 +15,12 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "NavTimebdsPoll.h"
+#include "NavTimegalPoll.h"
 
-template class ublox::message::NavTimebdsPoll<ublox::cc_plugin::Message>;
+template class ublox::message::NavTimegalPoll<ublox::cc_plugin::Message>;
 template class ublox::cc_plugin::ProtocolMessageBase<
-    ublox::message::NavTimebdsPoll<ublox::cc_plugin::Message>,
-    ublox::cc_plugin::message::NavTimebdsPoll>;
+    ublox::message::NavTimegalPoll<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::NavTimegalPoll>;
 
 
 namespace cc = comms_champion;
@@ -34,15 +34,15 @@ namespace cc_plugin
 namespace message
 {
 
-NavTimebdsPoll::NavTimebdsPoll() = default;
-NavTimebdsPoll::~NavTimebdsPoll() = default;
+NavTimegalPoll::NavTimegalPoll() = default;
+NavTimegalPoll::~NavTimegalPoll() = default;
 
-NavTimebdsPoll& NavTimebdsPoll::operator=(const NavTimebdsPoll&) = default;
-NavTimebdsPoll& NavTimebdsPoll::operator=(NavTimebdsPoll&&) = default;
+NavTimegalPoll& NavTimegalPoll::operator=(const NavTimegalPoll&) = default;
+NavTimegalPoll& NavTimegalPoll::operator=(NavTimegalPoll&&) = default;
 
-const char* NavTimebdsPoll::nameImpl() const
+const char* NavTimegalPoll::nameImpl() const
 {
-    static const char* Str = "NAV-TIMEBDS (Poll)";
+    static const char* Str = "NAV-TIMEGAL (Poll)";
     return Str;
 }
 

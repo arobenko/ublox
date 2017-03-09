@@ -16,7 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 /// @file
-/// @brief Contains definition of NAV-TIMEBDS (@b poll) message and its fields.
+/// @brief Contains definition of NAV-TIMEGAL (@b poll) message and its fields.
 
 #pragma once
 
@@ -28,34 +28,34 @@ namespace ublox
 namespace message
 {
 
-/// @brief Accumulates details of all the NAV-TIMEBDS (@b poll) message fields.
-/// @see NavTimebdsPoll
-struct NavTimebdsPollFields
+/// @brief Accumulates details of all the NAV-TIMEGAL (@b poll) message fields.
+/// @see NavTimegalPoll
+struct NavTimegalPollFields
 {
     /// @brief All the fields bundled in std::tuple.
     using All = std::tuple<>;
 };
 
-/// @brief Definition of NAV-TIMEBDS (@b poll) message
+/// @brief Definition of NAV-TIMEGAL (@b poll) message
 /// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
 ///     various implementation options. @n
-///     See @ref NavTimebdsPollFields and for definition of the fields this message contains.
+///     See @ref NavTimegalPollFields and for definition of the fields this message contains.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
-class NavTimebdsPoll : public
+class NavTimegalPoll : public
     comms::MessageBase<
         TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_NAV_TIMEBDS>,
-        comms::option::FieldsImpl<NavTimebdsPollFields::All>,
-        comms::option::MsgType<NavTimebdsPoll<TMsgBase> >
+        comms::option::StaticNumIdImpl<MsgId_NAV_TIMEGAL>,
+        comms::option::FieldsImpl<NavTimegalPollFields::All>,
+        comms::option::MsgType<NavTimegalPoll<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_NAV_TIMEBDS>,
-        comms::option::FieldsImpl<NavTimebdsPollFields::All>,
-        comms::option::MsgType<NavTimebdsPoll<TMsgBase> >
+        comms::option::StaticNumIdImpl<MsgId_NAV_TIMEGAL>,
+        comms::option::FieldsImpl<NavTimegalPollFields::All>,
+        comms::option::MsgType<NavTimegalPoll<TMsgBase> >
     > Base;
 public:
 
@@ -69,22 +69,22 @@ public:
         "Number of fields is incorrect");
 
     /// @brief Default constructor
-    NavTimebdsPoll() = default;
+    NavTimegalPoll() = default;
 
     /// @brief Copy constructor
-    NavTimebdsPoll(const NavTimebdsPoll&) = default;
+    NavTimegalPoll(const NavTimegalPoll&) = default;
 
     /// @brief Move constructor
-    NavTimebdsPoll(NavTimebdsPoll&& other) = default;
+    NavTimegalPoll(NavTimegalPoll&& other) = default;
 
     /// @brief Destructor
-    virtual ~NavTimebdsPoll() = default;
+    virtual ~NavTimegalPoll() = default;
 
     /// @brief Copy assignment
-    NavTimebdsPoll& operator=(const NavTimebdsPoll&) = default;
+    NavTimegalPoll& operator=(const NavTimegalPoll&) = default;
 
     /// @brief Move assignment
-    NavTimebdsPoll& operator=(NavTimebdsPoll&&) = default;
+    NavTimegalPoll& operator=(NavTimegalPoll&&) = default;
 };
 
 
