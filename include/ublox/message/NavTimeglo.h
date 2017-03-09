@@ -16,7 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 /// @file
-/// @brief Contains definition of NAV-TIMEGAL message and its fields.
+/// @brief Contains definition of NAV-TIMEGLO message and its fields.
 
 #pragma once
 
@@ -29,34 +29,34 @@ namespace ublox
 namespace message
 {
 
-/// @brief Accumulates details of all the NAV-TIMEGAL message fields.
-/// @see NavTimegal
-struct NavTimegalFields
+/// @brief Accumulates details of all the NAV-TIMEGLO message fields.
+/// @see NavTimeglo
+struct NavTimegloFields
 {
     /// @brief Definition of "iTOW" field.
     using iTOW = field::nav::iTOW;
 
-    /// @brief Definition of "galTOW" field.
-    using galTOW = field::common::U4;
+    /// @brief Definition of "TOD" field.
+    using TOD = field::common::U4;
 
-    /// @brief Definition of "fSOW" field.
-    using fGalTOW = field::nav::fTOW;
+    /// @brief Definition of "fTOD" field.
+    using fTOD = field::nav::fTOW;
 
-    /// @brief Definition of "week" field.
-    using galWno = field::nav::week;
+    /// @brief Definition of "Nt" field.
+    using Nt = field::common::U2;
 
-    /// @brief Definition of "leapS" field.
-    using leapS = field::common::I1;
+    /// @brief Definition of "N4" field.
+    using N4 = field::common::U1;
 
     /// @brief Definition of "valid" field.
     struct validBits : public
-        field::common::X1T<comms::option::BitmaskReservedBits<0xf8, 0> >
+        field::common::X1T<comms::option::BitmaskReservedBits<0xfc, 0> >
     {
         /// @brief Provide names for internal bits.
         /// @details See definition of @b COMMS_BITMASK_BITS macro
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
-        COMMS_BITMASK_BITS(galTowValid, galWnoValid, leapSValid);
+        COMMS_BITMASK_BITS(todValid, dateValid);
     };
 
     /// @brief Definition of "tAcc" field.
@@ -65,36 +65,36 @@ struct NavTimegalFields
     /// @brief All the fields bundled in std::tuple.
     using All = std::tuple<
         iTOW,
-        galTOW,
-        fGalTOW,
-        galWno,
-        leapS,
+        TOD,
+        fTOD,
+        Nt,
+        N4,
         validBits,
         tAcc
     >;
 };
 
-/// @brief Definition of NAV-TIMEGAL message
+/// @brief Definition of NAV-TIMEGLO message
 /// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
 ///     various implementation options. @n
-///     See @ref NavTimegalFields and for definition of the fields this message contains
+///     See @ref NavTimegloFields and for definition of the fields this message contains
 ///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
-class NavTimegal : public
+class NavTimeglo : public
     comms::MessageBase<
         TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_NAV_TIMEGAL>,
-        comms::option::FieldsImpl<NavTimegalFields::All>,
-        comms::option::MsgType<NavTimegal<TMsgBase> >
+        comms::option::StaticNumIdImpl<MsgId_NAV_TIMEGLO>,
+        comms::option::FieldsImpl<NavTimegloFields::All>,
+        comms::option::MsgType<NavTimeglo<TMsgBase> >
     >
 {
     typedef comms::MessageBase<
         TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_NAV_TIMEGAL>,
-        comms::option::FieldsImpl<NavTimegalFields::All>,
-        comms::option::MsgType<NavTimegal<TMsgBase> >
+        comms::option::StaticNumIdImpl<MsgId_NAV_TIMEGLO>,
+        comms::option::FieldsImpl<NavTimegloFields::All>,
+        comms::option::MsgType<NavTimeglo<TMsgBase> >
     > Base;
 public:
 
@@ -104,32 +104,32 @@ public:
     ///     for details.
     ///
     ///     The field names are:
-    ///     @li @b iTOW for @ref NavTimegalFields::iTOW field
-    ///     @li @b galTOW for @ref NavTimegalFields::galTOW field
-    ///     @li @b fGalTOW for @ref NavTimegalFields::fGalTOW field
-    ///     @li @b galWno for @ref NavTimegalFields::galWno field
-    ///     @li @b leapS for @ref NavTimegalFields::leapS field
-    ///     @li @b valid for @ref NavTimegalFields::validBits field
-    ///     @li @b tAcc for @ref NavTimegalFields::tAcc field
-    COMMS_MSG_FIELDS_ACCESS(iTOW, galTOW, fGalTOW, galWno, leapS, valid, tAcc);
+    ///     @li @b iTOW for @ref NavTimegloFields::iTOW field
+    ///     @li @b TOD for @ref NavTimegloFields::TOD field
+    ///     @li @b fTOD for @ref NavTimegloFields::fTOD field
+    ///     @li @b Nt for @ref NavTimegloFields::Nt field
+    ///     @li @b N4 for @ref NavTimegloFields::N4 field
+    ///     @li @b valid for @ref NavTimegloFields::validBits field
+    ///     @li @b tAcc for @ref NavTimegloFields::tAcc field
+    COMMS_MSG_FIELDS_ACCESS(iTOW, TOD, fTOD, Nt, N4, valid, tAcc);
 
     /// @brief Default constructor
-    NavTimegal() = default;
+    NavTimeglo() = default;
 
     /// @brief Copy constructor
-    NavTimegal(const NavTimegal&) = default;
+    NavTimeglo(const NavTimeglo&) = default;
 
     /// @brief Move constructor
-    NavTimegal(NavTimegal&& other) = default;
+    NavTimeglo(NavTimeglo&& other) = default;
 
     /// @brief Destructor
-    virtual ~NavTimegal() = default;
+    virtual ~NavTimeglo() = default;
 
     /// @brief Copy assignment
-    NavTimegal& operator=(const NavTimegal&) = default;
+    NavTimeglo& operator=(const NavTimeglo&) = default;
 
     /// @brief Move assignment
-    NavTimegal& operator=(NavTimegal&&) = default;
+    NavTimeglo& operator=(NavTimeglo&&) = default;
 };
 
 

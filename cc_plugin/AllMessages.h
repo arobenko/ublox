@@ -42,14 +42,16 @@
 #include "cc_plugin/message/NavVelnedPoll.h"
 #include "cc_plugin/message/NavTimegps.h"
 #include "cc_plugin/message/NavTimegpsPoll.h"
-#include "cc_plugin/message/NavTimebds.h"
-#include "cc_plugin/message/NavTimebdsPoll.h"
-#include "cc_plugin/message/NavTimegal.h"
-#include "cc_plugin/message/NavTimegalPoll.h"
 #include "cc_plugin/message/NavTimeutc.h"
 #include "cc_plugin/message/NavTimeutcPoll.h"
 #include "cc_plugin/message/NavClock.h"
 #include "cc_plugin/message/NavClockPoll.h"
+#include "cc_plugin/message/NavTimeglo.h"
+#include "cc_plugin/message/NavTimegloPoll.h"
+#include "cc_plugin/message/NavTimebds.h"
+#include "cc_plugin/message/NavTimebdsPoll.h"
+#include "cc_plugin/message/NavTimegal.h"
+#include "cc_plugin/message/NavTimegalPoll.h"
 #include "cc_plugin/message/NavSvinfo.h"
 #include "cc_plugin/message/NavSvinfoPoll.h"
 #include "cc_plugin/message/NavDgps.h"
@@ -304,6 +306,8 @@ typedef std::tuple<
     cc_plugin::message::NavTimeutcPoll,
     cc_plugin::message::NavClock,
     cc_plugin::message::NavClockPoll,
+    cc_plugin::message::NavTimeglo,
+    cc_plugin::message::NavTimegloPoll,
     cc_plugin::message::NavTimebds,
     cc_plugin::message::NavTimebdsPoll,
     cc_plugin::message::NavTimegal,
