@@ -52,6 +52,8 @@
 #include "cc_plugin/message/NavTimebdsPoll.h"
 #include "cc_plugin/message/NavTimegal.h"
 #include "cc_plugin/message/NavTimegalPoll.h"
+#include "cc_plugin/message/NavTimels.h"
+#include "cc_plugin/message/NavTimelsPoll.h"
 #include "cc_plugin/message/NavSvinfo.h"
 #include "cc_plugin/message/NavSvinfoPoll.h"
 #include "cc_plugin/message/NavDgps.h"
@@ -312,6 +314,8 @@ typedef std::tuple<
     cc_plugin::message::NavTimebdsPoll,
     cc_plugin::message::NavTimegal,
     cc_plugin::message::NavTimegalPoll,
+    cc_plugin::message::NavTimels,
+    cc_plugin::message::NavTimelsPoll,
     cc_plugin::message::NavSvinfo,
     cc_plugin::message::NavSvinfoPoll,
     cc_plugin::message::NavDgps,
