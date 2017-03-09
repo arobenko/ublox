@@ -39,6 +39,8 @@ struct NavSvinfoFields
         Antaris, ///< Antaris
         Ublox5, ///< u-blox 5
         Ublox6, ///< u-blox 6
+        Ublox7, ///< u-blox 7
+        Ublox8, ///< u-blox 8
         NumOfValues /// number of available values
     };
 
