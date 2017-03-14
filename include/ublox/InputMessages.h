@@ -53,6 +53,7 @@
 
 #include "message/RxmRaw.h"
 #include "message/RxmSfrb.h"
+#include "message/RxmMeasx.h"
 #include "message/RxmSvsi.h"
 #include "message/RxmAlm.h"
 #include "message/RxmEph.h"
@@ -179,6 +180,7 @@ using InputMessages =
         message::NavAopstatusU8<TMessage>,
         message::RxmRaw<TMessage>,
         message::RxmSfrb<TMessage>,
+        message::RxmMeasx<TMessage>,
         message::RxmSvsi<TMessage>,
         message::RxmAlm<TMessage>,
         message::RxmEph<TMessage>,

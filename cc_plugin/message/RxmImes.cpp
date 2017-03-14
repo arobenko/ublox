@@ -47,7 +47,7 @@ QVariantMap createProps_doppler()
     return
         cc::property::field::ForField<RxmImesFields::doppler>()
             .name("doppler")
-            .scaledDecimals(4)
+            .scaledDecimals(9)
             .asMap();
 }
 
@@ -66,6 +66,7 @@ QVariantMap createProps_pos1Lat()
         cc::property::field::ForField<RxmImesFields::pos1Lat>()
             .name("pos1Lat")
             .serialisedHidden()
+            .scaledDecimals(9)
             .asMap();
 }
 
@@ -88,6 +89,7 @@ QVariantMap createProps_pos1Lon()
         cc::property::field::ForField<RxmImesFields::pos1Lon>()
             .name("pos1Lon")
             .serialisedHidden()
+            .scaledDecimals(9)
             .asMap();
 }
 
@@ -178,7 +180,7 @@ QVariantMap createProps_lat()
     return
         cc::property::field::ForField<RxmImesFields::lat>()
             .name("lat")
-            .scaledDecimals(6)
+            .scaledDecimals(9)
             .asMap();
 }
 
@@ -187,7 +189,7 @@ QVariantMap createProps_lon()
     return
         cc::property::field::ForField<RxmImesFields::lon>()
             .name("lat")
-            .scaledDecimals(6)
+            .scaledDecimals(9)
             .asMap();
 }
 
