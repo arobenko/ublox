@@ -84,6 +84,7 @@ function (cc_plugin_ublox)
         message/RxmEph.cpp
         message/RxmEphPollSv.cpp
         message/RxmEphPoll.cpp
+        message/RxmPmreqV0.cpp
         message/RxmPmreq.cpp
         message/RxmImes.cpp
         message/RxmImesPoll.cpp
