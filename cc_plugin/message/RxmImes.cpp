@@ -188,7 +188,7 @@ QVariantMap createProps_lon()
 {
     return
         cc::property::field::ForField<RxmImesFields::lon>()
-            .name("lat")
+            .name("lon")
             .scaledDecimals(9)
             .asMap();
 }
