@@ -88,6 +88,8 @@ function (cc_plugin_ublox)
         message/RxmEphPoll.cpp
         message/RxmPmreqV0.cpp
         message/RxmPmreq.cpp
+        message/RxmRlmShort.cpp
+        message/RxmRlmLong.cpp
         message/RxmImes.cpp
         message/RxmImesPoll.cpp
         message/InfError.cpp

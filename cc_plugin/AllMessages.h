@@ -89,6 +89,8 @@
 #include "cc_plugin/message/RxmEphPoll.h"
 #include "cc_plugin/message/RxmPmreqV0.h"
 #include "cc_plugin/message/RxmPmreq.h"
+#include "cc_plugin/message/RxmRlmShort.h"
+#include "cc_plugin/message/RxmRlmLong.h"
 #include "cc_plugin/message/RxmImes.h"
 #include "cc_plugin/message/RxmImesPoll.h"
 
@@ -356,6 +358,8 @@ typedef std::tuple<
     cc_plugin::message::RxmEphPoll,
     cc_plugin::message::RxmPmreqV0,
     cc_plugin::message::RxmPmreq,
+    cc_plugin::message::RxmRlmShort,
+    cc_plugin::message::RxmRlmLong,
     cc_plugin::message::RxmImes,
     cc_plugin::message::RxmImesPoll,
     cc_plugin::message::InfError,

@@ -58,6 +58,8 @@
 #include "message/RxmSvsi.h"
 #include "message/RxmAlm.h"
 #include "message/RxmEph.h"
+#include "message/RxmRlmShort.h"
+#include "message/RxmRlmLong.h"
 #include "message/RxmImes.h"
 
 #include "message/InfError.h"
@@ -186,6 +188,8 @@ using InputMessages =
         message::RxmSvsi<TMessage>,
         message::RxmAlm<TMessage>,
         message::RxmEph<TMessage>,
+        message::RxmRlmShort<TMessage>,
+        message::RxmRlmLong<TMessage>,
         message::RxmImes<TMessage>,
         message::InfError<TMessage>,
         message::InfWarning<TMessage>,
