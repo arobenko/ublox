@@ -76,6 +76,8 @@ function (cc_plugin_ublox)
         message/RxmRawPoll.cpp
         message/RxmSfrb.cpp
         message/RxmMeasx.cpp
+        message/RxmRawx.cpp
+        message/RxmRawxPoll.cpp
         message/RxmSvsi.cpp
         message/RxmSvsiPoll.cpp
         message/RxmAlm.cpp
