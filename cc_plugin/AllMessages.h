@@ -286,6 +286,7 @@
 #include "cc_plugin/message/LogRetrieveposextra.h"
 
 #include "cc_plugin/message/SecSign.h"
+#include "cc_plugin/message/SecUniqid.h"
 
 namespace ublox
 {
@@ -547,7 +548,8 @@ typedef std::tuple<
     cc_plugin::message::LogFindtimeCmd,
     cc_plugin::message::LogFindtime,
     cc_plugin::message::LogRetrieveposextra,
-    cc_plugin::message::SecSign
+    cc_plugin::message::SecSign,
+    cc_plugin::message::SecUniqid
 > AllMessages;
 
 }  // namespace cc_plugin
