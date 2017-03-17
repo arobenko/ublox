@@ -76,6 +76,7 @@
 #include "cc_plugin/message/RxmRaw.h"
 #include "cc_plugin/message/RxmRawPoll.h"
 #include "cc_plugin/message/RxmSfrb.h"
+#include "cc_plugin/message/RxmSfrbx.h"
 #include "cc_plugin/message/RxmMeasx.h"
 #include "cc_plugin/message/RxmRawx.h"
 #include "cc_plugin/message/RxmRawxPoll.h"
@@ -345,6 +346,7 @@ typedef std::tuple<
     cc_plugin::message::RxmRaw,
     cc_plugin::message::RxmRawPoll,
     cc_plugin::message::RxmSfrb,
+    cc_plugin::message::RxmSfrbx,
     cc_plugin::message::RxmMeasx,
     cc_plugin::message::RxmRawx,
     cc_plugin::message::RxmRawxPoll,
