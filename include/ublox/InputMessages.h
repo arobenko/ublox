@@ -148,6 +148,8 @@
 #include "message/LogFindtime.h"
 #include "message/LogRetrieveposextra.h"
 
+#include "message/SecSign.h"
+
 namespace ublox
 {
 
@@ -268,7 +270,8 @@ using InputMessages =
         message::LogRetrievepos<TMessage>,
         message::LogRetrievestring<TMessage>,
         message::LogFindtime<TMessage>,
-        message::LogRetrieveposextra<TMessage>
+        message::LogRetrieveposextra<TMessage>,
+        message::SecSign<TMessage>
     >;
 
 }  // namespace ublox

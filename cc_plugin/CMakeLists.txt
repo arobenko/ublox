@@ -274,6 +274,7 @@ function (cc_plugin_ublox)
         message/LogFindtimeCmd.cpp
         message/LogFindtime.cpp
         message/LogRetrieveposextra.cpp
+        message/SecSign.cpp
         field/MsgId.cpp
         field/common.cpp
         field/nav.cpp
