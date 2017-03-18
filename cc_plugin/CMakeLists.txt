@@ -228,6 +228,7 @@ function (cc_plugin_ublox)
         message/TimVrfy.cpp        
         message/TimVrfyPoll.cpp
         message/TimDosc.cpp
+        message/TimSmeas.cpp
         message/TimFchg.cpp
         message/TimFchgPoll.cpp
         message/TimHoc.cpp
