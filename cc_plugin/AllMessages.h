@@ -237,6 +237,7 @@
 #include "cc_plugin/message/TimDosc.h"
 #include "cc_plugin/message/TimFchg.h"
 #include "cc_plugin/message/TimFchgPoll.h"
+#include "cc_plugin/message/TimHoc.h"
 
 #include "cc_plugin/message/EsfStatus.h"
 #include "cc_plugin/message/EsfStatusPoll.h"

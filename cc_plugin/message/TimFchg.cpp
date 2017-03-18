@@ -50,15 +50,15 @@ QVariantList createFieldsProperties()
     props.append(
         cc::property::field::ForField<TimFchgFields::iTOW>().name("iTOW").asMap());
     props.append(
-        cc::property::field::ForField<TimFchgFields::intDeltaFreq>().name("intDeltaFreq").asMap());
+        cc::property::field::ForField<TimFchgFields::intDeltaFreq>().name("intDeltaFreq").scaledDecimals(4).asMap());
     props.append(
-        cc::property::field::ForField<TimFchgFields::intDeltaFreqUnc>().name("intDeltaFreqUnc").asMap());
+        cc::property::field::ForField<TimFchgFields::intDeltaFreqUnc>().name("intDeltaFreqUnc").scaledDecimals(4).asMap());
     props.append(
         cc::property::field::ForField<TimFchgFields::intRaw>().name("intRaw").asMap());
     props.append(
-        cc::property::field::ForField<TimFchgFields::extDeltaFreq>().name("extDeltaFreq").asMap());
+        cc::property::field::ForField<TimFchgFields::extDeltaFreq>().name("extDeltaFreq").scaledDecimals(4).asMap());
     props.append(
-        cc::property::field::ForField<TimFchgFields::extDeltaFreqUnc>().name("extDeltaFreqUnc").asMap());
+        cc::property::field::ForField<TimFchgFields::extDeltaFreqUnc>().name("extDeltaFreqUnc").scaledDecimals(4).asMap());
     props.append(
         cc::property::field::ForField<TimFchgFields::extRaw>().name("extRaw").asMap());
 

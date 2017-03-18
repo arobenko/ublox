@@ -230,6 +230,7 @@ function (cc_plugin_ublox)
         message/TimDosc.cpp
         message/TimFchg.cpp
         message/TimFchgPoll.cpp
+        message/TimHoc.cpp
         message/EsfStatus.cpp
         message/EsfStatusPoll.cpp
         message/MgaGpsEph.cpp
