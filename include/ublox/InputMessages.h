@@ -135,6 +135,7 @@
 #include "message/TimTm2.h"
 #include "message/TimSvin.h"
 #include "message/TimVrfy.h"
+#include "message/TimDosc.h"
 
 #include "message/EsfStatus.h"
 
@@ -263,6 +264,7 @@ using InputMessages =
         message::TimTm2<TMessage>,
         message::TimSvin<TMessage>,
         message::TimVrfy<TMessage>,
+        message::TimDosc<TMessage>,
         message::EsfStatus<TMessage>,
         message::MgaFlashAck<TMessage>,
         message::MgaAck<TMessage>,

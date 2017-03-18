@@ -234,6 +234,7 @@
 #include "cc_plugin/message/TimSvinPoll.h"
 #include "cc_plugin/message/TimVrfy.h"
 #include "cc_plugin/message/TimVrfyPoll.h"
+#include "cc_plugin/message/TimDosc.h"
 
 #include "cc_plugin/message/EsfStatus.h"
 #include "cc_plugin/message/EsfStatusPoll.h"
@@ -501,6 +502,7 @@ typedef std::tuple<
     cc_plugin::message::TimSvinPoll,
     cc_plugin::message::TimVrfy,
     cc_plugin::message::TimVrfyPoll,
+    cc_plugin::message::TimDosc,
     cc_plugin::message::EsfStatus,
     cc_plugin::message::EsfStatusPoll,
     cc_plugin::message::MgaGpsEph,
