@@ -228,6 +228,8 @@ function (cc_plugin_ublox)
         message/TimVrfy.cpp        
         message/TimVrfyPoll.cpp
         message/TimDosc.cpp
+        message/TimFchg.cpp
+        message/TimFchgPoll.cpp
         message/EsfStatus.cpp
         message/EsfStatusPoll.cpp
         message/MgaGpsEph.cpp

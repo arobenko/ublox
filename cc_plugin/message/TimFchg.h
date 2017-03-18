@@ -19,7 +19,7 @@
 #pragma once
 
 #include "comms_champion/comms_champion.h"
-#include "ublox/message/TimDosc.h"
+#include "ublox/message/TimFchg.h"
 #include "cc_plugin/Message.h"
 #include "cc_plugin/ProtocolMessageBase.h"
 
@@ -32,19 +32,19 @@ namespace cc_plugin
 namespace message
 {
 
-class TimDosc : public
+class TimFchg : public
     ProtocolMessageBase<
-        ublox::message::TimDosc<ublox::cc_plugin::Message>,
-        TimDosc>
+        ublox::message::TimFchg<ublox::cc_plugin::Message>,
+        TimFchg>
 {
 public:
-    TimDosc();
-    TimDosc(const TimDosc&) = delete;
-    TimDosc(TimDosc&&) = delete;
-    virtual ~TimDosc();
+    TimFchg();
+    TimFchg(const TimFchg&) = delete;
+    TimFchg(TimFchg&&) = delete;
+    virtual ~TimFchg();
 
-    TimDosc& operator=(const TimDosc&);
-    TimDosc& operator=(TimDosc&&);
+    TimFchg& operator=(const TimFchg&);
+    TimFchg& operator=(TimFchg&&);
 
 protected:
     virtual const char* nameImpl() const override;
@@ -57,8 +57,8 @@ protected:
 
 }  // namespace ublox
 
-extern template class ublox::message::TimDosc<ublox::cc_plugin::Message>;
+extern template class ublox::message::TimFchg<ublox::cc_plugin::Message>;
 extern template class ublox::cc_plugin::ProtocolMessageBase<
-    ublox::message::TimDosc<ublox::cc_plugin::Message>,
-    ublox::cc_plugin::message::TimDosc>;
+    ublox::message::TimFchg<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::TimFchg>;
 

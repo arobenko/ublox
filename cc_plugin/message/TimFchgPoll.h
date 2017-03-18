@@ -19,7 +19,7 @@
 #pragma once
 
 #include "comms_champion/comms_champion.h"
-#include "ublox/message/TimDosc.h"
+#include "ublox/message/TimFchgPoll.h"
 #include "cc_plugin/Message.h"
 #include "cc_plugin/ProtocolMessageBase.h"
 
@@ -32,23 +32,22 @@ namespace cc_plugin
 namespace message
 {
 
-class TimDosc : public
+class TimFchgPoll : public
     ProtocolMessageBase<
-        ublox::message::TimDosc<ublox::cc_plugin::Message>,
-        TimDosc>
+        ublox::message::TimFchgPoll<ublox::cc_plugin::Message>,
+        TimFchgPoll>
 {
 public:
-    TimDosc();
-    TimDosc(const TimDosc&) = delete;
-    TimDosc(TimDosc&&) = delete;
-    virtual ~TimDosc();
+    TimFchgPoll();
+    TimFchgPoll(const TimFchgPoll&) = delete;
+    TimFchgPoll(TimFchgPoll&&) = delete;
+    virtual ~TimFchgPoll();
 
-    TimDosc& operator=(const TimDosc&);
-    TimDosc& operator=(TimDosc&&);
+    TimFchgPoll& operator=(const TimFchgPoll&);
+    TimFchgPoll& operator=(TimFchgPoll&&);
 
 protected:
     virtual const char* nameImpl() const override;
-    virtual const QVariantList& fieldsPropertiesImpl() const override;
 };
 
 }  // namespace message
@@ -57,8 +56,8 @@ protected:
 
 }  // namespace ublox
 
-extern template class ublox::message::TimDosc<ublox::cc_plugin::Message>;
+extern template class ublox::message::TimFchgPoll<ublox::cc_plugin::Message>;
 extern template class ublox::cc_plugin::ProtocolMessageBase<
-    ublox::message::TimDosc<ublox::cc_plugin::Message>,
-    ublox::cc_plugin::message::TimDosc>;
+    ublox::message::TimFchgPoll<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::TimFchgPoll>;
 
