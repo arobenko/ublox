@@ -117,18 +117,6 @@ QVariantMap createProps_xDOP(char prefix)
             .asMap();
 }
 
-QVariantMap createProps_utcStandard()
-{
-    return
-        cc::property::field::ForField<CfgNav5Fields::utcStandard>()
-            .name("utcStandard")
-            .add("Automatic", (int)CfgNav5Fields::UtcStandard::Automatic)
-            .add("US", (int)CfgNav5Fields::UtcStandard::Us)
-            .add("Soviet Union", (int)CfgNav5Fields::UtcStandard::SovietUnion)
-            .add("China", (int)CfgNav5Fields::UtcStandard::China)
-            .asMap();
-}
-
 QVariantList createFieldsProperties()
 {
     QVariantList props;
@@ -158,7 +146,7 @@ QVariantList createFieldsProperties()
     props.append(cc_plugin::field::common::props_reserved(1));
     props.append(
         cc::property::field::ForField<CfgNav5Fields::staticHoldMaxDist>().name("staticHoldMaxDist").asMap());
-    props.append(createProps_utcStandard());
+    props.append(cc_plugin::field::common::createProps_utcStandard());
     props.append(cc_plugin::field::common::props_reserved(2));
     props.append(cc_plugin::field::common::props_reserved(3));
     assert(props.size() == CfgNav5::FieldIdx_numOfValues);

@@ -59,24 +59,6 @@ QVariantMap createProps_validBits()
     return props.asMap();
 }
 
-QVariantMap createProps_utcStandard()
-{
-    typedef NavTimeutcFields::utcStandard Field;
-    return
-        cc::property::field::ForField<Field>()
-            .name("utcStandard")
-            .serialisedHidden()
-            .add("No info")
-            .add("CRL")
-            .add("NIST")
-            .add("USNO")
-            .add("BIPM")
-            .add("European Lab")
-            .add("SU")
-            .add("NTSC")
-            .add("Unknown", (int)Field::ValueType::Unknown)
-            .asMap();
-}
 
 QVariantMap createProps_valid()
 {
@@ -85,7 +67,7 @@ QVariantMap createProps_valid()
         cc::property::field::ForField<Field>()
             .name("valid")
             .add(createProps_validBits())
-            .add(createProps_utcStandard());
+            .add(cc_plugin::field::common::createProps_utcStandard(true));
 
     assert(props.members().size() == Field::FieldIdx_numOfValues);
     return props.asMap();

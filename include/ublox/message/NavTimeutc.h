@@ -74,40 +74,8 @@ struct NavTimeutcFields
         COMMS_BITMASK_BITS(validTOW, validWKN, validUTC);
     };
 
-    /// @brief Value enumeration for @ref utcStandard field
-    enum class UtcStandard : std::uint8_t
-    {
-        NotAvailable, ///< Information not available
-        CRL, ///< Communications Research Labratory (CRL).
-        NIST, ///< National Institute of Standards and Technology (NIST)
-        USNO, ///< U.S. Naval Observatory (USNO)
-        BIPM, ///< International Bureau of Weights and Measures (BIPM)
-        EuLab, ///< European Laboratory
-        SU, ///< Former Soviet Union (SU)
-        NTSC, ///< National Time Service Center, China (NTSC)
-        Unknown = 15 ///< Unknown
-    };
-
-    /// @brief Custom validation class for @ref utcStandard field
-    struct UtcStandardValidator
-    {
-        template <typename TField>
-        bool operator()(const TField& field) const
-        {
-            auto val = field.value();
-            return
-                (val <= UtcStandard::NTSC) ||
-                (val == UtcStandard::Unknown);
-        }
-    };
-
     /// @brief Definition of "utcStandard" member field of @ref validBitfield field.
-    using utcStandard =
-        field::common::EnumT<
-            UtcStandard,
-            comms::option::ContentsValidator<UtcStandardValidator>,
-            comms::option::FixedBitLength<4>
-        >;
+    using utcStandard = field::common::utcStandardT<comms::option::FixedBitLength<4> >;
 
     /// @brief Definition of "valid" field as a bitfield.
     struct validBitfield : public

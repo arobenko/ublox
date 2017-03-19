@@ -46,17 +46,72 @@ QVariantMap createProps_towSubMS()
     return
         cc::property::field::ForField<TimTpFields::towSubMS>()
             .name("towSubMS")
-            .scaledDecimals(2)
             .asMap();
+}
+
+QVariantMap createProps_flagsBits()
+{
+    typedef TimTpFields::flagsBits Field;
+    auto props =
+        cc::property::field::ForField<Field>()
+            .name("flags")
+            .serialisedHidden()
+            .add("timeBase")
+            .add("utc");
+    assert(props.bits().size() == Field::BitIdx_numOfValues);
+    return props.asMap();
+}
+
+QVariantMap createProps_raim()
+{
+    typedef TimTpFields::raim Field;
+    auto props =
+        cc::property::field::ForField<Field>()
+            .name("raim")
+            .serialisedHidden()
+            .add("not available")
+            .add("not active")
+            .add("active");
+    assert(props.values().size() == (int)Field::ValueType::NumOfValues);
+    return props.asMap();
 }
 
 QVariantMap createProps_flags()
 {
-    cc::property::field::ForField<TimTpFields::flags> props;
-    props.name("flags")
-         .add("timeBase")
-         .add("utc");
-    assert(props.bits().size() == TimTpFields::flags::BitIdx_numOfValues);
+    typedef TimTpFields::flags Field;
+    auto props =
+        cc::property::field::ForField<Field>()
+            .name("flags")
+            .add(createProps_flagsBits())
+            .add(createProps_raim())
+            .add(cc::property::field::IntValue().hidden().asMap());
+    assert(props.members().size() == Field::FieldIdx_numOfValues);
+    return props.asMap();
+}
+
+QVariantMap createProps_timeRefGnss()
+{
+    typedef TimTpFields::timeRefGnss Field;
+    return
+        cc::property::field::ForField<Field>()
+            .name("timeRefGnss")
+            .serialisedHidden()
+            .add("GPS")
+            .add("GLONASS")
+            .add("BeiDou")
+            .add("Unknown", (int)Field::ValueType::Unknown)
+            .asMap();
+}
+
+QVariantMap createProps_refInfo()
+{
+    typedef TimTpFields::refInfo Field;
+    auto props =
+        cc::property::field::ForField<Field>()
+            .name("refInfo")
+            .add(createProps_timeRefGnss())
+            .add(cc_plugin::field::common::createProps_utcStandard(true));
+    assert(props.members().size() == Field::FieldIdx_numOfValues);
     return props.asMap();
 }
 
@@ -71,7 +126,7 @@ QVariantList createFieldsProperties()
     props.append(
         cc::property::field::ForField<TimTpFields::week>().name("week").asMap());
     props.append(createProps_flags());
-    props.append(cc_plugin::field::common::props_reserved(1));
+    props.append(createProps_refInfo());
 
     assert(props.size() == TimTp::FieldIdx_numOfValues);
     return props;

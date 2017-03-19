@@ -453,6 +453,47 @@ enum class GnssId : std::uint8_t
 using gnssId =
     EnumT<GnssId, comms::option::ValidNumValueRange<0, (int)GnssId::NumOfValues - 1> >;
 
+
+/// @brief Value enumeration for @ref utcStandard field
+enum class UtcStandard : std::uint8_t
+{
+    NotAvailable, ///< Information not available
+    CRL, ///< Communications Research Labratory (CRL).
+    NIST, ///< National Institute of Standards and Technology (NIST)
+    USNO, ///< U.S. Naval Observatory (USNO)
+    BIPM, ///< International Bureau of Weights and Measures (BIPM)
+    EuLab, ///< European Laboratory
+    SU, ///< Former Soviet Union (SU)
+    NTSC, ///< National Time Service Center, China (NTSC)
+    Unknown = 15 ///< Unknown
+};
+
+/// @brief Custom validation class for @ref utcStandardT field
+struct UtcStandardValidator
+{
+    template <typename TField>
+    bool operator()(const TField& field) const
+    {
+        auto val = field.value();
+        return
+            (val <= UtcStandard::NTSC) ||
+            (val == UtcStandard::Unknown);
+    }
+};
+
+/// @brief Definition of common "utcStandardT" field.
+/// @tparam TOpt Extra options
+template<typename... TOpt>
+using utcStandardT =
+    field::common::EnumT<
+        UtcStandard,
+        comms::option::ContentsValidator<UtcStandardValidator>,
+        TOpt...
+    >;
+
+/// @brief Definition of common "utcStandard" field.
+using utcStandard = utcStandardT<>;
+
 }  // namespace common
 
 }  // namespace field

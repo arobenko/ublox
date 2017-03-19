@@ -164,6 +164,28 @@ QVariantMap createProps_reservedBundleTwoParts(unsigned idx)
     return createProps_reservedBundle(idx, 2);
 }
 
+QVariantMap createProps_utcStandard(bool serialisedHidden)
+{
+    typedef ublox::field::common::utcStandard Field;
+    auto props =
+        cc::property::field::ForField<Field>()
+            .name("utcStandard")
+            .add("No info")
+            .add("CRL")
+            .add("NIST")
+            .add("USNO")
+            .add("BIPM")
+            .add("European Lab")
+            .add("SU")
+            .add("NTSC")
+            .add("Unknown", (int)Field::ValueType::Unknown);
+
+    if (serialisedHidden) {
+        props.serialisedHidden();
+    }
+    return props.asMap();
+}
+
 }  // namespace common
 
 }  // namespace field

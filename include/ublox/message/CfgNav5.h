@@ -160,42 +160,8 @@ struct CfgNav5Fields
     /// @brief Definition of "staticHoldMaxDist" field.
     using staticHoldMaxDist = field::common::U2;
 
-    /// @brief Value enumeration for @ref utcStandard enum value field.
-    enum class UtcStandard : std::uint8_t
-    {
-        Automatic, ///< Automatic, gerived from used GNSS
-        Us = 3, ///< Operated by U.S. Naval Observatory (GPS)
-        SovietUnion = 6, ///<  Operated by former Soviet Unioin (GLONASS)
-        China = 7, ///< Operated by Chine (BeiDou)
-    };
-
-    /// @brief Custom value validator for @ref utcStandard field.
-    struct UtcStandardValidator
-    {
-        template <typename TField>
-        bool operator()(const TField& field) const
-        {
-            static const UtcStandard Values[] = {
-                UtcStandard::Automatic,
-                UtcStandard::Us,
-                UtcStandard::SovietUnion,
-                UtcStandard::China,
-            };
-
-            auto value = field.value();
-            auto iter = std::lower_bound(std::begin(Values), std::end(Values), value);
-            return (iter != std::end(Values)) && (*iter == value);
-        }
-    };
-
-
     /// @brief Definition of "utcStandard" field.
-    using utcStandard =
-        field::common::EnumT<
-            UtcStandard,
-            comms::option::ContentsValidator<UtcStandardValidator>
-        >;
-
+    using utcStandard = field::common::utcStandard;
 
     /// @brief Definition of "reserved2" field.
     using reserved2 = field::common::res1;
