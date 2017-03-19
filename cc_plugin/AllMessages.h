@@ -184,6 +184,12 @@
 #include "cc_plugin/message/CfgPms.h"
 #include "cc_plugin/message/CfgPmsPoll.h"
 
+#include "cc_plugin/message/UpdSosRestored.h"
+#include "cc_plugin/message/UpdSosAck.h"
+#include "cc_plugin/message/UpdSosClear.h"
+#include "cc_plugin/message/UpdSosCreate.h"
+#include "cc_plugin/message/UpdSosPoll.h"
+
 #include "cc_plugin/message/MonIo.h"
 #include "cc_plugin/message/MonIoPoll.h"
 #include "cc_plugin/message/MonVer.h"
@@ -463,6 +469,11 @@ typedef std::tuple<
     cc_plugin::message::CfgDynseed,
     cc_plugin::message::CfgPms,
     cc_plugin::message::CfgPmsPoll,
+    cc_plugin::message::UpdSosRestored,
+    cc_plugin::message::UpdSosAck,
+    cc_plugin::message::UpdSosClear,
+    cc_plugin::message::UpdSosCreate,
+    cc_plugin::message::UpdSosPoll,
     cc_plugin::message::MonIo,
     cc_plugin::message::MonIoPoll,
     cc_plugin::message::MonVer,

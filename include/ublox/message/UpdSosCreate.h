@@ -16,7 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 /// @file
-/// @brief Contains definition of TIM-VCOCAL (<b>stop command</b>) message and its fields.
+/// @brief Contains definition of UPD-SOS (<b>create command</b>) message and its fields.
 
 #pragma once
 
@@ -29,38 +29,42 @@ namespace ublox
 namespace message
 {
 
-/// @brief Accumulates details of all the TIM-VCOCAL (<b>stop command</b>) message fields.
-/// @see TimVcocalStop
-struct TimVcocalStopFields
+/// @brief Accumulates details of all the UPD-SOS (<b>create command</b>) message fields.
+/// @see UpdSosCreate
+struct UpdSosCreateFields
 {
-    /// @brief Definition of "type" field.
-    using type =
+    /// @brief Definition of "cmd" field.
+    using cmd =
         field::common::U1T<
         comms::option::ValidNumValueRange<0, 0>,
         comms::option::FailOnInvalid
     >;
 
+    /// @brief Definition of "reserved1" field.
+    using reserved1 = field::common::res3;
+
 
     /// @brief All the fields bundled in std::tuple.
     using All = std::tuple<
-        type
+        cmd,
+        reserved1
     >;
 };
 
-/// @brief Definition of TIM-VCOCAL (<b>stop command</b>) message
+/// @brief Definition of UPD-SOS (<b>create command</b>) message
 /// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
 ///     various implementation options. @n
-///     See @ref TimVcocalStopFields and for definition of the fields this message contains
+///     See @ref UpdSosCreateFields and for definition of the fields this message contains
 ///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
-class TimVcocalStop : public
+class UpdSosCreate : public
     comms::MessageBase<
         TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_TIM_VCOCAL>,
-        comms::option::FieldsImpl<TimVcocalStopFields::All>,
-        comms::option::MsgType<TimVcocalStop<TMsgBase> >
+        comms::option::StaticNumIdImpl<MsgId_UPD_SOS>,
+        comms::option::FieldsImpl<UpdSosCreateFields::All>,
+        comms::option::MsgType<UpdSosCreate<TMsgBase> >
     >
 {
 public:
@@ -71,26 +75,27 @@ public:
     ///     for details.
     ///
     ///     The field names are:
-    ///     @li @b type for @ref TimVcocalStopFields::type field
-    COMMS_MSG_FIELDS_ACCESS(type);
+    ///     @li @b cmd for @ref UpdSosCreateFields::cmd field
+    ///     @li @b reserved1 for @ref UpdSosCreateFields::reserved1 field
+    COMMS_MSG_FIELDS_ACCESS(cmd, reserved1);
 
     /// @brief Default constructor
-    TimVcocalStop() = default;
+    UpdSosCreate() = default;
 
     /// @brief Copy constructor
-    TimVcocalStop(const TimVcocalStop&) = default;
+    UpdSosCreate(const UpdSosCreate&) = default;
 
     /// @brief Move constructor
-    TimVcocalStop(TimVcocalStop&& other) = default;
+    UpdSosCreate(UpdSosCreate&& other) = default;
 
     /// @brief Destructor
-    virtual ~TimVcocalStop() = default;
+    virtual ~UpdSosCreate() = default;
 
     /// @brief Copy assignment
-    TimVcocalStop& operator=(const TimVcocalStop&) = default;
+    UpdSosCreate& operator=(const UpdSosCreate&) = default;
 
     /// @brief Move assignment
-    TimVcocalStop& operator=(TimVcocalStop&&) = default;
+    UpdSosCreate& operator=(UpdSosCreate&&) = default;
 };
 
 

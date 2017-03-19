@@ -109,6 +109,9 @@
 #include "message/CfgGeofence.h"
 #include "message/CfgPms.h"
 
+#include "message/UpdSosRestored.h"
+#include "message/UpdSosAck.h"
+
 #include "message/MonIo.h"
 #include "message/MonVer.h"
 #include "message/MonMsgpp.h"
@@ -244,6 +247,8 @@ using InputMessages =
         message::CfgSmgr<TMessage>,
         message::CfgGeofence<TMessage>,
         message::CfgPms<TMessage>,
+        message::UpdSosRestored<TMessage>,
+        message::UpdSosAck<TMessage>,
         message::MonIo<TMessage>,
         message::MonVer<TMessage>,
         message::MonMsgpp<TMessage>,

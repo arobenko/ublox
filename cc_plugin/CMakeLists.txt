@@ -179,6 +179,11 @@ function (cc_plugin_ublox)
         message/CfgDynseed.cpp
         message/CfgPms.cpp
         message/CfgPmsPoll.cpp
+        message/UpdSosRestored.cpp
+        message/UpdSosAck.cpp
+        message/UpdSosClear.cpp
+        message/UpdSosCreate.cpp
+        message/UpdSosPoll.cpp
         message/MonIo.cpp
         message/MonIoPoll.cpp
         message/MonVer.cpp
