@@ -230,6 +230,10 @@ function (cc_plugin_ublox)
         message/TimDosc.cpp
         message/TimTos.cpp
         message/TimSmeas.cpp
+        message/TimVcocal.cpp
+        message/TimVcocalExt.cpp
+        message/TimVcocalStop.cpp
+        message/TimVcocalPoll.cpp
         message/TimFchg.cpp
         message/TimFchgPoll.cpp
         message/TimHoc.cpp

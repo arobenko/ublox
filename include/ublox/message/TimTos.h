@@ -76,7 +76,7 @@ struct TimTosFields
         NumOfValues ///< number of available values
     };
 
-    /// @brief Definition of "raim" member field of @ref flags bitfield.
+    /// @brief Definition of "discSrc" member field of @ref flags bitfield.
     using discSrc =
         field::common::EnumT<
             DiscSrc,

@@ -237,6 +237,10 @@
 #include "cc_plugin/message/TimDosc.h"
 #include "cc_plugin/message/TimTos.h"
 #include "cc_plugin/message/TimSmeas.h"
+#include "cc_plugin/message/TimVcocal.h"
+#include "cc_plugin/message/TimVcocalExt.h"
+#include "cc_plugin/message/TimVcocalStop.h"
+#include "cc_plugin/message/TimVcocalPoll.h"
 #include "cc_plugin/message/TimFchg.h"
 #include "cc_plugin/message/TimFchgPoll.h"
 #include "cc_plugin/message/TimHoc.h"
@@ -510,6 +514,10 @@ typedef std::tuple<
     cc_plugin::message::TimDosc,
     cc_plugin::message::TimTos,
     cc_plugin::message::TimSmeas,
+    cc_plugin::message::TimVcocal,
+    cc_plugin::message::TimVcocalExt,
+    cc_plugin::message::TimVcocalStop,
+    cc_plugin::message::TimVcocalPoll,
     cc_plugin::message::TimFchg,
     cc_plugin::message::TimFchgPoll,
     cc_plugin::message::EsfStatus,
