@@ -272,7 +272,7 @@ public:
     TimTos(TimTos&& other) = default;
 
     /// @brief Destructor
-    virtual ~TimTos() = default;
+    ~TimTos() = default;
 
     /// @brief Copy assignment
     TimTos& operator=(const TimTos&) = default;

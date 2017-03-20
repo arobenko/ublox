@@ -187,7 +187,7 @@ public:
     CfgGnss(CfgGnss&& other) = default;
 
     /// @brief Destructor
-    virtual ~CfgGnss() = default;
+    ~CfgGnss() = default;
 
     /// @brief Copy assignment
     CfgGnss& operator=(const CfgGnss&) = default;

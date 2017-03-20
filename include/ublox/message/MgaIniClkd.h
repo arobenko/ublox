@@ -113,7 +113,7 @@ public:
     MgaIniClkd(MgaIniClkd&& other) = default;
 
     /// @brief Destructor
-    virtual ~MgaIniClkd() = default;
+    ~MgaIniClkd() = default;
 
     /// @brief Copy assignment
     MgaIniClkd& operator=(const MgaIniClkd&) = default;

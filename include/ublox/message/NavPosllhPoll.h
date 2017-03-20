@@ -78,7 +78,7 @@ public:
     NavPosllhPoll(NavPosllhPoll&& other) = default;
 
     /// @brief Destructor
-    virtual ~NavPosllhPoll() = default;
+    ~NavPosllhPoll() = default;
 
     /// @brief Copy assignment
     NavPosllhPoll& operator=(const NavPosllhPoll&) = default;

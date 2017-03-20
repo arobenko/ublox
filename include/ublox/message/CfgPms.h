@@ -135,7 +135,7 @@ public:
     CfgPms(CfgPms&& other) = default;
 
     /// @brief Destructor
-    virtual ~CfgPms() = default;
+    ~CfgPms() = default;
 
     /// @brief Copy assignment
     CfgPms& operator=(const CfgPms&) = default;

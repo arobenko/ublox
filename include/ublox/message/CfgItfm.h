@@ -198,7 +198,7 @@ public:
     CfgItfm(CfgItfm&& other) = default;
 
     /// @brief Destructor
-    virtual ~CfgItfm() = default;
+    ~CfgItfm() = default;
 
     /// @brief Copy assignment
     CfgItfm& operator=(const CfgItfm&) = default;

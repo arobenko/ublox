@@ -104,7 +104,7 @@ public:
     CfgDynseed(CfgDynseed&& other) = default;
 
     /// @brief Destructor
-    virtual ~CfgDynseed() = default;
+    ~CfgDynseed() = default;
 
     /// @brief Copy assignment
     CfgDynseed& operator=(const CfgDynseed&) = default;

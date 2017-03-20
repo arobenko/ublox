@@ -269,7 +269,7 @@ public:
     MgaQzssEph(MgaQzssEph&& other) = default;
 
     /// @brief Destructor
-    virtual ~MgaQzssEph() = default;
+    ~MgaQzssEph() = default;
 
     /// @brief Copy assignment
     MgaQzssEph& operator=(const MgaQzssEph&) = default;

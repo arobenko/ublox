@@ -84,7 +84,7 @@ public:
     AckNak(AckNak&& other) = default;
 
     /// @brief Destructor
-    virtual ~AckNak() = default;
+    ~AckNak() = default;
 
     /// @brief Copy assignment
     AckNak& operator=(const AckNak&) = default;

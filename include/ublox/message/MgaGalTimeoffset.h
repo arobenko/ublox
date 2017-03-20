@@ -131,7 +131,7 @@ public:
     MgaGalTimeoffset(MgaGalTimeoffset&& other) = default;
 
     /// @brief Destructor
-    virtual ~MgaGalTimeoffset() = default;
+    ~MgaGalTimeoffset() = default;
 
     /// @brief Copy assignment
     MgaGalTimeoffset& operator=(const MgaGalTimeoffset&) = default;

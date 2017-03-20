@@ -203,7 +203,7 @@ public:
     LogRetrievepos(LogRetrievepos&& other) = default;
 
     /// @brief Destructor
-    virtual ~LogRetrievepos() = default;
+    ~LogRetrievepos() = default;
 
     /// @brief Copy assignment
     LogRetrievepos& operator=(const LogRetrievepos&) = default;

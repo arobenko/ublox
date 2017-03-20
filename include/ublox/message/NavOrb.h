@@ -311,7 +311,7 @@ public:
     NavOrb(NavOrb&& other) = default;
 
     /// @brief Destructor
-    virtual ~NavOrb() = default;
+    ~NavOrb() = default;
 
     /// @brief Copy assignment
     NavOrb& operator=(const NavOrb&) = default;

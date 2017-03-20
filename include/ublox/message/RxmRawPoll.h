@@ -78,7 +78,7 @@ public:
     RxmRawPoll(RxmRawPoll&& other) = default;
 
     /// @brief Destructor
-    virtual ~RxmRawPoll() = default;
+    ~RxmRawPoll() = default;
 
     /// @brief Copy assignment
     RxmRawPoll& operator=(const RxmRawPoll&) = default;

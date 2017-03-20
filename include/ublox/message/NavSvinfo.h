@@ -221,7 +221,7 @@ public:
     NavSvinfo(NavSvinfo&& other) = default;
 
     /// @brief Destructor
-    virtual ~NavSvinfo() = default;
+    ~NavSvinfo() = default;
 
     /// @brief Copy assignment
     NavSvinfo& operator=(const NavSvinfo&) = default;

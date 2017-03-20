@@ -146,7 +146,7 @@ public:
     MonGnss(MonGnss&& other) = default;
 
     /// @brief Destructor
-    virtual ~MonGnss() = default;
+    ~MonGnss() = default;
 
     /// @brief Copy assignment
     MonGnss& operator=(const MonGnss&) = default;

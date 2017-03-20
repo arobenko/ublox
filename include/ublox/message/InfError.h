@@ -50,7 +50,7 @@ public:
     InfError(InfError&& other) = default;
 
     /// @brief Destructor
-    virtual ~InfError() = default;
+    ~InfError() = default;
 
     /// @brief Copy assignment
     InfError& operator=(const InfError&) = default;

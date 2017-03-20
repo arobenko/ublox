@@ -212,7 +212,7 @@ public:
     NavTimels(NavTimels&& other) = default;
 
     /// @brief Destructor
-    virtual ~NavTimels() = default;
+    ~NavTimels() = default;
 
     /// @brief Copy assignment
     NavTimels& operator=(const NavTimels&) = default;

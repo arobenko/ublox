@@ -361,7 +361,7 @@ public:
     NavPvt(NavPvt&& other) = default;
 
     /// @brief Destructor
-    virtual ~NavPvt() = default;
+    ~NavPvt() = default;
 
     /// @brief Copy assignment
     NavPvt& operator=(const NavPvt&) = default;

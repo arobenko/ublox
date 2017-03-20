@@ -291,7 +291,7 @@ public:
     NavSat(NavSat&& other) = default;
 
     /// @brief Destructor
-    virtual ~NavSat() = default;
+    ~NavSat() = default;
 
     /// @brief Copy assignment
     NavSat& operator=(const NavSat&) = default;

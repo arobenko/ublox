@@ -141,7 +141,7 @@ public:
     CfgRst(CfgRst&& other) = default;
 
     /// @brief Destructor
-    virtual ~CfgRst() = default;
+    ~CfgRst() = default;
 
     /// @brief Copy assignment
     CfgRst& operator=(const CfgRst&) = default;

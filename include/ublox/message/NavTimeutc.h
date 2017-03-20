@@ -161,7 +161,7 @@ public:
     NavTimeutc(NavTimeutc&& other) = default;
 
     /// @brief Destructor
-    virtual ~NavTimeutc() = default;
+    ~NavTimeutc() = default;
 
     /// @brief Copy assignment
     NavTimeutc& operator=(const NavTimeutc&) = default;

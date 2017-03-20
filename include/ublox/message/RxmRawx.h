@@ -249,7 +249,7 @@ public:
     RxmRawx(RxmRawx&& other) = default;
 
     /// @brief Destructor
-    virtual ~RxmRawx() = default;
+    ~RxmRawx() = default;
 
     /// @brief Copy assignment
     RxmRawx& operator=(const RxmRawx&) = default;

@@ -95,7 +95,7 @@ public:
     MonRxr(MonRxr&& other) = default;
 
     /// @brief Destructor
-    virtual ~MonRxr() = default;
+    ~MonRxr() = default;
 
     /// @brief Copy assignment
     MonRxr& operator=(const MonRxr&) = default;

@@ -96,7 +96,7 @@ public:
     MgaFlashStop(MgaFlashStop&& other) = default;
 
     /// @brief Destructor
-    virtual ~MgaFlashStop() = default;
+    ~MgaFlashStop() = default;
 
     /// @brief Copy assignment
     MgaFlashStop& operator=(const MgaFlashStop&) = default;

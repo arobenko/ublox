@@ -78,7 +78,7 @@ public:
     MonIoPoll(MonIoPoll&& other) = default;
 
     /// @brief Destructor
-    virtual ~MonIoPoll() = default;
+    ~MonIoPoll() = default;
 
     /// @brief Copy assignment
     MonIoPoll& operator=(const MonIoPoll&) = default;

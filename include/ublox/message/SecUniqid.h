@@ -105,7 +105,7 @@ public:
     SecUniqid(SecUniqid&& other) = default;
 
     /// @brief Destructor
-    virtual ~SecUniqid() = default;
+    ~SecUniqid() = default;
 
     /// @brief Copy assignment
     SecUniqid& operator=(const SecUniqid&) = default;

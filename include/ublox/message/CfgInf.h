@@ -160,7 +160,7 @@ public:
     CfgInf(CfgInf&& other) = default;
 
     /// @brief Destructor
-    virtual ~CfgInf() = default;
+    ~CfgInf() = default;
 
     /// @brief Copy assignment
     CfgInf& operator=(const CfgInf&) = default;

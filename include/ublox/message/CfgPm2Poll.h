@@ -78,7 +78,7 @@ public:
     CfgPm2Poll(CfgPm2Poll&& other) = default;
 
     /// @brief Destructor
-    virtual ~CfgPm2Poll() = default;
+    ~CfgPm2Poll() = default;
 
     /// @brief Copy assignment
     CfgPm2Poll& operator=(const CfgPm2Poll&) = default;

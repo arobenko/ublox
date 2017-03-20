@@ -174,7 +174,7 @@ public:
     NavGeofence(NavGeofence&& other) = default;
 
     /// @brief Destructor
-    virtual ~NavGeofence() = default;
+    ~NavGeofence() = default;
 
     /// @brief Copy assignment
     NavGeofence& operator=(const NavGeofence&) = default;

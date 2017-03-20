@@ -185,7 +185,7 @@ public:
     MgaGloAlm(MgaGloAlm&& other) = default;
 
     /// @brief Destructor
-    virtual ~MgaGloAlm() = default;
+    ~MgaGloAlm() = default;
 
     /// @brief Copy assignment
     MgaGloAlm& operator=(const MgaGloAlm&) = default;

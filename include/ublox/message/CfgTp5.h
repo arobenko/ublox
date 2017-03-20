@@ -209,7 +209,7 @@ public:
     CfgTp5(CfgTp5&& other) = default;
 
     /// @brief Destructor
-    virtual ~CfgTp5() = default;
+    ~CfgTp5() = default;
 
     /// @brief Copy assignment
     CfgTp5& operator=(const CfgTp5&) = default;

@@ -90,7 +90,7 @@ public:
     UpdSosClear(UpdSosClear&& other) = default;
 
     /// @brief Destructor
-    virtual ~UpdSosClear() = default;
+    ~UpdSosClear() = default;
 
     /// @brief Copy assignment
     UpdSosClear& operator=(const UpdSosClear&) = default;

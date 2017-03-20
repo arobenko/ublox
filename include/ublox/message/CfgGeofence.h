@@ -201,7 +201,7 @@ public:
     CfgGeofence(CfgGeofence&& other) = default;
 
     /// @brief Destructor
-    virtual ~CfgGeofence() = default;
+    ~CfgGeofence() = default;
 
     /// @brief Copy assignment
     CfgGeofence& operator=(const CfgGeofence&) = default;

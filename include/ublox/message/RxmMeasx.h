@@ -336,7 +336,7 @@ public:
     RxmMeasx(RxmMeasx&& other) = default;
 
     /// @brief Destructor
-    virtual ~RxmMeasx() = default;
+    ~RxmMeasx() = default;
 
     /// @brief Copy assignment
     RxmMeasx& operator=(const RxmMeasx&) = default;

@@ -259,7 +259,7 @@ public:
     CfgDosc(CfgDosc&& other) = default;
 
     /// @brief Destructor
-    virtual ~CfgDosc() = default;
+    ~CfgDosc() = default;
 
     /// @brief Copy assignment
     CfgDosc& operator=(const CfgDosc&) = default;

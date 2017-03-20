@@ -128,7 +128,7 @@ public:
     RxmPmreqV0(RxmPmreqV0&& other) = default;
 
     /// @brief Destructor
-    virtual ~RxmPmreqV0() = default;
+    ~RxmPmreqV0() = default;
 
     /// @brief Copy assignment
     RxmPmreqV0& operator=(const RxmPmreqV0&) = default;

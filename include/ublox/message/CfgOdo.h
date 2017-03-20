@@ -186,7 +186,7 @@ public:
     CfgOdo(CfgOdo&& other) = default;
 
     /// @brief Destructor
-    virtual ~CfgOdo() = default;
+    ~CfgOdo() = default;
 
     /// @brief Copy assignment
     CfgOdo& operator=(const CfgOdo&) = default;

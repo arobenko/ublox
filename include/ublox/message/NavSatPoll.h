@@ -78,7 +78,7 @@ public:
     NavSatPoll(NavSatPoll&& other) = default;
 
     /// @brief Destructor
-    virtual ~NavSatPoll() = default;
+    ~NavSatPoll() = default;
 
     /// @brief Copy assignment
     NavSatPoll& operator=(const NavSatPoll&) = default;

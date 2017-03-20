@@ -82,7 +82,7 @@ public:
     AidAlmPoll(AidAlmPoll&& other) = default;
 
     /// @brief Destructor
-    virtual ~AidAlmPoll() = default;
+    ~AidAlmPoll() = default;
 
     /// @brief Copy assignment
     AidAlmPoll& operator=(const AidAlmPoll&) = default;

@@ -127,7 +127,7 @@ public:
     CfgRxm(CfgRxm&& other) = default;
 
     /// @brief Destructor
-    virtual ~CfgRxm() = default;
+    ~CfgRxm() = default;
 
     /// @brief Copy assignment
     CfgRxm& operator=(const CfgRxm&) = default;

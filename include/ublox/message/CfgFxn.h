@@ -145,7 +145,7 @@ public:
     CfgFxn(CfgFxn&& other) = default;
 
     /// @brief Destructor
-    virtual ~CfgFxn() = default;
+    ~CfgFxn() = default;
 
     /// @brief Copy assignment
     CfgFxn& operator=(const CfgFxn&) = default;

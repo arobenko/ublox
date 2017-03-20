@@ -155,7 +155,7 @@ public:
     MgaGalUtc(MgaGalUtc&& other) = default;
 
     /// @brief Destructor
-    virtual ~MgaGalUtc() = default;
+    ~MgaGalUtc() = default;
 
     /// @brief Copy assignment
     MgaGalUtc& operator=(const MgaGalUtc&) = default;

@@ -85,7 +85,7 @@ public:
     NavEoe(NavEoe&& other) = default;
 
     /// @brief Destructor
-    virtual ~NavEoe() = default;
+    ~NavEoe() = default;
 
     /// @brief Copy assignment
     NavEoe& operator=(const NavEoe&) = default;

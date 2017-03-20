@@ -147,7 +147,7 @@ public:
     AidAlpsrv(AidAlpsrv&& other) = default;
 
     /// @brief Destructor
-    virtual ~AidAlpsrv() = default;
+    ~AidAlpsrv() = default;
 
     /// @brief Copy assignment
     AidAlpsrv& operator=(const AidAlpsrv&) = default;

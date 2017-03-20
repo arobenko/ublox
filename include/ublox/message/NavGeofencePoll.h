@@ -78,7 +78,7 @@ public:
     NavGeofencePoll(NavGeofencePoll&& other) = default;
 
     /// @brief Destructor
-    virtual ~NavGeofencePoll() = default;
+    ~NavGeofencePoll() = default;
 
     /// @brief Copy assignment
     NavGeofencePoll& operator=(const NavGeofencePoll&) = default;

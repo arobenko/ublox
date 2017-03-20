@@ -196,7 +196,7 @@ public:
     CfgEsfgwt(CfgEsfgwt&& other) = default;
 
     /// @brief Destructor
-    virtual ~CfgEsfgwt() = default;
+    ~CfgEsfgwt() = default;
 
     /// @brief Copy assignment
     CfgEsfgwt& operator=(const CfgEsfgwt&) = default;

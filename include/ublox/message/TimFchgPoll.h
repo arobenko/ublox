@@ -78,7 +78,7 @@ public:
     TimFchgPoll(TimFchgPoll&& other) = default;
 
     /// @brief Destructor
-    virtual ~TimFchgPoll() = default;
+    ~TimFchgPoll() = default;
 
     /// @brief Copy assignment
     TimFchgPoll& operator=(const TimFchgPoll&) = default;

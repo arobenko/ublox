@@ -125,7 +125,7 @@ public:
     MgaFlashData(MgaFlashData&& other) = default;
 
     /// @brief Destructor
-    virtual ~MgaFlashData() = default;
+    ~MgaFlashData() = default;
 
     /// @brief Copy assignment
     MgaFlashData& operator=(const MgaFlashData&) = default;

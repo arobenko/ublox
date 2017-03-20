@@ -79,7 +79,7 @@ public:
     NavDgpsPoll(NavDgpsPoll&& other) = default;
 
     /// @brief Destructor
-    virtual ~NavDgpsPoll() = default;
+    ~NavDgpsPoll() = default;
 
     /// @brief Copy assignment
     NavDgpsPoll& operator=(const NavDgpsPoll&) = default;

@@ -115,7 +115,7 @@ public:
     NavPosllh(NavPosllh&& other) = default;
 
     /// @brief Destructor
-    virtual ~NavPosllh() = default;
+    ~NavPosllh() = default;
 
     /// @brief Copy assignment
     NavPosllh& operator=(const NavPosllh&) = default;

@@ -294,7 +294,7 @@ public:
     MonHw(MonHw&& other) = default;
 
     /// @brief Destructor
-    virtual ~MonHw() = default;
+    ~MonHw() = default;
 
     /// @brief Copy assignment
     MonHw& operator=(const MonHw&) = default;

@@ -219,7 +219,7 @@ public:
     CfgSmgr(CfgSmgr&& other) = default;
 
     /// @brief Destructor
-    virtual ~CfgSmgr() = default;
+    ~CfgSmgr() = default;
 
     /// @brief Copy assignment
     CfgSmgr& operator=(const CfgSmgr&) = default;

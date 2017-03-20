@@ -184,7 +184,7 @@ public:
     CfgNmeaExtV1(CfgNmeaExtV1&& other) = default;
 
     /// @brief Destructor
-    virtual ~CfgNmeaExtV1() = default;
+    ~CfgNmeaExtV1() = default;
 
     /// @brief Copy assignment
     CfgNmeaExtV1& operator=(const CfgNmeaExtV1&) = default;

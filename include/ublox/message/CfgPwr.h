@@ -119,7 +119,7 @@ public:
     CfgPwr(CfgPwr&& other) = default;
 
     /// @brief Destructor
-    virtual ~CfgPwr() = default;
+    ~CfgPwr() = default;
 
     /// @brief Copy assignment
     CfgPwr& operator=(const CfgPwr&) = default;

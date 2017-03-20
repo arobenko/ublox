@@ -168,7 +168,7 @@ public:
     MgaIniFreq(MgaIniFreq&& other) = default;
 
     /// @brief Destructor
-    virtual ~MgaIniFreq() = default;
+    ~MgaIniFreq() = default;
 
     /// @brief Copy assignment
     MgaIniFreq& operator=(const MgaIniFreq&) = default;

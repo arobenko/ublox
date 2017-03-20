@@ -145,7 +145,7 @@ public:
     CfgTxslot(CfgTxslot&& other) = default;
 
     /// @brief Destructor
-    virtual ~CfgTxslot() = default;
+    ~CfgTxslot() = default;
 
     /// @brief Copy assignment
     CfgTxslot& operator=(const CfgTxslot&) = default;

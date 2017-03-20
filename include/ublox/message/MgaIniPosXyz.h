@@ -124,7 +124,7 @@ public:
     MgaIniPosXyz(MgaIniPosXyz&& other) = default;
 
     /// @brief Destructor
-    virtual ~MgaIniPosXyz() = default;
+    ~MgaIniPosXyz() = default;
 
     /// @brief Copy assignment
     MgaIniPosXyz& operator=(const MgaIniPosXyz&) = default;

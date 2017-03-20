@@ -207,7 +207,7 @@ public:
     RxmSvsi(RxmSvsi&& other) = default;
 
     /// @brief Destructor
-    virtual ~RxmSvsi() = default;
+    ~RxmSvsi() = default;
 
     /// @brief Copy assignment
     RxmSvsi& operator=(const RxmSvsi&) = default;

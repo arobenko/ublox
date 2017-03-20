@@ -138,7 +138,7 @@ public:
     MgaAck(MgaAck&& other) = default;
 
     /// @brief Destructor
-    virtual ~MgaAck() = default;
+    ~MgaAck() = default;
 
     /// @brief Copy assignment
     MgaAck& operator=(const MgaAck&) = default;

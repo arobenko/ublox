@@ -109,7 +109,7 @@ public:
     UpdSosAck(UpdSosAck&& other) = default;
 
     /// @brief Destructor
-    virtual ~UpdSosAck() = default;
+    ~UpdSosAck() = default;
 
     /// @brief Copy assignment
     UpdSosAck& operator=(const UpdSosAck&) = default;

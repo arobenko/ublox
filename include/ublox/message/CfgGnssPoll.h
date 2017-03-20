@@ -78,7 +78,7 @@ public:
     CfgGnssPoll(CfgGnssPoll&& other) = default;
 
     /// @brief Destructor
-    virtual ~CfgGnssPoll() = default;
+    ~CfgGnssPoll() = default;
 
     /// @brief Copy assignment
     CfgGnssPoll& operator=(const CfgGnssPoll&) = default;

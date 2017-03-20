@@ -78,7 +78,7 @@ public:
     MonTxbufPoll(MonTxbufPoll&& other) = default;
 
     /// @brief Destructor
-    virtual ~MonTxbufPoll() = default;
+    ~MonTxbufPoll() = default;
 
     /// @brief Copy assignment
     MonTxbufPoll& operator=(const MonTxbufPoll&) = default;

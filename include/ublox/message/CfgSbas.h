@@ -179,7 +179,7 @@ public:
     CfgSbas(CfgSbas&& other) = default;
 
     /// @brief Destructor
-    virtual ~CfgSbas() = default;
+    ~CfgSbas() = default;
 
     /// @brief Copy assignment
     CfgSbas& operator=(const CfgSbas&) = default;

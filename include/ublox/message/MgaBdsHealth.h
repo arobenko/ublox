@@ -124,7 +124,7 @@ public:
     MgaBdsHealth(MgaBdsHealth&& other) = default;
 
     /// @brief Destructor
-    virtual ~MgaBdsHealth() = default;
+    ~MgaBdsHealth() = default;
 
     /// @brief Copy assignment
     MgaBdsHealth& operator=(const MgaBdsHealth&) = default;

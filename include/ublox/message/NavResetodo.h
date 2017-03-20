@@ -65,7 +65,7 @@ public:
     NavResetodo(NavResetodo&& other) = default;
 
     /// @brief Destructor
-    virtual ~NavResetodo() = default;
+    ~NavResetodo() = default;
 
     /// @brief Copy assignment
     NavResetodo& operator=(const NavResetodo&) = default;

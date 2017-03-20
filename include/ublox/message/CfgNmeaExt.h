@@ -180,7 +180,7 @@ public:
     CfgNmeaExt(CfgNmeaExt&& other) = default;
 
     /// @brief Destructor
-    virtual ~CfgNmeaExt() = default;
+    ~CfgNmeaExt() = default;
 
     /// @brief Copy assignment
     CfgNmeaExt& operator=(const CfgNmeaExt&) = default;

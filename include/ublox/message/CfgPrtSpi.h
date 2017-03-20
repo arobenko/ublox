@@ -188,7 +188,7 @@ public:
     CfgPrtSpi(CfgPrtSpi&& other) = default;
 
     /// @brief Destructor
-    virtual ~CfgPrtSpi() = default;
+    ~CfgPrtSpi() = default;
 
     /// @brief Copy assignment
     CfgPrtSpi& operator=(const CfgPrtSpi&) = default;

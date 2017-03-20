@@ -108,7 +108,7 @@ public:
     LogFindtime(LogFindtime&& other) = default;
 
     /// @brief Destructor
-    virtual ~LogFindtime() = default;
+    ~LogFindtime() = default;
 
     /// @brief Copy assignment
     LogFindtime& operator=(const LogFindtime&) = default;

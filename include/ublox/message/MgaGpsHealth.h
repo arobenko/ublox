@@ -124,7 +124,7 @@ public:
     MgaGpsHealth(MgaGpsHealth&& other) = default;
 
     /// @brief Destructor
-    virtual ~MgaGpsHealth() = default;
+    ~MgaGpsHealth() = default;
 
     /// @brief Copy assignment
     MgaGpsHealth& operator=(const MgaGpsHealth&) = default;

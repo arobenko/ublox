@@ -164,7 +164,7 @@ public:
     MgaAno(MgaAno&& other) = default;
 
     /// @brief Destructor
-    virtual ~MgaAno() = default;
+    ~MgaAno() = default;
 
     /// @brief Copy assignment
     MgaAno& operator=(const MgaAno&) = default;

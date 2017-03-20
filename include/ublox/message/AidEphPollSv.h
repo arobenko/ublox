@@ -84,7 +84,7 @@ public:
     AidEphPollSv(AidEphPollSv&& other) = default;
 
     /// @brief Destructor
-    virtual ~AidEphPollSv() = default;
+    ~AidEphPollSv() = default;
 
     /// @brief Copy assignment
     AidEphPollSv& operator=(const AidEphPollSv&) = default;

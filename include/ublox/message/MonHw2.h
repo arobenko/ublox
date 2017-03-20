@@ -181,7 +181,7 @@ public:
     MonHw2(MonHw2&& other) = default;
 
     /// @brief Destructor
-    virtual ~MonHw2() = default;
+    ~MonHw2() = default;
 
     /// @brief Copy assignment
     MonHw2& operator=(const MonHw2&) = default;

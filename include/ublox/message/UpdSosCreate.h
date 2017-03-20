@@ -89,7 +89,7 @@ public:
     UpdSosCreate(UpdSosCreate&& other) = default;
 
     /// @brief Destructor
-    virtual ~UpdSosCreate() = default;
+    ~UpdSosCreate() = default;
 
     /// @brief Copy assignment
     UpdSosCreate& operator=(const UpdSosCreate&) = default;

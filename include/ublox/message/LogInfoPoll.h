@@ -78,7 +78,7 @@ public:
     LogInfoPoll(LogInfoPoll&& other) = default;
 
     /// @brief Destructor
-    virtual ~LogInfoPoll() = default;
+    ~LogInfoPoll() = default;
 
     /// @brief Copy assignment
     LogInfoPoll& operator=(const LogInfoPoll&) = default;

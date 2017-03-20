@@ -123,7 +123,7 @@ public:
     NavTimebds(NavTimebds&& other) = default;
 
     /// @brief Destructor
-    virtual ~NavTimebds() = default;
+    ~NavTimebds() = default;
 
     /// @brief Copy assignment
     NavTimebds& operator=(const NavTimebds&) = default;

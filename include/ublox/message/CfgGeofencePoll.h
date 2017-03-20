@@ -77,7 +77,7 @@ public:
     CfgGeofencePoll(CfgGeofencePoll&& other) = default;
 
     /// @brief Destructor
-    virtual ~CfgGeofencePoll() = default;
+    ~CfgGeofencePoll() = default;
 
     /// @brief Copy assignment
     CfgGeofencePoll& operator=(const CfgGeofencePoll&) = default;

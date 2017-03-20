@@ -110,7 +110,7 @@ public:
     MgaDbd(MgaDbd&& other) = default;
 
     /// @brief Destructor
-    virtual ~MgaDbd() = default;
+    ~MgaDbd() = default;
 
     /// @brief Copy assignment
     MgaDbd& operator=(const MgaDbd&) = default;

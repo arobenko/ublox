@@ -197,7 +197,7 @@ public:
     TimSmeas(TimSmeas&& other) = default;
 
     /// @brief Destructor
-    virtual ~TimSmeas() = default;
+    ~TimSmeas() = default;
 
     /// @brief Copy assignment
     TimSmeas& operator=(const TimSmeas&) = default;

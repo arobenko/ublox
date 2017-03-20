@@ -155,7 +155,7 @@ public:
     MgaGpsUtc(MgaGpsUtc&& other) = default;
 
     /// @brief Destructor
-    virtual ~MgaGpsUtc() = default;
+    ~MgaGpsUtc() = default;
 
     /// @brief Copy assignment
     MgaGpsUtc& operator=(const MgaGpsUtc&) = default;

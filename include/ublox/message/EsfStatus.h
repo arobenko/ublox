@@ -283,7 +283,7 @@ public:
     EsfStatus(EsfStatus&& other) = default;
 
     /// @brief Destructor
-    virtual ~EsfStatus() = default;
+    ~EsfStatus() = default;
 
     /// @brief Copy assignment
     EsfStatus& operator=(const EsfStatus&) = default;

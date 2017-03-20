@@ -264,7 +264,7 @@ public:
     MgaBdsEph(MgaBdsEph&& other) = default;
 
     /// @brief Destructor
-    virtual ~MgaBdsEph() = default;
+    ~MgaBdsEph() = default;
 
     /// @brief Copy assignment
     MgaBdsEph& operator=(const MgaBdsEph&) = default;

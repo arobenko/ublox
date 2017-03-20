@@ -356,7 +356,7 @@ public:
     RxmImes(RxmImes&& other) = default;
 
     /// @brief Destructor
-    virtual ~RxmImes() = default;
+    ~RxmImes() = default;
 
     /// @brief Copy assignment
     RxmImes& operator=(const RxmImes&) = default;

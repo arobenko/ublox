@@ -114,7 +114,7 @@ public:
     CfgRate(CfgRate&& other) = default;
 
     /// @brief Destructor
-    virtual ~CfgRate() = default;
+    ~CfgRate() = default;
 
     /// @brief Copy assignment
     CfgRate& operator=(const CfgRate&) = default;

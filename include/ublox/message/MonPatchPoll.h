@@ -78,7 +78,7 @@ public:
     MonPatchPoll(MonPatchPoll&& other) = default;
 
     /// @brief Destructor
-    virtual ~MonPatchPoll() = default;
+    ~MonPatchPoll() = default;
 
     /// @brief Copy assignment
     MonPatchPoll& operator=(const MonPatchPoll&) = default;

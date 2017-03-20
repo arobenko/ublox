@@ -277,7 +277,7 @@ public:
     CfgNav5(CfgNav5&& other) = default;
 
     /// @brief Destructor
-    virtual ~CfgNav5() = default;
+    ~CfgNav5() = default;
 
     /// @brief Copy assignment
     CfgNav5& operator=(const CfgNav5&) = default;

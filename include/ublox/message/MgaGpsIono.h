@@ -155,7 +155,7 @@ public:
     MgaGpsIono(MgaGpsIono&& other) = default;
 
     /// @brief Destructor
-    virtual ~MgaGpsIono() = default;
+    ~MgaGpsIono() = default;
 
     /// @brief Copy assignment
     MgaGpsIono& operator=(const MgaGpsIono&) = default;

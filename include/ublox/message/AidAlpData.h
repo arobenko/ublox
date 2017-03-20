@@ -90,7 +90,7 @@ public:
     AidAlpData(AidAlpData&& other) = default;
 
     /// @brief Destructor
-    virtual ~AidAlpData() = default;
+    ~AidAlpData() = default;
 
     /// @brief Copy assignment
     AidAlpData& operator=(const AidAlpData&) = default;

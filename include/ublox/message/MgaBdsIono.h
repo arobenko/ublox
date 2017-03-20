@@ -157,7 +157,7 @@ public:
     MgaBdsIono(MgaBdsIono&& other) = default;
 
     /// @brief Destructor
-    virtual ~MgaBdsIono() = default;
+    ~MgaBdsIono() = default;
 
     /// @brief Copy assignment
     MgaBdsIono& operator=(const MgaBdsIono&) = default;

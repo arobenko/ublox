@@ -127,7 +127,7 @@ public:
     MgaFlashAck(MgaFlashAck&& other) = default;
 
     /// @brief Destructor
-    virtual ~MgaFlashAck() = default;
+    ~MgaFlashAck() = default;
 
     /// @brief Copy assignment
     MgaFlashAck& operator=(const MgaFlashAck&) = default;

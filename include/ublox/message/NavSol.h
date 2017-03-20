@@ -192,7 +192,7 @@ public:
     NavSol(NavSol&& other) = default;
 
     /// @brief Destructor
-    virtual ~NavSol() = default;
+    ~NavSol() = default;
 
     /// @brief Copy assignment
     NavSol& operator=(const NavSol&) = default;

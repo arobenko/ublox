@@ -280,7 +280,7 @@ public:
     MgaGalEph(MgaGalEph&& other) = default;
 
     /// @brief Destructor
-    virtual ~MgaGalEph() = default;
+    ~MgaGalEph() = default;
 
     /// @brief Copy assignment
     MgaGalEph& operator=(const MgaGalEph&) = default;

@@ -200,7 +200,7 @@ public:
     MgaIniTimeGnss(MgaIniTimeGnss&& other) = default;
 
     /// @brief Destructor
-    virtual ~MgaIniTimeGnss() = default;
+    ~MgaIniTimeGnss() = default;
 
     /// @brief Copy assignment
     MgaIniTimeGnss& operator=(const MgaIniTimeGnss&) = default;

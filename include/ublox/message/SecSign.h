@@ -115,7 +115,7 @@ public:
     SecSign(SecSign&& other) = default;
 
     /// @brief Destructor
-    virtual ~SecSign() = default;
+    ~SecSign() = default;
 
     /// @brief Copy assignment
     SecSign& operator=(const SecSign&) = default;

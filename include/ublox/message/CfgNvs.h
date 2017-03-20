@@ -134,7 +134,7 @@ public:
     CfgNvs(CfgNvs&& other) = default;
 
     /// @brief Destructor
-    virtual ~CfgNvs() = default;
+    ~CfgNvs() = default;
 
     /// @brief Copy assignment
     CfgNvs& operator=(const CfgNvs&) = default;

@@ -279,7 +279,7 @@ public:
     CfgEsrc(CfgEsrc&& other) = default;
 
     /// @brief Destructor
-    virtual ~CfgEsrc() = default;
+    ~CfgEsrc() = default;
 
     /// @brief Copy assignment
     CfgEsrc& operator=(const CfgEsrc&) = default;

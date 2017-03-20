@@ -84,7 +84,7 @@ public:
     TimVcocalStop(TimVcocalStop&& other) = default;
 
     /// @brief Destructor
-    virtual ~TimVcocalStop() = default;
+    ~TimVcocalStop() = default;
 
     /// @brief Copy assignment
     TimVcocalStop& operator=(const TimVcocalStop&) = default;

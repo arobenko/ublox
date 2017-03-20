@@ -127,7 +127,7 @@ public:
     CfgFixseed(CfgFixseed&& other) = default;
 
     /// @brief Destructor
-    virtual ~CfgFixseed() = default;
+    ~CfgFixseed() = default;
 
     /// @brief Copy assignment
     CfgFixseed& operator=(const CfgFixseed&) = default;

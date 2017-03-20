@@ -131,7 +131,7 @@ public:
     MgaGloTimeoffset(MgaGloTimeoffset&& other) = default;
 
     /// @brief Destructor
-    virtual ~MgaGloTimeoffset() = default;
+    ~MgaGloTimeoffset() = default;
 
     /// @brief Copy assignment
     MgaGloTimeoffset& operator=(const MgaGloTimeoffset&) = default;

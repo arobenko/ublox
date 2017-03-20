@@ -78,7 +78,7 @@ public:
     NavOdoPoll(NavOdoPoll&& other) = default;
 
     /// @brief Destructor
-    virtual ~NavOdoPoll() = default;
+    ~NavOdoPoll() = default;
 
     /// @brief Copy assignment
     NavOdoPoll& operator=(const NavOdoPoll&) = default;

@@ -105,7 +105,7 @@ public:
     NavVelecef(NavVelecef&& other) = default;
 
     /// @brief Destructor
-    virtual ~NavVelecef() = default;
+    ~NavVelecef() = default;
 
     /// @brief Copy assignment
     NavVelecef& operator=(const NavVelecef&) = default;

@@ -78,7 +78,7 @@ public:
     CfgDatPoll(CfgDatPoll&& other) = default;
 
     /// @brief Destructor
-    virtual ~CfgDatPoll() = default;
+    ~CfgDatPoll() = default;
 
     /// @brief Copy assignment
     CfgDatPoll& operator=(const CfgDatPoll&) = default;

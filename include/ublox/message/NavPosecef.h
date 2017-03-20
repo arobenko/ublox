@@ -104,7 +104,7 @@ public:
     NavPosecef(NavPosecef&& other) = default;
 
     /// @brief Destructor
-    virtual ~NavPosecef() = default;
+    ~NavPosecef() = default;
 
     /// @brief Copy assignment
     NavPosecef& operator=(const NavPosecef&) = default;

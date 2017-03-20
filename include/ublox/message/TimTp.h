@@ -201,7 +201,7 @@ public:
     TimTp(TimTp&& other) = default;
 
     /// @brief Destructor
-    virtual ~TimTp() = default;
+    ~TimTp() = default;
 
     /// @brief Copy assignment
     TimTp& operator=(const TimTp&) = default;

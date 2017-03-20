@@ -78,7 +78,7 @@ public:
     MonGnssPoll(MonGnssPoll&& other) = default;
 
     /// @brief Destructor
-    virtual ~MonGnssPoll() = default;
+    ~MonGnssPoll() = default;
 
     /// @brief Copy assignment
     MonGnssPoll& operator=(const MonGnssPoll&) = default;

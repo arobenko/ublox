@@ -50,7 +50,7 @@ public:
     InfWarning(InfWarning&& other) = default;
 
     /// @brief Destructor
-    virtual ~InfWarning() = default;
+    ~InfWarning() = default;
 
     /// @brief Copy assignment
     InfWarning& operator=(const InfWarning&) = default;

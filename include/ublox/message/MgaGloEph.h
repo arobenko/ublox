@@ -221,7 +221,7 @@ public:
     MgaGloEph(MgaGloEph&& other) = default;
 
     /// @brief Destructor
-    virtual ~MgaGloEph() = default;
+    ~MgaGloEph() = default;
 
     /// @brief Copy assignment
     MgaGloEph& operator=(const MgaGloEph&) = default;

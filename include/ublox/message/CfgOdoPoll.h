@@ -77,7 +77,7 @@ public:
     CfgOdoPoll(CfgOdoPoll&& other) = default;
 
     /// @brief Destructor
-    virtual ~CfgOdoPoll() = default;
+    ~CfgOdoPoll() = default;
 
     /// @brief Copy assignment
     CfgOdoPoll& operator=(const CfgOdoPoll&) = default;

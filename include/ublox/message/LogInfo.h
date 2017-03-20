@@ -239,7 +239,7 @@ public:
     LogInfo(LogInfo&& other) = default;
 
     /// @brief Destructor
-    virtual ~LogInfo() = default;
+    ~LogInfo() = default;
 
     /// @brief Copy assignment
     LogInfo& operator=(const LogInfo&) = default;

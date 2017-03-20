@@ -120,7 +120,7 @@ public:
     NavDop(NavDop&& other) = default;
 
     /// @brief Destructor
-    virtual ~NavDop() = default;
+    ~NavDop() = default;
 
     /// @brief Copy assignment
     NavDop& operator=(const NavDop&) = default;

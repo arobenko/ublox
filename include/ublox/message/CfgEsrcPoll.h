@@ -77,7 +77,7 @@ public:
     CfgEsrcPoll(CfgEsrcPoll&& other) = default;
 
     /// @brief Destructor
-    virtual ~CfgEsrcPoll() = default;
+    ~CfgEsrcPoll() = default;
 
     /// @brief Copy assignment
     CfgEsrcPoll& operator=(const CfgEsrcPoll&) = default;

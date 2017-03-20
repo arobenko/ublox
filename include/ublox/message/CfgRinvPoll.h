@@ -78,7 +78,7 @@ public:
     CfgRinvPoll(CfgRinvPoll&& other) = default;
 
     /// @brief Destructor
-    virtual ~CfgRinvPoll() = default;
+    ~CfgRinvPoll() = default;
 
     /// @brief Copy assignment
     CfgRinvPoll& operator=(const CfgRinvPoll&) = default;

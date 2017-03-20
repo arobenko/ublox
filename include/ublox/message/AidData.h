@@ -78,7 +78,7 @@ public:
     AidData(AidData&& other) = default;
 
     /// @brief Destructor
-    virtual ~AidData() = default;
+    ~AidData() = default;
 
     /// @brief Copy assignment
     AidData& operator=(const AidData&) = default;

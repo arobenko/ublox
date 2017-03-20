@@ -256,7 +256,7 @@ public:
     NavSbas(NavSbas&& other) = default;
 
     /// @brief Destructor
-    virtual ~NavSbas() = default;
+    ~NavSbas() = default;
 
     /// @brief Copy assignment
     NavSbas& operator=(const NavSbas&) = default;

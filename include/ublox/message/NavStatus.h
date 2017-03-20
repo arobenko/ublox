@@ -227,7 +227,7 @@ public:
     NavStatus(NavStatus&& other) = default;
 
     /// @brief Destructor
-    virtual ~NavStatus() = default;
+    ~NavStatus() = default;
 
     /// @brief Copy assignment
     NavStatus& operator=(const NavStatus&) = default;

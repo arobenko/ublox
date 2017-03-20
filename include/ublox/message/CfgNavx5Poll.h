@@ -78,7 +78,7 @@ public:
     CfgNavx5Poll(CfgNavx5Poll&& other) = default;
 
     /// @brief Destructor
-    virtual ~CfgNavx5Poll() = default;
+    ~CfgNavx5Poll() = default;
 
     /// @brief Copy assignment
     CfgNavx5Poll& operator=(const CfgNavx5Poll&) = default;

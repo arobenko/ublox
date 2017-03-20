@@ -78,7 +78,7 @@ public:
     AidHuiPoll(AidHuiPoll&& other) = default;
 
     /// @brief Destructor
-    virtual ~AidHuiPoll() = default;
+    ~AidHuiPoll() = default;
 
     /// @brief Copy assignment
     AidHuiPoll& operator=(const AidHuiPoll&) = default;

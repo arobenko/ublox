@@ -115,7 +115,7 @@ public:
     AidAopU8(AidAopU8&& other) = default;
 
     /// @brief Destructor
-    virtual ~AidAopU8() = default;
+    ~AidAopU8() = default;
 
     /// @brief Copy assignment
     AidAopU8& operator=(const AidAopU8&) = default;

@@ -144,7 +144,7 @@ public:
     CfgNmea(CfgNmea&& other) = default;
 
     /// @brief Destructor
-    virtual ~CfgNmea() = default;
+    ~CfgNmea() = default;
 
     /// @brief Copy assignment
     CfgNmea& operator=(const CfgNmea&) = default;

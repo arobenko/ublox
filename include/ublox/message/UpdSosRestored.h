@@ -111,7 +111,7 @@ public:
     UpdSosRestored(UpdSosRestored&& other) = default;
 
     /// @brief Destructor
-    virtual ~UpdSosRestored() = default;
+    ~UpdSosRestored() = default;
 
     /// @brief Copy assignment
     UpdSosRestored& operator=(const UpdSosRestored&) = default;

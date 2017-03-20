@@ -154,7 +154,7 @@ public:
     TimVcocalExt(TimVcocalExt&& other) = default;
 
     /// @brief Destructor
-    virtual ~TimVcocalExt() = default;
+    ~TimVcocalExt() = default;
 
     /// @brief Copy assignment
     TimVcocalExt& operator=(const TimVcocalExt&) = default;

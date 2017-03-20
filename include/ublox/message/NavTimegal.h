@@ -123,7 +123,7 @@ public:
     NavTimegal(NavTimegal&& other) = default;
 
     /// @brief Destructor
-    virtual ~NavTimegal() = default;
+    ~NavTimegal() = default;
 
     /// @brief Copy assignment
     NavTimegal& operator=(const NavTimegal&) = default;

@@ -269,7 +269,7 @@ public:
     MgaGpsEph(MgaGpsEph&& other) = default;
 
     /// @brief Destructor
-    virtual ~MgaGpsEph() = default;
+    ~MgaGpsEph() = default;
 
     /// @brief Copy assignment
     MgaGpsEph& operator=(const MgaGpsEph&) = default;

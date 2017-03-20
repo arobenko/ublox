@@ -78,7 +78,7 @@ public:
     NavTimegpsPoll(NavTimegpsPoll&& other) = default;
 
     /// @brief Destructor
-    virtual ~NavTimegpsPoll() = default;
+    ~NavTimegpsPoll() = default;
 
     /// @brief Copy assignment
     NavTimegpsPoll& operator=(const NavTimegpsPoll&) = default;

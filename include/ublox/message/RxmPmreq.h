@@ -100,7 +100,7 @@ public:
     RxmPmreq(RxmPmreq&& other) = default;
 
     /// @brief Destructor
-    virtual ~RxmPmreq() = default;
+    ~RxmPmreq() = default;
 
     /// @brief Copy assignment
     RxmPmreq& operator=(const RxmPmreq&) = default;

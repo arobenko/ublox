@@ -78,7 +78,7 @@ public:
     CfgRxmPoll(CfgRxmPoll&& other) = default;
 
     /// @brief Destructor
-    virtual ~CfgRxmPoll() = default;
+    ~CfgRxmPoll() = default;
 
     /// @brief Copy assignment
     CfgRxmPoll& operator=(const CfgRxmPoll&) = default;

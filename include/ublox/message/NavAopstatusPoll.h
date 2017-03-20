@@ -78,7 +78,7 @@ public:
     NavAopstatusPoll(NavAopstatusPoll&& other) = default;
 
     /// @brief Destructor
-    virtual ~NavAopstatusPoll() = default;
+    ~NavAopstatusPoll() = default;
 
     /// @brief Copy assignment
     NavAopstatusPoll& operator=(const NavAopstatusPoll&) = default;

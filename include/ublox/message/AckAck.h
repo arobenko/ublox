@@ -83,7 +83,7 @@ public:
     AckAck(AckAck&& other) = default;
 
     /// @brief Destructor
-    virtual ~AckAck() = default;
+    ~AckAck() = default;
 
     /// @brief Copy assignment
     AckAck& operator=(const AckAck&) = default;

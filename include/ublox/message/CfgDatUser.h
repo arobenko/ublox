@@ -135,7 +135,7 @@ public:
     CfgDatUser(CfgDatUser&& other) = default;
 
     /// @brief Destructor
-    virtual ~CfgDatUser() = default;
+    ~CfgDatUser() = default;
 
     /// @brief Copy assignment
     CfgDatUser& operator=(const CfgDatUser&) = default;

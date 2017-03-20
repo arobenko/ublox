@@ -178,7 +178,7 @@ public:
     MgaQzssAlm(MgaQzssAlm&& other) = default;
 
     /// @brief Destructor
-    virtual ~MgaQzssAlm() = default;
+    ~MgaQzssAlm() = default;
 
     /// @brief Copy assignment
     MgaQzssAlm& operator=(const MgaQzssAlm&) = default;

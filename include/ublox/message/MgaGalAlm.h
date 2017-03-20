@@ -197,7 +197,7 @@ public:
     MgaGalAlm(MgaGalAlm&& other) = default;
 
     /// @brief Destructor
-    virtual ~MgaGalAlm() = default;
+    ~MgaGalAlm() = default;
 
     /// @brief Copy assignment
     MgaGalAlm& operator=(const MgaGalAlm&) = default;

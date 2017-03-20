@@ -78,7 +78,7 @@ public:
     EsfStatusPoll(EsfStatusPoll&& other) = default;
 
     /// @brief Destructor
-    virtual ~EsfStatusPoll() = default;
+    ~EsfStatusPoll() = default;
 
     /// @brief Copy assignment
     EsfStatusPoll& operator=(const EsfStatusPoll&) = default;

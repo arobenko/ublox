@@ -171,7 +171,7 @@ public:
     MonTxbuf(MonTxbuf&& other) = default;
 
     /// @brief Destructor
-    virtual ~MonTxbuf() = default;
+    ~MonTxbuf() = default;
 
     /// @brief Copy assignment
     MonTxbuf& operator=(const MonTxbuf&) = default;

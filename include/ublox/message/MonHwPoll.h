@@ -78,7 +78,7 @@ public:
     MonHwPoll(MonHwPoll&& other) = default;
 
     /// @brief Destructor
-    virtual ~MonHwPoll() = default;
+    ~MonHwPoll() = default;
 
     /// @brief Copy assignment
     MonHwPoll& operator=(const MonHwPoll&) = default;

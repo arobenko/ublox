@@ -78,7 +78,7 @@ public:
     MgaDbdPoll(MgaDbdPoll&& other) = default;
 
     /// @brief Destructor
-    virtual ~MgaDbdPoll() = default;
+    ~MgaDbdPoll() = default;
 
     /// @brief Copy assignment
     MgaDbdPoll& operator=(const MgaDbdPoll&) = default;

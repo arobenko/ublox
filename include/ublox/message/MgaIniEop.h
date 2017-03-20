@@ -210,7 +210,7 @@ public:
     MgaIniEop(MgaIniEop&& other) = default;
 
     /// @brief Destructor
-    virtual ~MgaIniEop() = default;
+    ~MgaIniEop() = default;
 
     /// @brief Copy assignment
     MgaIniEop& operator=(const MgaIniEop&) = default;

@@ -65,7 +65,7 @@ public:
     TimVcocalPoll(TimVcocalPoll&& other) = default;
 
     /// @brief Destructor
-    virtual ~TimVcocalPoll() = default;
+    ~TimVcocalPoll() = default;
 
     /// @brief Copy assignment
     TimVcocalPoll& operator=(const TimVcocalPoll&) = default;

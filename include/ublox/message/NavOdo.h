@@ -113,7 +113,7 @@ public:
     NavOdo(NavOdo&& other) = default;
 
     /// @brief Destructor
-    virtual ~NavOdo() = default;
+    ~NavOdo() = default;
 
     /// @brief Copy assignment
     NavOdo& operator=(const NavOdo&) = default;

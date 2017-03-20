@@ -128,7 +128,7 @@ public:
     CfgCfg(CfgCfg&& other) = default;
 
     /// @brief Destructor
-    virtual ~CfgCfg() = default;
+    ~CfgCfg() = default;
 
     /// @brief Copy assignment
     CfgCfg& operator=(const CfgCfg&) = default;

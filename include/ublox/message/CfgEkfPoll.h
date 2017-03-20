@@ -78,7 +78,7 @@ public:
     CfgEkfPoll(CfgEkfPoll&& other) = default;
 
     /// @brief Destructor
-    virtual ~CfgEkfPoll() = default;
+    ~CfgEkfPoll() = default;
 
     /// @brief Copy assignment
     CfgEkfPoll& operator=(const CfgEkfPoll&) = default;

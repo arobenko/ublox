@@ -130,7 +130,7 @@ public:
     AidAlp(AidAlp&& other) = default;
 
     /// @brief Destructor
-    virtual ~AidAlp() = default;
+    ~AidAlp() = default;
 
     /// @brief Copy assignment
     AidAlp& operator=(const AidAlp&) = default;

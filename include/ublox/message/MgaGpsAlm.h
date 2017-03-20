@@ -178,7 +178,7 @@ public:
     MgaGpsAlm(MgaGpsAlm&& other) = default;
 
     /// @brief Destructor
-    virtual ~MgaGpsAlm() = default;
+    ~MgaGpsAlm() = default;
 
     /// @brief Copy assignment
     MgaGpsAlm& operator=(const MgaGpsAlm&) = default;

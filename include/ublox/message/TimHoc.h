@@ -132,7 +132,7 @@ public:
     TimHoc(TimHoc&& other) = default;
 
     /// @brief Destructor
-    virtual ~TimHoc() = default;
+    ~TimHoc() = default;
 
     /// @brief Copy assignment
     TimHoc& operator=(const TimHoc&) = default;

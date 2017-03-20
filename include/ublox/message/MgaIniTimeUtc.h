@@ -239,7 +239,7 @@ public:
     MgaIniTimeUtc(MgaIniTimeUtc&& other) = default;
 
     /// @brief Destructor
-    virtual ~MgaIniTimeUtc() = default;
+    ~MgaIniTimeUtc() = default;
 
     /// @brief Copy assignment
     MgaIniTimeUtc& operator=(const MgaIniTimeUtc&) = default;

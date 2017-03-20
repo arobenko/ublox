@@ -134,7 +134,7 @@ public:
     CfgTmode(CfgTmode&& other) = default;
 
     /// @brief Destructor
-    virtual ~CfgTmode() = default;
+    ~CfgTmode() = default;
 
     /// @brief Copy assignment
     CfgTmode& operator=(const CfgTmode&) = default;

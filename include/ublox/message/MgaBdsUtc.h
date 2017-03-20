@@ -156,7 +156,7 @@ public:
     MgaBdsUtc(MgaBdsUtc&& other) = default;
 
     /// @brief Destructor
-    virtual ~MgaBdsUtc() = default;
+    ~MgaBdsUtc() = default;
 
     /// @brief Copy assignment
     MgaBdsUtc& operator=(const MgaBdsUtc&) = default;

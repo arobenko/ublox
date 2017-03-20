@@ -141,7 +141,7 @@ public:
     MonMsgpp(MonMsgpp&& other) = default;
 
     /// @brief Destructor
-    virtual ~MonMsgpp() = default;
+    ~MonMsgpp() = default;
 
     /// @brief Copy assignment
     MonMsgpp& operator=(const MonMsgpp&) = default;

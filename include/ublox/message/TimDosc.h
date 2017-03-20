@@ -89,7 +89,7 @@ public:
     TimDosc(TimDosc&& other) = default;
 
     /// @brief Destructor
-    virtual ~TimDosc() = default;
+    ~TimDosc() = default;
 
     /// @brief Copy assignment
     TimDosc& operator=(const TimDosc&) = default;

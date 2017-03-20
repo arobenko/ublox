@@ -86,7 +86,7 @@ public:
     CfgTp5PollSelect(CfgTp5PollSelect&& other) = default;
 
     /// @brief Destructor
-    virtual ~CfgTp5PollSelect() = default;
+    ~CfgTp5PollSelect() = default;
 
     /// @brief Copy assignment
     CfgTp5PollSelect& operator=(const CfgTp5PollSelect&) = default;

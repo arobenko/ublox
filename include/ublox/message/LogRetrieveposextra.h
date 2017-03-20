@@ -162,7 +162,7 @@ public:
     LogRetrieveposextra(LogRetrieveposextra&& other) = default;
 
     /// @brief Destructor
-    virtual ~LogRetrieveposextra() = default;
+    ~LogRetrieveposextra() = default;
 
     /// @brief Copy assignment
     LogRetrieveposextra& operator=(const LogRetrieveposextra&) = default;

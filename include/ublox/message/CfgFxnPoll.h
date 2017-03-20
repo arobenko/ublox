@@ -78,7 +78,7 @@ public:
     CfgFxnPoll(CfgFxnPoll&& other) = default;
 
     /// @brief Destructor
-    virtual ~CfgFxnPoll() = default;
+    ~CfgFxnPoll() = default;
 
     /// @brief Copy assignment
     CfgFxnPoll& operator=(const CfgFxnPoll&) = default;

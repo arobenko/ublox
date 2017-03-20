@@ -180,7 +180,7 @@ public:
     MgaBdsAlm(MgaBdsAlm&& other) = default;
 
     /// @brief Destructor
-    virtual ~MgaBdsAlm() = default;
+    ~MgaBdsAlm() = default;
 
     /// @brief Copy assignment
     MgaBdsAlm& operator=(const MgaBdsAlm&) = default;

@@ -141,7 +141,7 @@ public:
     TimFchg(TimFchg&& other) = default;
 
     /// @brief Destructor
-    virtual ~TimFchg() = default;
+    ~TimFchg() = default;
 
     /// @brief Copy assignment
     TimFchg& operator=(const TimFchg&) = default;

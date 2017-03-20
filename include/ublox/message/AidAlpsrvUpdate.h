@@ -129,7 +129,7 @@ public:
     AidAlpsrvUpdate(AidAlpsrvUpdate&& other) = default;
 
     /// @brief Destructor
-    virtual ~AidAlpsrvUpdate() = default;
+    ~AidAlpsrvUpdate() = default;
 
     /// @brief Copy assignment
     AidAlpsrvUpdate& operator=(const AidAlpsrvUpdate&) = default;

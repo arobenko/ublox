@@ -188,7 +188,7 @@ public:
     MonPatch(MonPatch&& other) = default;
 
     /// @brief Destructor
-    virtual ~MonPatch() = default;
+    ~MonPatch() = default;
 
     /// @brief Copy assignment
     MonPatch& operator=(const MonPatch&) = default;

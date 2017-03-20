@@ -134,7 +134,7 @@ public:
     RxmRlmShort(RxmRlmShort&& other) = default;
 
     /// @brief Destructor
-    virtual ~RxmRlmShort() = default;
+    ~RxmRlmShort() = default;
 
     /// @brief Copy assignment
     RxmRlmShort& operator=(const RxmRlmShort&) = default;

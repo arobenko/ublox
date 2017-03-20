@@ -154,7 +154,7 @@ public:
     CfgUsb(CfgUsb&& other) = default;
 
     /// @brief Destructor
-    virtual ~CfgUsb() = default;
+    ~CfgUsb() = default;
 
     /// @brief Copy assignment
     CfgUsb& operator=(const CfgUsb&) = default;
