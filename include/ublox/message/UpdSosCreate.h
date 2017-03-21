@@ -37,7 +37,7 @@ struct UpdSosCreateFields
     using cmd =
         field::common::U1T<
         comms::option::ValidNumValueRange<0, 0>,
-        comms::option::FailOnInvalid
+        comms::option::FailOnInvalid<>
     >;
 
     /// @brief Definition of "reserved1" field.

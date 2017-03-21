@@ -38,7 +38,7 @@ struct MgaIniFreqFields
     field::common::U1T<
         comms::option::ValidNumValueRange<0x21, 0x21>,
         comms::option::DefaultNumValue<0x21>,
-        comms::option::FailOnInvalid
+        comms::option::FailOnInvalid<>
     >;
 
     /// @brief Definition of "version" field.

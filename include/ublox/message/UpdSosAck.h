@@ -38,7 +38,7 @@ struct UpdSosAckFields
         field::common::U1T<
         comms::option::ValidNumValueRange<2, 2>,
         comms::option::DefaultNumValue<2>,
-        comms::option::FailOnInvalid
+        comms::option::FailOnInvalid<>
     >;
 
     /// @brief Definition of "reserved1" field.

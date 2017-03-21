@@ -38,7 +38,7 @@ struct TimVcocalFields
         field::common::U1T<
         comms::option::ValidNumValueRange<3, 3>,
         comms::option::DefaultNumValue<3>,
-        comms::option::FailOnInvalid
+        comms::option::FailOnInvalid<>
     >;
 
     /// @brief Definition of "version" field.

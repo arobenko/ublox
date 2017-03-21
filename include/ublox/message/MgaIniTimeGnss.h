@@ -38,7 +38,7 @@ struct MgaIniTimeGnssFields
     field::common::U1T<
         comms::option::ValidNumValueRange<0x11, 0x11>,
         comms::option::DefaultNumValue<0x11>,
-        comms::option::FailOnInvalid
+        comms::option::FailOnInvalid<>
     >;
 
     /// @brief Definition of "version" field.

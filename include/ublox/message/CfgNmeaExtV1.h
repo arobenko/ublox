@@ -84,7 +84,7 @@ struct CfgNmeaExtV1Fields : public CfgNmeaExtFields
         field::common::U1T<
             comms::option::ValidNumValueRange<1, 1>,
             comms::option::DefaultNumValue<1>,
-            comms::option::FailOnInvalid
+            comms::option::FailOnInvalid<>
         >;
 
     /// @brief Definition of "bdsTalkerId" field.
