@@ -4,6 +4,7 @@ project ("ublox")
 option (CC_UBLOX_LIB_ONLY "Install only UBLOX protocol library, no other applications/plugings are built." OFF)
 option (CC_UBLOX_AND_COMMS_LIBS_ONLY "Install UBLOX protocol and COMMS libraries only, no other applications/plugings are built." OFF)
 option (CC_UBLOX_FULL_SOLUTION "Build and install full solution, including CommsChampion sources." OFF)
+option (CC_UBLOX_NO_WARN_AS_ERR "Do NOT treat warning as error" OFF)
 
 set (CMAKE_CXX_STANDARD 11)
 
@@ -147,13 +148,17 @@ endwhile()
 
 if (CMAKE_COMPILER_IS_GNUCC)
     set (extra_flags_list
-        "-Wall" "-Wextra" "-Werror" "-Wcast-align" "-Wcast-qual" "-Wctor-dtor-privacy"
+        "-Wall" "-Wextra" "-Wcast-align" "-Wcast-qual" "-Wctor-dtor-privacy"
         "-Wmissing-include-dirs" "-Wnoexcept" "-Wlogical-op" "-Wstrict-null-sentinel"
         "-Woverloaded-virtual" "-Wredundant-decls" "-Wshadow" "-Wundef" "-Wunused"
         "-Wno-unknown-pragmas" "-fdiagnostics-show-option"
     )
-    
-    string(REPLACE ";" " " extra_flags "${extra_flags_list}")
+
+    if (NOT CC_UBLOX_NO_WARN_AS_ERR)
+        list (APPEND extra_flags_list "-Werror")
+    endif ()
+
+        string(REPLACE ";" " " extra_flags "${extra_flags_list}")
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${extra_flags}")
 elseif (MSVC)
     add_definitions( "/wd4503" "/wd4309" "/wd4267" "-D_SCL_SECURE_NO_WARNINGS")
