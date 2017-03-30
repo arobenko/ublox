@@ -325,6 +325,43 @@ endfunction()
 
 ######################################################################
 
+function (cc_plugin_install_config file)
+    install (
+        FILES ${file}
+        DESTINATION ${CONFIG_INSTALL_DIR}
+    )
+
+    if (CC_UBLOX_FULL_SOLUTION)
+        install (
+            FILES ${file}
+            DESTINATION ${CONFIG_INSTALL_DIR}
+            RENAME "default.cfg"
+        )
+    endif()
+
+endfunction ()
+
+######################################################################
+
+function (cc_plugin_config)
+    set (config_file ${CMAKE_CURRENT_SOURCE_DIR}/config/ublox.cfg)
+    if (WIN32)
+        set (match_str "/dev/ttyS0")
+        set (replacement_str "COM1")
+        set (output_file "${CMAKE_CURRENT_BINARY_DIR}/ublox.cfg")
+
+        file (READ ${config_file} config_text)
+        string (REGEX REPLACE "${match_str}" "${replacement_str}" modified_config_text "${config_text}")
+        file (WRITE "${output_file}" "${modified_config_text}")
+
+        set (config_file ${output_file})
+    endif ()
+
+    cc_plugin_install_config (${config_file})
+endfunction ()
+
+######################################################################
+
 if (NOT "${CC_UBLOX_QT_DIR}" STREQUAL "")
     list (APPEND CMAKE_PREFIX_PATH ${CC_UBLOX_QT_DIR})
 endif ()
@@ -366,6 +403,7 @@ if (CMAKE_COMPILER_IS_GNUCC)
 endif ()
     
 cc_plugin_ublox ()
+cc_plugin_config ()
 
 if (CC_UBLOX_FULL_SOLUTION)
     add_dependencies(${THIS_PLUGIN_NAME} ${CC_EXTERNAL_TGT})
