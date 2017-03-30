@@ -9,7 +9,7 @@ transport protocol used in **u-blox 4/5/6/7/8** devices.
 # UBLOX Library
 The library uses [COMMS library](https://github.com/arobenko/comms_champion#comms-library)
 from [comms_champion](https://github.com/arobenko/comms_champion) project 
-to specify all the messages resulting in clear, concise,
+to specify **all** of the existing messages resulting in clear, concise,
 and very efficient code.
 
 The ublox binary protocol is **HUGE** and it is unlikely that any product
