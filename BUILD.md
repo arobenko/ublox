@@ -36,7 +36,9 @@ installation directory (provided by **CC_UBLOX_INSTALL_DIR**), the usage of
 this variable is not necessary.
 
 - **CC_UBLOX_QT_DIR**=/path/to/qt - Path to custom build of **QT5** if it cannot be
-found in standard system directories.
+found in standard system directories. The **QT5** is used by the
+[comms_champion](https://github.com/arobenko/comms_champion) tools and it is
+required to build the protocol plugin for them.
 
 - **CC_UBLOX_NO_WARN_AS_ERR**=ON/OFF - By default, all warnings are treated as
 errors. Enable this option in case the compiler generates warning and fails the
