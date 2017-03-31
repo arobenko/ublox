@@ -4,7 +4,7 @@ use a UBX binary protocol to transmit GPS data to a host computer using
 asynchronous serial ports. This project provides a **headers only**, **platform independent**,
 and **bare-metal friendly** library implemented in C++(11), which implements all 
 the messages as well as wrapping 
-transport protocol used in **u-blox 4/5/6/7/8** devices.
+transport protocol supported by **u-blox 4/5/6/7/8** devices.
 
 # UBLOX Library
 The library uses [COMMS library](https://github.com/arobenko/comms_champion#comms-library)
