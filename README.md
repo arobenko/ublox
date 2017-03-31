@@ -26,6 +26,11 @@ plugin for the [CommsChampion Tools](https://github.com/arobenko/comms_champion#
 from the same [comms_champion](https://github.com/arobenko/comms_champion) project,
 which will allow visual analysis of the u-blox binary protocol traffic.
 
+Please refer to 
+[How to Use CommsChampion with UBLOX Protocol](https://github.com/arobenko/ublox/wiki/How-to-Use-CommsChampion-with-UBLOX-Protocol) 
+wiki page for instructions on how to analyse the UBX binary protocol using the
+[CommsChampion Tools](https://github.com/arobenko/comms_champion#commschampion-tools).
+
 # Licence
 The [UBLOX Library](#ublox-library) as well as [CommsChampion Plugin](#commschampion-plugin) 
 from this repository are licensed under
