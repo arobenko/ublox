@@ -57,7 +57,13 @@ generate Makefile-s on Windows by providing additional **-G "NMake Makefiles"** 
 to **cmake**. In this case use **nmake** utility instead of **make**.
 
 Please review the examples below and use appropriate option that suites your
-needs.
+needs. Remember to add **-DCMAKE_BUILD_TYPE=Release** option for release
+builds.
+
+Also **note**, that compilation process of the protocol plugin for 
+[CommsChampion Tools](https://github.com/arobenko/comms_champion#commschampion-tools)
+requires a lot of memory and your compilation may fail due to heap memory allocation
+failure. It is recommended to use 64 bit OS with at least 8GB of RAM. 
 
 ### Full Solution
 If you are not familiar with [comms_champion](https://github.com/arobenko/comms_champion) 
@@ -71,7 +77,7 @@ and exchange any UBX messages with it.
 ```
 $> cd /path/to/ublox/sources
 $> mkdir build && cd build
-$> cmake -DCC_UBLOX_FULL_SOLUTION=ON ..
+$> cmake -DCMAKE_BUILD_TYPE=Release -DCC_UBLOX_FULL_SOLUTION=ON ..
 $> make install 
 ```
 
@@ -109,7 +115,7 @@ its installation directory.
 ```
 $> cd /path/to/ublox/sources
 $> mkdir build && cd build
-$> cmake -CC_MAIN_INSTALL_DIR=/path/to/comms_champion/build/install ..
+$> cmake -DCMAKE_BUILD_TYPE=Release -CC_MAIN_INSTALL_DIR=/path/to/comms_champion/build/install ..
 $> make install 
 ```
 
@@ -124,7 +130,7 @@ using **CC_UBLOX_INSTALL_DIR** variable instead.
 ```
 $> cd /path/to/ublox/sources
 $> mkdir build && cd build
-$> cmake -CC_UBLOX_INSTALL_DIR=/path/to/comms_champion/build/install ..
+$> cmake -DCMAKE_BUILD_TYPE=Release -CC_UBLOX_INSTALL_DIR=/path/to/comms_champion/build/install ..
 $> make install 
 ```
 
