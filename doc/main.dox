@@ -4,7 +4,7 @@
 /// <a href="https://www.u-blox.com/en/position-time">u-blox GPS receivers</a> 
 /// use a UBX binary protocol to transmit GPS data to a host computer using
 /// asynchronous serial ports. This library provides implementation of all 
-/// the messages as well as wrapping transport protocol used in u-blox 4/5/6/7 
+/// the messages as well as wrapping transport protocol supported by u-blox 4/5/6/7/8 
 /// devices. 
 ///
 /// This library is implemented using C++(11) programming language and 
@@ -16,9 +16,7 @@
 /// being developed.
 ///
 /// It is recommended to get to know the @b COMMS library and its features first,
-/// in order to understand how to use this one. The documentation of the
-/// @b COMMS library can be downloaded from
-/// <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/doc_comms.zip">here</a>. 
+/// in order to understand how to use this one. 
 ///
 /// @section ublox_headers Headers
 /// The @b UBLOX library uses classes and functions from the 
@@ -62,7 +60,7 @@
 /// while @b NAV-POSECEF poll request is implemented in ublox::message::NavPosecefPoll one.
 ///
 /// There may also be multiple formats of the same output message. The good
-/// example would be CFG-PRT messages. The first field in such message identifies
+/// example would be @b CFG-PRT messages. The first field in such message identifies
 /// the type of the port (@b DDC, @b UART, @b SPI, @b USB) which defines the
 /// contents of the following fields. It was much simpler and more convenient
 /// to implement them as separate message classes: 
@@ -72,7 +70,7 @@
 /// @li ublox::message::CfgPrtUsb
 ///
 /// The @b poll form of the message may also have multiple forms. For example
-/// poll request for RXM-ALM message may have either empty body or provide
+/// poll request for @b RXM-ALM message may have either empty body or provide
 /// SVID of the satellite as its only field. This library implements these 
 /// forms as two separate messages: ublox::message::RxmAlmPoll and 
 /// ublox::message::RxmAlmPollSv.
@@ -143,7 +141,7 @@
 /// using InNavTimegps = ublox::message::NavTimegps<MyInputMessage>;
 /// ...
 /// @endcode
-/// These messages need to be bundles into @b std::tuple.
+/// These messages need to be bundled into @b std::tuple.
 /// @code
 /// using AllInputMessages = 
 ///     std::tuple<
@@ -268,7 +266,7 @@
 /// };
 /// @endcode
 /// If the code being developed requires having multiple handlers for the same
-/// messagesm it is possible to define the @b handle() functions mentioned above
+/// messages, it is possible to define the @b handle() functions mentioned above
 /// as (pure) @b virtual and have other handling classes derive from it while
 /// implementing the required functionality. However, it is recommended to 
 /// use the infrastructure already provided by the @b COMMS library. Just 
@@ -282,7 +280,7 @@
 /// message type in the second (@b AllInputMessages) template parameter as well
 /// as the common handling function for the interface type passed as
 /// the first template parameter (@b MyInputMessage). The default implementation
-/// provided by the comms::GenericHandler is that every @b handle() member function
+/// provided by the @b comms::GenericHandler is that every @b handle() member function
 /// upcasts the handled input message type to the common interface one and
 /// calls the common handling function, which by default does nothing. Now
 /// derive your custom handling classes from @b MyHandler and override only the
@@ -447,7 +445,7 @@
 /// as their inner storage types. These classes use dynamic memory allocation 
 /// and may use exceptions. If usage of these classes is not acceptable, both
 /// the @b COMMS and @b UBLOX libraries provide the way to substitute these
-/// classes with something more friendly. The @b COMMS library provides
+/// classes with something more bare-metal friendly. The @b COMMS library provides
 /// @b comms::util::StaticString and @b comms::util::StaticVector types, which
 /// expose the same public interface as @b std::string and @b std::vector
 /// respectively but must receive the maximal size as an additional template
