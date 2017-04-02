@@ -44,17 +44,35 @@ namespace
 
 using ublox::message::NavTimeutcFields;
 
-QVariantMap createProps_valid()
+QVariantMap createProps_validBits()
 {
-    cc::property::field::ForField<NavTimeutcFields::validBits> props;
-    props.name("valid")
-         .add("validTOW")
-         .add("validWKN")
-         .add("validUTC");
+    typedef NavTimeutcFields::validBits Field;
+    auto props =
+        cc::property::field::ForField<Field>()
+            .name("valid")
+            .serialisedHidden()
+            .add("validTOW")
+            .add("validWKN")
+            .add("validUTC");
 
-    assert(props.bits().size() == NavTimeutcFields::validBits::BitIdx_numOfValues);
+    assert(props.bits().size() == Field::BitIdx_numOfValues);
     return props.asMap();
 }
+
+
+QVariantMap createProps_valid()
+{
+    typedef NavTimeutcFields::validBitfield Field;
+    auto props =
+        cc::property::field::ForField<Field>()
+            .name("valid")
+            .add(createProps_validBits())
+            .add(cc_plugin::field::common::createProps_utcStandard(true));
+
+    assert(props.members().size() == Field::FieldIdx_numOfValues);
+    return props.asMap();
+}
+
 
 QVariantList createFieldsProperties()
 {

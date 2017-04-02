@@ -78,7 +78,7 @@ public:
     AidAopPoll(AidAopPoll&& other) = default;
 
     /// @brief Destructor
-    virtual ~AidAopPoll() = default;
+    ~AidAopPoll() = default;
 
     /// @brief Copy assignment
     AidAopPoll& operator=(const AidAopPoll&) = default;

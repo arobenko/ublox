@@ -87,7 +87,7 @@ public:
     InfStringMsgBase(InfStringMsgBase&& other) = default;
 
     /// @brief Destructor
-    virtual ~InfStringMsgBase() = default;
+    ~InfStringMsgBase() = default;
 
     /// @brief Copy assignment
     InfStringMsgBase& operator=(const InfStringMsgBase&) = default;

@@ -78,7 +78,7 @@ public:
     CfgUsbPoll(CfgUsbPoll&& other) = default;
 
     /// @brief Destructor
-    virtual ~CfgUsbPoll() = default;
+    ~CfgUsbPoll() = default;
 
     /// @brief Copy assignment
     CfgUsbPoll& operator=(const CfgUsbPoll&) = default;

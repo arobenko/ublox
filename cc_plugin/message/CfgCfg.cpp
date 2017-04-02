@@ -50,7 +50,10 @@ QVariantMap createProps_mask(const char* name)
          .add("navConf")
          .add("rxmConf")
          .add(CfgCfgFields::mask::BitIdx_rinvConf, "rinvConf")
-         .add("antConf");
+         .add("antConf")
+         .add("logConf")
+         .add("ftsConf")
+         ;
     assert(props.bits().size() == CfgCfgFields::mask::BitIdx_numOfValues);
     return props.asMap();
 }

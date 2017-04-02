@@ -46,25 +46,32 @@ using ublox::message::CfgItfmFields;
 
 QVariantMap createProps_config()
 {
-    cc::property::field::ForField<CfgItfmFields::bbThreshold> bbThresholdProps;
-    bbThresholdProps.name("bbThreshold").serialisedHidden();
+    auto bbThresholdProps =
+        cc::property::field::ForField<CfgItfmFields::bbThreshold>()
+            .name("bbThreshold")
+            .serialisedHidden();
 
-    cc::property::field::ForField<CfgItfmFields::cwThreshold> cwThresholdProps;
-    cwThresholdProps.name("cwThreshold").serialisedHidden();
+    auto cwThresholdProps =
+        cc::property::field::ForField<CfgItfmFields::cwThreshold>()
+            .name("cwThreshold")
+            .serialisedHidden();
 
+    auto algorithmBitsProps =
+        cc::property::field::ForField<CfgItfmFields::algorithmBits>()
+            .name("algorithmBits")
+            .serialisedHidden();
 
-    cc::property::field::ForField<CfgItfmFields::reserved1> reserved1Props;
-    reserved1Props.name("reserved1").serialisedHidden();
-
-    cc::property::field::ForField<CfgItfmFields::enable> enableProps;
-    enableProps.add("enable").serialisedHidden();
+    auto enableProps =
+        cc::property::field::ForField<CfgItfmFields::enable>()
+            .add("enable")
+            .serialisedHidden();
     assert(enableProps.bits().size() == CfgItfmFields::enable::BitIdx_numOfValues);
 
     cc::property::field::ForField<CfgItfmFields::config> props;
     props.name("config")
          .add(bbThresholdProps.asMap())
          .add(cwThresholdProps.asMap())
-         .add(reserved1Props.asMap())
+         .add(algorithmBitsProps.asMap())
          .add(enableProps.asMap());
     assert(props.members().size() == CfgItfmFields::config::FieldIdx_numOfValues);
     return props.asMap();
@@ -72,8 +79,10 @@ QVariantMap createProps_config()
 
 QVariantMap createProps_config2()
 {
-    cc::property::field::ForField<CfgItfmFields::reserved2> reserved2Props;
-    reserved2Props.name("reserved2").serialisedHidden();
+    auto generalBitsProps =
+        cc::property::field::ForField<CfgItfmFields::generalBits>()
+            .name("generalBits")
+            .serialisedHidden();
 
     cc::property::field::ForField<CfgItfmFields::antSetting> antSettingProps;
     antSettingProps.name("antSetting")
@@ -83,18 +92,24 @@ QVariantMap createProps_config2()
                    .serialisedHidden();
     assert(antSettingProps.values().size() == (int)CfgItfmFields::AntSetting::NumOfValues);
 
-    cc::property::field::ForField<CfgItfmFields::reserved3> reserved3Props;
-    reserved3Props.name("reserved3").serialisedHidden();
+    auto enable2Props =
+        cc::property::field::ForField<CfgItfmFields::enable2>()
+            .add("enable2")
+            .serialisedHidden();
+    assert(enable2Props.bits().size() == CfgItfmFields::enable2::BitIdx_numOfValues);
 
-    cc::property::field::ForField<CfgItfmFields::config2> props;
-    props.name("config2")
-         .add(reserved2Props.asMap())
-         .add(antSettingProps.asMap())
-         .add(reserved3Props.asMap());
+    auto reservedProps = cc::property::field::IntValue().hidden();
+
+    auto props =
+        cc::property::field::ForField<CfgItfmFields::config2>()
+            .name("config2")
+            .add(generalBitsProps.asMap())
+            .add(antSettingProps.asMap())
+            .add(enable2Props.asMap())
+            .add(reservedProps.asMap());
     assert(props.members().size() == CfgItfmFields::config2::FieldIdx_numOfValues);
     return props.asMap();
 }
-
 
 QVariantList createFieldsProperties()
 {

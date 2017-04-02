@@ -119,7 +119,7 @@ public:
     MonVer(MonVer&& other) = default;
 
     /// @brief Destructor
-    virtual ~MonVer() = default;
+    ~MonVer() = default;
 
     /// @brief Copy assignment
     MonVer& operator=(const MonVer&) = default;

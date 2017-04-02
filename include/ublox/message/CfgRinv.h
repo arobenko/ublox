@@ -100,7 +100,7 @@ public:
     CfgRinv(CfgRinv&& other) = default;
 
     /// @brief Destructor
-    virtual ~CfgRinv() = default;
+    ~CfgRinv() = default;
 
     /// @brief Copy assignment
     CfgRinv& operator=(const CfgRinv&) = default;

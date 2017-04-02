@@ -126,7 +126,7 @@ public:
     NavVelned(NavVelned&& other) = default;
 
     /// @brief Destructor
-    virtual ~NavVelned() = default;
+    ~NavVelned() = default;
 
     /// @brief Copy assignment
     NavVelned& operator=(const NavVelned&) = default;

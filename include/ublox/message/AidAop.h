@@ -92,6 +92,12 @@ class AidAop : public
         comms::option::MsgType<AidAop<TMsgBase, TDataOpt, TOptionalOpt> >
     >
 {
+    typedef comms::MessageBase<
+        TMsgBase,
+        comms::option::StaticNumIdImpl<MsgId_AID_AOP>,
+        comms::option::FieldsImpl<AidAopFields::All<TDataOpt, TOptionalOpt> >,
+        comms::option::MsgType<AidAop<TMsgBase, TDataOpt, TOptionalOpt> >
+    > Base;
 public:
 
     /// @brief Allow access to internal fields.
@@ -115,13 +121,25 @@ public:
     AidAop(AidAop&& other) = default;
 
     /// @brief Destructor
-    virtual ~AidAop() = default;
+    ~AidAop() = default;
 
     /// @brief Copy assignment
     AidAop& operator=(const AidAop&) = default;
 
     /// @brief Move assignment
     AidAop& operator=(AidAop&&) = default;
+
+    /// @brief Provides custom read functionality.
+    /// @details Verifies the data length prior to invoking default read of the fields
+    template <typename TIter>
+    comms::ErrorStatus doRead(TIter& iter, std::size_t len)
+    {
+        if (len != Base::doLength()) {
+            return comms::ErrorStatus::InvalidMsgData;
+        }
+
+        return Base::doRead(iter, len);
+    }
 };
 
 

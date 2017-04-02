@@ -45,10 +45,12 @@ struct TimTpFields
     /// @brief Definition of "week" field.
     using week = field::common::U2;
 
-    /// @brief Definition of "flags" field.
-    struct flags : public
+
+    /// @brief Definition of flags bits in "flags" fieldfield.
+    struct flagsBits : public
         field::common::X1T<
-            comms::option::BitmaskReservedBits<0xfc, 0>
+            comms::option::BitmaskReservedBits<0xfc, 0>,
+            comms::option::FixedBitLength<2>
         >
     {
         /// @brief Provide names for internal bits.
@@ -58,8 +60,93 @@ struct TimTpFields
         COMMS_BITMASK_BITS(timeBase, utc);
     };
 
-    /// @brief Definition of "reserved" field.
-    using reserved = field::common::res1;
+    /// @brief Enumeration value for @ref raim field
+    enum class Raim : std::uint8_t
+    {
+        NotAvailable, ///< Information not available
+        NotActive, ///< Not active
+        Active, ///< Active
+        NumOfValues ///< number of available values
+    };
+
+    /// @brief Definition of "raim" member field of @ref flags bitfield.
+    using raim =
+        field::common::EnumT<
+            Raim,
+            comms::option::ValidNumValueRange<0, (int)Raim::NumOfValues - 1>,
+            comms::option::FixedBitLength<2>
+        >;
+
+    /// @brief Definition of "flags" field.
+    struct flags : public
+        field::common::BitfieldT<
+            std::tuple<
+                flagsBits,
+                raim,
+                field::common::res1T<comms::option::FixedBitLength<4> >
+            >
+        >
+    {
+        /// @brief Allow access to internal fields.
+        /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
+        ///     related to @b comms::field::Bitfield class from COMMS library
+        ///     for details.
+        COMMS_FIELD_MEMBERS_ACCESS(bits, raim, reserved);
+    };
+
+    /// @brief Enumeration value of @ref timeRefGnss field.
+    enum class TimeRefGnss : std::uint8_t
+    {
+        Gps, ///< GPS
+        Glonass, ///< GLONASS
+        BeiDou, ///< BeiDou
+        Unknown = 15, ///< Unknown
+    };
+
+    /// @brief Custom validator for @ref timeRefGnss field
+    struct TimeRefGnssValidator
+    {
+        template <typename TField>
+        bool operator()(const TField& field) const
+        {
+            static const TimeRefGnss Values[] = {
+                TimeRefGnss::Gps,
+                TimeRefGnss::Glonass,
+                TimeRefGnss::BeiDou,
+                TimeRefGnss::Unknown
+            };
+
+            auto iter = std::lower_bound(std::begin(Values), std::end(Values), field.value());
+            return (iter != std::end(Values)) && (*iter == field.value());
+        }
+    };
+
+    /// @brief Definition of "timeRefGnss" member field of @ref refInfo bitfield.
+    using timeRefGnss =
+        field::common::EnumT<
+            TimeRefGnss,
+            comms::option::ContentsValidator<TimeRefGnssValidator>,
+            comms::option::FixedBitLength<4>
+        >;
+
+    /// @brief Definition of "utcStandard" member field of @ref refInfo bitfield.
+    using utcStandard = field::common::utcStandardT<comms::option::FixedBitLength<4> >;
+
+    /// @brief Definition of "refInfo" field.
+    struct refInfo : public
+        field::common::BitfieldT<
+            std::tuple<
+                timeRefGnss,
+                utcStandard
+            >
+        >
+    {
+        /// @brief Allow access to internal fields.
+        /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
+        ///     related to @b comms::field::Bitfield class from COMMS library
+        ///     for details.
+        COMMS_FIELD_MEMBERS_ACCESS(timeRefGnss, utcStandard);
+    };
 
     /// @brief All the fields bundled in std::tuple.
     using All = std::tuple<
@@ -68,7 +155,7 @@ struct TimTpFields
         qErr,
         week,
         flags,
-        reserved
+        refInfo
     >;
 };
 
@@ -88,12 +175,6 @@ class TimTp : public
         comms::option::MsgType<TimTp<TMsgBase> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_TIM_TP>,
-        comms::option::FieldsImpl<TimTpFields::All>,
-        comms::option::MsgType<TimTp<TMsgBase> >
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.
@@ -107,8 +188,8 @@ public:
     ///     @li @b qErr for @ref TimTpFields::qErr field
     ///     @li @b week for @ref TimTpFields::week field
     ///     @li @b flags for @ref TimTpFields::flags field
-    ///     @li @b reserved for @ref TimTpFields::reserved field
-    COMMS_MSG_FIELDS_ACCESS(towMS, towSubMS, qErr, week, flags, reserved);
+    ///     @li @b refInfo for @ref TimTpFields::refInfo field
+    COMMS_MSG_FIELDS_ACCESS(towMS, towSubMS, qErr, week, flags, refInfo);
 
     /// @brief Default constructor
     TimTp() = default;
@@ -120,7 +201,7 @@ public:
     TimTp(TimTp&& other) = default;
 
     /// @brief Destructor
-    virtual ~TimTp() = default;
+    ~TimTp() = default;
 
     /// @brief Copy assignment
     TimTp& operator=(const TimTp&) = default;

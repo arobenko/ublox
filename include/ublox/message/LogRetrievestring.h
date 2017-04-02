@@ -169,7 +169,7 @@ public:
     LogRetrievestring(LogRetrievestring&& other) = default;
 
     /// @brief Destructor
-    virtual ~LogRetrievestring() = default;
+    ~LogRetrievestring() = default;
 
     /// @brief Copy assignment
     LogRetrievestring& operator=(const LogRetrievestring&) = default;

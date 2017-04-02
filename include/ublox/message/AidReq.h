@@ -78,7 +78,7 @@ public:
     AidReq(AidReq&& other) = default;
 
     /// @brief Destructor
-    virtual ~AidReq() = default;
+    ~AidReq() = default;
 
     /// @brief Copy assignment
     AidReq& operator=(const AidReq&) = default;

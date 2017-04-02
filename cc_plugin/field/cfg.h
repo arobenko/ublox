@@ -56,8 +56,12 @@ const QVariantMap& props_datRotZ();
 const QVariantMap& props_datScale();
 const QVariantMap& props_nmeaFilter();
 const QVariantMap& props_nmeaVersion();
+const QVariantMap& props_gnssToFilter();
+const QVariantMap& props_svNumbering();
 const QVariantMap& props_nmeaNumSV();
 const QVariantMap& props_nmeaFlags();
+const QVariantMap& props_mainTalkerId();
+const QVariantMap& props_gsvTalkerId();
 const QVariantMap& props_tpIdx();
 
 }  // namespace cfg

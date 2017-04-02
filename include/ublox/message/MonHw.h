@@ -132,6 +132,20 @@ struct MonHwFields
             comms::option::FixedBitLength<2>
         >;
 
+    /// @brief Definition of "xtalAbsent" single bit bitmask member field of @ref flags bitfield.
+    struct xtalAbsent : public
+        field::common::X1T<
+            comms::option::FixedBitLength<1>
+        >
+    {
+        /// @brief Provide names for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS(bit);
+    };
+
+
     /// @brief Definition of "flags" field.
     struct flags : public
         field::common::BitfieldT<
@@ -139,8 +153,9 @@ struct MonHwFields
                 rtcCalib,
                 safeBoot,
                 jammingState,
+                xtalAbsent,
                 field::common::res1T<
-                    comms::option::FixedBitLength<4>
+                    comms::option::FixedBitLength<3>
                 >
             >
         >
@@ -149,7 +164,7 @@ struct MonHwFields
         /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
         ///     related to @b comms::field::Bitfield class from COMMS library
         ///     for details.
-        COMMS_FIELD_MEMBERS_ACCESS(rtcCalib, safeBoot, jammingState, reserved);
+        COMMS_FIELD_MEMBERS_ACCESS(rtcCalib, safeBoot, jammingState, xtalAbsent, reserved);
     };
 
     /// @brief Definition of "reserved1" field.
@@ -279,7 +294,7 @@ public:
     MonHw(MonHw&& other) = default;
 
     /// @brief Destructor
-    virtual ~MonHw() = default;
+    ~MonHw() = default;
 
     /// @brief Copy assignment
     MonHw& operator=(const MonHw&) = default;

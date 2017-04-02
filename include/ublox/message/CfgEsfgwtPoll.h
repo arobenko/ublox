@@ -79,7 +79,7 @@ public:
     CfgEsfgwtPoll(CfgEsfgwtPoll&& other) = default;
 
     /// @brief Destructor
-    virtual ~CfgEsfgwtPoll() = default;
+    ~CfgEsfgwtPoll() = default;
 
     /// @brief Copy assignment
     CfgEsfgwtPoll& operator=(const CfgEsfgwtPoll&) = default;

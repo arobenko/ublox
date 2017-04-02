@@ -79,7 +79,7 @@ public:
     RxmEphPoll(RxmEphPoll&& other) = default;
 
     /// @brief Destructor
-    virtual ~RxmEphPoll() = default;
+    ~RxmEphPoll() = default;
 
     /// @brief Copy assignment
     RxmEphPoll& operator=(const RxmEphPoll&) = default;

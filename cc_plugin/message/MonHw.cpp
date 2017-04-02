@@ -67,36 +67,46 @@ QVariantMap createProps_aPower()
 
 QVariantMap createProps_flags()
 {
-    cc::property::field::ForField<MonHwFields::rtcCalib> rtcCalibProps;
-    rtcCalibProps.name("flags")
-                 .add("rtcCalib")
-                 .serialisedHidden();
+    auto rtcCalibProps =
+        cc::property::field::ForField<MonHwFields::rtcCalib>()
+            .name("flags")
+            .add("rtcCalib")
+            .serialisedHidden();
     assert(rtcCalibProps.bits().size() == MonHwFields::rtcCalib::BitIdx_numOfValues);
 
-    cc::property::field::ForField<MonHwFields::safeBoot> safeBootProps;
-    safeBootProps.name("safeBoot")
-                 .add("Inactive")
-                 .add("Active")
-                 .serialisedHidden();
+    auto safeBootProps =
+        cc::property::field::ForField<MonHwFields::safeBoot>()
+            .name("safeBoot")
+            .add("Inactive")
+            .add("Active")
+            .serialisedHidden();
     assert(safeBootProps.values().size() == (int)MonHwFields::SafeBoot::NumOfValues);
 
-    cc::property::field::ForField<MonHwFields::jammingState> jammingStateProps;
-    jammingStateProps.name("jammingState")
-                     .add("unknown")
-                     .add("ok")
-                     .add("warning")
-                     .add("critical")
-                     .serialisedHidden();
+    auto jammingStateProps =
+        cc::property::field::ForField<MonHwFields::jammingState>()
+            .name("jammingState")
+            .add("unknown")
+            .add("ok")
+            .add("warning")
+            .add("critical")
+            .serialisedHidden();
     assert(jammingStateProps.values().size() == (int)MonHwFields::JammingState::NumOfValues);
 
-    cc::property::field::IntValue reservedProps;
-    reservedProps.hidden();
+    auto xtalAbsentProps =
+        cc::property::field::ForField<MonHwFields::xtalAbsent>()
+            .add("xtalAbsent")
+            .serialisedHidden();
+    assert(xtalAbsentProps.bits().size() == MonHwFields::xtalAbsent::BitIdx_numOfValues);
 
-    cc::property::field::ForField<MonHwFields::flags> props;
-    props.add(rtcCalibProps.asMap())
-         .add(safeBootProps.asMap())
-         .add(jammingStateProps.asMap())
-         .add(reservedProps.asMap());
+    auto reservedProps = cc::property::field::IntValue().hidden();
+
+    auto props =
+        cc::property::field::ForField<MonHwFields::flags>()
+            .add(rtcCalibProps.asMap())
+            .add(safeBootProps.asMap())
+            .add(jammingStateProps.asMap())
+            .add(xtalAbsentProps.asMap())
+            .add(reservedProps.asMap());
     assert(props.members().size() == MonHwFields::flags::FieldIdx_numOfValues);
     return props.asMap();
 }

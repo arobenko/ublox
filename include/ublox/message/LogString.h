@@ -85,7 +85,7 @@ public:
     LogString(LogString&& other) = default;
 
     /// @brief Destructor
-    virtual ~LogString() = default;
+    ~LogString() = default;
 
     /// @brief Copy assignment
     LogString& operator=(const LogString&) = default;

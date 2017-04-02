@@ -63,6 +63,7 @@ QVariantMap createProps_sys(const QString& propsName)
             .add("WAAS", (int)NavSbasFields::Sys::WAAS)
             .add("EGNOS", (int)NavSbasFields::Sys::EGNOS)
             .add("MSAS", (int)NavSbasFields::Sys::MSAS)
+            .add("GAGAN", (int)NavSbasFields::Sys::GAGAN)
             .add("GPS", (int)NavSbasFields::Sys::GPS)
             .asMap();
 }

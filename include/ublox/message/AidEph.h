@@ -130,7 +130,7 @@ public:
     AidEph(AidEph&& other) = default;
 
     /// @brief Destructor
-    virtual ~AidEph() = default;
+    ~AidEph() = default;
 
     /// @brief Copy assignment
     AidEph& operator=(const AidEph&) = default;

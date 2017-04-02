@@ -131,7 +131,7 @@ public:
     LogCreate(LogCreate&& other) = default;
 
     /// @brief Destructor
-    virtual ~LogCreate() = default;
+    ~LogCreate() = default;
 
     /// @brief Copy assignment
     LogCreate& operator=(const LogCreate&) = default;

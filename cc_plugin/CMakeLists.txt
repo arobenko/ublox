@@ -33,6 +33,9 @@ function (cc_plugin_ublox)
         message/NavSolPoll.cpp
         message/NavPvt.cpp
         message/NavPvtPoll.cpp
+        message/NavOdo.cpp
+        message/NavOdoPoll.cpp
+        message/NavResetodo.cpp
         message/NavVelecef.cpp
         message/NavVelecefPoll.cpp
         message/NavVelned.cpp
@@ -43,19 +46,39 @@ function (cc_plugin_ublox)
         message/NavTimeutcPoll.cpp
         message/NavClock.cpp
         message/NavClockPoll.cpp
+        message/NavTimeglo.cpp
+        message/NavTimegloPoll.cpp
+        message/NavTimebds.cpp
+        message/NavTimebdsPoll.cpp
+        message/NavTimegal.cpp
+        message/NavTimegalPoll.cpp
+        message/NavTimels.cpp
+        message/NavTimelsPoll.cpp
         message/NavSvinfo.cpp
         message/NavSvinfoPoll.cpp
         message/NavDgps.cpp
         message/NavDgpsPoll.cpp
         message/NavSbas.cpp
         message/NavSbasPoll.cpp
+        message/NavOrb.cpp
+        message/NavOrbPoll.cpp
+        message/NavSat.cpp
+        message/NavSatPoll.cpp
+        message/NavGeofence.cpp
+        message/NavGeofencePoll.cpp
         message/NavEkfstatus.cpp
         message/NavEkfstatusPoll.cpp
         message/NavAopstatus.cpp
+        message/NavAopstatusU8.cpp
         message/NavAopstatusPoll.cpp
+        message/NavEoe.cpp
         message/RxmRaw.cpp
         message/RxmRawPoll.cpp
         message/RxmSfrb.cpp
+        message/RxmSfrbx.cpp
+        message/RxmMeasx.cpp
+        message/RxmRawx.cpp
+        message/RxmRawxPoll.cpp
         message/RxmSvsi.cpp
         message/RxmSvsiPoll.cpp
         message/RxmAlm.cpp
@@ -64,7 +87,12 @@ function (cc_plugin_ublox)
         message/RxmEph.cpp
         message/RxmEphPollSv.cpp
         message/RxmEphPoll.cpp
+        message/RxmPmreqV0.cpp
         message/RxmPmreq.cpp
+        message/RxmRlmShort.cpp
+        message/RxmRlmLong.cpp
+        message/RxmImes.cpp
+        message/RxmImesPoll.cpp
         message/InfError.cpp
         message/InfWarning.cpp
         message/InfNotice.cpp
@@ -103,6 +131,7 @@ function (cc_plugin_ublox)
         message/CfgAntPoll.cpp
         message/CfgSbas.cpp
         message/CfgSbasPoll.cpp
+        message/CfgNmeaExtV1.cpp
         message/CfgNmeaExt.cpp
         message/CfgNmea.cpp
         message/CfgNmeaPoll.cpp
@@ -110,6 +139,8 @@ function (cc_plugin_ublox)
         message/CfgUsbPoll.cpp
         message/CfgTmode.cpp
         message/CfgTmodePoll.cpp
+        message/CfgOdo.cpp
+        message/CfgOdoPoll.cpp
         message/CfgNvs.cpp
         message/CfgNavx5.cpp
         message/CfgNavx5Poll.cpp
@@ -134,6 +165,25 @@ function (cc_plugin_ublox)
         message/CfgGnssPoll.cpp
         message/CfgLogfilter.cpp
         message/CfgLogfilterPoll.cpp
+        message/CfgTxslot.cpp
+        message/CfgPwr.cpp
+        message/CfgEsrc.cpp
+        message/CfgEsrcPoll.cpp
+        message/CfgDosc.cpp
+        message/CfgDoscPoll.cpp
+        message/CfgSmgr.cpp
+        message/CfgSmgrPoll.cpp
+        message/CfgGeofence.cpp
+        message/CfgGeofencePoll.cpp
+        message/CfgFixseed.cpp
+        message/CfgDynseed.cpp
+        message/CfgPms.cpp
+        message/CfgPmsPoll.cpp
+        message/UpdSosRestored.cpp
+        message/UpdSosAck.cpp
+        message/UpdSosClear.cpp
+        message/UpdSosCreate.cpp
+        message/UpdSosPoll.cpp
         message/MonIo.cpp
         message/MonIoPoll.cpp
         message/MonVer.cpp
@@ -149,6 +199,10 @@ function (cc_plugin_ublox)
         message/MonHw2.cpp
         message/MonHw2Poll.cpp
         message/MonRxr.cpp
+        message/MonPatch.cpp
+        message/MonPatchPoll.cpp
+        message/MonGnss.cpp
+        message/MonGnssPoll.cpp
         message/AidReq.cpp
         message/AidIni.cpp
         message/AidIniPoll.cpp
@@ -163,6 +217,7 @@ function (cc_plugin_ublox)
         message/AidEphPoll.cpp
         message/AidAlpsrv.cpp
         message/AidAlpsrvUpdate.cpp
+        message/AidAopU8.cpp
         message/AidAop.cpp
         message/AidAopPollSv.cpp
         message/AidAopPoll.cpp
@@ -177,6 +232,52 @@ function (cc_plugin_ublox)
         message/TimSvinPoll.cpp
         message/TimVrfy.cpp        
         message/TimVrfyPoll.cpp
+        message/TimDosc.cpp
+        message/TimTos.cpp
+        message/TimSmeas.cpp
+        message/TimVcocal.cpp
+        message/TimVcocalExt.cpp
+        message/TimVcocalStop.cpp
+        message/TimVcocalPoll.cpp
+        message/TimFchg.cpp
+        message/TimFchgPoll.cpp
+        message/TimHoc.cpp
+        message/EsfStatus.cpp
+        message/EsfStatusPoll.cpp
+        message/MgaGpsEph.cpp
+        message/MgaGpsAlm.cpp
+        message/MgaGpsHealth.cpp
+        message/MgaGpsUtc.cpp
+        message/MgaGpsIono.cpp
+        message/MgaGalEph.cpp
+        message/MgaGalAlm.cpp
+        message/MgaGalTimeoffset.cpp
+        message/MgaGalUtc.cpp
+        message/MgaBdsEph.cpp
+        message/MgaBdsAlm.cpp
+        message/MgaBdsHealth.cpp
+        message/MgaBdsUtc.cpp
+        message/MgaBdsIono.cpp
+        message/MgaQzssEph.cpp
+        message/MgaQzssAlm.cpp
+        message/MgaQzssHealth.cpp
+        message/MgaGloEph.cpp
+        message/MgaGloAlm.cpp
+        message/MgaGloTimeoffset.cpp
+        message/MgaAno.cpp
+        message/MgaFlashData.cpp
+        message/MgaFlashStop.cpp
+        message/MgaFlashAck.cpp
+        message/MgaIniPosXyz.cpp
+        message/MgaIniPosLlh.cpp
+        message/MgaIniTimeUtc.cpp
+        message/MgaIniTimeGnss.cpp
+        message/MgaIniClkd.cpp
+        message/MgaIniFreq.cpp
+        message/MgaIniEop.cpp
+        message/MgaAck.cpp
+        message/MgaDbd.cpp
+        message/MgaDbdPoll.cpp
         message/LogErase.cpp
         message/LogString.cpp
         message/LogCreate.cpp
@@ -187,6 +288,9 @@ function (cc_plugin_ublox)
         message/LogRetrievestring.cpp
         message/LogFindtimeCmd.cpp
         message/LogFindtime.cpp
+        message/LogRetrieveposextra.cpp
+        message/SecSign.cpp
+        message/SecUniqid.cpp
         field/MsgId.cpp
         field/common.cpp
         field/nav.cpp
@@ -221,6 +325,43 @@ endfunction()
 
 ######################################################################
 
+function (cc_plugin_install_config file)
+    install (
+        FILES ${file}
+        DESTINATION ${CONFIG_INSTALL_DIR}
+    )
+
+    if (CC_UBLOX_FULL_SOLUTION)
+        install (
+            FILES ${file}
+            DESTINATION ${CONFIG_INSTALL_DIR}
+            RENAME "default.cfg"
+        )
+    endif()
+
+endfunction ()
+
+######################################################################
+
+function (cc_plugin_config)
+    set (config_file ${CMAKE_CURRENT_SOURCE_DIR}/config/ublox.cfg)
+    if (WIN32)
+        set (match_str "/dev/ttyS0")
+        set (replacement_str "COM1")
+        set (output_file "${CMAKE_CURRENT_BINARY_DIR}/ublox.cfg")
+
+        file (READ ${config_file} config_text)
+        string (REGEX REPLACE "${match_str}" "${replacement_str}" modified_config_text "${config_text}")
+        file (WRITE "${output_file}" "${modified_config_text}")
+
+        set (config_file ${output_file})
+    endif ()
+
+    cc_plugin_install_config (${config_file})
+endfunction ()
+
+######################################################################
+
 if (NOT "${CC_UBLOX_QT_DIR}" STREQUAL "")
     list (APPEND CMAKE_PREFIX_PATH ${CC_UBLOX_QT_DIR})
 endif ()
@@ -235,6 +376,10 @@ endif ()
 if (NOT CC_UBLOX_FULL_SOLUTION)
     if (EXISTS "${INSTALL_DIR}/cmake/CommsChampionConfig.cmake")
         list (APPEND CMAKE_PREFIX_PATH "${INSTALL_DIR}/cmake")
+        FILE(GLOB_RECURSE comms.headers "${INSTALL_DIR}/include/comms/*.h")
+        add_custom_target(comms.headers SOURCES ${comms.headers})
+        FILE(GLOB_RECURSE cc.headers "${INSTALL_DIR}/include/comms_champion/*.h")
+        add_custom_target(cc.headers SOURCES ${cc.headers})
     endif ()
     
     if (NOT "${CC_MAIN_INSTALL_DIR}" STREQUAL "")
@@ -258,7 +403,11 @@ if (CMAKE_COMPILER_IS_GNUCC)
 endif ()
     
 cc_plugin_ublox ()
+cc_plugin_config ()
 
 if (CC_UBLOX_FULL_SOLUTION)
     add_dependencies(${THIS_PLUGIN_NAME} ${CC_EXTERNAL_TGT})
 endif ()
+
+FILE(GLOB_RECURSE plugin.headers "*.h")
+add_custom_target(cc_plugin.headers SOURCES ${plugin.headers})

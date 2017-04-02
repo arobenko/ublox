@@ -99,7 +99,7 @@ public:
     RxmSfrb(RxmSfrb&& other) = default;
 
     /// @brief Destructor
-    virtual ~RxmSfrb() = default;
+    ~RxmSfrb() = default;
 
     /// @brief Copy assignment
     RxmSfrb& operator=(const RxmSfrb&) = default;

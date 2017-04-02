@@ -78,7 +78,7 @@ public:
     RxmSvsiPoll(RxmSvsiPoll&& other) = default;
 
     /// @brief Destructor
-    virtual ~RxmSvsiPoll() = default;
+    ~RxmSvsiPoll() = default;
 
     /// @brief Copy assignment
     RxmSvsiPoll& operator=(const RxmSvsiPoll&) = default;

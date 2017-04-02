@@ -118,7 +118,7 @@ public:
     NavTimegps(NavTimegps&& other) = default;
 
     /// @brief Destructor
-    virtual ~NavTimegps() = default;
+    ~NavTimegps() = default;
 
     /// @brief Copy assignment
     NavTimegps& operator=(const NavTimegps&) = default;

@@ -92,7 +92,7 @@ public:
     CfgMsgCurrent(CfgMsgCurrent&& other) = default;
 
     /// @brief Destructor
-    virtual ~CfgMsgCurrent() = default;
+    ~CfgMsgCurrent() = default;
 
     /// @brief Copy assignment
     CfgMsgCurrent& operator=(const CfgMsgCurrent&) = default;

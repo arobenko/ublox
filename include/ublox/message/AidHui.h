@@ -204,7 +204,7 @@ public:
     AidHui(AidHui&& other) = default;
 
     /// @brief Destructor
-    virtual ~AidHui() = default;
+    ~AidHui() = default;
 
     /// @brief Copy assignment
     AidHui& operator=(const AidHui&) = default;

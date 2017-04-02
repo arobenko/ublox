@@ -125,7 +125,7 @@ public:
     TimSvin(TimSvin&& other) = default;
 
     /// @brief Destructor
-    virtual ~TimSvin() = default;
+    ~TimSvin() = default;
 
     /// @brief Copy assignment
     TimSvin& operator=(const TimSvin&) = default;

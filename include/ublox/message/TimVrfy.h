@@ -152,7 +152,7 @@ public:
     TimVrfy(TimVrfy&& other) = default;
 
     /// @brief Destructor
-    virtual ~TimVrfy() = default;
+    ~TimVrfy() = default;
 
     /// @brief Copy assignment
     TimVrfy& operator=(const TimVrfy&) = default;

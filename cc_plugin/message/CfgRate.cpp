@@ -45,7 +45,10 @@ QVariantMap createProps_timeRef()
     cc::property::field::ForField<CfgRateFields::timeRef> props;
     props.name("timeRef")
          .add("UTC time")
-         .add("GPS time");
+         .add("GPS time")
+         .add("GLONASS time")
+         .add("BeiDou time")
+         .add("Galileo time");
     assert(props.values().size() == (int)CfgRateFields::TimeRef::NumOfValues);
     return props.asMap();
 }

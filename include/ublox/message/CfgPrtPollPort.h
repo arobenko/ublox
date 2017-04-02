@@ -89,7 +89,7 @@ public:
     CfgPrtPollPort(CfgPrtPollPort&& other) = default;
 
     /// @brief Destructor
-    virtual ~CfgPrtPollPort() = default;
+    ~CfgPrtPollPort() = default;
 
     /// @brief Copy assignment
     CfgPrtPollPort& operator=(const CfgPrtPollPort&) = default;

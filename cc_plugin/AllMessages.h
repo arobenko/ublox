@@ -33,6 +33,9 @@
 #include "cc_plugin/message/NavSolPoll.h"
 #include "cc_plugin/message/NavPvt.h"
 #include "cc_plugin/message/NavPvtPoll.h"
+#include "cc_plugin/message/NavOdo.h"
+#include "cc_plugin/message/NavOdoPoll.h"
+#include "cc_plugin/message/NavResetodo.h"
 #include "cc_plugin/message/NavVelecef.h"
 #include "cc_plugin/message/NavVelecefPoll.h"
 #include "cc_plugin/message/NavVelned.h"
@@ -43,20 +46,40 @@
 #include "cc_plugin/message/NavTimeutcPoll.h"
 #include "cc_plugin/message/NavClock.h"
 #include "cc_plugin/message/NavClockPoll.h"
+#include "cc_plugin/message/NavTimeglo.h"
+#include "cc_plugin/message/NavTimegloPoll.h"
+#include "cc_plugin/message/NavTimebds.h"
+#include "cc_plugin/message/NavTimebdsPoll.h"
+#include "cc_plugin/message/NavTimegal.h"
+#include "cc_plugin/message/NavTimegalPoll.h"
+#include "cc_plugin/message/NavTimels.h"
+#include "cc_plugin/message/NavTimelsPoll.h"
 #include "cc_plugin/message/NavSvinfo.h"
 #include "cc_plugin/message/NavSvinfoPoll.h"
 #include "cc_plugin/message/NavDgps.h"
 #include "cc_plugin/message/NavDgpsPoll.h"
 #include "cc_plugin/message/NavSbas.h"
 #include "cc_plugin/message/NavSbasPoll.h"
+#include "cc_plugin/message/NavOrb.h"
+#include "cc_plugin/message/NavOrbPoll.h"
+#include "cc_plugin/message/NavSat.h"
+#include "cc_plugin/message/NavSatPoll.h"
+#include "cc_plugin/message/NavGeofence.h"
+#include "cc_plugin/message/NavGeofencePoll.h"
 #include "cc_plugin/message/NavEkfstatus.h"
 #include "cc_plugin/message/NavEkfstatusPoll.h"
 #include "cc_plugin/message/NavAopstatus.h"
+#include "cc_plugin/message/NavAopstatusU8.h"
 #include "cc_plugin/message/NavAopstatusPoll.h"
+#include "cc_plugin/message/NavEoe.h"
 
 #include "cc_plugin/message/RxmRaw.h"
 #include "cc_plugin/message/RxmRawPoll.h"
 #include "cc_plugin/message/RxmSfrb.h"
+#include "cc_plugin/message/RxmSfrbx.h"
+#include "cc_plugin/message/RxmMeasx.h"
+#include "cc_plugin/message/RxmRawx.h"
+#include "cc_plugin/message/RxmRawxPoll.h"
 #include "cc_plugin/message/RxmSvsi.h"
 #include "cc_plugin/message/RxmSvsiPoll.h"
 #include "cc_plugin/message/RxmAlm.h"
@@ -65,7 +88,12 @@
 #include "cc_plugin/message/RxmEph.h"
 #include "cc_plugin/message/RxmEphPollSv.h"
 #include "cc_plugin/message/RxmEphPoll.h"
+#include "cc_plugin/message/RxmPmreqV0.h"
 #include "cc_plugin/message/RxmPmreq.h"
+#include "cc_plugin/message/RxmRlmShort.h"
+#include "cc_plugin/message/RxmRlmLong.h"
+#include "cc_plugin/message/RxmImes.h"
+#include "cc_plugin/message/RxmImesPoll.h"
 
 #include "cc_plugin/message/InfError.h"
 #include "cc_plugin/message/InfWarning.h"
@@ -107,6 +135,7 @@
 #include "cc_plugin/message/CfgAntPoll.h"
 #include "cc_plugin/message/CfgSbas.h"
 #include "cc_plugin/message/CfgSbasPoll.h"
+#include "cc_plugin/message/CfgNmeaExtV1.h"
 #include "cc_plugin/message/CfgNmeaExt.h"
 #include "cc_plugin/message/CfgNmea.h"
 #include "cc_plugin/message/CfgNmeaPoll.h"
@@ -114,6 +143,8 @@
 #include "cc_plugin/message/CfgUsbPoll.h"
 #include "cc_plugin/message/CfgTmode.h"
 #include "cc_plugin/message/CfgTmodePoll.h"
+#include "cc_plugin/message/CfgOdo.h"
+#include "cc_plugin/message/CfgOdoPoll.h"
 #include "cc_plugin/message/CfgNvs.h"
 #include "cc_plugin/message/CfgNavx5.h"
 #include "cc_plugin/message/CfgNavx5Poll.h"
@@ -138,6 +169,26 @@
 #include "cc_plugin/message/CfgGnssPoll.h"
 #include "cc_plugin/message/CfgLogfilter.h"
 #include "cc_plugin/message/CfgLogfilterPoll.h"
+#include "cc_plugin/message/CfgTxslot.h"
+#include "cc_plugin/message/CfgPwr.h"
+#include "cc_plugin/message/CfgEsrc.h"
+#include "cc_plugin/message/CfgEsrcPoll.h"
+#include "cc_plugin/message/CfgDosc.h"
+#include "cc_plugin/message/CfgDoscPoll.h"
+#include "cc_plugin/message/CfgSmgr.h"
+#include "cc_plugin/message/CfgSmgrPoll.h"
+#include "cc_plugin/message/CfgGeofence.h"
+#include "cc_plugin/message/CfgGeofencePoll.h"
+#include "cc_plugin/message/CfgFixseed.h"
+#include "cc_plugin/message/CfgDynseed.h"
+#include "cc_plugin/message/CfgPms.h"
+#include "cc_plugin/message/CfgPmsPoll.h"
+
+#include "cc_plugin/message/UpdSosRestored.h"
+#include "cc_plugin/message/UpdSosAck.h"
+#include "cc_plugin/message/UpdSosClear.h"
+#include "cc_plugin/message/UpdSosCreate.h"
+#include "cc_plugin/message/UpdSosPoll.h"
 
 #include "cc_plugin/message/MonIo.h"
 #include "cc_plugin/message/MonIoPoll.h"
@@ -154,6 +205,10 @@
 #include "cc_plugin/message/MonHw2.h"
 #include "cc_plugin/message/MonHw2Poll.h"
 #include "cc_plugin/message/MonRxr.h"
+#include "cc_plugin/message/MonPatch.h"
+#include "cc_plugin/message/MonPatchPoll.h"
+#include "cc_plugin/message/MonGnss.h"
+#include "cc_plugin/message/MonGnssPoll.h"
 
 #include "cc_plugin/message/AidReq.h"
 #include "cc_plugin/message/AidIni.h"
@@ -169,6 +224,7 @@
 #include "cc_plugin/message/AidEphPoll.h"
 #include "cc_plugin/message/AidAlpsrv.h"
 #include "cc_plugin/message/AidAlpsrvUpdate.h"
+#include "cc_plugin/message/AidAopU8.h"
 #include "cc_plugin/message/AidAop.h"
 #include "cc_plugin/message/AidAopPollSv.h"
 #include "cc_plugin/message/AidAopPoll.h"
@@ -184,6 +240,54 @@
 #include "cc_plugin/message/TimSvinPoll.h"
 #include "cc_plugin/message/TimVrfy.h"
 #include "cc_plugin/message/TimVrfyPoll.h"
+#include "cc_plugin/message/TimDosc.h"
+#include "cc_plugin/message/TimTos.h"
+#include "cc_plugin/message/TimSmeas.h"
+#include "cc_plugin/message/TimVcocal.h"
+#include "cc_plugin/message/TimVcocalExt.h"
+#include "cc_plugin/message/TimVcocalStop.h"
+#include "cc_plugin/message/TimVcocalPoll.h"
+#include "cc_plugin/message/TimFchg.h"
+#include "cc_plugin/message/TimFchgPoll.h"
+#include "cc_plugin/message/TimHoc.h"
+
+#include "cc_plugin/message/EsfStatus.h"
+#include "cc_plugin/message/EsfStatusPoll.h"
+
+#include "cc_plugin/message/MgaGpsEph.h"
+#include "cc_plugin/message/MgaGpsAlm.h"
+#include "cc_plugin/message/MgaGpsHealth.h"
+#include "cc_plugin/message/MgaGpsUtc.h"
+#include "cc_plugin/message/MgaGpsIono.h"
+#include "cc_plugin/message/MgaGalEph.h"
+#include "cc_plugin/message/MgaGalAlm.h"
+#include "cc_plugin/message/MgaGalTimeoffset.h"
+#include "cc_plugin/message/MgaGalUtc.h"
+#include "cc_plugin/message/MgaBdsEph.h"
+#include "cc_plugin/message/MgaBdsAlm.h"
+#include "cc_plugin/message/MgaBdsHealth.h"
+#include "cc_plugin/message/MgaBdsUtc.h"
+#include "cc_plugin/message/MgaBdsIono.h"
+#include "cc_plugin/message/MgaQzssEph.h"
+#include "cc_plugin/message/MgaQzssAlm.h"
+#include "cc_plugin/message/MgaQzssHealth.h"
+#include "cc_plugin/message/MgaGloEph.h"
+#include "cc_plugin/message/MgaGloAlm.h"
+#include "cc_plugin/message/MgaGloTimeoffset.h"
+#include "cc_plugin/message/MgaAno.h"
+#include "cc_plugin/message/MgaFlashData.h"
+#include "cc_plugin/message/MgaFlashStop.h"
+#include "cc_plugin/message/MgaFlashAck.h"
+#include "cc_plugin/message/MgaIniPosXyz.h"
+#include "cc_plugin/message/MgaIniPosLlh.h"
+#include "cc_plugin/message/MgaIniTimeUtc.h"
+#include "cc_plugin/message/MgaIniTimeGnss.h"
+#include "cc_plugin/message/MgaIniClkd.h"
+#include "cc_plugin/message/MgaIniFreq.h"
+#include "cc_plugin/message/MgaIniEop.h"
+#include "cc_plugin/message/MgaAck.h"
+#include "cc_plugin/message/MgaDbd.h"
+#include "cc_plugin/message/MgaDbdPoll.h"
 
 #include "cc_plugin/message/LogErase.h"
 #include "cc_plugin/message/LogString.h"
@@ -195,6 +299,10 @@
 #include "cc_plugin/message/LogRetrievestring.h"
 #include "cc_plugin/message/LogFindtimeCmd.h"
 #include "cc_plugin/message/LogFindtime.h"
+#include "cc_plugin/message/LogRetrieveposextra.h"
+
+#include "cc_plugin/message/SecSign.h"
+#include "cc_plugin/message/SecUniqid.h"
 
 namespace ublox
 {
@@ -215,6 +323,9 @@ typedef std::tuple<
     cc_plugin::message::NavSolPoll,
     cc_plugin::message::NavPvt,
     cc_plugin::message::NavPvtPoll,
+    cc_plugin::message::NavOdo,
+    cc_plugin::message::NavOdoPoll,
+    cc_plugin::message::NavResetodo,
     cc_plugin::message::NavVelecef,
     cc_plugin::message::NavVelecefPoll,
     cc_plugin::message::NavVelned,
@@ -225,19 +336,39 @@ typedef std::tuple<
     cc_plugin::message::NavTimeutcPoll,
     cc_plugin::message::NavClock,
     cc_plugin::message::NavClockPoll,
+    cc_plugin::message::NavTimeglo,
+    cc_plugin::message::NavTimegloPoll,
+    cc_plugin::message::NavTimebds,
+    cc_plugin::message::NavTimebdsPoll,
+    cc_plugin::message::NavTimegal,
+    cc_plugin::message::NavTimegalPoll,
+    cc_plugin::message::NavTimels,
+    cc_plugin::message::NavTimelsPoll,
     cc_plugin::message::NavSvinfo,
     cc_plugin::message::NavSvinfoPoll,
     cc_plugin::message::NavDgps,
     cc_plugin::message::NavDgpsPoll,
     cc_plugin::message::NavSbas,
     cc_plugin::message::NavSbasPoll,
+    cc_plugin::message::NavOrb,
+    cc_plugin::message::NavOrbPoll,
+    cc_plugin::message::NavSat,
+    cc_plugin::message::NavSatPoll,
+    cc_plugin::message::NavGeofence,
+    cc_plugin::message::NavGeofencePoll,
     cc_plugin::message::NavEkfstatus,
     cc_plugin::message::NavEkfstatusPoll,
     cc_plugin::message::NavAopstatus,
+    cc_plugin::message::NavAopstatusU8,
     cc_plugin::message::NavAopstatusPoll,
+    cc_plugin::message::NavEoe,
     cc_plugin::message::RxmRaw,
     cc_plugin::message::RxmRawPoll,
     cc_plugin::message::RxmSfrb,
+    cc_plugin::message::RxmSfrbx,
+    cc_plugin::message::RxmMeasx,
+    cc_plugin::message::RxmRawx,
+    cc_plugin::message::RxmRawxPoll,
     cc_plugin::message::RxmSvsi,
     cc_plugin::message::RxmSvsiPoll,
     cc_plugin::message::RxmAlm,
@@ -246,7 +377,12 @@ typedef std::tuple<
     cc_plugin::message::RxmEph,
     cc_plugin::message::RxmEphPollSv,
     cc_plugin::message::RxmEphPoll,
+    cc_plugin::message::RxmPmreqV0,
     cc_plugin::message::RxmPmreq,
+    cc_plugin::message::RxmRlmShort,
+    cc_plugin::message::RxmRlmLong,
+    cc_plugin::message::RxmImes,
+    cc_plugin::message::RxmImesPoll,
     cc_plugin::message::InfError,
     cc_plugin::message::InfWarning,
     cc_plugin::message::InfNotice,
@@ -285,6 +421,7 @@ typedef std::tuple<
     cc_plugin::message::CfgAntPoll,
     cc_plugin::message::CfgSbas,
     cc_plugin::message::CfgSbasPoll,
+    cc_plugin::message::CfgNmeaExtV1,
     cc_plugin::message::CfgNmeaExt,
     cc_plugin::message::CfgNmea,
     cc_plugin::message::CfgNmeaPoll,
@@ -292,6 +429,8 @@ typedef std::tuple<
     cc_plugin::message::CfgUsbPoll,
     cc_plugin::message::CfgTmode,
     cc_plugin::message::CfgTmodePoll,
+    cc_plugin::message::CfgOdo,
+    cc_plugin::message::CfgOdoPoll,
     cc_plugin::message::CfgNvs,
     cc_plugin::message::CfgNavx5,
     cc_plugin::message::CfgNavx5Poll,
@@ -316,6 +455,25 @@ typedef std::tuple<
     cc_plugin::message::CfgGnssPoll,
     cc_plugin::message::CfgLogfilter,
     cc_plugin::message::CfgLogfilterPoll,
+    cc_plugin::message::CfgTxslot,
+    cc_plugin::message::CfgPwr,
+    cc_plugin::message::CfgEsrc,
+    cc_plugin::message::CfgEsrcPoll,
+    cc_plugin::message::CfgDosc,
+    cc_plugin::message::CfgDoscPoll,
+    cc_plugin::message::CfgSmgr,
+    cc_plugin::message::CfgSmgrPoll,
+    cc_plugin::message::CfgGeofence,
+    cc_plugin::message::CfgGeofencePoll,
+    cc_plugin::message::CfgFixseed,
+    cc_plugin::message::CfgDynseed,
+    cc_plugin::message::CfgPms,
+    cc_plugin::message::CfgPmsPoll,
+    cc_plugin::message::UpdSosRestored,
+    cc_plugin::message::UpdSosAck,
+    cc_plugin::message::UpdSosClear,
+    cc_plugin::message::UpdSosCreate,
+    cc_plugin::message::UpdSosPoll,
     cc_plugin::message::MonIo,
     cc_plugin::message::MonIoPoll,
     cc_plugin::message::MonVer,
@@ -331,6 +489,10 @@ typedef std::tuple<
     cc_plugin::message::MonHw2,
     cc_plugin::message::MonHw2Poll,
     cc_plugin::message::MonRxr,
+    cc_plugin::message::MonPatch,
+    cc_plugin::message::MonPatchPoll,
+    cc_plugin::message::MonGnss,
+    cc_plugin::message::MonGnssPoll,
     cc_plugin::message::AidReq,
     cc_plugin::message::AidIni,
     cc_plugin::message::AidIniPoll,
@@ -345,6 +507,7 @@ typedef std::tuple<
     cc_plugin::message::AidEphPoll,
     cc_plugin::message::AidAlpsrv,
     cc_plugin::message::AidAlpsrvUpdate,
+    cc_plugin::message::AidAopU8,
     cc_plugin::message::AidAop,
     cc_plugin::message::AidAopPollSv,
     cc_plugin::message::AidAopPoll,
@@ -359,6 +522,51 @@ typedef std::tuple<
     cc_plugin::message::TimSvinPoll,
     cc_plugin::message::TimVrfy,
     cc_plugin::message::TimVrfyPoll,
+    cc_plugin::message::TimDosc,
+    cc_plugin::message::TimTos,
+    cc_plugin::message::TimSmeas,
+    cc_plugin::message::TimVcocal,
+    cc_plugin::message::TimVcocalExt,
+    cc_plugin::message::TimVcocalStop,
+    cc_plugin::message::TimVcocalPoll,
+    cc_plugin::message::TimFchg,
+    cc_plugin::message::TimFchgPoll,
+    cc_plugin::message::EsfStatus,
+    cc_plugin::message::EsfStatusPoll,
+    cc_plugin::message::MgaGpsEph,
+    cc_plugin::message::MgaGpsAlm,
+    cc_plugin::message::MgaGpsHealth,
+    cc_plugin::message::MgaGpsUtc,
+    cc_plugin::message::MgaGpsIono,
+    cc_plugin::message::MgaGalEph,
+    cc_plugin::message::MgaGalAlm,
+    cc_plugin::message::MgaGalTimeoffset,
+    cc_plugin::message::MgaGalUtc,
+    cc_plugin::message::MgaBdsEph,
+    cc_plugin::message::MgaBdsAlm,
+    cc_plugin::message::MgaBdsHealth,
+    cc_plugin::message::MgaBdsUtc,
+    cc_plugin::message::MgaBdsIono,
+    cc_plugin::message::MgaQzssEph,
+    cc_plugin::message::MgaQzssAlm,
+    cc_plugin::message::MgaQzssHealth,
+    cc_plugin::message::MgaGloEph,
+    cc_plugin::message::MgaGloAlm,
+    cc_plugin::message::MgaGloTimeoffset,
+    cc_plugin::message::MgaAno,
+    cc_plugin::message::MgaFlashData,
+    cc_plugin::message::MgaFlashStop,
+    cc_plugin::message::MgaFlashAck,
+    cc_plugin::message::MgaIniPosXyz,
+    cc_plugin::message::MgaIniPosLlh,
+    cc_plugin::message::MgaIniTimeUtc,
+    cc_plugin::message::MgaIniTimeGnss,
+    cc_plugin::message::MgaIniClkd,
+    cc_plugin::message::MgaIniFreq,
+    cc_plugin::message::MgaIniEop,
+    cc_plugin::message::MgaAck,
+    cc_plugin::message::MgaDbd,
+    cc_plugin::message::MgaDbdPoll,
     cc_plugin::message::LogErase,
     cc_plugin::message::LogString,
     cc_plugin::message::LogCreate,
@@ -368,7 +576,10 @@ typedef std::tuple<
     cc_plugin::message::LogRetrievepos,
     cc_plugin::message::LogRetrievestring,
     cc_plugin::message::LogFindtimeCmd,
-    cc_plugin::message::LogFindtime
+    cc_plugin::message::LogFindtime,
+    cc_plugin::message::LogRetrieveposextra,
+    cc_plugin::message::SecSign,
+    cc_plugin::message::SecUniqid
 > AllMessages;
 
 }  // namespace cc_plugin

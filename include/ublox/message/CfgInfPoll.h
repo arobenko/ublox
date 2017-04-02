@@ -88,7 +88,7 @@ public:
     CfgInfPoll(CfgInfPoll&& other) = default;
 
     /// @brief Destructor
-    virtual ~CfgInfPoll() = default;
+    ~CfgInfPoll() = default;
 
     /// @brief Copy assignment
     CfgInfPoll& operator=(const CfgInfPoll&) = default;

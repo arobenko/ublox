@@ -78,7 +78,7 @@ public:
     TimVrfyPoll(TimVrfyPoll&& other) = default;
 
     /// @brief Destructor
-    virtual ~TimVrfyPoll() = default;
+    ~TimVrfyPoll() = default;
 
     /// @brief Copy assignment
     TimVrfyPoll& operator=(const TimVrfyPoll&) = default;

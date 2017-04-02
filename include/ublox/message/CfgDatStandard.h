@@ -85,7 +85,7 @@ public:
     CfgDatStandard(CfgDatStandard&& other) = default;
 
     /// @brief Destructor
-    virtual ~CfgDatStandard() = default;
+    ~CfgDatStandard() = default;
 
     /// @brief Copy assignment
     CfgDatStandard& operator=(const CfgDatStandard&) = default;

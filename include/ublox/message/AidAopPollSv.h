@@ -86,7 +86,7 @@ public:
     AidAopPollSv(AidAopPollSv&& other) = default;
 
     /// @brief Destructor
-    virtual ~AidAopPollSv() = default;
+    ~AidAopPollSv() = default;
 
     /// @brief Copy assignment
     AidAopPollSv& operator=(const AidAopPollSv&) = default;

@@ -78,7 +78,7 @@ public:
     NavEkfstatusPoll(NavEkfstatusPoll&& other) = default;
 
     /// @brief Destructor
-    virtual ~NavEkfstatusPoll() = default;
+    ~NavEkfstatusPoll() = default;
 
     /// @brief Copy assignment
     NavEkfstatusPoll& operator=(const NavEkfstatusPoll&) = default;

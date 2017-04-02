@@ -212,7 +212,7 @@ public:
     NavEkfstatus(NavEkfstatus&& other) = default;
 
     /// @brief Destructor
-    virtual ~NavEkfstatus() = default;
+    ~NavEkfstatus() = default;
 
     /// @brief Copy assignment
     NavEkfstatus& operator=(const NavEkfstatus&) = default;

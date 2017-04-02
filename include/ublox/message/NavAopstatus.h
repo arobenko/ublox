@@ -137,7 +137,7 @@ public:
     NavAopstatus(NavAopstatus&& other) = default;
 
     /// @brief Destructor
-    virtual ~NavAopstatus() = default;
+    ~NavAopstatus() = default;
 
     /// @brief Copy assignment
     NavAopstatus& operator=(const NavAopstatus&) = default;

@@ -78,7 +78,7 @@ public:
     CfgNmeaPoll(CfgNmeaPoll&& other) = default;
 
     /// @brief Destructor
-    virtual ~CfgNmeaPoll() = default;
+    ~CfgNmeaPoll() = default;
 
     /// @brief Copy assignment
     CfgNmeaPoll& operator=(const CfgNmeaPoll&) = default;

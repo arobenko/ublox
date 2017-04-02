@@ -130,7 +130,7 @@ public:
     RxmEph(RxmEph&& other) = default;
 
     /// @brief Destructor
-    virtual ~RxmEph() = default;
+    ~RxmEph() = default;
 
     /// @brief Copy assignment
     RxmEph& operator=(const RxmEph&) = default;

@@ -78,7 +78,7 @@ public:
     MonMsgppPoll(MonMsgppPoll&& other) = default;
 
     /// @brief Destructor
-    virtual ~MonMsgppPoll() = default;
+    ~MonMsgppPoll() = default;
 
     /// @brief Copy assignment
     MonMsgppPoll& operator=(const MonMsgppPoll&) = default;

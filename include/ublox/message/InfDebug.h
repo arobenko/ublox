@@ -50,7 +50,7 @@ public:
     InfDebug(InfDebug&& other) = default;
 
     /// @brief Destructor
-    virtual ~InfDebug() = default;
+    ~InfDebug() = default;
 
     /// @brief Copy assignment
     InfDebug& operator=(const InfDebug&) = default;

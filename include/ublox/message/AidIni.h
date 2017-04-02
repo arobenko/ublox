@@ -332,7 +332,7 @@ public:
     AidIni(AidIni&& other) = default;
 
     /// @brief Destructor
-    virtual ~AidIni() = default;
+    ~AidIni() = default;
 
     /// @brief Copy assignment
     AidIni& operator=(const AidIni&) = default;

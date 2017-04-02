@@ -124,7 +124,7 @@ public:
     CfgLogfilter(CfgLogfilter&& other) = default;
 
     /// @brief Destructor
-    virtual ~CfgLogfilter() = default;
+    ~CfgLogfilter() = default;
 
     /// @brief Copy assignment
     CfgLogfilter& operator=(const CfgLogfilter&) = default;

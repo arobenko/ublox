@@ -101,13 +101,26 @@ QVariantMap createProps_flags2()
             .serialisedHidden();
     assert(psmStateProps.values().size() == (int)NavStatusFields::PsmState::NumOfValues);
 
-    auto reservedProps =
-        cc::property::field::IntValue().name("reserved").hidden();
+    auto reserved1Props = cc::property::field::IntValue().hidden();
+
+    auto spoofDetStateProps =
+        cc::property::field::ForField<NavStatusFields::psmState>()
+            .name("spoofDetState")
+            .add("Unknown")
+            .add("No spoofing")
+            .add("Spoofing")
+            .add("Multiple spoofing")
+            .serialisedHidden();
+    assert(spoofDetStateProps.values().size() == (int)NavStatusFields::PsmState::NumOfValues);
+
+    auto reserved2Props = cc::property::field::IntValue().hidden();
 
     auto flags2Props =
         cc::property::field::ForField<NavStatusFields::flags2>()
             .add(psmStateProps.asMap())
-            .add(reservedProps.asMap());
+            .add(reserved1Props.asMap())
+            .add(spoofDetStateProps.asMap())
+            .add(reserved2Props.asMap());
     assert(flags2Props.members().size() == NavStatusFields::flags2::FieldIdx_numOfValues);
     return flags2Props.asMap();
 }

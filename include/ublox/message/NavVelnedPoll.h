@@ -78,7 +78,7 @@ public:
     NavVelnedPoll(NavVelnedPoll&& other) = default;
 
     /// @brief Destructor
-    virtual ~NavVelnedPoll() = default;
+    ~NavVelnedPoll() = default;
 
     /// @brief Copy assignment
     NavVelnedPoll& operator=(const NavVelnedPoll&) = default;

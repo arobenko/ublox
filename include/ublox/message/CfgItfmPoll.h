@@ -78,7 +78,7 @@ public:
     CfgItfmPoll(CfgItfmPoll&& other) = default;
 
     /// @brief Destructor
-    virtual ~CfgItfmPoll() = default;
+    ~CfgItfmPoll() = default;
 
     /// @brief Copy assignment
     CfgItfmPoll& operator=(const CfgItfmPoll&) = default;

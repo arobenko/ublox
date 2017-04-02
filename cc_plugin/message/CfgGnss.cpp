@@ -50,24 +50,29 @@ QVariantMap createProps_numConfigBlocks()
             .asMap();
 }
 
-QVariantMap createProps_gnssId()
-{
-    return
-        cc::property::field::ForField<CfgGnssFields::gnssId>()
-            .name("gnssId")
-            .add("GPS", (int)CfgGnssFields::GnssId::GPS)
-            .add("SBAS", (int)CfgGnssFields::GnssId::SBAS)
-            .add("QZSS", (int)CfgGnssFields::GnssId::QZSS)
-            .add("GLONASS", (int)CfgGnssFields::GnssId::GLONASS)
-            .asMap();
-}
-
 QVariantMap createProps_flags()
 {
-    cc::property::field::ForField<CfgGnssFields::flags> props;
-    props.name("flags")
-         .add("enable");
-    assert(props.bits().size() == CfgGnssFields::flags::BitIdx_numOfValues);
+    auto flagsLowProps =
+        cc::property::field::ForField<CfgGnssFields::flagsLow>()
+            .serialisedHidden()
+            .add("enable");
+
+    assert(flagsLowProps.bits().size() == CfgGnssFields::flagsLow::BitIdx_numOfValues);
+
+    auto sigCfgMaskProps =
+        cc::property::field::ForField<CfgGnssFields::sigCfgMask>()
+            .name("sigCfgMask")
+            .serialisedHidden();
+
+    auto flagsHighProps = cc::property::field::ForField<CfgGnssFields::flagsHigh>().hidden();
+
+    auto props =
+        cc::property::field::ForField<CfgGnssFields::flags>()
+            .name("flags")
+            .add(flagsLowProps.asMap())
+            .add(sigCfgMaskProps.asMap())
+            .add(flagsHighProps.asMap());
+    assert(props.members().size() == CfgGnssFields::flags::FieldIdx_numOfValues);
     return props.asMap();
 }
 
@@ -75,7 +80,7 @@ QVariantMap createProps_data()
 {
     cc::property::field::ForField<CfgGnssFields::block> blockProps;
     blockProps
-        .add(createProps_gnssId())
+        .add(cc_plugin::field::common::props_gnssId())
         .add(cc::property::field::ForField<CfgGnssFields::resTrkCh>().name("resTrkCh").asMap())
         .add(cc::property::field::ForField<CfgGnssFields::maxTrkCh>().name("maxTrkCh").asMap())
         .add(cc_plugin::field::common::props_reserved(1))

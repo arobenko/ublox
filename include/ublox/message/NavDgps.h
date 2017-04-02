@@ -221,7 +221,7 @@ public:
     NavDgps(NavDgps&& other) = default;
 
     /// @brief Destructor
-    virtual ~NavDgps() = default;
+    ~NavDgps() = default;
 
     /// @brief Copy assignment
     NavDgps& operator=(const NavDgps&) = default;

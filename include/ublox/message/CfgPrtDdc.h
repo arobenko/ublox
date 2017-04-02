@@ -157,7 +157,7 @@ public:
     CfgPrtDdc(CfgPrtDdc&& other) = default;
 
     /// @brief Destructor
-    virtual ~CfgPrtDdc() = default;
+    ~CfgPrtDdc() = default;
 
     /// @brief Copy assignment
     CfgPrtDdc& operator=(const CfgPrtDdc&) = default;

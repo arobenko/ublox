@@ -143,7 +143,7 @@ public:
     MonIo(MonIo&& other) = default;
 
     /// @brief Destructor
-    virtual ~MonIo() = default;
+    ~MonIo() = default;
 
     /// @brief Copy assignment
     MonIo& operator=(const MonIo&) = default;

@@ -78,7 +78,7 @@ public:
     TimTm2Poll(TimTm2Poll&& other) = default;
 
     /// @brief Destructor
-    virtual ~TimTm2Poll() = default;
+    ~TimTm2Poll() = default;
 
     /// @brief Copy assignment
     TimTm2Poll& operator=(const TimTm2Poll&) = default;

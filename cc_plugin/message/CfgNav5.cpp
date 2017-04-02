@@ -55,7 +55,9 @@ QVariantMap createProps_mask()
          .add("posMask")
          .add("timeMask")
          .add("staticHoldMask")
-         .add("dgpsMask");
+         .add("dgpsMask")
+         .add("cnoThreshold")
+         .add(CfgNav5Fields::mask::BitIdx_utc, "utc");
     assert(props.bits().size() == CfgNav5Fields::mask::BitIdx_numOfValues);
     return props.asMap();
 }
@@ -73,6 +75,7 @@ QVariantMap createProps_dynModel()
             .add("Airborne <1g Acceleration", (int)CfgNav5Fields::DynModel::Airborne_1g)
             .add("Airborne <2g Acceleration", (int)CfgNav5Fields::DynModel::Airborne_2g)
             .add("Airborne <4g Acceleration", (int)CfgNav5Fields::DynModel::Airborne_4g)
+            .add("Wrist warn watch", (int)CfgNav5Fields::DynModel::WristWatch)
             .asMap();
 }
 
@@ -140,9 +143,12 @@ QVariantList createFieldsProperties()
         cc::property::field::ForField<CfgNav5Fields::cnoThreshNumSVs>().name("cnoThreshNumSVs").asMap());
     props.append(
         cc::property::field::ForField<CfgNav5Fields::cnoThresh>().name("cnoThresh").asMap());
+    props.append(cc_plugin::field::common::props_reserved(1));
+    props.append(
+        cc::property::field::ForField<CfgNav5Fields::staticHoldMaxDist>().name("staticHoldMaxDist").asMap());
+    props.append(cc_plugin::field::common::createProps_utcStandard());
     props.append(cc_plugin::field::common::props_reserved(2));
     props.append(cc_plugin::field::common::props_reserved(3));
-    props.append(cc_plugin::field::common::props_reserved(4));
     assert(props.size() == CfgNav5::FieldIdx_numOfValues);
     return props;
 }

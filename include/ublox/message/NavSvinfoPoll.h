@@ -78,7 +78,7 @@ public:
     NavSvinfoPoll(NavSvinfoPoll&& other) = default;
 
     /// @brief Destructor
-    virtual ~NavSvinfoPoll() = default;
+    ~NavSvinfoPoll() = default;
 
     /// @brief Copy assignment
     NavSvinfoPoll& operator=(const NavSvinfoPoll&) = default;

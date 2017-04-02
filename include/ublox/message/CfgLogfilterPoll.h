@@ -78,7 +78,7 @@ public:
     CfgLogfilterPoll(CfgLogfilterPoll&& other) = default;
 
     /// @brief Destructor
-    virtual ~CfgLogfilterPoll() = default;
+    ~CfgLogfilterPoll() = default;
 
     /// @brief Copy assignment
     CfgLogfilterPoll& operator=(const CfgLogfilterPoll&) = default;

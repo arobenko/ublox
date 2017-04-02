@@ -49,6 +49,23 @@ QVariantMap createProps_reserved(unsigned idx)
             .asMap();
 }
 
+QVariantMap createProps_gnssId()
+{
+    auto props =
+        cc::property::field::ForField<ublox::field::common::gnssId>()
+            .name("gnssId")
+            .add("GPS")
+            .add("SBAS")
+            .add("Galileo")
+            .add("BeiDou")
+            .add("IMES")
+            .add("QZSS")
+            .add("GLONASS");
+
+    assert(props.values().size() == (int)ublox::field::common::GnssId::NumOfValues);
+    return props.asMap();
+}
+
 }  // namespace
 
 const QVariantList& emptyProperties()
@@ -122,6 +139,51 @@ const QVariantMap& props_reserved(unsigned idx)
     }
 
     return Props[idx];
+}
+
+const QVariantMap& props_gnssId()
+{
+    static const auto Props = createProps_gnssId();
+    return Props;
+}
+
+QVariantMap createProps_reservedBundle(unsigned resIdx, unsigned elemCount)
+{
+    auto props =
+        cc::property::field::Bundle()
+            .name(QString("reserved%1").arg(resIdx, 1, 10, QChar('0')));
+
+    for (auto count = 0U; count < elemCount; ++count) {
+        props.add(QVariantMap());
+    }
+    return props.asMap();
+}
+
+QVariantMap createProps_reservedBundleTwoParts(unsigned idx)
+{
+    return createProps_reservedBundle(idx, 2);
+}
+
+QVariantMap createProps_utcStandard(bool serialisedHidden)
+{
+    typedef ublox::field::common::utcStandard Field;
+    auto props =
+        cc::property::field::ForField<Field>()
+            .name("utcStandard")
+            .add("No info")
+            .add("CRL")
+            .add("NIST")
+            .add("USNO")
+            .add("BIPM")
+            .add("European Lab")
+            .add("SU")
+            .add("NTSC")
+            .add("Unknown", (int)Field::ValueType::Unknown);
+
+    if (serialisedHidden) {
+        props.serialisedHidden();
+    }
+    return props.asMap();
 }
 
 }  // namespace common

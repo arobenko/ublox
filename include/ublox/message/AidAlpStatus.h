@@ -108,7 +108,7 @@ public:
     AidAlpStatus(AidAlpStatus&& other) = default;
 
     /// @brief Destructor
-    virtual ~AidAlpStatus() = default;
+    ~AidAlpStatus() = default;
 
     /// @brief Copy assignment
     AidAlpStatus& operator=(const AidAlpStatus&) = default;

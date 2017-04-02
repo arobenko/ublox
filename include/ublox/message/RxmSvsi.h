@@ -39,7 +39,7 @@ struct RxmSvsiFields
     /// @brief Definition of "week" field.
     using week = field::rxm::week;
 
-    /// @brief Definition of "iTOW" field.
+    /// @brief Definition of "numVis" field.
     using numVis = field::common::U1;
 
     /// @brief Definition of "numSV" field.
@@ -207,7 +207,7 @@ public:
     RxmSvsi(RxmSvsi&& other) = default;
 
     /// @brief Destructor
-    virtual ~RxmSvsi() = default;
+    ~RxmSvsi() = default;
 
     /// @brief Copy assignment
     RxmSvsi& operator=(const RxmSvsi&) = default;

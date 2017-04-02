@@ -38,6 +38,9 @@ struct CfgRateFields
     {
         UTC, ///< UTC time
         GPS, ///< GPS time
+        GLONASS, ///< Glonass time
+        BeiDou, ///< BeiDou time
+        Galileo, ///< Galileo time
         NumOfValues ///< number of available values
     };
 
@@ -111,7 +114,7 @@ public:
     CfgRate(CfgRate&& other) = default;
 
     /// @brief Destructor
-    virtual ~CfgRate() = default;
+    ~CfgRate() = default;
 
     /// @brief Copy assignment
     CfgRate& operator=(const CfgRate&) = default;

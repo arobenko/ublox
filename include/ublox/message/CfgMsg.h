@@ -95,7 +95,7 @@ public:
     CfgMsg(CfgMsg&& other) = default;
 
     /// @brief Destructor
-    virtual ~CfgMsg() = default;
+    ~CfgMsg() = default;
 
     /// @brief Copy assignment
     CfgMsg& operator=(const CfgMsg&) = default;

@@ -78,7 +78,7 @@ public:
     CfgTpPoll(CfgTpPoll&& other) = default;
 
     /// @brief Destructor
-    virtual ~CfgTpPoll() = default;
+    ~CfgTpPoll() = default;
 
     /// @brief Copy assignment
     CfgTpPoll& operator=(const CfgTpPoll&) = default;

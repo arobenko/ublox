@@ -134,7 +134,7 @@ public:
     CfgAnt(CfgAnt&& other) = default;
 
     /// @brief Destructor
-    virtual ~CfgAnt() = default;
+    ~CfgAnt() = default;
 
     /// @brief Copy assignment
     CfgAnt& operator=(const CfgAnt&) = default;

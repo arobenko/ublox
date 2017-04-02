@@ -20,7 +20,7 @@
 
 #include "comms_champion/comms_champion.h"
 #include "cc_plugin/Message.h"
-#include "cc_plugin/Stack.h"
+#include "ublox/Stack.h"
 
 namespace ublox
 {

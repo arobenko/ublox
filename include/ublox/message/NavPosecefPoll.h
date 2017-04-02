@@ -78,7 +78,7 @@ public:
     NavPosecefPoll(NavPosecefPoll&& other) = default;
 
     /// @brief Destructor
-    virtual ~NavPosecefPoll() = default;
+    ~NavPosecefPoll() = default;
 
     /// @brief Copy assignment
     NavPosecefPoll& operator=(const NavPosecefPoll&) = default;

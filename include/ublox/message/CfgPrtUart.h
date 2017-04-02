@@ -214,7 +214,7 @@ public:
     CfgPrtUart(CfgPrtUart&& other) = default;
 
     /// @brief Destructor
-    virtual ~CfgPrtUart() = default;
+    ~CfgPrtUart() = default;
 
     /// @brief Copy assignment
     CfgPrtUart& operator=(const CfgPrtUart&) = default;

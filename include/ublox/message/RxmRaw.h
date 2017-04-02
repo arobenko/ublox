@@ -160,7 +160,7 @@ public:
     RxmRaw(RxmRaw&& other) = default;
 
     /// @brief Destructor
-    virtual ~RxmRaw() = default;
+    ~RxmRaw() = default;
 
     /// @brief Copy assignment
     RxmRaw& operator=(const RxmRaw&) = default;

@@ -86,7 +86,7 @@ public:
     CfgMsgPoll(CfgMsgPoll&& other) = default;
 
     /// @brief Destructor
-    virtual ~CfgMsgPoll() = default;
+    ~CfgMsgPoll() = default;
 
     /// @brief Copy assignment
     CfgMsgPoll& operator=(const CfgMsgPoll&) = default;

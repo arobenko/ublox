@@ -23,6 +23,7 @@
 #include <cstdint>
 #include <limits>
 #include <algorithm>
+#include <utility>
 #include "comms/comms.h"
 #include "ublox/MsgId.h"
 
@@ -41,26 +42,38 @@ struct MsgIdValueValidator
     bool operator()(const TField& field) const
     {
         typedef bool (*ValidateFunc)(ublox::MsgId);
+        typedef std::pair<std::uint8_t, ValidateFunc> FuncInfo;
 
-        static const ValidateFunc Funcs[] = {
-            &MsgIdValueValidator::validateNav,
-            &MsgIdValueValidator::validateRxm,
-            &MsgIdValueValidator::validateInf,
-            &MsgIdValueValidator::validateAck,
-            &MsgIdValueValidator::validateCfg,
-            &MsgIdValueValidator::validateMon,
-            &MsgIdValueValidator::validateAid,
-            &MsgIdValueValidator::validateTim,
-            &MsgIdValueValidator::validateLog
+        static const FuncInfo Funcs[] = {
+            std::make_pair(classId(MsgId_NAV_POSECEF), &MsgIdValueValidator::validateNav),
+            std::make_pair(classId(MsgId_RXM_RAW), &MsgIdValueValidator::validateRxm),
+            std::make_pair(classId(MsgId_INF_ERROR), &MsgIdValueValidator::validateInf),
+            std::make_pair(classId(MsgId_ACK_NAK), &MsgIdValueValidator::validateAck),
+            std::make_pair(classId(MsgId_CFG_PRT), &MsgIdValueValidator::validateCfg),
+            std::make_pair(classId(MsgId_UPD_SOS), &MsgIdValueValidator::validateUpd),
+            std::make_pair(classId(MsgId_MON_IO), &MsgIdValueValidator::validateMon),
+            std::make_pair(classId(MsgId_AID_REQ), &MsgIdValueValidator::validateAid),
+            std::make_pair(classId(MsgId_TIM_TP), &MsgIdValueValidator::validateTim),
+            std::make_pair(classId(MsgId_ESF_STATUS), &MsgIdValueValidator::validateEsf),
+            std::make_pair(classId(MsgId_MGA_GPS), &MsgIdValueValidator::validateMga),
+            std::make_pair(classId(MsgId_LOG_ERASE), &MsgIdValueValidator::validateLog),
+            std::make_pair(classId(MsgId_SEC_SIGN), &MsgIdValueValidator::validateSec),
         };
 
         ublox::MsgId id = field.value();
-        return std::any_of(
-            std::begin(Funcs), std::end(Funcs),
-            [id](ValidateFunc func) -> bool
-            {
-                return func(id);
-            });
+        auto cId = classId(id);
+        auto iter =
+            std::lower_bound(
+                std::begin(Funcs), std::end(Funcs), cId,
+                [](const FuncInfo& info, std::uint8_t cIdParam) -> bool
+                {
+                    return info.first < cIdParam;
+                });
+        if ((iter == std::end(Funcs)) || (iter->first != cId)) {
+            return false;
+        }
+
+        return iter->second(id);
     }
 
 private:
@@ -72,12 +85,6 @@ private:
 
     static bool validateNav(ublox::MsgId id)
     {
-        static const auto NavClassId = classId(MsgId_NAV_POSECEF);
-
-        if (classId(id) != NavClassId) {
-            return false;
-        }
-
         static const ublox::MsgId IDs[] = {
             MsgId_NAV_POSECEF,
             MsgId_NAV_POSLLH,
@@ -85,16 +92,26 @@ private:
             MsgId_NAV_DOP,
             MsgId_NAV_SOL,
             MsgId_NAV_PVT,
+            MsgId_NAV_ODO,
+            MsgId_NAV_RESETODO,
             MsgId_NAV_VELECEF,
             MsgId_NAV_VELNED,
             MsgId_NAV_TIMEGPS,
             MsgId_NAV_TIMEUTC,
             MsgId_NAV_CLOCK,
+            MsgId_NAV_TIMEGLO,
+            MsgId_NAV_TIMEBDS,
+            MsgId_NAV_TIMEGAL,
+            MsgId_NAV_TIMELS,
             MsgId_NAV_SVINFO,
             MsgId_NAV_DGPS,
             MsgId_NAV_SBAS,
+            MsgId_NAV_ORB,
+            MsgId_NAV_SAT,
+            MsgId_NAV_GEOFENCE,
             MsgId_NAV_EKFSTATUS,
-            MsgId_NAV_AOPSTATUS
+            MsgId_NAV_AOPSTATUS,
+            MsgId_NAV_EOE
         };
 
         auto iter = std::lower_bound(std::begin(IDs), std::end(IDs), id);
@@ -103,19 +120,18 @@ private:
 
     static bool validateRxm(ublox::MsgId id)
     {
-        static const auto RxmClassId = classId(MsgId_RXM_RAW);
-
-        if (classId(id) != RxmClassId) {
-            return false;
-        }
-
         static const ublox::MsgId IDs[] = {
             MsgId_RXM_RAW,
             MsgId_RXM_SFRB,
+            MsgId_RXM_SFRBX,
+            MsgId_RXM_MEASX,
+            MsgId_RXM_RAWX,
             MsgId_RXM_SVSI,
             MsgId_RXM_ALM,
             MsgId_RXM_EPH,
             MsgId_RXM_PMREQ,
+            MsgId_RXM_RLM,
+            MsgId_RXM_IMES,
         };
 
         auto iter = std::lower_bound(std::begin(IDs), std::end(IDs), id);
@@ -124,12 +140,6 @@ private:
 
     static bool validateInf(ublox::MsgId id)
     {
-        static const auto InfClassId = classId(MsgId_INF_ERROR);
-
-        if (classId(id) != InfClassId) {
-            return false;
-        }
-
         static const ublox::MsgId IDs[] = {
             MsgId_INF_ERROR,
             MsgId_INF_WARNING,
@@ -149,12 +159,6 @@ private:
 
     static bool validateCfg(ublox::MsgId id)
     {
-        static const auto CfgClassId = classId(MsgId_CFG_PRT);
-
-        if (classId(id) != CfgClassId) {
-            return false;
-        }
-
         static const ublox::MsgId IDs[] = {
             MsgId_CFG_PRT,
             MsgId_CFG_MSG,
@@ -172,6 +176,7 @@ private:
             MsgId_CFG_NMEA,
             MsgId_CFG_USB,
             MsgId_CFG_TMODE,
+            MsgId_CFG_ODO,
             MsgId_CFG_NVS,
             MsgId_CFG_NAVX5,
             MsgId_CFG_NAV5,
@@ -183,7 +188,26 @@ private:
             MsgId_CFG_PM2,
             MsgId_CFG_TMODE2,
             MsgId_CFG_GNSS,
-            MsgId_CFG_LOGFILTER
+            MsgId_CFG_LOGFILTER,
+            MsgId_CFG_TXSLOT,
+            MsgId_CFG_PWR,
+            MsgId_CFG_ESRC,
+            MsgId_CFG_DOSC,
+            MsgId_CFG_SMGR,
+            MsgId_CFG_GEOFENCE,
+            MsgId_CFG_FIXSEED,
+            MsgId_CFG_DYNSEED,
+            MsgId_CFG_PMS
+        };
+
+        auto iter = std::lower_bound(std::begin(IDs), std::end(IDs), id);
+        return (iter != std::end(IDs)) && (*iter == id);
+    }
+
+    static bool validateUpd(ublox::MsgId id)
+    {
+        static const ublox::MsgId IDs[] = {
+            MsgId_UPD_SOS,
         };
 
         auto iter = std::lower_bound(std::begin(IDs), std::end(IDs), id);
@@ -192,12 +216,6 @@ private:
 
     static bool validateMon(ublox::MsgId id)
     {
-        static const auto MonClassId = classId(MsgId_MON_IO);
-
-        if (classId(id) != MonClassId) {
-            return false;
-        }
-
         static const ublox::MsgId IDs[] = {
             MsgId_MON_IO,
             MsgId_MON_VER,
@@ -206,7 +224,10 @@ private:
             MsgId_MON_TXBUF,
             MsgId_MON_HW,
             MsgId_MON_HW2,
-            MsgId_MON_RXR
+            MsgId_MON_RXR,
+            MsgId_MON_PATCH,
+            MsgId_MON_GNSS,
+            MsgId_MON_SMGR,
         };
 
         auto iter = std::lower_bound(std::begin(IDs), std::end(IDs), id);
@@ -215,12 +236,6 @@ private:
 
     static bool validateAid(ublox::MsgId id)
     {
-        static const auto AidClassId = classId(MsgId_AID_REQ);
-
-        if (classId(id) != AidClassId) {
-            return false;
-        }
-
         static const ublox::MsgId IDs[] = {
             MsgId_AID_REQ,
             MsgId_AID_INI,
@@ -239,31 +254,55 @@ private:
 
     static bool validateTim(ublox::MsgId id)
     {
-        static const auto TimClassId = classId(MsgId_TIM_TP);
-
-        if (classId(id) != TimClassId) {
-            return false;
-        }
-
         static const ublox::MsgId IDs[] = {
             MsgId_TIM_TP,
             MsgId_TIM_TM2,
             MsgId_TIM_SVIN,
             MsgId_TIM_VRFY,
+            MsgId_TIM_DOSC,
+            MsgId_TIM_TOS,
+            MsgId_TIM_SMEAS,
+            MsgId_TIM_VCOCAL,
+            MsgId_TIM_FCHG,
+            MsgId_TIM_HOC,
         };
 
         auto iter = std::lower_bound(std::begin(IDs), std::end(IDs), id);
         return (iter != std::end(IDs)) && (*iter == id);
     }
 
+    static bool validateEsf(ublox::MsgId id)
+    {
+        static const ublox::MsgId IDs[] = {
+            MsgId_ESF_STATUS,
+        };
+
+        auto iter = std::lower_bound(std::begin(IDs), std::end(IDs), id);
+        return (iter != std::end(IDs)) && (*iter == id);
+    }
+
+    static bool validateMga(ublox::MsgId id)
+    {
+        static const ublox::MsgId IDs[] = {
+            MsgId_MGA_GPS,
+            MsgId_MGA_GAL,
+            MsgId_MGA_BDS,
+            MsgId_MGA_QZSS,
+            MsgId_MGA_GLO,
+            MsgId_MGA_ANO,
+            MsgId_MGA_FLASH,
+            MsgId_MGA_INI,
+            MsgId_MGA_ACK,
+            MsgId_MGA_DBD,
+        };
+
+        auto iter = std::lower_bound(std::begin(IDs), std::end(IDs), id);
+        return (iter != std::end(IDs)) && (*iter == id);
+    }
+
+
     static bool validateLog(ublox::MsgId id)
     {
-        static const auto LogClassId = classId(MsgId_LOG_ERASE);
-
-        if (classId(id) != LogClassId) {
-            return false;
-        }
-
         static const ublox::MsgId IDs[] = {
             MsgId_LOG_ERASE,
             MsgId_LOG_STRING,
@@ -272,15 +311,24 @@ private:
             MsgId_LOG_RETRIEVE,
             MsgId_LOG_RETRIEVEPOS,
             MsgId_LOG_RETRIEVESTRING,
-            MsgId_LOG_FINDTIME
+            MsgId_LOG_FINDTIME,
+            MsgId_LOG_RETRIEVEPOSEXTRA,
         };
 
         auto iter = std::lower_bound(std::begin(IDs), std::end(IDs), id);
         return (iter != std::end(IDs)) && (*iter == id);
     }
 
+    static bool validateSec(ublox::MsgId id)
+    {
+        static const ublox::MsgId IDs[] = {
+            MsgId_SEC_SIGN,
+            MsgId_SEC_UNIQID,
+        };
 
-
+        auto iter = std::lower_bound(std::begin(IDs), std::end(IDs), id);
+        return (iter != std::end(IDs)) && (*iter == id);
+    }
 };
 
 }  // namespace details
@@ -298,5 +346,4 @@ using MsgId =
 }  // namespace field
 
 }  // namespace ublox
-
 

@@ -115,7 +115,7 @@ public:
     RxmAlm(RxmAlm&& other) = default;
 
     /// @brief Destructor
-    virtual ~RxmAlm() = default;
+    ~RxmAlm() = default;
 
     /// @brief Copy assignment
     RxmAlm& operator=(const RxmAlm&) = default;

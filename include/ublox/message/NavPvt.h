@@ -89,7 +89,7 @@ struct NavPvtFields
 
     /// @brief Definition of two first bits (@b gnssFixOn and @b diffSoln) in
     ///     @ref flags bitfield as separate bitmask member field.
-    struct flagsBits : public
+    struct flagsLow : public
         field::common::X1T<comms::option::FixedBitLength<2> >
     {
         /// @brief Provide names for internal bits.
@@ -103,16 +103,33 @@ struct NavPvtFields
     using psmState =
         field::common::EnumT<
             PsmState,
-            comms::option::FixedBitLength<6>,
+            comms::option::FixedBitLength<3>,
             comms::option::ValidNumValueRange<0, (int)PsmState::NumOfValues - 1>
         >;
+
+    /// @brief Definition of the bits in the "high" area of
+    ///     @ref flags bitfield.
+    struct flagsHigh : public
+        field::common::X1T<
+            comms::option::FixedBitLength<3>,
+            comms::option::BitmaskReservedBits<0xfc, 0>
+        >
+    {
+        /// @brief Provide names for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS(headVehValid);
+    };
+
 
     /// @brief Definition of "flags" field.
     struct flags : public
         field::common::BitfieldT<
             std::tuple<
-                flagsBits,
-                psmState
+                flagsLow,
+                psmState,
+                flagsHigh
             >
         >
     {
@@ -120,11 +137,20 @@ struct NavPvtFields
         /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
         ///     related to @b comms::field::Bitfield class from COMMS library
         ///     for details.
-        COMMS_FIELD_MEMBERS_ACCESS(flagsBits, psmState);
+        COMMS_FIELD_MEMBERS_ACCESS(flagsLow, psmState, flagsHigh);
     };
 
-    /// @brief Definition of "reserved1" field.
-    using reserved1 = field::common::res1;
+    /// @brief Definition of "flags2" field.
+    struct flags2 : public
+        field::common::X1T<comms::option::BitmaskReservedBits<0x1f, 0> >
+    {
+        /// @brief Provide names for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS(confirmedAvai=5, confirmedDate, confirmedTime);
+    };
+
 
     /// @brief Definition of "numSV" field.
     using numSV = field::nav::numSV;
@@ -159,23 +185,37 @@ struct NavPvtFields
     /// @brief Definition of "gSpeed" field.
     using gSpeed = field::common::I4T<field::common::Scaling_mm2m>;
 
-    /// @brief Definition of "heading" field.
-    using heading = field::nav::heading;
+    /// @brief Definition of "headMot" field.
+    using headMot = field::nav::heading;
 
     /// @brief Definition of "sAcc" field.
     using sAcc = field::common::U4T<field::common::Scaling_mm2m>;
 
-    /// @brief Definition of "headingAcc" field.
-    using headingAcc = field::common::U4T<comms::option::ScalingRatio<1, 100000> >;
+    /// @brief Definition of "headAcc" field.
+    using headAcc = field::common::U4T<comms::option::ScalingRatio<1, 100000> >;
 
     /// @brief Definition of "pDOP" field.
     using pDOP = field::nav::pDOP;
 
+    /// @brief Definition of "reserved1" field.
+    using reserved1 = field::common::res2;
+
     /// @brief Definition of "reserved2" field.
-    using reserved2 = field::common::res2;
+    using reserved2 = field::common::res4;
+
+    /// @brief Definition of "headVeh" field.
+    using headVeh =
+        field::common::OptionalT<
+            field::nav::heading,
+            comms::option::DefaultOptionalMode<comms::field::OptionalMode::Missing>
+        >;
 
     /// @brief Definition of "reserved3" field.
-    using reserved3 = field::common::res4;
+    using reserved3 =
+        field::common::OptionalT<
+            field::common::res4,
+            comms::option::DefaultOptionalMode<comms::field::OptionalMode::Missing>
+        >;
 
     /// @brief All the fields bundled in std::tuple.
     using All = std::tuple<
@@ -191,7 +231,7 @@ struct NavPvtFields
         nano,
         fixType,
         flags,
-        reserved1,
+        flags2,
         numSV,
         lon,
         lat,
@@ -203,11 +243,13 @@ struct NavPvtFields
         velE,
         velD,
         gSpeed,
-        heading,
+        headMot,
         sAcc,
-        headingAcc,
+        headAcc,
         pDOP,
+        reserved1,
         reserved2,
+        headVeh,
         reserved3
     >;
 };
@@ -254,7 +296,7 @@ public:
     ///     @li @b nano for @ref NavPvtFields::nano field
     ///     @li @b fixType for @ref NavPvtFields::fixType field
     ///     @li @b flags for @ref NavPvtFields::flags field
-    ///     @li @b reserved1 for @ref NavPvtFields::reserved1 field
+    ///     @li @b flags2 for @ref NavPvtFields::flags2 field
     ///     @li @b numSV for @ref NavPvtFields::numSV field
     ///     @li @b lon for @ref NavPvtFields::lon field
     ///     @li @b lat for @ref NavPvtFields::lat field
@@ -266,10 +308,13 @@ public:
     ///     @li @b velE for @ref NavPvtFields::velE field
     ///     @li @b velD for @ref NavPvtFields::velD field
     ///     @li @b gSpeed for @ref NavPvtFields::gSpeed field
-    ///     @li @b heading for @ref NavPvtFields::heading field
-    ///     @li @b headingAcc for @ref NavPvtFields::headingAcc field
+    ///     @li @b headMot for @ref NavPvtFields::headMot field
+    ///     @li @b sAcc for @ref NavPvtFields::sAcc field
+    ///     @li @b headAcc for @ref NavPvtFields::headAcc field
     ///     @li @b pDOP for @ref NavPvtFields::pDOP field
+    ///     @li @b reserved1 for @ref NavPvtFields::reserved1 field
     ///     @li @b reserved2 for @ref NavPvtFields::reserved2 field
+    ///     @li @b headVeh for @ref NavPvtFields::headVeh field
     ///     @li @b reserved3 for @ref NavPvtFields::reserved3 field
     COMMS_MSG_FIELDS_ACCESS(
         iTOW,
@@ -284,7 +329,7 @@ public:
         nano,
         fixType,
         flags,
-        reserved1,
+        flags2,
         numSV,
         lon,
         lat,
@@ -296,11 +341,13 @@ public:
         velE,
         velD,
         gSpeed,
-        heading,
+        headMot,
         sAcc,
-        headingAcc,
+        headAcc,
         pDOP,
+        reserved1,
         reserved2,
+        headVeh,
         reserved3
     );
 
@@ -314,13 +361,39 @@ public:
     NavPvt(NavPvt&& other) = default;
 
     /// @brief Destructor
-    virtual ~NavPvt() = default;
+    ~NavPvt() = default;
 
     /// @brief Copy assignment
     NavPvt& operator=(const NavPvt&) = default;
 
     /// @brief Move assignment
     NavPvt& operator=(NavPvt&&) = default;
+
+    /// @brief Provides custom read functionality.
+    template <typename TIter>
+    comms::ErrorStatus doRead(TIter& iter, std::size_t len)
+    {
+        auto es = Base::template readFieldsUntil<FieldIdx_headVeh>(iter, len);
+        if (es != comms::ErrorStatus::Success) {
+            return es;
+        }
+
+        static const auto ReqLen =
+            NavPvtFields::headVeh::Field::maxLength() +
+            NavPvtFields::reserved3::Field::maxLength();
+
+        if (len < ReqLen) {
+            field_headVeh().setMissing();
+            field_reserved3().setMissing();
+            return es;
+        }
+
+        field_headVeh().setExists();
+        field_reserved3().setExists();
+
+        return Base::template readFieldsFrom<FieldIdx_headVeh>(iter, len);
+    }
+
 };
 
 

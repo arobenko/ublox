@@ -78,7 +78,7 @@ public:
     NavClockPoll(NavClockPoll&& other) = default;
 
     /// @brief Destructor
-    virtual ~NavClockPoll() = default;
+    ~NavClockPoll() = default;
 
     /// @brief Copy assignment
     NavClockPoll& operator=(const NavClockPoll&) = default;

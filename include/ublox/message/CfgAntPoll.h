@@ -77,7 +77,7 @@ public:
     CfgAntPoll(CfgAntPoll&& other) = default;
 
     /// @brief Destructor
-    virtual ~CfgAntPoll() = default;
+    ~CfgAntPoll() = default;
 
     /// @brief Copy assignment
     CfgAntPoll& operator=(const CfgAntPoll&) = default;

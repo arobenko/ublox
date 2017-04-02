@@ -46,6 +46,7 @@ struct CfgNav5Fields
         Airborne_1g, ///< Airborne with <1g Acceleration
         Airborne_2g,///< Airborne with <2g Acceleration
         Airborne_4g,///< Airborne with <4g Acceleration
+        WristWatch, ///< Wrist worn watch
     };
 
     /// @brief Custom value validator for @ref dynModel field.
@@ -62,7 +63,8 @@ struct CfgNav5Fields
                 DynModel::Sea,
                 DynModel::Airborne_1g,
                 DynModel::Airborne_2g,
-                DynModel::Airborne_4g
+                DynModel::Airborne_4g,
+                DynModel::WristWatch,
             };
 
             auto value = field.value();
@@ -82,14 +84,24 @@ struct CfgNav5Fields
     /// @brief Definition of "mask" field.
     struct mask : public
         field::common::X2T<
-            comms::option::BitmaskReservedBits<0xff00, 0>
+            comms::option::BitmaskReservedBits<0xfa00, 0>
         >
     {
         /// @brief Provide names for internal bits.
         /// @details See definition of @b COMMS_BITMASK_BITS macro
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
-        COMMS_BITMASK_BITS(dyn, minEl, posFixMode, drLim, posMask, timeMask, staticHoldMask, dgps);
+        COMMS_BITMASK_BITS(
+            dyn,
+            minEl,
+            posFixMode,
+            drLim,
+            posMask,
+            timeMask,
+            staticHoldMask,
+            dgpsMask,
+            cnoThreshold,
+            utc=10);
     };
 
     /// @brief Definition of "dynModel" field.
@@ -143,13 +155,19 @@ struct CfgNav5Fields
     using cnoThresh = field::common::U1;
 
     /// @brief Definition of "reserved2" field.
-    using reserved2 = field::common::res2;
+    using reserved1 = field::common::res2;
+
+    /// @brief Definition of "staticHoldMaxDist" field.
+    using staticHoldMaxDist = field::common::U2;
+
+    /// @brief Definition of "utcStandard" field.
+    using utcStandard = field::common::utcStandard;
+
+    /// @brief Definition of "reserved2" field.
+    using reserved2 = field::common::res1;
 
     /// @brief Definition of "reserved3" field.
     using reserved3 = field::common::res4;
-
-    /// @brief Definition of "reserved4" field.
-    using reserved4 = field::common::res4;
 
     /// @brief All the fields bundled in std::tuple.
     using All = std::tuple<
@@ -168,9 +186,11 @@ struct CfgNav5Fields
         dgpsTimeOut,
         cnoThreshNumSVs,
         cnoThresh,
+        reserved1,
+        staticHoldMaxDist,
+        utcStandard,
         reserved2,
-        reserved3,
-        reserved4
+        reserved3
     >;
 };
 
@@ -219,9 +239,11 @@ public:
     ///     @li @b dgpsTimeOut for @ref CfgNav5Fields::dgpsTimeOut field
     ///     @li @b cnoThreshNumSVs for @ref CfgNav5Fields::cnoThreshNumSVs field
     ///     @li @b cnoThresh for @ref CfgNav5Fields::cnoThresh field
+    ///     @li @b reserved1 for @ref CfgNav5Fields::reserved1 field
+    ///     @li @b staticHoldMaxDist for @ref CfgNav5Fields::staticHoldMaxDist field
+    ///     @li @b utcStandard for @ref CfgNav5Fields::utcStandard field
     ///     @li @b reserved2 for @ref CfgNav5Fields::reserved2 field
-    ///     @li @b reserved3 for @ref CfgNav5Fields::reserved3 field
-    ///     @li @b reserved4 for @ref CfgNav5Fields::reserved4 field
+    ///     @li @b reserved34 for @ref CfgNav5Fields::reserved3 field
     COMMS_MSG_FIELDS_ACCESS(
         mask,
         dynModel,
@@ -238,9 +260,11 @@ public:
         dgpsTimeOut,
         cnoThreshNumSVs,
         cnoThresh,
+        reserved1,
+        staticHoldMaxDist,
+        utcStandard,
         reserved2,
-        reserved3,
-        reserved4
+        reserved3
     );
 
     /// @brief Default constructor
@@ -253,7 +277,7 @@ public:
     CfgNav5(CfgNav5&& other) = default;
 
     /// @brief Destructor
-    virtual ~CfgNav5() = default;
+    ~CfgNav5() = default;
 
     /// @brief Copy assignment
     CfgNav5& operator=(const CfgNav5&) = default;

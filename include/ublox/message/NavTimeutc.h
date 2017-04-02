@@ -60,9 +60,12 @@ struct NavTimeutcFields
     /// @brief Definition of "sec" field.
     using sec = field::nav::sec;
 
-    /// @brief Definition of "valid" field.
+    /// @brief Definition of validity bits in @ref validBitfield field.
     struct validBits : public
-        field::common::X1T<comms::option::BitmaskReservedBits<0xf8, 0> >
+        field::common::X1T<
+            comms::option::BitmaskReservedBits<0xf8, 0>,
+            comms::option::FixedBitLength<4>
+        >
     {
         /// @brief Provide names for internal bits.
         /// @details See definition of @b COMMS_BITMASK_BITS macro
@@ -70,6 +73,26 @@ struct NavTimeutcFields
         ///     for details.
         COMMS_BITMASK_BITS(validTOW, validWKN, validUTC);
     };
+
+    /// @brief Definition of "utcStandard" member field of @ref validBitfield field.
+    using utcStandard = field::common::utcStandardT<comms::option::FixedBitLength<4> >;
+
+    /// @brief Definition of "valid" field as a bitfield.
+    struct validBitfield : public
+        field::common::BitfieldT<
+            std::tuple<
+                validBits,
+                utcStandard
+            >
+        >
+    {
+        /// @brief Allow access to internal fields.
+        /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
+        ///     related to @b comms::field::Bitfield class from COMMS library
+        ///     for details.
+        COMMS_FIELD_MEMBERS_ACCESS(validBits, utcStandard);
+    };
+
 
     /// @brief All the fields bundled in std::tuple.
     using All = std::tuple<
@@ -82,7 +105,7 @@ struct NavTimeutcFields
         hour,
         min,
         sec,
-        validBits
+        validBitfield
     >;
 };
 
@@ -125,7 +148,7 @@ public:
     ///     @li @b hour for @ref NavTimeutcFields::hour field
     ///     @li @b min for @ref NavTimeutcFields::min field
     ///     @li @b sec for @ref NavTimeutcFields::sec field
-    ///     @li @b valid for @ref NavTimeutcFields::validBits field
+    ///     @li @b valid for @ref NavTimeutcFields::validBitfield field
     COMMS_MSG_FIELDS_ACCESS(iTOW, tAcc, nano, year, month, day, hour, min, sec, valid);
 
     /// @brief Default constructor
@@ -138,7 +161,7 @@ public:
     NavTimeutc(NavTimeutc&& other) = default;
 
     /// @brief Destructor
-    virtual ~NavTimeutc() = default;
+    ~NavTimeutc() = default;
 
     /// @brief Copy assignment
     NavTimeutc& operator=(const NavTimeutc&) = default;

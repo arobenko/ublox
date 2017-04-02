@@ -78,7 +78,7 @@ public:
     NavTimeutcPoll(NavTimeutcPoll&& other) = default;
 
     /// @brief Destructor
-    virtual ~NavTimeutcPoll() = default;
+    ~NavTimeutcPoll() = default;
 
     /// @brief Copy assignment
     NavTimeutcPoll& operator=(const NavTimeutcPoll&) = default;

@@ -1,5 +1,5 @@
 //
-// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2017 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -30,22 +30,38 @@
 #include "message/NavDop.h"
 #include "message/NavSol.h"
 #include "message/NavPvt.h"
+#include "message/NavOdo.h"
 #include "message/NavVelecef.h"
 #include "message/NavVelned.h"
 #include "message/NavTimegps.h"
 #include "message/NavTimeutc.h"
 #include "message/NavClock.h"
+#include "message/NavTimeglo.h"
+#include "message/NavTimebds.h"
+#include "message/NavTimegal.h"
+#include "message/NavTimels.h"
 #include "message/NavSvinfo.h"
 #include "message/NavDgps.h"
 #include "message/NavSbas.h"
+#include "message/NavOrb.h"
+#include "message/NavSat.h"
+#include "message/NavGeofence.h"
 #include "message/NavEkfstatus.h"
 #include "message/NavAopstatus.h"
+#include "message/NavAopstatusU8.h"
+#include "message/NavEoe.h"
 
 #include "message/RxmRaw.h"
 #include "message/RxmSfrb.h"
+#include "message/RxmSfrbx.h"
+#include "message/RxmMeasx.h"
+#include "message/RxmRawx.h"
 #include "message/RxmSvsi.h"
 #include "message/RxmAlm.h"
 #include "message/RxmEph.h"
+#include "message/RxmRlmShort.h"
+#include "message/RxmRlmLong.h"
+#include "message/RxmImes.h"
 
 #include "message/InfError.h"
 #include "message/InfWarning.h"
@@ -75,6 +91,7 @@
 #include "message/CfgNmea.h"
 #include "message/CfgUsb.h"
 #include "message/CfgTmode.h"
+#include "message/CfgOdo.h"
 #include "message/CfgNavx5.h"
 #include "message/CfgNav5.h"
 #include "message/CfgEsfgwt.h"
@@ -86,6 +103,14 @@
 #include "message/CfgTmode2.h"
 #include "message/CfgGnss.h"
 #include "message/CfgLogfilter.h"
+#include "message/CfgEsrc.h"
+#include "message/CfgDosc.h"
+#include "message/CfgSmgr.h"
+#include "message/CfgGeofence.h"
+#include "message/CfgPms.h"
+
+#include "message/UpdSosRestored.h"
+#include "message/UpdSosAck.h"
 
 #include "message/MonIo.h"
 #include "message/MonVer.h"
@@ -95,6 +120,8 @@
 #include "message/MonHw.h"
 #include "message/MonHw2.h"
 #include "message/MonRxr.h"
+#include "message/MonPatch.h"
+#include "message/MonGnss.h"
 
 #include "message/AidIni.h"
 #include "message/AidHui.h"
@@ -102,6 +129,7 @@
 #include "message/AidEph.h"
 #include "message/AidAlpsrv.h"
 #include "message/AidAlpsrvUpdate.h"
+#include "message/AidAopU8.h"
 #include "message/AidAop.h"
 #include "message/AidAlp.h"
 #include "message/AidAlpStatus.h"
@@ -110,11 +138,26 @@
 #include "message/TimTm2.h"
 #include "message/TimSvin.h"
 #include "message/TimVrfy.h"
+#include "message/TimDosc.h"
+#include "message/TimTos.h"
+#include "message/TimSmeas.h"
+#include "message/TimVcocal.h"
+#include "message/TimFchg.h"
+
+#include "message/EsfStatus.h"
+
+#include "message/MgaFlashAck.h"
+#include "message/MgaAck.h"
+#include "message/MgaDbd.h"
 
 #include "message/LogInfo.h"
 #include "message/LogRetrievepos.h"
 #include "message/LogRetrievestring.h"
 #include "message/LogFindtime.h"
+#include "message/LogRetrieveposextra.h"
+
+#include "message/SecSign.h"
+#include "message/SecUniqid.h"
 
 namespace ublox
 {
@@ -131,21 +174,36 @@ using InputMessages =
         message::NavDop<TMessage>,
         message::NavSol<TMessage>,
         message::NavPvt<TMessage>,
+        message::NavOdo<TMessage>,
         message::NavVelecef<TMessage>,
         message::NavVelned<TMessage>,
         message::NavTimegps<TMessage>,
         message::NavTimeutc<TMessage>,
         message::NavClock<TMessage>,
+        message::NavTimeglo<TMessage>,
+        message::NavTimebds<TMessage>,
+        message::NavTimegal<TMessage>,
+        message::NavTimels<TMessage>,
         message::NavSvinfo<TMessage>,
         message::NavDgps<TMessage>,
         message::NavSbas<TMessage>,
+        message::NavOrb<TMessage>,
+        message::NavSat<TMessage>,
+        message::NavGeofence<TMessage>,
         message::NavEkfstatus<TMessage>,
         message::NavAopstatus<TMessage>,
+        message::NavAopstatusU8<TMessage>,
         message::RxmRaw<TMessage>,
         message::RxmSfrb<TMessage>,
+        message::RxmSfrbx<TMessage>,
+        message::RxmMeasx<TMessage>,
+        message::RxmRawx<TMessage>,
         message::RxmSvsi<TMessage>,
         message::RxmAlm<TMessage>,
         message::RxmEph<TMessage>,
+        message::RxmRlmShort<TMessage>,
+        message::RxmRlmLong<TMessage>,
+        message::RxmImes<TMessage>,
         message::InfError<TMessage>,
         message::InfWarning<TMessage>,
         message::InfNotice<TMessage>,
@@ -172,6 +230,7 @@ using InputMessages =
         message::CfgNmea<TMessage>,
         message::CfgUsb<TMessage>,
         message::CfgTmode<TMessage>,
+        message::CfgOdo<TMessage>,
         message::CfgNavx5<TMessage>,
         message::CfgNav5<TMessage>,
         message::CfgEsfgwt<TMessage>,
@@ -183,6 +242,13 @@ using InputMessages =
         message::CfgTmode2<TMessage>,
         message::CfgGnss<TMessage>,
         message::CfgLogfilter<TMessage>,
+        message::CfgEsrc<TMessage>,
+        message::CfgDosc<TMessage>,
+        message::CfgSmgr<TMessage>,
+        message::CfgGeofence<TMessage>,
+        message::CfgPms<TMessage>,
+        message::UpdSosRestored<TMessage>,
+        message::UpdSosAck<TMessage>,
         message::MonIo<TMessage>,
         message::MonVer<TMessage>,
         message::MonMsgpp<TMessage>,
@@ -191,12 +257,15 @@ using InputMessages =
         message::MonHw<TMessage>,
         message::MonHw2<TMessage>,
         message::MonRxr<TMessage>,
+        message::MonPatch<TMessage>,
+        message::MonGnss<TMessage>,
         message::AidIni<TMessage>,
         message::AidHui<TMessage>,
         message::AidAlm<TMessage>,
         message::AidEph<TMessage>,
         message::AidAlpsrv<TMessage>,
         message::AidAlpsrvUpdate<TMessage>,
+        message::AidAopU8<TMessage>,
         message::AidAop<TMessage>,
         message::AidAlp<TMessage>,
         message::AidAlpStatus<TMessage>,
@@ -204,10 +273,22 @@ using InputMessages =
         message::TimTm2<TMessage>,
         message::TimSvin<TMessage>,
         message::TimVrfy<TMessage>,
+        message::TimDosc<TMessage>,
+        message::TimTos<TMessage>,
+        message::TimSmeas<TMessage>,
+        message::TimVcocal<TMessage>,
+        message::TimFchg<TMessage>,
+        message::EsfStatus<TMessage>,
+        message::MgaFlashAck<TMessage>,
+        message::MgaAck<TMessage>,
+        message::MgaDbd<TMessage>,
         message::LogInfo<TMessage>,
         message::LogRetrievepos<TMessage>,
         message::LogRetrievestring<TMessage>,
-        message::LogFindtime<TMessage>
+        message::LogFindtime<TMessage>,
+        message::LogRetrieveposextra<TMessage>,
+        message::SecSign<TMessage>,
+        message::SecUniqid<TMessage>
     >;
 
 }  // namespace ublox

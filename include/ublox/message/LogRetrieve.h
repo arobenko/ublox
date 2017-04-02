@@ -106,7 +106,7 @@ public:
     LogRetrieve(LogRetrieve&& other) = default;
 
     /// @brief Destructor
-    virtual ~LogRetrieve() = default;
+    ~LogRetrieve() = default;
 
     /// @brief Copy assignment
     LogRetrieve& operator=(const LogRetrieve&) = default;

@@ -43,6 +43,11 @@ const QVariantMap& props_week();
 const QVariantMap& props_numSV();
 const QVariantMap& props_svid();
 const QVariantMap& props_reserved(unsigned idx);
+const QVariantMap& props_gnssId();
+
+QVariantMap createProps_reservedBundle(unsigned resIdx, unsigned elemCount);
+QVariantMap createProps_reservedBundleTwoParts(unsigned idx);
+QVariantMap createProps_utcStandard(bool serialisedHidden = false);
 
 
 }  // namespace common

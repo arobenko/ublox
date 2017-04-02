@@ -78,7 +78,7 @@ public:
     LogErase(LogErase&& other) = default;
 
     /// @brief Destructor
-    virtual ~LogErase() = default;
+    ~LogErase() = default;
 
     /// @brief Copy assignment
     LogErase& operator=(const LogErase&) = default;

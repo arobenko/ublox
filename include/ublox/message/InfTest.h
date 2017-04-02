@@ -50,7 +50,7 @@ public:
     InfTest(InfTest&& other) = default;
 
     /// @brief Destructor
-    virtual ~InfTest() = default;
+    ~InfTest() = default;
 
     /// @brief Copy assignment
     InfTest& operator=(const InfTest&) = default;

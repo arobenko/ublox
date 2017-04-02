@@ -127,7 +127,7 @@ public:
     CfgPrtUsb(CfgPrtUsb&& other) = default;
 
     /// @brief Destructor
-    virtual ~CfgPrtUsb() = default;
+    ~CfgPrtUsb() = default;
 
     /// @brief Copy assignment
     CfgPrtUsb& operator=(const CfgPrtUsb&) = default;

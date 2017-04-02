@@ -45,19 +45,55 @@ namespace
 
 using ublox::message::CfgTp5Fields;
 
-QVariantMap createProps_flags()
+QVariantMap createProps_flagsLow()
 {
-    cc::property::field::ForField<CfgTp5Fields::flags> props;
+    cc::property::field::ForField<CfgTp5Fields::flagsLow> props;
     props.name("flags")
+         .serialisedHidden()
          .add("active")
-         .add("lockGpsFreq")
+         .add("lockGnssFreq")
          .add("lockedOtherSet")
          .add("isFreq")
          .add("isLength")
          .add("alignToTow")
-         .add("polarity")
-         .add("gridUtcGps");
-    assert(props.bits().size() == CfgTp5Fields::flags::BitIdx_numOfValues);
+         .add("polarity");
+    assert(props.bits().size() == CfgTp5Fields::flagsLow::BitIdx_numOfValues);
+    return props.asMap();
+}
+
+QVariantMap createProps_gridUtcGnss()
+{
+    cc::property::field::ForField<CfgTp5Fields::gridUtcGnss> props;
+    props.name("gridUtcGnss")
+         .serialisedHidden()
+         .add("UTC")
+         .add("GPS")
+         .add("GLONASS")
+         .add("BeiDou")
+         .add("Galileo");
+    assert(props.values().size() == (int)CfgTp5Fields::GridUtcGnss::NumOfValues);
+    return props.asMap();
+}
+
+QVariantMap createProps_syncMode()
+{
+    cc::property::field::ForField<CfgTp5Fields::syncMode> props;
+    props.name("syncMode")
+         .serialisedHidden()
+         .add("0")
+         .add("1");
+    assert(props.values().size() == (int)CfgTp5Fields::SyncMode::NumOfValues);
+    return props.asMap();
+}
+
+QVariantMap createProps_flags()
+{
+    cc::property::field::ForField<CfgTp5Fields::flags> props;
+    props.add(createProps_flagsLow())
+         .add(createProps_gridUtcGnss())
+         .add(createProps_syncMode())
+         .add(cc::property::field::IntValue().hidden().asMap());
+    assert(props.members().size() == CfgTp5Fields::flags::FieldIdx_numOfValues);
     return props.asMap();
 }
 
@@ -65,7 +101,8 @@ QVariantList createFieldsProperties()
 {
     QVariantList props;
     props.append(cc_plugin::field::cfg::props_tpIdx());
-    props.append(cc_plugin::field::common::props_reserved(0));
+    props.append(
+        cc::property::field::ForField<CfgTp5Fields::version>().name("version").asMap());
     props.append(cc_plugin::field::common::props_reserved(1));
     props.append(
         cc::property::field::ForField<CfgTp5Fields::antCableDelay>().name("antCableDelay").asMap());

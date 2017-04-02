@@ -105,7 +105,7 @@ public:
     NavClock(NavClock&& other) = default;
 
     /// @brief Destructor
-    virtual ~NavClock() = default;
+    ~NavClock() = default;
 
     /// @brief Copy assignment
     NavClock& operator=(const NavClock&) = default;

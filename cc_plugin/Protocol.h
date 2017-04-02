@@ -1,5 +1,5 @@
 //
-// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
+// Copyright 2017 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -18,9 +18,8 @@
 
 #pragma once
 
+#include <memory>
 #include "comms_champion/comms_champion.h"
-#include "cc_plugin/Stack.h"
-#include "cc_plugin/TransportMessage.h"
 
 namespace ublox
 {
@@ -28,26 +27,30 @@ namespace ublox
 namespace cc_plugin
 {
 
-class Protocol : public
-    comms_champion::ProtocolBase<
-        cc_plugin::Stack,
-        cc_plugin::TransportMessage
-    >
+class ProtocolImpl;
+class Protocol : public comms_champion::Protocol
 {
-    typedef comms_champion::ProtocolBase<
-        cc_plugin::Stack,
-        cc_plugin::TransportMessage
-    > Base;
 public:
-    Protocol() = default;
+    Protocol();
     virtual ~Protocol();
 
 protected:
     virtual const QString& nameImpl() const override;
+    virtual MessagesList readImpl(const comms_champion::DataInfo& dataInfo, bool final) override;
+    virtual comms_champion::DataInfoPtr writeImpl(comms_champion::Message& msg) override;
+    virtual MessagesList createAllMessagesImpl() override;
+    virtual comms_champion::MessagePtr createMessageImpl(const QString& idAsString, unsigned idx) override;
+    virtual UpdateStatus updateMessageImpl(comms_champion::Message& msg) override;
+    virtual comms_champion::MessagePtr cloneMessageImpl(const comms_champion::Message& msg) override;
+    virtual comms_champion::MessagePtr createInvalidMessageImpl() override;
+    virtual comms_champion::MessagePtr createRawDataMessageImpl() override;
+    virtual comms_champion::MessagePtr createExtraInfoMessageImpl() override;
+
+private:
+    std::unique_ptr<ProtocolImpl> m_pImpl;
 };
 
 }  // namespace cc_plugin
 
 }  // namespace ublox
-
 

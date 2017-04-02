@@ -78,7 +78,7 @@ public:
     MonVerPoll(MonVerPoll&& other) = default;
 
     /// @brief Destructor
-    virtual ~MonVerPoll() = default;
+    ~MonVerPoll() = default;
 
     /// @brief Copy assignment
     MonVerPoll& operator=(const MonVerPoll&) = default;

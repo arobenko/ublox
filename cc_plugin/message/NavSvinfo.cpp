@@ -59,6 +59,8 @@ QVariantMap createProps_globalFlags()
                 .add("Antaris")
                 .add("ublox-5")
                 .add("ublox-6")
+                .add("ublox-7")
+                .add("ublox-8")
                 .serialisedHidden();
     assert(chipGenProps.values().size() == (int)NavSvinfoFields::ChipGen::NumOfValues);
 

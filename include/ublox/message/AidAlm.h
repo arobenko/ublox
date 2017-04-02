@@ -112,7 +112,7 @@ public:
     AidAlm(AidAlm&& other) = default;
 
     /// @brief Destructor
-    virtual ~AidAlm() = default;
+    ~AidAlm() = default;
 
     /// @brief Copy assignment
     AidAlm& operator=(const AidAlm&) = default;

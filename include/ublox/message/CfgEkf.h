@@ -196,7 +196,7 @@ public:
     CfgEkf(CfgEkf&& other) = default;
 
     /// @brief Destructor
-    virtual ~CfgEkf() = default;
+    ~CfgEkf() = default;
 
     /// @brief Copy assignment
     CfgEkf& operator=(const CfgEkf&) = default;
