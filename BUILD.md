@@ -45,6 +45,17 @@ errors. Enable this option in case the compiler generates warning and fails the
 compilation. Please open the issue when such scenario occurs. Default value is 
 **OFF**.
 
+## Choosing C++ Standard
+
+Since CMake v3.1 it became possible to set version of C++ standard by setting
+**CMAKE_CXX_STANDARD** variable. If no value of this variable is set in command
+line arguments, default value **11** will be assigned to it. In order to use
+c++14 standard in compilation, set the variable value to **14**. 
+
+Please **NOTE**, that _clang_ compiler has problems compiling valid c++11 constructs
+used in this project. Hence, the compilation will fail unless the compilation is
+configured to use c++14 standard.
+
 ## Build and Install Examples
 
 The examples below are Linux/Unix system oriented, i.e. they use **make** utility
@@ -80,6 +91,16 @@ $> mkdir build && cd build
 $> cmake -DCMAKE_BUILD_TYPE=Release -DCC_UBLOX_FULL_SOLUTION=ON ..
 $> make install 
 ```
+
+### Full Solution with Clang Compiler
+**NOTE**, that c++14 standard needs to be enabled for successful compilation.
+```
+$> cd /path/to/ublox/sources
+$> mkdir build && cd build
+$> CC=clang CXX=clang++ cmake -DCMAKE_BUILD_TYPE=Release -DCC_UBLOX_FULL_SOLUTION=ON -DCMAKE_CXX_STANDARD=14 ..
+$> make install 
+```
+
 
 ### Libraries Only
 If the UBLOX library needs to be used to develop some embedded application and

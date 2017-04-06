@@ -63,7 +63,7 @@ set (CC_EXTERNAL_TGT "comms_champion_external")
 macro (externals install_dir build_cc)
         include(ExternalProject)
         
-        set (cc_tag "v0.15")
+        set (cc_tag "develop")
         set (cc_main_dir "${CMAKE_BINARY_DIR}/comms_champion")
         set (cc_src_dir "${cc_main_dir}/src")
         set (cc_bin_dir "${cc_main_dir}/build")
@@ -89,7 +89,8 @@ macro (externals install_dir build_cc)
             SOURCE_DIR "${cc_src_dir}"
             CMAKE_ARGS 
                 -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DCC_INSTALL_DIR=${install_dir} 
-                -DCC_NO_UNIT_TESTS=ON -DCC_NO_WARN_AS_ERR=ON
+                -DCC_NO_UNIT_TESTS=ON -DCC_NO_WARN_AS_ERR=ON -DCMAKE_CXX_STANDARD=${CMAKE_CXX_STANDARD} 
+                -DCMAKE_C_COMPILER=${CMAKE_C_COMPILER} -DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER} 
                 ${cc_qt_dir_opt} ${ct_lib_only_opt}
             BINARY_DIR "${cc_bin_dir}"
         )
