@@ -6,7 +6,9 @@ option (CC_UBLOX_AND_COMMS_LIBS_ONLY "Install UBLOX protocol and COMMS libraries
 option (CC_UBLOX_FULL_SOLUTION "Build and install full solution, including CommsChampion sources." OFF)
 option (CC_UBLOX_NO_WARN_AS_ERR "Do NOT treat warning as error" OFF)
 
-set (CMAKE_CXX_STANDARD 11)
+if (NOT CMAKE_CXX_STANDARD)
+    set (CMAKE_CXX_STANDARD 11)
+endif()
 
 set (INSTALL_DIR ${CMAKE_BINARY_DIR}/install)
 if (NOT "${CC_UBLOX_INSTALL_DIR}" STREQUAL "")
@@ -61,7 +63,7 @@ set (CC_EXTERNAL_TGT "comms_champion_external")
 macro (externals install_dir build_cc)
         include(ExternalProject)
         
-        set (cc_tag "v0.15")
+        set (cc_tag "v0.15.1")
         set (cc_main_dir "${CMAKE_BINARY_DIR}/comms_champion")
         set (cc_src_dir "${cc_main_dir}/src")
         set (cc_bin_dir "${cc_main_dir}/build")
@@ -87,7 +89,8 @@ macro (externals install_dir build_cc)
             SOURCE_DIR "${cc_src_dir}"
             CMAKE_ARGS 
                 -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DCC_INSTALL_DIR=${install_dir} 
-                -DCC_NO_UNIT_TESTS=ON -DCC_NO_WARN_AS_ERR=ON
+                -DCC_NO_UNIT_TESTS=ON -DCC_NO_WARN_AS_ERR=ON -DCMAKE_CXX_STANDARD=${CMAKE_CXX_STANDARD} 
+                -DCMAKE_C_COMPILER=${CMAKE_C_COMPILER} -DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER} 
                 ${cc_qt_dir_opt} ${ct_lib_only_opt}
             BINARY_DIR "${cc_bin_dir}"
         )
@@ -146,13 +149,23 @@ while (TRUE)
     break()
 endwhile()
 
-if (CMAKE_COMPILER_IS_GNUCC)
+if ((CMAKE_COMPILER_IS_GNUCC) OR ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang"))
     set (extra_flags_list
         "-Wall" "-Wextra" "-Wcast-align" "-Wcast-qual" "-Wctor-dtor-privacy"
-        "-Wmissing-include-dirs" "-Wnoexcept" "-Wlogical-op" "-Wstrict-null-sentinel"
+        "-Wmissing-include-dirs"
         "-Woverloaded-virtual" "-Wredundant-decls" "-Wshadow" "-Wundef" "-Wunused"
         "-Wno-unknown-pragmas" "-fdiagnostics-show-option"
     )
+
+    if (CMAKE_COMPILER_IS_GNUCC)
+        list (APPEND extra_flags_list
+            "-Wnoexcept" "-Wlogical-op" "-Wstrict-null-sentinel"
+        )
+    endif ()
+
+    if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+        list (APPEND extra_flags_list "-Wno-dangling-field" "-ftemplate-depth=1024")
+    endif ()
 
     if (NOT CC_UBLOX_NO_WARN_AS_ERR)
         list (APPEND extra_flags_list "-Werror")
