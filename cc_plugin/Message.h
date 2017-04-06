@@ -44,7 +44,7 @@ protected:
 
     virtual QString idAsStringImpl() const override
     {
-        return QString("0x%1").arg(Base::getId(), 4, 16, QChar('0'));
+        return QString("0x%1").arg(static_cast<unsigned>(Base::getId()), 4, 16, QChar('0'));
     }
 
     virtual const QVariantList& fieldsPropertiesImpl() const override
