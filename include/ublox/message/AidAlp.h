@@ -38,13 +38,13 @@ namespace message
 struct AidAlpFields
 {
     /// @brief Definition of "predTow" field.
-    using predTow = field::common::U4;
+    using predTow = field::common::U4T<comms::option::UnitsSeconds>;
 
     /// @brief Definition of "predDur" field.
-    using predDur = field::common::U4;
+    using predDur = field::common::U4T<comms::option::UnitsSeconds>;
 
     /// @brief Definition of "age" field.
-    using age = field::common::I4;
+    using age = field::common::I4T<comms::option::UnitsSeconds>;
 
     /// @brief Definition of "predWno" field.
     using predWno = field::common::U2;

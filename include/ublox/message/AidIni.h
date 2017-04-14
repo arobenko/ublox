@@ -37,13 +37,17 @@ struct AidIniFields
     /// @brief Definition of "ecefX" field.
     using ecefX =
         field::common::OptionalT<
-            field::common::I4T<field::common::Scaling_cm2m>
+            field::common::I4T<field::common::Scaling_cm2m>,
+            comms::option::UnitsCentimeters
         >;
 
     /// @brief Definition of "lat" field.
     using lat =
         field::common::OptionalT<
-            field::common::I4T<comms::option::ScalingRatio<1, 10000000L> >
+            field::common::I4T<
+                comms::option::ScalingRatio<1, 10000000L>,
+                comms::option::UnitsDegrees
+            >
         >;
 
     /// @brief Definition of "ecefY" field.
@@ -59,7 +63,7 @@ struct AidIniFields
     using alt = ecefZ;
 
     /// @brief Definition of "posAcc" field.
-    using posAcc = field::common::U4T<field::common::Scaling_cm2m>;
+    using posAcc = field::common::U4T<comms::option::UnitsCentimeters>;
 
     /// @brief Definition of "tmCfg" field.
     struct tmCfg : public
@@ -77,7 +81,8 @@ struct AidIniFields
     /// @brief Definition of "wno" field.
     using wno =
         field::common::OptionalT<
-            field::common::U2
+            field::common::U2,
+            comms::option::UnitsWeeks
         >;
 
     /// @brief Definition of the @ref date bitfield
@@ -110,7 +115,7 @@ struct AidIniFields
     /// @brief Definition of "tow" field.
     using tow =
         field::common::OptionalT<
-            field::common::U4T<field::common::Scaling_ms2s>
+            field::common::U4T<comms::option::UnitsMilliseconds>
         >;
 
     /// @brief Definition of the @ref time bitfield
@@ -147,30 +152,32 @@ struct AidIniFields
     using time = field::common::OptionalT<timeBitfield>;
 
     /// @brief Definition of "towNs" field.
-    using towNs = field::common::I4T<field::common::Scaling_ns2s>;
+    using towNs = field::common::I4T<comms::option::UnitsNanoseconds>;
 
     /// @brief Definition of "tAccMs" field.
-    using tAccMs = field::common::U4T<field::common::Scaling_ms2s>;
+    using tAccMs = field::common::U4T<comms::option::UnitsMilliseconds>;
 
     /// @brief Definition of "tAccNs" field.
-    using tAccNs = field::common::U4T<field::common::Scaling_ns2s>;
+    using tAccNs = field::common::U4T<comms::option::UnitsNanoseconds>;
 
     /// @brief Definition of "clkD" field.
     using clkD =
         field::common::OptionalT<
-            field::common::I4T<field::common::Scaling_ns2s>
+            field::common::I4T<comms::option::UnitsNanoseconds>
         >;
 
     /// @brief Definition of "freq" field.
     using freq =
         field::common::OptionalT<
-            field::common::I4T<comms::option::ScalingRatio<1, 100> >
+            field::common::I4T<
+                comms::option::ScalingRatio<1, 100>,
+                comms::option::UnitsHertz>
         >;
 
     /// @brief Definition of "clkDAcc" field.
     using clkDAcc =
         field::common::OptionalT<
-            field::common::U4T<field::common::Scaling_ns2s>
+            field::common::U4T<comms::option::UnitsNanoseconds>
         >;
 
     /// @brief Definition of "freqAcc" field.
