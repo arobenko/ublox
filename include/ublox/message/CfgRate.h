@@ -45,7 +45,7 @@ struct CfgRateFields
     };
 
     /// @brief Definition of "measRate" field.
-    using measRate = field::common::U2T<field::common::Scaling_ms2s>;
+    using measRate = field::common::U2T<comms::option::UnitsMilliseconds>;
 
     /// @brief Definition of "navRate" field.
     using navRate =

@@ -115,7 +115,8 @@ struct CfgEkfFields
     /// @brief Definition of "tempUpdate" field.
     using tempUpdate =
         field::common::U2T<
-            comms::option::ValidNumValueRange<9, 0xffff>
+            comms::option::ValidNumValueRange<9, 0xffff>,
+            comms::option::UnitsSeconds
         >;
 
     /// @brief All the fields bundled in std::tuple.

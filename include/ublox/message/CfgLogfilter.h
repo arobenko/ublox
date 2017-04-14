@@ -54,16 +54,16 @@ struct CfgLogfilterFields
     };
 
     /// @brief Definition of "minInterval" field.
-    using minInterval = field::common::U2;
+    using minInterval = field::common::U2T<comms::option::UnitsSeconds>;
 
     /// @brief Definition of "timeThreshold" field.
-    using timeThreshold = field::common::U2;
+    using timeThreshold = field::common::U2T<comms::option::UnitsSeconds>;
 
     /// @brief Definition of "speedThreshold" field.
-    using speedThreshold = field::common::U2;
+    using speedThreshold = field::common::U2T<comms::option::UnitsMetersPerSecond>;
 
     /// @brief Definition of "positionThreshold" field.
-    using positionThreshold = field::common::U4;
+    using positionThreshold = field::common::U4T<comms::option::UnitsMeters>;
 
     /// @brief All the fields bundled in std::tuple.
     using All = std::tuple<

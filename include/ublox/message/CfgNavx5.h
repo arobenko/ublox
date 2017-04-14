@@ -186,7 +186,8 @@ struct CfgNavx5Fields
     /// @brief Definition of "aopOrbMaxErr" field.
     using aopOrbMaxErr =
         field::common::U2T<
-            comms::option::ContentsValidator<AopOrbMaxErrValidator>
+            comms::option::ContentsValidator<AopOrbMaxErrValidator>,
+            comms::option::UnitsMeters
         >;
 
     /// @brief Definition of "reserved6" field.

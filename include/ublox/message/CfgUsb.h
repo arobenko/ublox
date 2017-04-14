@@ -50,7 +50,7 @@ struct CfgUsbFields
         >;
 
     /// @brief Definition of "powerConsumption" field.
-    using powerConsumption = field::common::U2;
+    using powerConsumption = field::common::U2T<comms::option::UnitsMilliamps>;
 
     /// @brief Definition of "flags" field.
     struct flags : public

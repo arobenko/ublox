@@ -143,7 +143,11 @@ struct CfgEsrcFields
     };
 
     /// @brief Definition of "freq" field.
-    using freq = field::common::U4T<comms::option::ScalingRatio<1, 2> >;
+    using freq =
+        field::common::U4T<
+            comms::option::ScalingRatio<1, 2>,
+            comms::option::UnitsHertz
+        >;
 
     /// @brief Definition of "reserved2" field.
     using reserved2 = field::common::res4;
@@ -155,19 +159,19 @@ struct CfgEsrcFields
     using withAge = field::common::U4T<comms::option::ScalingRatio<1, 0x100> >;
 
     /// @brief Definition of "timeToTemp" field.
-    using timeToTemp = field::common::U2;
+    using timeToTemp = field::common::U2T<comms::option::UnitsSeconds>;
 
     /// @brief Definition of "maxDevLifeTime" field.
     using maxDevLifeTime = field::common::U2;
 
     /// @brief Definition of "offset" field.
-    using offset = field::common::I4T<field::common::Scaling_ns2s>;
+    using offset = field::common::I4T<comms::option::UnitsNanoseconds>;
 
     /// @brief Definition of "offsetUncertainty" field.
-    using offsetUncertainty = field::common::U4T<field::common::Scaling_ns2s>;
+    using offsetUncertainty = field::common::U4T<comms::option::UnitsNanoseconds>;
 
     /// @brief Definition of "jitter" field.
-    using jitter = field::common::U4T<field::common::Scaling_ns2s>;
+    using jitter = field::common::U4T<comms::option::UnitsNanoseconds>;
 
     /// @brief Definition of a block field repeated multiple times in @ref
     ///     data list.

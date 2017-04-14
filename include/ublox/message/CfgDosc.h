@@ -124,7 +124,11 @@ struct CfgDoscFields
     };
 
     /// @brief Definition of "freq" field.
-    using freq = field::common::U4T<comms::option::ScalingRatio<1, 2> >;
+    using freq =
+        field::common::U4T<
+            comms::option::ScalingRatio<1, 2>,
+            comms::option::UnitsHertz
+        >;
 
     /// @brief Definition of "phaseOffset" field.
     using phaseOffset = field::common::I4;
@@ -136,7 +140,7 @@ struct CfgDoscFields
     using withAge = field::common::U4T<comms::option::ScalingRatio<1, 0x100> >;
 
     /// @brief Definition of "timeToTemp" field.
-    using timeToTemp = field::common::U2;
+    using timeToTemp = field::common::U2T<comms::option::UnitsSeconds>;
 
     /// @brief Definition of "reserved3" field.
     using reserved3 = field::common::res2;

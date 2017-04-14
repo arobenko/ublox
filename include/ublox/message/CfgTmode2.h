@@ -68,52 +68,52 @@ struct CfgTmode2Fields
     /// @brief Definition of "ecefX" field.
     using ecefX =
         field::common::OptionalT<
-            field::common::I4T<field::common::Scaling_cm2m>
+            field::common::I4T<comms::option::UnitsCentimeters>
         >;
 
     /// @brief Definition of "lat" field.
     using lat =
         field::common::OptionalT<
-            field::common::I4T<comms::option::ScalingRatio<1, 10000000L> >
+            field::common::I4T<
+                comms::option::ScalingRatio<1, 10000000L>,
+                comms::option::UnitsDegrees
+            >
         >;
 
     /// @brief Definition of "ecefY" field.
     using ecefY =
         field::common::OptionalT<
-            field::common::I4T<field::common::Scaling_cm2m>
+            field::common::I4T<comms::option::UnitsCentimeters>
         >;
 
     /// @brief Definition of "lon" field.
-    using lon =
-        field::common::OptionalT<
-            field::common::I4T<comms::option::ScalingRatio<1, 10000000L> >
-        >;
+    using lon = lat;
 
     /// @brief Definition of "ecefZ" field.
     using ecefZ =
         field::common::OptionalT<
-            field::common::I4T<field::common::Scaling_cm2m>
+            field::common::I4T<comms::option::UnitsCentimeters>
         >;
 
     /// @brief Definition of "alt" field.
     using alt =
         field::common::OptionalT<
-            field::common::I4T<field::common::Scaling_cm2m>
+            field::common::I4T<comms::option::UnitsCentimeters>
         >;
 
     /// @brief Definition of "fixedPosAcc" field.
     using fixedPosAcc =
         field::common::U4T<
-            field::common::Scaling_mm2m
+            comms::option::UnitsMillimeters
         >;
 
     /// @brief Definition of "svinMinDur" field.
-    using svinMinDur = field::common::U4;
+    using svinMinDur = field::common::U4T<comms::option::UnitsSeconds>;
 
     /// @brief Definition of "svinAccLimit" field.
     using svinAccLimit =
         field::common::U4T<
-            field::common::Scaling_mm2m
+            comms::option::UnitsMillimeters
         >;
 
     /// @brief All the fields bundled in std::tuple.

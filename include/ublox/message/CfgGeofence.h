@@ -86,13 +86,22 @@ struct CfgGeofenceFields
     using reserved2 = field::common::res1;
 
     /// @brief Definition of "lat" field.
-    using lat = field::common::I4T<comms::option::ScalingRatio<1, 10000000L> >;
+    using lat = field::common::I4T<
+        comms::option::ScalingRatio<1, 10000000L>,
+        comms::option::UnitsDegrees
+    >;
 
     /// @brief Definition of "lon" field.
-    using lon = field::common::I4T<comms::option::ScalingRatio<1, 10000000L> >;
+    using lon = field::common::I4T<
+        comms::option::ScalingRatio<1, 10000000L>,
+        comms::option::UnitsDegrees
+    >;
 
     /// @brief Definition of "radius" field.
-    using radius = field::common::U4T<comms::option::ScalingRatio<1, 100L> >;
+    using radius = field::common::U4T<
+        comms::option::ScalingRatio<1, 100L>,
+        comms::option::UnitsMeters
+    >;
 
 
     /// @brief Definition of a block field repeated multiple times in @ref

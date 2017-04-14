@@ -46,16 +46,16 @@ struct CfgTp5Fields
     using reserved1 = field::common::res2;
 
     /// @brief Definition of "antCableDelay" field.
-    using antCableDelay = field::common::I2T<field::common::Scaling_ns2s>;
+    using antCableDelay = field::common::I2T<comms::option::UnitsNanoseconds>;
 
     /// @brief Definition of "rfGroupDelay" field.
-    using rfGroupDelay = field::common::I2T<field::common::Scaling_ns2s>;
+    using rfGroupDelay = field::common::I2T<comms::option::UnitsNanoseconds>;
 
     /// @brief Definition of "freqPeriod" field.
-    using freqPeriod = field::common::U4T<field::common::Scaling_us2s>;
+    using freqPeriod = field::common::U4T<comms::option::UnitsMicroseconds>;
 
     /// @brief Definition of "freqPeriodLock" field.
-    using freqPeriodLock = field::common::U4T<field::common::Scaling_us2s>;
+    using freqPeriodLock = field::common::U4T<comms::option::UnitsMicroseconds>;
 
     /// @brief Definition of "pulseLenRatio" field.
     using pulseLenRatio = field::common::U4;
@@ -64,7 +64,7 @@ struct CfgTp5Fields
     using pulseLenRatioLock = field::common::U4;
 
     /// @brief Definition of "userConfigDelay" field.
-    using userConfigDelay = field::common::I4T<field::common::Scaling_ns2s>;
+    using userConfigDelay = field::common::I4T<comms::option::UnitsNanoseconds>;
 
     /// @brief Definition of "flagsLow" member field of @ref flags bitfield.
     struct flagsLow : public

@@ -50,7 +50,7 @@ struct CfgTmodeFields
         >;
 
     /// @brief Definition of "fixedPosX" field.
-    using fixedPosX = field::common::I4T<field::common::Scaling_cm2m>;
+    using fixedPosX = field::common::I4T<comms::option::UnitsCentimeters>;
 
     /// @brief Definition of "fixedPosY" field.
     using fixedPosY = fixedPosX;
@@ -59,19 +59,13 @@ struct CfgTmodeFields
     using fixedPosZ = fixedPosX;
 
     /// @brief Definition of "fixedPosVar" field.
-    using fixedPosVar =
-        field::common::U4T<
-            comms::option::ScalingRatio<1, 1000000L>
-        >;
+    using fixedPosVar = field::common::U4;
 
     /// @brief Definition of "svinMinDur" field.
-    using svinMinDur = field::common::U4;
+    using svinMinDur = field::common::U4T<comms::option::UnitsSeconds>;
 
     /// @brief Definition of "svinVarLimit" field.
-    using svinVarLimit =
-        field::common::U4T<
-            comms::option::ScalingRatio<1, 1000000L>
-        >;
+    using svinVarLimit = field::common::U4;
 
     /// @brief All the fields bundled in std::tuple.
     using All = std::tuple<
