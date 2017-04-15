@@ -46,25 +46,29 @@ using month  =
 /// @brief Definition of common "day" field.
 using day  =
     field::common::U1T<
-        comms::option::ValidNumValueRange<1, 31>
+        comms::option::ValidNumValueRange<1, 31>,
+        comms::option::UnitsDays
     >;
 
 /// @brief Definition of common "hour" field.
 using hour  =
     field::common::U1T<
-        comms::option::ValidNumValueRange<0, 23>
+        comms::option::ValidNumValueRange<0, 23>,
+        comms::option::UnitsHours
     >;
 
 /// @brief Definition of common "minute" field.
 using minute  =
     field::common::U1T<
-        comms::option::ValidNumValueRange<0, 59>
+        comms::option::ValidNumValueRange<0, 59>,
+        comms::option::UnitsMinutes
     >;
 
 /// @brief Definition of common "second" field.
 using second  =
     field::common::U1T<
-        comms::option::ValidNumValueRange<0, 60>
+        comms::option::ValidNumValueRange<0, 60>,
+        comms::option::UnitsSeconds
     >;
 
 }  // namespace log

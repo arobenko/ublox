@@ -44,22 +44,26 @@ struct LogRetrieveposFields
     using entryIndex  = field::common::U4;
 
     /// @brief Definition of "lon" field.
-    using lon = field::common::I4T<comms::option::ScalingRatio<1, 10000000> >;
+    using lon =
+        field::common::I4T<
+            comms::option::ScalingRatio<1, 10000000>,
+            comms::option::UnitsDegrees
+        >;
 
     /// @brief Definition of "lat" field.
     using lat = lon;
 
     /// @brief Definition of "hMSL" field.
-    using hMSL = field::common::I4T<field::common::Scaling_mm2m>;
+    using hMSL = field::common::I4T<comms::option::UnitsMillimeters>;
 
     /// @brief Definition of "hAcc" field.
-    using hAcc = field::common::U4T<field::common::Scaling_mm2m>;
+    using hAcc = field::common::U4T<comms::option::UnitsMillimeters>;
 
     /// @brief Definition of "gSpeed" field.
-    using gSpeed = field::common::U4T<field::common::Scaling_mm2m>;
+    using gSpeed = field::common::U4T<comms::option::UnitsMillimetersPerSecond>;
 
     /// @brief Definition of "heading" field.
-    using heading = field::common::U4;
+    using heading = field::common::U4T<comms::option::UnitsDegrees>;
 
     /// @brief Definition of "version" field.
     using version =

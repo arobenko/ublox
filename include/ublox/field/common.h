@@ -420,13 +420,13 @@ struct res7 : public BundleT<std::tuple<res3, res4> >
 ///     seconds.
 using iTOW =
     U4T<
-        Scaling_ms2s,
-        comms::option::ValidNumValueRange<0, 1000L * 60 * 60 * 24 * 7>
+        comms::option::ValidNumValueRange<0, 1000L * 60 * 60 * 24 * 7>,
+        comms::option::UnitsMilliseconds
     >;
 
 /// @brief Definition of common @b week field used in multiple messages in
 ///     multiple message classes.
-using week = I2;
+using week = I2T<UnitsWeeks>;
 
 /// @brief Definition of common @b numSV field used in multiple messages in
 ///     multiple message classes.

@@ -164,7 +164,7 @@ struct EsfStatusFields
 
 
     /// @brief Definition of "freq" field.
-    using freq = field::common::U1;
+    using freq = field::common::U1T<comms::option::UnitsHertz>;
 
     /// @brief Definition of "faults" field.
     struct faults : public
