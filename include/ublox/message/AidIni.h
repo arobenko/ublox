@@ -37,8 +37,7 @@ struct AidIniFields
     /// @brief Definition of "ecefX" field.
     using ecefX =
         field::common::OptionalT<
-            field::common::I4T<field::common::Scaling_cm2m>,
-            comms::option::UnitsCentimeters
+            field::common::I4T<comms::option::UnitsCentimeters>
         >;
 
     /// @brief Definition of "lat" field.

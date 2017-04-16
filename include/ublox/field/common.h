@@ -271,21 +271,6 @@ static_assert(std::numeric_limits<double>::is_iec559,
 static_assert(sizeof(double) == sizeof(std::uint64_t),
     "double is expected to have size of 8 bytes");
 
-/// @brief Common option used to scale centimeters to meters
-using Scaling_cm2m = comms::option::ScalingRatio<1, 100>;
-
-/// @brief Common option used to scale millimeters to meters
-using Scaling_mm2m = comms::option::ScalingRatio<1, 1000L>;
-
-/// @brief Common option used to scale milliseconds to seconds
-using Scaling_ms2s = comms::option::ScalingRatio<1, 1000>;
-
-/// @brief Common option used to scale microseconds to seconds
-using Scaling_us2s = comms::option::ScalingRatio<1, 1000000L>;
-
-/// @brief Common option used to scale nanoseconds to seconds
-using Scaling_ns2s = comms::option::ScalingRatio<1, 1000000000L>;
-
 /// @brief Common definition of sequence of fields or raw bytes.
 /// @details Defined to be @b comms::field::ArrayList
 ///     with @ref FieldBase as a base class, @b TElem as the element type, and
