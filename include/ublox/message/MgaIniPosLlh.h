@@ -51,16 +51,20 @@ struct MgaIniPosLlhFields
     using reserved1 = field::common::res2;
 
     /// @brief Definition of "lat" field.
-    using lat = field::common::I4T<comms::option::ScalingRatio<1, 10000000> >;
+    using lat =
+        field::common::I4T<
+            comms::option::ScalingRatio<1, 10000000>,
+            comms::option::UnitsDegrees
+        >;
 
     /// @brief Definition of "lon" field.
-    using lon = field::common::I4T<comms::option::ScalingRatio<1, 10000000> >;
+    using lon = lat;
 
     /// @brief Definition of "alt" field.
-    using alt = field::common::I4T<field::common::Scaling_cm2m>;
+    using alt = field::common::I4T<comms::option::UnitsCentimeters>;
 
     /// @brief Definition of "posAcc" field.
-    using posAcc = field::common::U4T<field::common::Scaling_cm2m>;
+    using posAcc = field::common::U4T<comms::option::UnitsCentimeters>;
 
     /// @brief All the fields bundled in std::tuple.
     using All = std::tuple<

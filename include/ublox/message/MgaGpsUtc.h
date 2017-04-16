@@ -51,28 +51,40 @@ struct MgaGpsUtcFields
     using reserved1 = field::common::res2;
 
     /// @brief Definition of "utcA0" field.
-    using utcA0 = field::common::I4;
+    using utcA0 =
+        field::common::I4T<
+            comms::option::ScalingRatio<1, 0x40000000>,
+            comms::option::UnitsSeconds
+        >;
 
     /// @brief Definition of "utcA1" field.
-    using utcA1 = field::common::I4;
+    using utcA1 =
+        field::common::I4T<
+            comms::option::ScalingRatio<1, 0x4000000000000ULL>,
+            comms::option::UnitsSeconds
+        >;
 
     /// @brief Definition of "utcDtLS" field.
-    using utcDtLS = field::common::I1;
+    using utcDtLS = field::common::I1T<comms::option::UnitsSeconds>;
 
     /// @brief Definition of "utcTot" field.
-    using utcTot = field::common::U1;
+    using utcTot =
+        field::common::U1T<
+            comms::option::ScalingRatio<0x1000, 1>,
+            comms::option::UnitsSeconds
+        >;
 
     /// @brief Definition of "utcWNt" field.
-    using utcWNt = field::common::U1;
+    using utcWNt = field::common::U1T<comms::option::UnitsWeeks>;
 
     /// @brief Definition of "utcWNlsf" field.
-    using utcWNlsf = field::common::U1;
+    using utcWNlsf = field::common::U1T<comms::option::UnitsWeeks>;
 
     /// @brief Definition of "utcDn" field.
-    using utcDn = field::common::U1;
+    using utcDn = field::common::U1T<comms::option::UnitsDays>;
 
     /// @brief Definition of "utcDtLSF" field.
-    using utcDtLSF = field::common::I1;
+    using utcDtLSF = field::common::I1T<comms::option::UnitsSeconds>;
 
     /// @brief Definition of "reserved2" field.
     using reserved2 = field::common::res2;

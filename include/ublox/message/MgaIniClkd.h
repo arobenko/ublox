@@ -51,10 +51,10 @@ struct MgaIniClkdFields
     using reserved1 = field::common::res2;
 
     /// @brief Definition of "clkD" field.
-    using clkD = field::common::I4T<field::common::Scaling_ns2s>;
+    using clkD = field::common::I4T<comms::option::UnitsNanoseconds>;
 
     /// @brief Definition of "clkDAcc" field.
-    using clkDAcc = field::common::U4T<field::common::Scaling_ns2s>;
+    using clkDAcc = field::common::U4T<comms::option::UnitsNanoseconds>;
 
     /// @brief All the fields bundled in std::tuple.
     using All = std::tuple<

@@ -54,7 +54,7 @@ struct MgaGloAlmFields
     using reserved1 = field::common::res1;
 
     /// @brief Definition of "N" field.
-    using N = field::common::U2;
+    using N = field::common::U2T<comms::option::UnitsDays>;
 
     /// @brief Definition of "M" field.
     using M = field::common::U1;
@@ -63,25 +63,33 @@ struct MgaGloAlmFields
     using C = field::common::U1;
 
     /// @brief Definition of "tau" field.
-    using tau = field::common::I2;
+    using tau =
+        field::common::I2T<
+            comms::option::ScalingRatio<1, 0x40000>,
+            comms::option::UnitsSeconds
+        >;
 
     /// @brief Definition of "epsilon" field.
-    using epsilon = field::common::U2;
+    using epsilon = field::common::U2T<comms::option::ScalingRatio<1, 0x100000> >;
 
     /// @brief Definition of "lambda" field.
-    using lambda = field::common::I4;
+    using lambda = field::common::I4T<comms::option::ScalingRatio<1, 0x100000> >;
 
     /// @brief Definition of "deltaI" field.
-    using deltaI = field::common::I4;
+    using deltaI = lambda;
 
     /// @brief Definition of "tLambda" field.
-    using tLambda = field::common::U4;
+    using tLambda =
+        field::common::U4T<
+            comms::option::ScalingRatio<1, 0x20>,
+            comms::option::UnitsSeconds
+        >;
 
     /// @brief Definition of "deltaT" field.
-    using deltaT = field::common::I4;
+    using deltaT = field::common::I4T<comms::option::ScalingRatio<1, 0x200> >;
 
     /// @brief Definition of "deltaDT" field.
-    using deltaDT = field::common::I1;
+    using deltaDT = field::common::I1T<comms::option::ScalingRatio<1, 0x4000> >;
 
     /// @brief Definition of "H" field.
     using H = field::common::I1;

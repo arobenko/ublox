@@ -50,7 +50,7 @@ struct MgaIniPosXyzFields
     using reserved1 = field::common::res2;
 
     /// @brief Definition of "ecefX" field.
-    using ecefX = field::common::I4T<field::common::Scaling_cm2m>;
+    using ecefX = field::common::I4T<comms::option::UnitsCentimeters>;
 
     /// @brief Definition of "ecefY" field.
     using ecefY = ecefX;
@@ -59,7 +59,7 @@ struct MgaIniPosXyzFields
     using ecefZ = ecefX;
 
     /// @brief Definition of "posAcc" field.
-    using posAcc = field::common::U4T<field::common::Scaling_cm2m>;
+    using posAcc = field::common::U4T<comms::option::UnitsCentimeters>;
 
     /// @brief All the fields bundled in std::tuple.
     using All = std::tuple<

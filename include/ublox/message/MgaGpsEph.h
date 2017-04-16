@@ -63,73 +63,109 @@ struct MgaGpsEphFields
     using svHealth = field::common::U1;
 
     /// @brief Definition of "tgd" field.
-    using tgd = field::common::I1;
+    using tgd =
+        field::common::I1T<
+            comms::option::ScalingRatio<1, 0x80000000>,
+            comms::option::UnitsSeconds
+        >;
 
     /// @brief Definition of "iodc" field.
     using iodc = field::common::U2;
 
     /// @brief Definition of "toc" field.
-    using toc = field::common::U2;
+    using toc =
+        field::common::U2T<
+            comms::option::ScalingRatio<0x10, 1>,
+            comms::option::UnitsSeconds
+        >;
 
     /// @brief Definition of "reserved2" field.
     using reserved2 = field::common::res1;
 
     /// @brief Definition of "af2" field.
-    using af2 = field::common::I1;
+    using af2 =
+        field::common::I1T<
+            comms::option::ScalingRatio<1, 0x80000000000000ULL>,
+            comms::option::UnitsSeconds
+        >;
 
     /// @brief Definition of "af1" field.
-    using af1 = field::common::I2;
+    using af1 =
+        field::common::I2T<
+            comms::option::ScalingRatio<1, 0x80000000000ULL>,
+            comms::option::UnitsSeconds
+        >;
 
     /// @brief Definition of "af0" field.
-    using af0 = field::common::I4;
+    using af0 =
+        field::common::I4T<
+            comms::option::ScalingRatio<1, 0x80000000>,
+            comms::option::UnitsSeconds
+        >;
 
     /// @brief Definition of "crs" field.
-    using crs = field::common::I2;
+    using crs =
+        field::common::I2T<
+            comms::option::ScalingRatio<1, 0x20>,
+            comms::option::UnitsMeters
+        >;
 
     /// @brief Definition of "deltaN" field.
-    using deltaN = field::common::I2;
+    using deltaN = field::common::I2T<comms::option::ScalingRatio<1, 0x80000000000ULL> >;
 
     /// @brief Definition of "m0" field.
-    using m0 = field::common::I4;
+    using m0 = field::common::I4T<comms::option::ScalingRatio<1, 0x80000000> >;
 
     /// @brief Definition of "cuc" field.
-    using cuc = field::common::I2;
+    using cuc =
+        field::common::I2T<
+            comms::option::ScalingRatio<1, 0x20000000>,
+            comms::option::UnitsRadians
+        >;
 
     /// @brief Definition of "cus" field.
-    using cus = field::common::I2;
+    using cus = cuc;
 
     /// @brief Definition of "e" field.
-    using e = field::common::U4;
+    using e = field::common::U4T<comms::option::ScalingRatio<1, 0x200000000ULL> >;
 
     /// @brief Definition of "sqrtA" field.
-    using sqrtA = field::common::U4;
+    using sqrtA = field::common::U4T<comms::option::ScalingRatio<1, 0x80000> >;
 
     /// @brief Definition of "toe" field.
-    using toe = field::common::U2;
+    using toe =
+        field::common::U2T<
+            comms::option::ScalingRatio<1, 0x10>,
+            comms::option::UnitsSeconds
+        >;
 
     /// @brief Definition of "cic" field.
-    using cic = field::common::I2;
+    using cic = cuc;
 
     /// @brief Definition of "omega0" field.
-    using omega0 = field::common::I4;
+    using omega0 = field::common::I4T<comms::option::ScalingRatio<1, 0x80000000> >;
 
     /// @brief Definition of "cis" field.
-    using cis = field::common::I2;
+    using cis = cuc;
 
     /// @brief Definition of "crc" field.
-    using crc = field::common::I2;
+    using crc =
+        field::common::I2T<
+            comms::option::ScalingRatio<1, 0x20>,
+            comms::option::UnitsMeters
+        >;
 
     /// @brief Definition of "i0" field.
-    using i0 = field::common::I4;
+    using i0 = omega0;
 
     /// @brief Definition of "omega" field.
-    using omega = field::common::I4;
+    using omega = omega0;
 
     /// @brief Definition of "omegaDot" field.
-    using omegaDot = field::common::I4;
+    using omegaDot = field::common::I4T<comms::option::ScalingRatio<1, 0x80000000000ULL> >;
 
     /// @brief Definition of "idot" field.
-    using idot = field::common::I2;
+    using idot = field::common::I2T<comms::option::ScalingRatio<1, 0x80000000000ULL> >;
 
     /// @brief Definition of "reserved3" field.
     using reserved3 = field::common::res2;

@@ -51,28 +51,52 @@ struct MgaGpsIonoFields
     using reserved1 = field::common::res2;
 
     /// @brief Definition of "ionoAlpha0" field.
-    using ionoAlpha0 = field::common::I1;
+    using ionoAlpha0 =
+        field::common::I1T<
+            comms::option::ScalingRatio<1, 0x40000000>,
+            comms::option::UnitsSeconds
+        >;
 
     /// @brief Definition of "ionoAlpha1" field.
-    using ionoAlpha1 = field::common::I1;
+    using ionoAlpha1 =
+        field::common::I1T<
+            comms::option::ScalingRatio<1, 0x8000000>,
+            comms::option::UnitsSeconds
+        >;
 
     /// @brief Definition of "ionoAlpha2" field.
-    using ionoAlpha2 = field::common::I1;
+    using ionoAlpha2 =
+        field::common::I1T<
+            comms::option::ScalingRatio<1, 0x1000000>,
+            comms::option::UnitsSeconds
+        >;
 
     /// @brief Definition of "ionoAlpha3" field.
-    using ionoAlpha3 = field::common::I1;
+    using ionoAlpha3 = ionoAlpha2;
 
     /// @brief Definition of "ionoBeta0" field.
-    using ionoBeta0 = field::common::I1;
+    using ionoBeta0 =
+        field::common::I1T<
+            comms::option::ScalingRatio<0x800, 1>,
+            comms::option::UnitsSeconds
+        >;
 
     /// @brief Definition of "ionoBeta1" field.
-    using ionoBeta1 = field::common::I1;
+    using ionoBeta1 =
+        field::common::I1T<
+            comms::option::ScalingRatio<0x4000, 1>,
+            comms::option::UnitsSeconds
+        >;
 
     /// @brief Definition of "ionoBeta2" field.
-    using ionoBeta2 = field::common::I1;
+    using ionoBeta2 =
+        field::common::I1T<
+            comms::option::ScalingRatio<0x10000, 1>,
+            comms::option::UnitsSeconds
+        >;
 
     /// @brief Definition of "ionoBeta3" field.
-    using ionoBeta3 = field::common::I1;
+    using ionoBeta3 = ionoBeta2;
 
     /// @brief Definition of "reserved2" field.
     using reserved2 = field::common::res4;

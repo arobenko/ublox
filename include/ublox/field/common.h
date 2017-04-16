@@ -426,7 +426,7 @@ using iTOW =
 
 /// @brief Definition of common @b week field used in multiple messages in
 ///     multiple message classes.
-using week = I2T<UnitsWeeks>;
+using week = I2T<comms::option::UnitsWeeks>;
 
 /// @brief Definition of common @b numSV field used in multiple messages in
 ///     multiple message classes.
