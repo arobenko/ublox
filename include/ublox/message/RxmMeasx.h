@@ -60,7 +60,8 @@ struct RxmMeasxFields
     /// @brief Definition of "gpsTOWacc" field.
     using gpsTOWacc =
         field::common::U2T<
-            comms::option::ScalingRatio<1, 0x10>
+            comms::option::ScalingRatio<1, 0x10>,
+            comms::option::UnitsMilliseconds
         >;
 
     /// @brief Definition of "gloTOWacc" field.
@@ -149,13 +150,15 @@ struct RxmMeasxFields
     /// @brief Definition of "dopplerMS" field.
     using dopplerMS =
         field::common::I4T<
-            comms::option::ScalingRatio<4, 100>
+            comms::option::ScalingRatio<4, 100>,
+            comms::option::UnitsMetersPerSecond
         >;
 
     /// @brief Definition of "dopplerHZ" field.
     using dopplerHZ =
         field::common::I4T<
-            comms::option::ScalingRatio<2, 10>
+            comms::option::ScalingRatio<2, 10>,
+            comms::option::UnitsHertz
         >;
 
     /// @brief Definition of "wholeChips" field.
@@ -173,13 +176,14 @@ struct RxmMeasxFields
     /// @brief Definition of "codePhase" field.
     using codePhase =
         field::common::U4T<
-            comms::option::ScalingRatio<1, 0x200000>
+            comms::option::ScalingRatio<1, 0x200000>,
+            comms::option::UnitsMilliseconds
         >;
 
     /// @brief Definition of "intCodePhase" field.
     using intCodePhase =
         field::common::U1T<
-            field::common::Scaling_ms2s
+            comms::option::UnitsMilliseconds
         >;
 
     /// @brief Definition of "pseuRangeRMSErr" field.

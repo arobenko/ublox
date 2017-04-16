@@ -34,7 +34,7 @@ namespace message
 struct RxmRawFields
 {
     /// @brief Definition of "rcvTow" field.
-    using rcvTow = field::common::I4T<field::common::Scaling_ms2s>;
+    using rcvTow = field::common::I4T<comms::option::UnitsMilliseconds>;
 
     /// @brief Definition of "week" field.
     using week = field::rxm::week;
@@ -49,10 +49,10 @@ struct RxmRawFields
     using cpMes = field::common::R8;
 
     /// @brief Definition of "prMes" field.
-    using prMes = field::common::R8;
+    using prMes = field::common::R8T<comms::option::UnitsMeters>;
 
     /// @brief Definition of "doMes" field.
-    using doMes = field::common::R4;
+    using doMes = field::common::R4T<comms::option::UnitsHertz>;
 
     /// @brief Definition of "sv" field.
     using sv = field::common::U1;

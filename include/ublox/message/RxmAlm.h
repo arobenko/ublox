@@ -37,7 +37,7 @@ struct RxmAlmFields
     using svid = field::rxm::svid_ext;
 
     /// @brief Definition of "week" field.
-    using week = field::common::U4;
+    using week = field::common::U4T<comms::option::UnitsWeeks>;
 
     /// @brief Definition of "dwrd" field.
     /// @tparam TOpt Extra option(s)
