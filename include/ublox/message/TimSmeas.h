@@ -66,20 +66,22 @@ struct TimSmeasFields
     /// @brief Definition of "phaseOffsetFrac" field.
     using phaseOffsetFrac =
         field::common::I1T<
-            comms::option::ScalingRatio<1, 0x100>
+            comms::option::ScalingRatio<1, 0x100>,
+            comms::option::UnitsNanoseconds
         >;
 
     /// @brief Definition of "phaseUncFrac" field.
     using phaseUncFrac =
         field::common::U1T<
-            comms::option::ScalingRatio<1, 0x100>
+            comms::option::ScalingRatio<1, 0x100>,
+            comms::option::UnitsNanoseconds
         >;
 
     /// @brief Definition of "phaseOffset" field.
-    using phaseOffset = field::common::I4T<field::common::Scaling_ns2s>;
+    using phaseOffset = field::common::I4T<comms::option::UnitsNanoseconds>;
 
     /// @brief Definition of "phaseUnc" field.
-    using phaseUnc = field::common::U4T<field::common::Scaling_ns2s>;
+    using phaseUnc = field::common::U4T<comms::option::UnitsNanoseconds>;
 
     /// @brief Definition of "reserved3" field.
     using reserved3 = field::common::res4;

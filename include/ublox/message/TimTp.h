@@ -34,16 +34,20 @@ namespace message
 struct TimTpFields
 {
     /// @brief Definition of "towMS" field.
-    using towMS = field::common::U4T<field::common::Scaling_ms2s>;
+    using towMS = field::common::U4T<comms::option::UnitsMilliseconds>;
 
     /// @brief Definition of "towSubMS" field.
-    using towSubMS = field::common::U4T<comms::option::ScalingRatio<1, 0x20> >;
+    using towSubMS =
+        field::common::U4T<
+            comms::option::ScalingRatio<1, 0x20>,
+            comms::option::UnitsMilliseconds
+        >;
 
     /// @brief Definition of "qErr" field.
     using qErr = field::common::I4;
 
     /// @brief Definition of "week" field.
-    using week = field::common::U2;
+    using week = field::common::U2T<comms::option::UnitsWeeks>;
 
 
     /// @brief Definition of flags bits in "flags" fieldfield.

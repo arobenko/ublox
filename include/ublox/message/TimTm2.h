@@ -113,19 +113,19 @@ struct TimTm2Fields
     using wnF = field::common::U2;
 
     /// @brief Definition of "towMsR" field.
-    using towMsR = field::common::U4T<field::common::Scaling_ms2s>;
+    using towMsR = field::common::U4T<comms::option::UnitsMilliseconds>;
 
     /// @brief Definition of "towSubMsR" field.
-    using towSubMsR = field::common::U4T<field::common::Scaling_ns2s>;
+    using towSubMsR = field::common::U4T<comms::option::UnitsNanoseconds>;
 
     /// @brief Definition of "towMsF" field.
-    using towMsF = field::common::U4T<field::common::Scaling_ms2s>;
+    using towMsF = field::common::U4T<comms::option::UnitsMilliseconds>;
 
     /// @brief Definition of "towSubMsF" field.
-    using towSubMsF = field::common::U4T<field::common::Scaling_ns2s>;
+    using towSubMsF = field::common::U4T<comms::option::UnitsNanoseconds>;
 
     /// @brief Definition of "accEst" field.
-    using accEst = field::common::U4T<field::common::Scaling_ns2s>;
+    using accEst = field::common::U4T<comms::option::UnitsNanoseconds>;
 
     /// @brief All the fields bundled in std::tuple.
     using All = std::tuple<
