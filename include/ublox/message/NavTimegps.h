@@ -43,7 +43,7 @@ struct NavTimegpsFields
     using week = field::nav::week;
 
     /// @brief Definition of "leapS" field.
-    using leapS = field::common::I1;
+    using leapS = field::common::I1T<comms::option::UnitsSeconds>;
 
     /// @brief Definition of "valid" field.
     struct validBits : public

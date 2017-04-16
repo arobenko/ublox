@@ -37,13 +37,13 @@ struct NavTimegloFields
     using iTOW = field::nav::iTOW;
 
     /// @brief Definition of "TOD" field.
-    using TOD = field::common::U4;
+    using TOD = field::common::U4T<comms::option::UnitsSeconds>;
 
     /// @brief Definition of "fTOD" field.
     using fTOD = field::nav::fTOW;
 
     /// @brief Definition of "Nt" field.
-    using Nt = field::common::U2;
+    using Nt = field::common::U2T<comms::option::UnitsDays>;
 
     /// @brief Definition of "N4" field.
     using N4 = field::common::U1;

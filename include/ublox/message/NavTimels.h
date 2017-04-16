@@ -81,7 +81,7 @@ struct NavTimelsFields
         >;
 
     /// @brief Definition of "currLs" field.
-    using currLs = field::common::I1;
+    using currLs = field::common::I1T<comms::option::UnitsSeconds>;
 
     /// @brief Value enumeration for @ref srcOfLsChange field
     enum class SrcOfLsChange : std::uint8_t
@@ -103,10 +103,10 @@ struct NavTimelsFields
         >;
 
     /// @brief Definition of "lsChange" field.
-    using lsChange = field::common::I1;
+    using lsChange = field::common::I1T<comms::option::UnitsSeconds>;
 
     /// @brief Definition of "timeToLsEvent" field.
-    using timeToLsEvent = field::common::I4;
+    using timeToLsEvent = field::common::I4T<comms::option::UnitsSeconds>;
 
     /// @brief Definition of "dateOfLsGpsWn" field.
     using dateOfLsGpsWn = field::common::U2;

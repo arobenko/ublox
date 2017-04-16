@@ -37,7 +37,7 @@ struct NavTimegalFields
     using iTOW = field::nav::iTOW;
 
     /// @brief Definition of "galTOW" field.
-    using galTOW = field::common::U4;
+    using galTOW = field::common::U4T<comms::option::UnitsSeconds>;
 
     /// @brief Definition of "fSOW" field.
     using fGalTOW = field::nav::fTOW;
@@ -46,7 +46,7 @@ struct NavTimegalFields
     using galWno = field::nav::week;
 
     /// @brief Definition of "leapS" field.
-    using leapS = field::common::I1;
+    using leapS = field::common::I1T<comms::option::UnitsSeconds>;
 
     /// @brief Definition of "valid" field.
     struct validBits : public

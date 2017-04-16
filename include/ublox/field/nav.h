@@ -37,16 +37,16 @@ using iTOW = common::iTOW;
 /// @brief Definition of common "fTOW" field.
 using fTOW =
     common::I4T<
-        common::Scaling_ns2s,
+        comms::option::UnitsNanoseconds,
         comms::option::ValidNumValueRange<-500000, 500000>
     >;
 ;
 
 /// @brief Definition of common "ecef" field.
-using ecef = common::I4T<common::Scaling_cm2m>;
+using ecef = common::I4T<comms::option::UnitsCentimeters>;
 
 /// @brief Definition of common "ecefX" field.
-using ecefX = common::I4T<common::Scaling_cm2m>;
+using ecefX = ecef;
 
 /// @brief Definition of common "ecefY" field.
 using ecefY = ecef;
@@ -55,37 +55,45 @@ using ecefY = ecef;
 using ecefZ = ecef;
 
 /// @brief Definition of common "ecefVX" field.
-using ecefVX = ecef;
+using ecefVX = common::I4T<comms::option::UnitsCentimetersPerSecond>;
 
 /// @brief Definition of common "ecefVY" field.
-using ecefVY = ecef;
+using ecefVY = ecefVX;
 
 /// @brief Definition of common "ecefVZ" field.
-using ecefVZ = ecef;
+using ecefVZ = ecefVX;
 
 /// @brief Definition of common "lat" field.
-using lat = common::I4T<comms::option::ScalingRatio<1, 10000000L> >;
+using lat =
+    common::I4T<
+        comms::option::ScalingRatio<1, 10000000L>,
+        comms::option::UnitsDegrees
+    >;
 
 /// @brief Definition of common "lon" field.
-using lon = common::I4T<comms::option::ScalingRatio<1, 10000000L> >;
+using lon =
+    common::I4T<
+        comms::option::ScalingRatio<1, 10000000L>,
+        comms::option::UnitsDegrees
+    >;
 
 /// @brief Definition of common "height" field.
-using height = common::I4T<common::Scaling_mm2m>;
+using height = common::I4T<comms::option::UnitsMillimeters>;
 
 /// @brief Definition of common "pAcc" field.
-using pAcc = common::U4T<common::Scaling_cm2m>;
+using pAcc = common::U4T<comms::option::UnitsCentimeters>;
 
 /// @brief Definition of common "sAcc" field.
-using sAcc = common::U4T<common::Scaling_cm2m>;
+using sAcc = common::U4T<comms::option::UnitsCentimetersPerSecond>;
 
 /// @brief Definition of common "hMSL" field.
-using hMSL = common::I4T<common::Scaling_mm2m>;
+using hMSL = common::I4T<comms::option::UnitsMillimeters>;
 
 /// @brief Definition of common "hAcc" field.
-using hAcc = common::U4T<common::Scaling_mm2m>;
+using hAcc = common::U4T<comms::option::UnitsMillimeters>;
 
 /// @brief Definition of common "vAcc" field.
-using vAcc = common::U4T<common::Scaling_mm2m>;
+using vAcc = common::U4T<comms::option::UnitsMillimeters>;
 
 /// @brief Value enumeration for @ref ublox::field::nav::gpsFix field.
 enum class GpsFix : std::uint8_t
@@ -130,37 +138,41 @@ using month =
 /// @brief Definition of common "day" field.
 using day =
     common::U1T<
-        comms::option::ValidNumValueRange<1, 31>
+        comms::option::ValidNumValueRange<1, 31>,
+        comms::option::UnitsDays
     >;
 
 
 /// @brief Definition of common "hour" field.
 using hour =
     common::U1T<
-        comms::option::ValidNumValueRange<0, 23>
+        comms::option::ValidNumValueRange<0, 23>,
+        comms::option::UnitsHours
     >;
 
 
 /// @brief Definition of common "min" field.
 using min =
     common::U1T<
-        comms::option::ValidNumValueRange<0, 59>
+        comms::option::ValidNumValueRange<0, 59>,
+        comms::option::UnitsMinutes
     >;
 
 
 /// @brief Definition of common "sec" field.
 using sec =
     common::U1T<
-        comms::option::ValidNumValueRange<0, 60>
+        comms::option::ValidNumValueRange<0, 60>,
+        comms::option::UnitsSeconds
     >;
 
 /// @brief Definition of common "tAcc" field.
-using tAcc = common::U4T<common::Scaling_ns2s>;
+using tAcc = common::U4T<comms::option::UnitsNanoseconds>;
 
 /// @brief Definition of common "nano" field.
 using nano =
     common::I4T<
-        common::Scaling_ns2s,
+        comms::option::UnitsNanoseconds,
         comms::option::ValidNumValueRange<-1000000000L, 1000000000>
     >;
 
@@ -168,7 +180,9 @@ using nano =
 /// @brief Definition of common "heading" field.
 using heading =
     common::I4T<
-        comms::option::ScalingRatio<1, 100000> >;
+        comms::option::ScalingRatio<1, 100000>,
+        comms::option::UnitsDegrees
+    >;
 
 /// @brief Definition of common "numCh" field.
 using numCh = common::U1;

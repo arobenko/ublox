@@ -147,13 +147,13 @@ struct NavSbasFields
     using reserved1 = field::common::res1;
 
     /// @brief Definition of "prc" field.
-    using prc = field::common::U2T<field::common::Scaling_cm2m>;
+    using prc = field::common::U2T<comms::option::UnitsCentimeters>;
 
     /// @brief Definition of "reserved2" field.
     using reserved2 = field::common::res2;
 
     /// @brief Definition of "ic" field.
-    using ic = field::common::U2T<field::common::Scaling_cm2m>;
+    using ic = field::common::U2T<comms::option::UnitsCentimeters>;
 
     /// @brief Definition of the block of fields used in @ref data list
     struct block : public

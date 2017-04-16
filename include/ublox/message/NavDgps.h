@@ -45,7 +45,7 @@ struct NavDgpsFields
     using iTOW = field::nav::iTOW;
 
     /// @brief Definition of "age" field.
-    using age = field::common::I4T<field::common::Scaling_ms2s>;
+    using age = field::common::I4T<comms::option::UnitsMilliseconds>;
 
     /// @brief Definition of "baseId" field.
     using baseId = field::common::I2;
@@ -107,13 +107,13 @@ struct NavDgpsFields
     };
 
     /// @brief Definition of "agec" field.
-    using ageC = field::common::U2T<field::common::Scaling_ms2s>;
+    using ageC = field::common::U2T<comms::option::UnitsMilliseconds>;
 
     /// @brief Definition of "prc" field.
-    using prc = field::common::R4;
+    using prc = field::common::R4T<comms::option::UnitsMeters>;
 
     /// @brief Definition of "prrc" field.
-    using prrc = field::common::R4;
+    using prrc = field::common::R4T<comms::option::UnitsMetersPerSecond>;
 
     /// @brief Definition of the repeated block as a single bundle field
     struct block : public

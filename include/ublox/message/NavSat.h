@@ -59,13 +59,17 @@ struct NavSatFields
     using cno = field::common::U1;
 
     /// @brief Definition of "elev" field.
-    using elev = field::common::I1;
+    using elev = field::common::I1T<comms::option::UnitsDegrees>;
 
     /// @brief Definition of "azim" field.
-    using azim = field::common::I2;
+    using azim = field::common::I2T<comms::option::UnitsDegrees>;
 
     /// @brief Definition of "prRes" field.
-    using prRes = field::common::I2T<comms::option::ScalingRatio<1, 10> >;
+    using prRes =
+        field::common::I2T<
+            comms::option::ScalingRatio<1, 10>,
+            comms::option::UnitsMeters
+        >;
 
     /// @brief Value enumeration for @ref qualityInd field.
     enum class QualityInd : std::uint8_t

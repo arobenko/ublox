@@ -48,7 +48,7 @@ struct NavEkfstatusFields
     using pulses = field::common::I4;
 
     /// @brief Definition of "period" field.
-    using period = field::common::I4T<field::common::Scaling_ms2s>;
+    using period = field::common::I4T<comms::option::UnitsMilliseconds>;
 
     /// @brief Definition of "gyroMean" field.
     using gyroMean = field::common::U4T<comms::option::ScalingRatio<1, 100> >;

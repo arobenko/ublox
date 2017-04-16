@@ -174,7 +174,7 @@ struct NavPvtFields
     using vAcc = field::nav::vAcc;
 
     /// @brief Definition of "velN" field.
-    using velN = field::common::I4T<field::common::Scaling_mm2m>;
+    using velN = field::common::I4T<comms::option::UnitsMillimetersPerSecond>;
 
     /// @brief Definition of "velE" field.
     using velE = velN;
@@ -183,16 +183,20 @@ struct NavPvtFields
     using velD = velN;
 
     /// @brief Definition of "gSpeed" field.
-    using gSpeed = field::common::I4T<field::common::Scaling_mm2m>;
+    using gSpeed = field::common::I4T<comms::option::UnitsMillimetersPerSecond>;
 
     /// @brief Definition of "headMot" field.
     using headMot = field::nav::heading;
 
     /// @brief Definition of "sAcc" field.
-    using sAcc = field::common::U4T<field::common::Scaling_mm2m>;
+    using sAcc = field::common::U4T<comms::option::UnitsMillimetersPerSecond>;
 
     /// @brief Definition of "headAcc" field.
-    using headAcc = field::common::U4T<comms::option::ScalingRatio<1, 100000> >;
+    using headAcc =
+        field::common::U4T<
+            comms::option::ScalingRatio<1, 100000>,
+            comms::option::UnitsDegrees
+        >;
 
     /// @brief Definition of "pDOP" field.
     using pDOP = field::nav::pDOP;
