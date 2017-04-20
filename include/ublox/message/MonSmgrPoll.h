@@ -16,7 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 /// @file
-/// @brief Contains definition of MON-GNSS (@b poll) message and its fields.
+/// @brief Contains definition of MON-SMGR (@b poll) message and its fields.
 
 #pragma once
 
@@ -28,63 +28,48 @@ namespace ublox
 namespace message
 {
 
-/// @brief Accumulates details of all the MON-GNSS (@b poll) message fields.
-/// @see MonGnssPoll
-struct MonGnssPollFields
+/// @brief Accumulates details of all the MON-SMGR (@b poll) message fields.
+/// @see MonSmgrPoll
+struct MonSmgrPollFields
 {
     /// @brief All the fields bundled in std::tuple.
     using All = std::tuple<>;
 };
 
-/// @brief Definition of MON-GNSS (@b poll) message
+/// @brief Definition of MON-SMGR (@b poll) message
 /// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
 ///     various implementation options. @n
-///     See @ref MonGnssPollFields and for definition of the fields this message contains.
+///     See @ref MonSmgrPollFields and for definition of the fields this message contains.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
-class MonGnssPoll : public
+class MonSmgrPoll : public
     comms::MessageBase<
         TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_MON_GNSS>,
-        comms::option::FieldsImpl<MonGnssPollFields::All>,
-        comms::option::MsgType<MonGnssPoll<TMsgBase> >
+        comms::option::StaticNumIdImpl<MsgId_MON_SMGR>,
+        comms::option::FieldsImpl<MonSmgrPollFields::All>,
+        comms::option::MsgType<MonSmgrPoll<TMsgBase> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_MON_GNSS>,
-        comms::option::FieldsImpl<MonGnssPollFields::All>,
-        comms::option::MsgType<MonGnssPoll<TMsgBase> >
-    > Base;
 public:
 
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
-
     /// @brief Default constructor
-    MonGnssPoll() = default;
+    MonSmgrPoll() = default;
 
     /// @brief Copy constructor
-    MonGnssPoll(const MonGnssPoll&) = default;
+    MonSmgrPoll(const MonSmgrPoll&) = default;
 
     /// @brief Move constructor
-    MonGnssPoll(MonGnssPoll&& other) = default;
+    MonSmgrPoll(MonSmgrPoll&& other) = default;
 
     /// @brief Destructor
-    ~MonGnssPoll() = default;
+    ~MonSmgrPoll() = default;
 
     /// @brief Copy assignment
-    MonGnssPoll& operator=(const MonGnssPoll&) = default;
+    MonSmgrPoll& operator=(const MonSmgrPoll&) = default;
 
     /// @brief Move assignment
-    MonGnssPoll& operator=(MonGnssPoll&&) = default;
+    MonSmgrPoll& operator=(MonSmgrPoll&&) = default;
 };
 
 

@@ -122,6 +122,7 @@
 #include "message/MonRxr.h"
 #include "message/MonPatch.h"
 #include "message/MonGnss.h"
+#include "message/MonSmgr.h"
 
 #include "message/AidIni.h"
 #include "message/AidHui.h"
@@ -259,6 +260,7 @@ using InputMessages =
         message::MonRxr<TMessage>,
         message::MonPatch<TMessage>,
         message::MonGnss<TMessage>,
+        message::MonSmgr<TMessage>,
         message::AidIni<TMessage>,
         message::AidHui<TMessage>,
         message::AidAlm<TMessage>,
