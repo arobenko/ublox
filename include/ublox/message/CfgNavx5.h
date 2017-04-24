@@ -48,8 +48,8 @@ struct CfgNavx5Fields
         template <typename TField>
         bool operator()(const TField& field) const
         {
-            typedef typename std::decay<decltype(field)>::type FieldType;
-            typedef typename FieldType::ValueType ValueType;
+            using FieldType = typename std::decay<decltype(field)>::type;
+            using ValueType = typename FieldType::ValueType;
             auto value = field.value();
             if (value == static_cast<ValueType>(0)) {
                 return true;
@@ -251,12 +251,6 @@ class CfgNavx5 : public
         comms::option::MsgType<CfgNavx5<TMsgBase> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_CFG_NAVX5>,
-        comms::option::FieldsImpl<CfgNavx5Fields::All>,
-        comms::option::MsgType<CfgNavx5<TMsgBase> >
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.

@@ -90,12 +90,6 @@ class CfgDatUser : public
         comms::option::MsgType<CfgDatUser<TMsgBase> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_CFG_DAT>,
-        comms::option::FieldsImpl<CfgDatUserFields::All>,
-        comms::option::MsgType<CfgDatUser<TMsgBase> >
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.

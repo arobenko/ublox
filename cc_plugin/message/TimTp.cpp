@@ -51,7 +51,7 @@ QVariantMap createProps_towSubMS()
 
 QVariantMap createProps_flagsBits()
 {
-    typedef TimTpFields::flagsBits Field;
+    using Field = TimTpFields::flagsBits;
     auto props =
         cc::property::field::ForField<Field>()
             .name("flags")
@@ -64,7 +64,7 @@ QVariantMap createProps_flagsBits()
 
 QVariantMap createProps_raim()
 {
-    typedef TimTpFields::raim Field;
+    using Field = TimTpFields::raim;
     auto props =
         cc::property::field::ForField<Field>()
             .name("raim")
@@ -78,7 +78,7 @@ QVariantMap createProps_raim()
 
 QVariantMap createProps_flags()
 {
-    typedef TimTpFields::flags Field;
+    using Field = TimTpFields::flags;
     auto props =
         cc::property::field::ForField<Field>()
             .name("flags")
@@ -91,7 +91,7 @@ QVariantMap createProps_flags()
 
 QVariantMap createProps_timeRefGnss()
 {
-    typedef TimTpFields::timeRefGnss Field;
+    using Field = TimTpFields::timeRefGnss;
     return
         cc::property::field::ForField<Field>()
             .name("timeRefGnss")
@@ -105,7 +105,7 @@ QVariantMap createProps_timeRefGnss()
 
 QVariantMap createProps_refInfo()
 {
-    typedef TimTpFields::refInfo Field;
+    using Field = TimTpFields::refInfo;
     auto props =
         cc::property::field::ForField<Field>()
             .name("refInfo")

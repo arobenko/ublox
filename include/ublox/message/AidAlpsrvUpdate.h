@@ -96,13 +96,6 @@ class AidAlpsrvUpdate : public
         comms::option::HasDoRefresh
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_AID_ALPSRV>,
-        comms::option::FieldsImpl<AidAlpsrvUpdateFields::All<TDataOpt> >,
-        comms::option::MsgType<AidAlpsrvUpdate<TMsgBase, TDataOpt> >,
-        comms::option::HasDoRefresh
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.
@@ -147,6 +140,7 @@ public:
     template <typename TIter>
     comms::ErrorStatus doRead(TIter& iter, std::size_t len)
     {
+        using Base = typename std::decay<decltype(comms::toMessageBase(*this))>::type;
         auto es = Base::template readFieldsUntil<FieldIdx_ofs>(iter, len);
         if (es != comms::ErrorStatus::Success) {
             return es;
@@ -177,14 +171,11 @@ public:
     /// @return @b true in case the mode of "size" field was modified, @b false otherwise
     bool doRefresh()
     {
-        auto& allFields = Base::fields();
-        auto& sizeField = std::get<FieldIdx_size>(allFields);
-        auto& dataField = std::get<FieldIdx_data>(allFields);
-        if (sizeField.value() == dataField.value().size()) {
+        if (field_size().value() == field_data().value().size()) {
             return false;
         }
 
-        sizeField.value() = dataField.value().size();
+        field_size().value() = field_data().value().size();
         return true;
     }
 };

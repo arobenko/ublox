@@ -51,22 +51,7 @@ class TimVrfyPoll : public
         comms::option::MsgType<TimVrfyPoll<TMsgBase> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_TIM_VRFY>,
-        comms::option::FieldsImpl<TimVrfyPollFields::All>,
-        comms::option::MsgType<TimVrfyPoll<TMsgBase> >
-    > Base;
 public:
-
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
 
     /// @brief Default constructor
     TimVrfyPoll() = default;

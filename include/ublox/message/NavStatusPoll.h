@@ -51,22 +51,7 @@ class NavStatusPoll : public
         comms::option::MsgType<NavStatusPoll<TMsgBase> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_NAV_STATUS>,
-        comms::option::FieldsImpl<NavStatusPollFields::All>,
-        comms::option::MsgType<NavStatusPoll<TMsgBase> >
-    > Base;
 public:
-
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
 
     /// @brief Default constructor
     NavStatusPoll() = default;

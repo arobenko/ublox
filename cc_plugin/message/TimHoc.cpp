@@ -43,7 +43,7 @@ using ublox::message::TimHocFields;
 
 QVariantMap createProps_oscId()
 {
-    typedef TimHocFields::oscId Field;
+    using Field = TimHocFields::oscId;
     auto props =
         cc::property::field::ForField<Field>()
             .name("oscId")
@@ -56,7 +56,7 @@ QVariantMap createProps_oscId()
 
 QVariantMap createProps_flags()
 {
-    typedef TimHocFields::flags Field;
+    using Field = TimHocFields::flags;
     auto props =
         cc::property::field::ForField<Field>()
             .name("flags")

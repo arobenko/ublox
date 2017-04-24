@@ -48,9 +48,9 @@ class TransportMessage : public
         cc_plugin::Message,
         details::TransportMessageFields>
 {
-    typedef comms_champion::TransportMessageBase<
+    using Base = comms_champion::TransportMessageBase<
         cc_plugin::Message,
-        details::TransportMessageFields> Base;
+        details::TransportMessageFields>;
 public:
     enum FieldIdx
     {

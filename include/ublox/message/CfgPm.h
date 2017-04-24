@@ -200,12 +200,6 @@ class CfgPm : public
         comms::option::MsgType<CfgPm<TMsgBase> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_CFG_PM>,
-        comms::option::FieldsImpl<CfgPmFields::All>,
-        comms::option::MsgType<CfgPm<TMsgBase> >
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.

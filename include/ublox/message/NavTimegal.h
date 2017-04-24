@@ -90,12 +90,6 @@ class NavTimegal : public
         comms::option::MsgType<NavTimegal<TMsgBase> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_NAV_TIMEGAL>,
-        comms::option::FieldsImpl<NavTimegalFields::All>,
-        comms::option::MsgType<NavTimegal<TMsgBase> >
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.

@@ -58,12 +58,6 @@ class CfgDatStandard : public
         comms::option::MsgType<CfgDatStandard<TMsgBase> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_CFG_DAT>,
-        comms::option::FieldsImpl<CfgDatStandardFields::All>,
-        comms::option::MsgType<CfgDatStandard<TMsgBase> >
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.

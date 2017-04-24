@@ -34,10 +34,10 @@ class ProtocolImpl : public
         cc_plugin::TransportMessage
     >
 {
-    typedef comms_champion::ProtocolBase<
+    using Base = comms_champion::ProtocolBase<
         cc_plugin::Stack,
         cc_plugin::TransportMessage
-    > Base;
+    >;
 public:
     friend class ublox::cc_plugin::Protocol;
 

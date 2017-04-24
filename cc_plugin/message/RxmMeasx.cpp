@@ -44,7 +44,7 @@ using ublox::message::RxmMeasxFields;
 
 QVariantMap createProps_towSet()
 {
-    typedef RxmMeasxFields::towSet Field;
+    using Field = RxmMeasxFields::towSet;
     auto props =
         cc::property::field::ForField<Field>()
             .name("towSet")
@@ -57,7 +57,7 @@ QVariantMap createProps_towSet()
 
 QVariantMap createProps_flags()
 {
-    typedef RxmMeasxFields::flags Field;
+    using Field = RxmMeasxFields::flags;
     auto props =
         cc::property::field::ForField<Field>()
             .name("flags")
@@ -69,7 +69,7 @@ QVariantMap createProps_flags()
 
 QVariantMap createProps_mpathIndic()
 {
-    typedef RxmMeasxFields::mpathIndic Field;
+    using Field = RxmMeasxFields::mpathIndic;
     auto props =
         cc::property::field::ForField<Field>()
             .name("mpathIndic")

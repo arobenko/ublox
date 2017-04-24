@@ -44,7 +44,7 @@ namespace
 using ublox::message::NavTimelsFields;
 QVariantMap createProps_srcOfCurrLs()
 {
-    typedef NavTimelsFields::srcOfCurrLs Field;
+    using Field = NavTimelsFields::srcOfCurrLs;
     return
         cc::property::field::ForField<Field>()
             .name("srcOfCurrLs")
@@ -62,7 +62,7 @@ QVariantMap createProps_srcOfCurrLs()
 
 QVariantMap createProps_srcOfLsChange()
 {
-    typedef NavTimelsFields::srcOfLsChange Field;
+    using Field = NavTimelsFields::srcOfLsChange;
     auto props =
         cc::property::field::ForField<Field>()
             .name("srcOfLsChange")
@@ -80,7 +80,7 @@ QVariantMap createProps_srcOfLsChange()
 
 QVariantMap createProps_valid()
 {
-    typedef NavTimelsFields::validBits Field;
+    using Field = NavTimelsFields::validBits;
     auto props =
         cc::property::field::ForField<Field>()
             .name("valid")

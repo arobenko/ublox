@@ -155,13 +155,7 @@ class CfgGnss : public
         comms::option::HasDoRefresh
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_CFG_GNSS>,
-        comms::option::FieldsImpl<CfgGnssFields::All<TBlocksListOpt> >,
-        comms::option::MsgType<CfgGnss<TMsgBase, TBlocksListOpt> >,
-        comms::option::HasDoRefresh
-    > Base;
+
 public:
 
     /// @brief Allow access to internal fields.
@@ -202,16 +196,13 @@ public:
     template <typename TIter>
     comms::ErrorStatus doRead(TIter& iter, std::size_t len)
     {
+        using Base = typename std::decay<decltype(comms::toMessageBase(*this))>::type;
         auto es = Base::template readFieldsUntil<FieldIdx_blocksList>(iter, len);
         if (es != comms::ErrorStatus::Success) {
             return es;
         }
 
-        auto& allFields = Base::fields();
-        auto& numBlocksField = std::get<FieldIdx_numConfigBlocks>(allFields);
-        auto& dataField = std::get<FieldIdx_blocksList>(allFields);
-        dataField.forceReadElemCount(numBlocksField.value());
-
+        field_blocksList().forceReadElemCount(field_numConfigBlocks().value());
         return Base::template readFieldsFrom<FieldIdx_blocksList>(iter, len);
     }
 
@@ -222,14 +213,11 @@ public:
     /// @return @b true in case the value of @b "numConfigBlocks" field was modified, @b false otherwise
     bool doRefresh()
     {
-        auto& allFields = Base::fields();
-        auto& numBlocksField = std::get<FieldIdx_numConfigBlocks>(allFields);
-        auto& dataField = std::get<FieldIdx_blocksList>(allFields);
-        if (numBlocksField.value() == dataField.value().size()) {
+        if (field_numConfigBlocks().value() == field_blocksList().value().size()) {
             return false;
         }
 
-        numBlocksField.value() = dataField.value().size();
+        field_numConfigBlocks().value() = field_blocksList().value().size();
         return true;
     }
 

@@ -41,8 +41,8 @@ struct MsgIdValueValidator
     template <typename TField>
     bool operator()(const TField& field) const
     {
-        typedef bool (*ValidateFunc)(ublox::MsgId);
-        typedef std::pair<std::uint8_t, ValidateFunc> FuncInfo;
+        using ValidateFunc = bool (*)(ublox::MsgId);
+        using FuncInfo = std::pair<std::uint8_t, ValidateFunc>;
 
         static const FuncInfo Funcs[] = {
             std::make_pair(classId(MsgId_NAV_POSECEF), &MsgIdValueValidator::validateNav),

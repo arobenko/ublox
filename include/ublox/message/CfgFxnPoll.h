@@ -51,22 +51,8 @@ class CfgFxnPoll : public
         comms::option::MsgType<CfgFxnPoll<TMsgBase> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_CFG_FXN>,
-        comms::option::FieldsImpl<CfgFxnPollFields::All>,
-        comms::option::MsgType<CfgFxnPoll<TMsgBase> >
-    > Base;
+
 public:
-
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
 
     /// @brief Default constructor
     CfgFxnPoll() = default;

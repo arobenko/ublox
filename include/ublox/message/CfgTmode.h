@@ -95,12 +95,6 @@ class CfgTmode : public
         comms::option::MsgType<CfgTmode<TMsgBase> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_CFG_TMODE>,
-        comms::option::FieldsImpl<CfgTmodeFields::All>,
-        comms::option::MsgType<CfgTmode<TMsgBase> >
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.

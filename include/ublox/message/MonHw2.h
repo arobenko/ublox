@@ -134,12 +134,6 @@ class MonHw2 : public
         comms::option::MsgType<MonHw2<TMsgBase> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_MON_HW2>,
-        comms::option::FieldsImpl<MonHw2Fields::All>,
-        comms::option::MsgType<MonHw2<TMsgBase> >
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.

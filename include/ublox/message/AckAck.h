@@ -57,12 +57,6 @@ class AckAck : public
         comms::option::MsgType<AckAck<TMsgBase> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_ACK_ACK>,
-        comms::option::FieldsImpl<AckAckFields::All>,
-        comms::option::MsgType<AckAck<TMsgBase> >
-    > Base;
 public:
     /// @brief Allow access to internal fields.
     /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro

@@ -312,7 +312,7 @@ namespace ublox
 namespace cc_plugin
 {
 
-typedef std::tuple<
+using AllMessages = std::tuple<
     cc_plugin::message::NavPosecef,
     cc_plugin::message::NavPosecefPoll,
     cc_plugin::message::NavPosllh,
@@ -584,7 +584,7 @@ typedef std::tuple<
     cc_plugin::message::LogRetrieveposextra,
     cc_plugin::message::SecSign,
     cc_plugin::message::SecUniqid
-> AllMessages;
+>;
 
 }  // namespace cc_plugin
 

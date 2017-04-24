@@ -140,12 +140,6 @@ class AidHui : public
         comms::option::MsgType<AidHui<TMsgBase> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_AID_HUI>,
-        comms::option::FieldsImpl<AidHuiFields::All>,
-        comms::option::MsgType<AidHui<TMsgBase> >
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.

@@ -29,7 +29,7 @@ namespace cc_plugin
 template <typename TMsgBase, typename TActualMsg>
 class ProtocolMessageBase : public comms_champion::ProtocolMessageBase<TMsgBase, TActualMsg>
 {
-    typedef comms_champion::ProtocolMessageBase<TMsgBase, TActualMsg> Base;
+    using Base = comms_champion::ProtocolMessageBase<TMsgBase, TActualMsg>;
 public:
     ProtocolMessageBase() = default;
     ProtocolMessageBase(const ProtocolMessageBase&) = default;

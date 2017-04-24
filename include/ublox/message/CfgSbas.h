@@ -148,12 +148,6 @@ class CfgSbas : public
         comms::option::MsgType<CfgSbas<TMsgBase> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_CFG_SBAS>,
-        comms::option::FieldsImpl<CfgSbasFields::All>,
-        comms::option::MsgType<CfgSbas<TMsgBase> >
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.

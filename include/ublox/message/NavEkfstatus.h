@@ -157,12 +157,6 @@ class NavEkfstatus : public
         comms::option::MsgType<NavEkfstatus<TMsgBase> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_NAV_EKFSTATUS>,
-        comms::option::FieldsImpl<NavEkfstatusFields::All>,
-        comms::option::MsgType<NavEkfstatus<TMsgBase> >
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.

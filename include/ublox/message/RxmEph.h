@@ -91,13 +91,6 @@ class RxmEph : public
         comms::option::HasDoRefresh
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_RXM_EPH>,
-        comms::option::FieldsImpl<RxmEphFields::All<TSfOpt> >,
-        comms::option::MsgType<RxmEph<TMsgBase, TSfOpt> >,
-        comms::option::HasDoRefresh
-    > Base;
 public:
     /// @brief Allow access to internal fields.
     /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
@@ -147,24 +140,20 @@ public:
     template <typename TIter>
     comms::ErrorStatus doRead(TIter& iter, std::size_t len)
     {
+        using Base = typename std::decay<decltype(comms::toMessageBase(*this))>::type;
         auto es = Base::template readFieldsUntil<FieldIdx_sf1d>(iter, len);
         if (es != comms::ErrorStatus::Success) {
             return es;
         }
 
-        auto& allFields = Base::fields();
-        auto& howField = std::get<FieldIdx_how>(allFields);
         auto sfMode = comms::field::OptionalMode::Exists;
-        if (howField.value() == 0U) {
+        if (field_how().value() == 0U) {
             sfMode = comms::field::OptionalMode::Missing;
         }
 
-        auto& sf1dField = std::get<FieldIdx_sf1d>(allFields);
-        auto& sf2dField = std::get<FieldIdx_sf2d>(allFields);
-        auto& sf3dField = std::get<FieldIdx_sf3d>(allFields);
-        sf1dField.setMode(sfMode);
-        sf2dField.setMode(sfMode);
-        sf3dField.setMode(sfMode);
+        field_sf1d().setMode(sfMode);
+        field_sf2d().setMode(sfMode);
+        field_sf3d().setMode(sfMode);
         return Base::template readFieldsFrom<FieldIdx_sf1d>(iter, len);
     }
 
@@ -177,25 +166,20 @@ public:
     /// @return @b true in case the modes of "sfXd" fields were modified, @b false otherwise
     bool doRefresh()
     {
-        auto& allFields = Base::fields();
-        auto& howField = std::get<FieldIdx_how>(allFields);
         auto expectedMode = comms::field::OptionalMode::Exists;
-        if (howField.value() == 0U) {
+        if (field_how().value() == 0U) {
             expectedMode = comms::field::OptionalMode::Missing;
         }
 
-        auto& sf1dField = std::get<FieldIdx_sf1d>(allFields);
-        auto& sf2dField = std::get<FieldIdx_sf2d>(allFields);
-        auto& sf3dField = std::get<FieldIdx_sf3d>(allFields);
-        if ((sf1dField.getMode() == expectedMode) &&
-            (sf2dField.getMode() == expectedMode) &&
-            (sf3dField.getMode() == expectedMode)){
+        if ((field_sf1d().getMode() == expectedMode) &&
+            (field_sf2d().getMode() == expectedMode) &&
+            (field_sf3d().getMode() == expectedMode)){
             return false;
         }
 
-        sf1dField.setMode(expectedMode);
-        sf2dField.setMode(expectedMode);
-        sf3dField.setMode(expectedMode);
+        field_sf1d().setMode(expectedMode);
+        field_sf2d().setMode(expectedMode);
+        field_sf3d().setMode(expectedMode);
         return true;
     }
 

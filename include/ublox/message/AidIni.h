@@ -37,7 +37,8 @@ struct AidIniFields
     /// @brief Definition of "ecefX" field.
     using ecefX =
         field::common::OptionalT<
-            field::common::I4T<comms::option::UnitsCentimeters>
+            field::common::I4T<comms::option::UnitsCentimeters>,
+            comms::option::DefaultOptionalMode<comms::field::OptionalMode::Exists>
         >;
 
     /// @brief Definition of "lat" field.
@@ -46,7 +47,8 @@ struct AidIniFields
             field::common::I4T<
                 comms::option::ScalingRatio<1, 10000000L>,
                 comms::option::UnitsDegrees
-            >
+            >,
+            comms::option::DefaultOptionalMode<comms::field::OptionalMode::Missing>
         >;
 
     /// @brief Definition of "ecefY" field.
@@ -59,7 +61,11 @@ struct AidIniFields
     using ecefZ = ecefX;
 
     /// @brief Definition of "alt" field.
-    using alt = ecefZ;
+    using alt =
+        field::common::OptionalT<
+            field::common::I4T<comms::option::UnitsCentimeters>,
+            comms::option::DefaultOptionalMode<comms::field::OptionalMode::Missing>
+        >;
 
     /// @brief Definition of "posAcc" field.
     using posAcc = field::common::U4T<comms::option::UnitsCentimeters>;
@@ -80,8 +86,8 @@ struct AidIniFields
     /// @brief Definition of "wno" field.
     using wno =
         field::common::OptionalT<
-            field::common::U2,
-            comms::option::UnitsWeeks
+            field::common::U2T<comms::option::UnitsWeeks>,
+            comms::option::DefaultOptionalMode<comms::field::OptionalMode::Exists>
         >;
 
     /// @brief Definition of the @ref date bitfield
@@ -109,12 +115,17 @@ struct AidIniFields
     };
 
     /// @brief Definition of "date" field.
-    using date = field::common::OptionalT<dateBitfield>;
+    using date =
+        field::common::OptionalT<
+            dateBitfield,
+            comms::option::DefaultOptionalMode<comms::field::OptionalMode::Missing>
+        >;
 
     /// @brief Definition of "tow" field.
     using tow =
         field::common::OptionalT<
-            field::common::U4T<comms::option::UnitsMilliseconds>
+            field::common::U4T<comms::option::UnitsMilliseconds>,
+            comms::option::DefaultOptionalMode<comms::field::OptionalMode::Exists>
         >;
 
     /// @brief Definition of the @ref time bitfield
@@ -148,7 +159,11 @@ struct AidIniFields
     };
 
     /// @brief Definition of "time" field.
-    using time = field::common::OptionalT<timeBitfield>;
+    using time =
+        field::common::OptionalT<
+            timeBitfield,
+            comms::option::DefaultOptionalMode<comms::field::OptionalMode::Missing>
+        >;
 
     /// @brief Definition of "towNs" field.
     using towNs = field::common::I4T<comms::option::UnitsNanoseconds>;
@@ -162,7 +177,8 @@ struct AidIniFields
     /// @brief Definition of "clkD" field.
     using clkD =
         field::common::OptionalT<
-            field::common::I4T<comms::option::UnitsNanoseconds>
+            field::common::I4T<comms::option::UnitsNanoseconds>,
+            comms::option::DefaultOptionalMode<comms::field::OptionalMode::Exists>
         >;
 
     /// @brief Definition of "freq" field.
@@ -170,19 +186,23 @@ struct AidIniFields
         field::common::OptionalT<
             field::common::I4T<
                 comms::option::ScalingRatio<1, 100>,
-                comms::option::UnitsHertz>
+                comms::option::UnitsHertz
+            >,
+            comms::option::DefaultOptionalMode<comms::field::OptionalMode::Missing>
         >;
 
     /// @brief Definition of "clkDAcc" field.
     using clkDAcc =
         field::common::OptionalT<
-            field::common::U4T<comms::option::UnitsNanoseconds>
+            field::common::U4T<comms::option::UnitsNanoseconds>,
+            comms::option::DefaultOptionalMode<comms::field::OptionalMode::Exists>
         >;
 
     /// @brief Definition of "freqAcc" field.
     using freqAcc =
         field::common::OptionalT<
-            field::common::U4
+            field::common::U4,
+            comms::option::DefaultOptionalMode<comms::field::OptionalMode::Missing>
         >;
 
     /// @brief Definition of "flags" field.
@@ -250,13 +270,6 @@ class AidIni : public
         comms::option::HasDoRefresh
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_AID_INI>,
-        comms::option::FieldsImpl<AidIniFields::All>,
-        comms::option::MsgType<AidIni<TMsgBase> >,
-        comms::option::HasDoRefresh
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.
@@ -311,25 +324,7 @@ public:
     /// @details The existing/missing mode of the optional fields is determined
     ///     by the default value of the @b flags (see @ref AidIniFields::flags)
     ///     field.
-    AidIni()
-    {
-        auto& allFields = Base::fields();
-
-        std::get<FieldIdx_ecefX>(allFields).setExists();
-        std::get<FieldIdx_lat>(allFields).setMissing();
-        std::get<FieldIdx_ecefY>(allFields).setExists();
-        std::get<FieldIdx_lon>(allFields).setMissing();
-        std::get<FieldIdx_ecefZ>(allFields).setExists();
-        std::get<FieldIdx_alt>(allFields).setMissing();
-        std::get<FieldIdx_wno>(allFields).setExists();
-        std::get<FieldIdx_date>(allFields).setMissing();
-        std::get<FieldIdx_tow>(allFields).setExists();
-        std::get<FieldIdx_time>(allFields).setMissing();
-        std::get<FieldIdx_clkD>(allFields).setExists();
-        std::get<FieldIdx_freq>(allFields).setMissing();
-        std::get<FieldIdx_clkDAcc>(allFields).setExists();
-        std::get<FieldIdx_freqAcc>(allFields).setMissing();
-    }
+    AidIni() = default;
 
     /// @brief Copy constructor
     AidIni(const AidIni&) = default;
@@ -355,46 +350,29 @@ public:
     template <typename TIter>
     comms::ErrorStatus doRead(TIter& iter, std::size_t len)
     {
-        auto& allFields = Base::fields();
-        auto& flagsField = std::get<FieldIdx_flags>(allFields);
-        flagsField.value() = 0;
+        using Base = typename std::decay<decltype(comms::toMessageBase(*this))>::type;
+        field_flags().value() = 0;
+        doRefresh();
 
         auto es = Base::doRead(iter, len);
         if (es != comms::ErrorStatus::Success) {
             return es;
         }
 
-        if (flagsField.getBitValue(AidIniFields::flags::BitIdx_lla)) {
-            auto& ecefXField = std::get<FieldIdx_ecefX>(allFields);
-            auto& latField = std::get<FieldIdx_lat>(allFields);
-            auto& ecefYField = std::get<FieldIdx_ecefY>(allFields);
-            auto& lonField = std::get<FieldIdx_lon>(allFields);
-            auto& ecefZField = std::get<FieldIdx_ecefZ>(allFields);
-            auto& altField = std::get<FieldIdx_alt>(allFields);
-
-            reassignToField(ecefXField, latField);
-            reassignToField(ecefYField, lonField);
-            reassignToField(ecefZField, altField);
+        if (field_flags().getBitValue(AidIniFields::flags::BitIdx_lla)) {
+            reassignToField(field_ecefX(), field_lat());
+            reassignToField(field_ecefY(), field_lon());
+            reassignToField(field_ecefZ(), field_alt());
         }
 
-        if (flagsField.getBitValue(AidIniFields::flags::BitIdx_utc)) {
-            auto& wnoField = std::get<FieldIdx_wno>(allFields);
-            auto& dateField = std::get<FieldIdx_date>(allFields);
-            auto& towField = std::get<FieldIdx_tow>(allFields);
-            auto& timeField = std::get<FieldIdx_time>(allFields);
-
-            reassignToBitfield(wnoField, dateField);
-            reassignToBitfield(towField, timeField);
+        if (field_flags().getBitValue(AidIniFields::flags::BitIdx_utc)) {
+            reassignToBitfield(field_wno(), field_date());
+            reassignToBitfield(field_tow(), field_time());
         }
 
-        if (flagsField.getBitValue(AidIniFields::flags::BitIdx_clockF)) {
-            auto& clkDField = std::get<FieldIdx_clkD>(allFields);
-            auto& freqField = std::get<FieldIdx_freq>(allFields);
-            auto& clkDAccField = std::get<FieldIdx_clkDAcc>(allFields);
-            auto& freqAccField = std::get<FieldIdx_freqAcc>(allFields);
-
-            reassignToField(clkDField, freqField);
-            reassignToField(clkDAccField, freqAccField);
+        if (field_flags().getBitValue(AidIniFields::flags::BitIdx_clockF)) {
+            reassignToField(field_clkD(), field_freq());
+            reassignToField(field_clkDAcc(), field_freqAcc());
         }
 
         return es;
@@ -409,80 +387,60 @@ public:
     {
         bool refreshed = false;
 
-        auto& allFields = Base::fields();
-        auto& flagsField = std::get<FieldIdx_flags>(allFields);
-
         auto expectedCartesian = comms::field::OptionalMode::Exists;
         auto expectedGeodetic = comms::field::OptionalMode::Missing;
-        if (flagsField.getBitValue(AidIniFields::flags::BitIdx_lla)) {
+        if (field_flags().getBitValue(AidIniFields::flags::BitIdx_lla)) {
             std::swap(expectedCartesian, expectedGeodetic);
         }
 
-        auto& ecefXField = std::get<FieldIdx_ecefX>(allFields);
-        auto& latField = std::get<FieldIdx_lat>(allFields);
-        auto& ecefYField = std::get<FieldIdx_ecefY>(allFields);
-        auto& lonField = std::get<FieldIdx_lon>(allFields);
-        auto& ecefZField = std::get<FieldIdx_ecefZ>(allFields);
-        auto& altField = std::get<FieldIdx_alt>(allFields);
+        if ((field_ecefX().getMode() != expectedCartesian) ||
+            (field_ecefY().getMode() != expectedCartesian) ||
+            (field_ecefZ().getMode() != expectedCartesian) ||
+            (field_lat().getMode() != expectedGeodetic) ||
+            (field_lon().getMode() != expectedGeodetic) ||
+            (field_alt().getMode() != expectedGeodetic)) {
 
-        if ((ecefXField.getMode() != expectedCartesian) ||
-            (ecefYField.getMode() != expectedCartesian) ||
-            (ecefZField.getMode() != expectedCartesian) ||
-            (latField.getMode() != expectedGeodetic) ||
-            (lonField.getMode() != expectedGeodetic) ||
-            (altField.getMode() != expectedGeodetic)) {
-
-            ecefXField.setMode(expectedCartesian);
-            ecefYField.setMode(expectedCartesian);
-            ecefZField.setMode(expectedCartesian);
-            latField.setMode(expectedGeodetic);
-            lonField.setMode(expectedGeodetic);
-            altField.setMode(expectedGeodetic);
+            field_ecefX().setMode(expectedCartesian);
+            field_ecefY().setMode(expectedCartesian);
+            field_ecefZ().setMode(expectedCartesian);
+            field_lat().setMode(expectedGeodetic);
+            field_lon().setMode(expectedGeodetic);
+            field_alt().setMode(expectedGeodetic);
 
             refreshed = true;
         }
 
         auto expectedWnoTowMode = comms::field::OptionalMode::Exists;
         auto expectedDateTimeMode = comms::field::OptionalMode::Missing;
-        if (flagsField.getBitValue(AidIniFields::flags::BitIdx_utc)) {
+        if (field_flags().getBitValue(AidIniFields::flags::BitIdx_utc)) {
             std::swap(expectedWnoTowMode, expectedDateTimeMode);
         }
 
-        auto& wnoField = std::get<FieldIdx_wno>(allFields);
-        auto& dateField = std::get<FieldIdx_date>(allFields);
-        auto& towField = std::get<FieldIdx_tow>(allFields);
-        auto& timeField = std::get<FieldIdx_time>(allFields);
-
-        if ((wnoField.getMode() != expectedWnoTowMode) ||
-            (towField.getMode() != expectedWnoTowMode) ||
-            (dateField.getMode() != expectedDateTimeMode) ||
-            (timeField.getMode() != expectedDateTimeMode)) {
-            wnoField.setMode(expectedWnoTowMode);
-            towField.setMode(expectedWnoTowMode);
-            dateField.setMode(expectedDateTimeMode);
-            timeField.setMode(expectedDateTimeMode);
+        if ((field_wno().getMode() != expectedWnoTowMode) ||
+            (field_tow().getMode() != expectedWnoTowMode) ||
+            (field_date().getMode() != expectedDateTimeMode) ||
+            (field_time().getMode() != expectedDateTimeMode)) {
+            field_wno().setMode(expectedWnoTowMode);
+            field_tow().setMode(expectedWnoTowMode);
+            field_date().setMode(expectedDateTimeMode);
+            field_time().setMode(expectedDateTimeMode);
             refreshed = true;
         }
 
         auto expectedClkDMode = comms::field::OptionalMode::Exists;
         auto expectedFreqMode = comms::field::OptionalMode::Missing;
-        if (flagsField.getBitValue(AidIniFields::flags::BitIdx_clockF)) {
+        if (field_flags().getBitValue(AidIniFields::flags::BitIdx_clockF)) {
             std::swap(expectedClkDMode, expectedFreqMode);
         }
 
-        auto& clkDField = std::get<FieldIdx_clkD>(allFields);
-        auto& freqField = std::get<FieldIdx_freq>(allFields);
-        auto& clkDAccField = std::get<FieldIdx_clkDAcc>(allFields);
-        auto& freqAccField = std::get<FieldIdx_freqAcc>(allFields);
-
-        if ((clkDField.getMode() != expectedClkDMode) ||
-            (clkDAccField.getMode() != expectedClkDMode) ||
-            (freqField.getMode() != expectedFreqMode) ||
-            (freqAccField.getMode() != expectedFreqMode)) {
-            clkDField.setMode(expectedClkDMode);
-            clkDAccField.setMode(expectedClkDMode);
-            freqField.setMode(expectedFreqMode);
-            freqAccField.setMode(expectedFreqMode);
+        if ((field_clkD().getMode() != expectedClkDMode) ||
+            (field_clkDAcc().getMode() != expectedClkDMode) ||
+            (field_freq().getMode() != expectedFreqMode) ||
+            (field_freqAcc().getMode() != expectedFreqMode)) {
+            field_clkD().setMode(expectedClkDMode);
+            field_clkDAcc().setMode(expectedClkDMode);
+            field_freq().setMode(expectedFreqMode);
+            field_freqAcc().setMode(expectedFreqMode);
             refreshed = true;
         }
 
@@ -495,7 +453,7 @@ private:
     void reassignToBitfield(TFrom& from, TTo& to)
     {
         to.setMode(comms::field::OptionalMode::Exists);
-        typedef typename std::decay<decltype(from)>::type FromOptField;
+        using FromOptField = typename std::decay<decltype(from)>::type;
         static const auto BufSize = sizeof(typename FromOptField::Field::ValueType);
         std::uint8_t buf[BufSize] = {0};
         auto* writeIter = &buf[0];

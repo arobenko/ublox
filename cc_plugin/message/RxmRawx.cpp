@@ -44,7 +44,7 @@ using ublox::message::RxmRawxFields;
 
 QVariantMap createProps_recStat()
 {
-    typedef RxmRawxFields::recStat Field;
+    using Field = RxmRawxFields::recStat;
     auto props =
         cc::property::field::ForField<Field>()
             .name("recStat")
@@ -56,7 +56,7 @@ QVariantMap createProps_recStat()
 
 QVariantMap createProps_trkStat()
 {
-    typedef RxmRawxFields::trkStat Field;
+    using Field = RxmRawxFields::trkStat;
     auto props =
         cc::property::field::ForField<Field>()
             .name("trkStat")

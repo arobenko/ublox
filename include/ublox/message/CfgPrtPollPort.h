@@ -62,12 +62,6 @@ class CfgPrtPollPort : public
         comms::option::MsgType<CfgPrtPollPort<TMsgBase> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_CFG_PRT>,
-        comms::option::FieldsImpl<CfgPrtPollPortFields::All>,
-        comms::option::MsgType<CfgPrtPollPort<TMsgBase> >
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.

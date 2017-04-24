@@ -214,12 +214,6 @@ class CfgNav5 : public
         comms::option::MsgType<CfgNav5<TMsgBase> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_CFG_NAV5>,
-        comms::option::FieldsImpl<CfgNav5Fields::All>,
-        comms::option::MsgType<CfgNav5<TMsgBase> >
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.

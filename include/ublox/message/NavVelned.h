@@ -94,12 +94,6 @@ class NavVelned : public
         comms::option::MsgType<NavVelned<TMsgBase> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_NAV_VELNED>,
-        comms::option::FieldsImpl<NavVelnedFields::All>,
-        comms::option::MsgType<NavVelned<TMsgBase> >
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.

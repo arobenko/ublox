@@ -78,12 +78,6 @@ class LogFindtime : public
         comms::option::MsgType<LogFindtime<TMsgBase> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_LOG_FINDTIME>,
-        comms::option::FieldsImpl<LogFindtimeFields::All>,
-        comms::option::MsgType<LogFindtime<TMsgBase> >
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.
@@ -124,14 +118,13 @@ public:
     template <typename TIter>
     comms::ErrorStatus doRead(TIter& iter, std::size_t len)
     {
+        using Base = typename std::decay<decltype(comms::toMessageBase(*this))>::type;
         auto es = Base::template readFieldsUntil<FieldIdx_reserved1>(iter, len);
         if (es != comms::ErrorStatus::Success) {
             return es;
         }
 
-        auto& allFields = Base::fields();
-        auto& typeField = std::get<FieldIdx_type>(allFields);
-        if (!typeField.valid()) {
+        if (!field_type().valid()) {
             return comms::ErrorStatus::InvalidMsgData;
         }
 

@@ -159,12 +159,6 @@ class TimTm2 : public
         comms::option::MsgType<TimTm2<TMsgBase> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_TIM_TM2>,
-        comms::option::FieldsImpl<TimTm2Fields::All>,
-        comms::option::MsgType<TimTm2<TMsgBase> >
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.

@@ -55,7 +55,7 @@ QVariantMap createProps_prRes()
 
 QVariantMap createProps_qualityInd()
 {
-    typedef NavSatFields::qualityInd Field;
+    using Field = NavSatFields::qualityInd;
     auto props =
         cc::property::field::ForField<Field>()
             .name("qualityInd")
@@ -74,7 +74,7 @@ QVariantMap createProps_qualityInd()
 
 QVariantMap createProps_flagsLow()
 {
-    typedef NavSatFields::flagsLow Field;
+    using Field = NavSatFields::flagsLow;
     auto props =
         cc::property::field::ForField<Field>()
             .serialisedHidden()
@@ -85,7 +85,7 @@ QVariantMap createProps_flagsLow()
 
 QVariantMap createProps_health()
 {
-    typedef NavSatFields::health Field;
+    using Field = NavSatFields::health;
     auto props =
         cc::property::field::ForField<Field>()
             .name("health")
@@ -99,7 +99,7 @@ QVariantMap createProps_health()
 
 QVariantMap createProps_flagsMid()
 {
-    typedef NavSatFields::flagsMid Field;
+    using Field = NavSatFields::flagsMid;
     auto props =
         cc::property::field::ForField<Field>()
             .serialisedHidden()
@@ -111,7 +111,7 @@ QVariantMap createProps_flagsMid()
 
 QVariantMap createProps_orbitSource()
 {
-    typedef NavSatFields::orbitSource Field;
+    using Field = NavSatFields::orbitSource;
     auto props =
         cc::property::field::ForField<Field>()
             .name("orbitSource")
@@ -127,7 +127,7 @@ QVariantMap createProps_orbitSource()
 
 QVariantMap createProps_flagsHigh()
 {
-    typedef NavSatFields::flagsHigh Field;
+    using Field = NavSatFields::flagsHigh;
     auto props =
         cc::property::field::ForField<Field>()
             .serialisedHidden()
@@ -141,7 +141,7 @@ QVariantMap createProps_flagsHigh()
 
 QVariantMap createProps_flags()
 {
-    typedef NavSatFields::flags Field;
+    using Field = NavSatFields::flags;
     auto props =
         cc::property::field::ForField<Field>()
             .name("flags")

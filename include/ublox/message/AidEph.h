@@ -91,13 +91,6 @@ class AidEph : public
         comms::option::HasDoRefresh
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_AID_EPH>,
-        comms::option::FieldsImpl<AidEphFields::All<TSfOpt> >,
-        comms::option::MsgType<AidEph<TMsgBase, TSfOpt> >,
-        comms::option::HasDoRefresh
-    > Base;
 public:
     /// @brief Allow access to internal fields.
     /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
@@ -147,6 +140,7 @@ public:
     template <typename TIter>
     comms::ErrorStatus doRead(TIter& iter, std::size_t len)
     {
+        using Base = typename std::decay<decltype(comms::toMessageBase(*this))>::type;
         auto es = Base::template readFieldsUntil<FieldIdx_sf1d>(iter, len);
         if (es != comms::ErrorStatus::Success) {
             return es;
@@ -177,6 +171,7 @@ public:
     /// @return @b true in case the modes of "sfXd" fields were modified, @b false otherwise
     bool doRefresh()
     {
+        using Base = typename std::decay<decltype(comms::toMessageBase(*this))>::type;
         auto& allFields = Base::fields();
         auto& howField = std::get<FieldIdx_how>(allFields);
         auto expectedMode = comms::field::OptionalMode::Exists;

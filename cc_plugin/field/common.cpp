@@ -166,7 +166,7 @@ QVariantMap createProps_reservedBundleTwoParts(unsigned idx)
 
 QVariantMap createProps_utcStandard(bool serialisedHidden)
 {
-    typedef ublox::field::common::utcStandard Field;
+    using Field = ublox::field::common::utcStandard;
     auto props =
         cc::property::field::ForField<Field>()
             .name("utcStandard")

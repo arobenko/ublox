@@ -127,13 +127,6 @@ class RxmRaw : public
         comms::option::HasDoRefresh
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_RXM_RAW>,
-        comms::option::FieldsImpl<RxmRawFields::All<TDataOpt> >,
-        comms::option::MsgType<RxmRaw<TMsgBase, TDataOpt> >,
-        comms::option::HasDoRefresh
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.
@@ -174,16 +167,13 @@ public:
     template <typename TIter>
     comms::ErrorStatus doRead(TIter& iter, std::size_t len)
     {
+        using Base = typename std::decay<decltype(comms::toMessageBase(*this))>::type;
         auto es = Base::template readFieldsUntil<FieldIdx_data>(iter, len);
         if (es != comms::ErrorStatus::Success) {
             return es;
         }
 
-        auto& allFields = Base::fields();
-        auto& numSvField = std::get<FieldIdx_numSV>(allFields);
-        auto& dataField = std::get<FieldIdx_data>(allFields);
-        dataField.forceReadElemCount(numSvField.value());
-
+        field_data().forceReadElemCount(field_numSV().value());
         return Base::template readFieldsFrom<FieldIdx_data>(iter, len);
     }
 
@@ -193,14 +183,11 @@ public:
     /// @return @b true in case the value of "numSV" field was modified, @b false otherwise
     bool doRefresh()
     {
-        auto& allFields = Base::fields();
-        auto& numSvField = std::get<FieldIdx_numSV>(allFields);
-        auto& dataField = std::get<FieldIdx_data>(allFields);
-        if (numSvField.value() == dataField.value().size()) {
+        if (field_numSV().value() == field_data().value().size()) {
             return false;
         }
 
-        numSvField.value() = dataField.value().size();
+        field_numSV().value() = field_data().value().size();
         return true;
     }
 

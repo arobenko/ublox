@@ -28,10 +28,10 @@ namespace ublox
 namespace cc_plugin
 {
 
-typedef ublox::Stack<
+using Stack = ublox::Stack<
     cc_plugin::Message,
     cc_plugin::AllMessages
-> Stack;
+>;
 
 }  // namespace cc_plugin
 

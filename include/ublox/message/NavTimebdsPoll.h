@@ -51,22 +51,7 @@ class NavTimebdsPoll : public
         comms::option::MsgType<NavTimebdsPoll<TMsgBase> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_NAV_TIMEBDS>,
-        comms::option::FieldsImpl<NavTimebdsPollFields::All>,
-        comms::option::MsgType<NavTimebdsPoll<TMsgBase> >
-    > Base;
 public:
-
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
 
     /// @brief Default constructor
     NavTimebdsPoll() = default;

@@ -76,12 +76,6 @@ class LogRetrieve : public
         comms::option::MsgType<LogRetrieve<TMsgBase> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_LOG_RETRIEVE>,
-        comms::option::FieldsImpl<LogRetrieveFields::All>,
-        comms::option::MsgType<LogRetrieve<TMsgBase> >
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.

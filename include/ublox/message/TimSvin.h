@@ -90,12 +90,6 @@ class TimSvin : public
         comms::option::MsgType<TimSvin<TMsgBase> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_TIM_SVIN>,
-        comms::option::FieldsImpl<TimSvinFields::All>,
-        comms::option::MsgType<TimSvin<TMsgBase> >
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.

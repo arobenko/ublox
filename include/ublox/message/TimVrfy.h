@@ -119,12 +119,6 @@ class TimVrfy : public
         comms::option::MsgType<TimVrfy<TMsgBase> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_TIM_VRFY>,
-        comms::option::FieldsImpl<TimVrfyFields::All>,
-        comms::option::MsgType<TimVrfy<TMsgBase> >
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.

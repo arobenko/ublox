@@ -43,7 +43,7 @@ using ublox::message::UpdSosRestoredFields;
 
 QVariantMap createProps_response()
 {
-    typedef UpdSosRestoredFields::response Field;
+    using Field = UpdSosRestoredFields::response;
     auto props =
         cc::property::field::ForField<Field>()
             .name("response")

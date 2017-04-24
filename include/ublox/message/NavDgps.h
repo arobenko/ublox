@@ -177,13 +177,6 @@ class NavDgps : public
         comms::option::HasDoRefresh
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_NAV_DGPS>,
-        comms::option::FieldsImpl<NavDgpsFields::All<TDataOpt> >,
-        comms::option::MsgType<NavDgps<TMsgBase, TDataOpt> >,
-        comms::option::HasDoRefresh
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.
@@ -236,16 +229,13 @@ public:
     template <typename TIter>
     comms::ErrorStatus doRead(TIter& iter, std::size_t len)
     {
+        using Base = typename std::decay<decltype(comms::toMessageBase(*this))>::type;
         auto es = Base::template readFieldsUntil<FieldIdx_data>(iter, len);
         if (es != comms::ErrorStatus::Success) {
             return es;
         }
 
-        auto& allFields = Base::fields();
-        auto& numChField = std::get<FieldIdx_numCh>(allFields);
-        auto& dataField = std::get<FieldIdx_data>(allFields);
-        dataField.forceReadElemCount(numChField.value());
-
+        field_data().forceReadElemCount(field_numCh().value());
         return Base::template readFieldsFrom<FieldIdx_data>(iter, len);
     }
 
@@ -256,14 +246,11 @@ public:
     /// @return @b true in case the value of "numCh" field was modified, @b false otherwise
     bool doRefresh()
     {
-        auto& allFields = Base::fields();
-        auto& numChField = std::get<FieldIdx_numCh>(allFields);
-        auto& dataField = std::get<FieldIdx_data>(allFields);
-        if (numChField.value() == dataField.value().size()) {
+        if (field_numCh().value() == field_data().value().size()) {
             return false;
         }
 
-        numChField.value() = dataField.value().size();
+        field_numCh().value() = field_data().value().size();
         return true;
     }
 

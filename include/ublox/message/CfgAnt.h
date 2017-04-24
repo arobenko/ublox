@@ -106,12 +106,6 @@ class CfgAnt : public
         comms::option::MsgType<CfgAnt<TMsgBase> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_CFG_ANT>,
-        comms::option::FieldsImpl<CfgAntFields::All>,
-        comms::option::MsgType<CfgAnt<TMsgBase> >
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.

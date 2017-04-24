@@ -59,12 +59,6 @@ class CfgMsgPoll : public
         comms::option::MsgType<CfgMsgPoll<TMsgBase> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_CFG_MSG>,
-        comms::option::FieldsImpl<CfgMsgPollFields::All>,
-        comms::option::MsgType<CfgMsgPoll<TMsgBase> >
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.

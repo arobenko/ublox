@@ -28,15 +28,15 @@ namespace ublox
 namespace cc_plugin
 {
 
-typedef std::tuple<
+using ExtraMessageOptions = std::tuple<
     comms::option::ValidCheckInterface,
     comms::option::LengthInfoInterface
-> ExtraMessageOptions;
+>;
 
 template <typename... TOptions>
 class MessageT : public comms_champion::MessageBase<ublox::MessageT, ExtraMessageOptions, TOptions...>
 {
-    typedef comms_champion::MessageBase<ublox::MessageT, ExtraMessageOptions, TOptions...> Base;
+    using Base = comms_champion::MessageBase<ublox::MessageT, ExtraMessageOptions, TOptions...>;
 public:
     virtual ~MessageT() = default;
 
@@ -54,7 +54,7 @@ protected:
     }
 };
 
-typedef MessageT<> Message;
+using Message = MessageT<>;
 
 }  // namespace cc_plugin
 

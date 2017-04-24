@@ -86,12 +86,6 @@ class NavTimegps : public
         comms::option::MsgType<NavTimegps<TMsgBase> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_NAV_TIMEGPS>,
-        comms::option::FieldsImpl<NavTimegpsFields::All>,
-        comms::option::MsgType<NavTimegps<TMsgBase> >
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.

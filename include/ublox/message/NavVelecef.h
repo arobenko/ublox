@@ -74,12 +74,6 @@ class NavVelecef : public
         comms::option::MsgType<NavVelecef<TMsgBase> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_NAV_VELECEF>,
-        comms::option::FieldsImpl<NavVelecefFields::All>,
-        comms::option::MsgType<NavVelecef<TMsgBase> >
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.

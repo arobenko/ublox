@@ -163,12 +163,6 @@ class NavTimels : public
         comms::option::MsgType<NavTimels<TMsgBase> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_NAV_TIMELS>,
-        comms::option::FieldsImpl<NavTimelsFields::All>,
-        comms::option::MsgType<NavTimels<TMsgBase> >
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.

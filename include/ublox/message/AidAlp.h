@@ -95,12 +95,6 @@ class AidAlp : public
         comms::option::MsgType<AidAlp<TMsgBase> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_AID_ALP>,
-        comms::option::FieldsImpl<AidAlpFields::All>,
-        comms::option::MsgType<AidAlp<TMsgBase> >
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.

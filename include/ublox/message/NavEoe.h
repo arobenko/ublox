@@ -58,12 +58,6 @@ class NavEoe : public
         comms::option::MsgType<NavEoe<TMsgBase> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_NAV_EOE>,
-        comms::option::FieldsImpl<NavEoeFields::All>,
-        comms::option::MsgType<NavEoe<TMsgBase> >
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.

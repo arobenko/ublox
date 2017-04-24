@@ -221,13 +221,6 @@ class NavSbas : public
         comms::option::HasDoRefresh
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_NAV_SBAS>,
-        comms::option::FieldsImpl<NavSbasFields::All<TDataOpt> >,
-        comms::option::MsgType<NavSbas<TMsgBase, TDataOpt> >,
-        comms::option::HasDoRefresh
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.
@@ -271,16 +264,13 @@ public:
     template <typename TIter>
     comms::ErrorStatus doRead(TIter& iter, std::size_t len)
     {
+        using Base = typename std::decay<decltype(comms::toMessageBase(*this))>::type;
         auto es = Base::template readFieldsUntil<FieldIdx_data>(iter, len);
         if (es != comms::ErrorStatus::Success) {
             return es;
         }
 
-        auto& allFields = Base::fields();
-        auto& cntField = std::get<FieldIdx_cnt>(allFields);
-        auto& dataField = std::get<FieldIdx_data>(allFields);
-        dataField.forceReadElemCount(cntField.value());
-
+        field_data().forceReadElemCount(field_cnt().value());
         return Base::template readFieldsFrom<FieldIdx_data>(iter, len);
     }
 
@@ -291,14 +281,11 @@ public:
     /// @return @b true in case the value of "cnt" field was modified, @b false otherwise
     bool doRefresh()
     {
-        auto& allFields = Base::fields();
-        auto& cntField = std::get<FieldIdx_cnt>(allFields);
-        auto& dataField = std::get<FieldIdx_data>(allFields);
-        if (cntField.value() == dataField.value().size()) {
+        if (field_cnt().value() == field_data().value().size()) {
             return false;
         }
 
-        cntField.value() = dataField.value().size();
+        field_cnt().value() = field_data().value().size();
         return true;
     }
 
