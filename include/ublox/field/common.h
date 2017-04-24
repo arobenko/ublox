@@ -374,7 +374,7 @@ struct res5 : public BundleT<std::tuple<res1, res4> >
 {
     /// @brief Allow access to internal fields.
     /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
-    ///     related to @b comms::field::Bitfield class from COMMS library
+    ///     related to @b comms::field::Bundle class from COMMS library
     ///     for details.
     COMMS_FIELD_MEMBERS_ACCESS(part1, part2);
 };
@@ -384,7 +384,7 @@ struct res6 : public BundleT<std::tuple<res2, res4> >
 {
     /// @brief Allow access to internal fields.
     /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
-    ///     related to @b comms::field::Bitfield class from COMMS library
+    ///     related to @b comms::field::Bundle class from COMMS library
     ///     for details.
     COMMS_FIELD_MEMBERS_ACCESS(part1, part2);
 };
@@ -394,7 +394,7 @@ struct res7 : public BundleT<std::tuple<res3, res4> >
 {
     /// @brief Allow access to internal fields.
     /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
-    ///     related to @b comms::field::Bitfield class from COMMS library
+    ///     related to @b comms::field::Bundle class from COMMS library
     ///     for details.
     COMMS_FIELD_MEMBERS_ACCESS(part1, part2);
 };
