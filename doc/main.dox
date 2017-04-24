@@ -501,7 +501,7 @@
 /// integral value type, which means when using the @b value() member function
 /// of the relevant field object the serialised value of type @b std::int32_t is 
 /// received. In order to scale it down to proper floating point value, use 
-/// @b scaleAs() member function:
+/// @b getScaled() member function:
 /// @code
 /// void handle(InNavPosllh& msg)
 /// {
@@ -511,51 +511,78 @@
 ///     std::int32_t latValue = lat.value();
 ///     std::int32_t lonValue = lon.value();
 ///
-///     double latRealValue = lat.scaleAs<double>();
-///     double lonRealValue = lon.scaleAs<double>(); 
+///     double latRealValue = lat.getScaled<double>();
+///     double lonRealValue = lon.getScaled<double>(); 
 ///     ..
 /// }
 /// @endcode 
 ///
-/// All the fields, that their serialised value can be scaled down, are defined
+/// All the fields, that their serialised value can be scaled, are defined
 /// using @b comms::option::ScalingRatio
-/// option from the @b COMMS library.
+/// option from the @b COMMS library. The the field's definition doesn't contain
+/// any scaled ratio, the attempt to scale the value will result in simple cast
+/// to the specified return type.
 ///
-/// The ublox binary protocol also defines multiple distance related
-/// fields. Some distance related fields are specified to be meters, others
-/// centimetres or even millimetres. For convenience, all such fields are defined 
-/// with an ability to be scaled down to @b meters. For example, @b ecefX,
-/// @b ecefY, and @b ecefZ fields in @b NAV-POSECEF message are defined to be
-/// in centimetres in the protocol specification. However, their definition uses
-/// ublox::field::common::Scaling_cm2m option, which allows scaling the value
-/// down to meters if necessary:
+/// @subsection ublox_fields_units Units Conversions
+/// There are many fields in the @b UBX protocol, that define to contain specific units,
+/// such as 
+/// @b time @b duration (ns, ms, sec, ...), @b distance (mm, cm, m, ...), 
+/// @b velocity (mm/s, cm/s, m/s, ...), @b angle (deg, rad), etc...
+/// The @b COMMS library provides a functionality of conversion between different
+/// units while taking scaling factors into account as well. The @b UBLOX library 
+/// defines multiple fields with explicit indication of type of the units such
+/// fields contain. It allows easy retrieval of a particular units without 
+/// worrying about doing the required math manually. For example the @b ecefX
+/// field in @b NAV-POSECEF message is defined to contain @b centimetres:
+/// @code
+/// using ecefX = ublox::field::common::I4T<comms::option::UnitsCentimeters>;
+/// @endcode
+/// In many occasions, the distance is handled in @b meters, rather than 
+/// @b centimetres
 /// @code
 /// void handle(InNavPosecef& msg)
 /// {
 ///     auto& ecefX = msg.field_ecefX(fields);
 ///
-///     std::int32_t ecefXinCentimeters = ecefX.value(); // ecefX value in centimetres 
-///     double ecefXinMeters = ecefX.scaleAs<double>(); // ecefX value in meters
+///     double ecefXinMeters = comms::units::getMeters<double>(ecefX); // ecefX value in meters
+///     ...
 /// }
 /// @endcode 
-/// In a similar way all the time related fields are defined with an ability to
-/// be scaled to seconds (instead of milliseconds, microseconds, and nanoseconds).
-/// For example, the same @b NAV-POSECEF message has @b iTOW field 
-/// (ublox::message::NavPosecefFields::iTOW), which is GPS time of the week in
-/// milliseconds. If there is a need to get this value in seconds, use the
-/// same @b scaleAs() member function:
-/// @code
-/// void handle(InNavPosecef& msg)
-/// {
-///     auto& iTOW = msg.field_iTOW();
 ///
-///     std::uint32_t iTOWinMilliseconds = iTOW.value(); // iTOW value in milliseconds 
-///     double iTOWinSeconds = ecefX.scaleAs<double>(); // iTOW value in seconds
+/// Let's get back to previous example of defining latitude and longitude in
+/// @b NAV-POSLLH message with scaling ratio. The fields are also defined to
+/// contain @b degrees.
+/// @code
+/// using lat =
+///     ublox::field::common::I4T<
+///         comms::option::ScalingRatio<1, 10000000L>,
+///         comms::option::UnitsDegrees
+///     >;
+/// @endcode
+/// Such definition makes them convertible to @b radians if needed.
+/// @code
+/// void handle(InNavPosllh& msg)
+/// {
+///     auto& lat = msg.field_lat();
+///     auto& lon = msg.field_lon();
+/// 
+///     double latDegrees = comms::units::getDegrees<double>(lat); 
+///     double lonDegrees = comms::units::getDegrees<double>(lon); 
+///
+///     double latRadians = comms::units::getRadians<double>(lat); 
+///     double lonRadians = comms::units::getRadians<double>(lon); 
+///     ...
 /// }
 /// @endcode 
-/// Also the velocity related fields that are defined to be <b> centimetres per
-/// second</b> or <b>millimetres per second</b> can be scaled down to 
-/// <b> meters per second </b> if needed.
+/// @b NOTE, that the scaling ratio is automatically taken care of. There is 
+/// no real need to know the original units also. If the @b type of the units
+/// is known (angle measurement in the example above), the developer can use
+/// the converstion function(s) to the required units. In this case the 
+/// compiler will do all the necessary match calculation and/or type 
+/// conversions. 
+/// 
+/// To get a better understanding on units conversion, pleas read the 
+/// <b>Fields Tutorial</b> page in @b COMMS library documentation.
 ///
 /// @subsection ublox_fields_message_id Message ID Field
 /// The ublox binary protocol identifies the messages using two fields: <b>class
