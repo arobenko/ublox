@@ -45,7 +45,7 @@ struct CfgRateFields
     };
 
     /// @brief Definition of "measRate" field.
-    using measRate = field::common::U2T<field::common::Scaling_ms2s>;
+    using measRate = field::common::U2T<comms::option::UnitsMilliseconds>;
 
     /// @brief Definition of "navRate" field.
     using navRate =
@@ -85,12 +85,6 @@ class CfgRate : public
         comms::option::MsgType<CfgRate<TMsgBase> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_CFG_RATE>,
-        comms::option::FieldsImpl<CfgRateFields::All>,
-        comms::option::MsgType<CfgRate<TMsgBase> >
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.

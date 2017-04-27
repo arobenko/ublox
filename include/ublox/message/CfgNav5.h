@@ -119,16 +119,20 @@ struct CfgNav5Fields
         >;
 
     /// @brief Definition of "fixedAlt" field.
-    using fixedAlt = field::common::I4T<comms::option::ScalingRatio<1, 100> >;
+    using fixedAlt =
+        field::common::I4T<
+            comms::option::ScalingRatio<1, 100>,
+            comms::option::UnitsMeters
+        >;
 
     /// @brief Definition of "fixedAltVar" field.
     using fixedAltVar = field::common::U4T<comms::option::ScalingRatio<1, 10000> >;
 
     /// @brief Definition of "minElev" field.
-    using minElev = field::common::I1;
+    using minElev = field::common::I1T<comms::option::UnitsDegrees>;
 
     /// @brief Definition of "drLimit" field.
-    using drLimit = field::common::U1;
+    using drLimit = field::common::U1T<comms::option::UnitsSeconds>;
 
     /// @brief Definition of "pDOP" field.
     using pDOP = field::common::U2T<comms::option::ScalingRatio<1, 10> >;
@@ -137,16 +141,16 @@ struct CfgNav5Fields
     using tDOP = field::common::U2T<comms::option::ScalingRatio<1, 10> >;
 
     /// @brief Definition of "pAcc" field.
-    using pAcc = field::common::U2;
+    using pAcc = field::common::U2T<comms::option::UnitsMeters>;
 
     /// @brief Definition of "tAcc" field.
-    using tAcc = field::common::U2;
+    using tAcc = field::common::U2T<comms::option::UnitsMeters> ;
 
     /// @brief Definition of "staticHoldThreash" field.
-    using staticHoldThreash = field::common::U1T<field::common::Scaling_cm2m>;
+    using staticHoldThreash = field::common::U1T<comms::option::UnitsCentimetersPerSecond>;
 
     /// @brief Definition of "dgpsTimeOut" field.
-    using dgpsTimeOut = field::common::U1;
+    using dgpsTimeOut = field::common::U1T<comms::option::UnitsSeconds>;
 
     /// @brief Definition of "cnoThreshNumSVs" field.
     using cnoThreshNumSVs = field::common::U1;
@@ -158,7 +162,7 @@ struct CfgNav5Fields
     using reserved1 = field::common::res2;
 
     /// @brief Definition of "staticHoldMaxDist" field.
-    using staticHoldMaxDist = field::common::U2;
+    using staticHoldMaxDist = field::common::U2T<comms::option::UnitsMeters>;
 
     /// @brief Definition of "utcStandard" field.
     using utcStandard = field::common::utcStandard;
@@ -210,12 +214,6 @@ class CfgNav5 : public
         comms::option::MsgType<CfgNav5<TMsgBase> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_CFG_NAV5>,
-        comms::option::FieldsImpl<CfgNav5Fields::All>,
-        comms::option::MsgType<CfgNav5<TMsgBase> >
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.

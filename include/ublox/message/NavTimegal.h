@@ -37,7 +37,7 @@ struct NavTimegalFields
     using iTOW = field::nav::iTOW;
 
     /// @brief Definition of "galTOW" field.
-    using galTOW = field::common::U4;
+    using galTOW = field::common::U4T<comms::option::UnitsSeconds>;
 
     /// @brief Definition of "fSOW" field.
     using fGalTOW = field::nav::fTOW;
@@ -46,7 +46,7 @@ struct NavTimegalFields
     using galWno = field::nav::week;
 
     /// @brief Definition of "leapS" field.
-    using leapS = field::common::I1;
+    using leapS = field::common::I1T<comms::option::UnitsSeconds>;
 
     /// @brief Definition of "valid" field.
     struct validBits : public
@@ -90,12 +90,6 @@ class NavTimegal : public
         comms::option::MsgType<NavTimegal<TMsgBase> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_NAV_TIMEGAL>,
-        comms::option::FieldsImpl<NavTimegalFields::All>,
-        comms::option::MsgType<NavTimegal<TMsgBase> >
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.

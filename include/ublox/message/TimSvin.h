@@ -37,7 +37,7 @@ struct TimSvinFields
     using dur = field::common::U4;
 
     /// @brief Definition of "meanX" field.
-    using meanX = field::common::I4T<field::common::Scaling_cm2m>;
+    using meanX = field::common::I4T<comms::option::UnitsCentimeters>;
 
     /// @brief Definition of "meanY" field.
     using meanY = meanX;
@@ -90,12 +90,6 @@ class TimSvin : public
         comms::option::MsgType<TimSvin<TMsgBase> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_TIM_SVIN>,
-        comms::option::FieldsImpl<TimSvinFields::All>,
-        comms::option::MsgType<TimSvin<TMsgBase> >
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.

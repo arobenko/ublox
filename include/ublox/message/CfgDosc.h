@@ -124,7 +124,11 @@ struct CfgDoscFields
     };
 
     /// @brief Definition of "freq" field.
-    using freq = field::common::U4T<comms::option::ScalingRatio<1, 2> >;
+    using freq =
+        field::common::U4T<
+            comms::option::ScalingRatio<1, 2>,
+            comms::option::UnitsHertz
+        >;
 
     /// @brief Definition of "phaseOffset" field.
     using phaseOffset = field::common::I4;
@@ -136,7 +140,7 @@ struct CfgDoscFields
     using withAge = field::common::U4T<comms::option::ScalingRatio<1, 0x100> >;
 
     /// @brief Definition of "timeToTemp" field.
-    using timeToTemp = field::common::U2;
+    using timeToTemp = field::common::U2T<comms::option::UnitsSeconds>;
 
     /// @brief Definition of "reserved3" field.
     using reserved3 = field::common::res2;
@@ -172,7 +176,7 @@ struct CfgDoscFields
     {
         /// @brief Allow access to internal fields.
         /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
-        ///     related to @b comms::field::Bitfield class from COMMS library
+        ///     related to @b comms::field::Bundle class from COMMS library
         ///     for details.
         COMMS_FIELD_MEMBERS_ACCESS(
             oscId,
@@ -228,13 +232,6 @@ class CfgDosc : public
         comms::option::HasDoRefresh
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_CFG_DOSC>,
-        comms::option::FieldsImpl<CfgDoscFields::All<TDataOpt> >,
-        comms::option::MsgType<CfgDosc<TMsgBase, TDataOpt> >,
-        comms::option::HasDoRefresh
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.
@@ -274,6 +271,7 @@ public:
     template <typename TIter>
     comms::ErrorStatus doRead(TIter& iter, std::size_t len)
     {
+        using Base = typename std::decay<decltype(comms::toMessageBase(*this))>::type;
         auto es = Base::template readFieldsUntil<FieldIdx_data>(iter, len);
         if (es != comms::ErrorStatus::Success) {
             return es;

@@ -48,19 +48,35 @@ struct MgaGloTimeoffsetFields
         >;
 
     /// @brief Definition of "N" field.
-    using N = field::common::U2;
+    using N = field::common::U2T<comms::option::UnitsDays>;
 
     /// @brief Definition of "tauC" field.
-    using tauC = field::common::I4;
+    using tauC =
+        field::common::I4T<
+            comms::option::ScalingRatio<1, 0x8000000>,
+            comms::option::UnitsSeconds
+        >;
 
     /// @brief Definition of "tauGps" field.
-    using tauGps = field::common::I4;
+    using tauGps =
+        field::common::I4T<
+            comms::option::ScalingRatio<1, 0x80000000>,
+            comms::option::UnitsSeconds
+        >;
 
     /// @brief Definition of "B1" field.
-    using B1 = field::common::I2;
+    using B1 =
+        field::common::I2T<
+            comms::option::ScalingRatio<1, 0x400>,
+            comms::option::UnitsSeconds
+        >;
 
     /// @brief Definition of "B2" field.
-    using B2 = field::common::I2;
+    using B2 =
+        field::common::I2T<
+            comms::option::ScalingRatio<1, 0x10000>,
+            comms::option::UnitsSeconds
+        >;
 
     /// @brief Definition of "reserved1" field.
     using reserved1 = field::common::res4;

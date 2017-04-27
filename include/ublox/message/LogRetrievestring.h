@@ -117,13 +117,6 @@ class LogRetrievestring : public
         comms::option::HasDoRefresh
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_LOG_RETRIEVESTRING>,
-        comms::option::FieldsImpl<LogRetrievestringFields::All<TBytesOpt> >,
-        comms::option::MsgType<LogRetrievestring<TMsgBase, TBytesOpt> >,
-        comms::option::HasDoRefresh
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.
@@ -184,16 +177,13 @@ public:
     template <typename TIter>
     comms::ErrorStatus doRead(TIter& iter, std::size_t len)
     {
+        using Base = typename std::decay<decltype(comms::toMessageBase(*this))>::type;
         auto es = Base::template readFieldsUntil<FieldIdx_bytes>(iter, len);
         if (es != comms::ErrorStatus::Success) {
             return es;
         }
 
-        auto& allFields = Base::fields();
-        auto& countField = std::get<FieldIdx_byteCount>(allFields);
-        auto& bytesField = std::get<FieldIdx_bytes>(allFields);
-        bytesField.forceReadElemCount(countField.value());
-
+        field_bytes().forceReadElemCount(field_byteCount().value());
         return Base::template readFieldsFrom<FieldIdx_bytes>(iter, len);
     }
 
@@ -204,17 +194,13 @@ public:
     /// @return @b true in case the value of "byteCount" field was modified, @b false otherwise
     bool doRefresh()
     {
-        auto& allFields = Base::fields();
-        auto& countField = std::get<FieldIdx_byteCount>(allFields);
-        auto& bytesField = std::get<FieldIdx_bytes>(allFields);
-        if (countField.value() == bytesField.value().size()) {
+        if (field_byteCount().value() == field_bytes().value().size()) {
             return false;
         }
 
-        countField.value() = bytesField.value().size();
+        field_byteCount().value() = field_bytes().value().size();
         return true;
     }
-
 };
 
 

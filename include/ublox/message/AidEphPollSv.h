@@ -57,12 +57,6 @@ class AidEphPollSv : public
         comms::option::MsgType<AidEphPollSv<TMsgBase> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_AID_EPH>,
-        comms::option::FieldsImpl<AidEphPollSvFields::All>,
-        comms::option::MsgType<AidEphPollSv<TMsgBase> >
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.

@@ -52,22 +52,7 @@ class AidEphPoll : public
         comms::option::MsgType<AidEphPoll<TMsgBase> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_AID_EPH>,
-        comms::option::FieldsImpl<AidEphPollFields::All>,
-        comms::option::MsgType<AidEphPoll<TMsgBase> >
-    > Base;
 public:
-
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
 
     /// @brief Default constructor
     AidEphPoll() = default;

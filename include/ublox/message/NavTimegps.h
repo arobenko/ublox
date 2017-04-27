@@ -43,7 +43,7 @@ struct NavTimegpsFields
     using week = field::nav::week;
 
     /// @brief Definition of "leapS" field.
-    using leapS = field::common::I1;
+    using leapS = field::common::I1T<comms::option::UnitsSeconds>;
 
     /// @brief Definition of "valid" field.
     struct validBits : public
@@ -86,12 +86,6 @@ class NavTimegps : public
         comms::option::MsgType<NavTimegps<TMsgBase> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_NAV_TIMEGPS>,
-        comms::option::FieldsImpl<NavTimegpsFields::All>,
-        comms::option::MsgType<NavTimegps<TMsgBase> >
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.

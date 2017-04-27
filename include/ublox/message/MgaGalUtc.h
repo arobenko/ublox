@@ -51,28 +51,40 @@ struct MgaGalUtcFields
     using reserved1 = field::common::res2;
 
     /// @brief Definition of "a0" field.
-    using a0 = field::common::I4;
+    using a0 =
+        field::common::I4T<
+            comms::option::ScalingRatio<1, 0x40000000>,
+            comms::option::UnitsSeconds
+        >;
 
     /// @brief Definition of "a1" field.
-    using a1 = field::common::I4;
+    using a1 =
+        field::common::I4T<
+            comms::option::ScalingRatio<1, 0x4000000000000ULL>,
+            comms::option::UnitsSeconds
+        >;
 
     /// @brief Definition of "dtLS" field.
-    using dtLS = field::common::I1;
+    using dtLS = field::common::I1T<comms::option::UnitsSeconds>;
 
     /// @brief Definition of "tot" field.
-    using tot = field::common::U1;
+    using tot =
+        field::common::U1T<
+            comms::option::ScalingRatio<3600, 1>,
+            comms::option::UnitsSeconds
+        >;
 
     /// @brief Definition of "wnt" field.
-    using wnt = field::common::U1;
+    using wnt = field::common::U1T<comms::option::UnitsWeeks>;
 
     /// @brief Definition of "wnLSF" field.
-    using wnLSF = field::common::U1;
+    using wnLSF = field::common::U1T<comms::option::UnitsWeeks>;
 
     /// @brief Definition of "dN" field.
-    using dN = field::common::U1;
+    using dN = field::common::U1T<comms::option::UnitsDays>;
 
     /// @brief Definition of "dTLSF" field.
-    using dTLSF = field::common::I1;
+    using dTLSF = field::common::I1T<comms::option::UnitsSeconds>;
 
     /// @brief Definition of "reserved2" field.
     using reserved2 = field::common::res2;

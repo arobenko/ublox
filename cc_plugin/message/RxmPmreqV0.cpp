@@ -44,7 +44,7 @@ using ublox::message::RxmPmreqV0Fields;
 
 QVariantMap createProps_flags()
 {
-    typedef RxmPmreqV0Fields::flags Field;
+    using Field = RxmPmreqV0Fields::flags;
     auto props =
         cc::property::field::ForField<Field>()
             .name("flags")
@@ -56,7 +56,7 @@ QVariantMap createProps_flags()
 
 QVariantMap createProps_wakeupSources()
 {
-    typedef RxmPmreqV0Fields::wakeupSources Field;
+    using Field = RxmPmreqV0Fields::wakeupSources;
     auto props =
         cc::property::field::ForField<Field>()
             .name("wakeupSources")

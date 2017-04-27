@@ -59,13 +59,17 @@ struct NavSatFields
     using cno = field::common::U1;
 
     /// @brief Definition of "elev" field.
-    using elev = field::common::I1;
+    using elev = field::common::I1T<comms::option::UnitsDegrees>;
 
     /// @brief Definition of "azim" field.
-    using azim = field::common::I2;
+    using azim = field::common::I2T<comms::option::UnitsDegrees>;
 
     /// @brief Definition of "prRes" field.
-    using prRes = field::common::I2T<comms::option::ScalingRatio<1, 10> >;
+    using prRes =
+        field::common::I2T<
+            comms::option::ScalingRatio<1, 10>,
+            comms::option::UnitsMeters
+        >;
 
     /// @brief Value enumeration for @ref qualityInd field.
     enum class QualityInd : std::uint8_t
@@ -208,7 +212,7 @@ struct NavSatFields
     {
         /// @brief Allow access to internal fields.
         /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
-        ///     related to @b comms::field::Bitfield class from COMMS library
+        ///     related to @b comms::field::Bundle class from COMMS library
         ///     for details.
         COMMS_FIELD_MEMBERS_ACCESS(gnssId, svId, cno, elev, azim, prRes, flags);
     };
@@ -253,13 +257,6 @@ class NavSat : public
         comms::option::HasDoRefresh
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_NAV_SAT>,
-        comms::option::FieldsImpl<NavSatFields::All<TDataOpt> >,
-        comms::option::MsgType<NavSat<TMsgBase, TDataOpt> >,
-        comms::option::HasDoRefresh
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.
@@ -306,6 +303,7 @@ public:
     template <typename TIter>
     comms::ErrorStatus doRead(TIter& iter, std::size_t len)
     {
+        using Base = typename std::decay<decltype(comms::toMessageBase(*this))>::type;
         auto es = Base::template readFieldsUntil<FieldIdx_data>(iter, len);
         if (es != comms::ErrorStatus::Success) {
             return es;

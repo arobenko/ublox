@@ -66,13 +66,17 @@ struct MgaBdsEphFields
     using a1 = field::common::I4;
 
     /// @brief Definition of "a0" field.
-    using a0 = field::common::I4;
+    using a0 = field::common::I4T<comms::option::UnitsSeconds>;
 
     /// @brief Definition of "toc" field.
-    using toc = field::common::U4;
+    using toc =
+        field::common::U4T<
+            comms::option::ScalingRatio<0x8, 1>,
+            comms::option::UnitsSeconds
+        >;
 
     /// @brief Definition of "TGD1" field.
-    using TGD1 = field::common::I2;
+    using TGD1 = field::common::I2T<comms::option::UnitsNanoseconds>;
 
     /// @brief Definition of "URAI" field.
     using URAI = field::common::U1;
@@ -81,7 +85,7 @@ struct MgaBdsEphFields
     using IODE = field::common::U1;
 
     /// @brief Definition of "toe" field.
-    using toe = field::common::U4;
+    using toe = toc;
 
     /// @brief Definition of "sqrtA" field.
     using sqrtA = field::common::U4;
@@ -117,10 +121,10 @@ struct MgaBdsEphFields
     using Cus = field::common::I4;
 
     /// @brief Definition of "Crc" field.
-    using Crc = field::common::I4;
+    using Crc = field::common::I4T<comms::option::UnitsMeters>;
 
     /// @brief Definition of "Crs" field.
-    using Crs = field::common::I4;
+    using Crs = field::common::I4T<comms::option::UnitsMeters>;
 
     /// @brief Definition of "Cic" field.
     using Cic = field::common::I4;

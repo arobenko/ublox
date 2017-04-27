@@ -46,7 +46,7 @@ struct CfgSmgrFields
     using maxFreqChangeRate = field::common::U2;
 
     /// @brief Definition of "maxPhaseCorrRate" field.
-    using maxPhaseCorrRate = field::common::U2T<field::common::Scaling_ns2s>;
+    using maxPhaseCorrRate = field::common::U2T<comms::option::UnitsNanoseconds>;
 
     /// @brief Definition of "reserved1" field.
     using reserved1 = field::common::res2;
@@ -55,7 +55,7 @@ struct CfgSmgrFields
     using freqTolerance = field::common::U2;
 
     /// @brief Definition of "timeTolerance" field.
-    using timeTolerance = field::common::U2;
+    using timeTolerance = field::common::U2T<comms::option::UnitsNanoseconds>;
 
     /// @brief Definition of "messageCfg" field.
     struct messageCfg : public
@@ -69,7 +69,7 @@ struct CfgSmgrFields
     };
 
     /// @brief Definition of "maxSlewRate" field.
-    using maxSlewRate = field::common::U2T<field::common::Scaling_us2s>;
+    using maxSlewRate = field::common::U2T<comms::option::UnitsMicroseconds>;
 
     /// @brief Enumeration value for @ref TPCoherent field.
     enum class TPCoherentVal : std::uint8_t

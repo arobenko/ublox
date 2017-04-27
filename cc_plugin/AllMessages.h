@@ -209,6 +209,8 @@
 #include "cc_plugin/message/MonPatchPoll.h"
 #include "cc_plugin/message/MonGnss.h"
 #include "cc_plugin/message/MonGnssPoll.h"
+#include "cc_plugin/message/MonSmgr.h"
+#include "cc_plugin/message/MonSmgrPoll.h"
 
 #include "cc_plugin/message/AidReq.h"
 #include "cc_plugin/message/AidIni.h"
@@ -310,7 +312,7 @@ namespace ublox
 namespace cc_plugin
 {
 
-typedef std::tuple<
+using AllMessages = std::tuple<
     cc_plugin::message::NavPosecef,
     cc_plugin::message::NavPosecefPoll,
     cc_plugin::message::NavPosllh,
@@ -493,6 +495,8 @@ typedef std::tuple<
     cc_plugin::message::MonPatchPoll,
     cc_plugin::message::MonGnss,
     cc_plugin::message::MonGnssPoll,
+    cc_plugin::message::MonSmgr,
+    cc_plugin::message::MonSmgrPoll,
     cc_plugin::message::AidReq,
     cc_plugin::message::AidIni,
     cc_plugin::message::AidIniPoll,
@@ -580,7 +584,7 @@ typedef std::tuple<
     cc_plugin::message::LogRetrieveposextra,
     cc_plugin::message::SecSign,
     cc_plugin::message::SecUniqid
-> AllMessages;
+>;
 
 }  // namespace cc_plugin
 

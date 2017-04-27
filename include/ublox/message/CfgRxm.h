@@ -99,12 +99,7 @@ class CfgRxm : public
         comms::option::MsgType<CfgRxm<TMsgBase> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_CFG_RXM>,
-        comms::option::FieldsImpl<CfgRxmFields::All>,
-        comms::option::MsgType<CfgRxm<TMsgBase> >
-    > Base;
+
 public:
 
     /// @brief Allow access to internal fields.

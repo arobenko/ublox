@@ -64,12 +64,6 @@ class CfgMsgCurrent : public
         comms::option::MsgType<CfgMsgCurrent<TMsgBase> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_CFG_MSG>,
-        comms::option::FieldsImpl<CfgMsgCurrentFields::All>,
-        comms::option::MsgType<CfgMsgCurrent<TMsgBase> >
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.

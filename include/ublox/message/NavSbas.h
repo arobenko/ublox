@@ -147,13 +147,13 @@ struct NavSbasFields
     using reserved1 = field::common::res1;
 
     /// @brief Definition of "prc" field.
-    using prc = field::common::U2T<field::common::Scaling_cm2m>;
+    using prc = field::common::U2T<comms::option::UnitsCentimeters>;
 
     /// @brief Definition of "reserved2" field.
     using reserved2 = field::common::res2;
 
     /// @brief Definition of "ic" field.
-    using ic = field::common::U2T<field::common::Scaling_cm2m>;
+    using ic = field::common::U2T<comms::option::UnitsCentimeters>;
 
     /// @brief Definition of the block of fields used in @ref data list
     struct block : public
@@ -173,7 +173,7 @@ struct NavSbasFields
     {
         /// @brief Allow access to internal fields.
         /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
-        ///     related to @b comms::field::Bitfield class from COMMS library
+        ///     related to @b comms::field::Bundle class from COMMS library
         ///     for details.
         COMMS_FIELD_MEMBERS_ACCESS(svid, flags, udre, svSys, svService, reserved1, prc, reserved2, ic);
     };
@@ -221,13 +221,6 @@ class NavSbas : public
         comms::option::HasDoRefresh
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_NAV_SBAS>,
-        comms::option::FieldsImpl<NavSbasFields::All<TDataOpt> >,
-        comms::option::MsgType<NavSbas<TMsgBase, TDataOpt> >,
-        comms::option::HasDoRefresh
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.
@@ -271,16 +264,13 @@ public:
     template <typename TIter>
     comms::ErrorStatus doRead(TIter& iter, std::size_t len)
     {
+        using Base = typename std::decay<decltype(comms::toMessageBase(*this))>::type;
         auto es = Base::template readFieldsUntil<FieldIdx_data>(iter, len);
         if (es != comms::ErrorStatus::Success) {
             return es;
         }
 
-        auto& allFields = Base::fields();
-        auto& cntField = std::get<FieldIdx_cnt>(allFields);
-        auto& dataField = std::get<FieldIdx_data>(allFields);
-        dataField.forceReadElemCount(cntField.value());
-
+        field_data().forceReadElemCount(field_cnt().value());
         return Base::template readFieldsFrom<FieldIdx_data>(iter, len);
     }
 
@@ -291,14 +281,11 @@ public:
     /// @return @b true in case the value of "cnt" field was modified, @b false otherwise
     bool doRefresh()
     {
-        auto& allFields = Base::fields();
-        auto& cntField = std::get<FieldIdx_cnt>(allFields);
-        auto& dataField = std::get<FieldIdx_data>(allFields);
-        if (cntField.value() == dataField.value().size()) {
+        if (field_cnt().value() == field_data().value().size()) {
             return false;
         }
 
-        cntField.value() = dataField.value().size();
+        field_cnt().value() = field_data().value().size();
         return true;
     }
 

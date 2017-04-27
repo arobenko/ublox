@@ -34,7 +34,7 @@ namespace message
 struct RxmPmreqFields
 {
     /// @brief Definition of "duration" field.
-    using duration = field::common::U4T<field::common::Scaling_ms2s>;
+    using duration = field::common::U4T<comms::option::UnitsMilliseconds>;
 
     /// @brief Definition of "flags" field.
     struct flags : public
@@ -72,12 +72,6 @@ class RxmPmreq : public
         comms::option::MsgType<RxmPmreq<TMsgBase> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_RXM_PMREQ>,
-        comms::option::FieldsImpl<RxmPmreqFields::All>,
-        comms::option::MsgType<RxmPmreq<TMsgBase> >
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.

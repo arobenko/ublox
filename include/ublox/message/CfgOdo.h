@@ -95,10 +95,14 @@ struct CfgOdoFields
     using reserved2 = field::common::res6;
 
     /// @brief Definition of "cogMaxSpeed" field.
-    using cogMaxSpeed = field::common::U1T<comms::option::ScalingRatio<1, 10> >;
+    using cogMaxSpeed =
+        field::common::U1T<
+            comms::option::ScalingRatio<1, 10>,
+            comms::option::UnitsMetersPerSecond
+        >;
 
     /// @brief Definition of "cogMaxPosAcc" field.
-    using cogMaxPosAcc = field::common::U1;
+    using cogMaxPosAcc = field::common::U1T<comms::option::UnitsMeters>;
 
     /// @brief Definition of "reserved3" field.
     using reserved3 = field::common::res2;

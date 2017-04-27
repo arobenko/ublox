@@ -37,7 +37,7 @@ struct NavVelnedFields
     using iTOW = field::nav::iTOW;
 
     /// @brief Definition of "velN" field.
-    using velN = field::common::I4T<field::common::Scaling_cm2m>;;
+    using velN = field::common::I4T<comms::option::UnitsCentimetersPerSecond>;
 
     /// @brief Definition of "velE" field.
     using velE = velN;
@@ -46,10 +46,10 @@ struct NavVelnedFields
     using velD = velN;
 
     /// @brief Definition of "speed" field.
-    using speed = field::common::U4T<field::common::Scaling_cm2m>;
+    using speed = field::common::U4T<comms::option::UnitsCentimetersPerSecond>;
 
     /// @brief Definition of "gSpeed" field.
-    using gSpeed = field::common::U4T<field::common::Scaling_cm2m>;
+    using gSpeed = field::common::U4T<comms::option::UnitsCentimetersPerSecond>;
 
     /// @brief Definition of "heading" field.
     using heading = field::nav::heading;
@@ -59,7 +59,10 @@ struct NavVelnedFields
 
     /// @brief Definition of "cAcc" field.
     using cAcc =
-        field::common::U4T<comms::option::ScalingRatio<1, 100000> >;
+        field::common::U4T<
+            comms::option::ScalingRatio<1, 100000>,
+            comms::option::UnitsDegrees
+        >;
 
     /// @brief All the fields bundled in std::tuple.
     using All = std::tuple<
@@ -91,12 +94,6 @@ class NavVelned : public
         comms::option::MsgType<NavVelned<TMsgBase> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_NAV_VELNED>,
-        comms::option::FieldsImpl<NavVelnedFields::All>,
-        comms::option::MsgType<NavVelned<TMsgBase> >
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.

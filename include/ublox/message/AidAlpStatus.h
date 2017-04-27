@@ -81,12 +81,6 @@ class AidAlpStatus : public
         comms::option::MsgType<AidAlpStatus<TMsgBase> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_AID_ALP>,
-        comms::option::FieldsImpl<AidAlpStatusFields::All>,
-        comms::option::MsgType<AidAlpStatus<TMsgBase> >
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.
@@ -120,9 +114,8 @@ public:
     template <typename TIter>
     comms::ErrorStatus doRead(TIter& iter, std::size_t len)
     {
-        auto& allFields = Base::fields();
-        auto& statusField = std::get<FieldIdx_status>(allFields);
-        if (len != statusField.length()) {
+        using Base = typename std::decay<decltype(comms::toMessageBase(*this))>::type;
+        if (len != field_status().length()) {
             return comms::ErrorStatus::InvalidMsgData;
         }
 

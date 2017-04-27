@@ -62,19 +62,19 @@ struct TimVrfyFields
     };
 
     /// @brief Definition of "itow" field.
-    using itow = field::common::I4T<field::common::Scaling_ms2s>;
+    using itow = field::common::I4T<comms::option::UnitsMilliseconds>;
 
     /// @brief Definition of "frac" field.
-    using frac = field::common::I4T<field::common::Scaling_ns2s>;
+    using frac = field::common::I4T<comms::option::UnitsNanoseconds>;
 
     /// @brief Definition of "deltaMS" field.
-    using deltaMS = field::common::I4T<field::common::Scaling_ms2s>;
+    using deltaMS = field::common::I4T<comms::option::UnitsMilliseconds>;
 
     /// @brief Definition of "deltaNS" field.
-    using deltaNS = field::common::I4T<field::common::Scaling_ns2s>;
+    using deltaNS = field::common::I4T<comms::option::UnitsNanoseconds>;
 
     /// @brief Definition of "wno" field.
-    using wno = field::common::U2;
+    using wno = field::common::U2T<comms::option::UnitsWeeks>;
 
     /// @brief Definition of "src" member field of @ref flags field.
     using src =
@@ -119,12 +119,6 @@ class TimVrfy : public
         comms::option::MsgType<TimVrfy<TMsgBase> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_TIM_VRFY>,
-        comms::option::FieldsImpl<TimVrfyFields::All>,
-        comms::option::MsgType<TimVrfy<TMsgBase> >
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.

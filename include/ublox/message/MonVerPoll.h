@@ -51,22 +51,8 @@ class MonVerPoll : public
         comms::option::MsgType<MonVerPoll<TMsgBase> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_MON_VER>,
-        comms::option::FieldsImpl<MonVerPollFields::All>,
-        comms::option::MsgType<MonVerPoll<TMsgBase> >
-    > Base;
+
 public:
-
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
 
     /// @brief Default constructor
     MonVerPoll() = default;

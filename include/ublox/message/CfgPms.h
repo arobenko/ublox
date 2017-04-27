@@ -71,10 +71,10 @@ struct CfgPmsFields
         >;
 
     /// @brief Definition of "period" field.
-    using period = field::common::U2;
+    using period = field::common::U2T<comms::option::UnitsSeconds>;
 
     /// @brief Definition of "onTime" field.
-    using onTime = field::common::U2;
+    using onTime = field::common::U2T<comms::option::UnitsSeconds>;
 
     /// @brief Definition of "reserved1" field.
     using reserved1 = field::common::res2;

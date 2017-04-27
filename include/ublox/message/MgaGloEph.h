@@ -66,46 +66,70 @@ struct MgaGloEphFields
     using H = field::common::I1;
 
     /// @brief Definition of "x" field.
-    using x = field::common::I4;
+    using x =
+        field::common::I4T<
+            comms::option::ScalingRatio<1, 0x800>,
+            comms::option::UnitsKilometers
+        >;
 
     /// @brief Definition of "y" field.
-    using y = field::common::I4;
+    using y = x;
 
     /// @brief Definition of "z" field.
-    using z = field::common::I4;
+    using z = x;
 
     /// @brief Definition of "dx" field.
-    using dx = field::common::I4;
+    using dx =
+        field::common::I4T<
+            comms::option::ScalingRatio<1, 0x100000>,
+            comms::option::UnitsKilometersPerSecond
+        >;
 
     /// @brief Definition of "dy" field.
-    using dy = field::common::I4;
+    using dy = dx;
 
     /// @brief Definition of "dz" field.
-    using dz = field::common::I4;
+    using dz = dx;
 
     /// @brief Definition of "ddx" field.
-    using ddx = field::common::I1;
+    using ddx =
+        field::common::I1T<
+            comms::option::ScalingRatio<1, 0x40000000>,
+            comms::option::UnitsKilometers
+        >;
 
     /// @brief Definition of "ddy" field.
-    using ddy = field::common::I1;
+    using ddy = ddx;
 
     /// @brief Definition of "ddz" field.
-    using ddz = field::common::I1;
+    using ddz = ddx;
 
     /// @brief Definition of "tb" field.
-    using tb = field::common::U1;
+    using tb =
+        field::common::U1T<
+            comms::option::ScalingRatio<15, 1>,
+            comms::option::UnitsMinutes
+        >;
 
     /// @brief Definition of "gamma" field.
-    using gamma = field::common::I2;
+    using gamma = field::common::I2T<comms::option::ScalingRatio<1, 0x10000000000ULL> >;
 
     /// @brief Definition of "E" field.
-    using E = field::common::U1;
+    using E = field::common::U1T<comms::option::UnitsDays>;
 
     /// @brief Definition of "deltaTau" field.
-    using deltaTau = field::common::I1;
+    using deltaTau =
+        field::common::I1T<
+            comms::option::ScalingRatio<1, 0x40000000>,
+            comms::option::UnitsSeconds
+        >;
 
     /// @brief Definition of "tau" field.
-    using tau = field::common::I4;
+    using tau =
+        field::common::I4T<
+            comms::option::ScalingRatio<1, 0x40000000>,
+            comms::option::UnitsSeconds
+        >;
 
     /// @brief Definition of "reserved2" field.
     using reserved2 = field::common::res4;

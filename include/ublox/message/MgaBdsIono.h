@@ -51,28 +51,36 @@ struct MgaBdsIonoFields
     using reserved1 = field::common::res2;
 
     /// @brief Definition of "alpha0" field.
-    using alpha0 = field::common::I1;
+    using alpha0 =
+        field::common::I1T<
+            comms::option::ScalingRatio<1, 0x40000000>,
+            comms::option::UnitsSeconds
+        >;
 
     /// @brief Definition of "alpha1" field.
-    using alpha1 = field::common::I1;
+    using alpha1 = field::common::I1T<comms::option::ScalingRatio<1, 0x8000000> >;
 
     /// @brief Definition of "alpha2" field.
-    using alpha2 = field::common::I1;
+    using alpha2 = field::common::I1T<comms::option::ScalingRatio<1, 0x1000000> >;
 
     /// @brief Definition of "alpha3" field.
-    using alpha3 = field::common::I1;
+    using alpha3 = field::common::I1T<comms::option::ScalingRatio<1, 0x1000000> >;
 
     /// @brief Definition of "beta0" field.
-    using beta0 = field::common::I1;
+    using beta0 =
+        field::common::I1T<
+            comms::option::ScalingRatio<0x800, 1>,
+            comms::option::UnitsSeconds
+        >;
 
     /// @brief Definition of "beta1" field.
-    using beta1 = field::common::I1;
+    using beta1 = field::common::I1T<comms::option::ScalingRatio<0x4000, 1> >;
 
     /// @brief Definition of "beta2" field.
-    using beta2 = field::common::I1;
+    using beta2 = field::common::I1T<comms::option::ScalingRatio<0x10000, 1> >;
 
     /// @brief Definition of "beta3" field.
-    using beta3 = field::common::I1;
+    using beta3 = field::common::I1T<comms::option::ScalingRatio<0x10000, 1> >;
 
     /// @brief Definition of "reserved2" field.
     using reserved2 = field::common::res4;

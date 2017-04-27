@@ -57,37 +57,45 @@ struct MgaGalAlmFields
     using ioda = field::common::U1;
 
     /// @brief Definition of "almWNa" field.
-    using almWNa = field::common::U1;
+    using almWNa = field::common::U1T<comms::option::UnitsWeeks>;
 
     /// @brief Definition of "toa" field.
-    using toa = field::common::U2;
+    using toa =
+        field::common::U2T<
+            comms::option::ScalingRatio<600, 1>,
+            comms::option::UnitsSeconds
+        >;
 
     /// @brief Definition of "deltaSqrtA" field.
-    using deltaSqrtA = field::common::I2;
+    using deltaSqrtA = field::common::I2T<comms::option::ScalingRatio<1, 0x200> >;
 
     /// @brief Definition of "e" field.
-    using e = field::common::U2;
+    using e = field::common::U2T<comms::option::ScalingRatio<1, 0x10000> >;
 
     /// @brief Definition of "deltaI" field.
-    using deltaI = field::common::I2;
+    using deltaI = field::common::I2T<comms::option::ScalingRatio<1, 0x4000> >;
 
     /// @brief Definition of "omega0" field.
-    using omega0 = field::common::I2;
+    using omega0 = field::common::I2T<comms::option::ScalingRatio<1, 0x8000> >;
 
     /// @brief Definition of "omegaDot" field.
-    using omegaDot = field::common::I2;
+    using omegaDot = field::common::I2T<comms::option::ScalingRatio<1, 0x200000000ULL> >;
 
     /// @brief Definition of "omega" field.
-    using omega = field::common::I2;
+    using omega = field::common::I2T<comms::option::ScalingRatio<1, 0x8000> >;
 
     /// @brief Definition of "m0" field.
-    using m0 = field::common::I2;
+    using m0 = field::common::I2T<comms::option::ScalingRatio<1, 0x8000> >;
 
     /// @brief Definition of "af0" field.
-    using af0 = field::common::I2;
+    using af0 =
+        field::common::I2T<
+            comms::option::ScalingRatio<1, 0x80000>,
+            comms::option::UnitsSeconds
+        >;
 
     /// @brief Definition of "af1" field.
-    using af1 = field::common::I2;
+    using af1 = field::common::I2T<comms::option::ScalingRatio<1, 0x4000000000ULL> >;
 
     /// @brief Definition of "healthE1B" field.
     using healthE1B = field::common::U1;

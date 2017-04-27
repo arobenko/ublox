@@ -54,10 +54,10 @@ struct MgaBdsAlmFields
     using reserved1 = field::common::res1;
 
     /// @brief Definition of "Wna" field.
-    using Wna = field::common::U1;
+    using Wna = field::common::U1T<comms::option::UnitsWeeks>;
 
     /// @brief Definition of "toa" field.
-    using toa = field::common::U1;
+    using toa = field::common::U1T<comms::option::UnitsSeconds>;
 
     /// @brief Definition of "deltaI" field.
     using deltaI = field::common::I2;
@@ -81,7 +81,7 @@ struct MgaBdsAlmFields
     using OmegaDot = field::common::I4;
 
     /// @brief Definition of "a0" field.
-    using a0 = field::common::I2;
+    using a0 = field::common::I2T<comms::option::UnitsSeconds>;
 
     /// @brief Definition of "a1" field.
     using a1 = field::common::I2;

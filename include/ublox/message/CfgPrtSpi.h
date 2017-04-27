@@ -142,13 +142,6 @@ class CfgPrtSpi : public
         comms::option::HasDoRefresh
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_CFG_PRT>,
-        comms::option::FieldsImpl<CfgPrtSpiFields::All>,
-        comms::option::MsgType<CfgPrtSpi<TMsgBase> >,
-        comms::option::HasDoRefresh
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.
@@ -204,14 +197,13 @@ public:
     template <typename TIter>
     comms::ErrorStatus doRead(TIter& iter, std::size_t len)
     {
+        using Base = typename std::decay<decltype(comms::toMessageBase(*this))>::type;
         auto es = Base::template readFieldsUntil<FieldIdx_reserved0>(iter, len);
         if (es != comms::ErrorStatus::Success) {
             return es;
         }
 
-        auto& allFields = Base::fields();
-        auto& portIdField = std::get<FieldIdx_portID>(allFields);
-        if (portIdField.value() != CfgPrtSpiFields::PortId::SPI) {
+        if (field_portID().value() != CfgPrtSpiFields::PortId::SPI) {
             return comms::ErrorStatus::InvalidMsgData;
         }
 
@@ -224,13 +216,11 @@ public:
     /// @return @b true in case the "portID" field was modified, @b false otherwise
     bool doRefresh()
     {
-        auto& allFields = Base::fields();
-        auto& portIdField = std::get<FieldIdx_portID>(allFields);
-        if (portIdField.value() == CfgPrtSpiFields::PortId::SPI) {
+        if (field_portID().value() == CfgPrtSpiFields::PortId::SPI) {
             return false;
         }
 
-        portIdField.value() = CfgPrtSpiFields::PortId::SPI;
+        field_portID().value() = CfgPrtSpiFields::PortId::SPI;
         return true;
     }
 };

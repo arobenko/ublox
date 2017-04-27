@@ -43,7 +43,7 @@ using ublox::message::TimVcocalExtFields;
 
 QVariantMap createProps_oscId()
 {
-    typedef TimVcocalExtFields::oscId Field;
+    using Field = TimVcocalExtFields::oscId;
     auto props =
         cc::property::field::ForField<Field>()
             .name("oscId")
@@ -55,7 +55,7 @@ QVariantMap createProps_oscId()
 
 QVariantMap createProps_srcId()
 {
-    typedef TimVcocalExtFields::srcId Field;
+    using Field = TimVcocalExtFields::srcId;
     auto props =
         cc::property::field::ForField<Field>()
             .name("srcId")

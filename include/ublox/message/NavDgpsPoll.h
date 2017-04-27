@@ -52,22 +52,8 @@ class NavDgpsPoll : public
         comms::option::MsgType<NavDgpsPoll<TMsgBase> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_NAV_DGPS>,
-        comms::option::FieldsImpl<NavDgpsPollFields::All>,
-        comms::option::MsgType<NavDgpsPoll<TMsgBase> >
-    > Base;
+
 public:
-
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    static_assert(std::tuple_size<typename Base::AllFields>::value == 0U,
-        "Number of fields is incorrect");
 
     /// @brief Default constructor
     NavDgpsPoll() = default;

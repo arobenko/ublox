@@ -51,22 +51,7 @@ class MonHwPoll : public
         comms::option::MsgType<MonHwPoll<TMsgBase> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_MON_HW>,
-        comms::option::FieldsImpl<MonHwPollFields::All>,
-        comms::option::MsgType<MonHwPoll<TMsgBase> >
-    > Base;
 public:
-
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
 
     /// @brief Default constructor
     MonHwPoll() = default;

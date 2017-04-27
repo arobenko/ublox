@@ -92,12 +92,6 @@ class AidAop : public
         comms::option::MsgType<AidAop<TMsgBase, TDataOpt, TOptionalOpt> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_AID_AOP>,
-        comms::option::FieldsImpl<AidAopFields::All<TDataOpt, TOptionalOpt> >,
-        comms::option::MsgType<AidAop<TMsgBase, TDataOpt, TOptionalOpt> >
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.
@@ -134,6 +128,7 @@ public:
     template <typename TIter>
     comms::ErrorStatus doRead(TIter& iter, std::size_t len)
     {
+        using Base = typename std::decay<decltype(comms::toMessageBase(*this))>::type;
         if (len != Base::doLength()) {
             return comms::ErrorStatus::InvalidMsgData;
         }

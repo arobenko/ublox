@@ -43,7 +43,7 @@ using ublox::message::TimTosFields;
 
 QVariantMap createProps_flagsLow()
 {
-    typedef TimTosFields::flagsLow Field;
+    using Field = TimTosFields::flagsLow;
     auto props =
         cc::property::field::ForField<Field>()
             .name("flags")
@@ -62,7 +62,7 @@ QVariantMap createProps_flagsLow()
 
 QVariantMap createProps_discSrc()
 {
-    typedef TimTosFields::discSrc Field;
+    using Field = TimTosFields::discSrc;
     auto props =
         cc::property::field::ForField<Field>()
             .name("discSrc")
@@ -79,7 +79,7 @@ QVariantMap createProps_discSrc()
 
 QVariantMap createProps_flagsHigh()
 {
-    typedef TimTosFields::flagsHigh Field;
+    using Field = TimTosFields::flagsHigh;
     auto props =
         cc::property::field::ForField<Field>()
             .serialisedHidden()
@@ -92,7 +92,7 @@ QVariantMap createProps_flagsHigh()
 
 QVariantMap createProps_flags()
 {
-    typedef TimTosFields::flags Field;
+    using Field = TimTosFields::flags;
     auto props =
         cc::property::field::ForField<Field>()
             .name("flags")

@@ -37,7 +37,7 @@ struct AidAlmFields
     using svid = field::aid::svid_ext;
 
     /// @brief Definition of "week" field..
-    using week = field::common::U4;
+    using week = field::common::U4T<comms::option::UnitsWeeks>;
 
     /// @brief Definition of "dwrd" field.
     /// @tparam TOpt Extra option(s) for the held list
@@ -79,13 +79,6 @@ class AidAlm : public
         comms::option::HasDoRefresh
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_AID_ALM>,
-        comms::option::FieldsImpl<AidAlmFields::All<TDwrdOpt> >,
-        comms::option::MsgType<AidAlm<TMsgBase, TDwrdOpt> >,
-        comms::option::HasDoRefresh
-    > Base;
 public:
     /// @brief Allow access to internal fields.
     /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro
@@ -128,20 +121,18 @@ public:
     template <typename TIter>
     comms::ErrorStatus doRead(TIter& iter, std::size_t len)
     {
+        using Base = typename std::decay<decltype(comms::toMessageBase(*this))>::type;
         auto es = Base::template readFieldsUntil<FieldIdx_dwrd>(iter, len);
         if (es != comms::ErrorStatus::Success) {
             return es;
         }
 
-        auto& allFields = Base::fields();
-        auto& weekField = std::get<FieldIdx_week>(allFields);
         auto dataMode = comms::field::OptionalMode::Exists;
-        if (weekField.value() == 0U) {
+        if (field_week().value() == 0U) {
             dataMode = comms::field::OptionalMode::Missing;
         }
 
-        auto& dataField = std::get<FieldIdx_dwrd>(allFields);
-        dataField.setMode(dataMode);
+        field_dwrd().setMode(dataMode);
         return Base::template readFieldsFrom<FieldIdx_dwrd>(iter, len);
     }
 
@@ -153,19 +144,16 @@ public:
     /// @return @b true in case the mode of "dwrd" field was modified, @b false otherwise
     bool doRefresh()
     {
-        auto& allFields = Base::fields();
-        auto& weekField = std::get<FieldIdx_week>(allFields);
         auto expectedMode = comms::field::OptionalMode::Exists;
-        if (weekField.value() == 0U) {
+        if (field_week().value() == 0U) {
             expectedMode = comms::field::OptionalMode::Missing;
         }
 
-        auto& dataField = std::get<FieldIdx_dwrd>(allFields);
-        if (dataField.getMode() == expectedMode) {
+        if (field_dwrd().getMode() == expectedMode) {
             return false;
         }
 
-        dataField.setMode(expectedMode);
+        field_dwrd().setMode(expectedMode);
         return true;
     }
 };

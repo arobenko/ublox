@@ -203,6 +203,8 @@ function (cc_plugin_ublox)
         message/MonPatchPoll.cpp
         message/MonGnss.cpp
         message/MonGnssPoll.cpp
+        message/MonSmgr.cpp
+        message/MonSmgrPoll.cpp
         message/AidReq.cpp
         message/AidIni.cpp
         message/AidIniPoll.cpp

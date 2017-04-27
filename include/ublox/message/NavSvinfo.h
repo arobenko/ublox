@@ -118,13 +118,13 @@ struct NavSvinfoFields
     using cno = field::common::U1;
 
     /// @brief Definition of "elev" field.
-    using elev = field::common::I1;
+    using elev = field::common::I1T<comms::option::UnitsDegrees>;
 
     /// @brief Definition of "azim" field.
-    using azim = field::common::I2;
+    using azim = field::common::I2T<comms::option::UnitsDegrees>;
 
     /// @brief Definition of "prRes" field.
-    using prRes = field::common::I4T<field::common::Scaling_cm2m>;
+    using prRes = field::common::I4T<comms::option::UnitsCentimeters>;
 
     /// @brief Definition of a block field repeated multiple times in @ref
     ///     data list.
@@ -144,7 +144,7 @@ struct NavSvinfoFields
     {
         /// @brief Allow access to internal fields.
         /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
-        ///     related to @b comms::field::Bitfield class from COMMS library
+        ///     related to @b comms::field::Bundle class from COMMS library
         ///     for details.
         COMMS_FIELD_MEMBERS_ACCESS(chn, svid, flags, quality, cno, elev, azim, prRes);
     };
@@ -189,13 +189,6 @@ class NavSvinfo : public
         comms::option::HasDoRefresh
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_NAV_SVINFO>,
-        comms::option::FieldsImpl<NavSvinfoFields::All<TDataOpt> >,
-        comms::option::MsgType<NavSvinfo<TMsgBase, TDataOpt> >,
-        comms::option::HasDoRefresh
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.
@@ -236,6 +229,7 @@ public:
     template <typename TIter>
     comms::ErrorStatus doRead(TIter& iter, std::size_t len)
     {
+        using Base = typename std::decay<decltype(comms::toMessageBase(*this))>::type;
         auto es = Base::template readFieldsUntil<FieldIdx_data>(iter, len);
         if (es != comms::ErrorStatus::Success) {
             return es;

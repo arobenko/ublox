@@ -57,28 +57,28 @@ template <typename TOpt = comms::option::EmptyOption>
 using datumName = common::ZString<6, TOpt>;
 
 /// @brief Definition of common "majA" field used in CFG-DAT messages.
-using datMajA = common::R8;
+using datMajA = common::R8T<comms::option::UnitsMeters>;
 
 /// @brief Definition of common "flat" field used in CFG-DAT messages.
 using datFlat = common::R8;
 
 /// @brief Definition of common "dX" field used in CFG-DAT messages.
-using datDX = common::R4;
+using datDX = common::R4T<comms::option::UnitsMeters>;
 
 /// @brief Definition of common "dY" field used in CFG-DAT messages.
-using datDY = common::R4;
+using datDY = common::R4T<comms::option::UnitsMeters>;
 
 /// @brief Definition of common "dZ" field used in CFG-DAT messages.
-using datDZ = common::R4;
+using datDZ = common::R4T<comms::option::UnitsMeters>;
 
 /// @brief Definition of common "rotX" field used in CFG-DAT messages.
-using datRotX = common::R4;
+using datRotX = common::R4T<comms::option::UnitsSeconds>;
 
 /// @brief Definition of common "rotY" field used in CFG-DAT messages.
-using datRotY = common::R4;
+using datRotY = common::R4T<comms::option::UnitsSeconds>;
 
 /// @brief Definition of common "rotZ" field used in CFG-DAT messages.
-using datRotZ = common::R4;
+using datRotZ = common::R4T<comms::option::UnitsSeconds>;
 
 /// @brief Definition of common "scale" field used in CFG-DAT messages.
 using datScale = common::R4;

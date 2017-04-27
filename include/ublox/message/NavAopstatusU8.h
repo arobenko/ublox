@@ -86,12 +86,6 @@ class NavAopstatusU8 : public
         comms::option::MsgType<NavAopstatusU8<TMsgBase> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_NAV_AOPSTATUS>,
-        comms::option::FieldsImpl<NavAopstatusU8Fields::All>,
-        comms::option::MsgType<NavAopstatusU8<TMsgBase> >
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.

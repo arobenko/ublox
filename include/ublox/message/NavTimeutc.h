@@ -125,12 +125,6 @@ class NavTimeutc : public
         comms::option::MsgType<NavTimeutc<TMsgBase> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_NAV_TIMEUTC>,
-        comms::option::FieldsImpl<NavTimeutcFields::All>,
-        comms::option::MsgType<NavTimeutc<TMsgBase> >
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.

@@ -37,10 +37,10 @@ struct NavClockFields
     using iTOW = field::nav::iTOW;
 
     /// @brief Definition of "clkB" field.
-    using clkB = field::common::I4T<field::common::Scaling_ns2s>;
+    using clkB = field::common::I4T<comms::option::UnitsNanoseconds>;
 
     /// @brief Definition of "clkD" field.
-    using clkD = field::common::I4T<field::common::Scaling_ns2s>;
+    using clkD = field::common::I4T<comms::option::UnitsNanoseconds>;
 
     /// @brief Definition of "tAcc" field.
     using tAcc = field::nav::tAcc;
@@ -74,12 +74,7 @@ class NavClock : public
         comms::option::MsgType<NavClock<TMsgBase> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_NAV_CLOCK>,
-        comms::option::FieldsImpl<NavClockFields::All>,
-        comms::option::MsgType<NavClock<TMsgBase> >
-    > Base;
+
 public:
 
     /// @brief Allow access to internal fields.

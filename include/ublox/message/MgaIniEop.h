@@ -52,28 +52,36 @@ struct MgaIniEopFields
     using reserved1 = field::common::res2;
 
     /// @brief Definition of "d2kRef" field.
-    using d2kRef = field::common::U2;
+    using d2kRef = field::common::U2T<comms::option::UnitsDays>;
 
     /// @brief Definition of "d2kMax" field.
-    using d2kMax = field::common::U2;
+    using d2kMax = field::common::U2T<comms::option::UnitsDays>;
 
     /// @brief Definition of "xpP0" field.
-    using xpP0 = field::common::I4;
+    using xpP0 = field::common::I4T<comms::option::ScalingRatio<1, 0x40000000> >;
 
     /// @brief Definition of "xpP1" field.
-    using xpP1 = field::common::I4;
+    using xpP1 = xpP0;
 
     /// @brief Definition of "ypP0" field.
-    using ypP0 = field::common::I4;
+    using ypP0 = xpP0;
 
     /// @brief Definition of "ypP1" field.
-    using ypP1 = field::common::I4;
+    using ypP1 = xpP0;
 
     /// @brief Definition of "dUT1" field.
-    using dUT1 = field::common::I4;
+    using dUT1 =
+        field::common::I4T<
+            comms::option::ScalingRatio<1, 0x2000000>,
+            comms::option::UnitsSeconds
+        >;
 
     /// @brief Definition of "ddUT1" field.
-    using ddUT1 = field::common::I4;
+    using ddUT1 =
+        field::common::I4T<
+            comms::option::ScalingRatio<1, 0x40000000>,
+            comms::option::UnitsSeconds
+        >;
 
     /// @brief Definition of "reserved2" field.
     using reserved2 = field::common::res4;

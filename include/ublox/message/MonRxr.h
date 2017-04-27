@@ -68,12 +68,6 @@ class MonRxr : public
         comms::option::MsgType<MonRxr<TMsgBase> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_MON_RXR>,
-        comms::option::FieldsImpl<MonRxrFields::All>,
-        comms::option::MsgType<MonRxr<TMsgBase> >
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.

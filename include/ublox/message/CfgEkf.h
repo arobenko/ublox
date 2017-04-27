@@ -115,7 +115,8 @@ struct CfgEkfFields
     /// @brief Definition of "tempUpdate" field.
     using tempUpdate =
         field::common::U2T<
-            comms::option::ValidNumValueRange<9, 0xffff>
+            comms::option::ValidNumValueRange<9, 0xffff>,
+            comms::option::UnitsSeconds
         >;
 
     /// @brief All the fields bundled in std::tuple.
@@ -149,12 +150,6 @@ class CfgEkf : public
         comms::option::MsgType<CfgEkf<TMsgBase> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_CFG_EKF>,
-        comms::option::FieldsImpl<CfgEkfFields::All>,
-        comms::option::MsgType<CfgEkf<TMsgBase> >
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.

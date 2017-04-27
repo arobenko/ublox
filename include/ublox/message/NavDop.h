@@ -86,12 +86,6 @@ class NavDop : public
         comms::option::MsgType<NavDop<TMsgBase> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_NAV_DOP>,
-        comms::option::FieldsImpl<NavDopFields::All>,
-        comms::option::MsgType<NavDop<TMsgBase> >
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.

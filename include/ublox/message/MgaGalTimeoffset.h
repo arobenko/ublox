@@ -51,16 +51,28 @@ struct MgaGalTimeoffsetFields
     using reserved1 = field::common::res2;
 
     /// @brief Definition of "a0G" field.
-    using a0G = field::common::I2;
+    using a0G =
+        field::common::I2T<
+            comms::option::ScalingRatio<1, 0x800000000ULL>,
+            comms::option::UnitsSeconds
+        >;
 
     /// @brief Definition of "a1G" field.
-    using a1G = field::common::I2;
+    using a1G =
+        field::common::I2T<
+            comms::option::ScalingRatio<1, 0x8000000000000ULL>,
+            comms::option::UnitsSeconds
+        >;
 
     /// @brief Definition of "t0G" field.
-    using t0G = field::common::U1;
+    using t0G =
+        field::common::U1T<
+            comms::option::ScalingRatio<3600, 1>,
+            comms::option::UnitsSeconds
+        >;
 
     /// @brief Definition of "wn0G" field.
-    using wn0G = field::common::U1;
+    using wn0G = field::common::U1T<comms::option::UnitsWeeks>;
 
     /// @brief Definition of "reserved2" field.
     using reserved2 = field::common::res2;

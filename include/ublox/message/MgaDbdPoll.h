@@ -51,23 +51,7 @@ class MgaDbdPoll : public
         comms::option::MsgType<MgaDbdPoll<TMsgBase> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_MGA_DBD>,
-        comms::option::FieldsImpl<MgaDbdPollFields::All>,
-        comms::option::MsgType<MgaDbdPoll<TMsgBase> >
-    > Base;
 public:
-
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
-
     /// @brief Default constructor
     MgaDbdPoll() = default;
 

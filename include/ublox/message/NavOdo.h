@@ -46,13 +46,13 @@ struct NavOdoFields
     using iTOW = field::nav::iTOW;
 
     /// @brief Definition of "distance" field.
-    using distance = field::common::U4;
+    using distance = field::common::U4T<comms::option::UnitsMeters>;
 
     /// @brief Definition of "totalDistance" field.
-    using totalDistance = field::common::U4;
+    using totalDistance = field::common::U4T<comms::option::UnitsMeters>;
 
     /// @brief Definition of "distanceStd" field.
-    using distanceStd = field::common::U4;
+    using distanceStd = field::common::U4T<comms::option::UnitsMeters>;
 
     /// @brief All the fields bundled in std::tuple.
     using All = std::tuple<

@@ -68,52 +68,52 @@ struct CfgTmode2Fields
     /// @brief Definition of "ecefX" field.
     using ecefX =
         field::common::OptionalT<
-            field::common::I4T<field::common::Scaling_cm2m>
+            field::common::I4T<comms::option::UnitsCentimeters>
         >;
 
     /// @brief Definition of "lat" field.
     using lat =
         field::common::OptionalT<
-            field::common::I4T<comms::option::ScalingRatio<1, 10000000L> >
+            field::common::I4T<
+                comms::option::ScalingRatio<1, 10000000L>,
+                comms::option::UnitsDegrees
+            >
         >;
 
     /// @brief Definition of "ecefY" field.
     using ecefY =
         field::common::OptionalT<
-            field::common::I4T<field::common::Scaling_cm2m>
+            field::common::I4T<comms::option::UnitsCentimeters>
         >;
 
     /// @brief Definition of "lon" field.
-    using lon =
-        field::common::OptionalT<
-            field::common::I4T<comms::option::ScalingRatio<1, 10000000L> >
-        >;
+    using lon = lat;
 
     /// @brief Definition of "ecefZ" field.
     using ecefZ =
         field::common::OptionalT<
-            field::common::I4T<field::common::Scaling_cm2m>
+            field::common::I4T<comms::option::UnitsCentimeters>
         >;
 
     /// @brief Definition of "alt" field.
     using alt =
         field::common::OptionalT<
-            field::common::I4T<field::common::Scaling_cm2m>
+            field::common::I4T<comms::option::UnitsCentimeters>
         >;
 
     /// @brief Definition of "fixedPosAcc" field.
     using fixedPosAcc =
         field::common::U4T<
-            field::common::Scaling_mm2m
+            comms::option::UnitsMillimeters
         >;
 
     /// @brief Definition of "svinMinDur" field.
-    using svinMinDur = field::common::U4;
+    using svinMinDur = field::common::U4T<comms::option::UnitsSeconds>;
 
     /// @brief Definition of "svinAccLimit" field.
     using svinAccLimit =
         field::common::U4T<
-            field::common::Scaling_mm2m
+            comms::option::UnitsMillimeters
         >;
 
     /// @brief All the fields bundled in std::tuple.
@@ -160,13 +160,6 @@ class CfgTmode2 : public
         comms::option::HasDoRefresh
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_CFG_TMODE2>,
-        comms::option::FieldsImpl<CfgTmode2Fields::All>,
-        comms::option::MsgType<CfgTmode2<TMsgBase> >,
-        comms::option::HasDoRefresh
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.
@@ -212,23 +205,13 @@ public:
     ///     @ref CfgTmode2Fields::alt are marked as @b missing.
     CfgTmode2()
     {
-        auto& allFields = Base::fields();
+        field_ecefX().setExists();
+        field_ecefY().setExists();
+        field_ecefZ().setExists();
 
-        auto& ecefXField = std::get<FieldIdx_ecefX>(allFields);
-        auto& ecefYField = std::get<FieldIdx_ecefY>(allFields);
-        auto& ecefZField = std::get<FieldIdx_ecefZ>(allFields);
-
-        ecefXField.setExists();
-        ecefYField.setExists();
-        ecefZField.setExists();
-
-        auto& latField = std::get<FieldIdx_lat>(allFields);
-        auto& lonField = std::get<FieldIdx_lon>(allFields);
-        auto& altField = std::get<FieldIdx_alt>(allFields);
-
-        latField.setMissing();
-        lonField.setMissing();
-        altField.setMissing();
+        field_lat().setMissing();
+        field_lon().setMissing();
+        field_alt().setMissing();
     }
 
     /// @brief Copy constructor
@@ -254,33 +237,25 @@ public:
     template <typename TIter>
     comms::ErrorStatus doRead(TIter& iter, std::size_t len)
     {
+        using Base = typename std::decay<decltype(comms::toMessageBase(*this))>::type;
         auto es = Base::template readFieldsUntil<FieldIdx_ecefX>(iter, len);
         if (es != comms::ErrorStatus::Success) {
             return es;
         }
 
-        auto& allFields = Base::fields();
-        auto& flagsField = std::get<FieldIdx_flags>(allFields);
-
         auto cartesianMode = comms::field::OptionalMode::Exists;
         auto geodeticMode = comms::field::OptionalMode::Missing;
-        if (flagsField.getBitValue(CfgTmode2Fields::flags::BitIdx_lla)) {
+        if (field_flags().getBitValue(CfgTmode2Fields::flags::BitIdx_lla)) {
             std::swap(cartesianMode, geodeticMode);
         }
 
-        auto& ecefXField = std::get<FieldIdx_ecefX>(allFields);
-        auto& ecefYField = std::get<FieldIdx_ecefY>(allFields);
-        auto& ecefZField = std::get<FieldIdx_ecefZ>(allFields);
-        ecefXField.setMode(cartesianMode);
-        ecefYField.setMode(cartesianMode);
-        ecefZField.setMode(cartesianMode);
+        field_ecefX().setMode(cartesianMode);
+        field_ecefY().setMode(cartesianMode);
+        field_ecefZ().setMode(cartesianMode);
 
-        auto& latField = std::get<FieldIdx_lat>(allFields);
-        auto& lonField = std::get<FieldIdx_lon>(allFields);
-        auto& altField = std::get<FieldIdx_alt>(allFields);
-        latField.setMode(geodeticMode);
-        lonField.setMode(geodeticMode);
-        altField.setMode(geodeticMode);
+        field_lat().setMode(geodeticMode);
+        field_lon().setMode(geodeticMode);
+        field_alt().setMode(geodeticMode);
 
         return Base::template readFieldsFrom<FieldIdx_ecefX>(iter, len);
     }
@@ -292,37 +267,27 @@ public:
     /// @return @b true in case the mode of any optional field was modified, @b false otherwise
     bool doRefresh()
     {
-        auto& allFields = Base::fields();
-        auto& flagsField = std::get<FieldIdx_flags>(allFields);
-
         auto cartesianMode = comms::field::OptionalMode::Exists;
         auto geodeticMode = comms::field::OptionalMode::Missing;
-        if (flagsField.getBitValue(CfgTmode2Fields::flags::BitIdx_lla)) {
+        if (field_flags().getBitValue(CfgTmode2Fields::flags::BitIdx_lla)) {
             std::swap(cartesianMode, geodeticMode);
         }
 
-        auto& ecefXField = std::get<FieldIdx_ecefX>(allFields);
-        auto& ecefYField = std::get<FieldIdx_ecefY>(allFields);
-        auto& ecefZField = std::get<FieldIdx_ecefZ>(allFields);
-        auto& latField = std::get<FieldIdx_lat>(allFields);
-        auto& lonField = std::get<FieldIdx_lon>(allFields);
-        auto& altField = std::get<FieldIdx_alt>(allFields);
-
-        if ((ecefXField.getMode() == cartesianMode) &&
-            (ecefYField.getMode() == cartesianMode) &&
-            (ecefZField.getMode() == cartesianMode) &&
-            (latField.getMode() == geodeticMode) &&
-            (lonField.getMode() == geodeticMode) &&
-            (altField.getMode() == geodeticMode)) {
+        if ((field_ecefX().getMode() == cartesianMode) &&
+            (field_ecefY().getMode() == cartesianMode) &&
+            (field_ecefZ().getMode() == cartesianMode) &&
+            (field_lat().getMode() == geodeticMode) &&
+            (field_lon().getMode() == geodeticMode) &&
+            (field_alt().getMode() == geodeticMode)) {
             return false;
         }
 
-        ecefXField.setMode(cartesianMode);
-        ecefYField.setMode(cartesianMode);
-        ecefZField.setMode(cartesianMode);
-        latField.setMode(geodeticMode);
-        lonField.setMode(geodeticMode);
-        altField.setMode(geodeticMode);
+        field_ecefX().setMode(cartesianMode);
+        field_ecefY().setMode(cartesianMode);
+        field_ecefZ().setMode(cartesianMode);
+        field_lat().setMode(geodeticMode);
+        field_lon().setMode(geodeticMode);
+        field_alt().setMode(geodeticMode);
         return true;
     }
 };

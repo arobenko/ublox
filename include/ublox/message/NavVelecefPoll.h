@@ -51,23 +51,7 @@ class NavVelecefPoll : public
         comms::option::MsgType<NavVelecefPoll<TMsgBase> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_NAV_VELECEF>,
-        comms::option::FieldsImpl<NavVelecefPollFields::All>,
-        comms::option::MsgType<NavVelecefPoll<TMsgBase> >
-    > Base;
 public:
-
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
-
     /// @brief Default constructor
     NavVelecefPoll() = default;
 

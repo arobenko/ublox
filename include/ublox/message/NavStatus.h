@@ -161,10 +161,10 @@ struct NavStatusFields
     };
 
     /// @brief Definition of "ttff" field.
-    using ttff = field::common::U4T<field::common::Scaling_ms2s>;
+    using ttff = field::common::U4T<comms::option::UnitsMilliseconds>;
 
     /// @brief Definition of "msss" field.
-    using msss = field::common::U4T<field::common::Scaling_ms2s>;
+    using msss = field::common::U4T<comms::option::UnitsMilliseconds>;
 
     /// @brief All the fields bundled in std::tuple.
     using All = std::tuple<
@@ -194,12 +194,6 @@ class NavStatus : public
         comms::option::MsgType<NavStatus<TMsgBase> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_NAV_STATUS>,
-        comms::option::FieldsImpl<NavStatusFields::All>,
-        comms::option::MsgType<NavStatus<TMsgBase> >
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.

@@ -59,12 +59,6 @@ class AidAopPollSv : public
         comms::option::MsgType<AidAopPollSv<TMsgBase> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_AID_AOP>,
-        comms::option::FieldsImpl<AidAopPollSvFields::All>,
-        comms::option::MsgType<AidAopPollSv<TMsgBase> >
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.

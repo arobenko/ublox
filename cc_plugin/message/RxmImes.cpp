@@ -72,7 +72,7 @@ QVariantMap createProps_pos1Lat()
 
 QVariantMap createProps_position1_1()
 {
-    typedef RxmImesFields::position1_1 Field;
+    using Field = RxmImesFields::position1_1;
     auto props =
         cc::property::field::ForField<Field>()
             .name("position1_1")
@@ -95,7 +95,7 @@ QVariantMap createProps_pos1Lon()
 
 QVariantMap createProps_pos1Flags()
 {
-    typedef RxmImesFields::pos1Flags Field;
+    using Field = RxmImesFields::pos1Flags;
     auto props =
         cc::property::field::ForField<Field>()
             .serialisedHidden()
@@ -106,7 +106,7 @@ QVariantMap createProps_pos1Flags()
 
 QVariantMap createProps_position1_2()
 {
-    typedef RxmImesFields::position1_2 Field;
+    using Field = RxmImesFields::position1_2;
     auto props =
         cc::property::field::ForField<Field>()
             .name("position1_2")
@@ -136,7 +136,7 @@ QVariantMap createProps_pos2Alt()
 
 QVariantMap createProps_pos2Acc()
 {
-    typedef RxmImesFields::pos2Acc Field;
+    using Field = RxmImesFields::pos2Acc;
     auto props =
         cc::property::field::ForField<Field>()
             .name("pos2Acc")
@@ -152,7 +152,7 @@ QVariantMap createProps_pos2Acc()
 
 QVariantMap createProps_pos2Flags()
 {
-    typedef RxmImesFields::pos2Flags Field;
+    using Field = RxmImesFields::pos2Flags;
     auto props =
         cc::property::field::ForField<Field>()
             .serialisedHidden()
@@ -163,7 +163,7 @@ QVariantMap createProps_pos2Flags()
 
 QVariantMap createProps_position2_1()
 {
-    typedef RxmImesFields::position2_1 Field;
+    using Field = RxmImesFields::position2_1;
     auto props =
         cc::property::field::ForField<Field>()
             .name("position2_1")
@@ -204,7 +204,7 @@ QVariantMap createProps_shortId()
 
 QVariantMap createProps_shortIdFlags()
 {
-    typedef RxmImesFields::shortIdFlags Field;
+    using Field = RxmImesFields::shortIdFlags;
     auto props =
         cc::property::field::ForField<Field>()
             .serialisedHidden()
@@ -217,7 +217,7 @@ QVariantMap createProps_shortIdFlags()
 
 QVariantMap createProps_shortIdFrame()
 {
-    typedef RxmImesFields::shortIdFrame Field;
+    using Field = RxmImesFields::shortIdFrame;
     auto props =
         cc::property::field::ForField<Field>()
             .name("shortIdFrame")
@@ -229,7 +229,7 @@ QVariantMap createProps_shortIdFrame()
 
 QVariantMap createProps_mediumId_2()
 {
-    typedef RxmImesFields::mediumId_2 Field;
+    using Field = RxmImesFields::mediumId_2;
     auto props =
         cc::property::field::ForField<Field>()
             .name("mediumId_2")

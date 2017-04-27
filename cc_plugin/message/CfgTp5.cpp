@@ -45,6 +45,68 @@ namespace
 
 using ublox::message::CfgTp5Fields;
 
+QVariantMap createProps_optIntValue(const QString& name)
+{
+    return
+        cc::property::field::Optional()
+            .name(name)
+            .uncheckable()
+            .field(cc::property::field::IntValue().name(name).asMap())
+            .asMap();
+}
+
+QVariantMap createProps_freqPeriod()
+{
+    auto props =
+        cc::property::field::ForField<CfgTp5Fields::freqPeriod>()
+            .name("freqPeriod")
+            .serialisedHidden()
+            .add(createProps_optIntValue("freq"))
+            .add(createProps_optIntValue("period"));
+
+    assert(props.members().size() == CfgTp5Fields::freqPeriod::FieldIdx_numOfValues);
+    return props.asMap();
+}
+
+QVariantMap createProps_freqPeriodLock()
+{
+    auto props =
+        cc::property::field::ForField<CfgTp5Fields::freqPeriodLock>()
+            .name("freqPeriodLock")
+            .serialisedHidden()
+            .add(createProps_optIntValue("freqLock"))
+            .add(createProps_optIntValue("periodLock"));
+
+    assert(props.members().size() == CfgTp5Fields::freqPeriodLock::FieldIdx_numOfValues);
+    return props.asMap();
+}
+
+QVariantMap createProps_pulseLenRatio()
+{
+    auto props =
+        cc::property::field::ForField<CfgTp5Fields::pulseLenRatio>()
+            .name("pulseLenRatio")
+            .serialisedHidden()
+            .add(createProps_optIntValue("pulseLen"))
+            .add(createProps_optIntValue("ratio"));
+
+    assert(props.members().size() == CfgTp5Fields::pulseLenRatio::FieldIdx_numOfValues);
+    return props.asMap();
+}
+
+QVariantMap createProps_pulseLenRatioLock()
+{
+    auto props =
+        cc::property::field::ForField<CfgTp5Fields::pulseLenRatio>()
+            .name("pulseLenRatioLock")
+            .serialisedHidden()
+            .add(createProps_optIntValue("pulseLenLock"))
+            .add(createProps_optIntValue("ratioLock"));
+
+    assert(props.members().size() == CfgTp5Fields::pulseLenRatioLock::FieldIdx_numOfValues);
+    return props.asMap();
+}
+
 QVariantMap createProps_flagsLow()
 {
     cc::property::field::ForField<CfgTp5Fields::flagsLow> props;
@@ -108,14 +170,10 @@ QVariantList createFieldsProperties()
         cc::property::field::ForField<CfgTp5Fields::antCableDelay>().name("antCableDelay").asMap());
     props.append(
         cc::property::field::ForField<CfgTp5Fields::rfGroupDelay>().name("rfGroupDelay").asMap());
-    props.append(
-        cc::property::field::ForField<CfgTp5Fields::freqPeriod>().name("freqPeriod").asMap());
-    props.append(
-        cc::property::field::ForField<CfgTp5Fields::freqPeriodLock>().name("freqPeriodLock").asMap());
-    props.append(
-        cc::property::field::ForField<CfgTp5Fields::pulseLenRatio>().name("pulseLenRatio").asMap());
-    props.append(
-        cc::property::field::ForField<CfgTp5Fields::pulseLenRatioLock>().name("pulseLenRatioLock").asMap());
+    props.append(createProps_freqPeriod());
+    props.append(createProps_freqPeriodLock());
+    props.append(createProps_pulseLenRatio());
+    props.append(createProps_pulseLenRatioLock());
     props.append(
         cc::property::field::ForField<CfgTp5Fields::userConfigDelay>().name("userConfigDelay").asMap());
     props.append(createProps_flags());

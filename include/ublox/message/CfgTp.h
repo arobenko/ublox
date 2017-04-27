@@ -51,10 +51,10 @@ struct CfgTpFields
     };
 
     /// @brief Definition of "interval" field.
-    using interval = field::common::U4T<field::common::Scaling_us2s>;
+    using interval = field::common::U4T<comms::option::UnitsMicroseconds>;
 
     /// @brief Definition of "length" field.
-    using length = field::common::U4T<field::common::Scaling_us2s>;
+    using length = field::common::U4T<comms::option::UnitsMicroseconds>;
 
     /// @brief Definition of "status" field.
     using status =
@@ -84,13 +84,13 @@ struct CfgTpFields
     using res = field::common::res1;
 
     /// @brief Definition of "antennaCableDelay" field.
-    using antennaCableDelay = field::common::I2T<field::common::Scaling_ns2s>;
+    using antennaCableDelay = field::common::I2T<comms::option::UnitsNanoseconds>;
 
     /// @brief Definition of "rfGroupDelay" field.
-    using rfGroupDelay = field::common::I2T<field::common::Scaling_ns2s>;
+    using rfGroupDelay = field::common::I2T<comms::option::UnitsNanoseconds>;
 
     /// @brief Definition of "userDelay" field.
-    using userDelay = field::common::I4T<field::common::Scaling_ns2s>;
+    using userDelay = field::common::I4T<comms::option::UnitsNanoseconds>;
 
     /// @brief All the fields bundled in std::tuple.
     using All = std::tuple<
@@ -122,12 +122,6 @@ class CfgTp : public
         comms::option::MsgType<CfgTp<TMsgBase> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_CFG_TP>,
-        comms::option::FieldsImpl<CfgTpFields::All>,
-        comms::option::MsgType<CfgTp<TMsgBase> >
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.

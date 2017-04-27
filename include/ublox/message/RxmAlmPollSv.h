@@ -58,12 +58,6 @@ class RxmAlmPollSv : public
         comms::option::MsgType<RxmAlmPollSv<TMsgBase> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_RXM_ALM>,
-        comms::option::FieldsImpl<RxmAlmPollSvFields::All>,
-        comms::option::MsgType<RxmAlmPollSv<TMsgBase> >
-    > Base;
 public:
     /// @brief Allow access to internal fields.
     /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro

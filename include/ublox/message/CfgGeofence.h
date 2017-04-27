@@ -86,13 +86,22 @@ struct CfgGeofenceFields
     using reserved2 = field::common::res1;
 
     /// @brief Definition of "lat" field.
-    using lat = field::common::I4T<comms::option::ScalingRatio<1, 10000000L> >;
+    using lat = field::common::I4T<
+        comms::option::ScalingRatio<1, 10000000L>,
+        comms::option::UnitsDegrees
+    >;
 
     /// @brief Definition of "lon" field.
-    using lon = field::common::I4T<comms::option::ScalingRatio<1, 10000000L> >;
+    using lon = field::common::I4T<
+        comms::option::ScalingRatio<1, 10000000L>,
+        comms::option::UnitsDegrees
+    >;
 
     /// @brief Definition of "radius" field.
-    using radius = field::common::U4T<comms::option::ScalingRatio<1, 100L> >;
+    using radius = field::common::U4T<
+        comms::option::ScalingRatio<1, 100L>,
+        comms::option::UnitsMeters
+    >;
 
 
     /// @brief Definition of a block field repeated multiple times in @ref
@@ -108,7 +117,7 @@ struct CfgGeofenceFields
     {
         /// @brief Allow access to internal fields.
         /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
-        ///     related to @b comms::field::Bitfield class from COMMS library
+        ///     related to @b comms::field::Bundle class from COMMS library
         ///     for details.
         COMMS_FIELD_MEMBERS_ACCESS(lat, lon, radius);
     };
@@ -157,13 +166,6 @@ class CfgGeofence : public
         comms::option::HasDoRefresh
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_CFG_GEOFENCE>,
-        comms::option::FieldsImpl<CfgGeofenceFields::All<TDataOpt> >,
-        comms::option::MsgType<CfgGeofence<TMsgBase, TDataOpt> >,
-        comms::option::HasDoRefresh
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.
@@ -216,6 +218,7 @@ public:
     template <typename TIter>
     comms::ErrorStatus doRead(TIter& iter, std::size_t len)
     {
+        using Base = typename std::decay<decltype(comms::toMessageBase(*this))>::type;
         auto es = Base::template readFieldsUntil<FieldIdx_data>(iter, len);
         if (es != comms::ErrorStatus::Success) {
             return es;

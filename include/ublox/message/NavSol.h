@@ -132,12 +132,6 @@ class NavSol : public
         comms::option::MsgType<NavSol<TMsgBase> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_NAV_SOL>,
-        comms::option::FieldsImpl<NavSolFields::All>,
-        comms::option::MsgType<NavSol<TMsgBase> >
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.

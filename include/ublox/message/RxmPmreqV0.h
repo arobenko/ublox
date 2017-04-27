@@ -43,7 +43,7 @@ struct RxmPmreqV0Fields
     using reserved1 = field::common::res3;
 
     /// @brief Definition of "duration" field.
-    using duration = field::common::U4T<field::common::Scaling_ms2s>;
+    using duration = field::common::U4T<comms::option::UnitsMilliseconds>;
 
     /// @brief Definition of "flags" field.
     struct flags : public
@@ -140,7 +140,7 @@ public:
     template <typename TIter>
     comms::ErrorStatus doRead(TIter& iter, std::size_t len)
     {
-        typedef typename std::decay<decltype(comms::toMessageBase(*this))>::type Base;
+        using Base = typename std::decay<decltype(comms::toMessageBase(*this))>::type;
         if (len < Base::doLength()) {
             return comms::ErrorStatus::InvalidMsgData;
         }

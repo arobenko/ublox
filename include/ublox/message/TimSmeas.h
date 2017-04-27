@@ -66,20 +66,22 @@ struct TimSmeasFields
     /// @brief Definition of "phaseOffsetFrac" field.
     using phaseOffsetFrac =
         field::common::I1T<
-            comms::option::ScalingRatio<1, 0x100>
+            comms::option::ScalingRatio<1, 0x100>,
+            comms::option::UnitsNanoseconds
         >;
 
     /// @brief Definition of "phaseUncFrac" field.
     using phaseUncFrac =
         field::common::U1T<
-            comms::option::ScalingRatio<1, 0x100>
+            comms::option::ScalingRatio<1, 0x100>,
+            comms::option::UnitsNanoseconds
         >;
 
     /// @brief Definition of "phaseOffset" field.
-    using phaseOffset = field::common::I4T<field::common::Scaling_ns2s>;
+    using phaseOffset = field::common::I4T<comms::option::UnitsNanoseconds>;
 
     /// @brief Definition of "phaseUnc" field.
-    using phaseUnc = field::common::U4T<field::common::Scaling_ns2s>;
+    using phaseUnc = field::common::U4T<comms::option::UnitsNanoseconds>;
 
     /// @brief Definition of "reserved3" field.
     using reserved3 = field::common::res4;
@@ -115,7 +117,7 @@ struct TimSmeasFields
     {
         /// @brief Allow access to internal fields.
         /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
-        ///     related to @b comms::field::Bitfield class from COMMS library
+        ///     related to @b comms::field::Bundle class from COMMS library
         ///     for details.
         COMMS_FIELD_MEMBERS_ACCESS(
             sourceId,
@@ -212,7 +214,7 @@ public:
     template <typename TIter>
     comms::ErrorStatus doRead(TIter& iter, std::size_t len)
     {
-        typedef typename std::decay<decltype(comms::toMessageBase(*this))>::type Base;
+        using Base = typename std::decay<decltype(comms::toMessageBase(*this))>::type;
         auto es = Base::template readFieldsUntil<FieldIdx_data>(iter, len);
         if (es != comms::ErrorStatus::Success) {
             return es;

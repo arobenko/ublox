@@ -60,12 +60,6 @@ class CfgTp5PollSelect : public
         comms::option::MsgType<CfgTp5PollSelect<TMsgBase> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_CFG_TP5>,
-        comms::option::FieldsImpl<CfgTp5PollSelectFields::All>,
-        comms::option::MsgType<CfgTp5PollSelect<TMsgBase> >
-    > Base;
 public:
     /// @brief Allow access to internal fields.
     /// @details See definition of @b COMMS_MSG_FIELDS_ACCESS macro

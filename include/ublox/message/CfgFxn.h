@@ -47,28 +47,28 @@ struct CfgFxnFields
     };
 
     /// @brief Definition of "tReacq" field.
-    using tReacq = field::common::U4T<field::common::Scaling_ms2s>;
+    using tReacq = field::common::U4T<comms::option::UnitsMilliseconds>;
 
     /// @brief Definition of "tAcq" field.
-    using tAcq = field::common::U4T<field::common::Scaling_ms2s>;
+    using tAcq = field::common::U4T<comms::option::UnitsMilliseconds>;
 
     /// @brief Definition of "tReacqOff" field.
-    using tReacqOff = field::common::U4T<field::common::Scaling_ms2s>;
+    using tReacqOff = field::common::U4T<comms::option::UnitsMilliseconds>;
 
     /// @brief Definition of "tAcqOff" field.
-    using tAcqOff = field::common::U4T<field::common::Scaling_ms2s>;
+    using tAcqOff = field::common::U4T<comms::option::UnitsMilliseconds>;
 
     /// @brief Definition of "tOn" field.
-    using tOn = field::common::U4T<field::common::Scaling_ms2s>;
+    using tOn = field::common::U4T<comms::option::UnitsMilliseconds>;
 
     /// @brief Definition of "tOff" field.
-    using tOff = field::common::U4T<field::common::Scaling_ms2s>;
+    using tOff = field::common::U4T<comms::option::UnitsMilliseconds>;
 
     /// @brief Definition of "res" field.
     using res = field::common::res4;
 
     /// @brief Definition of "baseTow" field.
-    using baseTow = field::common::U4T<field::common::Scaling_ms2s>;
+    using baseTow = field::common::U4T<comms::option::UnitsMilliseconds>;
 
     /// @brief All the fields bundled in std::tuple.
     using All = std::tuple<
@@ -100,12 +100,6 @@ class CfgFxn : public
         comms::option::MsgType<CfgFxn<TMsgBase> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_CFG_FXN>,
-        comms::option::FieldsImpl<CfgFxnFields::All>,
-        comms::option::MsgType<CfgFxn<TMsgBase> >
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.

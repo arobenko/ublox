@@ -45,7 +45,7 @@ using ublox::message::TimSmeasFields;
 
 QVariantMap createProps_flags()
 {
-    typedef TimSmeasFields::flags Field;
+    using Field = TimSmeasFields::flags;
     auto props =
         cc::property::field::ForField<Field>()
             .name("flags")

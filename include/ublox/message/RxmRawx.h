@@ -34,13 +34,13 @@ namespace message
 struct RxmRawxFields
 {
     /// @brief Definition of "rcvTow" field.
-    using rcvTow = field::common::R8;
+    using rcvTow = field::common::R8T<comms::option::UnitsSeconds>;
 
     /// @brief Definition of "week" field.
-    using week = field::common::U2;
+    using week = field::common::U2T<comms::option::UnitsWeeks>;
 
     /// @brief Definition of "leapS" field.
-    using leapS = field::common::I1;
+    using leapS = field::common::I1T<comms::option::UnitsSeconds>;
 
     /// @brief Definition of "numMeas" field.
     using numMeas = field::common::U1;
@@ -68,13 +68,13 @@ struct RxmRawxFields
     using reserved1 = field::common::res2;
 
     /// @brief Definition of "prMes" field.
-    using prMes = field::common::R8;
+    using prMes = field::common::R8T<comms::option::UnitsMeters>;
 
     /// @brief Definition of "cpMes" field.
     using cpMes = field::common::R8;
 
     /// @brief Definition of "doMes" field.
-    using doMes = field::common::R4;
+    using doMes = field::common::R4T<comms::option::UnitsHertz>;
 
     /// @brief Definition of "gnssId" field.
     using gnssId = field::common::gnssId;
@@ -95,20 +95,20 @@ struct RxmRawxFields
     using locktime =
         field::common::U2T<
             comms::option::ValidNumValueRange<0, 64500>,
-            field::common::Scaling_ms2s
+            comms::option::UnitsMilliseconds
         >;
 
     /// @brief Definition of "cno" field.
     using cno = field::common::U1;
 
     /// @brief Definition of "prStdev" field.
-    using prStdev = field::common::U1;
+    using prStdev = field::common::U1T<comms::option::UnitsMeters>;
 
     /// @brief Definition of "cpStdev" field.
     using cpStdev = field::common::U1T<comms::option::ScalingRatio<4, 1000> >;
 
     /// @brief Definition of "doStdev" field.
-    using doStdev = field::common::U1;
+    using doStdev = field::common::U1T<comms::option::UnitsHertz>;
 
     /// @brief Definition of "trkStat" field.
     struct trkStat : public
@@ -150,7 +150,7 @@ struct RxmRawxFields
     {
         /// @brief Allow access to internal fields.
         /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
-        ///     related to @b comms::field::Bitfield class from COMMS library
+        ///     related to @b comms::field::Bundle class from COMMS library
         ///     for details.
         COMMS_FIELD_MEMBERS_ACCESS(
             prMes,
@@ -263,7 +263,7 @@ public:
     template <typename TIter>
     comms::ErrorStatus doRead(TIter& iter, std::size_t len)
     {
-        typedef typename std::decay<decltype(comms::toMessageBase(*this))>::type Base;
+        using Base = typename std::decay<decltype(comms::toMessageBase(*this))>::type;
         auto es = Base::template readFieldsUntil<FieldIdx_data>(iter, len);
         if (es != comms::ErrorStatus::Success) {
             return es;

@@ -164,12 +164,6 @@ class LogInfo : public
         comms::option::MsgType<LogInfo<TMsgBase> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_LOG_INFO>,
-        comms::option::FieldsImpl<LogInfoFields::All>,
-        comms::option::MsgType<LogInfo<TMsgBase> >
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.

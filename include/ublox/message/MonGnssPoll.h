@@ -1,5 +1,5 @@
 //
-// Copyright 2015 - 2017 (C). Alex Robenko. All rights reserved.
+// Copyright 2017 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -51,22 +51,7 @@ class MonGnssPoll : public
         comms::option::MsgType<MonGnssPoll<TMsgBase> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_MON_GNSS>,
-        comms::option::FieldsImpl<MonGnssPollFields::All>,
-        comms::option::MsgType<MonGnssPoll<TMsgBase> >
-    > Base;
 public:
-
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
 
     /// @brief Default constructor
     MonGnssPoll() = default;

@@ -46,7 +46,7 @@ using ublox::message::NavTimeutcFields;
 
 QVariantMap createProps_validBits()
 {
-    typedef NavTimeutcFields::validBits Field;
+    using Field = NavTimeutcFields::validBits;
     auto props =
         cc::property::field::ForField<Field>()
             .name("valid")
@@ -62,7 +62,7 @@ QVariantMap createProps_validBits()
 
 QVariantMap createProps_valid()
 {
-    typedef NavTimeutcFields::validBitfield Field;
+    using Field = NavTimeutcFields::validBitfield;
     auto props =
         cc::property::field::ForField<Field>()
             .name("valid")

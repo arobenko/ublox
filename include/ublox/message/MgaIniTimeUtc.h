@@ -95,7 +95,7 @@ struct MgaIniTimeUtcFields
     };
 
     /// @brief Definition of "leapSecs" field.
-    using leapSecs = field::common::I1;
+    using leapSecs = field::common::I1T<comms::option::UnitsSeconds>;
 
     /// @brief Definition of "year" field.
     using year = field::common::U2;
@@ -109,25 +109,29 @@ struct MgaIniTimeUtcFields
     /// @brief Definition of "day" field.
     using day  =
         field::common::U1T<
-            comms::option::ValidNumValueRange<1, 31>
+            comms::option::ValidNumValueRange<1, 31>,
+            comms::option::UnitsDays
         >;
 
     /// @brief Definition of "hour" field.
     using hour  =
         field::common::U1T<
-            comms::option::ValidNumValueRange<0, 23>
+            comms::option::ValidNumValueRange<0, 23>,
+            comms::option::UnitsHours
         >;
 
     /// @brief Definition of "minute" field.
     using minute  =
         field::common::U1T<
-            comms::option::ValidNumValueRange<0, 59>
+            comms::option::ValidNumValueRange<0, 59>,
+            comms::option::UnitsMinutes
         >;
 
     /// @brief Definition of "second" field.
     using second  =
         field::common::U1T<
-            comms::option::ValidNumValueRange<0, 60>
+            comms::option::ValidNumValueRange<0, 60>,
+            comms::option::UnitsSeconds
         >;
 
     /// @brief Definition of "reserved1" field.
@@ -136,11 +140,12 @@ struct MgaIniTimeUtcFields
     /// @brief Definition of "ns" field.
     using ns =
         field::common::U4T<
-            comms::option::ValidNumValueRange<0, 999999999>
+            comms::option::ValidNumValueRange<0, 999999999>,
+            comms::option::UnitsNanoseconds
         >;
 
     /// @brief Definition of "tAccS" field.
-    using tAccS = field::common::U2;
+    using tAccS = field::common::U2T<comms::option::UnitsSeconds>;
 
     /// @brief Definition of "reserved2" field.
     using reserved2  = field::common::res2;
@@ -149,7 +154,8 @@ struct MgaIniTimeUtcFields
     /// @brief Definition of "tAccNs" field.
     using tAccNs =
         field::common::U4T<
-            comms::option::ValidNumValueRange<0, 999999999>
+            comms::option::ValidNumValueRange<0, 999999999>,
+            comms::option::UnitsNanoseconds
         >;
 
     /// @brief All the fields bundled in std::tuple.

@@ -74,12 +74,6 @@ class CfgDynseed : public
         comms::option::MsgType<CfgDynseed<TMsgBase> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_CFG_DYNSEED>,
-        comms::option::FieldsImpl<CfgDynseedFields::All>,
-        comms::option::MsgType<CfgDynseed<TMsgBase> >
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.

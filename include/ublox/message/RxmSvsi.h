@@ -131,7 +131,7 @@ struct RxmSvsiFields
     {
         /// @brief Allow access to internal fields.
         /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
-        ///     related to @b comms::field::Bitfield class from COMMS library
+        ///     related to @b comms::field::Bundle class from COMMS library
         ///     for details.
         COMMS_FIELD_MEMBERS_ACCESS(svid, svFlag, azim, elev, age);
     };
@@ -175,13 +175,6 @@ class RxmSvsi : public
         comms::option::HasDoRefresh
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_RXM_SVSI>,
-        comms::option::FieldsImpl<RxmSvsiFields::All<TDataOpt> >,
-        comms::option::MsgType<RxmSvsi<TMsgBase, TDataOpt> >,
-        comms::option::HasDoRefresh
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.
@@ -221,16 +214,13 @@ public:
     template <typename TIter>
     comms::ErrorStatus doRead(TIter& iter, std::size_t len)
     {
+        using Base = typename std::decay<decltype(comms::toMessageBase(*this))>::type;
         auto es = Base::template readFieldsUntil<FieldIdx_data>(iter, len);
         if (es != comms::ErrorStatus::Success) {
             return es;
         }
 
-        auto& allFields = Base::fields();
-        auto& numSvField = std::get<FieldIdx_numSV>(allFields);
-        auto& dataField = std::get<FieldIdx_data>(allFields);
-        dataField.forceReadElemCount(numSvField.value());
-
+        field_data().forceReadElemCount(field_numSV().value());
         return Base::template readFieldsFrom<FieldIdx_data>(iter, len);
     }
 
@@ -239,19 +229,15 @@ public:
     ///     actual number of elements in @ref RxmSvsiFields::data.
     bool doRefresh()
     {
-        auto& allFields = Base::fields();
-        auto& numSvField = std::get<FieldIdx_numSV>(allFields);
-        auto& dataField = std::get<FieldIdx_data>(allFields);
-        if (numSvField.value() == dataField.value().size()) {
+        if (field_numSV().value() == field_data().value().size()) {
             return false;
         }
 
-        numSvField.value() = dataField.value().size();
+        field_numSV().value() = field_data().value().size();
         return true;
     }
 
 };
-
 
 }  // namespace message
 

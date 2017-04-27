@@ -155,19 +155,19 @@ struct CfgPmFields
     };
 
     /// @brief Definition of "updatePeriod" field.
-    using updatePeriod = field::common::U4T<field::common::Scaling_ms2s>;
+    using updatePeriod = field::common::U4T<comms::option::UnitsMilliseconds>;
 
     /// @brief Definition of "searchPeriod" field.
-    using searchPeriod = field::common::U4T<field::common::Scaling_ms2s>;
+    using searchPeriod = field::common::U4T<comms::option::UnitsMilliseconds>;
 
     /// @brief Definition of "gridOffset" field.
-    using gridOffset = field::common::U4T<field::common::Scaling_ms2s>;
+    using gridOffset = field::common::U4T<comms::option::UnitsMilliseconds>;
 
     /// @brief Definition of "onTime" field.
-    using onTime = field::common::U2;
+    using onTime = field::common::U2T<comms::option::UnitsSeconds>;
 
     /// @brief Definition of "minAcqTime" field.
-    using minAcqTime = field::common::U2;
+    using minAcqTime = field::common::U2T<comms::option::UnitsSeconds>;
 
     /// @brief All the fields bundled in std::tuple.
     using All = std::tuple<
@@ -200,12 +200,6 @@ class CfgPm : public
         comms::option::MsgType<CfgPm<TMsgBase> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_CFG_PM>,
-        comms::option::FieldsImpl<CfgPmFields::All>,
-        comms::option::MsgType<CfgPm<TMsgBase> >
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.

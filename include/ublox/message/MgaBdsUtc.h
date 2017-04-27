@@ -51,28 +51,35 @@ struct MgaBdsUtcFields
     using reserved1 = field::common::res2;
 
     /// @brief Definition of "a0UTC" field.
-    using a0UTC = field::common::I4;
+    using a0UTC =
+        field::common::I4T<
+            comms::option::ScalingRatio<1, 0x40000000>,
+            comms::option::UnitsSeconds
+        >;
 
     /// @brief Definition of "a1UTC" field.
-    using a1UTC = field::common::I4;
+    using a1UTC =
+        field::common::I4T<
+            comms::option::ScalingRatio<1, 0x4000000000000ULL>
+        >;
 
     /// @brief Definition of "dtLS" field.
-    using dtLS = field::common::I1;
+    using dtLS = field::common::I1T<comms::option::UnitsSeconds>;
 
     /// @brief Definition of "reserved2" field.
     using reserved2 = field::common::res1;
 
     /// @brief Definition of "wnRec" field.
-    using wnRec = field::common::U1;
+    using wnRec = field::common::U1T<comms::option::UnitsWeeks>;
 
     /// @brief Definition of "wnLSF" field.
-    using wnLSF = field::common::U1;
+    using wnLSF = field::common::U1T<comms::option::UnitsWeeks>;
 
     /// @brief Definition of "dN" field.
-    using dN = field::common::U1;
+    using dN = field::common::U1T<comms::option::UnitsDays>;
 
     /// @brief Definition of "dtLSF" field.
-    using dtLSF = field::common::I1;
+    using dtLSF = field::common::I1T<comms::option::UnitsSeconds>;
 
     /// @brief Definition of "reserved3" field.
     using reserved3 = field::common::res2;

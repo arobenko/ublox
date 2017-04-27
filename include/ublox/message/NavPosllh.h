@@ -82,12 +82,6 @@ class NavPosllh : public
         comms::option::MsgType<NavPosllh<TMsgBase> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_NAV_POSLLH>,
-        comms::option::FieldsImpl<NavPosllhFields::All>,
-        comms::option::MsgType<NavPosllh<TMsgBase> >
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.

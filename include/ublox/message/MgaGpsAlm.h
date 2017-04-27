@@ -54,37 +54,49 @@ struct MgaGpsAlmFields
     using svHealth = field::common::U1;
 
     /// @brief Definition of "e" field.
-    using e = field::common::U2;
+    using e = field::common::U2T<comms::option::ScalingRatio<1, 0x200000> >;
 
     /// @brief Definition of "almWNa" field.
-    using almWNa = field::common::U1;
+    using almWNa = field::common::U1T<comms::option::UnitsWeeks>;
 
     /// @brief Definition of "toa" field.
-    using toa = field::common::U1;
+    using toa =
+        field::common::U1T<
+            comms::option::ScalingRatio<1, 0x1000>,
+            comms::option::UnitsSeconds
+        >;
 
     /// @brief Definition of "deltaI" field.
-    using deltaI = field::common::I2;
+    using deltaI = field::common::I2T<comms::option::ScalingRatio<1, 0x80000> >;
 
     /// @brief Definition of "omegaDot" field.
-    using omegaDot = field::common::I2;
+    using omegaDot = field::common::I2T<comms::option::ScalingRatio<1, 0x4000000000ULL> >;
 
     /// @brief Definition of "sqrtA" field.
-    using sqrtA = field::common::U4;
+    using sqrtA = field::common::U4T<comms::option::ScalingRatio<1, 0x800> >;
 
     /// @brief Definition of "omega0" field.
-    using omega0 = field::common::I4;
+    using omega0 = field::common::I4T<comms::option::ScalingRatio<1, 0x800000> >;
 
     /// @brief Definition of "omega" field.
-    using omega = field::common::I4;
+    using omega = omega0;
 
     /// @brief Definition of "m0" field.
-    using m0 = field::common::I4;
+    using m0 = field::common::I4T<comms::option::ScalingRatio<1, 0x800000> >;
 
     /// @brief Definition of "af0" field.
-    using af0 = field::common::I2;
+    using af0 =
+        field::common::I2T<
+            comms::option::ScalingRatio<1, 0x100000>,
+            comms::option::UnitsSeconds
+        >;
 
     /// @brief Definition of "af1" field.
-    using af1 = field::common::I2;
+    using af1 =
+        field::common::I2T<
+            comms::option::ScalingRatio<1, 0x4000000000ULL>,
+            comms::option::UnitsSeconds
+        >;
 
     /// @brief Definition of "reserved1" field.
     using reserved1 = field::common::res4;

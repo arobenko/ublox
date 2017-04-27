@@ -123,37 +123,37 @@ struct TimTosFields
     using month = field::common::U1;
 
     /// @brief Definition of "day" field.
-    using day = field::common::U1;
+    using day = field::common::U1T<comms::option::UnitsDays>;
 
     /// @brief Definition of "hour" field.
-    using hour = field::common::U1;
+    using hour = field::common::U1T<comms::option::UnitsHours>;
 
     /// @brief Definition of "minute" field.
-    using minute = field::common::U1;
+    using minute = field::common::U1T<comms::option::UnitsMinutes>;
 
     /// @brief Definition of "second" field.
-    using second = field::common::U1;
+    using second = field::common::U1T<comms::option::UnitsSeconds>;
 
     /// @brief Definition of "utcStandard" field.
     using utcStandard = field::common::utcStandard;
 
     /// @brief Definition of "utcOffset" field.
-    using utcOffset = field::common::I4T<field::common::Scaling_ns2s>;
+    using utcOffset = field::common::I4T<comms::option::UnitsNanoseconds>;
 
     /// @brief Definition of "utcUncertainty" field.
-    using utcUncertainty = field::common::U4T<field::common::Scaling_ns2s>;
+    using utcUncertainty = field::common::U4T<comms::option::UnitsNanoseconds>;
 
     /// @brief Definition of "week" field.
-    using week = field::common::U4;
+    using week = field::common::U4T<comms::option::UnitsWeeks>;
 
     /// @brief Definition of "TOW" field.
-    using TOW = field::common::U4;
+    using TOW = field::common::U4T<comms::option::UnitsSeconds>;
 
     /// @brief Definition of "gnssOffset" field.
-    using gnssOffset = field::common::I4T<field::common::Scaling_ns2s>;
+    using gnssOffset = field::common::I4T<comms::option::UnitsNanoseconds>;
 
     /// @brief Definition of "gnssUncertainty" field.
-    using gnssUncertainty = field::common::U4T<field::common::Scaling_ns2s>;
+    using gnssUncertainty = field::common::U4T<comms::option::UnitsNanoseconds>;
 
     /// @brief Definition of "intOscOffset" field.
     using intOscOffset = field::common::I4T<comms::option::ScalingRatio<1, 0x100> >;

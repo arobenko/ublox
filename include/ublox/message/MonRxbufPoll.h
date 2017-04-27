@@ -51,22 +51,7 @@ class MonRxbufPoll : public
         comms::option::MsgType<MonRxbufPoll<TMsgBase> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_MON_RXBUF>,
-        comms::option::FieldsImpl<MonRxbufPollFields::All>,
-        comms::option::MsgType<MonRxbufPoll<TMsgBase> >
-    > Base;
 public:
-
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
 
     /// @brief Default constructor
     MonRxbufPoll() = default;

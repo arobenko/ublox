@@ -103,7 +103,11 @@ struct MgaIniFreqFields
     };
 
     /// @brief Definition of "freq" field.
-    using freq = field::common::I4T<comms::option::ScalingRatio<1, 100> >;
+    using freq =
+        field::common::I4T<
+            comms::option::ScalingRatio<1, 100>,
+            comms::option::UnitsHertz
+        >;
 
     /// @brief Definition of "freqAcc" field.
     using freqAcc = field::common::U4;

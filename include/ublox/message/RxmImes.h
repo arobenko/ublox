@@ -64,7 +64,8 @@ struct RxmImesFields
     /// @brief Definition of "doppler" field.
     using doppler =
         field::common::I4T<
-            comms::option::ScalingRatio<1, 0x1000>
+            comms::option::ScalingRatio<1, 0x1000>,
+            comms::option::UnitsHertz
         >;
 
     /// @brief Definition of "pos1Floor" member field of @ref position1_1 bitfield.
@@ -74,7 +75,8 @@ struct RxmImesFields
     using pos1Lat =
         field::common::I4T<
             comms::option::FixedBitLength<23>,
-            comms::option::ScalingRatio<180, 0x800000>
+            comms::option::ScalingRatio<180, 0x800000>,
+            comms::option::UnitsDegrees
         >;
 
     /// @brief Definition of "position1_1" field.
@@ -98,7 +100,8 @@ struct RxmImesFields
     using pos1Lon =
         field::common::I4T<
             comms::option::FixedBitLength<24>,
-            comms::option::ScalingRatio<360, 0x1000000>
+            comms::option::ScalingRatio<360, 0x1000000>,
+            comms::option::UnitsDegrees
         >;
 
     /// @brief Definition of the remaining bits in @ref position1_2 bitfield as a
@@ -136,7 +139,11 @@ struct RxmImesFields
     using pos2Floor = field::common::I2T<comms::option::FixedBitLength<9> >;
 
     /// @brief Definition of "pos2Alt" member field of @ref position2_1 bitfield.
-    using pos2Alt = field::common::I2T<comms::option::FixedBitLength<12> >;
+    using pos2Alt =
+        field::common::I2T<
+            comms::option::FixedBitLength<12>,
+            comms::option::UnitsMeters
+        >;
 
     /// @brief Enumeration value for @ref pos2Acc field.
     enum class Pos2Acc : std::uint8_t
@@ -192,13 +199,15 @@ struct RxmImesFields
     /// @brief Definition of "lat" field.
     using lat =
         field::common::I4T<
-            comms::option::ScalingRatio<180, 0x1000000>
+            comms::option::ScalingRatio<180, 0x1000000>,
+            comms::option::UnitsDegrees
         >;
 
     /// @brief Definition of "lon" field.
     using lon =
         field::common::I4T<
-            comms::option::ScalingRatio<360, 0x2000000>
+            comms::option::ScalingRatio<360, 0x2000000>,
+            comms::option::UnitsDegrees
         >;
 
     /// @brief Definition of "shortId" member field of @ref shortIdFrame bitfield.
@@ -274,7 +283,7 @@ struct RxmImesFields
     {
         /// @brief Allow access to internal fields.
         /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
-        ///     related to @b comms::field::Bitfield class from COMMS library
+        ///     related to @b comms::field::Bundle class from COMMS library
         ///     for details.
         COMMS_FIELD_MEMBERS_ACCESS(
             reserved2,
@@ -370,7 +379,7 @@ public:
     template <typename TIter>
     comms::ErrorStatus doRead(TIter& iter, std::size_t len)
     {
-        typedef typename std::decay<decltype(comms::toMessageBase(*this))>::type Base;
+        using Base = typename std::decay<decltype(comms::toMessageBase(*this))>::type;
         auto es = Base::template readFieldsUntil<FieldIdx_data>(iter, len);
         if (es != comms::ErrorStatus::Success) {
             return es;

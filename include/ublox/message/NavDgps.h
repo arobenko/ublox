@@ -45,7 +45,7 @@ struct NavDgpsFields
     using iTOW = field::nav::iTOW;
 
     /// @brief Definition of "age" field.
-    using age = field::common::I4T<field::common::Scaling_ms2s>;
+    using age = field::common::I4T<comms::option::UnitsMilliseconds>;
 
     /// @brief Definition of "baseId" field.
     using baseId = field::common::I2;
@@ -107,13 +107,13 @@ struct NavDgpsFields
     };
 
     /// @brief Definition of "agec" field.
-    using ageC = field::common::U2T<field::common::Scaling_ms2s>;
+    using ageC = field::common::U2T<comms::option::UnitsMilliseconds>;
 
     /// @brief Definition of "prc" field.
-    using prc = field::common::R4;
+    using prc = field::common::R4T<comms::option::UnitsMeters>;
 
     /// @brief Definition of "prrc" field.
-    using prrc = field::common::R4;
+    using prrc = field::common::R4T<comms::option::UnitsMetersPerSecond>;
 
     /// @brief Definition of the repeated block as a single bundle field
     struct block : public
@@ -129,7 +129,7 @@ struct NavDgpsFields
     {
         /// @brief Allow access to internal fields.
         /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
-        ///     related to @b comms::field::Bitfield class from COMMS library
+        ///     related to @b comms::field::Bundle class from COMMS library
         ///     for details.
         COMMS_FIELD_MEMBERS_ACCESS(svid, flags, ageC, prc, prrc);
     };
@@ -177,13 +177,6 @@ class NavDgps : public
         comms::option::HasDoRefresh
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_NAV_DGPS>,
-        comms::option::FieldsImpl<NavDgpsFields::All<TDataOpt> >,
-        comms::option::MsgType<NavDgps<TMsgBase, TDataOpt> >,
-        comms::option::HasDoRefresh
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.
@@ -236,16 +229,13 @@ public:
     template <typename TIter>
     comms::ErrorStatus doRead(TIter& iter, std::size_t len)
     {
+        using Base = typename std::decay<decltype(comms::toMessageBase(*this))>::type;
         auto es = Base::template readFieldsUntil<FieldIdx_data>(iter, len);
         if (es != comms::ErrorStatus::Success) {
             return es;
         }
 
-        auto& allFields = Base::fields();
-        auto& numChField = std::get<FieldIdx_numCh>(allFields);
-        auto& dataField = std::get<FieldIdx_data>(allFields);
-        dataField.forceReadElemCount(numChField.value());
-
+        field_data().forceReadElemCount(field_numCh().value());
         return Base::template readFieldsFrom<FieldIdx_data>(iter, len);
     }
 
@@ -256,14 +246,11 @@ public:
     /// @return @b true in case the value of "numCh" field was modified, @b false otherwise
     bool doRefresh()
     {
-        auto& allFields = Base::fields();
-        auto& numChField = std::get<FieldIdx_numCh>(allFields);
-        auto& dataField = std::get<FieldIdx_data>(allFields);
-        if (numChField.value() == dataField.value().size()) {
+        if (field_numCh().value() == field_data().value().size()) {
             return false;
         }
 
-        numChField.value() = dataField.value().size();
+        field_numCh().value() = field_data().value().size();
         return true;
     }
 

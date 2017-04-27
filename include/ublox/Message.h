@@ -68,17 +68,17 @@ public:
 };
 
 /// @brief Default Ublox interface class.
-/// @details It is a typedef of MessageT class with extra following options:
+/// @details It is a redefinition of MessageT class with extra following options:
 ///     @li <b> comms::option::ReadIterator<const std::uint8_t*></b> -
 ///         Enables read operation and specifies <b>const std::uint8_t*</b> as
 ///         the iterator used for reading.
 ///     @li <b> comms::option::WriteIterator<std::uint8_t*></b> -
 ///         Enables write operation and specifies <b>std::uint8_t*</b> as
 ///         the iterator used for writing.
-typedef MessageT<
+using Message = MessageT<
     comms::option::ReadIterator<const std::uint8_t*>,
     comms::option::WriteIterator<std::uint8_t*>
-> Message;
+>;
 
 }  // namespace ublox
 

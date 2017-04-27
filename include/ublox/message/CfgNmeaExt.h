@@ -135,12 +135,6 @@ class CfgNmeaExt : public
         comms::option::MsgType<CfgNmeaExt<TMsgBase> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_CFG_NMEA>,
-        comms::option::FieldsImpl<CfgNmeaExtFields::All>,
-        comms::option::MsgType<CfgNmeaExt<TMsgBase> >
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.

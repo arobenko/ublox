@@ -271,21 +271,6 @@ static_assert(std::numeric_limits<double>::is_iec559,
 static_assert(sizeof(double) == sizeof(std::uint64_t),
     "double is expected to have size of 8 bytes");
 
-/// @brief Common option used to scale centimeters to meters
-using Scaling_cm2m = comms::option::ScalingRatio<1, 100>;
-
-/// @brief Common option used to scale millimeters to meters
-using Scaling_mm2m = comms::option::ScalingRatio<1, 1000L>;
-
-/// @brief Common option used to scale milliseconds to seconds
-using Scaling_ms2s = comms::option::ScalingRatio<1, 1000>;
-
-/// @brief Common option used to scale microseconds to seconds
-using Scaling_us2s = comms::option::ScalingRatio<1, 1000000L>;
-
-/// @brief Common option used to scale nanoseconds to seconds
-using Scaling_ns2s = comms::option::ScalingRatio<1, 1000000000L>;
-
 /// @brief Common definition of sequence of fields or raw bytes.
 /// @details Defined to be @b comms::field::ArrayList
 ///     with @ref FieldBase as a base class, @b TElem as the element type, and
@@ -389,7 +374,7 @@ struct res5 : public BundleT<std::tuple<res1, res4> >
 {
     /// @brief Allow access to internal fields.
     /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
-    ///     related to @b comms::field::Bitfield class from COMMS library
+    ///     related to @b comms::field::Bundle class from COMMS library
     ///     for details.
     COMMS_FIELD_MEMBERS_ACCESS(part1, part2);
 };
@@ -399,7 +384,7 @@ struct res6 : public BundleT<std::tuple<res2, res4> >
 {
     /// @brief Allow access to internal fields.
     /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
-    ///     related to @b comms::field::Bitfield class from COMMS library
+    ///     related to @b comms::field::Bundle class from COMMS library
     ///     for details.
     COMMS_FIELD_MEMBERS_ACCESS(part1, part2);
 };
@@ -409,7 +394,7 @@ struct res7 : public BundleT<std::tuple<res3, res4> >
 {
     /// @brief Allow access to internal fields.
     /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
-    ///     related to @b comms::field::Bitfield class from COMMS library
+    ///     related to @b comms::field::Bundle class from COMMS library
     ///     for details.
     COMMS_FIELD_MEMBERS_ACCESS(part1, part2);
 };
@@ -420,13 +405,13 @@ struct res7 : public BundleT<std::tuple<res3, res4> >
 ///     seconds.
 using iTOW =
     U4T<
-        Scaling_ms2s,
-        comms::option::ValidNumValueRange<0, 1000L * 60 * 60 * 24 * 7>
+        comms::option::ValidNumValueRange<0, 1000L * 60 * 60 * 24 * 7>,
+        comms::option::UnitsMilliseconds
     >;
 
 /// @brief Definition of common @b week field used in multiple messages in
 ///     multiple message classes.
-using week = I2;
+using week = I2T<comms::option::UnitsWeeks>;
 
 /// @brief Definition of common @b numSV field used in multiple messages in
 ///     multiple message classes.

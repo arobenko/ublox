@@ -61,7 +61,8 @@ struct CfgEsfgwtFields
     /// @brief Definition of "wtQuantError" field.
     using wtQuantError =
         field::common::U4T<
-            comms::option::ScalingRatio<1, 1000000L>
+            comms::option::ScalingRatio<1, 1000000L>,
+            comms::option::UnitsMeters
         >;
 
     /// @brief Definition of "timeTagFactor" field.
@@ -79,14 +80,14 @@ struct CfgEsfgwtFields
     /// @brief Definition of "wtLantency" field.
     using wtLatency =
         field::common::U2T<
-            field::common::Scaling_ms2s
+            comms::option::UnitsMilliseconds
         >;
 
     /// @brief Definition of "reserved" field.
     using reserved2 = field::common::res2;
 
     /// @brief Definition of "wtFrequency" field.
-    using wtFrequency = field::common::U1;
+    using wtFrequency = field::common::U1T<comms::option::UnitsHertz>;
 
     /// @brief Definition of "reserved3" field.
     using reserved3 = field::common::res1;
@@ -94,7 +95,7 @@ struct CfgEsfgwtFields
     /// @brief Definition of "speedDeadBand" field.
     using speedDeadBand =
         field::common::U2T<
-            field::common::Scaling_cm2m
+            comms::option::UnitsCentimetersPerSecond
         >;
 
     /// @brief Definition of "reserved4" field.
@@ -139,12 +140,6 @@ class CfgEsfgwt : public
         comms::option::MsgType<CfgEsfgwt<TMsgBase> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_CFG_ESFGWT>,
-        comms::option::FieldsImpl<CfgEsfgwtFields::All>,
-        comms::option::MsgType<CfgEsfgwt<TMsgBase> >
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.

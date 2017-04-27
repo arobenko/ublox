@@ -51,22 +51,7 @@ class TimTm2Poll : public
         comms::option::MsgType<TimTm2Poll<TMsgBase> >
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_TIM_TM2>,
-        comms::option::FieldsImpl<TimTm2PollFields::All>,
-        comms::option::MsgType<TimTm2Poll<TMsgBase> >
-    > Base;
 public:
-
-    /// @brief Index to access the fields
-    enum FieldIdx
-    {
-        FieldIdx_numOfValues ///< number of available fields
-    };
-
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
 
     /// @brief Default constructor
     TimTm2Poll() = default;

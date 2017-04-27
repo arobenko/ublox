@@ -78,13 +78,6 @@ class CfgPrtUsb : public
         comms::option::HasDoRefresh
     >
 {
-    typedef comms::MessageBase<
-        TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_CFG_PRT>,
-        comms::option::FieldsImpl<CfgPrtUsbFields::All>,
-        comms::option::MsgType<CfgPrtUsb<TMsgBase> >,
-        comms::option::HasDoRefresh
-    > Base;
 public:
 
     /// @brief Allow access to internal fields.
@@ -114,9 +107,6 @@ public:
         reserved5
     );
 
-    static_assert(std::tuple_size<typename Base::AllFields>::value == FieldIdx_numOfValues,
-        "Number of fields is incorrect");
-
     /// @brief Default constructor
     CfgPrtUsb() = default;
 
@@ -143,14 +133,13 @@ public:
     template <typename TIter>
     comms::ErrorStatus doRead(TIter& iter, std::size_t len)
     {
+        using Base = typename std::decay<decltype(comms::toMessageBase(*this))>::type;
         auto es = Base::template readFieldsUntil<FieldIdx_reserved0>(iter, len);
         if (es != comms::ErrorStatus::Success) {
             return es;
         }
 
-        auto& allFields = Base::fields();
-        auto& portIdField = std::get<FieldIdx_portID>(allFields);
-        if (portIdField.value() != CfgPrtUsbFields::PortId::USB) {
+        if (field_portID().value() != CfgPrtUsbFields::PortId::USB) {
             return comms::ErrorStatus::InvalidMsgData;
         }
 
@@ -163,13 +152,11 @@ public:
     /// @return @b true in case the "portID" field was modified, @b false otherwise
     bool doRefresh()
     {
-        auto& allFields = Base::fields();
-        auto& portIdField = std::get<FieldIdx_portID>(allFields);
-        if (portIdField.value() == CfgPrtUsbFields::PortId::USB) {
+        if (field_portID().value() == CfgPrtUsbFields::PortId::USB) {
             return false;
         }
 
-        portIdField.value() = CfgPrtUsbFields::PortId::USB;
+        field_portID().value() = CfgPrtUsbFields::PortId::USB;
         return true;
     }
 
