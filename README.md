@@ -18,7 +18,7 @@ allows cherry-picking limited number of the selected messages the product requir
 which provides a great flexibility in terms of the final code size.
 
 Full [doxygen](www.doxygen.org) generated documentation with the full tutorial inside can be
-downloaded as zip archive from [Dropbox](https://www.dropbox.com/s/vov9k3rx1e5blzv/doc_ublox_v0.7.zip).
+downloaded as zip archive from [Dropbox](https://www.dropbox.com/s/6hl6nyqjnjhh5bo/doc_ublox_v0.8.zip?dl=1).
 
 # CommsChampion Plugin
 In addition to the library described above, this project provides a protocol
