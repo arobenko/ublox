@@ -164,7 +164,7 @@ if ((CMAKE_COMPILER_IS_GNUCC) OR ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang"))
     endif ()
 
     if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-        list (APPEND extra_flags_list "-Wno-dangling-field" "-ftemplate-depth=1024")
+        list (APPEND extra_flags_list "-Wno-dangling-field" "-Wno-unused-command-line-argument" "-ftemplate-depth=1024")
     endif ()
 
     if (NOT CC_UBLOX_NO_WARN_AS_ERR)
