@@ -145,9 +145,22 @@ while (TRUE)
         file (RELATIVE_PATH rel_plugin_install_path "${CC_ROOT_DIR}" "${CC_PLUGIN_DIR}")
         set (PLUGIN_INSTALL_DIR "${INSTALL_DIR}/${rel_plugin_install_path}")
     endif ()
-    
+
+    if (EXISTS "${INSTALL_DIR}/cmake/CommsChampionConfig.cmake")
+        FILE(GLOB_RECURSE comms.headers "${INSTALL_DIR}/include/comms/*.h")
+        add_custom_target(comms.headers SOURCES ${comms.headers})
+        FILE(GLOB_RECURSE cc.headers "${INSTALL_DIR}/include/comms_champion/*.h")
+        add_custom_target(cc.headers SOURCES ${cc.headers})
+    endif ()
+
     break()
 endwhile()
+
+if (NOT "${CC_UBLOX_QT_DIR}" STREQUAL "")
+    list (APPEND CMAKE_PREFIX_PATH ${CC_UBLOX_QT_DIR})
+endif ()
+
+find_package(Qt5Core)
 
 if ((CMAKE_COMPILER_IS_GNUCC) OR ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang"))
     set (extra_flags_list
@@ -196,3 +209,4 @@ include_directories(
 )
 
 add_subdirectory(cc_plugin)
+add_subdirectory(example)
