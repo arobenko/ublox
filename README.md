@@ -20,6 +20,12 @@ which provides a great flexibility in terms of the final code size.
 Full [doxygen](www.doxygen.org) generated documentation with the full tutorial inside can be
 downloaded as zip archive from [Dropbox](https://www.dropbox.com/s/6hl6nyqjnjhh5bo/doc_ublox_v0.8.zip?dl=1).
 
+The "example" folder contains simple example on how to use the [UBLOX Library](#ublox-library). The
+example application is implemented using QT5 framework to drive the discovery 
+and handling of asynchronous events. It configures the USB interface to be used
+for UBX communication using **CFG-PRT** message and polls for **NAV-POSSLLH** 
+message every second.
+
 # CommsChampion Plugin
 In addition to the library described above, this project provides a protocol
 plugin for the [CommsChampion Tools](https://github.com/arobenko/comms_champion#commschampion-tools)
