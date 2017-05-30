@@ -20,6 +20,12 @@
 #include <iostream>
 #include <cassert>
 
+#include "comms/CompileControl.h"
+
+CC_DISABLE_WARNINGS()
+#include <QtCore/QCoreApplication>
+CC_ENABLE_WARNINGS()
+
 #include "ublox/message/CfgPrtUsb.h"
 #include "ublox/message/NavPosllhPoll.h"
 
@@ -66,7 +72,7 @@ void Session::handle(InNavPosllh& msg)
 {
     std::cout << "POS: lat=" << comms::units::getDegrees<double>(msg.field_lat()) <<
         "; lon=" << comms::units::getDegrees<double>(msg.field_lon()) <<
-        "; alt=" << comms::units::getMeters<double>(msg.field_height());
+        "; alt=" << comms::units::getMeters<double>(msg.field_height()) << std::endl;
 }
 
 void Session::handle(InMessage& msg)
@@ -115,8 +121,14 @@ void Session::performRead()
 
 void Session::errorOccurred(QSerialPort::SerialPortError err)
 {
-    static_cast<void>(err);
+    if (err == QSerialPort::NoError) {
+        return;
+    }
     std::cerr << "ERROR: " << m_serial.errorString().toStdString() << std::endl;
+    m_serial.close();
+    if (!start()) {
+        qApp->quit();
+    }
 }
 
 void Session::sendPosPoll()
@@ -138,6 +150,7 @@ void Session::sendMessage(const OutMessage& msg)
     static_cast<void>(es);
     assert(es == comms::ErrorStatus::Success); // do not expect any error
     m_serial.write(reinterpret_cast<const char*>(&buf[0]), buf.size());
+    m_serial.flush();
 }
 
 void Session::configureUbxOutput()
@@ -150,6 +163,11 @@ void Session::configureUbxOutput()
     using OutProtoMaskField = typename std::decay<decltype(outProtoMaskField)>::type;
     outProtoMaskField.setBitValue(OutProtoMaskField::BitIdx_outUbx, true);
     outProtoMaskField.setBitValue(OutProtoMaskField::BitIdx_outNmea, false);
+
+    auto& inProtoMaskField = msg.field_inProtoMask();
+    using InProtoMaskField = typename std::decay<decltype(inProtoMaskField)>::type;
+    inProtoMaskField.setBitValue(InProtoMaskField::BitIdx_inUbx, true);
+    inProtoMaskField.setBitValue(InProtoMaskField::BitIdx_inNmea, false);
 
     sendMessage(msg);
 }

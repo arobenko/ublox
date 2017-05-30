@@ -32,7 +32,7 @@ const QString DevStr("dev");
 #ifdef WIN32
 const QString DefaultDevStr("COM1");
 #else
-const QString DefaultDevStr("/dev/ttyUSB0");
+const QString DefaultDevStr("/dev/ttyACM0");
 #endif
 
 void prepareCommandLineOptions(QCommandLineParser& parser)

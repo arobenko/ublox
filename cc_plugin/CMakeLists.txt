@@ -348,7 +348,7 @@ endfunction ()
 function (cc_plugin_config)
     set (config_file ${CMAKE_CURRENT_SOURCE_DIR}/config/ublox.cfg)
     if (WIN32)
-        set (match_str "/dev/ttyS0")
+        set (match_str "/dev/ttyACM0")
         set (replacement_str "COM1")
         set (output_file "${CMAKE_CURRENT_BINARY_DIR}/ublox.cfg")
 
