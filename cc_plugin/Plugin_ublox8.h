@@ -1,5 +1,5 @@
 //
-// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
+// Copyright 2014 - 2017 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -18,11 +18,9 @@
 
 #pragma once
 
-#include "ublox/Stack.h"
-#include "Message.h"
-
-#ifdef UBLOX8_ONLY
-#include "Ublox8Messages.h"
+#include <QtCore/QObject>
+#include <QtCore/QtPlugin>
+#include "comms_champion/comms_champion.h"
 
 namespace ublox
 {
@@ -30,34 +28,17 @@ namespace ublox
 namespace cc_plugin
 {
 
-using Stack = ublox::Stack<
-    cc_plugin::Message,
-    cc_plugin::Ublox8Messages
->;
+class Plugin_ublox8 : public comms_champion::Plugin
+{
+    Q_OBJECT
+    Q_PLUGIN_METADATA(IID "UBlox-8" FILE "ublox-8.json")
+    Q_INTERFACES(comms_champion::Plugin)
 
+public:
+    Plugin();
+    ~Plugin();
+};
 
 }  // namespace cc_plugin
 
 }  // namespace ublox
-
-#else
-#include "AllMessages.h"
-
-namespace ublox
-{
-
-namespace cc_plugin
-{
-
-using Stack = ublox::Stack<
-    cc_plugin::Message,
-    cc_plugin::AllMessages
->;
-
-
-}  // namespace cc_plugin
-
-}  // namespace ublox
-
-#endif
-

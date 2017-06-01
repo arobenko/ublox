@@ -1,0 +1,7 @@
+{
+    "name" : "UBX Protocol (ublox-8)",
+    "desc" : [
+        "UBX Binary Protocol - All messages supported by ublox-8 devices."
+    ],
+    "type" : "protocol"
+}

@@ -5,6 +5,7 @@ option (CC_UBLOX_LIB_ONLY "Install only UBLOX protocol library, no other applica
 option (CC_UBLOX_AND_COMMS_LIBS_ONLY "Install UBLOX protocol and COMMS libraries only, no other applications/plugings are built." OFF)
 option (CC_UBLOX_FULL_SOLUTION "Build and install full solution, including CommsChampion sources." OFF)
 option (CC_UBLOX_NO_WARN_AS_ERR "Do NOT treat warning as error" OFF)
+option (CC_UBLOX_PLUGIN_SPLIT "Split single plugin to all multiple ones for each device type." OFF)
 
 if (NOT CMAKE_CXX_STANDARD)
     set (CMAKE_CXX_STANDARD 11)

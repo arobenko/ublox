@@ -1,5 +1,5 @@
 //
-// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
+// Copyright 2014 - 2017 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -16,13 +16,10 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-#pragma once
+#include "Plugin_ublox8.h"
+#include "Protocol.h"
 
-#include "ublox/Stack.h"
-#include "Message.h"
-
-#ifdef UBLOX8_ONLY
-#include "Ublox8Messages.h"
+namespace cc = comms_champion;
 
 namespace ublox
 {
@@ -30,34 +27,19 @@ namespace ublox
 namespace cc_plugin
 {
 
-using Stack = ublox::Stack<
-    cc_plugin::Message,
-    cc_plugin::Ublox8Messages
->;
+Plugin_ublox8::Plugin_ublox8()
+{
+    pluginProperties()
+        .setProtocolCreateFunc(
+            [this]() -> cc::ProtocolPtr
+            {
+                return cc::ProtocolPtr(new Protocol());
+            });
+}
 
+Plugin_ublox8::~Plugin_ublox8() = default;
 
 }  // namespace cc_plugin
 
 }  // namespace ublox
-
-#else
-#include "AllMessages.h"
-
-namespace ublox
-{
-
-namespace cc_plugin
-{
-
-using Stack = ublox::Stack<
-    cc_plugin::Message,
-    cc_plugin::AllMessages
->;
-
-
-}  // namespace cc_plugin
-
-}  // namespace ublox
-
-#endif
 
