@@ -35,8 +35,8 @@ class Plugin_ublox8 : public comms_champion::Plugin
     Q_INTERFACES(comms_champion::Plugin)
 
 public:
-    Plugin();
-    ~Plugin();
+    Plugin_ublox8();
+    ~Plugin_ublox8();
 };
 
 }  // namespace cc_plugin
