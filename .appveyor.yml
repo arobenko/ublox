@@ -21,17 +21,18 @@ environment:
     matrix:
         - TOOLCHAIN: msvc14
         
+environment:        
     matrix:
         - UBLOX8_VAR: ON
         - UBLOX8_VAR: OFF 
         
-    matrix:
-        exclude:
-            - platform: x86
-              UBLOX8_VAR: ON
-        exclude:
-            - configuration: Debug
-              UBLOX8_VAR: ON          
+matrix:
+    exclude:
+        - platform: x86
+          UBLOX8_VAR: ON
+    exclude:
+        - configuration: Debug
+          UBLOX8_VAR: ON          
     
 install:
     - call script\appveyor_install.bat
