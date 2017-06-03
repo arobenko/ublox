@@ -1,5 +1,5 @@
 //
-// Copyright 2015 - 2016 (C). Alex Robenko. All rights reserved.
+// Copyright 2015 - 2017 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -33,6 +33,63 @@ namespace cc_plugin
 using Stack = ublox::Stack<
     cc_plugin::Message,
     cc_plugin::Ublox8Messages
+>;
+
+
+}  // namespace cc_plugin
+
+}  // namespace ublox
+
+#elif defined(UBLOX7_ONLY)
+#include "Ublox7Messages.h"
+
+namespace ublox
+{
+
+namespace cc_plugin
+{
+
+using Stack = ublox::Stack<
+    cc_plugin::Message,
+    cc_plugin::Ublox7Messages
+>;
+
+
+}  // namespace cc_plugin
+
+}  // namespace ublox
+
+#elif defined(UBLOX6_ONLY)
+#include "Ublox6Messages.h"
+
+namespace ublox
+{
+
+namespace cc_plugin
+{
+
+using Stack = ublox::Stack<
+    cc_plugin::Message,
+    cc_plugin::Ublox6Messages
+>;
+
+
+}  // namespace cc_plugin
+
+}  // namespace ublox
+
+#elif defined(UBLOX5_ONLY)
+#include "Ublox5Messages.h"
+
+namespace ublox
+{
+
+namespace cc_plugin
+{
+
+using Stack = ublox::Stack<
+    cc_plugin::Message,
+    cc_plugin::Ublox5Messages
 >;
 
 

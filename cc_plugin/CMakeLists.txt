@@ -300,92 +300,59 @@ endfunction()
 
 ######################################################################
 
-function (cc_plugin_ublox_all)
-    set (name "ublox")
-    
-    set (meta_file "${CMAKE_CURRENT_SOURCE_DIR}/ublox.json")
-    set (stamp_file "${CMAKE_CURRENT_BINARY_DIR}/ublox_refresh_stamp.txt")
-    
+function (cc_plugin_ublox idx)
+    set (name "ublox${idx}")
+
+    set (json_suffix)
+    if (NOT "${idx}" STREQUAL "")
+        set (json_suffix "-${idx}")
+    endif ()
+
+    set (meta_file "${CMAKE_CURRENT_SOURCE_DIR}/ublox${json_suffix}.json")
+    set (stamp_file "${CMAKE_CURRENT_BINARY_DIR}/ublox${idx}_refresh_stamp.txt")
+
     if ((NOT EXISTS ${stamp_file}) OR (${meta_file} IS_NEWER_THAN ${stamp_file}))
         execute_process(
             COMMAND ${CMAKE_COMMAND} -E touch ${CMAKE_CURRENT_SOURCE_DIR}/Plugin.h)
         execute_process(
             COMMAND ${CMAKE_COMMAND} -E touch ${stamp_file})
     endif ()
-    
-    
+
+    set (suffix)
+    if (NOT "${idx}" STREQUAL "")
+        set (suffix "_ublox${idx}")
+    endif ()
+
     set (src
-        Plugin.cpp
+        Plugin${suffix}.cpp
         Protocol.cpp
     )
-    
+
     set (hdr
-        Plugin.h
+        Plugin${suffix}.h
     )
-    
+
     qt5_wrap_cpp(
         moc
         ${hdr}
     )
-    
+
     add_library (${name} SHARED ${src} ${moc})
     target_link_libraries (${name} ${ALL_MESSAGES_LIB} ${CC_PLUGIN_LIBRARIES})
     qt5_use_modules(${name} Core)
-    
+
     install (
         TARGETS ${name}
         DESTINATION ${PLUGIN_INSTALL_DIR})
-        
+
     if (CC_UBLOX_FULL_SOLUTION)
         add_dependencies(${name} ${CC_EXTERNAL_TGT})
     endif ()
-    
-endfunction()
 
-######################################################################
+    if (NOT "${idx}" STREQUAL "")
+        target_compile_definitions(${name} PRIVATE -DUBLOX${idx}_ONLY)
+    endif ()
 
-function (cc_plugin_ublox8)
-    set (name "ublox8")
-    
-    set (meta_file "${CMAKE_CURRENT_SOURCE_DIR}/ublox-8.json")
-    set (stamp_file "${CMAKE_CURRENT_BINARY_DIR}/ublox8_refresh_stamp.txt")
-    
-    if ((NOT EXISTS ${stamp_file}) OR (${meta_file} IS_NEWER_THAN ${stamp_file}))
-        execute_process(
-            COMMAND ${CMAKE_COMMAND} -E touch ${CMAKE_CURRENT_SOURCE_DIR}/Plugin.h)
-        execute_process(
-            COMMAND ${CMAKE_COMMAND} -E touch ${stamp_file})
-    endif ()
-    
-    
-    set (src
-        Plugin_ublox8.cpp
-        Protocol.cpp
-    )
-    
-    set (hdr
-        Plugin_ublox8.h
-    )
-    
-    qt5_wrap_cpp(
-        moc
-        ${hdr}
-    )
-    
-    add_library (${name} SHARED ${src} ${moc})
-    target_link_libraries (${name} ${ALL_MESSAGES_LIB} ${CC_PLUGIN_LIBRARIES})
-    qt5_use_modules(${name} Core)
-    
-    target_compile_definitions(${name} PRIVATE -DUBLOX8_ONLY)
-    
-    install (
-        TARGETS ${name}
-        DESTINATION ${PLUGIN_INSTALL_DIR})
-        
-    if (CC_UBLOX_FULL_SOLUTION)
-        add_dependencies(${name} ${CC_EXTERNAL_TGT})
-    endif ()
-    
 endfunction()
 
 ######################################################################
@@ -438,12 +405,27 @@ endif ()
 
 cc_plugin_ublox_all_messages()
 
-if (CC_UBLOX_PLUGIN_SPLIT)
-    cc_plugin_ublox8()
-else ()
-    cc_plugin_ublox_all ()
+if (CC_UBLOX_PLUGIN_ALL)
+    cc_plugin_ublox("")
     cc_plugin_config ()
-endif ()    
+endif ()
+
+if (CC_UBLOX_PLUGIN_UBLOX8)
+    cc_plugin_ublox("8")
+endif ()
+
+if (CC_UBLOX_PLUGIN_UBLOX7)
+    cc_plugin_ublox("7")
+endif ()
+
+if (CC_UBLOX_PLUGIN_UBLOX6)
+    cc_plugin_ublox("6")
+endif ()
+
+if (CC_UBLOX_PLUGIN_UBLOX5)
+    cc_plugin_ublox("5")
+endif ()
+
 
 FILE(GLOB_RECURSE plugin.headers "*.h")
 add_custom_target(cc_plugin.headers SOURCES ${plugin.headers})

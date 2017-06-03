@@ -5,7 +5,11 @@ option (CC_UBLOX_LIB_ONLY "Install only UBLOX protocol library, no other applica
 option (CC_UBLOX_AND_COMMS_LIBS_ONLY "Install UBLOX protocol and COMMS libraries only, no other applications/plugings are built." OFF)
 option (CC_UBLOX_FULL_SOLUTION "Build and install full solution, including CommsChampion sources." OFF)
 option (CC_UBLOX_NO_WARN_AS_ERR "Do NOT treat warning as error" OFF)
-option (CC_UBLOX_PLUGIN_SPLIT "Split single plugin to all multiple ones for each device type." OFF)
+option (CC_UBLOX_PLUGIN_ALL "Build plugin for all the possible messages for any ublox device." ON)
+option (CC_UBLOX_PLUGIN_UBLOX8 "Build plugin for the messages supported by ublox-8." OFF)
+option (CC_UBLOX_PLUGIN_UBLOX7 "Build plugin for the messages supported by ublox-7." OFF)
+option (CC_UBLOX_PLUGIN_UBLOX6 "Build plugin for the messages supported by ublox-6." OFF)
+option (CC_UBLOX_PLUGIN_UBLOX5 "Build plugin for the messages supported by ublox-5." OFF)
 
 if (NOT CMAKE_CXX_STANDARD)
     set (CMAKE_CXX_STANDARD 11)
