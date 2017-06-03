@@ -3,6 +3,7 @@ IF NOT "%TOOLCHAIN%"=="msvc14" (
     exit -1
 )
 
+set UBLOX8_OPT="OFF"
 IF "%PLATFORM%"=="x86" (
     echo Performing x86 build
     call "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" x86
@@ -10,6 +11,10 @@ IF "%PLATFORM%"=="x86" (
 ) ELSE (
     echo Performing amd64 build
     call "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" amd64
-    set QTDIR="C:\Qt\5.7\msvc2015_64"    
+    set QTDIR="C:\Qt\5.7\msvc2015_64"
+    
+    if "%CONFIGURATION%"=="Release" (
+        set UBLOX8_OPT="ON"
+    )
 )
 
