@@ -5,6 +5,11 @@ option (CC_UBLOX_LIB_ONLY "Install only UBLOX protocol library, no other applica
 option (CC_UBLOX_AND_COMMS_LIBS_ONLY "Install UBLOX protocol and COMMS libraries only, no other applications/plugings are built." OFF)
 option (CC_UBLOX_FULL_SOLUTION "Build and install full solution, including CommsChampion sources." OFF)
 option (CC_UBLOX_NO_WARN_AS_ERR "Do NOT treat warning as error" OFF)
+option (CC_UBLOX_PLUGIN_ALL "Build plugin for all the possible messages for any ublox device." ON)
+option (CC_UBLOX_PLUGIN_UBLOX8 "Build plugin for the messages supported by ublox-8." OFF)
+option (CC_UBLOX_PLUGIN_UBLOX7 "Build plugin for the messages supported by ublox-7." OFF)
+option (CC_UBLOX_PLUGIN_UBLOX6 "Build plugin for the messages supported by ublox-6." OFF)
+option (CC_UBLOX_PLUGIN_UBLOX5 "Build plugin for the messages supported by ublox-5." OFF)
 
 if (NOT CMAKE_CXX_STANDARD)
     set (CMAKE_CXX_STANDARD 11)
@@ -63,7 +68,7 @@ set (CC_EXTERNAL_TGT "comms_champion_external")
 macro (externals install_dir build_cc)
         include(ExternalProject)
         
-        set (cc_tag "v0.17")
+        set (cc_tag "v0.18.1")
         set (cc_main_dir "${CMAKE_BINARY_DIR}/comms_champion")
         set (cc_src_dir "${cc_main_dir}/src")
         set (cc_bin_dir "${cc_main_dir}/build")
@@ -145,9 +150,22 @@ while (TRUE)
         file (RELATIVE_PATH rel_plugin_install_path "${CC_ROOT_DIR}" "${CC_PLUGIN_DIR}")
         set (PLUGIN_INSTALL_DIR "${INSTALL_DIR}/${rel_plugin_install_path}")
     endif ()
-    
+
+    if (EXISTS "${INSTALL_DIR}/cmake/CommsChampionConfig.cmake")
+        FILE(GLOB_RECURSE comms.headers "${INSTALL_DIR}/include/comms/*.h")
+        add_custom_target(comms.headers SOURCES ${comms.headers})
+        FILE(GLOB_RECURSE cc.headers "${INSTALL_DIR}/include/comms_champion/*.h")
+        add_custom_target(cc.headers SOURCES ${cc.headers})
+    endif ()
+
     break()
 endwhile()
+
+if (NOT "${CC_UBLOX_QT_DIR}" STREQUAL "")
+    list (APPEND CMAKE_PREFIX_PATH ${CC_UBLOX_QT_DIR})
+endif ()
+
+find_package(Qt5Core)
 
 if ((CMAKE_COMPILER_IS_GNUCC) OR ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang"))
     set (extra_flags_list
@@ -164,7 +182,7 @@ if ((CMAKE_COMPILER_IS_GNUCC) OR ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang"))
     endif ()
 
     if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-        list (APPEND extra_flags_list "-Wno-dangling-field" "-ftemplate-depth=1024")
+        list (APPEND extra_flags_list "-Wno-dangling-field" "-Wno-unused-command-line-argument" "-ftemplate-depth=1024")
     endif ()
 
     if (NOT CC_UBLOX_NO_WARN_AS_ERR)
@@ -196,3 +214,4 @@ include_directories(
 )
 
 add_subdirectory(cc_plugin)
+add_subdirectory(example)

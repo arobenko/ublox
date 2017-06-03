@@ -45,6 +45,26 @@ errors. Enable this option in case the compiler generates warning and fails the
 compilation. Please open the issue when such scenario occurs. Default value is 
 **OFF**.
 
+- **CC_UBLOX_PLUGIN_ALL**=ON/OFF - Build single UBlox protocol plugin for 
+[CommsChampion Tools](https://github.com/arobenko/comms_champion#commschampion-tools),
+that contains all the known UBX protocol messages. Default value is **ON**. Building
+single plugin requires a lot of RAM (at least 8GB). If the compiler fails with
+error saying that it is out of heap, set this option to **OFF** and enable 
+device specific ones described below.
+
+- **CC_UBLOX_PLUGIN_UBLOX8**=ON/OFF - Build protocol plugin dedicated to ublox-8
+only devices. Default value is **OFF**.
+
+- **CC_UBLOX_PLUGIN_UBLOX7**=ON/OFF - Build protocol plugin dedicated to ublox-7
+only devices. Default value is **OFF**.
+
+- **CC_UBLOX_PLUGIN_UBLOX6**=ON/OFF - Build protocol plugin dedicated to ublox-6
+only devices. Default value is **OFF**.
+
+- **CC_UBLOX_PLUGIN_UBLOX5**=ON/OFF - Build protocol plugin dedicated to ublox-5
+only devices. Default value is **OFF**.
+
+
 ## Choosing C++ Standard
 
 Since CMake v3.1 it became possible to set version of C++ standard by setting

@@ -66,28 +66,17 @@
 #include "cc_plugin/message/NavSatPoll.h"
 #include "cc_plugin/message/NavGeofence.h"
 #include "cc_plugin/message/NavGeofencePoll.h"
-#include "cc_plugin/message/NavEkfstatus.h"
 #include "cc_plugin/message/NavEkfstatusPoll.h"
-#include "cc_plugin/message/NavAopstatus.h"
 #include "cc_plugin/message/NavAopstatusU8.h"
 #include "cc_plugin/message/NavAopstatusPoll.h"
 #include "cc_plugin/message/NavEoe.h"
 
-#include "cc_plugin/message/RxmRaw.h"
-#include "cc_plugin/message/RxmRawPoll.h"
-#include "cc_plugin/message/RxmSfrb.h"
 #include "cc_plugin/message/RxmSfrbx.h"
 #include "cc_plugin/message/RxmMeasx.h"
 #include "cc_plugin/message/RxmRawx.h"
 #include "cc_plugin/message/RxmRawxPoll.h"
 #include "cc_plugin/message/RxmSvsi.h"
 #include "cc_plugin/message/RxmSvsiPoll.h"
-#include "cc_plugin/message/RxmAlm.h"
-#include "cc_plugin/message/RxmAlmPollSv.h"
-#include "cc_plugin/message/RxmAlmPoll.h"
-#include "cc_plugin/message/RxmEph.h"
-#include "cc_plugin/message/RxmEphPollSv.h"
-#include "cc_plugin/message/RxmEphPoll.h"
 #include "cc_plugin/message/RxmPmreqV0.h"
 #include "cc_plugin/message/RxmPmreq.h"
 #include "cc_plugin/message/RxmRlmShort.h"
@@ -120,17 +109,11 @@
 #include "cc_plugin/message/CfgDatUser.h"
 #include "cc_plugin/message/CfgDatStandard.h"
 #include "cc_plugin/message/CfgDatPoll.h"
-#include "cc_plugin/message/CfgTp.h"
-#include "cc_plugin/message/CfgTpPoll.h"
 #include "cc_plugin/message/CfgRate.h"
 #include "cc_plugin/message/CfgRatePoll.h"
 #include "cc_plugin/message/CfgCfg.h"
-#include "cc_plugin/message/CfgFxn.h"
-#include "cc_plugin/message/CfgFxnPoll.h"
 #include "cc_plugin/message/CfgRxm.h"
 #include "cc_plugin/message/CfgRxmPoll.h"
-#include "cc_plugin/message/CfgEkf.h"
-#include "cc_plugin/message/CfgEkfPoll.h"
 #include "cc_plugin/message/CfgAnt.h"
 #include "cc_plugin/message/CfgAntPoll.h"
 #include "cc_plugin/message/CfgSbas.h"
@@ -141,22 +124,15 @@
 #include "cc_plugin/message/CfgNmeaPoll.h"
 #include "cc_plugin/message/CfgUsb.h"
 #include "cc_plugin/message/CfgUsbPoll.h"
-#include "cc_plugin/message/CfgTmode.h"
-#include "cc_plugin/message/CfgTmodePoll.h"
 #include "cc_plugin/message/CfgOdo.h"
 #include "cc_plugin/message/CfgOdoPoll.h"
-#include "cc_plugin/message/CfgNvs.h"
 #include "cc_plugin/message/CfgNavx5.h"
 #include "cc_plugin/message/CfgNavx5Poll.h"
 #include "cc_plugin/message/CfgNav5.h"
 #include "cc_plugin/message/CfgNav5Poll.h"
-#include "cc_plugin/message/CfgEsfgwt.h"
-#include "cc_plugin/message/CfgEsfgwtPoll.h"
 #include "cc_plugin/message/CfgTp5.h"
 #include "cc_plugin/message/CfgTp5PollSelect.h"
 #include "cc_plugin/message/CfgTp5Poll.h"
-#include "cc_plugin/message/CfgPm.h"
-#include "cc_plugin/message/CfgPmPoll.h"
 #include "cc_plugin/message/CfgRinv.h"
 #include "cc_plugin/message/CfgRinvPoll.h"
 #include "cc_plugin/message/CfgItfm.h"
@@ -212,7 +188,6 @@
 #include "cc_plugin/message/MonSmgr.h"
 #include "cc_plugin/message/MonSmgrPoll.h"
 
-#include "cc_plugin/message/AidReq.h"
 #include "cc_plugin/message/AidIni.h"
 #include "cc_plugin/message/AidIniPoll.h"
 #include "cc_plugin/message/AidHui.h"
@@ -224,15 +199,9 @@
 #include "cc_plugin/message/AidEph.h"
 #include "cc_plugin/message/AidEphPollSv.h"
 #include "cc_plugin/message/AidEphPoll.h"
-#include "cc_plugin/message/AidAlpsrv.h"
-#include "cc_plugin/message/AidAlpsrvUpdate.h"
 #include "cc_plugin/message/AidAopU8.h"
-#include "cc_plugin/message/AidAop.h"
 #include "cc_plugin/message/AidAopPollSv.h"
 #include "cc_plugin/message/AidAopPoll.h"
-#include "cc_plugin/message/AidAlp.h"
-#include "cc_plugin/message/AidAlpStatus.h"
-#include "cc_plugin/message/AidAlpData.h"
 
 #include "cc_plugin/message/TimTp.h"
 #include "cc_plugin/message/TimTpPoll.h"
@@ -312,7 +281,7 @@ namespace ublox
 namespace cc_plugin
 {
 
-using AllMessages = std::tuple<
+using Ublox8Messages = std::tuple<
     cc_plugin::message::NavPosecef,
     cc_plugin::message::NavPosecefPoll,
     cc_plugin::message::NavPosllh,
@@ -358,27 +327,15 @@ using AllMessages = std::tuple<
     cc_plugin::message::NavSatPoll,
     cc_plugin::message::NavGeofence,
     cc_plugin::message::NavGeofencePoll,
-    cc_plugin::message::NavEkfstatus,
-    cc_plugin::message::NavEkfstatusPoll,
-    cc_plugin::message::NavAopstatus,
     cc_plugin::message::NavAopstatusU8,
     cc_plugin::message::NavAopstatusPoll,
     cc_plugin::message::NavEoe,
-    cc_plugin::message::RxmRaw,
-    cc_plugin::message::RxmRawPoll,
-    cc_plugin::message::RxmSfrb,
     cc_plugin::message::RxmSfrbx,
     cc_plugin::message::RxmMeasx,
     cc_plugin::message::RxmRawx,
     cc_plugin::message::RxmRawxPoll,
     cc_plugin::message::RxmSvsi,
     cc_plugin::message::RxmSvsiPoll,
-    cc_plugin::message::RxmAlm,
-    cc_plugin::message::RxmAlmPollSv,
-    cc_plugin::message::RxmAlmPoll,
-    cc_plugin::message::RxmEph,
-    cc_plugin::message::RxmEphPollSv,
-    cc_plugin::message::RxmEphPoll,
     cc_plugin::message::RxmPmreqV0,
     cc_plugin::message::RxmPmreq,
     cc_plugin::message::RxmRlmShort,
@@ -408,17 +365,11 @@ using AllMessages = std::tuple<
     cc_plugin::message::CfgDatUser,
     cc_plugin::message::CfgDatStandard,
     cc_plugin::message::CfgDatPoll,
-    cc_plugin::message::CfgTp,
-    cc_plugin::message::CfgTpPoll,
     cc_plugin::message::CfgRate,
     cc_plugin::message::CfgRatePoll,
     cc_plugin::message::CfgCfg,
-    cc_plugin::message::CfgFxn,
-    cc_plugin::message::CfgFxnPoll,
     cc_plugin::message::CfgRxm,
     cc_plugin::message::CfgRxmPoll,
-    cc_plugin::message::CfgEkf,
-    cc_plugin::message::CfgEkfPoll,
     cc_plugin::message::CfgAnt,
     cc_plugin::message::CfgAntPoll,
     cc_plugin::message::CfgSbas,
@@ -429,22 +380,15 @@ using AllMessages = std::tuple<
     cc_plugin::message::CfgNmeaPoll,
     cc_plugin::message::CfgUsb,
     cc_plugin::message::CfgUsbPoll,
-    cc_plugin::message::CfgTmode,
-    cc_plugin::message::CfgTmodePoll,
     cc_plugin::message::CfgOdo,
     cc_plugin::message::CfgOdoPoll,
-    cc_plugin::message::CfgNvs,
     cc_plugin::message::CfgNavx5,
     cc_plugin::message::CfgNavx5Poll,
     cc_plugin::message::CfgNav5,
     cc_plugin::message::CfgNav5Poll,
-    cc_plugin::message::CfgEsfgwt,
-    cc_plugin::message::CfgEsfgwtPoll,
     cc_plugin::message::CfgTp5,
     cc_plugin::message::CfgTp5PollSelect,
     cc_plugin::message::CfgTp5Poll,
-    cc_plugin::message::CfgPm,
-    cc_plugin::message::CfgPmPoll,
     cc_plugin::message::CfgRinv,
     cc_plugin::message::CfgRinvPoll,
     cc_plugin::message::CfgItfm,
@@ -497,7 +441,6 @@ using AllMessages = std::tuple<
     cc_plugin::message::MonGnssPoll,
     cc_plugin::message::MonSmgr,
     cc_plugin::message::MonSmgrPoll,
-    cc_plugin::message::AidReq,
     cc_plugin::message::AidIni,
     cc_plugin::message::AidIniPoll,
     cc_plugin::message::AidHui,
@@ -509,15 +452,9 @@ using AllMessages = std::tuple<
     cc_plugin::message::AidEph,
     cc_plugin::message::AidEphPollSv,
     cc_plugin::message::AidEphPoll,
-    cc_plugin::message::AidAlpsrv,
-    cc_plugin::message::AidAlpsrvUpdate,
     cc_plugin::message::AidAopU8,
-    cc_plugin::message::AidAop,
     cc_plugin::message::AidAopPollSv,
     cc_plugin::message::AidAopPoll,
-    cc_plugin::message::AidAlp,
-    cc_plugin::message::AidAlpStatus,
-    cc_plugin::message::AidAlpData,
     cc_plugin::message::TimTp,
     cc_plugin::message::TimTpPoll,
     cc_plugin::message::TimTm2,

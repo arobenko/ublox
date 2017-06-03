@@ -18,7 +18,14 @@ allows cherry-picking limited number of the selected messages the product requir
 which provides a great flexibility in terms of the final code size.
 
 Full [doxygen](www.doxygen.org) generated documentation with the full tutorial inside can be
-downloaded as zip archive from [Dropbox](https://www.dropbox.com/s/6hl6nyqjnjhh5bo/doc_ublox_v0.8.zip?dl=1).
+downloaded as zip archive from [Dropbox](https://www.dropbox.com/s/6hl6nyqjnjhh5bo/doc_ublox_v0.8.zip?dl=1) or
+from [release artefacts](https://github.com/arobenko/ublox/releases).
+
+The "example" folder contains simple example application showing how to use the [UBLOX Library](#ublox-library). 
+It is implemented using QT5 framework to drive the discovery 
+and handling of asynchronous events. It configures the USB interface to be used
+for UBX communication using **CFG-PRT** message and polls for **NAV-POSSLLH** 
+message every second.
 
 # CommsChampion Plugin
 In addition to the library described above, this project provides a protocol
@@ -38,10 +45,9 @@ the classic **GPLv3 / Commercial** dual licensing scheme. The
 source code is available for anyone to use as long as the derivative work
 remains open source with compatible licence. **Download** and **try** it! If it works
 as expected and commercial closed source licence is required for the final
-product, please send me an e-mail. As the author and full copyright owner I 
-will be able to provide one. Please refer
-to [Contact Information](#contact-information) below and get in touch with
-me if you need one.
+product, it can be purchased on [binpress](http://arobenko.binpress.com/product/ublox-protocol-library/4579).
+If the offered licences do not satisfy your needs and special conditions need to be
+included please send me an e-mail (see [Contact Information](#contact-information) below).
 
 # How to Build
 Detailed instructions on how to build and install all the components can be

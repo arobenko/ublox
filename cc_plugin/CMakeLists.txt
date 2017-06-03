@@ -1,25 +1,11 @@
-set (THIS_PLUGIN_NAME "ublox")
+set (ALL_MESSAGES_LIB "all_messages")
 
 ######################################################################
 
-function (cc_plugin_ublox)
-    set (name "${THIS_PLUGIN_NAME}")
-    
-    set (meta_file "${CMAKE_CURRENT_SOURCE_DIR}/ublox.json")
-    set (stamp_file "${CMAKE_CURRENT_BINARY_DIR}/ublox_refresh_stamp.txt")
-    
-    set (refresh_plugin_header TRUE)
-    if ((NOT EXISTS ${stamp_file}) OR (${meta_file} IS_NEWER_THAN ${stamp_file}))
-        execute_process(
-            COMMAND ${CMAKE_COMMAND} -E touch ${CMAKE_CURRENT_SOURCE_DIR}/Plugin.h)
-        execute_process(
-            COMMAND ${CMAKE_COMMAND} -E touch ${stamp_file})
-    endif ()
-    
-    
+function (cc_plugin_ublox_all_messages)
+    set (name "${ALL_MESSAGES_LIB}")
+
     set (src
-        Plugin.cpp
-        Protocol.cpp
         TransportMessage.cpp
         message/NavPosecef.cpp
         message/NavPosecefPoll.cpp
@@ -118,7 +104,7 @@ function (cc_plugin_ublox)
         message/CfgDatPoll.cpp
         message/CfgTp.cpp
         message/CfgTpPoll.cpp
-        message/CfgRate.cpp        
+        message/CfgRate.cpp
         message/CfgRatePoll.cpp
         message/CfgCfg.cpp
         message/CfgFxn.cpp
@@ -208,7 +194,7 @@ function (cc_plugin_ublox)
         message/AidReq.cpp
         message/AidIni.cpp
         message/AidIniPoll.cpp
-        message/AidHui.cpp        
+        message/AidHui.cpp
         message/AidHuiPoll.cpp
         message/AidData.cpp
         message/AidAlm.cpp
@@ -232,7 +218,7 @@ function (cc_plugin_ublox)
         message/TimTm2Poll.cpp
         message/TimSvin.cpp
         message/TimSvinPoll.cpp
-        message/TimVrfy.cpp        
+        message/TimVrfy.cpp
         message/TimVrfyPoll.cpp
         message/TimDosc.cpp
         message/TimTos.cpp
@@ -300,29 +286,73 @@ function (cc_plugin_ublox)
         field/inf.cpp
         field/cfg.cpp
     )
-    
-    set (hdr
-        Plugin.h
+
+    add_library (${name} STATIC ${src})
+    target_link_libraries (${name} ${CC_PLUGIN_LIBRARIES})
+    qt5_use_modules(${name} Core)
+
+    # For some reason message/AidHui fails to compile in Release mode with g++
+    if (CMAKE_COMPILER_IS_GNUCC AND ("${CMAKE_BUILD_TYPE}" STREQUAL "Release"))
+        set_source_files_properties (message/AidHui.cpp PROPERTIES COMPILE_FLAGS "-O2")
+    endif ()
+
+endfunction()
+
+######################################################################
+
+function (cc_plugin_ublox idx)
+    set (name "ublox${idx}")
+
+    set (json_suffix)
+    if (NOT "${idx}" STREQUAL "")
+        set (json_suffix "-${idx}")
+    endif ()
+
+    set (meta_file "${CMAKE_CURRENT_SOURCE_DIR}/ublox${json_suffix}.json")
+    set (stamp_file "${CMAKE_CURRENT_BINARY_DIR}/ublox${idx}_refresh_stamp.txt")
+
+    if ((NOT EXISTS ${stamp_file}) OR (${meta_file} IS_NEWER_THAN ${stamp_file}))
+        execute_process(
+            COMMAND ${CMAKE_COMMAND} -E touch ${CMAKE_CURRENT_SOURCE_DIR}/Plugin.h)
+        execute_process(
+            COMMAND ${CMAKE_COMMAND} -E touch ${stamp_file})
+    endif ()
+
+    set (suffix)
+    if (NOT "${idx}" STREQUAL "")
+        set (suffix "_ublox${idx}")
+    endif ()
+
+    set (src
+        Plugin${suffix}.cpp
+        Protocol.cpp
     )
-    
+
+    set (hdr
+        Plugin${suffix}.h
+    )
+
     qt5_wrap_cpp(
         moc
         ${hdr}
     )
-    
+
     add_library (${name} SHARED ${src} ${moc})
-    target_link_libraries (${name} ${CC_PLUGIN_LIBRARIES})
+    target_link_libraries (${name} ${ALL_MESSAGES_LIB} ${CC_PLUGIN_LIBRARIES})
     qt5_use_modules(${name} Core)
-    
-    # For some reason message/AidHui fails to compile in Release mode with g++
-    if (CMAKE_COMPILER_IS_GNUCC AND ("${CMAKE_BUILD_TYPE}" STREQUAL "Release"))
-        set_source_files_properties (message/AidHui.cpp PROPERTIES COMPILE_FLAGS "-O2")
-    endif () 
-    
+
     install (
         TARGETS ${name}
         DESTINATION ${PLUGIN_INSTALL_DIR})
-    
+
+    if (CC_UBLOX_FULL_SOLUTION)
+        add_dependencies(${name} ${CC_EXTERNAL_TGT})
+    endif ()
+
+    if (NOT "${idx}" STREQUAL "")
+        target_compile_definitions(${name} PRIVATE -DUBLOX${idx}_ONLY)
+    endif ()
+
 endfunction()
 
 ######################################################################
@@ -348,7 +378,7 @@ endfunction ()
 function (cc_plugin_config)
     set (config_file ${CMAKE_CURRENT_SOURCE_DIR}/config/ublox.cfg)
     if (WIN32)
-        set (match_str "/dev/ttyS0")
+        set (match_str "/dev/ttyACM0")
         set (replacement_str "COM1")
         set (output_file "${CMAKE_CURRENT_BINARY_DIR}/ublox.cfg")
 
@@ -364,52 +394,38 @@ endfunction ()
 
 ######################################################################
 
-if (NOT "${CC_UBLOX_QT_DIR}" STREQUAL "")
-    list (APPEND CMAKE_PREFIX_PATH ${CC_UBLOX_QT_DIR})
-endif ()
-
-find_package(Qt5Core)
-
 if (NOT Qt5Core_FOUND)
     message (WARNING "Can NOT compile ublox protocol plugin due to missing QT5 Core library")
     return ()
 endif ()
 
-if (NOT CC_UBLOX_FULL_SOLUTION)
-    if (EXISTS "${INSTALL_DIR}/cmake/CommsChampionConfig.cmake")
-        list (APPEND CMAKE_PREFIX_PATH "${INSTALL_DIR}/cmake")
-        FILE(GLOB_RECURSE comms.headers "${INSTALL_DIR}/include/comms/*.h")
-        add_custom_target(comms.headers SOURCES ${comms.headers})
-        FILE(GLOB_RECURSE cc.headers "${INSTALL_DIR}/include/comms_champion/*.h")
-        add_custom_target(cc.headers SOURCES ${cc.headers})
-    endif ()
-    
-    if (NOT "${CC_MAIN_INSTALL_DIR}" STREQUAL "")
-        list (APPEND CMAKE_PREFIX_PATH "${CC_MAIN_INSTALL_DIR}/cmake")
-    endif ()
-    
-    
-    find_package(CommsChampion)
-    
-    if (NOT CC_COMMS_CHAMPION_FOUND)
-        message (WARNING "Can NOT compile mqtt protocol plugin due to missing CommsChampion library")
-        return ()
-    endif ()
-    
-    include_directories(${CC_INCLUDE_DIRS})
-    link_directories(${CC_PLUGIN_LIBRARY_DIRS})
-endif ()   
-
 if (CMAKE_COMPILER_IS_GNUCC)
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -ftemplate-backtrace-limit=0")
 endif ()
-    
-cc_plugin_ublox ()
-cc_plugin_config ()
 
-if (CC_UBLOX_FULL_SOLUTION)
-    add_dependencies(${THIS_PLUGIN_NAME} ${CC_EXTERNAL_TGT})
+cc_plugin_ublox_all_messages()
+
+if (CC_UBLOX_PLUGIN_ALL)
+    cc_plugin_ublox("")
+    cc_plugin_config ()
 endif ()
+
+if (CC_UBLOX_PLUGIN_UBLOX8)
+    cc_plugin_ublox("8")
+endif ()
+
+if (CC_UBLOX_PLUGIN_UBLOX7)
+    cc_plugin_ublox("7")
+endif ()
+
+if (CC_UBLOX_PLUGIN_UBLOX6)
+    cc_plugin_ublox("6")
+endif ()
+
+if (CC_UBLOX_PLUGIN_UBLOX5)
+    cc_plugin_ublox("5")
+endif ()
+
 
 FILE(GLOB_RECURSE plugin.headers "*.h")
 add_custom_target(cc_plugin.headers SOURCES ${plugin.headers})
