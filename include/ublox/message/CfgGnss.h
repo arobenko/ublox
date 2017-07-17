@@ -122,7 +122,12 @@ struct CfgGnssFields
     /// @brief Definition of the list of configuration blocks
     /// @tparam TOpt Extra option(s)
     template <typename TOpt = comms::option::EmptyOption>
-    using blocksList = field::common::ListT<block, TOpt>;
+    using blocksList = 
+        field::common::ListT<
+            block, 
+            comms::option::SequenceSizeForcingEnabled,
+            TOpt
+        >;
 
     /// @brief All the fields bundled in std::tuple.
     /// @tparam TOpt Extra option(s) for @ref blocksList field
