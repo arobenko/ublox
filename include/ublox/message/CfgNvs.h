@@ -55,6 +55,12 @@ struct CfgNvsFields
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
         COMMS_BITMASK_BITS(alm=17, aop=29);
+
+        /// @brief Provide convenience access functions for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS_ACCESS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS_ACCESS(alm, aop);
     };
 
     /// @brief Definition of "clearMask" field.
@@ -77,6 +83,12 @@ struct CfgNvsFields
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
         COMMS_BITMASK_BITS(devBBR, devFlash, devEEPROM, devSpiFlash=4);
+
+        /// @brief Provide convenience access functions for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS_ACCESS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS_ACCESS(devBBR, devFlash, devEEPROM, devSpiFlash);
     };
 
     /// @brief All the fields bundled in std::tuple.

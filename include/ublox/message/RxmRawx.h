@@ -52,10 +52,10 @@ struct RxmRawxFields
         >
     {
         /// @brief Provide names for internal bits.
-        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        /// @details See definition of @b COMMS_BITMASK_BITS_SEQ macro
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
-        COMMS_BITMASK_BITS(leapSec, clkReset);
+        COMMS_BITMASK_BITS_SEQ(leapSec, clkReset);
     };
 
     /// @brief Definition of "version" field.
@@ -117,10 +117,10 @@ struct RxmRawxFields
         >
     {
         /// @brief Provide names for internal bits.
-        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        /// @details See definition of @b COMMS_BITMASK_BITS_SEQ macro
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
-        COMMS_BITMASK_BITS(prValid, cpValid, halfCyc, subHalfCyc);
+        COMMS_BITMASK_BITS_SEQ(prValid, cpValid, halfCyc, subHalfCyc);
     };
 
     /// @brief Definition of "reserved3" field.

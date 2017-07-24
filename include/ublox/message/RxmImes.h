@@ -113,10 +113,10 @@ struct RxmImesFields
         >
     {
         /// @brief Provide names for internal bits.
-        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        /// @details See definition of @b COMMS_BITMASK_BITS_SEQ macro
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
-        COMMS_BITMASK_BITS(pos1Valid);
+        COMMS_BITMASK_BITS_SEQ(pos1Valid);
     };
 
     /// @brief Definition of "position1_2" field.
@@ -172,10 +172,10 @@ struct RxmImesFields
         >
     {
         /// @brief Provide names for internal bits.
-        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        /// @details See definition of @b COMMS_BITMASK_BITS_SEQ macro
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
-        COMMS_BITMASK_BITS(pos2Valid);
+        COMMS_BITMASK_BITS_SEQ(pos2Valid);
     };
 
     /// @brief Definition of "position2_1" field.
@@ -222,10 +222,10 @@ struct RxmImesFields
         >
     {
         /// @brief Provide names for internal bits.
-        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        /// @details See definition of @b COMMS_BITMASK_BITS_SEQ macro
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
-        COMMS_BITMASK_BITS(shortValid, shortBoundary);
+        COMMS_BITMASK_BITS_SEQ(shortValid, shortBoundary);
     };
 
     /// @brief Definition of "shortIdFrame" field.
@@ -254,10 +254,10 @@ struct RxmImesFields
         >
     {
         /// @brief Provide names for internal bits.
-        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        /// @details See definition of @b COMMS_BITMASK_BITS_SEQ macro
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
-        COMMS_BITMASK_BITS(mediumIdMSB, mediumValid, mediumboundary);
+        COMMS_BITMASK_BITS_SEQ(mediumIdMSB, mediumValid, mediumboundary);
     };
 
     /// @brief Definition of a single block of @ref data list

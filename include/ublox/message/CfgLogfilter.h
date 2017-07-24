@@ -47,10 +47,10 @@ struct CfgLogfilterFields
         >
     {
         /// @brief Provide names for internal bits.
-        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        /// @details See definition of @b COMMS_BITMASK_BITS_SEQ macro
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
-        COMMS_BITMASK_BITS(recordEnabled, psmOncePerWakupEnabled, applyAllFilterSettings);
+        COMMS_BITMASK_BITS_SEQ(recordEnabled, psmOncePerWakupEnabled, applyAllFilterSettings);
     };
 
     /// @brief Definition of "minInterval" field.

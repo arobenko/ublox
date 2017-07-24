@@ -100,10 +100,10 @@ struct NavSatFields
         >
     {
         /// @brief Provide names for internal bits.
-        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        /// @details See definition of @b COMMS_BITMASK_BITS_SEQ macro
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
-        COMMS_BITMASK_BITS(svUsed);
+        COMMS_BITMASK_BITS_SEQ(svUsed);
     };
 
     /// @brief Value enumeration for @ref health field.
@@ -130,10 +130,10 @@ struct NavSatFields
         >
     {
         /// @brief Provide names for internal bits.
-        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        /// @details See definition of @b COMMS_BITMASK_BITS_SEQ macro
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
-        COMMS_BITMASK_BITS(diffCorr, smoothed);
+        COMMS_BITMASK_BITS_SEQ(diffCorr, smoothed);
     };
 
     /// @brief Value enumeration for @ref orbitSource field.
@@ -163,10 +163,10 @@ struct NavSatFields
         >
     {
         /// @brief Provide names for internal bits.
-        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        /// @details See definition of @b COMMS_BITMASK_BITS_SEQ macro
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
-        COMMS_BITMASK_BITS(ephAvail, almAvail, anoAvail, aopAvail);
+        COMMS_BITMASK_BITS_SEQ(ephAvail, almAvail, anoAvail, aopAvail);
     };
 
     /// @brief Definition of "flags" field.

@@ -71,10 +71,10 @@ struct CfgGnssFields
         >
     {
         /// @brief Provide names for internal bits.
-        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        /// @details See definition of @b COMMS_BITMASK_BITS_SEQ macro
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
-        COMMS_BITMASK_BITS(enable);
+        COMMS_BITMASK_BITS_SEQ(enable);
     };
 
     /// @brief Definition of "sigCfgMask" member field of the @ref flags bitfield.

@@ -113,10 +113,10 @@ struct NavEkfstatusFields
     struct measUsed : public field::common::X1
     {
         /// @brief Provide names for internal bits.
-        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        /// @details See definition of @b COMMS_BITMASK_BITS_SEQ macro
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
-        COMMS_BITMASK_BITS(pulse, direction, gyro, temp, pos, vel, errGyro, errPulse);
+        COMMS_BITMASK_BITS_SEQ(pulse, direction, gyro, temp, pos, vel, errGyro, errPulse);
     };
 
     /// @brief Definition of "reserved2" field.

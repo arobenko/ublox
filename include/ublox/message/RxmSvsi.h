@@ -63,10 +63,10 @@ struct RxmSvsiFields
         >
     {
         /// @brief Provide names for internal bits.
-        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        /// @details See definition of @b COMMS_BITMASK_BITS_SEQ macro
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
-        COMMS_BITMASK_BITS(healthy, ephVal, almVal, notAvail);
+        COMMS_BITMASK_BITS_SEQ(healthy, ephVal, almVal, notAvail);
     };
 
     /// @brief Definition of "svFlag" field.

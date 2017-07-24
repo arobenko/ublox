@@ -41,10 +41,10 @@ struct CfgSbasFields
         >
     {
         /// @brief Provide names for internal bits.
-        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        /// @details See definition of @b COMMS_BITMASK_BITS_SEQ macro
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
-        COMMS_BITMASK_BITS(enabled, test);
+        COMMS_BITMASK_BITS_SEQ(enabled, test);
     };
 
     /// @brief Definition of "usage" field.
@@ -54,10 +54,10 @@ struct CfgSbasFields
         >
     {
         /// @brief Provide names for internal bits.
-        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        /// @details See definition of @b COMMS_BITMASK_BITS_SEQ macro
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
-        COMMS_BITMASK_BITS(range, diffCorr, integrity);
+        COMMS_BITMASK_BITS_SEQ(range, diffCorr, integrity);
     };
 
     /// @brief Definition of "maxSBAS" field.
@@ -73,20 +73,20 @@ struct CfgSbasFields
         >
     {
         /// @brief Provide names for internal bits.
-        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        /// @details See definition of @b COMMS_BITMASK_BITS_SEQ macro
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
-        COMMS_BITMASK_BITS(PRN152, PRN153, PRN154, PRN155, PRN156, PRN157, PRN158);
+        COMMS_BITMASK_BITS_SEQ(PRN152, PRN153, PRN154, PRN155, PRN156, PRN157, PRN158);
     };
 
     /// @brief Definition of "scanmode1" field.
     struct scanmode1 : public field::common::X4
     {
         /// @brief Provide names for internal bits.
-        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        /// @details See definition of @b COMMS_BITMASK_BITS_SEQ macro
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
-        COMMS_BITMASK_BITS(
+        COMMS_BITMASK_BITS_SEQ(
             PRN120,
             PRN121,
             PRN122,

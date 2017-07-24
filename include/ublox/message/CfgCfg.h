@@ -45,6 +45,12 @@ struct CfgCfgFields
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
         COMMS_BITMASK_BITS(ioPort, msgConf, infMsg, navConf, rxmConf, rinvConf=9, antConf, logConf, ftsConf);
+
+        /// @brief Provide convenience access functions for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS_ACCESS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS_ACCESS(ioPort, msgConf, infMsg, navConf, rxmConf, rinvConf, antConf, logConf, ftsConf);
     };
 
     /// @brief Definition of "clearMask" field.
@@ -65,6 +71,12 @@ struct CfgCfgFields
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
         COMMS_BITMASK_BITS(devBBR, devFlash, devEEPROM, devSpiFlash=4);
+
+        /// @brief Provide convenience access functions for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS_ACCESS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS_ACCESS(devBBR, devFlash, devEEPROM, devSpiFlash);
     };
 
     /// @brief Definition of optional "deviceMask" field.

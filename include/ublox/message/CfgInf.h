@@ -62,10 +62,10 @@ struct CfgInfFields
         field::common::X1T<comms::option::BitmaskReservedBits<0xe0, 0> >
     {
         /// @brief Provide names for internal bits.
-        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        /// @details See definition of @b COMMS_BITMASK_BITS_SEQ macro
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
-        COMMS_BITMASK_BITS(ERROR, WARNING, NOTICE, DEBUG, TEST);
+        COMMS_BITMASK_BITS_SEQ(ERROR, WARNING, NOTICE, DEBUG, TEST);
     };
 
     /// @brief Definition of "infMsgMask" field.

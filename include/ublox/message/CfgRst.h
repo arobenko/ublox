@@ -75,6 +75,12 @@ struct CfgRstFields
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
         COMMS_BITMASK_BITS(eph, alm, health, klob, pos, clkd, osc, utc, rtc, sfdr=11, vmon, tct, aop=15);
+
+        /// @brief Provide convenience access functions for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS_ACCESS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS_ACCESS(eph, alm, health, klob, pos, clkd, osc, utc, rtc, sfdr, vmon, tct, aop);
     };
 
     /// @brief Definition of "resetMode" field.

@@ -74,10 +74,10 @@ struct CfgTpFields
     struct flags : public field::common::X1T<comms::option::BitmaskReservedBits<0xfe, 0> >
     {
         /// @brief Provide names for internal bits.
-        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        /// @details See definition of @b COMMS_BITMASK_BITS_SEQ macro
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
-        COMMS_BITMASK_BITS(syncMode);
+        COMMS_BITMASK_BITS_SEQ(syncMode);
     };
 
     /// @brief Definition of "res" field.

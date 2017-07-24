@@ -68,10 +68,10 @@ struct NavTimeutcFields
         >
     {
         /// @brief Provide names for internal bits.
-        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        /// @details See definition of @b COMMS_BITMASK_BITS_SEQ macro
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
-        COMMS_BITMASK_BITS(validTOW, validWKN, validUTC);
+        COMMS_BITMASK_BITS_SEQ(validTOW, validWKN, validUTC);
     };
 
     /// @brief Definition of "utcStandard" member field of @ref validBitfield field.

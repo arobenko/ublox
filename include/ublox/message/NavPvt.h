@@ -72,10 +72,10 @@ struct NavPvtFields
             comms::option::BitmaskReservedBits<0xf8, 0> >
     {
         /// @brief Provide names for internal bits.
-        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        /// @details See definition of @b COMMS_BITMASK_BITS_SEQ macro
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
-        COMMS_BITMASK_BITS(validDate, validTime, fullyResolved);
+        COMMS_BITMASK_BITS_SEQ(validDate, validTime, fullyResolved);
     };
 
     /// @brief Definition of "tAcc" field.
@@ -93,10 +93,10 @@ struct NavPvtFields
         field::common::X1T<comms::option::FixedBitLength<2> >
     {
         /// @brief Provide names for internal bits.
-        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        /// @details See definition of @b COMMS_BITMASK_BITS_SEQ macro
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
-        COMMS_BITMASK_BITS(gnssFixOK, diffSoln);
+        COMMS_BITMASK_BITS_SEQ(gnssFixOK, diffSoln);
     };
 
     /// @brief Definition of "psmState" member field in @ref flags bitmask field.
@@ -112,14 +112,14 @@ struct NavPvtFields
     struct flagsHigh : public
         field::common::X1T<
             comms::option::FixedBitLength<3>,
-            comms::option::BitmaskReservedBits<0xfc, 0>
+            comms::option::BitmaskReservedBits<0xfe, 0>
         >
     {
         /// @brief Provide names for internal bits.
-        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        /// @details See definition of @b COMMS_BITMASK_BITS_SEQ macro
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
-        COMMS_BITMASK_BITS(headVehValid);
+        COMMS_BITMASK_BITS_SEQ(headVehValid);
     };
 
 
@@ -149,6 +149,12 @@ struct NavPvtFields
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
         COMMS_BITMASK_BITS(confirmedAvai=5, confirmedDate, confirmedTime);
+
+        /// @brief Provide convenience access functions for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS_ACCESS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS_ACCESS(confirmedAvai, confirmedDate, confirmedTime);
     };
 
 

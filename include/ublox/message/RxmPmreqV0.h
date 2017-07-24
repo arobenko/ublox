@@ -56,6 +56,12 @@ struct RxmPmreqV0Fields
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
         COMMS_BITMASK_BITS(backup=1, force);
+
+        /// @brief Provide convenience access functions for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS_ACCESS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS_ACCESS(backup, force);
     };
 
     /// @brief Definition of "wakeupSources" field.
@@ -69,6 +75,12 @@ struct RxmPmreqV0Fields
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
         COMMS_BITMASK_BITS(uartrx=3, extint0=5, extint1, spics);
+
+        /// @brief Provide convenience access functions for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS_ACCESS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS_ACCESS(uartrx, extint0, extint1, spics);
     };
 
     /// @brief All the fields bundled in std::tuple.

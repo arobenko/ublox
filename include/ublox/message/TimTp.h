@@ -58,10 +58,10 @@ struct TimTpFields
         >
     {
         /// @brief Provide names for internal bits.
-        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        /// @details See definition of @b COMMS_BITMASK_BITS_SEQ macro
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
-        COMMS_BITMASK_BITS(timeBase, utc);
+        COMMS_BITMASK_BITS_SEQ(timeBase, utc);
     };
 
     /// @brief Enumeration value for @ref raim field

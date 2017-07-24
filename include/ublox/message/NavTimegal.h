@@ -53,10 +53,10 @@ struct NavTimegalFields
         field::common::X1T<comms::option::BitmaskReservedBits<0xf8, 0> >
     {
         /// @brief Provide names for internal bits.
-        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        /// @details See definition of @b COMMS_BITMASK_BITS_SEQ macro
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
-        COMMS_BITMASK_BITS(galTowValid, galWnoValid, leapSValid);
+        COMMS_BITMASK_BITS_SEQ(galTowValid, galWnoValid, leapSValid);
     };
 
     /// @brief Definition of "tAcc" field.

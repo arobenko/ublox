@@ -44,6 +44,12 @@ struct CfgEsfgwtFields
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
         COMMS_BITMASK_BITS(setVehicle=12, setTime, setWt);
+
+        /// @brief Provide convenience access functions for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS_ACCESS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS_ACCESS(setVehicle, setTime, setWt);
     };
 
     /// @brief Definition of "id" field.

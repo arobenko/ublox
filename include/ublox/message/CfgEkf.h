@@ -59,6 +59,12 @@ struct CfgEkfFields
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
         COMMS_BITMASK_BITS(clTab=1, clCalib=2, nomTacho=4, nomGyro=5, setTemp=6, dir=7);
+
+        /// @brief Provide convenience access functions for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS_ACCESS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS_ACCESS(clTab, clCalib, nomTacho, nomGyro, setTemp, dir);
     };
 
     /// @brief Definition of "configFlags" field.
@@ -68,10 +74,10 @@ struct CfgEkfFields
         >
     {
         /// @brief Provide names for internal bits.
-        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        /// @details See definition of @b COMMS_BITMASK_BITS_SEQ macro
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
-        COMMS_BITMASK_BITS(pulsesPerM, useSerWt);
+        COMMS_BITMASK_BITS_SEQ(pulsesPerM, useSerWt);
     };
 
     /// @brief Definition of "inverseFlags" field.
@@ -81,10 +87,10 @@ struct CfgEkfFields
         >
     {
         /// @brief Provide names for internal bits.
-        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        /// @details See definition of @b COMMS_BITMASK_BITS_SEQ macro
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
-        COMMS_BITMASK_BITS(invDir, invGyro);
+        COMMS_BITMASK_BITS_SEQ(invDir, invGyro);
     };
 
     /// @brief Definition of "reserved2" field.
