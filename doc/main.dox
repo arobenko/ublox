@@ -301,51 +301,8 @@
 ///     virtual void handle(MyInputMessage& msg) override {...}
 /// };
 /// @endcode
-///
-/// Every message class in ublox::message namespace uses 
-/// @b COMMS_MSG_FIELDS_ACCESS() macro to provide names to its fields. It 
-/// makes the access to the fields of the message easier. The fields can be
-/// accessed via defined accessor functions:
-/// @code
-/// class MyHandler
-/// {
-/// public:
-///     void handle(InNavPosecef& msg) {
-///         auto& iTOW = msg.field_iTOW(); // iTOW field
-///         auto& ecefX = msg.field_ecefX(); // ecefX field
-///         auto& ecefY = msg.field_ecefY(); // ecefY field
-///         auto& ecefZ = msg.field_ecefZ(); // ecefZ field
-///
-///         auto iTowVal = iTOW.value(); // Get iTOW value
-///         auto ecefXVal = ecefX.value(); // Get ecefX value
-///         auto ecefYVal = ecefY.value(); // Get ecefY value
-///         auto ecefZVal = ecefZ.value(); // Get ecefZ value
-///
-///             ... // Do something with the values
-///     }
-/// };
-/// @endcode
-/// or via @b FieldIdx enum.
-/// @code
-/// class MyHandler
-/// {
-/// public:
-///     void handle(InNavPosecef& msg) {
-///         auto& allFields = msg.fields(); // access to std::tuple of fields
-///         auto& iTOW = std::get<InNavPosecef::FieldIdx_iTOW>(allFields); // iTOW field
-///         auto& ecefX = std::get<InNavPosecef::FieldIdx_ecefX>(allFields); // ecefX field
-///         auto& ecefY = std::get<InNavPosecef::FieldIdx_ecefX>(allFields); // ecefY field
-///         auto& ecefZ = std::get<InNavPosecef::FieldIdx_ecefZ>(allFields); // ecefZ field
-///
-///         auto iTowVal = iTOW.value(); // Get iTOW value
-///         auto ecefXVal = ecefX.value(); // Get ecefX value
-///         auto ecefYVal = ecefY.value(); // Get ecefY value
-///         auto ecefZVal = ecefZ.value(); // Get ecefZ value
-///
-///             ... // Do something with the values
-///     }
-/// };
-/// @endcode
+/// The later @ref ublox_fields_accessing section contains information on
+/// how to access handled message fields.
 ///
 /// @section ublox_output_messages Output Messages
 /// Just like defining @ref ublox_input_messages, it is recommended to define
@@ -377,7 +334,7 @@
 ///         return 0U; // Nothing has been written
 ///     }
 ///
-///     auto begIter = comms::writeIteratorFor<MyOutputMessage>(&outputBuf[0]);
+///     auto begIter = comms::writeIteratorFor<MyOutputMessage>(buf);
 ///     auto iter = begIter;
 ///     auto es = protStack.write(msg, iter, bufLen);
 ///     if (es != comms::ErrorStatus::Success) {
@@ -481,9 +438,78 @@
 /// @b fields() member function of the message class, the reference of such
 /// tuple is returned:
 /// @code
-/// NavPosecef msg;
+/// ublox::message::NavPosecef<...> msg;
 /// NavPosecefFields::All& fields = msg.fields();
 /// @endcode
+///
+/// @subsection ublox_fields_accessing Accessing Message Fields
+/// Every message class in ublox::message namespace uses 
+/// @b COMMS_MSG_FIELDS_ACCESS() macro to provide names to its fields. For
+/// example comms::message::NavPosecef class defines the following names:
+/// @code
+/// namespace ublox
+/// {
+/// namespace message
+/// {
+/// template <typename TMsgBase>
+/// class NavPosecef : public comms::MessageBase<...>
+/// {
+/// public:
+///     COMMS_MSG_FIELDS_ACCESS(iTOW, ecefX, ecefY, ecefZ, pAcc);
+///     ...
+/// };
+///
+/// } // namespace message
+/// } // namespace ublox
+/// @endcode
+///
+/// The macro generates @b field_<name> convenience access function(s) for
+/// every name it receives. For example:
+/// @code
+/// class MyHandler
+/// {
+/// public:
+///     void handle(InNavPosecef& msg) {
+///         auto& iTOW = msg.field_iTOW(); // iTOW field
+///         auto& ecefX = msg.field_ecefX(); // ecefX field
+///         auto& ecefY = msg.field_ecefY(); // ecefY field
+///         auto& ecefZ = msg.field_ecefZ(); // ecefZ field
+///
+///         auto iTowVal = iTOW.value(); // Get iTOW value
+///         auto ecefXVal = ecefX.value(); // Get ecefX value
+///         auto ecefYVal = ecefY.value(); // Get ecefY value
+///         auto ecefZVal = ecefZ.value(); // Get ecefZ value
+///
+///             ... // Do something with the values
+///     }
+/// };
+/// @endcode
+/// The macro also generates enum @b FieldIdx enum containing @b FieldIdx_<name> 
+/// value for every provided name. They can be used to access fields by index 
+/// (comparing to names). For example:
+/// @code
+/// class MyHandler
+/// {
+/// public:
+///     void handle(InNavPosecef& msg) {
+///         auto& allFields = msg.fields(); // access to std::tuple of fields
+///         auto& iTOW = std::get<InNavPosecef::FieldIdx_iTOW>(allFields); // iTOW field
+///         auto& ecefX = std::get<InNavPosecef::FieldIdx_ecefX>(allFields); // ecefX field
+///         auto& ecefY = std::get<InNavPosecef::FieldIdx_ecefX>(allFields); // ecefY field
+///         auto& ecefZ = std::get<InNavPosecef::FieldIdx_ecefZ>(allFields); // ecefZ field
+///
+///         auto iTowVal = iTOW.value(); // Get iTOW value
+///         auto ecefXVal = ecefX.value(); // Get ecefX value
+///         auto ecefYVal = ecefY.value(); // Get ecefY value
+///         auto ecefZVal = ecefZ.value(); // Get ecefZ value
+///
+///             ... // Do something with the values
+///     }
+/// };
+/// @endcode
+/// @b NOTE, that call to @b field_<name>() member function gives an access to
+/// the @b field object, not the stored value. To access the stored value, please
+/// use @b value() member function of the @b field.
 ///
 /// In order to properly understand what the fields are, and how to operate with
 /// them, it is recommended to thoroughly read the 
@@ -578,7 +604,7 @@
 /// no real need to know the original units also. If the @b type of the units
 /// is known (angle measurement in the example above), the developer can use
 /// the converstion function(s) to the required units. In this case the 
-/// compiler will do all the necessary match calculation and/or type 
+/// compiler will do all the necessary math calculation and/or type 
 /// conversions. 
 /// 
 /// To get a better understanding on units conversion, pleas read the 
@@ -604,9 +630,23 @@
 /// There are multiple bitmask fields that inherit from 
 /// @b comms::field::BitmaskValue (for example ublox::message::CfgPrtFields::outProtoMask).
 /// This bitmask fields use @b COMMS_BITMASK_BITS() macro from @b COMMS library
-/// to define names for the bits. This macro will create @b BitIdx enum with
-/// all the values prefixed with @b BitIdx_, which cat be used to get/set
-/// bit values. 
+/// to define names for the bits and @b COMMS_BITMASK_BITS_ACCESS() macro to generate
+/// convenience set/get member functions. When the bits are "sequential", i.e.
+/// start at bit @b 0 and go up without skips, then single @b COMMS_BITMASK_BITS_SEQ() macro
+/// is used to achieve the same effect. These macro will create @b BitIdx enum with
+/// all the values prefixed with @b BitIdx_, which cat be used as bit indices. 
+/// The macros also generate convenience access @b setBitValue_<name>() and @b
+/// getBitValue_<name>() for every name provided to the macros. For example:  
+/// @code
+/// using OutCfgPrtUsb = ublox::message::CfgPrtUsb<MyOutputMessage>;
+///
+/// OutCfgPrtUsb msg;
+/// auto& outProtoMaskField = msg.field_outProtoMask();
+///
+/// outProtoMaskField.setBitValue_outUbx(true);
+/// outProtoMaskField.setBitValue_outNmea(false);
+/// @endcode 
+/// The @b BitIdx enum values can also be used:
 /// @code
 /// using OutCfgPrtUsb = ublox::message::CfgPrtUsb<MyOutputMessage>;
 ///
