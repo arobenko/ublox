@@ -73,6 +73,12 @@ struct CfgNmeaExtFields : public CfgNmeaFields
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
         COMMS_BITMASK_BITS(gps, sbas, qzss=4, glonass, beidou);
+
+        /// @brief Provide convenience access functions for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS_ACCESS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS_ACCESS(gps, sbas, qzss, glonass, beidou);
     };
 
     /// @brief Definition of "svNumbering" field.

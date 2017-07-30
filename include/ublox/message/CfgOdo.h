@@ -50,10 +50,10 @@ struct CfgOdoFields
         >
     {
         /// @brief Provide names for internal bits.
-        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        /// @details See definition of @b COMMS_BITMASK_BITS_SEQ macro
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
-        COMMS_BITMASK_BITS(useODO, useCOG, outLPVel, outLPCog);
+        COMMS_BITMASK_BITS_SEQ(useODO, useCOG, outLPVel, outLPCog);
     };
 
     /// @brief Value enumeration for @ref profile field.

@@ -41,10 +41,10 @@ struct CfgAntFields
         >
     {
         /// @brief Provide names for internal bits.
-        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        /// @details See definition of @b COMMS_BITMASK_BITS_SEQ macro
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
-        COMMS_BITMASK_BITS(svcs, csd, ocd, pdwnOnSCD, recovery);
+        COMMS_BITMASK_BITS_SEQ(svcs, csd, ocd, pdwnOnSCD, recovery);
     };
 
     /// @brief Common definition of @b pinSwitch, @b pinSCD, and @b pinOCD member
@@ -59,10 +59,10 @@ struct CfgAntFields
     struct reconfig : public field::common::X1T<comms::option::FixedBitLength<1> >
     {
         /// @brief Provide names for internal bits.
-        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        /// @details See definition of @b COMMS_BITMASK_BITS_SEQ macro
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
-        COMMS_BITMASK_BITS(bit);
+        COMMS_BITMASK_BITS_SEQ(bit);
     };
 
     /// @brief Definition of "pins" field.

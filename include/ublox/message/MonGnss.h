@@ -47,10 +47,10 @@ struct MonGnssFields
         >
     {
         /// @brief Provide names for internal bits.
-        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        /// @details See definition of @b COMMS_BITMASK_BITS_SEQ macro
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
-        COMMS_BITMASK_BITS(GPSSup, GlonassSup, BeidouSup, GalileoSup);
+        COMMS_BITMASK_BITS_SEQ(GPSSup, GlonassSup, BeidouSup, GalileoSup);
     };
 
     /// @brief Definition of "default" field.
@@ -60,10 +60,10 @@ struct MonGnssFields
         >
     {
         /// @brief Provide names for internal bits.
-        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        /// @details See definition of @b COMMS_BITMASK_BITS_SEQ macro
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
-        COMMS_BITMASK_BITS(GPSDef, GlonassDef, BeidouDef, GalileoDef);
+        COMMS_BITMASK_BITS_SEQ(GPSDef, GlonassDef, BeidouDef, GalileoDef);
     };
 
     /// @brief Definition of "enabled" field.
@@ -73,10 +73,10 @@ struct MonGnssFields
         >
     {
         /// @brief Provide names for internal bits.
-        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        /// @details See definition of @b COMMS_BITMASK_BITS_SEQ macro
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
-        COMMS_BITMASK_BITS(GPSEna, GlonassEna, BeidouEna, GalileoEna);
+        COMMS_BITMASK_BITS_SEQ(GPSEna, GlonassEna, BeidouEna, GalileoEna);
     };
 
 

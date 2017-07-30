@@ -46,10 +46,10 @@ struct CfgTxslotFields
         >
     {
         /// @brief Provide names for internal bits.
-        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        /// @details See definition of @b COMMS_BITMASK_BITS_SEQ macro
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
-        COMMS_BITMASK_BITS(DDC, UART1, UART2, USB, SPI);
+        COMMS_BITMASK_BITS_SEQ(DDC, UART1, UART2, USB, SPI);
     };
 
     /// @brief Value enumeration for @ref refTp field.

@@ -62,10 +62,10 @@ struct CfgSmgrFields
         field::common::X2T<comms::option::BitmaskReservedBits<0xfff0, 0> >
     {
         /// @brief Provide names for internal bits.
-        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        /// @details See definition of @b COMMS_BITMASK_BITS_SEQ macro
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
-        COMMS_BITMASK_BITS(measInternal, measGNSS, measEXTINT0, measEXTINT1);
+        COMMS_BITMASK_BITS_SEQ(measInternal, measGNSS, measEXTINT0, measEXTINT1);
     };
 
     /// @brief Definition of "maxSlewRate" field.
@@ -113,6 +113,24 @@ struct CfgSmgrFields
             issueFreqWarning,
             issueTimeWarning
         );
+
+        /// @brief Provide convenience access functions for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS_ACCESS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS_ACCESS(
+            disableInternal,
+            disableExternal,
+            preferenceMode,
+            enableGNSS,
+            enableEXTINT0,
+            enableEXTINT1,
+            enableHostMeasInt,
+            enableHostMeasExt,
+            useAnyFix,
+            disableMaxSlewRate,
+            issueFreqWarning,
+            issueTimeWarning);
     };
 
     /// @brief Definition of "flagshHigh" member field of @ref flags bitfield.
@@ -123,10 +141,10 @@ struct CfgSmgrFields
         >
     {
         /// @brief Provide names for internal bits.
-        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        /// @details See definition of @b COMMS_BITMASK_BITS_SEQ macro
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
-        COMMS_BITMASK_BITS(disableOffset);
+        COMMS_BITMASK_BITS_SEQ(disableOffset);
     };
 
     /// @brief Definition of "flags" field.

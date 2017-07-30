@@ -81,6 +81,12 @@ struct AidIniFields
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
         COMMS_BITMASK_BITS(fEdge=1, tm1=4, f1=6);
+
+        /// @brief Provide convenience access functions for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS_ACCESS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS_ACCESS(fEdge, tm1, f1);
     };
 
     /// @brief Definition of "wno" field.
@@ -216,6 +222,13 @@ struct AidIniFields
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
         COMMS_BITMASK_BITS(pos, time, clockD, tp, clockF, lla, altInv, prevTm, utc=10);
+
+        /// @brief Provide convenience access functions for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS_ACCESS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS_ACCESS(pos, time, clockD, tp, clockF, lla, altInv, prevTm, utc);
+
     };
 
     /// @brief All the fields bundled in std::tuple.

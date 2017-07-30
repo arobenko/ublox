@@ -102,6 +102,22 @@ struct CfgNav5Fields
             dgpsMask,
             cnoThreshold,
             utc=10);
+
+        /// @brief Provide convenience access functions for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS_ACCESS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS_ACCESS(
+            dyn,
+            minEl,
+            posFixMode,
+            drLim,
+            posMask,
+            timeMask,
+            staticHoldMask,
+            dgpsMask,
+            cnoThreshold,
+            utc);
     };
 
     /// @brief Definition of "dynModel" field.

@@ -71,10 +71,10 @@ struct CfgGnssFields
         >
     {
         /// @brief Provide names for internal bits.
-        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        /// @details See definition of @b COMMS_BITMASK_BITS_SEQ macro
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
-        COMMS_BITMASK_BITS(enable);
+        COMMS_BITMASK_BITS_SEQ(enable);
     };
 
     /// @brief Definition of "sigCfgMask" member field of the @ref flags bitfield.
@@ -122,7 +122,12 @@ struct CfgGnssFields
     /// @brief Definition of the list of configuration blocks
     /// @tparam TOpt Extra option(s)
     template <typename TOpt = comms::option::EmptyOption>
-    using blocksList = field::common::ListT<block, TOpt>;
+    using blocksList = 
+        field::common::ListT<
+            block, 
+            comms::option::SequenceSizeForcingEnabled,
+            TOpt
+        >;
 
     /// @brief All the fields bundled in std::tuple.
     /// @tparam TOpt Extra option(s) for @ref blocksList field

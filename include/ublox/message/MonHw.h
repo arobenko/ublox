@@ -110,10 +110,10 @@ struct MonHwFields
         >
     {
         /// @brief Provide names for internal bits.
-        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        /// @details See definition of @b COMMS_BITMASK_BITS_SEQ macro
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
-        COMMS_BITMASK_BITS(bit);
+        COMMS_BITMASK_BITS_SEQ(bit);
     };
 
     /// @brief Definition of "safeBoot" member field of @ref flags bitfield.
@@ -139,10 +139,10 @@ struct MonHwFields
         >
     {
         /// @brief Provide names for internal bits.
-        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        /// @details See definition of @b COMMS_BITMASK_BITS_SEQ macro
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
-        COMMS_BITMASK_BITS(bit);
+        COMMS_BITMASK_BITS_SEQ(bit);
     };
 
 

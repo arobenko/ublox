@@ -122,10 +122,10 @@ struct CfgPmFields
         >
     {
         /// @brief Provide names for internal bits.
-        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        /// @details See definition of @b COMMS_BITMASK_BITS_SEQ macro
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
-        COMMS_BITMASK_BITS(waitTimeFix, updateRTC, updateEPH);
+        COMMS_BITMASK_BITS_SEQ(waitTimeFix, updateRTC, updateEPH);
     };
 
     /// @brief Definition of "flags" field.

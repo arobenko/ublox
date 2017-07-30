@@ -62,10 +62,10 @@ struct CfgPrtFields
     struct en : public field::common::X1T<comms::option::FixedBitLength<1> >
     {
         /// @brief Provide names for internal bits.
-        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        /// @details See definition of @b COMMS_BITMASK_BITS_SEQ macro
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
-        COMMS_BITMASK_BITS(bit);
+        COMMS_BITMASK_BITS_SEQ(bit);
     };
 
     /// @brief Definition of "pol" member field in @ref txReady bitfield
@@ -121,7 +121,7 @@ struct CfgPrtFields
         /// @details See definition of @b COMMS_BITMASK_BITS macro
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
-        COMMS_BITMASK_BITS(inUbx, inNmea, inRtcm);
+        COMMS_BITMASK_BITS_SEQ(inUbx, inNmea, inRtcm);
     };
 
     /// @brief Definition of "outProtoMask" field.
@@ -129,10 +129,10 @@ struct CfgPrtFields
         field::common::X2T<comms::option::BitmaskReservedBits<0xfffc, 0> >
     {
         /// @brief Provide names for internal bits.
-        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        /// @details See definition of @b COMMS_BITMASK_BITS_SEQ macro
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
-        COMMS_BITMASK_BITS(outUbx, outNmea);
+        COMMS_BITMASK_BITS_SEQ(outUbx, outNmea);
     };
 
     /// @brief Definition of "flags" field.
@@ -144,6 +144,12 @@ struct CfgPrtFields
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
         COMMS_BITMASK_BITS(extendedTxTimeout=1);
+
+        /// @brief Provide convenience access functions for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS_ACCESS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS_ACCESS(extendedTxTimeout);
     };
 
     /// @brief Definition of "reserved5" field

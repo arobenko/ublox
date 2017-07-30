@@ -59,10 +59,10 @@ struct CfgNmeaFields
         >
     {
         /// @brief Provide names for internal bits.
-        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        /// @details See definition of @b COMMS_BITMASK_BITS_SEQ macro
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
-        COMMS_BITMASK_BITS(posFilt, mskPosFilt, timeFilt, dateFilt, gpsOnlyFilter, trackFilt);
+        COMMS_BITMASK_BITS_SEQ(posFilt, mskPosFilt, timeFilt, dateFilt, gpsOnlyFilter, trackFilt);
     };
 
     /// @brief Definition of "nmeaVersion" field.
@@ -83,10 +83,10 @@ struct CfgNmeaFields
         >
     {
         /// @brief Provide names for internal bits.
-        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        /// @details See definition of @b COMMS_BITMASK_BITS_SEQ macro
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
-        COMMS_BITMASK_BITS(compat, consider);
+        COMMS_BITMASK_BITS_SEQ(compat, consider);
     };
 
     /// @brief All the fields bundled in std::tuple.

@@ -126,10 +126,10 @@ struct CfgPm2Fields
         field::common::X1T<comms::option::FixedBitLength<1> >
     {
         /// @brief Provide names for internal bits.
-        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        /// @details See definition of @b COMMS_BITMASK_BITS_SEQ macro
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
-        COMMS_BITMASK_BITS(bit);
+        COMMS_BITMASK_BITS_SEQ(bit);
     };
 
     /// @brief Definition of "updateRTC" bit as a bitmask member of @ref flags bitfield field.
@@ -137,10 +137,10 @@ struct CfgPm2Fields
         field::common::X1T<comms::option::FixedBitLength<1> >
     {
         /// @brief Provide names for internal bits.
-        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        /// @details See definition of @b COMMS_BITMASK_BITS_SEQ macro
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
-        COMMS_BITMASK_BITS(bit);
+        COMMS_BITMASK_BITS_SEQ(bit);
     };
 
     /// @brief Definition of "updateEPH" bit as a bitmask member of @ref flags bitfield field.
@@ -148,10 +148,10 @@ struct CfgPm2Fields
         field::common::X1T<comms::option::FixedBitLength<1> >
     {
         /// @brief Provide names for internal bits.
-        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        /// @details See definition of @b COMMS_BITMASK_BITS_SEQ macro
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
-        COMMS_BITMASK_BITS(bit);
+        COMMS_BITMASK_BITS_SEQ(bit);
     };
 
     /// @brief Definition of "doNotEnterOff" bit as a bitmask member of @ref flags bitfield field.
@@ -159,10 +159,10 @@ struct CfgPm2Fields
         field::common::X1T<comms::option::FixedBitLength<1> >
     {
         /// @brief Provide names for internal bits.
-        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        /// @details See definition of @b COMMS_BITMASK_BITS_SEQ macro
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
-        COMMS_BITMASK_BITS(bit);
+        COMMS_BITMASK_BITS_SEQ(bit);
     };
 
     /// @brief Definition of "mode" member of @ref flags bitfield field.

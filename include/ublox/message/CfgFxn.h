@@ -44,6 +44,12 @@ struct CfgFxnFields
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
         COMMS_BITMASK_BITS(sleep=1, absAlign=3, onOff);
+
+        /// @brief Provide convenience access functions for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS_ACCESS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS_ACCESS(sleep, absAlign, onOff);
     };
 
     /// @brief Definition of "tReacq" field.

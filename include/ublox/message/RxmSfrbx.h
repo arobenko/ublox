@@ -67,6 +67,7 @@ struct RxmSfrbxFields
     using dwrd =
         field::common::ListT<
             field::common::U4,
+            comms::option::SequenceSizeForcingEnabled,
             TOpt
         >;
 

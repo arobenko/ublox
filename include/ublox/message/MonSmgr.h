@@ -71,10 +71,10 @@ struct MonSmgrFields
         >
     {
         /// @brief Provide names for internal bits.
-        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        /// @details See definition of @b COMMS_BITMASK_BITS_SEQ macro
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
-        COMMS_BITMASK_BITS(intOscCalib, intOscDisc);
+        COMMS_BITMASK_BITS_SEQ(intOscCalib, intOscDisc);
     };
 
     /// @brief Definition of "intOsc" field.
@@ -107,10 +107,10 @@ struct MonSmgrFields
         >
     {
         /// @brief Provide names for internal bits.
-        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        /// @details See definition of @b COMMS_BITMASK_BITS_SEQ macro
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
-        COMMS_BITMASK_BITS(extOscCalib, extOscDisc);
+        COMMS_BITMASK_BITS_SEQ(extOscCalib, extOscDisc);
     };
 
     /// @brief Definition of "extOsc" field.
@@ -155,10 +155,10 @@ struct MonSmgrFields
         >
     {
         /// @brief Provide names for internal bits.
-        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        /// @details See definition of @b COMMS_BITMASK_BITS_SEQ macro
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
-        COMMS_BITMASK_BITS(gnssAvail);
+        COMMS_BITMASK_BITS_SEQ(gnssAvail);
     };
 
     /// @brief Definition of "extInt0" field.
@@ -168,10 +168,10 @@ struct MonSmgrFields
         >
     {
         /// @brief Provide names for internal bits.
-        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        /// @details See definition of @b COMMS_BITMASK_BITS_SEQ macro
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
-        COMMS_BITMASK_BITS(extInt0Avail, extInt0Type, extInt0FeedBack);
+        COMMS_BITMASK_BITS_SEQ(extInt0Avail, extInt0Type, extInt0FeedBack);
     };
 
     /// @brief Definition of "extInt1" field.
@@ -181,10 +181,10 @@ struct MonSmgrFields
         >
     {
         /// @brief Provide names for internal bits.
-        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        /// @details See definition of @b COMMS_BITMASK_BITS_SEQ macro
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
-        COMMS_BITMASK_BITS(extInt1Avail, extInt1Type, extInt1FeedBack);
+        COMMS_BITMASK_BITS_SEQ(extInt1Avail, extInt1Type, extInt1FeedBack);
     };
 
     /// @brief All the fields bundled in std::tuple.

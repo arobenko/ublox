@@ -57,10 +57,10 @@ struct TimTm2Fields
         >
     {
         /// @brief Provide names for internal bits.
-        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        /// @details See definition of @b COMMS_BITMASK_BITS_SEQ macro
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
-        COMMS_BITMASK_BITS(mode, run, newFallingEdge);
+        COMMS_BITMASK_BITS_SEQ(mode, run, newFallingEdge);
     };
 
     /// @brief Definition of "timeBase" member field of @ref flags bitfield.
@@ -80,10 +80,10 @@ struct TimTm2Fields
         >
     {
         /// @brief Provide names for internal bits.
-        /// @details See definition of @b COMMS_BITMASK_BITS macro
+        /// @details See definition of @b COMMS_BITMASK_BITS_SEQ macro
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
-        COMMS_BITMASK_BITS(utc, time, newRisingEdge);
+        COMMS_BITMASK_BITS_SEQ(utc, time, newRisingEdge);
     };
 
     /// @brief Definition of "flags" field.
