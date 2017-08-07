@@ -19,7 +19,7 @@
 #pragma once
 
 #include "comms_champion/comms_champion.h"
-#include "ublox/message/CfgDoscPoll.h"
+#include "ublox/message/CfgDgnss.h"
 #include "cc_plugin/Message.h"
 #include "cc_plugin/ProtocolMessageBase.h"
 
@@ -32,22 +32,23 @@ namespace cc_plugin
 namespace message
 {
 
-class CfgDoscPoll : public
+class CfgDgnss : public
     ProtocolMessageBase<
-        ublox::message::CfgDoscPoll<ublox::cc_plugin::Message>,
-        CfgDoscPoll>
+        ublox::message::CfgDgnss<ublox::cc_plugin::Message>,
+        CfgDgnss>
 {
 public:
-    CfgDoscPoll();
-    CfgDoscPoll(const CfgDoscPoll&) = delete;
-    CfgDoscPoll(CfgDoscPoll&&) = delete;
-    virtual ~CfgDoscPoll();
+    CfgDgnss();
+    CfgDgnss(const CfgDgnss&) = delete;
+    CfgDgnss(CfgDgnss&&) = delete;
+    virtual ~CfgDgnss();
 
-    CfgDoscPoll& operator=(const CfgDoscPoll&);
-    CfgDoscPoll& operator=(CfgDoscPoll&&);
+    CfgDgnss& operator=(const CfgDgnss&);
+    CfgDgnss& operator=(CfgDgnss&&);
 
 protected:
     virtual const char* nameImpl() const override;
+    virtual const QVariantList& fieldsPropertiesImpl() const override;
 };
 
 }  // namespace message
@@ -56,8 +57,8 @@ protected:
 
 }  // namespace ublox
 
-extern template class ublox::message::CfgDoscPoll<ublox::cc_plugin::Message>;
+extern template class ublox::message::CfgDgnss<ublox::cc_plugin::Message>;
 extern template class ublox::cc_plugin::ProtocolMessageBase<
-    ublox::message::CfgDoscPoll<ublox::cc_plugin::Message>,
-    ublox::cc_plugin::message::CfgDoscPoll>;
+    ublox::message::CfgDgnss<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::CfgDgnss>;
 

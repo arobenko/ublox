@@ -179,6 +179,8 @@
 #include "cc_plugin/message/CfgSmgrPoll.h"
 #include "cc_plugin/message/CfgGeofence.h"
 #include "cc_plugin/message/CfgGeofencePoll.h"
+#include "cc_plugin/message/CfgDgnss.h"
+#include "cc_plugin/message/CfgDgnssPoll.h"
 #include "cc_plugin/message/CfgFixseed.h"
 #include "cc_plugin/message/CfgDynseed.h"
 #include "cc_plugin/message/CfgPms.h"
@@ -467,6 +469,8 @@ using AllMessages = std::tuple<
     cc_plugin::message::CfgSmgrPoll,
     cc_plugin::message::CfgGeofence,
     cc_plugin::message::CfgGeofencePoll,
+    cc_plugin::message::CfgDgnss,
+    cc_plugin::message::CfgDgnssPoll,
     cc_plugin::message::CfgFixseed,
     cc_plugin::message::CfgDynseed,
     cc_plugin::message::CfgPms,

@@ -19,7 +19,7 @@
 #pragma once
 
 #include "comms_champion/comms_champion.h"
-#include "ublox/message/CfgDoscPoll.h"
+#include "ublox/message/CfgDgnssPoll.h"
 #include "cc_plugin/Message.h"
 #include "cc_plugin/ProtocolMessageBase.h"
 
@@ -32,19 +32,19 @@ namespace cc_plugin
 namespace message
 {
 
-class CfgDoscPoll : public
+class CfgDgnssPoll : public
     ProtocolMessageBase<
-        ublox::message::CfgDoscPoll<ublox::cc_plugin::Message>,
-        CfgDoscPoll>
+        ublox::message::CfgDgnssPoll<ublox::cc_plugin::Message>,
+        CfgDgnssPoll>
 {
 public:
-    CfgDoscPoll();
-    CfgDoscPoll(const CfgDoscPoll&) = delete;
-    CfgDoscPoll(CfgDoscPoll&&) = delete;
-    virtual ~CfgDoscPoll();
+    CfgDgnssPoll();
+    CfgDgnssPoll(const CfgDgnssPoll&) = delete;
+    CfgDgnssPoll(CfgDgnssPoll&&) = delete;
+    virtual ~CfgDgnssPoll();
 
-    CfgDoscPoll& operator=(const CfgDoscPoll&);
-    CfgDoscPoll& operator=(CfgDoscPoll&&);
+    CfgDgnssPoll& operator=(const CfgDgnssPoll&);
+    CfgDgnssPoll& operator=(CfgDgnssPoll&&);
 
 protected:
     virtual const char* nameImpl() const override;
@@ -56,8 +56,8 @@ protected:
 
 }  // namespace ublox
 
-extern template class ublox::message::CfgDoscPoll<ublox::cc_plugin::Message>;
+extern template class ublox::message::CfgDgnssPoll<ublox::cc_plugin::Message>;
 extern template class ublox::cc_plugin::ProtocolMessageBase<
-    ublox::message::CfgDoscPoll<ublox::cc_plugin::Message>,
-    ublox::cc_plugin::message::CfgDoscPoll>;
+    ublox::message::CfgDgnssPoll<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::CfgDgnssPoll>;
 

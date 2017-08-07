@@ -111,6 +111,7 @@ enum MsgId : std::uint16_t
     MsgId_CFG_DOSC = 0x0661, ///< ID of CFG-DOSC message
     MsgId_CFG_SMGR = 0x0662, ///< ID of CFG-SMGR message
     MsgId_CFG_GEOFENCE = 0x0669, ///< ID of CFG-GEOFENCE message
+    MsgId_CFG_DGNSS = 0x0670, ///< ID of CFG-DGNSS message
     MsgId_CFG_FIXSEED = 0x0684, ///< ID of CFG-FIXSEED message
     MsgId_CFG_DYNSEED = 0x0685, ///< ID of CFG-DYNSEED message
     MsgId_CFG_PMS = 0x0686, ///< ID of CFG-PMS message

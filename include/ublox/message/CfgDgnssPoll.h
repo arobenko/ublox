@@ -16,7 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 /// @file
-/// @brief Contains definition of CFG-DOSC (@b poll) message and its fields.
+/// @brief Contains definition of CFG-DGNSS (@b poll) message and its fields.
 
 #pragma once
 
@@ -28,46 +28,46 @@ namespace ublox
 namespace message
 {
 
-/// @brief Accumulates details of all the CFG-DOSC (@b poll) message fields.
-/// @see CfgDoscPoll
-struct CfgDoscPollFields
+/// @brief Accumulates details of all the CFG-DGNSS (@b poll) message fields.
+/// @see CfgDgnssPoll
+struct CfgDgnssPollFields
 {
     using All = std::tuple<>;
 };
 
-/// @brief Definition of CFG-DOSC (@b poll) message
+/// @brief Definition of CFG-DGNSS (@b poll) message
 /// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
 ///     various implementation options. @n
-///     See @ref CfgDoscPollFields and for definition of the fields this message contains.
+///     See @ref CfgDgnssPollFields and for definition of the fields this message contains.
 /// @tparam TMsgBase Common interface class for all the messages.
 template <typename TMsgBase = Message>
-class CfgDoscPoll : public
+class CfgDgnssPoll : public
     comms::MessageBase<
         TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_CFG_DOSC>,
-        comms::option::FieldsImpl<CfgDoscPollFields::All>,
-        comms::option::MsgType<CfgDoscPoll<TMsgBase> >
+        comms::option::StaticNumIdImpl<MsgId_CFG_DGNSS>,
+        comms::option::FieldsImpl<CfgDgnssPollFields::All>,
+        comms::option::MsgType<CfgDgnssPoll<TMsgBase> >
     >
 {
 public:
     /// @brief Default constructor
-    CfgDoscPoll() = default;
+    CfgDgnssPoll() = default;
 
     /// @brief Copy constructor
-    CfgDoscPoll(const CfgDoscPoll&) = default;
+    CfgDgnssPoll(const CfgDgnssPoll&) = default;
 
     /// @brief Move constructor
-    CfgDoscPoll(CfgDoscPoll&& other) = default;
+    CfgDgnssPoll(CfgDgnssPoll&& other) = default;
 
     /// @brief Destructor
-    ~CfgDoscPoll() = default;
+    ~CfgDgnssPoll() = default;
 
     /// @brief Copy assignment
-    CfgDoscPoll& operator=(const CfgDoscPoll&) = default;
+    CfgDgnssPoll& operator=(const CfgDgnssPoll&) = default;
 
     /// @brief Move assignment
-    CfgDoscPoll& operator=(CfgDoscPoll&&) = default;
+    CfgDgnssPoll& operator=(CfgDgnssPoll&&) = default;
 };
 
 
