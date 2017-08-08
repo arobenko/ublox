@@ -107,6 +107,7 @@ enum MsgId : std::uint16_t
     MsgId_CFG_LOGFILTER = 0x0647, ///< ID of CFG-LOGFILTER message
     MsgId_CFG_TXSLOT = 0x0653, ///< ID of CFG-TXSLOT message
     MsgId_CFG_PWR = 0x0657, ///< ID of CFG-PWR message
+    MsgId_CFG_HNR = 0x065C, ///< ID of CFG-HNR message
     MsgId_CFG_ESRC = 0x0660, ///< ID of CFG-ESRC message
     MsgId_CFG_DOSC = 0x0661, ///< ID of CFG-DOSC message
     MsgId_CFG_SMGR = 0x0662, ///< ID of CFG-SMGR message

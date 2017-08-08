@@ -191,6 +191,7 @@ private:
             MsgId_CFG_LOGFILTER,
             MsgId_CFG_TXSLOT,
             MsgId_CFG_PWR,
+            MsgId_CFG_HNR,
             MsgId_CFG_ESRC,
             MsgId_CFG_DOSC,
             MsgId_CFG_SMGR,

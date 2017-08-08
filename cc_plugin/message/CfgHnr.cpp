@@ -15,14 +15,17 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+#include "CfgHnr.h"
+
 #include <cassert>
 
-#include "CfgDgnssPoll.h"
+#include "cc_plugin/field/common.h"
 
-template class ublox::message::CfgDgnssPoll<ublox::cc_plugin::Message>;
+template class ublox::message::CfgHnr<ublox::cc_plugin::Message>;
 template class ublox::cc_plugin::ProtocolMessageBase<
-    ublox::message::CfgDgnssPoll<ublox::cc_plugin::Message>,
-    ublox::cc_plugin::message::CfgDgnssPoll>;
+    ublox::message::CfgHnr<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::CfgHnr>;
+
 
 namespace cc = comms_champion;
 
@@ -35,19 +38,40 @@ namespace cc_plugin
 namespace message
 {
 
-CfgDgnssPoll::CfgDgnssPoll() = default;
-CfgDgnssPoll::~CfgDgnssPoll() = default;
-
-CfgDgnssPoll& CfgDgnssPoll::operator=(const CfgDgnssPoll&) = default;
-CfgDgnssPoll& CfgDgnssPoll::operator=(CfgDgnssPoll&&) = default;
-
-
-const char* CfgDgnssPoll::nameImpl() const
+namespace
 {
-    static const char* Str = "CFG-DGNSS (Poll)";
+
+using ublox::message::CfgHnrFields;
+
+QVariantList createFieldsProperties()
+{
+    QVariantList props;
+    props.append(cc::property::field::ForField<CfgHnrFields::highNavRate>().name("highNavRate").asMap());
+    props.append(cc_plugin::field::common::props_reserved(1));
+
+    assert(props.size() == CfgHnr::FieldIdx_numOfValues);
+    return props;
+}
+
+}  // namespace
+
+CfgHnr::CfgHnr() = default;
+CfgHnr::~CfgHnr() = default;
+
+CfgHnr& CfgHnr::operator=(const CfgHnr&) = default;
+CfgHnr& CfgHnr::operator=(CfgHnr&&) = default;
+
+const char* CfgHnr::nameImpl() const
+{
+    static const char* Str = "CFG-HNR";
     return Str;
 }
 
+const QVariantList& CfgHnr::fieldsPropertiesImpl() const
+{
+    static const auto Props = createFieldsProperties();
+    return Props;
+}
 
 }  // namespace message
 

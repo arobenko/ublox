@@ -17,12 +17,12 @@
 
 #include <cassert>
 
-#include "CfgDgnssPoll.h"
+#include "CfgHnrPoll.h"
 
-template class ublox::message::CfgDgnssPoll<ublox::cc_plugin::Message>;
+template class ublox::message::CfgHnrPoll<ublox::cc_plugin::Message>;
 template class ublox::cc_plugin::ProtocolMessageBase<
-    ublox::message::CfgDgnssPoll<ublox::cc_plugin::Message>,
-    ublox::cc_plugin::message::CfgDgnssPoll>;
+    ublox::message::CfgHnrPoll<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::CfgHnrPoll>;
 
 namespace cc = comms_champion;
 
@@ -35,16 +35,16 @@ namespace cc_plugin
 namespace message
 {
 
-CfgDgnssPoll::CfgDgnssPoll() = default;
-CfgDgnssPoll::~CfgDgnssPoll() = default;
+CfgHnrPoll::CfgHnrPoll() = default;
+CfgHnrPoll::~CfgHnrPoll() = default;
 
-CfgDgnssPoll& CfgDgnssPoll::operator=(const CfgDgnssPoll&) = default;
-CfgDgnssPoll& CfgDgnssPoll::operator=(CfgDgnssPoll&&) = default;
+CfgHnrPoll& CfgHnrPoll::operator=(const CfgHnrPoll&) = default;
+CfgHnrPoll& CfgHnrPoll::operator=(CfgHnrPoll&&) = default;
 
 
-const char* CfgDgnssPoll::nameImpl() const
+const char* CfgHnrPoll::nameImpl() const
 {
-    static const char* Str = "CFG-DGNSS (Poll)";
+    static const char* Str = "CFG-HNR (Poll)";
     return Str;
 }
 

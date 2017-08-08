@@ -103,10 +103,12 @@
 #include "message/CfgTmode2.h"
 #include "message/CfgGnss.h"
 #include "message/CfgLogfilter.h"
+#include "message/CfgHnr.h"
 #include "message/CfgEsrc.h"
 #include "message/CfgDosc.h"
 #include "message/CfgSmgr.h"
 #include "message/CfgGeofence.h"
+#include "message/CfgDgnss.h"
 #include "message/CfgPms.h"
 
 #include "message/UpdSosRestored.h"
@@ -243,10 +245,12 @@ using InputMessages =
         message::CfgTmode2<TMessage>,
         message::CfgGnss<TMessage>,
         message::CfgLogfilter<TMessage>,
+        message::CfgHnr<TMessage>,
         message::CfgEsrc<TMessage>,
         message::CfgDosc<TMessage>,
         message::CfgSmgr<TMessage>,
         message::CfgGeofence<TMessage>,
+        message::CfgDgnss<TMessage>,
         message::CfgPms<TMessage>,
         message::UpdSosRestored<TMessage>,
         message::UpdSosAck<TMessage>,

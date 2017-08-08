@@ -15,16 +15,13 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <cassert>
 
-#include "CfgDgnssPoll.h"
+#pragma once
 
-template class ublox::message::CfgDgnssPoll<ublox::cc_plugin::Message>;
-template class ublox::cc_plugin::ProtocolMessageBase<
-    ublox::message::CfgDgnssPoll<ublox::cc_plugin::Message>,
-    ublox::cc_plugin::message::CfgDgnssPoll>;
-
-namespace cc = comms_champion;
+#include "comms_champion/comms_champion.h"
+#include "ublox/message/CfgHnr.h"
+#include "cc_plugin/Message.h"
+#include "cc_plugin/ProtocolMessageBase.h"
 
 namespace ublox
 {
@@ -35,23 +32,33 @@ namespace cc_plugin
 namespace message
 {
 
-CfgDgnssPoll::CfgDgnssPoll() = default;
-CfgDgnssPoll::~CfgDgnssPoll() = default;
-
-CfgDgnssPoll& CfgDgnssPoll::operator=(const CfgDgnssPoll&) = default;
-CfgDgnssPoll& CfgDgnssPoll::operator=(CfgDgnssPoll&&) = default;
-
-
-const char* CfgDgnssPoll::nameImpl() const
+class CfgHnr : public
+    ProtocolMessageBase<
+        ublox::message::CfgHnr<ublox::cc_plugin::Message>,
+        CfgHnr>
 {
-    static const char* Str = "CFG-DGNSS (Poll)";
-    return Str;
-}
+public:
+    CfgHnr();
+    CfgHnr(const CfgHnr&) = delete;
+    CfgHnr(CfgHnr&&) = delete;
+    virtual ~CfgHnr();
 
+    CfgHnr& operator=(const CfgHnr&);
+    CfgHnr& operator=(CfgHnr&&);
+
+protected:
+    virtual const char* nameImpl() const override;
+    virtual const QVariantList& fieldsPropertiesImpl() const override;
+};
 
 }  // namespace message
 
 }  // namespace cc_plugin
 
 }  // namespace ublox
+
+extern template class ublox::message::CfgHnr<ublox::cc_plugin::Message>;
+extern template class ublox::cc_plugin::ProtocolMessageBase<
+    ublox::message::CfgHnr<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::CfgHnr>;
 

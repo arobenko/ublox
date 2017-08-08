@@ -153,6 +153,8 @@ function (cc_plugin_ublox_all_messages)
         message/CfgLogfilterPoll.cpp
         message/CfgTxslot.cpp
         message/CfgPwr.cpp
+        message/CfgHnr.cpp
+        message/CfgHnrPoll.cpp
         message/CfgEsrc.cpp
         message/CfgEsrcPoll.cpp
         message/CfgDosc.cpp

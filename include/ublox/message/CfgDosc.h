@@ -126,7 +126,7 @@ struct CfgDoscFields
     /// @brief Definition of "freq" field.
     using freq =
         field::common::U4T<
-            comms::option::ScalingRatio<1, 2>,
+            comms::option::ScalingRatio<1, 4>,
             comms::option::UnitsHertz
         >;
 

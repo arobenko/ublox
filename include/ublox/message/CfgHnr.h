@@ -16,9 +16,11 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 /// @file
-/// @brief Contains definition of CFG-DGNSS message and its fields.
+/// @brief Contains definition of CFG-HNR message and its fields.
 
 #pragma once
+
+#include <algorithm>
 
 #include "ublox/Message.h"
 #include "ublox/field/common.h"
@@ -29,52 +31,46 @@ namespace ublox
 namespace message
 {
 
-/// @brief Accumulates details of all the CFG-DGNSS message fields.
-/// @see CfgDgnss
-struct CfgDgnssFields
+/// @brief Accumulates details of all the CFG-HNR message fields.
+/// @see CfgHnr
+struct CfgHnrFields
 {
-    /// @brief Value enumeration for @ref dgnssMode field.
-    enum class DgnssMode : std::uint8_t
-    {
-        RtkFloat, ///< No attempts are made to fix ambiguities.
-        RtkFixed, ///< Ambiguities are fixed whenever possible.
-        NumOfValues /// number of available values
-    };
-
-    /// @brief Definition of "dgnssMode" field.
-    using dgnssMode =
-        field::common::EnumT<
-            DgnssMode,
-            comms::option::ValidNumValueRange<0, (int)DgnssMode::NumOfValues - 1>
+    /// @brief Definition of "highNavRate" field.
+    using highNavRate =
+        field::common::U1T<
+            comms::option::UnitsHertz
         >;
 
     /// @brief Definition of "reserved1" field.
     using reserved1 = field::common::res3;
 
+
     /// @brief All the fields bundled in std::tuple.
     using All = std::tuple<
-        dgnssMode,
+        highNavRate,
         reserved1
     >;
+
 };
 
-/// @brief Definition of CFG-DGNSS message
+/// @brief Definition of CFG-HNR message
 /// @details Inherits from @b comms::MessageBase
 ///     while providing @b TMsgBase as common interface class as well as
 ///     various implementation options. @n
-///     See @ref CfgDgnssFields and for definition of the fields this message contains
+///     See @ref CfgHnrFields and for definition of the fields this message contains
 ///         and COMMS_MSG_FIELDS_ACCESS() for fields access details.
 /// @tparam TMsgBase Common interface class for all the messages.
-/// @tparam TDataOpt Extra option(s) for @b data field
+/// @tparam TBlocksListOpt Extra option(s) for @b blocksList field
 template <typename TMsgBase = Message>
-class CfgDgnss : public
+class CfgHnr : public
     comms::MessageBase<
         TMsgBase,
-        comms::option::StaticNumIdImpl<MsgId_CFG_DGNSS>,
-        comms::option::FieldsImpl<CfgDgnssFields::All>,
-        comms::option::MsgType<CfgDgnss<TMsgBase> >
+        comms::option::StaticNumIdImpl<MsgId_CFG_HNR>,
+        comms::option::FieldsImpl<CfgHnrFields::All>,
+        comms::option::MsgType<CfgHnr<TMsgBase> >
     >
 {
+
 public:
 
     /// @brief Allow access to internal fields.
@@ -83,35 +79,31 @@ public:
     ///     for details.
     ///
     ///     The field names are:
-    ///     @li @b dgnssMode for @ref CfgDgnssFields::dgnssMode field
-    ///     @li @b reserved1 for @ref CfgDgnssFields::reserved1 field
-    COMMS_MSG_FIELDS_ACCESS(dgnssMode, reserved1);
+    ///     @li @b highNavRate for @ref CfgHnrFields::highNavRate field
+    ///     @li @b reserved1 for @ref CfgHnrFields::reserved1 field
+    COMMS_MSG_FIELDS_ACCESS(highNavRate, reserved1);
 
     /// @brief Default constructor
-    CfgDgnss() = default;
+    CfgHnr() = default;
 
     /// @brief Copy constructor
-    CfgDgnss(const CfgDgnss&) = default;
+    CfgHnr(const CfgHnr&) = default;
 
     /// @brief Move constructor
-    CfgDgnss(CfgDgnss&& other) = default;
+    CfgHnr(CfgHnr&& other) = default;
 
     /// @brief Destructor
-    ~CfgDgnss() = default;
+    ~CfgHnr() = default;
 
     /// @brief Copy assignment
-    CfgDgnss& operator=(const CfgDgnss&) = default;
+    CfgHnr& operator=(const CfgHnr&) = default;
 
     /// @brief Move assignment
-    CfgDgnss& operator=(CfgDgnss&&) = default;
+    CfgHnr& operator=(CfgHnr&&) = default;
 };
 
 
 }  // namespace message
 
 }  // namespace ublox
-
-
-
-
 

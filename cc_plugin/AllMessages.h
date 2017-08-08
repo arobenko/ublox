@@ -171,6 +171,8 @@
 #include "cc_plugin/message/CfgLogfilterPoll.h"
 #include "cc_plugin/message/CfgTxslot.h"
 #include "cc_plugin/message/CfgPwr.h"
+#include "cc_plugin/message/CfgHnr.h"
+#include "cc_plugin/message/CfgHnrPoll.h"
 #include "cc_plugin/message/CfgEsrc.h"
 #include "cc_plugin/message/CfgEsrcPoll.h"
 #include "cc_plugin/message/CfgDosc.h"
@@ -461,6 +463,8 @@ using AllMessages = std::tuple<
     cc_plugin::message::CfgLogfilterPoll,
     cc_plugin::message::CfgTxslot,
     cc_plugin::message::CfgPwr,
+    cc_plugin::message::CfgHnr,
+    cc_plugin::message::CfgHnrPoll,
     cc_plugin::message::CfgEsrc,
     cc_plugin::message::CfgEsrcPoll,
     cc_plugin::message::CfgDosc,
