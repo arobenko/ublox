@@ -108,22 +108,28 @@ QVariantMap createProps_txReady()
 
 QVariantMap createProps_inProtoMask()
 {
-    cc::property::field::ForField<ublox::message::CfgPrtFields::inProtoMask> props;
-    props.name("inProtoMask")
-         .add("inUbx")
-         .add("inNmea")
-         .add("inRtcm");
-    assert(props.bits().size() == ublox::message::CfgPrtFields::inProtoMask::BitIdx_numOfValues);
+    using Field = ublox::message::CfgPrtFields::inProtoMask;
+    auto props =
+        cc::property::field::ForField<Field>()
+            .name("inProtoMask")
+            .add("inUbx")
+            .add("inNmea")
+            .add("inRtcm")
+            .add(Field::BitIdx_inRtcm3, "inRtcm3");
+    assert(props.bits().size() == Field::BitIdx_numOfValues);
     return props.asMap();
 }
 
 QVariantMap createProps_outProtoMask()
 {
-    cc::property::field::ForField<ublox::message::CfgPrtFields::outProtoMask> props;
-    props.name("outProtoMask")
-        .add("outUbx")
-        .add("outNmea");
-    assert(props.bits().size() == ublox::message::CfgPrtFields::outProtoMask::BitIdx_numOfValues);
+    using Field = ublox::message::CfgPrtFields::outProtoMask;
+    auto props =
+        cc::property::field::ForField<Field>()
+            .name("outProtoMask")
+            .add("outUbx")
+            .add("outNmea")
+            .add(Field::BitIdx_outRtcm3, "outRtcm3");
+    assert(props.bits().size() == Field::BitIdx_numOfValues);
     return props.asMap();
 }
 

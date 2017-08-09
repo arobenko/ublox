@@ -115,24 +115,38 @@ struct CfgPrtFields
 
     /// @brief Definition of "inProtoMask" field.
     struct inProtoMask : public
-            field::common::X2T<comms::option::BitmaskReservedBits<0xfff8, 0> >
+            field::common::X2T<comms::option::BitmaskReservedBits<0xffd8, 0> >
     {
         /// @brief Provide names for internal bits.
         /// @details See definition of @b COMMS_BITMASK_BITS macro
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
-        COMMS_BITMASK_BITS_SEQ(inUbx, inNmea, inRtcm);
+        COMMS_BITMASK_BITS(inUbx, inNmea, inRtcm, inRtcm3=5);
+
+        /// @brief Provide convenience access functions for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS_ACCESS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS_ACCESS(inUbx, inNmea, inRtcm, inRtcm3);
+
     };
 
     /// @brief Definition of "outProtoMask" field.
     struct outProtoMask : public
-        field::common::X2T<comms::option::BitmaskReservedBits<0xfffc, 0> >
+        field::common::X2T<comms::option::BitmaskReservedBits<0xffdc, 0> >
     {
         /// @brief Provide names for internal bits.
-        /// @details See definition of @b COMMS_BITMASK_BITS_SEQ macro
+        /// @details See definition of @b COMMS_BITMASK_BITS macro
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
-        COMMS_BITMASK_BITS_SEQ(outUbx, outNmea);
+        COMMS_BITMASK_BITS(outUbx, outNmea, outRtcm3=5);
+
+        /// @brief Provide convenience access functions for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS_ACCESS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS_ACCESS(outUbx, outNmea, outRtcm3);
+
     };
 
     /// @brief Definition of "flags" field.
