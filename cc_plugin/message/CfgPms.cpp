@@ -52,6 +52,7 @@ QVariantMap createProps_powerSetupValue()
             .add("Interval")
             .add("Aggressive 1Hz")
             .add("Aggressive 2Hz")
+            .add("Aggressive 4Hz")
             .add("Invalid", (int)CfgPmsFields::PowerSetupValue::Invalid)
             .asMap();
 }

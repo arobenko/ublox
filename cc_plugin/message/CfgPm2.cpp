@@ -88,7 +88,7 @@ QVariantMap createProps_flags()
          .add(extintSelectProps.asMap())
          .add(createEnableDisableProps("extintWake"))
          .add(createEnableDisableProps("extintBackup"))
-         .add(createReservedProps())
+         .add(createEnableDisableProps("extintInactive"))
          .add(createEnableDisableProps("limitPeakCurr"))
          .add(createSingleBitMask("waitTimeFix"))
          .add(createSingleBitMask("updateRTC"))
@@ -99,6 +99,16 @@ QVariantMap createProps_flags()
          .add(createReservedProps());
     assert(props.members().size() == CfgPm2Fields::flags::FieldIdx_numOfValues);
     return props.asMap();
+}
+
+QVariantMap createProps_extintInactivity()
+{
+    return
+        cc::property::field::Optional()
+            .name("extintInactivity")
+            .field(cc::property::field::IntValue().name("extintInactivity").asMap())
+            .uncheckable()
+            .asMap();
 }
 
 QVariantList createFieldsProperties()
@@ -128,6 +138,7 @@ QVariantList createFieldsProperties()
     props.append(cc_plugin::field::common::props_reserved(9));
     props.append(cc_plugin::field::common::props_reserved(10));
     props.append(cc_plugin::field::common::props_reserved(11));
+    props.append(createProps_extintInactivity());
     assert(props.size() == CfgPm2::FieldIdx_numOfValues);
     return props;
 }

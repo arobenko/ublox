@@ -62,7 +62,13 @@ struct CfgNmeaFields
         /// @details See definition of @b COMMS_BITMASK_BITS_SEQ macro
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
-        COMMS_BITMASK_BITS_SEQ(posFilt, mskPosFilt, timeFilt, dateFilt, gpsOnlyFilter, trackFilt);
+        COMMS_BITMASK_BITS_SEQ(
+            posFilt,
+            mskPosFilt,
+            timeFilt,
+            dateFilt,
+            gpsOnlyFilter,
+            trackFilt);
     };
 
     /// @brief Definition of "nmeaVersion" field.
