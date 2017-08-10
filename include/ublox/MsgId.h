@@ -148,7 +148,10 @@ enum MsgId : std::uint16_t
     MsgId_TIM_VCOCAL = 0x0d15, ///< ID of TIM-VCOCAL message
     MsgId_TIM_FCHG = 0x0d16, ///< ID of TIM-FCHG message
     MsgId_TIM_HOC = 0x0d17, ///< ID of TIM-HOC message
+    MsgId_ESF_MEAS = 0x1002, ///< ID of ESF-MEAS message
+    MsgId_ESF_RAW = 0x1003, ///< ID of ESF-RAW message
     MsgId_ESF_STATUS = 0x1010, ///< ID of ESF-STATUS message
+    MsgId_ESF_INS = 0x1015, ///< ID of ESF-INS message
     MsgId_MGA_GPS = 0x1300, ///< ID of MGA-GPS message
     MsgId_MGA_GAL = 0x1302, ///< ID of MGA-GAL message
     MsgId_MGA_BDS = 0x1303, ///< ID of MGA-BDS message

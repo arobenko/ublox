@@ -109,7 +109,7 @@
 #include "message/CfgSmgr.h"
 #include "message/CfgGeofence.h"
 #include "message/CfgDgnss.h"
-#include "message/CfgTMode3.h"
+#include "message/CfgTmode3.h"
 #include "message/CfgPms.h"
 
 #include "message/UpdSosRestored.h"

@@ -277,7 +277,10 @@ private:
     static bool validateEsf(ublox::MsgId id)
     {
         static const ublox::MsgId IDs[] = {
+            MsgId_ESF_MEAS,
+            MsgId_ESF_RAW,
             MsgId_ESF_STATUS,
+            MsgId_ESF_INS,
         };
 
         auto iter = std::lower_bound(std::begin(IDs), std::end(IDs), id);

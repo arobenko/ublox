@@ -165,7 +165,10 @@ QVariantMap createMsgIdProperties()
             .add("TIM-FCHG", MsgId_TIM_FCHG)
             .add("TIM-HOC", MsgId_TIM_HOC)
 
+            .add("ESF-MEAS", MsgId_ESF_MEAS)
+            .add("ESF-RAW", MsgId_ESF_RAW)
             .add("ESF-STATUS", MsgId_ESF_STATUS)
+            .add("ESF-INS", MsgId_ESF_INS)
 
             .add("MGA-GPS", MsgId_MGA_GPS)
             .add("MGA-GAL", MsgId_MGA_GAL)
