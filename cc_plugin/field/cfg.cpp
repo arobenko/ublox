@@ -28,6 +28,7 @@ CC_ENABLE_WARNINGS()
 #include "ublox/message/CfgInf.h"
 #include "ublox/message/CfgNmea.h"
 #include "ublox/message/CfgNmeaExt.h"
+#include "ublox/message/CfgTmode2.h"
 
 namespace cc = comms_champion;
 
@@ -243,6 +244,18 @@ QVariantMap createProps_tpIdx()
     return props.asMap();
 }
 
+QVariantMap createProps_timeMode()
+{
+    using Field = ublox::message::CfgTmode2Fields::timeMode;
+    auto props =
+        cc::property::field::ForField<Field>()
+            .name("timeMode")
+            .add("Disabled")
+            .add("Survey In")
+            .add("Fixed Mode");
+    assert(props.values().size() == (int)Field::ValueType::NumOfValues);
+    return props.asMap();
+}
 
 }  // namespace
 
@@ -443,6 +456,13 @@ const QVariantMap& props_tpIdx()
     static const QVariantMap Props = createProps_tpIdx();
     return Props;
 }
+
+const QVariantMap& props_timeMode()
+{
+    static const QVariantMap Props = createProps_timeMode();
+    return Props;
+}
+
 
 }  // namespace cfg
 

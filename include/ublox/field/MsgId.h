@@ -197,6 +197,7 @@ private:
             MsgId_CFG_SMGR,
             MsgId_CFG_GEOFENCE,
             MsgId_CFG_DGNSS,
+            MsgId_CFG_TMODE3,
             MsgId_CFG_FIXSEED,
             MsgId_CFG_DYNSEED,
             MsgId_CFG_PMS

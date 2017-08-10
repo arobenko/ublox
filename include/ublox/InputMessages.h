@@ -109,6 +109,7 @@
 #include "message/CfgSmgr.h"
 #include "message/CfgGeofence.h"
 #include "message/CfgDgnss.h"
+#include "message/CfgTMode3.h"
 #include "message/CfgPms.h"
 
 #include "message/UpdSosRestored.h"
@@ -251,6 +252,7 @@ using InputMessages =
         message::CfgSmgr<TMessage>,
         message::CfgGeofence<TMessage>,
         message::CfgDgnss<TMessage>,
+        message::CfgTmode3<TMessage>,
         message::CfgPms<TMessage>,
         message::UpdSosRestored<TMessage>,
         message::UpdSosAck<TMessage>,

@@ -165,6 +165,8 @@ function (cc_plugin_ublox_all_messages)
         message/CfgGeofencePoll.cpp
         message/CfgDgnss.cpp
         message/CfgDgnssPoll.cpp
+        message/CfgTmode3.cpp
+        message/CfgTmode3Poll.cpp
         message/CfgFixseed.cpp
         message/CfgDynseed.cpp
         message/CfgPms.cpp

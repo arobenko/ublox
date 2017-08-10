@@ -164,7 +164,6 @@ struct CfgSmgrFields
         COMMS_FIELD_MEMBERS_ACCESS(flagsLow, TPCoherent, flagsHigh);
     };
 
-    // TODO: flags high and low.
     /// @brief All the fields bundled in std::tuple.
     using All = std::tuple<
         version,

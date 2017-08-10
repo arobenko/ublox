@@ -1,5 +1,5 @@
 //
-// Copyright 2015 - 2017 (C). Alex Robenko. All rights reserved.
+// Copyright 2017 (C). Alex Robenko. All rights reserved.
 //
 
 // This file is free software: you can redistribute it and/or modify
@@ -17,15 +17,15 @@
 
 #include <cassert>
 
-#include "CfgTmode2.h"
+#include "CfgTmode3.h"
 
 #include "cc_plugin/field/common.h"
 #include "cc_plugin/field/cfg.h"
 
-template class ublox::message::CfgTmode2<ublox::cc_plugin::Message>;
+template class ublox::message::CfgTmode3<ublox::cc_plugin::Message>;
 template class ublox::cc_plugin::ProtocolMessageBase<
-    ublox::message::CfgTmode2<ublox::cc_plugin::Message>,
-    ublox::cc_plugin::message::CfgTmode2>;
+    ublox::message::CfgTmode3<ublox::cc_plugin::Message>,
+    ublox::cc_plugin::message::CfgTmode3>;
 
 namespace cc = comms_champion;
 
@@ -41,19 +41,19 @@ namespace message
 namespace
 {
 
-using ublox::message::CfgTmode2Fields;
+using ublox::message::CfgTmode3Fields;
 
 QVariantMap createProps_flags()
 {
-    cc::property::field::ForField<CfgTmode2Fields::flags> props;
+    using Field = CfgTmode3Fields::flags;
+    cc::property::field::ForField<Field> props;
     props.name("flags")
-         .add("lla")
-         .add("altInv");
-    assert(props.bits().size() == CfgTmode2Fields::flags::BitIdx_numOfValues);
+         .add("lla");
+    assert(props.bits().size() == Field::BitIdx_numOfValues);
     return props.asMap();
 }
 
-QVariantMap createProps_cartesian(char coord)
+QVariantMap createProps_cartesian(const char* coord)
 {
     auto name = QString("ecef%1").arg(coord);
     cc::property::field::IntValue coordProps;
@@ -86,42 +86,52 @@ QVariantMap createProps_geodetic(const char* name, int scaledDigits = 0)
 QVariantList createFieldsProperties()
 {
     QVariantList props;
-    props.append(cc_plugin::field::cfg::props_timeMode());
+    props.append(
+        cc::property::field::ForField<CfgTmode3Fields::version>().name("version").asMap());
     props.append(cc_plugin::field::common::props_reserved(1));
+    props.append(cc_plugin::field::cfg::props_timeMode());
     props.append(createProps_flags());
-    props.append(createProps_cartesian('X'));
+    props.append(createProps_cartesian("X"));
     props.append(createProps_geodetic("lat", 7));
-    props.append(createProps_cartesian('Y'));
+    props.append(createProps_cartesian("Y"));
     props.append(createProps_geodetic("lon", 7));
-    props.append(createProps_cartesian('Z'));
+    props.append(createProps_cartesian("Z"));
     props.append(createProps_geodetic("alt"));
+    props.append(createProps_cartesian("XHP"));
+    props.append(createProps_geodetic("latHP", 9));
+    props.append(createProps_cartesian("YHP"));
+    props.append(createProps_geodetic("lonHP", 9));
+    props.append(createProps_cartesian("ZHP"));
+    props.append(createProps_geodetic("altHP"));
+    props.append(cc_plugin::field::common::props_reserved(2));
     props.append(
-        cc::property::field::ForField<CfgTmode2Fields::fixedPosAcc>().name("fixedPosAcc").asMap());
+        cc::property::field::ForField<CfgTmode3Fields::fixedPosAcc>().name("fixedPosAcc").asMap());
     props.append(
-        cc::property::field::ForField<CfgTmode2Fields::svinMinDur>().name("svinMinDur").asMap());
+        cc::property::field::ForField<CfgTmode3Fields::svinMinDur>().name("svinMinDur").asMap());
     props.append(
-        cc::property::field::ForField<CfgTmode2Fields::svinAccLimit>().name("svinAccLimit").asMap());
-
-    assert(props.size() == CfgTmode2::FieldIdx_numOfValues);
+        cc::property::field::ForField<CfgTmode3Fields::svinAccLimit>().name("svinAccLimit").asMap());
+    props.append(cc_plugin::field::common::props_reserved(3));
+    props.append(cc_plugin::field::common::props_reserved(4));
+    assert(props.size() == CfgTmode3::FieldIdx_numOfValues);
     return props;
 }
 
 }  // namespace
 
-CfgTmode2::CfgTmode2() = default;
-CfgTmode2::~CfgTmode2() = default;
+CfgTmode3::CfgTmode3() = default;
+CfgTmode3::~CfgTmode3() = default;
 
-CfgTmode2& CfgTmode2::operator=(const CfgTmode2&) = default;
-CfgTmode2& CfgTmode2::operator=(CfgTmode2&&) = default;
+CfgTmode3& CfgTmode3::operator=(const CfgTmode3&) = default;
+CfgTmode3& CfgTmode3::operator=(CfgTmode3&&) = default;
 
 
-const char* CfgTmode2::nameImpl() const
+const char* CfgTmode3::nameImpl() const
 {
-    static const char* Str = "CFG-TMODE2";
+    static const char* Str = "CFG-TMODE3";
     return Str;
 }
 
-const QVariantList& CfgTmode2::fieldsPropertiesImpl() const
+const QVariantList& CfgTmode3::fieldsPropertiesImpl() const
 {
     static const auto Props = createFieldsProperties();
     return Props;
