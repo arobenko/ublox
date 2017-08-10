@@ -238,6 +238,8 @@ function (cc_plugin_ublox_all_messages)
         message/TimHoc.cpp
         message/EsfStatus.cpp
         message/EsfStatusPoll.cpp
+        message/EsfIns.cpp
+        message/EsfInsPoll.cpp
         message/MgaGpsEph.cpp
         message/MgaGpsAlm.cpp
         message/MgaGpsHealth.cpp

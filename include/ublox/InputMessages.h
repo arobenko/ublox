@@ -149,6 +149,7 @@
 #include "message/TimFchg.h"
 
 #include "message/EsfStatus.h"
+#include "message/EsfIns.h"
 
 #include "message/MgaFlashAck.h"
 #include "message/MgaAck.h"
@@ -287,6 +288,7 @@ using InputMessages =
         message::TimVcocal<TMessage>,
         message::TimFchg<TMessage>,
         message::EsfStatus<TMessage>,
+        message::EsfIns<TMessage>,
         message::MgaFlashAck<TMessage>,
         message::MgaAck<TMessage>,
         message::MgaDbd<TMessage>,
