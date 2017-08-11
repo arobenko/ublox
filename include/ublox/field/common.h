@@ -137,6 +137,23 @@ using X2T =
 /// @brief Same as @ref X2T without any extra options
 using X2 = X2T<>;
 
+/// @brief Common definition for 3 bytes unsigned integer value field
+/// @details Defined to be @b comms::field::IntValue
+///     with @ref FieldBase as a base class, @b std::uint32_t as a storage type,
+///     3 bytes serialisation length, and @b TOptions... as extra options.
+/// @tparam TOptions Extra options.
+template <typename... TOptions>
+using U3T =
+    comms::field::IntValue<
+        FieldBase,
+        std::uint32_t,
+        comms::option::FixedLength<3>,
+        TOptions...
+    >;
+
+/// @brief Same as @ref U3T without any extra options.
+using U3 = U3T<>;
+
 /// @brief Common definition for 3 bytes bitmask value field
 /// @details Defined to be @b comms::field::BitmaskValue
 ///     with @ref FieldBase as a base class, 3 bytes fixed length

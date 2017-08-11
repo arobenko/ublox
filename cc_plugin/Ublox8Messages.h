@@ -228,11 +228,12 @@
 #include "cc_plugin/message/TimFchgPoll.h"
 #include "cc_plugin/message/TimHoc.h"
 
+#include "cc_plugin/message/EsfMeas.h"
+#include "cc_plugin/message/EsfMeasPoll.h"
 #include "cc_plugin/message/EsfStatus.h"
 #include "cc_plugin/message/EsfStatusPoll.h"
 #include "cc_plugin/message/EsfIns.h"
 #include "cc_plugin/message/EsfInsPoll.h"
-
 
 #include "cc_plugin/message/MgaGpsEph.h"
 #include "cc_plugin/message/MgaGpsAlm.h"
@@ -487,6 +488,8 @@ using Ublox8Messages = std::tuple<
     cc_plugin::message::TimVcocalPoll,
     cc_plugin::message::TimFchg,
     cc_plugin::message::TimFchgPoll,
+    cc_plugin::message::EsfMeas,
+    cc_plugin::message::EsfMeasPoll,
     cc_plugin::message::EsfStatus,
     cc_plugin::message::EsfStatusPoll,
     cc_plugin::message::EsfIns,
