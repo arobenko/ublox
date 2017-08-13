@@ -261,6 +261,7 @@
 
 #include "cc_plugin/message/EsfMeas.h"
 #include "cc_plugin/message/EsfMeasPoll.h"
+#include "cc_plugin/message/EsfRaw.h"
 #include "cc_plugin/message/EsfStatus.h"
 #include "cc_plugin/message/EsfStatusPoll.h"
 #include "cc_plugin/message/EsfIns.h"
@@ -553,6 +554,7 @@ using AllMessages = std::tuple<
     cc_plugin::message::TimFchgPoll,
     cc_plugin::message::EsfMeas,
     cc_plugin::message::EsfMeasPoll,
+    cc_plugin::message::EsfRaw,
     cc_plugin::message::EsfStatus,
     cc_plugin::message::EsfStatusPoll,
     cc_plugin::message::EsfIns,

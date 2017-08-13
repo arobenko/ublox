@@ -238,6 +238,7 @@ function (cc_plugin_ublox_all_messages)
         message/TimHoc.cpp
         message/EsfMeas.cpp
         message/EsfMeasPoll.cpp
+        message/EsfRaw.cpp
         message/EsfStatus.cpp
         message/EsfStatusPoll.cpp
         message/EsfIns.cpp
