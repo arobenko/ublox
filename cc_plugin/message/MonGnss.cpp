@@ -1,4 +1,4 @@
-//
+﻿//
 // Copyright 2017 (C). Alex Robenko. All rights reserved.
 //
 
@@ -57,13 +57,13 @@ QVariantMap createProps_supported()
 QVariantMap createProps_default()
 {
     auto props =
-        cc::property::field::ForField<MonGnssFields::deflt>()
-            .name("default")
+        cc::property::field::ForField<MonGnssFields::defaultGnss>()
+            .name("defaultGnss")
             .add("GPSDef")
             .add("GlonassDef")
             .add("BeidouDef")
             .add("GalileoDef");
-    assert(props.bits().size() == MonGnssFields::deflt::BitIdx_numOfValues);
+    assert(props.bits().size() == MonGnssFields::defaultGnss::BitIdx_numOfValues);
     return props.asMap();
 }
 

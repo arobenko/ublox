@@ -53,8 +53,8 @@ struct MonGnssFields
         COMMS_BITMASK_BITS_SEQ(GPSSup, GlonassSup, BeidouSup, GalileoSup);
     };
 
-    /// @brief Definition of "default" field.
-    struct deflt : public
+    /// @brief Definition of "defaultGnss" field.
+    struct defaultGnss : public
         field::common::X1T<
             comms::option::BitmaskReservedBits<0xf0, 0>
         >
@@ -90,7 +90,7 @@ struct MonGnssFields
     using All = std::tuple<
         version,
         supported,
-        deflt,
+        defaultGnss,
         enabled,
         simultaneous,
         reserved1
@@ -123,14 +123,14 @@ public:
     ///     The field names are:
     ///     @li @b version for @ref MonGnssFields::version field
     ///     @li @b supported for @ref MonGnssFields::supported field
-    ///     @li @b default for @ref MonGnssFields::deflt field
+    ///     @li @b defaultGnss for @ref MonGnssFields::defaultGnss field
     ///     @li @b enabled for @ref MonGnssFields::enabled field
     ///     @li @b simultaneous for @ref MonGnssFields::simultaneous field
     ///     @li @b reserved1 for @ref MonGnssFields::reserved1 field
     COMMS_MSG_FIELDS_ACCESS(
         version,
         supported,
-        default,
+        defaultGnss,
         enabled,
         simultaneous,
         reserved1

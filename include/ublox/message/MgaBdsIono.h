@@ -85,8 +85,6 @@ struct MgaBdsIonoFields
     /// @brief Definition of "reserved2" field.
     using reserved2 = field::common::res4;
 
-
-    // TODO
     /// @brief All the fields bundled in std::tuple.
     using All = std::tuple<
         type,

@@ -55,8 +55,10 @@ QVariantMap createProps_fixType()
     return
         cc::property::field::ForField<LogRetrieveposFields::fixType>()
             .name("fixType")
+            .add("Dead reckoning", (int)LogRetrieveposFields::FixType::DeadReckoning)
             .add("2D-Fix", (int)LogRetrieveposFields::FixType::Fix_2D)
             .add("3D-Fix", (int)LogRetrieveposFields::FixType::Fix_3D)
+            .add("GNSS + Dead reckoning", (int)LogRetrieveposFields::FixType::GnssAndDeadReckoning)
             .asMap();
 }
 
