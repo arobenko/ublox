@@ -290,6 +290,8 @@ function (cc_plugin_ublox_all_messages)
         message/LogRetrieveposextra.cpp
         message/SecSign.cpp
         message/SecUniqid.cpp
+        message/HnrPvt.cpp
+        message/HnrPvtPoll.cpp
         field/MsgId.cpp
         field/common.cpp
         field/nav.cpp

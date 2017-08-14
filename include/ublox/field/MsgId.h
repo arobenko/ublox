@@ -58,6 +58,7 @@ struct MsgIdValueValidator
             std::make_pair(classId(MsgId_MGA_GPS), &MsgIdValueValidator::validateMga),
             std::make_pair(classId(MsgId_LOG_ERASE), &MsgIdValueValidator::validateLog),
             std::make_pair(classId(MsgId_SEC_SIGN), &MsgIdValueValidator::validateSec),
+            std::make_pair(classId(MsgId_HNR_PVT), &MsgIdValueValidator::validateHnr),
         };
 
         ublox::MsgId id = field.value();
@@ -330,6 +331,16 @@ private:
         static const ublox::MsgId IDs[] = {
             MsgId_SEC_SIGN,
             MsgId_SEC_UNIQID,
+        };
+
+        auto iter = std::lower_bound(std::begin(IDs), std::end(IDs), id);
+        return (iter != std::end(IDs)) && (*iter == id);
+    }
+
+    static bool validateHnr(ublox::MsgId id)
+    {
+        static const ublox::MsgId IDs[] = {
+            MsgId_HNR_PVT,
         };
 
         auto iter = std::lower_bound(std::begin(IDs), std::end(IDs), id);

@@ -166,6 +166,8 @@
 #include "message/SecSign.h"
 #include "message/SecUniqid.h"
 
+#include "message/HnrPvt.h"
+
 namespace ublox
 {
 
@@ -302,7 +304,8 @@ using InputMessages =
         message::LogFindtime<TMessage>,
         message::LogRetrieveposextra<TMessage>,
         message::SecSign<TMessage>,
-        message::SecUniqid<TMessage>
+        message::SecUniqid<TMessage>,
+        message::HnrPvt<TMessage>
     >;
 
 }  // namespace ublox

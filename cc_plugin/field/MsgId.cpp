@@ -193,6 +193,8 @@ QVariantMap createMsgIdProperties()
             .add("SEC-SIGN", MsgId_SEC_SIGN)
             .add("SEC-UNIQID", MsgId_SEC_UNIQID)
 
+            .add("HNR-PVT", MsgId_HNR_PVT)
+
             .asMap();
 
 }

@@ -286,6 +286,9 @@
 #include "cc_plugin/message/SecSign.h"
 #include "cc_plugin/message/SecUniqid.h"
 
+#include "cc_plugin/message/HnrPvt.h"
+#include "cc_plugin/message/HnrPvtPoll.h"
+
 namespace ublox
 {
 
@@ -542,7 +545,10 @@ using Ublox8Messages = std::tuple<
     cc_plugin::message::LogFindtime,
     cc_plugin::message::LogRetrieveposextra,
     cc_plugin::message::SecSign,
-    cc_plugin::message::SecUniqid
+    cc_plugin::message::SecUniqid,
+    cc_plugin::message::HnrPvt,
+    cc_plugin::message::HnrPvtPoll
+
 >;
 
 }  // namespace cc_plugin

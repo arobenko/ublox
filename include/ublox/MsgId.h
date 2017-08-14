@@ -172,7 +172,8 @@ enum MsgId : std::uint16_t
     MsgId_LOG_FINDTIME = 0x210e, ///< ID of LOG-FINDTIME message
     MsgId_LOG_RETRIEVEPOSEXTRA = 0x210f, ///< ID of LOG-RETRIEVEPOSEXTRA message
     MsgId_SEC_SIGN = 0x2701, ///< ID of SEC-SIGN message
-    MsgId_SEC_UNIQID = 0x2703 ///< ID of SEC-UNIQID message
+    MsgId_SEC_UNIQID = 0x2703, ///< ID of SEC-UNIQID message
+    MsgId_HNR_PVT = 0x2800, ///< ID of HNR-PVT message
 };
 
 }  // namespace ublox
