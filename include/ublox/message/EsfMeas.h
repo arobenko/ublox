@@ -118,7 +118,7 @@ struct EsfMeasFields
             comms::option::ValidNumValueRange<0, 63>
         >;
 
-    /// @breif Definition of single data element for @ref data field.
+    /// @brief Definition of single data element for @ref data field.
     struct dataElem : public
         field::common::BundleT<
             std::tuple<

@@ -379,8 +379,8 @@ public:
     CfgPm2& operator=(CfgPm2&&) = default;
 
     /// @brief Provides custom read functionality.
-    /// @details The existence of "extintInactivityMs" (see @ref CfgPm2::extintInactivityMs) is
-    ///     determined by the value of "version" (see @ref CfgPm2::version).
+    /// @details The existence of "extintInactivityMs" (see @ref CfgPm2Fields::extintInactivityMs) is
+    ///     determined by the value of "version" (see @ref CfgPm2Fields::version).
     template <typename TIter>
     comms::ErrorStatus doRead(TIter& iter, std::size_t len)
     {
@@ -400,8 +400,8 @@ public:
     }
 
     /// @brief Provides custom refresh functionality
-    /// @details The existence of "extintInactivityMs" (see @ref CfgPm2::extintInactivityMs) is
-    ///     determined by the value of "version" (see @ref CfgPm2::version).
+    /// @details The existence of "extintInactivityMs" (see @ref CfgPm2Fields::extintInactivityMs) is
+    ///     determined by the value of "version" (see @ref CfgPm2Fields::version).
     /// @return @b true in case the mode of "extintInactivityMs" field was modified, @b false otherwise
     bool doRefresh()
     {

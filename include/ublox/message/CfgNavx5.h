@@ -367,9 +367,9 @@ public:
     CfgNavx5& operator=(CfgNavx5&&) = default;
 
     /// @brief Provides custom read functionality.
-    /// @details The existence of "reserved10" (see @ref CfgNavx5::reserved10) and
-    ///     "reserved11" (see @ref CfgNavx5::reserved11) is
-    ///     determined by the value of "version" (see @ref CfgNavx5::version).
+    /// @details The existence of "reserved10" (see @ref CfgNavx5Fields::reserved10) and
+    ///     "reserved11" (see @ref CfgNavx5Fields::reserved11) is
+    ///     determined by the value of "version" (see @ref CfgNavx5Fields::version).
     template <typename TIter>
     comms::ErrorStatus doRead(TIter& iter, std::size_t len)
     {
@@ -388,9 +388,9 @@ public:
     }
 
     /// @brief Provides custom refresh functionality
-    /// @details The existence of "reserved10" (see @ref CfgNavx5::reserved10) and
-    ///     "reserved11" (see @ref CfgNavx5::reserved11) is
-    ///     determined by the value of "version" (see @ref CfgNavx5::version).
+    /// @details The existence of "reserved10" (see @ref CfgNavx5Fields::reserved10) and
+    ///     "reserved11" (see @ref CfgNavx5Fields::reserved11) is
+    ///     determined by the value of "version" (see @ref CfgNavx5Fields::version).
     bool doRefresh()
     {
         auto optResMode = comms::field::OptionalMode::Missing;

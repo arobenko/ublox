@@ -45,7 +45,7 @@ struct EsfRawFields
     /// @brief Definition of "sTtag" field.
     using sTtag = field::common::U4;
 
-    /// @breif Definition of single block element for @ref list field.
+    /// @brief Definition of single block element for @ref list field.
     struct block : public
         field::common::BundleT<
             std::tuple<
@@ -77,7 +77,7 @@ struct EsfRawFields
         >;
 
     /// @brief All the fields bundled in std::tuple.
-    /// @tparam TOpt Extra option(s) for @ref data field
+    /// @tparam TOpt Extra option(s) for @ref list field
     template <typename TOpt>
     using All = std::tuple<
         reserved1,
