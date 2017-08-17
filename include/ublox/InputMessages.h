@@ -34,6 +34,8 @@
 #include "message/NavOdo.h"
 #include "message/NavVelecef.h"
 #include "message/NavVelned.h"
+#include "message/NavHpposecef.h"
+#include "message/NavHpposllh.h"
 #include "message/NavTimegps.h"
 #include "message/NavTimeutc.h"
 #include "message/NavClock.h"
@@ -188,6 +190,8 @@ using InputMessages =
         message::NavOdo<TMessage>,
         message::NavVelecef<TMessage>,
         message::NavVelned<TMessage>,
+        message::NavHpposecef<TMessage>,
+        message::NavHpposllh<TMessage>,
         message::NavTimegps<TMessage>,
         message::NavTimeutc<TMessage>,
         message::NavClock<TMessage>,

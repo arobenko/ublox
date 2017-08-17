@@ -43,42 +43,42 @@ struct NavAttFields
     /// @brief Definition of "reserved1" field.
     using reserved1 = field::common::res3;
 
-    /// @bried Definition of "roll" field.
+    /// @brief Definition of "roll" field.
     using roll =
         field::common::I4T<
             comms::option::UnitsDegrees,
             comms::option::ScalingRatio<1, 100000>
         >;
 
-    /// @bried Definition of "pitch" field.
+    /// @brief Definition of "pitch" field.
     using pitch =
         field::common::I4T<
             comms::option::UnitsDegrees,
             comms::option::ScalingRatio<1, 100000>
         >;
 
-    /// @bried Definition of "heading" field.
+    /// @brief Definition of "heading" field.
     using heading =
         field::common::I4T<
             comms::option::UnitsDegrees,
             comms::option::ScalingRatio<1, 100000>
         >;
 
-    /// @bried Definition of "accRoll" field.
+    /// @brief Definition of "accRoll" field.
     using accRoll =
         field::common::U4T<
             comms::option::UnitsDegrees,
             comms::option::ScalingRatio<1, 100000>
         >;
 
-    /// @bried Definition of "accPitch" field.
+    /// @brief Definition of "accPitch" field.
     using accPitch =
         field::common::U4T<
             comms::option::UnitsDegrees,
             comms::option::ScalingRatio<1, 100000>
         >;
 
-    /// @bried Definition of "accHeading" field.
+    /// @brief Definition of "accHeading" field.
     using accHeading =
         field::common::U4T<
             comms::option::UnitsDegrees,

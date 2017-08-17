@@ -98,6 +98,8 @@ private:
             MsgId_NAV_RESETODO,
             MsgId_NAV_VELECEF,
             MsgId_NAV_VELNED,
+            MsgId_NAV_HPPOSECEF,
+            MsgId_NAV_HPPOSLLH,
             MsgId_NAV_TIMEGPS,
             MsgId_NAV_TIMEUTC,
             MsgId_NAV_CLOCK,

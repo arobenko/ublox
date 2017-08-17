@@ -35,16 +35,16 @@ struct NavPosecefFields
     /// @brief Definition of "iTOW" field.
     using iTOW = field::nav::iTOW;
 
-    /// @brief Definition of "iTOW" field.
+    /// @brief Definition of "ecefX" field.
     using ecefX = field::nav::ecefX;
 
-    /// @brief Definition of "iTOW" field.
+    /// @brief Definition of "ecefY" field.
     using ecefY = field::nav::ecefY;
 
-    /// @brief Definition of "iTOW" field.
+    /// @brief Definition of "ecefZ" field.
     using ecefZ = field::nav::ecefZ;
 
-    /// @brief Definition of "iTOW" field.
+    /// @brief Definition of "pAcc" field.
     using pAcc = field::nav::pAcc;
 
     /// @brief All the fields bundled in std::tuple.

@@ -43,6 +43,8 @@ enum MsgId : std::uint16_t
     MsgId_NAV_RESETODO = 0x0110, ///< ID of NAV-RESETODO message
     MsgId_NAV_VELECEF = 0x0111, ///< ID of NAV-VELECEF message
     MsgId_NAV_VELNED = 0x0112, ///< ID of NAV-VELNED message
+    MsgId_NAV_HPPOSECEF = 0x0113, ///< ID of NAV-HPPOSECEF message
+    MsgId_NAV_HPPOSLLH = 0x0114, ///< ID of NAV-HPPOSLLH message
     MsgId_NAV_TIMEGPS = 0x0120, ///< ID of NAV-TIMEGPS message
     MsgId_NAV_TIMEUTC = 0x0121, ///< ID of NAV-TIMEUTC message
     MsgId_NAV_CLOCK = 0x0122, ///< ID of NAV-CLOCK message

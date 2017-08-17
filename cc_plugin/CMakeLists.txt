@@ -28,6 +28,8 @@ function (cc_plugin_ublox_all_messages)
         message/NavVelecefPoll.cpp
         message/NavVelned.cpp
         message/NavVelnedPoll.cpp
+        message/NavHpposecef.cpp
+        message/NavHpposecefPoll.cpp
         message/NavTimegps.cpp
         message/NavTimegpsPoll.cpp
         message/NavTimeutc.cpp
