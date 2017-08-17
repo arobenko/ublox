@@ -15,6 +15,8 @@ function (cc_plugin_ublox_all_messages)
         message/NavStatusPoll.cpp
         message/NavDop.cpp
         message/NavDopPoll.cpp
+        message/NavAtt.cpp
+        message/NavAttPoll.cpp
         message/NavSol.cpp
         message/NavSolPoll.cpp
         message/NavPvt.cpp

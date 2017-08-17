@@ -91,6 +91,7 @@ private:
             MsgId_NAV_POSLLH,
             MsgId_NAV_STATUS,
             MsgId_NAV_DOP,
+            MsgId_NAV_ATT,
             MsgId_NAV_SOL,
             MsgId_NAV_PVT,
             MsgId_NAV_ODO,

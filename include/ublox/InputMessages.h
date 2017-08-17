@@ -28,6 +28,7 @@
 #include "message/NavPosllh.h"
 #include "message/NavStatus.h"
 #include "message/NavDop.h"
+#include "message/NavAtt.h"
 #include "message/NavSol.h"
 #include "message/NavPvt.h"
 #include "message/NavOdo.h"
@@ -181,6 +182,7 @@ using InputMessages =
         message::NavPosllh<TMessage>,
         message::NavStatus<TMessage>,
         message::NavDop<TMessage>,
+        message::NavAtt<TMessage>,
         message::NavSol<TMessage>,
         message::NavPvt<TMessage>,
         message::NavOdo<TMessage>,

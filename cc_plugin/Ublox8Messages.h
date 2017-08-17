@@ -29,6 +29,8 @@
 #include "cc_plugin/message/NavStatusPoll.h"
 #include "cc_plugin/message/NavDop.h"
 #include "cc_plugin/message/NavDopPoll.h"
+#include "cc_plugin/message/NavAtt.h"
+#include "cc_plugin/message/NavAttPoll.h"
 #include "cc_plugin/message/NavSol.h"
 #include "cc_plugin/message/NavSolPoll.h"
 #include "cc_plugin/message/NavPvt.h"
@@ -304,6 +306,8 @@ using Ublox8Messages = std::tuple<
     cc_plugin::message::NavStatusPoll,
     cc_plugin::message::NavDop,
     cc_plugin::message::NavDopPoll,
+    cc_plugin::message::NavAtt,
+    cc_plugin::message::NavAttPoll,
     cc_plugin::message::NavSol,
     cc_plugin::message::NavSolPoll,
     cc_plugin::message::NavPvt,

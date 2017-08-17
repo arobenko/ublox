@@ -36,6 +36,7 @@ enum MsgId : std::uint16_t
     MsgId_NAV_POSLLH = 0x0102, ///< ID of NAV-POSLLH message
     MsgId_NAV_STATUS = 0x0103, ///< ID of NAV-STATUS message
     MsgId_NAV_DOP = 0x0104, ///< ID of NAV-DOP message
+    MsgId_NAV_ATT = 0x0105, ///< ID of NAV-ATT message
     MsgId_NAV_SOL = 0x0106, ///< ID of NAV-SOL message
     MsgId_NAV_PVT = 0x0107, ///< ID of NAV-PVT message
     MsgId_NAV_ODO = 0x0109, ///< ID of NAV-ODO message
