@@ -57,7 +57,8 @@ struct NavHpposecefFields
     using ecefXHp =
         field::common::I1T<
             comms::option::ScalingRatio<1, 10>,
-            comms::option::UnitsMillimeters
+            comms::option::UnitsMillimeters,
+            comms::option::ValidNumValueRange<-99, 99>
         >;
 
     /// @brief Definition of "ecefYHp" field.

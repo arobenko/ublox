@@ -44,6 +44,8 @@
 #include "cc_plugin/message/NavVelnedPoll.h"
 #include "cc_plugin/message/NavHpposecef.h"
 #include "cc_plugin/message/NavHpposecefPoll.h"
+#include "cc_plugin/message/NavHpposllh.h"
+#include "cc_plugin/message/NavHpposllhPoll.h"
 #include "cc_plugin/message/NavTimegps.h"
 #include "cc_plugin/message/NavTimegpsPoll.h"
 #include "cc_plugin/message/NavTimeutc.h"
@@ -323,6 +325,8 @@ using Ublox8Messages = std::tuple<
     cc_plugin::message::NavVelnedPoll,
     cc_plugin::message::NavHpposecef,
     cc_plugin::message::NavHpposecefPoll,
+    cc_plugin::message::NavHpposllh,
+    cc_plugin::message::NavHpposllhPoll,
     cc_plugin::message::NavTimegps,
     cc_plugin::message::NavTimegpsPoll,
     cc_plugin::message::NavTimeutc,
