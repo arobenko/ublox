@@ -69,13 +69,13 @@ struct NavPvtFields
     /// @brief Definition of "valid" field.
     struct validBits : public
         field::common::X1T<
-            comms::option::BitmaskReservedBits<0xf8, 0> >
+            comms::option::BitmaskReservedBits<0xf0, 0> >
     {
         /// @brief Provide names for internal bits.
         /// @details See definition of @b COMMS_BITMASK_BITS_SEQ macro
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
-        COMMS_BITMASK_BITS_SEQ(validDate, validTime, fullyResolved);
+        COMMS_BITMASK_BITS_SEQ(validDate, validTime, fullyResolved, validMag);
     };
 
     /// @brief Definition of "tAcc" field.
@@ -109,9 +109,9 @@ struct NavPvtFields
 
     /// @brief Definition of the bits in the "high" area of
     ///     @ref flags bitfield.
-    struct flagsHigh : public
+    struct headVehValid : public
         field::common::X1T<
-            comms::option::FixedBitLength<3>,
+            comms::option::FixedBitLength<1>,
             comms::option::BitmaskReservedBits<0xfe, 0>
         >
     {
@@ -119,8 +119,24 @@ struct NavPvtFields
         /// @details See definition of @b COMMS_BITMASK_BITS_SEQ macro
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
-        COMMS_BITMASK_BITS_SEQ(headVehValid);
+        COMMS_BITMASK_BITS_SEQ(bit);
     };
+
+    enum class CarrSoln : std::uint8_t
+    {
+        NoCarrier, ///< no carrier phase range solution
+        Float, /// float solution,
+        Fixed, /// fixed solution
+        NumOfValues
+    };
+
+    /// @brief Definition of "carrSoln" member field in @ref flags bitmask field.
+    using carrSoln =
+        field::common::EnumT<
+            CarrSoln,
+            comms::option::FixedBitLength<2>,
+            comms::option::ValidNumValueRange<0, (int)CarrSoln::NumOfValues - 1>
+        >;
 
 
     /// @brief Definition of "flags" field.
@@ -129,7 +145,8 @@ struct NavPvtFields
             std::tuple<
                 flagsLow,
                 psmState,
-                flagsHigh
+                headVehValid,
+                carrSoln
             >
         >
     {
@@ -137,7 +154,7 @@ struct NavPvtFields
         /// @details See definition of @b COMMS_FIELD_MEMBERS_ACCESS macro
         ///     related to @b comms::field::Bitfield class from COMMS library
         ///     for details.
-        COMMS_FIELD_MEMBERS_ACCESS(flagsLow, psmState, flagsHigh);
+        COMMS_FIELD_MEMBERS_ACCESS(flagsLow, psmState, headVehValid, carrSoln);
     };
 
     /// @brief Definition of "flags2" field.
@@ -214,18 +231,35 @@ struct NavPvtFields
     using reserved2 = field::common::res4;
 
     /// @brief Definition of "headVeh" field.
+    /// @details Defined as "optional" to allow usage with ublox-7 and earlier devices
     using headVeh =
         field::common::OptionalT<
             field::nav::heading,
             comms::option::DefaultOptionalMode<comms::field::OptionalMode::Missing>
         >;
 
-    /// @brief Definition of "reserved3" field.
-    using reserved3 =
+    /// @brief Definition of "magDec" field.
+    /// @details Defined as "optional" to allow usage with ublox-7 and earlier devices
+    using magDec =
         field::common::OptionalT<
-            field::common::res4,
+            field::common::I2T<
+                comms::option::ScalingRatio<1, 100>,
+                comms::option::UnitsDegrees
+            >,
             comms::option::DefaultOptionalMode<comms::field::OptionalMode::Missing>
         >;
+
+    /// @brief Definition of "magAcc" field.
+    /// @details Defined as "optional" to allow usage with ublox-7 and earlier devices
+    using magAcc =
+        field::common::OptionalT<
+            field::common::U2T<
+                comms::option::ScalingRatio<1, 100>,
+                comms::option::UnitsDegrees
+            >,
+            comms::option::DefaultOptionalMode<comms::field::OptionalMode::Missing>
+        >;
+
 
     /// @brief All the fields bundled in std::tuple.
     using All = std::tuple<
@@ -260,7 +294,8 @@ struct NavPvtFields
         reserved1,
         reserved2,
         headVeh,
-        reserved3
+        magDec,
+        magAcc
     >;
 };
 
@@ -319,7 +354,8 @@ public:
     ///     @li @b reserved1 for @ref NavPvtFields::reserved1 field
     ///     @li @b reserved2 for @ref NavPvtFields::reserved2 field
     ///     @li @b headVeh for @ref NavPvtFields::headVeh field
-    ///     @li @b reserved3 for @ref NavPvtFields::reserved3 field
+    ///     @li @b magDec for @ref NavPvtFields::magDec field
+    ///     @li @b magAcc for @ref NavPvtFields::magAcc field
     COMMS_MSG_FIELDS_ACCESS(
         iTOW,
         year,
@@ -352,7 +388,8 @@ public:
         reserved1,
         reserved2,
         headVeh,
-        reserved3
+        magDec,
+        magAcc
     );
 
     /// @brief Default constructor
@@ -385,18 +422,35 @@ public:
 
         static const auto ReqLen =
             NavPvtFields::headVeh::Field::maxLength() +
-            NavPvtFields::reserved3::Field::maxLength();
+            NavPvtFields::magDec::Field::maxLength() +
+            NavPvtFields::magAcc::Field::maxLength();
 
         if (len < ReqLen) {
             field_headVeh().setMissing();
-            field_reserved3().setMissing();
+            field_magDec().setMissing();
+            field_magAcc().setMissing();
             return es;
         }
 
         field_headVeh().setExists();
-        field_reserved3().setExists();
+        field_magDec().setExists();
+        field_magAcc().setExists();
 
         return Base::template readFieldsFrom<FieldIdx_headVeh>(iter, len);
+    }
+
+    bool doValid() const
+    {
+        using Base = typename std::decay<decltype(comms::toMessageBase(*this))>::type;
+        if (!Base::doValid()) {
+            return false;
+        }
+
+        // 3 last fields must have the same mode
+        auto mode = field_headVeh().getMode();
+        return
+            (field_magDec().getMode() == mode) &&
+            (field_magAcc().getMode() == mode);
     }
 
 };
