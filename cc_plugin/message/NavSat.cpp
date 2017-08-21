@@ -134,7 +134,12 @@ QVariantMap createProps_flagsHigh()
             .add("ephAvail")
             .add("almAvail")
             .add("anoAvail")
-            .add("aopAvail");
+            .add("aopAvail")
+            .add(Field::BitIdx_sbasCorrUsed, "sbasCorrUsed")
+            .add("rtcmCorrUsed")
+            .add(Field::BitIdx_prCorrUsed, "prCorrUsed")
+            .add("crCorrUsed")
+            .add("doCorrUsed");
     assert(props.bits().size() == Field::BitIdx_numOfValues);
     return props.asMap();
 }
