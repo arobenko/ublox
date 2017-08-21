@@ -72,6 +72,8 @@
 #include "cc_plugin/message/NavSatPoll.h"
 #include "cc_plugin/message/NavGeofence.h"
 #include "cc_plugin/message/NavGeofencePoll.h"
+#include "cc_plugin/message/NavSvin.h"
+#include "cc_plugin/message/NavSvinPoll.h"
 #include "cc_plugin/message/NavRelposned.h"
 #include "cc_plugin/message/NavRelposnedPoll.h"
 #include "cc_plugin/message/NavEkfstatusPoll.h"
@@ -84,6 +86,7 @@
 #include "cc_plugin/message/RxmRawx.h"
 #include "cc_plugin/message/RxmRawxPoll.h"
 #include "cc_plugin/message/RxmSvsi.h"
+#include "cc_plugin/message/RxmRtcm.h"
 #include "cc_plugin/message/RxmSvsiPoll.h"
 #include "cc_plugin/message/RxmPmreqV0.h"
 #include "cc_plugin/message/RxmPmreq.h"
@@ -368,6 +371,7 @@ using Ublox8Messages = std::tuple<
     cc_plugin::message::RxmRawxPoll,
     cc_plugin::message::RxmSvsi,
     cc_plugin::message::RxmSvsiPoll,
+    cc_plugin::message::RxmRtcm,
     cc_plugin::message::RxmPmreqV0,
     cc_plugin::message::RxmPmreq,
     cc_plugin::message::RxmRlmShort,

@@ -71,6 +71,7 @@ enum MsgId : std::uint16_t
     MsgId_RXM_SVSI = 0x0220, ///< ID of RXM-SVSI message
     MsgId_RXM_ALM = 0x0230, ///< ID of RXM-ALM message
     MsgId_RXM_EPH = 0x0231, ///< ID of RXM-EPH message
+    MsgId_RXM_RTCM = 0x0232, ///< ID of RXM-RTCM message
     MsgId_RXM_PMREQ = 0x0241, ///< ID of RXM-PMREQ message
     MsgId_RXM_RLM = 0x0259, ///< ID of RXM-RLM message
     MsgId_RXM_IMES = 0x0261, ///< ID of RXM-IMES message

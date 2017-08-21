@@ -98,13 +98,14 @@
 #include "cc_plugin/message/RxmEph.h"
 #include "cc_plugin/message/RxmEphPollSv.h"
 #include "cc_plugin/message/RxmEphPoll.h"
+#include "cc_plugin/message/RxmRtcm.h"
 #include "cc_plugin/message/RxmPmreqV0.h"
 #include "cc_plugin/message/RxmPmreq.h"
 #include "cc_plugin/message/RxmRlmShort.h"
 #include "cc_plugin/message/RxmRlmLong.h"
 #include "cc_plugin/message/RxmImes.h"
 #include "cc_plugin/message/RxmImesPoll.h"
-
+/*
 #include "cc_plugin/message/InfError.h"
 #include "cc_plugin/message/InfWarning.h"
 #include "cc_plugin/message/InfNotice.h"
@@ -329,7 +330,7 @@
 
 #include "cc_plugin/message/HnrPvt.h"
 #include "cc_plugin/message/HnrPvtPoll.h"
-
+*/
 namespace ublox
 {
 
@@ -413,12 +414,13 @@ using AllMessages = std::tuple<
     cc_plugin::message::RxmEph,
     cc_plugin::message::RxmEphPollSv,
     cc_plugin::message::RxmEphPoll,
+    cc_plugin::message::RxmRtcm,
     cc_plugin::message::RxmPmreqV0,
     cc_plugin::message::RxmPmreq,
     cc_plugin::message::RxmRlmShort,
     cc_plugin::message::RxmRlmLong,
     cc_plugin::message::RxmImes,
-    cc_plugin::message::RxmImesPoll,
+    cc_plugin::message::RxmImesPoll/*,
     cc_plugin::message::InfError,
     cc_plugin::message::InfWarning,
     cc_plugin::message::InfNotice,
@@ -630,7 +632,7 @@ using AllMessages = std::tuple<
     cc_plugin::message::SecSign,
     cc_plugin::message::SecUniqid,
     cc_plugin::message::HnrPvt,
-    cc_plugin::message::HnrPvtPoll
+    cc_plugin::message::HnrPvtPoll*/
 >;
 
 }  // namespace cc_plugin

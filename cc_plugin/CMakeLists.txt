@@ -83,6 +83,7 @@ function (cc_plugin_ublox_all_messages)
         message/RxmEph.cpp
         message/RxmEphPollSv.cpp
         message/RxmEphPoll.cpp
+        message/RxmRtcm.cpp
         message/RxmPmreqV0.cpp
         message/RxmPmreq.cpp
         message/RxmRlmShort.cpp
