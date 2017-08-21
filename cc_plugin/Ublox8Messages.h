@@ -355,6 +355,8 @@ using Ublox8Messages = std::tuple<
     cc_plugin::message::NavSatPoll,
     cc_plugin::message::NavGeofence,
     cc_plugin::message::NavGeofencePoll,
+    cc_plugin::message::NavSvin,
+    cc_plugin::message::NavSvinPoll,
     cc_plugin::message::NavRelposned,
     cc_plugin::message::NavRelposnedPoll,
     cc_plugin::message::NavAopstatusU8,

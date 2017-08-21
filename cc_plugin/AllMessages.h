@@ -72,6 +72,8 @@
 #include "cc_plugin/message/NavSatPoll.h"
 #include "cc_plugin/message/NavGeofence.h"
 #include "cc_plugin/message/NavGeofencePoll.h"
+#include "cc_plugin/message/NavSvin.h"
+#include "cc_plugin/message/NavSvinPoll.h"
 #include "cc_plugin/message/NavRelposned.h"
 #include "cc_plugin/message/NavRelposnedPoll.h"
 #include "cc_plugin/message/NavEkfstatus.h"
@@ -386,6 +388,8 @@ using AllMessages = std::tuple<
     cc_plugin::message::NavSatPoll,
     cc_plugin::message::NavGeofence,
     cc_plugin::message::NavGeofencePoll,
+    cc_plugin::message::NavSvin,
+    cc_plugin::message::NavSvinPoll,
     cc_plugin::message::NavRelposned,
     cc_plugin::message::NavRelposnedPoll,
     cc_plugin::message::NavEkfstatus,
