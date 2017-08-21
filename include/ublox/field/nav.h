@@ -199,7 +199,7 @@ enum class CarrSoln : std::uint8_t
     NumOfValues
 };
 
-/// @brief Definition of "carrSoln" member field in @ref flags bitmask field.
+/// @brief Definition of "carrSoln" field.
 template <typename... TOpts>
 using carrSoln =
     common::EnumT<
