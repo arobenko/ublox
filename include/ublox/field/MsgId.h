@@ -113,6 +113,7 @@ private:
             MsgId_NAV_ORB,
             MsgId_NAV_SAT,
             MsgId_NAV_GEOFENCE,
+            MsgId_NAV_RELPOSNED,
             MsgId_NAV_EKFSTATUS,
             MsgId_NAV_AOPSTATUS,
             MsgId_NAV_EOE

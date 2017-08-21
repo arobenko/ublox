@@ -72,6 +72,8 @@
 #include "cc_plugin/message/NavSatPoll.h"
 #include "cc_plugin/message/NavGeofence.h"
 #include "cc_plugin/message/NavGeofencePoll.h"
+#include "cc_plugin/message/NavRelposned.h"
+#include "cc_plugin/message/NavRelposnedPoll.h"
 #include "cc_plugin/message/NavEkfstatusPoll.h"
 #include "cc_plugin/message/NavAopstatusU8.h"
 #include "cc_plugin/message/NavAopstatusPoll.h"
@@ -353,6 +355,8 @@ using Ublox8Messages = std::tuple<
     cc_plugin::message::NavSatPoll,
     cc_plugin::message::NavGeofence,
     cc_plugin::message::NavGeofencePoll,
+    cc_plugin::message::NavRelposned,
+    cc_plugin::message::NavRelposnedPoll,
     cc_plugin::message::NavAopstatusU8,
     cc_plugin::message::NavAopstatusPoll,
     cc_plugin::message::NavEoe,

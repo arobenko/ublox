@@ -122,22 +122,11 @@ struct NavPvtFields
         COMMS_BITMASK_BITS_SEQ(bit);
     };
 
-    enum class CarrSoln : std::uint8_t
-    {
-        NoCarrier, ///< no carrier phase range solution
-        Float, /// float solution,
-        Fixed, /// fixed solution
-        NumOfValues
-    };
+    /// @brief Value enumeration for @ref carrSoln field.
+    using CarrSoln = field::nav::CarrSoln;
 
     /// @brief Definition of "carrSoln" member field in @ref flags bitmask field.
-    using carrSoln =
-        field::common::EnumT<
-            CarrSoln,
-            comms::option::FixedBitLength<2>,
-            comms::option::ValidNumValueRange<0, (int)CarrSoln::NumOfValues - 1>
-        >;
-
+    using carrSoln = field::nav::carrSoln<comms::option::FixedBitLength<2> >;
 
     /// @brief Definition of "flags" field.
     struct flags : public

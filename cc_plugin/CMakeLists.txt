@@ -58,6 +58,8 @@ function (cc_plugin_ublox_all_messages)
         message/NavSatPoll.cpp
         message/NavGeofence.cpp
         message/NavGeofencePoll.cpp
+        message/NavRelposned.cpp
+        message/NavRelposnedPoll.cpp
         message/NavEkfstatus.cpp
         message/NavEkfstatusPoll.cpp
         message/NavAopstatus.cpp

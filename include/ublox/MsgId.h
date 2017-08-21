@@ -58,6 +58,7 @@ enum MsgId : std::uint16_t
     MsgId_NAV_ORB = 0x0134, ///< ID of NAV-ORB message
     MsgId_NAV_SAT = 0x0135, ///< ID of NAV-SAT message
     MsgId_NAV_GEOFENCE = 0x0139, ///< ID of NAV-GEOFENCE message
+    MsgId_NAV_RELPOSNED = 0x013C, ///< ID of NAV-RELPOSNED message
     MsgId_NAV_EKFSTATUS = 0x0140, ///< ID of NAV-EKFSTATUS message
     MsgId_NAV_AOPSTATUS = 0x0160, ///< ID of NAV-AOPSTATUS message
     MsgId_NAV_EOE = 0x0161, ///< ID of NAV-EOE message

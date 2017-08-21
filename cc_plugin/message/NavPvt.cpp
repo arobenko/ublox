@@ -85,22 +85,13 @@ QVariantMap createProps_flags()
 
     assert(headVehValidProps.bits().size() == NavPvtFields::headVehValid::BitIdx_numOfValues);
 
-    auto carrSolnProps =
-        cc::property::field::ForField<NavPvtFields::carrSoln>()
-            .name("carrSoln")
-            .add("No carrier")
-            .add("Float")
-            .add("Fixed")
-            .serialisedHidden();
-    assert(carrSolnProps.values().size() == (int)NavPvtFields::CarrSoln::NumOfValues);
-
     auto props =
         cc::property::field::ForField<NavPvtFields::flags>()
             .name("flags")
             .add(flagsLowProps.asMap())
             .add(psmStateProps.asMap())
             .add(headVehValidProps.asMap())
-            .add(carrSolnProps.asMap());
+            .add(cc_plugin::field::nav::createProps_carrSoln());
     assert(props.members().size() == (int)NavPvtFields::flags::FieldIdx_numOfValues);
     return props.asMap();
 }
