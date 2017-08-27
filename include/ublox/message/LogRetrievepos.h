@@ -36,8 +36,10 @@ struct LogRetrieveposFields
     /// @brief Value enumeration for @ref fixType field.
     enum class FixType : std::uint8_t
     {
-        Fix_2D = 2, ///< 2D fix
-        Fix_3D ///< 3D fix
+        DeadReckoning = 1, ///< Dead reckoning
+        Fix_2D, ///< 2D fix
+        Fix_3D, ///< 3D fix
+        GnssAndDeadReckoning ///< GNSS + Dead Reckoning combined
     };
 
     /// @brief Definition of "entryIndex" field.
@@ -75,7 +77,7 @@ struct LogRetrieveposFields
     using fixType =
         field::common::EnumT<
             FixType,
-            comms::option::ValidNumValueRange<(int)FixType::Fix_2D, (int)FixType::Fix_3D>
+            comms::option::ValidNumValueRange<(int)FixType::DeadReckoning, (int)FixType::GnssAndDeadReckoning>
         >;
 
     /// @brief Definition of "year" field.

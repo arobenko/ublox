@@ -121,6 +121,8 @@ QVariantList createFieldsProperties()
     props.append(cc_plugin::field::common::props_reserved(8));
     props.append(cc_plugin::field::common::props_reserved(9));
     props.append(createProps_boolVal("useAdr"));
+    props.append(cc_plugin::field::common::createProps_optReserved(10, true));
+    props.append(cc_plugin::field::common::createProps_optReserved(11, true));
     assert(props.size() == CfgNavx5::FieldIdx_numOfValues);
     return props;
 }

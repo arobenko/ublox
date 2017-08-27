@@ -63,6 +63,7 @@ const QVariantMap& props_nmeaFlags();
 const QVariantMap& props_mainTalkerId();
 const QVariantMap& props_gsvTalkerId();
 const QVariantMap& props_tpIdx();
+const QVariantMap& props_timeMode();
 
 }  // namespace cfg
 

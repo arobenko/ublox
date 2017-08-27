@@ -33,16 +33,6 @@ namespace message
 /// @see CfgNvs
 struct CfgNvsFields
 {
-    /// @brief Bits access enumeration for @ref deviceMask bitmask field
-    enum
-    {
-        deviceMask_devBBR, ///< b devBBR bit index
-        deviceMask_devFlash, ///< b devFlash bit index
-        deviceMask_devEEPROM, ///< b devEEPROM bit index
-        deviceMask_devSpiFlash = 4,  ///< b devSpiFlash bit index
-        deviceMask_numOfValues ///< upper limit for available bits
-    };
-
     /// @brief Common mask field definition for @ref clearMask, @ref saveMask,
     ///     and @ref loadMask
     struct mask : public

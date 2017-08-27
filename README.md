@@ -18,7 +18,7 @@ allows cherry-picking limited number of the selected messages the product requir
 which provides a great flexibility in terms of the final code size.
 
 Full [doxygen](www.doxygen.org) generated documentation with the full tutorial inside can be
-downloaded as zip archive from [Dropbox](https://www.dropbox.com/s/6hl6nyqjnjhh5bo/doc_ublox_v0.8.zip?dl=1) or
+downloaded as **doc_ublox** zip archive 
 from [release artefacts](https://github.com/arobenko/ublox/releases).
 
 The "example" folder contains simple example application showing how to use the [UBLOX Library](#ublox-library). 

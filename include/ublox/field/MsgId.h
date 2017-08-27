@@ -58,6 +58,7 @@ struct MsgIdValueValidator
             std::make_pair(classId(MsgId_MGA_GPS), &MsgIdValueValidator::validateMga),
             std::make_pair(classId(MsgId_LOG_ERASE), &MsgIdValueValidator::validateLog),
             std::make_pair(classId(MsgId_SEC_SIGN), &MsgIdValueValidator::validateSec),
+            std::make_pair(classId(MsgId_HNR_PVT), &MsgIdValueValidator::validateHnr),
         };
 
         ublox::MsgId id = field.value();
@@ -90,12 +91,15 @@ private:
             MsgId_NAV_POSLLH,
             MsgId_NAV_STATUS,
             MsgId_NAV_DOP,
+            MsgId_NAV_ATT,
             MsgId_NAV_SOL,
             MsgId_NAV_PVT,
             MsgId_NAV_ODO,
             MsgId_NAV_RESETODO,
             MsgId_NAV_VELECEF,
             MsgId_NAV_VELNED,
+            MsgId_NAV_HPPOSECEF,
+            MsgId_NAV_HPPOSLLH,
             MsgId_NAV_TIMEGPS,
             MsgId_NAV_TIMEUTC,
             MsgId_NAV_CLOCK,
@@ -109,6 +113,8 @@ private:
             MsgId_NAV_ORB,
             MsgId_NAV_SAT,
             MsgId_NAV_GEOFENCE,
+            MsgId_NAV_SVIN,
+            MsgId_NAV_RELPOSNED,
             MsgId_NAV_EKFSTATUS,
             MsgId_NAV_AOPSTATUS,
             MsgId_NAV_EOE
@@ -129,6 +135,7 @@ private:
             MsgId_RXM_SVSI,
             MsgId_RXM_ALM,
             MsgId_RXM_EPH,
+            MsgId_RXM_RTCM,
             MsgId_RXM_PMREQ,
             MsgId_RXM_RLM,
             MsgId_RXM_IMES,
@@ -191,10 +198,13 @@ private:
             MsgId_CFG_LOGFILTER,
             MsgId_CFG_TXSLOT,
             MsgId_CFG_PWR,
+            MsgId_CFG_HNR,
             MsgId_CFG_ESRC,
             MsgId_CFG_DOSC,
             MsgId_CFG_SMGR,
             MsgId_CFG_GEOFENCE,
+            MsgId_CFG_DGNSS,
+            MsgId_CFG_TMODE3,
             MsgId_CFG_FIXSEED,
             MsgId_CFG_DYNSEED,
             MsgId_CFG_PMS
@@ -274,7 +284,10 @@ private:
     static bool validateEsf(ublox::MsgId id)
     {
         static const ublox::MsgId IDs[] = {
+            MsgId_ESF_MEAS,
+            MsgId_ESF_RAW,
             MsgId_ESF_STATUS,
+            MsgId_ESF_INS,
         };
 
         auto iter = std::lower_bound(std::begin(IDs), std::end(IDs), id);
@@ -324,6 +337,16 @@ private:
         static const ublox::MsgId IDs[] = {
             MsgId_SEC_SIGN,
             MsgId_SEC_UNIQID,
+        };
+
+        auto iter = std::lower_bound(std::begin(IDs), std::end(IDs), id);
+        return (iter != std::end(IDs)) && (*iter == id);
+    }
+
+    static bool validateHnr(ublox::MsgId id)
+    {
+        static const ublox::MsgId IDs[] = {
+            MsgId_HNR_PVT,
         };
 
         auto iter = std::lower_bound(std::begin(IDs), std::end(IDs), id);

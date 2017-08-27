@@ -40,7 +40,7 @@ struct AidEphFields
     using how = field::common::U4;
 
     /// @brief Definition of "sf1d" field.
-    /// @tparam TOpt Extra option(s)
+    /// @tparam TOpt Extra option(s) to be passed to the "list" definition
     template <typename TOpt = comms::option::EmptyOption>
     using sf1d =
         field::common::OptionalT<

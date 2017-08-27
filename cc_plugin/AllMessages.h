@@ -29,6 +29,8 @@
 #include "cc_plugin/message/NavStatusPoll.h"
 #include "cc_plugin/message/NavDop.h"
 #include "cc_plugin/message/NavDopPoll.h"
+#include "cc_plugin/message/NavAtt.h"
+#include "cc_plugin/message/NavAttPoll.h"
 #include "cc_plugin/message/NavSol.h"
 #include "cc_plugin/message/NavSolPoll.h"
 #include "cc_plugin/message/NavPvt.h"
@@ -40,6 +42,10 @@
 #include "cc_plugin/message/NavVelecefPoll.h"
 #include "cc_plugin/message/NavVelned.h"
 #include "cc_plugin/message/NavVelnedPoll.h"
+#include "cc_plugin/message/NavHpposecef.h"
+#include "cc_plugin/message/NavHpposecefPoll.h"
+#include "cc_plugin/message/NavHpposllh.h"
+#include "cc_plugin/message/NavHpposllhPoll.h"
 #include "cc_plugin/message/NavTimegps.h"
 #include "cc_plugin/message/NavTimegpsPoll.h"
 #include "cc_plugin/message/NavTimeutc.h"
@@ -66,6 +72,10 @@
 #include "cc_plugin/message/NavSatPoll.h"
 #include "cc_plugin/message/NavGeofence.h"
 #include "cc_plugin/message/NavGeofencePoll.h"
+#include "cc_plugin/message/NavSvin.h"
+#include "cc_plugin/message/NavSvinPoll.h"
+#include "cc_plugin/message/NavRelposned.h"
+#include "cc_plugin/message/NavRelposnedPoll.h"
 #include "cc_plugin/message/NavEkfstatus.h"
 #include "cc_plugin/message/NavEkfstatusPoll.h"
 #include "cc_plugin/message/NavAopstatus.h"
@@ -88,6 +98,7 @@
 #include "cc_plugin/message/RxmEph.h"
 #include "cc_plugin/message/RxmEphPollSv.h"
 #include "cc_plugin/message/RxmEphPoll.h"
+#include "cc_plugin/message/RxmRtcm.h"
 #include "cc_plugin/message/RxmPmreqV0.h"
 #include "cc_plugin/message/RxmPmreq.h"
 #include "cc_plugin/message/RxmRlmShort.h"
@@ -171,6 +182,8 @@
 #include "cc_plugin/message/CfgLogfilterPoll.h"
 #include "cc_plugin/message/CfgTxslot.h"
 #include "cc_plugin/message/CfgPwr.h"
+#include "cc_plugin/message/CfgHnr.h"
+#include "cc_plugin/message/CfgHnrPoll.h"
 #include "cc_plugin/message/CfgEsrc.h"
 #include "cc_plugin/message/CfgEsrcPoll.h"
 #include "cc_plugin/message/CfgDosc.h"
@@ -179,6 +192,10 @@
 #include "cc_plugin/message/CfgSmgrPoll.h"
 #include "cc_plugin/message/CfgGeofence.h"
 #include "cc_plugin/message/CfgGeofencePoll.h"
+#include "cc_plugin/message/CfgDgnss.h"
+#include "cc_plugin/message/CfgDgnssPoll.h"
+#include "cc_plugin/message/CfgTmode3.h"
+#include "cc_plugin/message/CfgTmode3Poll.h"
 #include "cc_plugin/message/CfgFixseed.h"
 #include "cc_plugin/message/CfgDynseed.h"
 #include "cc_plugin/message/CfgPms.h"
@@ -253,8 +270,13 @@
 #include "cc_plugin/message/TimFchgPoll.h"
 #include "cc_plugin/message/TimHoc.h"
 
+#include "cc_plugin/message/EsfMeas.h"
+#include "cc_plugin/message/EsfMeasPoll.h"
+#include "cc_plugin/message/EsfRaw.h"
 #include "cc_plugin/message/EsfStatus.h"
 #include "cc_plugin/message/EsfStatusPoll.h"
+#include "cc_plugin/message/EsfIns.h"
+#include "cc_plugin/message/EsfInsPoll.h"
 
 #include "cc_plugin/message/MgaGpsEph.h"
 #include "cc_plugin/message/MgaGpsAlm.h"
@@ -306,6 +328,9 @@
 #include "cc_plugin/message/SecSign.h"
 #include "cc_plugin/message/SecUniqid.h"
 
+#include "cc_plugin/message/HnrPvt.h"
+#include "cc_plugin/message/HnrPvtPoll.h"
+
 namespace ublox
 {
 
@@ -321,6 +346,8 @@ using AllMessages = std::tuple<
     cc_plugin::message::NavStatusPoll,
     cc_plugin::message::NavDop,
     cc_plugin::message::NavDopPoll,
+    cc_plugin::message::NavAtt,
+    cc_plugin::message::NavAttPoll,
     cc_plugin::message::NavSol,
     cc_plugin::message::NavSolPoll,
     cc_plugin::message::NavPvt,
@@ -332,6 +359,10 @@ using AllMessages = std::tuple<
     cc_plugin::message::NavVelecefPoll,
     cc_plugin::message::NavVelned,
     cc_plugin::message::NavVelnedPoll,
+    cc_plugin::message::NavHpposecef,
+    cc_plugin::message::NavHpposecefPoll,
+    cc_plugin::message::NavHpposllh,
+    cc_plugin::message::NavHpposllhPoll,
     cc_plugin::message::NavTimegps,
     cc_plugin::message::NavTimegpsPoll,
     cc_plugin::message::NavTimeutc,
@@ -358,6 +389,10 @@ using AllMessages = std::tuple<
     cc_plugin::message::NavSatPoll,
     cc_plugin::message::NavGeofence,
     cc_plugin::message::NavGeofencePoll,
+    cc_plugin::message::NavSvin,
+    cc_plugin::message::NavSvinPoll,
+    cc_plugin::message::NavRelposned,
+    cc_plugin::message::NavRelposnedPoll,
     cc_plugin::message::NavEkfstatus,
     cc_plugin::message::NavEkfstatusPoll,
     cc_plugin::message::NavAopstatus,
@@ -379,6 +414,7 @@ using AllMessages = std::tuple<
     cc_plugin::message::RxmEph,
     cc_plugin::message::RxmEphPollSv,
     cc_plugin::message::RxmEphPoll,
+    cc_plugin::message::RxmRtcm,
     cc_plugin::message::RxmPmreqV0,
     cc_plugin::message::RxmPmreq,
     cc_plugin::message::RxmRlmShort,
@@ -459,6 +495,8 @@ using AllMessages = std::tuple<
     cc_plugin::message::CfgLogfilterPoll,
     cc_plugin::message::CfgTxslot,
     cc_plugin::message::CfgPwr,
+    cc_plugin::message::CfgHnr,
+    cc_plugin::message::CfgHnrPoll,
     cc_plugin::message::CfgEsrc,
     cc_plugin::message::CfgEsrcPoll,
     cc_plugin::message::CfgDosc,
@@ -467,6 +505,10 @@ using AllMessages = std::tuple<
     cc_plugin::message::CfgSmgrPoll,
     cc_plugin::message::CfgGeofence,
     cc_plugin::message::CfgGeofencePoll,
+    cc_plugin::message::CfgDgnss,
+    cc_plugin::message::CfgDgnssPoll,
+    cc_plugin::message::CfgTmode3,
+    cc_plugin::message::CfgTmode3Poll,
     cc_plugin::message::CfgFixseed,
     cc_plugin::message::CfgDynseed,
     cc_plugin::message::CfgPms,
@@ -535,8 +577,13 @@ using AllMessages = std::tuple<
     cc_plugin::message::TimVcocalPoll,
     cc_plugin::message::TimFchg,
     cc_plugin::message::TimFchgPoll,
+    cc_plugin::message::EsfMeas,
+    cc_plugin::message::EsfMeasPoll,
+    cc_plugin::message::EsfRaw,
     cc_plugin::message::EsfStatus,
     cc_plugin::message::EsfStatusPoll,
+    cc_plugin::message::EsfIns,
+    cc_plugin::message::EsfInsPoll,
     cc_plugin::message::MgaGpsEph,
     cc_plugin::message::MgaGpsAlm,
     cc_plugin::message::MgaGpsHealth,
@@ -583,7 +630,9 @@ using AllMessages = std::tuple<
     cc_plugin::message::LogFindtime,
     cc_plugin::message::LogRetrieveposextra,
     cc_plugin::message::SecSign,
-    cc_plugin::message::SecUniqid
+    cc_plugin::message::SecUniqid,
+    cc_plugin::message::HnrPvt,
+    cc_plugin::message::HnrPvtPoll
 >;
 
 }  // namespace cc_plugin

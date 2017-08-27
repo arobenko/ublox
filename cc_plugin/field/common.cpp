@@ -186,6 +186,17 @@ QVariantMap createProps_utcStandard(bool serialisedHidden)
     return props.asMap();
 }
 
+QVariantMap createProps_optReserved(unsigned idx, bool uncheckable)
+{
+    return
+        cc::property::field::Optional()
+            .name(QString("reserved%1").arg(idx, 1, 10, QChar('0')))
+            .field(createProps_reserved(idx))
+            .uncheckable(uncheckable)
+            .asMap();
+}
+
+
 }  // namespace common
 
 }  // namespace field

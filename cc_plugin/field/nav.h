@@ -74,6 +74,7 @@ const QVariantMap& props_velD();
 const QVariantMap& props_numCh();
 const QVariantMap& props_cnt();
 const QVariantMap& props_svid();
+QVariantMap createProps_carrSoln(bool serialisedHidden = true);
 
 }  // namespace nav
 

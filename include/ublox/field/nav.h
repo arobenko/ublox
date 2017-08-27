@@ -190,6 +190,25 @@ using numCh = common::U1;
 /// @brief Definition of common "svid" field.
 using svid = common::svid;
 
+/// @brief Value enumeration for @ref carrSoln field.
+enum class CarrSoln : std::uint8_t
+{
+    NoCarrier, ///< no carrier phase range solution
+    Float, /// float solution,
+    Fixed, /// fixed solution
+    NumOfValues
+};
+
+/// @brief Definition of "carrSoln" field.
+template <typename... TOpts>
+using carrSoln =
+    common::EnumT<
+        CarrSoln,
+        comms::option::ValidNumValueRange<0, (int)CarrSoln::NumOfValues - 1>,
+        TOpts...
+    >;
+
+
 }  // namespace nav
 
 }  // namespace field

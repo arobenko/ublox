@@ -87,7 +87,7 @@ struct NavTimelsFields
     enum class SrcOfLsChange : std::uint8_t
     {
         NoSource, ///< No source
-        Gps, ///< GPS
+        Gps = 2, ///< GPS
         Sbas, ///< SBAS
         BeiDou, ///< BeiDou
         Galileo, ///< Galileo

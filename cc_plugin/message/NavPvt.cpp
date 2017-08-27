@@ -48,7 +48,8 @@ QVariantMap createProps_valid()
     props.name("valid")
          .add("validDate")
          .add("validTime")
-         .add("fullyResolved");
+         .add("fullyResolved")
+         .add("validMag");
 
     assert(props.bits().size() == NavPvtFields::validBits::BitIdx_numOfValues);
     return props.asMap();
@@ -77,20 +78,20 @@ QVariantMap createProps_flags()
             .serialisedHidden();
     assert(psmStateProps.values().size() == (int)NavPvtFields::PsmState::NumOfValues);
 
-    auto flagsHighProps =
-        cc::property::field::ForField<NavPvtFields::flagsHigh>()
+    auto headVehValidProps =
+        cc::property::field::ForField<NavPvtFields::headVehValid>()
             .add("headVehValid")
             .serialisedHidden();
 
-    assert(flagsHighProps.bits().size() == NavPvtFields::flagsHigh::BitIdx_numOfValues);
-
+    assert(headVehValidProps.bits().size() == NavPvtFields::headVehValid::BitIdx_numOfValues);
 
     auto props =
         cc::property::field::ForField<NavPvtFields::flags>()
             .name("flags")
             .add(flagsLowProps.asMap())
             .add(psmStateProps.asMap())
-            .add(flagsHighProps.asMap());
+            .add(headVehValidProps.asMap())
+            .add(cc_plugin::field::nav::createProps_carrSoln());
     assert(props.members().size() == (int)NavPvtFields::flags::FieldIdx_numOfValues);
     return props.asMap();
 }
@@ -127,12 +128,31 @@ QVariantMap createProps_headVeh()
             .asMap();
 }
 
-QVariantMap createProps_reserved3()
+QVariantMap createProps_magDec()
 {
+    using Field = NavPvtFields::magDec;
     return
-        cc::property::field::ForField<NavPvtFields::reserved3>()
-            .name("reserved3")
-            .field(cc_plugin::field::common::props_reserved(3))
+        cc::property::field::ForField<Field>()
+            .name("magDec")
+            .field(
+                cc::property::field::ForField<Field::Field>()
+                    .name("magDec")
+                    .scaledDecimals(2)
+                    .asMap())
+            .asMap();
+}
+
+QVariantMap createProps_magAcc()
+{
+    using Field = NavPvtFields::magAcc;
+    return
+        cc::property::field::ForField<Field>()
+            .name("magAcc")
+            .field(
+                cc::property::field::ForField<Field::Field>()
+                    .name("magAcc")
+                    .scaledDecimals(2)
+                    .asMap())
             .asMap();
 }
 
@@ -170,7 +190,8 @@ QVariantList createFieldsProperties()
     props.append(cc_plugin::field::common::props_reserved(1));
     props.append(cc_plugin::field::common::props_reserved(2));
     props.append(createProps_headVeh());
-    props.append(createProps_reserved3());
+    props.append(createProps_magDec());
+    props.append(createProps_magAcc());
 
     assert(props.size() == NavPvt::FieldIdx_numOfValues);
     return props;

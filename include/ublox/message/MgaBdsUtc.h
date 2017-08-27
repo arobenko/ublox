@@ -84,7 +84,6 @@ struct MgaBdsUtcFields
     /// @brief Definition of "reserved3" field.
     using reserved3 = field::common::res2;
 
-    // TODO
     /// @brief All the fields bundled in std::tuple.
     using All = std::tuple<
         type,

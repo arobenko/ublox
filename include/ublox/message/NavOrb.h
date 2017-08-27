@@ -36,7 +36,7 @@ struct NavOrbFields
     /// @brief Definition of "iTOW" field.
     using iTOW = field::nav::iTOW;
 
-    /// @brief Definition of "globalFlags" field.
+    /// @brief Definition of "version" field.
     using version =
         field::common::U1T<
             comms::option::ValidNumValueRange<1, 1>,

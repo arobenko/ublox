@@ -60,7 +60,8 @@ QVariantMap createProps_flags()
     props.name("flags")
          .add("compat")
          .add("consider")
-         .add("limit82");
+         .add("limit82")
+         .add("highPrec");
     assert(props.bits().size() == ublox::message::CfgNmeaExtV1Fields::flags::BitIdx_numOfValues);
     return props.asMap();
 }

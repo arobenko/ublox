@@ -56,6 +56,9 @@ struct CfgPm2Fields
     /// @brief Value enumeration for @ref extintBackup field.
     using ExtintBackup = DisabledEnabled;
 
+    /// @brief Value enumeration for @ref extintInactive field.
+    using ExtintInactive = DisabledEnabled;
+
     /// @brief Value enumeration for @ref limitPeakCurr field.
     using LimitPeakCurr = DisabledEnabled;
 
@@ -71,7 +74,7 @@ struct CfgPm2Fields
     using version =
         field::common::U1T<
             comms::option::DefaultNumValue<1>,
-            comms::option::ValidNumValueRange<1, 1>
+            comms::option::ValidNumValueRange<1, 2>
         >;
 
     /// @brief Definition of "reserved1" field.
@@ -82,12 +85,6 @@ struct CfgPm2Fields
 
     /// @brief Definition of "reserved3" field.
     using reserved3 = field::common::res1;
-
-    /// @brief Definition of "reserved" member of @ref flags bitfield field.
-    using reserved =
-        field::common::res1T<
-            comms::option::FixedBitLength<4>
-        >;
 
     /// @brief Definition of "extintSelect" member of @ref flags bitfield field.
     using extintSelect =
@@ -110,6 +107,14 @@ struct CfgPm2Fields
         field::common::EnumT<
             ExtintBackup,
             comms::option::ValidNumValueRange<0, (int)ExtintBackup::NumOfValues - 1>,
+            comms::option::FixedBitLength<1>
+        >;
+
+    /// @brief Definition of "extintInactive" member of @ref flags bitfield field.
+    using extintInactive =
+        field::common::EnumT<
+            ExtintInactive,
+            comms::option::ValidNumValueRange<0, (int)ExtintInactive::NumOfValues - 1>,
             comms::option::FixedBitLength<1>
         >;
 
@@ -177,13 +182,13 @@ struct CfgPm2Fields
     struct flags : public
         field::common::BitfieldT<
             std::tuple<
-                reserved,
+                field::common::res1T<
+                    comms::option::FixedBitLength<4>
+                >,
                 extintSelect,
                 extintWake,
                 extintBackup,
-                field::common::res1T<
-                    comms::option::FixedBitLength<1>
-                >,
+                extintInactive,
                 limitPeakCurr,
                 waitTimeFix,
                 updateRTC,
@@ -208,15 +213,15 @@ struct CfgPm2Fields
             extintSelect,
             extintWake,
             extintBackup,
-            invalid2,
+            extintInactive,
             limitPeakCurr,
             waitTimeFix,
             updateRTC,
             updateEPH,
-            invalid3,
+            invalid2,
             doNotEnterOff,
             mode,
-            invalid4);
+            invalid3);
     };
 
     /// @brief Definition of "updatePeriod" field.
@@ -258,6 +263,14 @@ struct CfgPm2Fields
     /// @brief Definition of "reserved11" field.
     using reserved11 = field::common::res4;
 
+    /// @brief Definition of "extintInactivityMs" field.
+    /// @details Defined as optional to allow single definition for
+    ///     versions 1 and 2 of the message
+    using extintInactivityMs =
+        field::common::OptionalT<
+            field::common::U4T<comms::option::UnitsMilliseconds>
+        >;
+
     /// @brief All the fields bundled in std::tuple.
     using All = std::tuple<
         version,
@@ -277,7 +290,8 @@ struct CfgPm2Fields
         reserved8,
         reserved9,
         reserved10,
-        reserved11
+        reserved11,
+        extintInactivityMs
     >;
 };
 
@@ -294,7 +308,8 @@ class CfgPm2 : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_PM2>,
         comms::option::FieldsImpl<CfgPm2Fields::All>,
-        comms::option::MsgType<CfgPm2<TMsgBase> >
+        comms::option::MsgType<CfgPm2<TMsgBase> >,
+        comms::option::HasDoRefresh
     >
 {
 public:
@@ -322,6 +337,7 @@ public:
     ///     @li @b reserved9 for @ref CfgPm2Fields::reserved9 field
     ///     @li @b reserved10 for @ref CfgPm2Fields::reserved10 field
     ///     @li @b reserved11 for @ref CfgPm2Fields::reserved11 field
+    ///     @li @b extintInactivityMs for @ref CfgPm2Fields::extintInactivityMs field
     COMMS_MSG_FIELDS_ACCESS(
         version,
         reserved1,
@@ -340,7 +356,8 @@ public:
         reserved8,
         reserved9,
         reserved10,
-        reserved11
+        reserved11,
+        extintInactivityMs
     );
 
     /// @brief Default constructor
@@ -360,6 +377,46 @@ public:
 
     /// @brief Move assignment
     CfgPm2& operator=(CfgPm2&&) = default;
+
+    /// @brief Provides custom read functionality.
+    /// @details The existence of "extintInactivityMs" (see @ref CfgPm2Fields::extintInactivityMs) is
+    ///     determined by the value of "version" (see @ref CfgPm2Fields::version).
+    template <typename TIter>
+    comms::ErrorStatus doRead(TIter& iter, std::size_t len)
+    {
+        using Base = typename std::decay<decltype(comms::toMessageBase(*this))>::type;
+        auto es = Base::template readFieldsUntil<FieldIdx_extintInactivityMs>(iter, len);
+        if (es != comms::ErrorStatus::Success) {
+            return es;
+        }
+
+        if (2 <= field_version().value()) {
+            field_extintInactivityMs().setExists();
+        }
+        else {
+            field_extintInactivityMs().setMissing();
+        }
+        return Base::template readFieldsFrom<FieldIdx_extintInactivityMs>(iter, len);
+    }
+
+    /// @brief Provides custom refresh functionality
+    /// @details The existence of "extintInactivityMs" (see @ref CfgPm2Fields::extintInactivityMs) is
+    ///     determined by the value of "version" (see @ref CfgPm2Fields::version).
+    /// @return @b true in case the mode of "extintInactivityMs" field was modified, @b false otherwise
+    bool doRefresh()
+    {
+        auto extintInactivityMsMode = comms::field::OptionalMode::Missing;
+        if (2 <= field_version().value()) {
+            extintInactivityMsMode = comms::field::OptionalMode::Exists;
+        }
+
+        if (field_extintInactivityMs().getMode() == extintInactivityMsMode) {
+            return false;
+        }
+
+        field_extintInactivityMs().setMode(extintInactivityMsMode);
+        return true;
+    }
 };
 
 

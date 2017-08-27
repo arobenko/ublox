@@ -28,11 +28,14 @@
 #include "message/NavPosllh.h"
 #include "message/NavStatus.h"
 #include "message/NavDop.h"
+#include "message/NavAtt.h"
 #include "message/NavSol.h"
 #include "message/NavPvt.h"
 #include "message/NavOdo.h"
 #include "message/NavVelecef.h"
 #include "message/NavVelned.h"
+#include "message/NavHpposecef.h"
+#include "message/NavHpposllh.h"
 #include "message/NavTimegps.h"
 #include "message/NavTimeutc.h"
 #include "message/NavClock.h"
@@ -46,6 +49,8 @@
 #include "message/NavOrb.h"
 #include "message/NavSat.h"
 #include "message/NavGeofence.h"
+#include "message/NavSvin.h"
+#include "message/NavRelposned.h"
 #include "message/NavEkfstatus.h"
 #include "message/NavAopstatus.h"
 #include "message/NavAopstatusU8.h"
@@ -59,6 +64,7 @@
 #include "message/RxmSvsi.h"
 #include "message/RxmAlm.h"
 #include "message/RxmEph.h"
+#include "message/RxmRtcm.h"
 #include "message/RxmRlmShort.h"
 #include "message/RxmRlmLong.h"
 #include "message/RxmImes.h"
@@ -103,10 +109,13 @@
 #include "message/CfgTmode2.h"
 #include "message/CfgGnss.h"
 #include "message/CfgLogfilter.h"
+#include "message/CfgHnr.h"
 #include "message/CfgEsrc.h"
 #include "message/CfgDosc.h"
 #include "message/CfgSmgr.h"
 #include "message/CfgGeofence.h"
+#include "message/CfgDgnss.h"
+#include "message/CfgTmode3.h"
 #include "message/CfgPms.h"
 
 #include "message/UpdSosRestored.h"
@@ -145,7 +154,10 @@
 #include "message/TimVcocal.h"
 #include "message/TimFchg.h"
 
+#include "message/EsfMeas.h"
+#include "message/EsfRaw.h"
 #include "message/EsfStatus.h"
+#include "message/EsfIns.h"
 
 #include "message/MgaFlashAck.h"
 #include "message/MgaAck.h"
@@ -160,6 +172,8 @@
 #include "message/SecSign.h"
 #include "message/SecUniqid.h"
 
+#include "message/HnrPvt.h"
+
 namespace ublox
 {
 
@@ -173,11 +187,14 @@ using InputMessages =
         message::NavPosllh<TMessage>,
         message::NavStatus<TMessage>,
         message::NavDop<TMessage>,
+        message::NavAtt<TMessage>,
         message::NavSol<TMessage>,
         message::NavPvt<TMessage>,
         message::NavOdo<TMessage>,
         message::NavVelecef<TMessage>,
         message::NavVelned<TMessage>,
+        message::NavHpposecef<TMessage>,
+        message::NavHpposllh<TMessage>,
         message::NavTimegps<TMessage>,
         message::NavTimeutc<TMessage>,
         message::NavClock<TMessage>,
@@ -191,6 +208,8 @@ using InputMessages =
         message::NavOrb<TMessage>,
         message::NavSat<TMessage>,
         message::NavGeofence<TMessage>,
+        message::NavSvin<TMessage>,
+        message::NavRelposned<TMessage>,
         message::NavEkfstatus<TMessage>,
         message::NavAopstatus<TMessage>,
         message::NavAopstatusU8<TMessage>,
@@ -202,6 +221,7 @@ using InputMessages =
         message::RxmSvsi<TMessage>,
         message::RxmAlm<TMessage>,
         message::RxmEph<TMessage>,
+        message::RxmRtcm<TMessage>,
         message::RxmRlmShort<TMessage>,
         message::RxmRlmLong<TMessage>,
         message::RxmImes<TMessage>,
@@ -243,10 +263,13 @@ using InputMessages =
         message::CfgTmode2<TMessage>,
         message::CfgGnss<TMessage>,
         message::CfgLogfilter<TMessage>,
+        message::CfgHnr<TMessage>,
         message::CfgEsrc<TMessage>,
         message::CfgDosc<TMessage>,
         message::CfgSmgr<TMessage>,
         message::CfgGeofence<TMessage>,
+        message::CfgDgnss<TMessage>,
+        message::CfgTmode3<TMessage>,
         message::CfgPms<TMessage>,
         message::UpdSosRestored<TMessage>,
         message::UpdSosAck<TMessage>,
@@ -280,7 +303,10 @@ using InputMessages =
         message::TimSmeas<TMessage>,
         message::TimVcocal<TMessage>,
         message::TimFchg<TMessage>,
+        message::EsfMeas<TMessage>,
+        message::EsfRaw<TMessage>,
         message::EsfStatus<TMessage>,
+        message::EsfIns<TMessage>,
         message::MgaFlashAck<TMessage>,
         message::MgaAck<TMessage>,
         message::MgaDbd<TMessage>,
@@ -290,7 +316,8 @@ using InputMessages =
         message::LogFindtime<TMessage>,
         message::LogRetrieveposextra<TMessage>,
         message::SecSign<TMessage>,
-        message::SecUniqid<TMessage>
+        message::SecUniqid<TMessage>,
+        message::HnrPvt<TMessage>
     >;
 
 }  // namespace ublox

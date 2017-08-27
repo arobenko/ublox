@@ -47,6 +47,7 @@ struct CfgPmsFields
         Interval, ///< Intervale
         Aggressive_1Hz, ///< Aggressive with 1Hz
         Aggressive_2Hz, ///< Aggressive with 2Hz
+        Aggressive_4Hz, ///< Aggressive with 4Hz
         Invalid = 0xff /// Invalid
     };
 
@@ -59,7 +60,7 @@ struct CfgPmsFields
             if (val == PowerSetupValue::Invalid) {
                 return true;
             }
-            return (PowerSetupValue::FullPower <= val) && (val <= PowerSetupValue::Aggressive_2Hz);
+            return (PowerSetupValue::FullPower <= val) && (val <= PowerSetupValue::Aggressive_4Hz);
         }
     };
 

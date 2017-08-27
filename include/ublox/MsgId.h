@@ -36,12 +36,15 @@ enum MsgId : std::uint16_t
     MsgId_NAV_POSLLH = 0x0102, ///< ID of NAV-POSLLH message
     MsgId_NAV_STATUS = 0x0103, ///< ID of NAV-STATUS message
     MsgId_NAV_DOP = 0x0104, ///< ID of NAV-DOP message
+    MsgId_NAV_ATT = 0x0105, ///< ID of NAV-ATT message
     MsgId_NAV_SOL = 0x0106, ///< ID of NAV-SOL message
     MsgId_NAV_PVT = 0x0107, ///< ID of NAV-PVT message
     MsgId_NAV_ODO = 0x0109, ///< ID of NAV-ODO message
     MsgId_NAV_RESETODO = 0x0110, ///< ID of NAV-RESETODO message
     MsgId_NAV_VELECEF = 0x0111, ///< ID of NAV-VELECEF message
     MsgId_NAV_VELNED = 0x0112, ///< ID of NAV-VELNED message
+    MsgId_NAV_HPPOSECEF = 0x0113, ///< ID of NAV-HPPOSECEF message
+    MsgId_NAV_HPPOSLLH = 0x0114, ///< ID of NAV-HPPOSLLH message
     MsgId_NAV_TIMEGPS = 0x0120, ///< ID of NAV-TIMEGPS message
     MsgId_NAV_TIMEUTC = 0x0121, ///< ID of NAV-TIMEUTC message
     MsgId_NAV_CLOCK = 0x0122, ///< ID of NAV-CLOCK message
@@ -55,6 +58,8 @@ enum MsgId : std::uint16_t
     MsgId_NAV_ORB = 0x0134, ///< ID of NAV-ORB message
     MsgId_NAV_SAT = 0x0135, ///< ID of NAV-SAT message
     MsgId_NAV_GEOFENCE = 0x0139, ///< ID of NAV-GEOFENCE message
+    MsgId_NAV_SVIN = 0x013B, ///< ID of NAV-SVIN message
+    MsgId_NAV_RELPOSNED = 0x013C, ///< ID of NAV-RELPOSNED message
     MsgId_NAV_EKFSTATUS = 0x0140, ///< ID of NAV-EKFSTATUS message
     MsgId_NAV_AOPSTATUS = 0x0160, ///< ID of NAV-AOPSTATUS message
     MsgId_NAV_EOE = 0x0161, ///< ID of NAV-EOE message
@@ -66,6 +71,7 @@ enum MsgId : std::uint16_t
     MsgId_RXM_SVSI = 0x0220, ///< ID of RXM-SVSI message
     MsgId_RXM_ALM = 0x0230, ///< ID of RXM-ALM message
     MsgId_RXM_EPH = 0x0231, ///< ID of RXM-EPH message
+    MsgId_RXM_RTCM = 0x0232, ///< ID of RXM-RTCM message
     MsgId_RXM_PMREQ = 0x0241, ///< ID of RXM-PMREQ message
     MsgId_RXM_RLM = 0x0259, ///< ID of RXM-RLM message
     MsgId_RXM_IMES = 0x0261, ///< ID of RXM-IMES message
@@ -107,10 +113,13 @@ enum MsgId : std::uint16_t
     MsgId_CFG_LOGFILTER = 0x0647, ///< ID of CFG-LOGFILTER message
     MsgId_CFG_TXSLOT = 0x0653, ///< ID of CFG-TXSLOT message
     MsgId_CFG_PWR = 0x0657, ///< ID of CFG-PWR message
+    MsgId_CFG_HNR = 0x065C, ///< ID of CFG-HNR message
     MsgId_CFG_ESRC = 0x0660, ///< ID of CFG-ESRC message
     MsgId_CFG_DOSC = 0x0661, ///< ID of CFG-DOSC message
     MsgId_CFG_SMGR = 0x0662, ///< ID of CFG-SMGR message
     MsgId_CFG_GEOFENCE = 0x0669, ///< ID of CFG-GEOFENCE message
+    MsgId_CFG_DGNSS = 0x0670, ///< ID of CFG-DGNSS message
+    MsgId_CFG_TMODE3 = 0x0671, ///< ID of CFG-TMODE3 message
     MsgId_CFG_FIXSEED = 0x0684, ///< ID of CFG-FIXSEED message
     MsgId_CFG_DYNSEED = 0x0685, ///< ID of CFG-DYNSEED message
     MsgId_CFG_PMS = 0x0686, ///< ID of CFG-PMS message
@@ -145,7 +154,10 @@ enum MsgId : std::uint16_t
     MsgId_TIM_VCOCAL = 0x0d15, ///< ID of TIM-VCOCAL message
     MsgId_TIM_FCHG = 0x0d16, ///< ID of TIM-FCHG message
     MsgId_TIM_HOC = 0x0d17, ///< ID of TIM-HOC message
+    MsgId_ESF_MEAS = 0x1002, ///< ID of ESF-MEAS message
+    MsgId_ESF_RAW = 0x1003, ///< ID of ESF-RAW message
     MsgId_ESF_STATUS = 0x1010, ///< ID of ESF-STATUS message
+    MsgId_ESF_INS = 0x1015, ///< ID of ESF-INS message
     MsgId_MGA_GPS = 0x1300, ///< ID of MGA-GPS message
     MsgId_MGA_GAL = 0x1302, ///< ID of MGA-GAL message
     MsgId_MGA_BDS = 0x1303, ///< ID of MGA-BDS message
@@ -166,7 +178,8 @@ enum MsgId : std::uint16_t
     MsgId_LOG_FINDTIME = 0x210e, ///< ID of LOG-FINDTIME message
     MsgId_LOG_RETRIEVEPOSEXTRA = 0x210f, ///< ID of LOG-RETRIEVEPOSEXTRA message
     MsgId_SEC_SIGN = 0x2701, ///< ID of SEC-SIGN message
-    MsgId_SEC_UNIQID = 0x2703 ///< ID of SEC-UNIQID message
+    MsgId_SEC_UNIQID = 0x2703, ///< ID of SEC-UNIQID message
+    MsgId_HNR_PVT = 0x2800, ///< ID of HNR-PVT message
 };
 
 }  // namespace ublox

@@ -381,6 +381,19 @@ const QVariantMap& props_svid()
     return common::props_svid();
 }
 
+QVariantMap createProps_carrSoln(bool serialisedHidden)
+{
+    auto props =
+        cc::property::field::EnumValue()
+            .name("carrSoln")
+            .add("No carrier")
+            .add("Float")
+            .add("Fixed")
+            .serialisedHidden(serialisedHidden);
+    assert(props.values().size() == (int)ublox::field::nav::CarrSoln::NumOfValues);
+    return props.asMap();
+}
+
 }  // namespace nav
 
 }  // namespace field

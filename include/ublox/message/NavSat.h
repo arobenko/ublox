@@ -159,14 +159,38 @@ struct NavSatFields
     struct flagsHigh : public
         field::common::X4T<
             comms::option::FixedBitLength<21>,
-            comms::option::BitmaskReservedBits<0xfffffff0, 0>
+            comms::option::BitmaskReservedBits<0xfffff190, 0>
         >
     {
         /// @brief Provide names for internal bits.
-        /// @details See definition of @b COMMS_BITMASK_BITS_SEQ macro
+        /// @details See definition of @b COMMS_BITMASK_BITS macro
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
-        COMMS_BITMASK_BITS_SEQ(ephAvail, almAvail, anoAvail, aopAvail);
+        COMMS_BITMASK_BITS(
+            ephAvail,
+            almAvail,
+            anoAvail,
+            aopAvail,
+            sbasCorrUsed=5,
+            rtcmCorrUsed,
+            prCorrUsed=9,
+            crCorrUsed,
+            doCorrUsed);
+
+        /// @brief Provide convenience access functions for internal bits.
+        /// @details See definition of @b COMMS_BITMASK_BITS_ACCESS macro
+        ///     related to @b comms::field::BitmaskValue class from COMMS library
+        ///     for details.
+        COMMS_BITMASK_BITS_ACCESS(
+            ephAvail,
+            almAvail,
+            anoAvail,
+            aopAvail,
+            sbasCorrUsed,
+            rtcmCorrUsed,
+            prCorrUsed,
+            crCorrUsed,
+            doCorrUsed);
     };
 
     /// @brief Definition of "flags" field.

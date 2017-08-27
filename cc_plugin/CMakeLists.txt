@@ -15,6 +15,8 @@ function (cc_plugin_ublox_all_messages)
         message/NavStatusPoll.cpp
         message/NavDop.cpp
         message/NavDopPoll.cpp
+        message/NavAtt.cpp
+        message/NavAttPoll.cpp
         message/NavSol.cpp
         message/NavSolPoll.cpp
         message/NavPvt.cpp
@@ -26,6 +28,10 @@ function (cc_plugin_ublox_all_messages)
         message/NavVelecefPoll.cpp
         message/NavVelned.cpp
         message/NavVelnedPoll.cpp
+        message/NavHpposecef.cpp
+        message/NavHpposecefPoll.cpp
+        message/NavHpposllh.cpp
+        message/NavHpposllhPoll.cpp
         message/NavTimegps.cpp
         message/NavTimegpsPoll.cpp
         message/NavTimeutc.cpp
@@ -52,6 +58,10 @@ function (cc_plugin_ublox_all_messages)
         message/NavSatPoll.cpp
         message/NavGeofence.cpp
         message/NavGeofencePoll.cpp
+        message/NavSvin.cpp
+        message/NavSvinPoll.cpp
+        message/NavRelposned.cpp
+        message/NavRelposnedPoll.cpp
         message/NavEkfstatus.cpp
         message/NavEkfstatusPoll.cpp
         message/NavAopstatus.cpp
@@ -73,6 +83,7 @@ function (cc_plugin_ublox_all_messages)
         message/RxmEph.cpp
         message/RxmEphPollSv.cpp
         message/RxmEphPoll.cpp
+        message/RxmRtcm.cpp
         message/RxmPmreqV0.cpp
         message/RxmPmreq.cpp
         message/RxmRlmShort.cpp
@@ -153,6 +164,8 @@ function (cc_plugin_ublox_all_messages)
         message/CfgLogfilterPoll.cpp
         message/CfgTxslot.cpp
         message/CfgPwr.cpp
+        message/CfgHnr.cpp
+        message/CfgHnrPoll.cpp
         message/CfgEsrc.cpp
         message/CfgEsrcPoll.cpp
         message/CfgDosc.cpp
@@ -161,6 +174,10 @@ function (cc_plugin_ublox_all_messages)
         message/CfgSmgrPoll.cpp
         message/CfgGeofence.cpp
         message/CfgGeofencePoll.cpp
+        message/CfgDgnss.cpp
+        message/CfgDgnssPoll.cpp
+        message/CfgTmode3.cpp
+        message/CfgTmode3Poll.cpp
         message/CfgFixseed.cpp
         message/CfgDynseed.cpp
         message/CfgPms.cpp
@@ -230,8 +247,13 @@ function (cc_plugin_ublox_all_messages)
         message/TimFchg.cpp
         message/TimFchgPoll.cpp
         message/TimHoc.cpp
+        message/EsfMeas.cpp
+        message/EsfMeasPoll.cpp
+        message/EsfRaw.cpp
         message/EsfStatus.cpp
         message/EsfStatusPoll.cpp
+        message/EsfIns.cpp
+        message/EsfInsPoll.cpp
         message/MgaGpsEph.cpp
         message/MgaGpsAlm.cpp
         message/MgaGpsHealth.cpp
@@ -279,6 +301,8 @@ function (cc_plugin_ublox_all_messages)
         message/LogRetrieveposextra.cpp
         message/SecSign.cpp
         message/SecUniqid.cpp
+        message/HnrPvt.cpp
+        message/HnrPvtPoll.cpp
         field/MsgId.cpp
         field/common.cpp
         field/nav.cpp

@@ -72,7 +72,10 @@ struct CfgNavx5Fields
         template <typename TField>
         bool operator()(const TField& field) const
         {
-            return (field.value() == 0) || (field.value() == 2);
+            return
+                (field.value() == 0) ||
+                (field.value() == 2) ||
+                (field.value() == 3);
         }
     };
 
@@ -219,6 +222,24 @@ struct CfgNavx5Fields
             comms::option::ValidNumValueRange<0, (int)UseAdr::NumOfValues - 1>
         >;
 
+    /// @brief Definition of "reserved10" field
+    /// @details Introduced in v3 of this message, as the result defined as
+    ///     optional field.
+    using reserved10 =
+        field::common::OptionalT<
+            field::common::res2,
+            comms::option::DefaultOptionalMode<comms::field::OptionalMode::Missing>
+        >;
+
+    /// @brief Definition of "reserved11" field
+    /// @details Introduced in v3 of this message, as the result defined as
+    ///     optional field.
+    using reserved11 =
+        field::common::OptionalT<
+            field::common::res2,
+            comms::option::DefaultOptionalMode<comms::field::OptionalMode::Missing>
+        >;
+
     /// @brief All the fields bundled in std::tuple.
     using All = std::tuple<
         version,
@@ -243,7 +264,9 @@ struct CfgNavx5Fields
         aopOrbMaxErr,
         reserved8,
         reserved9,
-        useAdr
+        useAdr,
+        reserved10,
+        reserved11
     >;
 };
 
@@ -260,7 +283,8 @@ class CfgNavx5 : public
         TMsgBase,
         comms::option::StaticNumIdImpl<MsgId_CFG_NAVX5>,
         comms::option::FieldsImpl<CfgNavx5Fields::All>,
-        comms::option::MsgType<CfgNavx5<TMsgBase> >
+        comms::option::MsgType<CfgNavx5<TMsgBase> >,
+        comms::option::HasDoRefresh
     >
 {
 public:
@@ -294,6 +318,8 @@ public:
     ///     @li @b reserved8 for @ref CfgNavx5Fields::reserved8 field
     ///     @li @b reserved9 for @ref CfgNavx5Fields::reserved9 field
     ///     @li @b useAdr for @ref CfgNavx5Fields::useAdr field
+    ///     @li @b reserved10 for @ref CfgNavx5Fields::reserved10 field
+    ///     @li @b reserved11 for @ref CfgNavx5Fields::reserved11 field
     COMMS_MSG_FIELDS_ACCESS(
         version,
         mask1,
@@ -317,7 +343,9 @@ public:
         aopOrbMaxErr,
         reserved8,
         reserved9,
-        useAdr
+        useAdr,
+        reserved10,
+        reserved11
     );
 
     /// @brief Default constructor
@@ -337,6 +365,48 @@ public:
 
     /// @brief Move assignment
     CfgNavx5& operator=(CfgNavx5&&) = default;
+
+    /// @brief Provides custom read functionality.
+    /// @details The existence of "reserved10" (see @ref CfgNavx5Fields::reserved10) and
+    ///     "reserved11" (see @ref CfgNavx5Fields::reserved11) is
+    ///     determined by the value of "version" (see @ref CfgNavx5Fields::version).
+    template <typename TIter>
+    comms::ErrorStatus doRead(TIter& iter, std::size_t len)
+    {
+        using Base = typename std::decay<decltype(comms::toMessageBase(*this))>::type;
+        auto es = Base::template readFieldsUntil<FieldIdx_reserved10>(iter, len);
+        if (es != comms::ErrorStatus::Success) {
+            return es;
+        }
+
+        if (3 <= field_version().value()) {
+            field_reserved10().setExists();
+            field_reserved11().setExists();
+        }
+
+        return Base::template readFieldsFrom<FieldIdx_reserved10>(iter, len);
+    }
+
+    /// @brief Provides custom refresh functionality
+    /// @details The existence of "reserved10" (see @ref CfgNavx5Fields::reserved10) and
+    ///     "reserved11" (see @ref CfgNavx5Fields::reserved11) is
+    ///     determined by the value of "version" (see @ref CfgNavx5Fields::version).
+    bool doRefresh()
+    {
+        auto optResMode = comms::field::OptionalMode::Missing;
+        if (3 <= field_version().value()) {
+            optResMode = comms::field::OptionalMode::Exists;
+        }
+
+        if ((field_reserved10().getMode() == optResMode) &&
+            (field_reserved11().getMode() == optResMode)) {
+            return false;
+        }
+
+        field_reserved10().setMode(optResMode);
+        field_reserved11().setMode(optResMode);
+        return true;
+    }
 };
 
 

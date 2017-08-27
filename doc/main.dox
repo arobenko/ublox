@@ -326,7 +326,7 @@
 /// @code
 /// ProtStack protStack; // Protocol stack defined earlier
 ///
-/// returns number of bytes written to the buffer
+/// //returns number of bytes written to the buffer
 /// std::size_t writeMsg(const MyOutputMessage& msg, std::uint8_t* buf, std::size_t bufLen)
 /// {
 ///     // Check the output buffer has enough space to serialise the message
@@ -445,7 +445,7 @@
 /// @subsection ublox_fields_accessing Accessing Message Fields
 /// Every message class in ublox::message namespace uses 
 /// @b COMMS_MSG_FIELDS_ACCESS() macro to provide names to its fields. For
-/// example comms::message::NavPosecef class defines the following names:
+/// example @ref ublox::message::NavPosecef class defines the following names:
 /// @code
 /// namespace ublox
 /// {
@@ -644,8 +644,12 @@
 /// auto& outProtoMaskField = msg.field_outProtoMask();
 ///
 /// outProtoMaskField.setBitValue_outUbx(true);
-/// outProtoMaskField.setBitValue_outNmea(false);
+/// outProtoMaskField.setBitValue_outNmea(false); // redundant
 /// @endcode 
+/// @b NOTE, that all the bits in the "bitmask" field are cleared when the field
+/// is default constructed, as the result explicitly clearing the "outNmea" bit
+/// in the example above is redundant.
+///
 /// The @b BitIdx enum values can also be used:
 /// @code
 /// using OutCfgPrtUsb = ublox::message::CfgPrtUsb<MyOutputMessage>;
@@ -655,8 +659,18 @@
 ///
 /// using OutProtoMaskField = ublox::message::CfgPrtFields::outProtoMask;
 /// outProtoMaskField.setBitValue(OutProtoMaskField::BitIdx_outUbx, true);
-/// outProtoMaskField.setBitValue(OutProtoMaskField::BitIdx_outNmea, false);
+/// outProtoMaskField.setBitValue(OutProtoMaskField::BitIdx_outNmea, false); // redundant
 /// @endcode 
+///
+/// The bitmask fields also support setting of the raw mask value as well.
+/// It can be useful when the protocol has been updated to add new bits to the
+/// existing field, but the old version of UBLOX library is being used. For example,
+/// let's assume that @ref ublox::message::CfgPrtFields::outProtoMask field doesn't
+/// contain @b outRtcm3 bit definition. The code which sets @b outUbx and @b outRtcm3
+/// bits may look like this:
+/// @code
+/// outProtoMaskField.value() = 0x21;
+/// @endcode
 ///
 /// @subsection ublox_fields_complex Complex Fields
 /// There are multiple complex fields, such as bitfields (for example 
@@ -682,4 +696,151 @@
 /// pinField.value() = ...;
 /// thresField.value() = ...;
 /// @endcode
-
+///
+/// @subsection ublox_fields_var_data Variable Length Data Fields
+/// Some fields may contain raw bytes and have variable length. For example @ref
+/// ublox::message::AidAlpsrvFields::data field used in @ref
+/// ublox::message::AidAlpsrv message. It is defined to be a 
+/// @b comms::field::ArrayList containing raw data (@b std::uint8_t).
+/// The access to the data can be implemented as following:
+/// @code
+/// void handle(InAidAlpsrv& msg)
+/// {
+///     auto& dataField = msg.field_data(); // access to "data" field
+///     auto& dataVector = dataField.value(); // access the std::vector<std::uint8_t> storage
+///     std::uint8_t firstByte = dataVector[0]; // use usual way to access vector elements
+///     ...
+/// }
+/// @endcode 
+/// Other variable length data fields may contain other fields. For example
+/// @ref ublox::message::NavSatFields::data field used in @ref ublox::message::NavSat
+/// message. It is defined to be @b comms::field::ArrayList containing other
+/// field (@b comms::field::Bundle). The to the stored data can be implemented 
+/// as following:
+/// @code
+/// void handle(InNavSat& msg)
+/// {
+///     auto& dataField = msg.field_data(); // access to "data" field
+///     auto& dataVector = dataField.value(); // access the std::vector<comms::field::Bundle<...> > storage
+///     auto& firstBlock = dataVector[0]; // use usual way to access vector elements, which are bundle fields
+///     auto& gnssIdField = firstBlock.field_gnssId(); // access the bundle member field
+///     std::uint8_t gnssIdValue = gnssIdField.value(); // access the value storage
+///     ...
+/// }
+/// @endcode 
+///
+/// @subsection ublox_fields_string String Fields
+/// Access to the string fields is somewhat similar to @ref ublox_fields_var_data. 
+/// See @ref ublox::message::MonVer message definition and the code below:
+/// @code
+/// void handle(InMonVer& msg)
+/// {
+///     auto& swVerField = msg.field_swVersion(); // access to "swVersion" field
+///     std::string& swVer = swVerField.value(); // access the std::string storage
+///     auto& hwVerField = msg.field_hwVersion(); // access to "hwVersion" field
+///     std::string& hwVer = hwVerField.value(); // access the std::string storage
+///     ...
+/// }
+/// @endcode 
+///
+/// @subsection ublox_fields_optional Optional Fields
+/// There are fields that are defined to be optional (@b comms::field::Optional).
+/// Usually their existence is determined by a value of some other field, such
+/// as a bit in some "flags" field. For example @ref ublox::message::CfgTmode2
+/// message. The bit "lla" in its "flags" field (see @ref ublox::message::CfgTmode2Fields::flags)
+/// determines the existence of either ("ecefX", "ecefY", "ecefZ") or
+/// ("lat", "lon", "alt") set of fields. All of these fields are defined to
+/// be "optional". The handling code may look like this:
+/// @code
+/// void handle(InCfgTmode2& msg)
+/// {
+///     if (msg.field_flags().getBitValue_lla()) {
+///         // Make sure the right fields exist
+///         assert(msg.field_lat().doesExist()); 
+///         assert(msg.field_lon().doesExist()); 
+///         assert(msg.field_lon().doesExist()); 
+///         assert(msg.field_ecefX().isMissing());
+///         assert(msg.field_ecefY().isMissing());
+///         assert(msg.field_ecefZ().isMissing());
+///         auto lat = comms::units::getDegrees<double>(msg.field_lat().field());
+///         auto lon = comms::units::getDegrees<double>(msg.field_lon().field());
+///         auto alt = comms::units::getMeters<double>(msg.field_alt().field());
+///         ...
+///     } else {
+///         // Make sure the right fields exist
+///         assert(msg.field_lat().isMissing()); 
+///         assert(msg.field_lon().isMissing()); 
+///         assert(msg.field_lon().isMissing()); 
+///         assert(msg.field_ecefX().doesExist());
+///         assert(msg.field_ecefY().doesExist());
+///         assert(msg.field_ecefZ().doesExist());
+///         auto ecefX = comms::units::getMeters<double>(msg.field_ecefX().field());
+///         auto ecefY = comms::units::getMeters<double>(msg.field_ecefY().field());
+///         auto ecefZ = comms::units::getMeters<double>(msg.field_ecefZ().field());
+///         ...
+///     }
+/// }
+/// @endcode 
+/// @b NOTE additional call to @b field() member function of the "optional" field
+/// to get an access to the @b real field the former wraps.
+///
+/// @section ublox_refresh Consistent State of the Message
+/// When preparing message to send and assigning new values to the fields, the
+/// message may be in inconsistent state. As an example let's take
+/// @ref ublox::message::CfgTmode2 message.
+/// @code
+/// using OutCfgTmode2 = ublox::message::CfgTmode2<MyOutputMessage>;
+/// OutCfgTmode2 msg;
+/// msg.field_flags().setBitValue_lla(true); // use "lat", "lon", "alt" set
+/// comms::units::setDegrees(msg.field_lat().field(), 123.456); // note call to *.field() member func
+/// comms::units::setDegrees(msg.field_lon().field(), 152.111); // note call to *.field() member func
+/// comms::units::setMeters(msg.field_alt().field(), 80.134); // note call to *.field() member func
+/// @endcode
+/// @b NOTE, that default constructed ublox::message::CfgTmode2 message sets
+/// "ecefX", "ecefY", and "ecefZ" fields to be @b existing, while "lat", "lon",
+/// and "alt" fields to be @b missing. This is due to the "lla" bit being default
+/// constructed as @b 0. The result of the code above is that message object
+/// is in inconsistent state, i.e. the "lla" bit is set, but "lat", "lon", and 
+/// "alt" fields are still marked to be missing (and "ecefX", "ecefY", and "ecefZ"
+/// are still marked as existing). If the message object is serialised now, the
+/// values of "ecef" fields (all default constructed as 0) will be written. @n
+/// In order to bring the message object into the proper consistent state the
+/// state of the optional fields need to be reversed. It can be done manually:
+/// @code
+/// msg.field_lat().setExists();
+/// msg.field_lon().setExists();
+/// msg.field_alt().setExists();
+/// msg.field_ecefX().setMissing();
+/// msg.field_ecefY().setMissing();
+/// msg.field_ecefZ().setMissing();
+/// @endcode
+/// However, it is a tedious and error prone process. Every message object has
+/// a @b doRefresh() member function, which is either inherited from @b comms::MessageBase
+/// class or explicitly overridden inside the message definition class. It is
+/// recommended to use it instead:
+/// @code
+/// msg.doRefresh();
+/// @endcode
+/// If the message cannot have an inconsistent state, then call to @b doRefresh()
+/// member function will do nothgin, and will probably be optimised away by the
+/// compiler.
+///
+/// @section ublox_back_compat Backward Compatibility
+/// The new versions of the UBX protocol may result in adding new enum values or
+/// bits to existing bitmasks. Such changes are easily introduced into the
+/// library and do not break backward compatibility. The older versions of the
+/// firmware or earlier device models just don't use these values/bits.
+///
+/// Sometimes the new versions of the same message are introduced. Usually the
+/// new version ends up being a separate class. For example @ref 
+/// ublox::message::RxmPmreq and ublox::message::RxmPmreqV0. The latter is 
+/// definition of the message that has "version" field with @b 0 value.
+///
+/// Sometimes new fields are appended at the end of the same message. Good 
+/// example is @b NAV-PVT message (@ref ublox::message::NavPvt). 
+/// The ublox-8 devices have added "headVeh", 
+/// "magDec", and "magAcc" fields at the end. The ublox-7 devices didn't have
+/// these fields. The @b UBLOX library defines these fields as
+/// "optional" (see @ref ublox_fields_optional), they are read and populated
+/// if "read" operation has extra 8 bytes.
+///

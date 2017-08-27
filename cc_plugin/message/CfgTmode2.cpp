@@ -20,6 +20,7 @@
 #include "CfgTmode2.h"
 
 #include "cc_plugin/field/common.h"
+#include "cc_plugin/field/cfg.h"
 
 template class ublox::message::CfgTmode2<ublox::cc_plugin::Message>;
 template class ublox::cc_plugin::ProtocolMessageBase<
@@ -41,17 +42,6 @@ namespace
 {
 
 using ublox::message::CfgTmode2Fields;
-
-QVariantMap createProps_timeMode()
-{
-    cc::property::field::ForField<CfgTmode2Fields::timeMode> props;
-    props.name("timeMode")
-         .add("Disabled")
-         .add("Survey In")
-         .add("Fixed Mode");
-    assert(props.values().size() == (int)CfgTmode2Fields::TimeMode::NumOfValues);
-    return props.asMap();
-}
 
 QVariantMap createProps_flags()
 {
@@ -96,7 +86,7 @@ QVariantMap createProps_geodetic(const char* name, int scaledDigits = 0)
 QVariantList createFieldsProperties()
 {
     QVariantList props;
-    props.append(createProps_timeMode());
+    props.append(cc_plugin::field::cfg::props_timeMode());
     props.append(cc_plugin::field::common::props_reserved(1));
     props.append(createProps_flags());
     props.append(createProps_cartesian('X'));
