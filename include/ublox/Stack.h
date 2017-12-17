@@ -104,8 +104,7 @@ using DataField =
 ///     The types of the messages must be bundled in
 ///     <a href="http://en.cppreference.com/w/cpp/utility/tuple">std::tuple</a>.
 /// @tparam TMsgAllocOptions The contents of this template parameter are passed
-///     as options to
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1protocol_1_1MsgIdLayer.html">comms::protocol::MsgIdLayer</a>
+///     as options to @b comms::protocol::MsgIdLayer
 ///     protocol layer in @b COMMS library. They are used to specify whether
 ///     dynamic memory allocation is allowed or "in place" allocation for
 ///     message objects must be implemented. It is expected to be either
@@ -113,9 +112,8 @@ using DataField =
 ///     <a href="http://en.cppreference.com/w/cpp/utility/tuple">std::tuple</a>.
 /// @tparam TDataFieldStorageOptions The contents of this template parameters
 ///     are passed to the definition of storage field of
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1protocol_1_1MsgDataLayer.html">comms::protocol::MsgDataLayer</a>
-///     layer. The field is a variant of
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1field_1_1ArrayList.html">comms::field::ArrayList</a>
+///     @b comms::protocol::MsgDataLayer
+///     layer. The field is a variant of @b comms::field::ArrayList
 ///     which uses <a href="http://en.cppreference.com/w/cpp/container/vector">std::vector</a>
 ///     as its internal storage by default. The option(s) specified in this
 ///     template parameter is/are forwarded to the definition of the storage
