@@ -121,8 +121,8 @@ using DataField =
 template <
     typename TMsgBase,
     typename TMessages,
-    typename TMsgAllocOptions = std::tuple<>,
-    typename TDataFieldStorageOptions = std::tuple<> >
+    typename TMsgAllocOptions = comms::option::EmptyOption,
+    typename TDataFieldStorageOptions = comms::option::EmptyOption>
 using Stack =
     comms::protocol::SyncPrefixLayer<
         details::SyncField1<typename TMsgBase::Field>,
@@ -137,9 +137,7 @@ using Stack =
                     TMessages,
                     comms::protocol::MsgSizeLayer<
                         details::LengthField<typename TMsgBase::Field>,
-                        comms::protocol::MsgDataLayer<
-                            details::DataField<typename TMsgBase::Field, TDataFieldStorageOptions>
-                        >
+                        comms::protocol::MsgDataLayer<TDataFieldStorageOptions>
                     >,
                     TMsgAllocOptions
                 >
