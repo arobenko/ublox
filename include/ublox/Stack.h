@@ -23,6 +23,7 @@
 
 #include "comms/comms.h"
 
+#include "version.h"
 #include "Message.h"
 #include "field/MsgId.h"
 #include "protocol/ChecksumCalc.h"
