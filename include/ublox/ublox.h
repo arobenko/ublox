@@ -21,6 +21,7 @@
 
 #pragma once
 
+#include "version.h"
 #include "MsgId.h"
 #include "Message.h"
 #include "Stack.h"

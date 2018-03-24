@@ -28,8 +28,7 @@ namespace ublox
 {
 
 /// @brief Interface class of all the Ublox binary protocol messages.
-/// @details The class publicly inherits from
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1Message.html" target="_black">comms::Message</a>
+/// @details The class publicly inherits from @b comms::Message
 ///     class while providing the following default options:
 ///     @li @b comms::option::MsgIdType<MsgId> > - use @ref MsgId as the type of message ID.
 ///     @li @b comms::option::LittleEndian - use little endian for serialisation
