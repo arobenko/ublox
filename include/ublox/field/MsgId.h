@@ -357,8 +357,6 @@ private:
 }  // namespace details
 
 /// @brief Definition of the field that represents message ID.
-/// @details See <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1field_1_1EnumValue.html">comms::field::EnumValue</a>
-///     for details.
 using MsgId =
     comms::field::EnumValue<
         comms::Field<comms::option::BigEndian>,

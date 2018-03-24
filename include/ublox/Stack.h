@@ -93,10 +93,9 @@ using DataField =
 /// @details It is used to process incoming binary stream of data and create
 ///     allocate message objects for received messages. It also responsible to
 ///     serialise outgoing messages and wrap their payload with appropriate transport
-///     information. See <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/page_prot_stack_tutorial.html">Protocol Stack Tutorial</a>
+///     information. See <b>Protocol Stack Definition Tutorial</b>
 ///     page in @b COMMS library tutorial for more information.@n
-///     The outermost layer is
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1protocol_1_1SyncPrefixLayer.html">comms::protocol::SyncPrefixLayer</a>.
+///     The outermost layer is @b comms::protocol::SyncPrefixLayer.
 ///     Please see its documentation for public interface description.
 /// @tparam TMsgBase Interface class for all the @b input messages, expected to be some
 ///     variant of ublox::MessageT class with options.

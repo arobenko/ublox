@@ -30,8 +30,7 @@ namespace protocol
 {
 
 /// @brief Checksum calculator.
-/// @details Provided to
-///     <a href="https://dl.dropboxusercontent.com/u/46999418/comms_champion/comms/html/classcomms_1_1protocol_1_1ChecksumLayer.html">comms::protocol::ChecksumLayer</a>
+/// @details Provided to @b comms::protocol::ChecksumLayer
 ///     when defining protocol stack (@ref ublox::Stack).
 struct ChecksumCalc
 {
