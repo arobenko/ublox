@@ -181,7 +181,7 @@ struct CfgTp5Fields
         /// @details See definition of @b COMMS_BITMASK_BITS_SEQ macro
         ///     related to @b comms::field::BitmaskValue class from COMMS library
         ///     for details.
-        COMMS_BITMASK_BITS_SEQ(active, logGpsFreq, lockedOtherSet, isFreq, isLength, alignToTow, polarity);
+        COMMS_BITMASK_BITS_SEQ(active, lockGpsFreq, lockedOtherSet, isFreq, isLength, alignToTow, polarity);
     };
 
     /// @brief Enumeration for @ref gridUtcGnss field.
