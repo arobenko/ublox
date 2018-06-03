@@ -41,13 +41,13 @@ wiki page for instructions on how to analyse the UBX binary protocol using the
 # Licence
 The [UBLOX Library](#ublox-library) as well as [CommsChampion Plugin](#commschampion-plugin) 
 from this repository are licensed under
-the classic **GPLv3 / Commercial** dual licensing scheme. The
+the classic **GPLv3 / Commercial** dual licensing scheme in the same way as 
+[CommsChampion](https://github.com/arobenko/comms_champion) project
+(see [LICENSE.md](https://github.com/arobenko/comms_champion/blob/master/LICENSE.md) for details). The
 source code is available for anyone to use as long as the derivative work
 remains open source with compatible licence. **Download** and **try** it! If it works
 as expected and commercial closed source licence is required for the final
-product, it can be purchased on [binpress](http://arobenko.binpress.com/product/ublox-protocol-library/4579).
-If the offered licences do not satisfy your needs and special conditions need to be
-included please send me an e-mail (see [Contact Information](#contact-information) below).
+product, please send me an e-mail (see [Contact Information](#contact-information) below).
 
 # How to Build
 Detailed instructions on how to build and install all the components can be
