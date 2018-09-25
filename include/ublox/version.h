@@ -30,7 +30,7 @@
 #define UBLOX_MINOR_VERSION 9U
 
 /// @brief Patch level of the library
-#define UBLOX_PATCH_VERSION 2U
+#define UBLOX_PATCH_VERSION 4U
 
 /// @brief Version of the UBLOX library as single numeric value
 #define UBLOX_VERSION \
