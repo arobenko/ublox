@@ -1,4 +1,4 @@
-<span style="color:red">**DEPRECATION NOTICE:**</span> This project contains
+<span style="color:red">**DEPRECATION NOTE:**</span> This project contains
 manual implementation of **UBX** protocol and has been deprecated.
 It is no longer maintained. Please use
 [cc.ublox.commsdsl](https://github.com/arobenko/cc.ublox.commsdsl) instead,
