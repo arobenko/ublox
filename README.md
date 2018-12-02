@@ -1,3 +1,13 @@
+<span style="color:red">**DEPRECATION NOTE:**</span> This project contains
+manual implementation of **UBX** protocol and has been deprecated.
+It is no longer maintained. Please use
+[cc.ublox.commsdsl](https://github.com/arobenko/cc.ublox.commsdsl) instead,
+which defines the protocol using [CommsDSL](https://github.com/arobenko/CommsDSL-Specification) 
+schema files. The generated outcome of protocol definition is hosted as
+[cc.ublox.generated](https://github.com/arobenko/cc.ublox.generated).
+
+-----------------------------------------------------------------------
+
 # Overview
 [u-blox GPS receivers](https://www.u-blox.com/en/position-time)
 use a UBX binary protocol to transmit GPS data to a host computer using
